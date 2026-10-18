@@ -2,6 +2,10 @@
 
 Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
 
+## New isolated physical source candidate
+
+[Complete three-clamp source project and native cached evidence](review/three-clamp-source-20261018/README.md). All six clamp-pad root relationships now pass cached native checks. Full refill/DRC, return-floor correction and electrical qualification remain open; the candidate is unadopted and separate from the global routing input.
+
 ## Actual bulk result rejected; pre-route contact mismatch measured
 
 [Read the source-bound failure evidence](review/router-contact-model-failure-20261018/README.md). The first Rust routed result is HELD: cached native joins worsen **1,693 → 2,192** with 502 old groups split. A separate original-engine experiment with no routing already misses **631 ordinary native joins** in its optimistic normal-contact graph; tail cleanup loses more source relationships. An actual inactive-layer copper violation is independently proved. These are routing-model/setup failures under diagnosis; no new routing gain or accepted board is claimed.
