@@ -20,7 +20,7 @@ The earlier [documentation-only snapshot](documentation/PUBLICATION.md) has an e
 
 ## Existing board review and local exclusions
 
-The [original board-review snapshot](BOARD_REVIEW.md), board/, routing/, evidence/, archives/ and original MANIFEST.json remain unchanged. This includes the existing cached native baseline/staged ZIPs and published editable board package.
+The [board-review publication](BOARD_REVIEW.md), board/, routing/, evidence/, archives/ and MANIFEST.json retain their separately versioned scope. The full-source upload preserved the original package; subsequent board/router publications have their own revisions and metadata bindings. The audit follow-up preserves those newer changes, including existing cached native baseline/staged ZIPs.
 
 Git internals, machine-local .claude permissions, credentials, private runtime/customer stores, temporary downloaded vendor/tool work, and existing ignored bytecode/build/runtime files remain local. These exclusions follow the project source/publication contract. Original machine configurations, live/adopted boards and the external IS-1 archive are not modified.
 
@@ -29,3 +29,7 @@ Git internals, machine-local .claude permissions, credentials, private runtime/c
 High-confidence credential scans found no matching keys/tokens in selected canonical source text, selected report text up to 10 MB and text entries in the five canonical hardware ZIPs. Media/binary payloads have a separate scope. Documentation file links, fences and generated-catalogue consistency were checked. Source and report manifests record the published bytes; original board-review paths were independently compared to the prior remote commit.
 
 This upload runs no new compilation, synthesis, ERC/DRC or physical measurement. All twelve fitted interfaces and actual electrical/motion limits remain required. Physical-wrapper FPGA implementation/timing, routing/current/assembly closure, complete target/runtime qualification and manufacturing readiness remain open.
+
+## Independent audit follow-up
+
+[Focused findings and source supplement](reports/documentation-refresh-20261018/independent-audit-followup/README.md) distinguish retained historical records, four known-stale CNC1 source hashes, non-file layer-geometry hashes and actual omitted assembly/linker inputs. [PUBLICATION_SCOPE.json](PUBLICATION_SCOPE.json) defines current versus original publication scope. An additional 178 small source files are preserved with exact hashes; generated executables and raw caches remain local. FULL_SOURCE_MANIFEST.json and BROWSABLE_EVIDENCE_MANIFEST.json retain their 945fb717 capture bytes; verify historical capture inventories at that revision. No historical engineering receipt is re-stamped.
