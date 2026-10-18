@@ -1,0 +1,11 @@
+# Routed KiCad progress — 18 October 2026
+
+[Download the complete editable KiCad project](../../archives/kicad-routing-progress-20261018-r2.zip), extract it into a separate folder, and open `native/board.kicad_pro`. It includes all 214 native PCB/project/rules/schematic/library files. The PCB exceeds GitHub's individual file limit and is supplied inside the ZIP. Exact file hashes are in [FILES.json](FILES.json).
+
+**KiCad 10.0.7 measured improvement: 1,687 → 1,680 required joins; API items 1,712 → 1,707. Zero previous pad relationships were lost.** This combines the eight-join additive candidate with the previous six-join candidate. KiCad confirms zero lost pad relationships relative to the published seven-join board. Every copper record of the six-join composition base is retained; donor route geometry supersedes the earlier additive donor. Total measured improvement from the a210 cached reference is fourteen joins (1,694 → 1,680). These counters are not directly comparable to the historical 1,172 full-fill result.
+
+The additive donor contributes 331 copper items to the six-join composition base. Composition checks cover its clearance from the previous route delta; native checks cover pad connectivity/poses, actual via masks and new via-drill/SMD intersections. The previously added inner annulus remains explicitly reviewed. See [measured progress](evidence/progress.json) and the accompanying source-bound receipts.
+
+This is **unfinished, unadopted, and not manufacturing-ready**. This measurement used saved copper caches; full refill/DRC, power/current/return/thermal/assembly and physical qualification remain open. A separate full refill/DRC job on the previous a76e board does not qualify this newer source. All twelve motor interfaces remain fitted. IS-3 remains a proposal.
+
+The [additive donor SES](additive-donor.ses) belongs to the original a210 routing input and carries this update's additive route. It is not a complete session for the combined fourteen-gain board; use the supplied complete PCB. [Original source and DSN inputs](../current-routing-setup-20261018/README.md) and the [previous six-gain board](../kicad-candidate-a76e13de-20261018/README.md) remain available separately. Bulk routing continues beyond this frozen checkpoint.

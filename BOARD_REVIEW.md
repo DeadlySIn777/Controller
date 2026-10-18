@@ -62,3 +62,7 @@ This repository is a bounded engineering-review snapshot, including actual nativ
 ## Later routed KiCad progress
 
 [New complete project and native measurements](review/routing-progress-20261018-r1/README.md): 1,688 → 1,687 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.
+
+## Later routed KiCad progress
+
+[New complete project and native measurements](review/routing-progress-20261018-r2/README.md): 1,687 → 1,680 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.

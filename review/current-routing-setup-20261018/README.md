@@ -24,3 +24,7 @@ The board is substantially incomplete. Global routing experiments and isolated p
 ## Later routed KiCad progress
 
 [New complete project and native measurements](../routing-progress-20261018-r1/README.md): 1,688 → 1,687 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.
+
+## Later routed KiCad progress
+
+[New complete project and native measurements](../routing-progress-20261018-r2/README.md): 1,687 → 1,680 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.
