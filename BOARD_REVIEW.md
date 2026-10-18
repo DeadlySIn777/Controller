@@ -58,3 +58,7 @@ This repository is a bounded engineering-review snapshot, including actual nativ
 ## Latest measured KiCad candidate — 18 October 2026
 
 [Download the complete KiCad project and inspect supporting files](review/kicad-candidate-a76e13de-20261018/README.md). Six cached native joins closed with zero old pad pairs lost; routing and manufacturing qualification remain incomplete.
+
+## Later routed KiCad progress
+
+[New complete project and native measurements](review/routing-progress-20261018-r1/README.md): 1,688 → 1,687 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.

@@ -20,3 +20,7 @@ The board is substantially incomplete. Global routing experiments and isolated p
 ## Later measured routing candidate
 
 [Complete newer KiCad candidate and editable support files](../kicad-candidate-a76e13de-20261018/README.md): six cached native joins closed, zero old pad pairs lost, 1,688 remain. This is a separate unadopted candidate; the a210 starting source above is preserved.
+
+## Later routed KiCad progress
+
+[New complete project and native measurements](../routing-progress-20261018-r1/README.md): 1,688 → 1,687 cached joins, zero prior pad pairs lost. Full refill/DRC and manufacture remain open.
