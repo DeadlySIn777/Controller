@@ -6,6 +6,8 @@ Actual editable KiCad 10 motherboard source and Specctra routing interchange, pu
 
 [Current exact joint PCB project, DSN, rules and limitations](current-global-R3/README.md). This is the actual input of the new global routing experiment; acceptance and full native AFTER checks are pending. Earlier snapshots below retain their own source and measurement scope.
 
+[Subsequent native preservation PASS and two runtime fixes](review/router-runtime-corrections-20261018.md): the interchange now retains all current source copper records and via masks; actual routed AFTER remains pending.
+
 ## Router interchange update
 
 [New measured failures and setup corrections](review/router-interchange-findings.md): the corrected native reference is **1,193 joins / 1,210 API items**. The early R6 cached round trip loses five connections and is rejected. The R8 partial-retrace correction passes exact segment preservation and router load/export; native cached round-trip verification now passes at the identical 1,193 joins / 1,210 API items, with all 8,001 via records and actual flashed layers unchanged. Full refill/DRC remains open. Historical blanket locks and lossy coordinate/via-mask import are also being corrected. Treat the earlier R6 DSN as a preserved diagnostic input.

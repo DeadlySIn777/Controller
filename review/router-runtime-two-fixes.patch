@@ -1,0 +1,39 @@
+--- a/src/main/java/app/freerouting/autoroute/pipeline/AutoroutePassRunner.java
++++ b/src/main/java/app/freerouting/autoroute/pipeline/AutoroutePassRunner.java
+@@ -498,7 +498,7 @@
+     // and checks remain at their original call sites. Never fire a stale payload.
+     if (router.thread instanceof
+             app.freerouting.management.jobs.RoutingJobSchedulerActionThread owner
+-        && router.job != null && router.job.board == router.board
++        && router.job != null && router.board != null
+         && owner.isCoalescedProgressOutputFor(router.job)) {
+       counters.queuedToBeRoutedCount = itemsToGoCount;
+       counters.skippedCount = skipped;
+--- a/src/main/java/app/freerouting/autoroute/pipeline/AutorouteConnectionRouter.java
++++ b/src/main/java/app/freerouting/autoroute/pipeline/AutorouteConnectionRouter.java
+@@ -34,6 +34,25 @@
+       Map<Item, Integer> ripupCosts,
+       int ripupPassNo) {
+     try {
++      // Original strict-DRC recovery deserializes a replacement board while the
++      // active pass still owns its original queued Item references. Resolve the
++      // stable identity before querying connectivity or constructing maze sets.
++      if (item.board != router.board || !item.isOnTheBoard()) {
++        Item canonical = router.board.getItem(item.getId());
++        if (canonical == null || canonical.board != router.board || !canonical.isOnTheBoard()
++            || canonical.getClass() != item.getClass() || canonical.netCount() != item.netCount()
++            || !canonical.containsNet(routeNetNo)) {
++          return new AutorouteAttemptResult(AutorouteAttemptState.FAILED,
++              "Queued item has no equivalent current-board identity; retry from a fresh pass");
++        }
++        for (int index = 0; index < item.netCount(); index++) {
++          if (canonical.getNetNumber(index) != item.getNetNumber(index)) {
++            return new AutorouteAttemptResult(AutorouteAttemptState.FAILED,
++                "Queued/current item net identity differs; no stale connectivity used");
++          }
++        }
++        item = canonical;
++      }
+       Net routeNet = router.board.rules.nets.get(routeNetNo);
+       boolean containsPlane = routeNet != null && routeNet.containsPlane();
+       int currentViaCosts =
