@@ -54,3 +54,7 @@ The board is 450 Ã— 235 mm, six copper layers, 2,723 footprints and 9,971 pad
 One active motherboard retains the soldered FPGA, all twelve fitted motor interfaces with individual enable/alarm, four ABZ encoders, 24 DI and 16 smart DO plus the other required interfaces. Existing machine settings, electrical limits, galvanic domains and fault/recovery behavior remain requirements. No channel removal, domain merge or blanket clearance reduction is authorized by this snapshot.
 
 This repository is a bounded engineering-review snapshot, including actual native sources and selected evidence. It does not include vendor installers, machine configurations, the historical report/cache tree or manufacturing outputs. No new software or hardware license grant is added here.
+
+## Latest measured KiCad candidate — 18 October 2026
+
+[Download the complete KiCad project and inspect supporting files](review/kicad-candidate-a76e13de-20261018/README.md). Six cached native joins closed with zero old pad pairs lost; routing and manufacturing qualification remain incomplete.

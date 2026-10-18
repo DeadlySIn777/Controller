@@ -16,3 +16,7 @@ Ordinary signal routing currently uses F.Cu, In3.Cu and B.Cu. The remaining inne
 The historical corrected R299 result is **1,172 required joins / 1,183 API unconnected items / 499 CLI unconnected diagnostic rows**. Those are three different counters. The a210 cached no-route reference is **1,694 required joins / 1,720 API items**; its source/cache differs, so those figures are not directly comparable with the older full result. Router counters alone are not native PCB connectivity measurements.
 
 The board is substantially incomplete. Global routing experiments and isolated power-placement work are continuing; this bundle makes their actual starting geometry and constraints available for independent review. It does not assert that the placement is routable as-is. Full native refill/DRC, complete power and return paths, current/thermal/signal integrity, FPGA physical implementation and manufacturing qualification remain open. No finished-board or manufacturing release is claimed.
+
+## Later measured routing candidate
+
+[Complete newer KiCad candidate and editable support files](../kicad-candidate-a76e13de-20261018/README.md): six cached native joins closed, zero old pad pairs lost, 1,688 remain. This is a separate unadopted candidate; the a210 starting source above is preserved.
