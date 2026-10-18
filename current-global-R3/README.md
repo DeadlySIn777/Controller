@@ -14,3 +14,5 @@ Original-parser source-forward/native preservation checks run concurrently with 
 [Subsequent native preservation PASS and two diagnosed runtime corrections](../review/router-runtime-corrections-20261018.md). The current routing AFTER result remains pending.
 
 [Current native board layer views](../review/current-native-layer-views/README.md) show the saved copper with explicit source power-planning/keepout overlays; these are visualization, not a new filled AFTER.
+
+[Derived Rust input with source-bound native drill models](rust-native-hole-model/README.md) corrects fictitious SMD holes and PTH drill fallback without changing the native board, copper, placement or electrical rules. The original adjacent DSN remains preserved.
