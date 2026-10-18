@@ -12,3 +12,5 @@ The original router loaded the DSN and applied the public fixed-state setter aft
 Original-parser source-forward/native preservation checks run concurrently with the reversible routing experiment. All acceptance checks, current filled copper, remaining critical/power routing, native DRC, electrical/thermal/signal integrity, FPGA fit/timing, assembly and physical qualification remain required. No new routing AFTER count is claimed. Retained twelve fitted motor interfaces, four ABZ encoders, 24 DI, 16 smart DO, electrical limits and isolation/fault contracts remain requirements. The board is not ready for manufacture.
 
 [Subsequent native preservation PASS and two diagnosed runtime corrections](../review/router-runtime-corrections-20261018.md). The current routing AFTER result remains pending.
+
+[Current native board layer views](../review/current-native-layer-views/README.md) show the saved copper with explicit source power-planning/keepout overlays; these are visualization, not a new filled AFTER.
