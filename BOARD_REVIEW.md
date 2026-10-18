@@ -2,6 +2,10 @@
 
 Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
 
+## Start with the current board and setup
+
+[Current source ZIP, exact design rules and both current DSN inputs](review/current-routing-setup-20261018/README.md). This entry identifies the exact a210 starting board and distinguishes historical full results from current cached measurements. Use it for the requested global routing/setup review.
+
 ## Corrected literal LED net source
 
 [Corrected editable a210 project](review/literal-net-source-correction-20261018/README.md) fixes 17 blank net fields in the d798 candidate without changing physical geometry. All 94,334 copper records pass the finite source/interchange check; no new routing or full-refill result is claimed.
