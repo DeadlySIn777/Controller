@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-30T20:08:27.768830+00:00",
+  "original_obligation": {
+    "signal": "WATCHDOG_TRIP_CLEAR",
+    "target_sheet": "mc_permission",
+    "target_nets": [
+      "WD_M_TRIP_CLEAR_N",
+      "WD_O_TRIP_CLEAR_N"
+    ],
+    "polarity": "actual retained clears ACTIVE LOW; deliberate disarmed common-clear policy/default pull remains to implement",
+    "implemented_connection": false
+  },
+  "corrected_obligation": {
+    "signal": "WATCHDOG_TRIP_CLEAR",
+    "target_sheet": "mc_permission",
+    "target_nets": [
+      "WD_REARM_M",
+      "WD_REARM_O"
+    ],
+    "polarity": "ACTIVE HIGH into U4018 inputs with default LOW; U4019 drives WD_M/O_TRIP_CLEAR_N and must never be driven by FPGA; deliberate disarmed common-clear policy remains to implement",
+    "implemented_connection": false
+  },
+  "reason": "U4019.7/.3 actively drive WD_M/O_TRIP_CLEAR_N; FPGA must instead drive the actual U4018.1/.3 WD_REARM_M/O inputs.",
+  "isolated_candidate_r03_pin_allocation_or_copper_changed": false,
+  "original_obligation_valid": false
+}

@@ -1,0 +1,28 @@
+"""Two explicitly named owned-role local corridor; no model or native write."""
+from pathlib import Path
+import hashlib
+H=Path(__file__).resolve().parent.parent
+p=H/'sbc-power/CM79-exact-R333-owned-q4f-only-local-coupled-In2-corridor-nominations-r334/exact-expanded-coupled-local-nomination.py'
+assert hashlib.sha256((p.parent/'receipt.json').read_bytes()).hexdigest()=='5f5ddabf01c07d4b72d44a4f7ff321e0babff70db33db681da9d0732e4c49961'
+s=p.read_text(encoding='utf-8').replace('CM79-exact-R333-owned-q4f-only-local-coupled-In2-corridor-nominations-r334','CM79-exact-R333-q4f-q053-only-local-coupled-In2-corridor-nominations-r336').replace('R334','R336')
+core="context=K.hole_context(c);_,groups=K.physical(provisional,NET,context)"
+assert core in s
+s=s.replace(core,"cacheDir=H/'sbc-power/CM79-exact-R333-owned-q4f-only-local-coupled-In2-corridor-nominations-r334';assert sha(cacheDir/'receipt.json')=='5f5ddabf01c07d4b72d44a4f7ff321e0babff70db33db681da9d0732e4c49961';assert sha(cacheDir/'fresh-actual-CORE5-only-original-middle-withdrawal-groups.pkl')=='7fb5124a8a5fdac9785c7cb1a97b3bc279ffb54399d092e6b9bf5ee3aba2e32b';assert sha(cacheDir/'fresh-actual-R333-LOGIC-ground-groups.pkl')=='cbc0fb58b2764761ae7febe4921081ed3492789c272bf5fc70e35ed337c7aba7';groups=pickle.loads((cacheDir/'fresh-actual-CORE5-only-original-middle-withdrawal-groups.pkl').read_bytes())")
+s=s.replace("_,lgGroups=K.physical(c,'/LOGIC_GND',context)","lgGroups=pickle.loads((cacheDir/'fresh-actual-R333-LOGIC-ground-groups.pkl').read_bytes())")
+s=s.replace("q4f=next(z for z in q if z['uuid']=='4f297f78-8d11-5be4-910e-9245f73fa249');", "q4f=next(z for z in q if z['uuid']=='4f297f78-8d11-5be4-910e-9245f73fa249');q053=next(z for z in q if z['uuid']=='053e747d-d229-5488-b123-0bd7612fb8ef');assert hashlib.sha256(q053['shape'].wkb).hexdigest()=='f1c8dff8cb02f72d2893bdacdce7f2d3d7a4c1a7606eb8dc064c27c3769c6524';fieldSigned=H/'field-signed-port-allocation-r4/receipt.json';assert sha(fieldSigned)=='e49fc7f958f264e552843ca43d1271dd84321dbcd52e27e2460155b2e635bb27';put(O/'exact-current-two-owned-before-role-and-signed-FB-authority.json',{'model_R333_sha256':sha(mp),'unchanged_before_physical_CORE5_and_LG_cache_R334_receipt_sha256':sha(cacheDir/'receipt.json'),'cache_reuse_requires_exact_unchanged_R333_model_and_only_original_middle_topology':True,'field_signed146_term_receipt_sha256':sha(fieldSigned),'FB_signed_full_ground_A':4.76859682896,'FB_positive_load_A':4.85896349563,'FB_buck_negative_CURRENT_A':-.09036666667,'saved_FA_FB24_and_return_budget_V':.48,'FIELD5_qualified_drop_budget':'OPEN','no_equal_sharing_current_capacity_or_derating_credit':True,'two_owned_before_roles':[{'UUID':z['uuid'],'raw_net':z['net'],'layer':z['layer'],'physical_WKB_sha256':hashlib.sha256(z['shape'].wkb).hexdigest(),'intended_WKB_sha256':hashlib.sha256(z['zone_outline_shape'].wkb).hexdigest(),'settings':{k:z[k]for k in('net','layer','priority','clearance_mm','min_thickness_mm','pad_connect_mode','island_removal_mode','thermal_gap_mm','thermal_bridge_width_mm')}}for z in(q4f,q053)],'only_soft_coupled_scope_mm':[116,169,139,208],'postcut_all_FB_FG_LG_direct_source_oldref_current_loop_mesh_native':'OPEN'});")
+s=s.replace("if z['uuid']==q4f['uuid']else zero(z['shape'])", "if z['uuid']in(q4f['uuid'],q053['uuid'])else zero(z['shape'])")
+s=s.replace("'existing_owned_positive_q_hard_except_exact_q4f_declared_local_coupled_scope'", "'existing_owned_positive_q_hard_except_exact_q4f_q053_declared_local_coupled_scope'")
+needle="test['owned_q4f_local_withdrawal_outside_declared_corridor_empty']=True;accepted.append"
+assert needle in s
+extra="""test['owned_q4f_local_withdrawal_outside_declared_corridor_empty']=True;ownedProposals=[]
+   for owner in(q4f,q053):
+    radius=.625+max(float(owner['clearance_mm']),gap(owner['net']))+.025;normal=buf(LineString(path),radius);rows={}
+    for role in('shape','zone_outline_shape'):
+     removed=zero(owner[role]).intersection(normal);assert removed.difference(corridor).is_empty,('explicit owned corridor scope',owner['uuid'],role);fn=O/(owner['uuid']+'-'+role+'-only-nominated-normal-negative-intersection.wkb');fn.write_bytes(removed.wkb);rows[role]={'exact_before_WKB_sha256':hashlib.sha256(owner[role].wkb).hexdigest(),'only_nominal_local_removed_mm2':removed.area,'only_nominal_local_removed_type':removed.geom_type,'removed_WKB_file':str(fn.resolve()),'removed_WKB_sha256':sha(fn),'native_minimum_and_local_guard_retained':True,'strict_literal_no_gain_and_local100nm_constructor_proof':'OPEN'}
+    fn=O/(owner['uuid']+'-only-nominated-fullwidth-normal-cutter.wkb');fn.write_bytes(normal.wkb);ownedProposals.append({'UUID':owner['uuid'],'raw_net':owner['net'],'layer':owner['layer'],'native_domain_clearance_mm':gap(owner['net']),'native_plane_local_mm':float(owner['clearance_mm']),'planner_reserve_mm':.025,'track_cut_radius_mm':radius,'normal_cutter_file':str(fn.resolve()),'normal_cutter_sha256':sha(fn),'exact_role_nomination':rows,'all_original_source_contact_direct_reference_current_return_loop_mesh_native':'OPEN'})
+   put(O/'exact-two-owned-local-normal-cutter-proposals-NO_HEAD_EMITTED.json',ownedProposals);accepted.append"""
+s=s.replace(needle,extra)
+s=s.replace('EXACT_R333_OWNED_q4f_ONLY_LOCAL_COUPLED_FULL1P25','EXACT_R333_OWNED_q4f_q053_ONLY_LOCAL_COUPLED_FULL1P25')
+s=s.replace("'only_soft_q4f_coupled_scope_mm'", "'only_soft_q4f_q053_coupled_scope_mm'")
+s=s.replace("'all_old_discrete_holes_native_rules_and_owned_positive_Cu_hard_except_explicit_local_q4f_coupled_corridor'", "'all_old_discrete_holes_native_rules_and_owned_positive_Cu_hard_except_explicit_local_q4f_q053_coupled_corridor'")
+exec(compile(s,str(__file__),'exec'))

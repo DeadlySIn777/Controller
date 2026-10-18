@@ -1,0 +1,82 @@
+{
+  "physical_contacts": {
+    "SCLK": 38,
+    "MISO": 40,
+    "MOSI": 44,
+    "CS_FB_candidate": 54,
+    "CS_CMD_candidate": 47
+  },
+  "logical_contract": "Frozen IS-1 dual CS_FB/CS_CMD, 176-byte feedback and 96-byte command; proposal does not change logical wire ABI",
+  "profiles": {
+    "cm4": {
+      "controller": "BCM2711 SPI0",
+      "sclk": "GPIO11",
+      "miso": "GPIO9",
+      "mosi": "GPIO10",
+      "cs_fb_candidate": "GPIO4",
+      "cs_cmd_candidate": "GPIO23",
+      "driver": "New GPIO-CS CNC3 target transport/pinmux needed; not native CE0/CE1 wiring",
+      "machine_use_enabled": false,
+      "target_build_observed": false,
+      "physical_dual_cs_exchange_observed": false,
+      "loaded_servo_timing_observed": false,
+      "pin_mapping_status": "source-mapped proposal; no custom carrier circuit qualified"
+    },
+    "cm5": {
+      "controller": "RP1 SPI0",
+      "sclk": "GPIO11",
+      "miso": "GPIO9",
+      "mosi": "GPIO10",
+      "cs_fb_candidate": "GPIO4",
+      "cs_cmd_candidate": "GPIO23",
+      "driver": "New RP1 GPIO-CS CNC3 target transport/pinmux needed; BCM2711 MMIO path is not portable",
+      "machine_use_enabled": false,
+      "target_build_observed": false,
+      "physical_dual_cs_exchange_observed": false,
+      "loaded_servo_timing_observed": false,
+      "pin_mapping_status": "source-mapped proposal; no custom carrier circuit qualified"
+    },
+    "cb1_sd_v22": {
+      "controller": "H616 SPI1",
+      "sclk": "PH6",
+      "miso": "PH8",
+      "mosi": "PH7",
+      "cs_fb_candidate": "PC7",
+      "cs_cmd_candidate": "PC11",
+      "driver": "Separate Allwinner profile; disable TFT35/MCP2515/other clients on bus",
+      "machine_use_enabled": false,
+      "target_build_observed": false,
+      "physical_dual_cs_exchange_observed": false,
+      "loaded_servo_timing_observed": false,
+      "pin_mapping_status": "source-mapped proposal; no custom carrier circuit qualified"
+    },
+    "cb1_emmc": {
+      "controller": "H616 SPI1",
+      "sclk": "PH6 (40-pin documentation only)",
+      "miso": "PH8 (40-pin documentation only)",
+      "mosi": "PH7 (40-pin documentation only)",
+      "cs_fb_candidate": "PI14 (40-pin documentation; bay continuity not established)",
+      "cs_cmd_candidate": "PI5 (40-pin documentation; bay continuity not established)",
+      "driver": "Full exact-revision 200-contact schematic/continuity is required before accepting the SD candidate circuit",
+      "machine_use_enabled": false,
+      "target_build_observed": false,
+      "physical_dual_cs_exchange_observed": false,
+      "loaded_servo_timing_observed": false,
+      "pin_mapping_status": "partial eMMC source only"
+    },
+    "cb2": {
+      "controller": "RK3566 SPI1 M1",
+      "sclk": "GPIO3_C3",
+      "miso": "GPIO3_C2",
+      "mosi": "GPIO3_C1",
+      "cs_fb_candidate": "GPIO3_A1 (BSP spi1 reg 1)",
+      "cs_cmd_candidate": "GPIO4_C6 (BSP spi1 reg 0)",
+      "driver": "Separate Rockchip profile; official BSP default disabled; supplied spidev overlays request 1 MHz",
+      "machine_use_enabled": false,
+      "target_build_observed": false,
+      "physical_dual_cs_exchange_observed": false,
+      "loaded_servo_timing_observed": false,
+      "pin_mapping_status": "source-mapped proposal; no custom carrier circuit qualified"
+    }
+  }
+}

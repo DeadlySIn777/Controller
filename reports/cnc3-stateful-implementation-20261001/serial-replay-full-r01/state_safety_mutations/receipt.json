@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "baseline_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-stateful-implementation-20261001\\serial-replay-full-r01\\stateful_motion\\receipt.json",
+  "baseline_receipt_sha256": "e121ba27c5f34f305369215792a7784ae16e3f5c8a0e50bfd2b2bf5ddbe64976",
+  "actual_original_positive_input_hashes": {
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/serial-replay-candidate-r01/cnc3_motion_state.v": "4317ddad0c64fffeadafaee1a35ca74661a26acdace540714b7ffc92e2d171bf",
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/serial-replay-candidate-r01/cnc3_stepgen_runtime.v": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3",
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/serial-replay-candidate-r01/cnc3_rate_admission_serial.v": "209326f95eb8f92f3629d9149147ced49d750eec2edb489552f3e42264e2bc7b",
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/serial-replay-candidate-r01/inputs/workspace/gateware/v3/rtl/cnc3_command_validate.v": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af"
+  },
+  "original_sources_unchanged": true,
+  "controls": [
+    {
+      "name": "unmeasured-selftest-ARM",
+      "compiled_mutation_sha256": "bf267d09e586938a0668d28845fa63d42065412a9d9a3d3e76e13ef272c570d5",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "ARM refuses untested watchdogs",
+      "exit_code": 1,
+      "log_sha256": "9656a29c756222ec56cf784f13af0e2f46b39d62c5cc66f651194fd50325aeec",
+      "log_tail": "FATAL: state.sv:82: ARM refuses untested watchdogs tick11 fault00000000\n       Time: 301000  Scope: tb.check\n"
+    },
+    {
+      "name": "instant-selftest-flag",
+      "compiled_mutation_sha256": "0b5defca0be356a42eb66379418dfa7d8da5f6fbbccf5603127f3c9aa9f78628",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "no instant SELFTEST flag",
+      "exit_code": 1,
+      "log_sha256": "2f3e01b34d5c667611e36de52041e0c1ce7e207b183de1acbe6b28b4c86afb62",
+      "log_tail": "FATAL: state.sv:82: no instant SELFTEST flag tick500015 fault00000000\n       Time: 10000380000  Scope: tb.check\n"
+    },
+    {
+      "name": "immediate-DISARM",
+      "compiled_mutation_sha256": "a9cfafaade13c6e2a9e1b3509db7105957929d6b12b4fd172689011d11df93fc",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "request retained while actual pulse drains",
+      "exit_code": 1,
+      "log_sha256": "d0a7e29e8075bf53a10e30174dfa4281cf5455d82a55dc33f03d375bb84896b5",
+      "log_tail": "FATAL: state.sv:82: request retained while actual pulse drains tick1225706 fault00000000\n       Time: 24514201000  Scope: tb.check\n"
+    },
+    {
+      "name": "retain-fault-continuity",
+      "compiled_mutation_sha256": "22d203b90a80706ce4f5d996866591abf8be70f29c6cf1158a5e996d7241f434",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "fault clears all armed continuity at ZERO rate",
+      "exit_code": 1,
+      "log_sha256": "9aeb8e7f50f274540c3d117dcee224517d4db323f5cc3a7902df63403e9405ea",
+      "log_tail": "FATAL: state.sv:82: fault clears all armed continuity at ZERO rate tick1227378 fault00000004\n       Time: 24547640000  Scope: tb.check\n"
+    },
+    {
+      "name": "ignore-reset-release",
+      "compiled_mutation_sha256": "02c157df797d74e6d9cdbb495e90a975368a7a8ffb9e48fa0ce97b7e7bb936a7",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "missing reset release blocks ARM",
+      "exit_code": 1,
+      "log_sha256": "5b46caffcdaf7e4bf094473b68618d7977b9431803d33238245705053ec7a742",
+      "log_tail": "FATAL: state.sv:82: missing reset release blocks ARM tick1250841 fault00000000\n       Time: 62937501000  Scope: tb.check\n"
+    },
+    {
+      "name": "late-at-one-period",
+      "compiled_mutation_sha256": "f5f69e52ef46676481a41d1056a0a1cdc9e76419fa7b5800bab1bb68b0ebbd15",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "below1.5 period is not late",
+      "exit_code": 1,
+      "log_sha256": "34b2c9a2e0138012b6ad13ab02870cfc059f36d37bb82d72a59fcd0069376a4f",
+      "log_tail": "FATAL: state.sv:82: below1.5 period is not late tick1075690 fault00000000\n       Time: 21513881000  Scope: tb.check\n"
+    },
+    {
+      "name": "lose-OPI-fall-proof",
+      "compiled_mutation_sha256": "a47ad4a81c751c800527fc16098f8a26473b5b7d19f4a5c87b2d1bad42be3a70",
+      "rejected_at_expected_runtime_assertion": true,
+      "expected_assertion": "actual stuck OPI after request drop faults at10us",
+      "exit_code": 1,
+      "log_sha256": "18d6408f6be2e715fbe461233835b1a244017ed2b9f91163b39dcc73047a26b4",
+      "log_tail": "FATAL: state.sv:82: actual stuck OPI after request drop faults at10us tick1251393 fault00000000\n       Time: 62948540000  Scope: tb.check\n"
+    }
+  ],
+  "evidence_type": "actual independently compiled stateful RTL mutations and runtime assertion rejection",
+  "vendor_fit_hardware_safety_qualification": false
+}

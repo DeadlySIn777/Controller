@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "product_revision": "engineering-r0",
+  "board_revision": "full-controller-not-frozen",
+  "manufacturer": "PCBWay",
+  "manufacturing_order_placed": false,
+  "artifacts": [
+    {
+      "id": "full_schematic",
+      "status": "partial-integrated-motion-card-only",
+      "note": "MC r04 has327 fitted parts and source pin parity; compute and full field interfaces are absent."
+    },
+    {
+      "id": "pcb_layout",
+      "status": "partial-motion-card-routing-full-controller-incomplete",
+      "note": "Real editable native rev14 exists with673 copper items and711 required missing joins."
+    },
+    {
+      "id": "fabrication_zip",
+      "status": "blocked-by-incomplete-schematic-routing-and-physical-contract",
+      "note": "No placeholder Gerbers/drills/ZIP generated."
+    },
+    {
+      "id": "fabrication_spec",
+      "status": "blocked-by-incomplete-design-final-stackup-not-qualified",
+      "note": "Six layers/1.6mm are MC layout assumptions, not a final manufacturing stackup."
+    },
+    {
+      "id": "bom",
+      "status": "partial-mc-exact-parts-costing-full-controller-incomplete",
+      "note": "327-part designator BOM exists; procurement gaps and complete motherboard/module/manufacture costs remain."
+    },
+    {
+      "id": "placement",
+      "status": "partial-mc-placement-candidate-not-assembly-cpl",
+      "note": "Native source placement exists; production CPL, mating/clearance and complete board are unfinished."
+    },
+    {
+      "id": "assembly_drawing",
+      "status": "blocked-by-incomplete-board-and-mechanical-contract",
+      "note": "Native review/3D renders are not a final PCBWay assembly drawing."
+    },
+    {
+      "id": "erc",
+      "status": "partial-mc-erc-pass-full-controller-pending",
+      "note": "Strict MC ERC0 with no ignored checks; incomplete circuitry is not made complete by ERC."
+    },
+    {
+      "id": "drc",
+      "status": "partial-mc-drc-fails-unconnected",
+      "note": "Strict MC DRC0 regular violations/no ignored checks,499 capped unconnected items; physical inventory711."
+    },
+    {
+      "id": "electrical_review",
+      "status": "partial-mc-source-and-native-review-only",
+      "note": "Current pin/package/copper reviews retain explicit power/timing/IO/service gaps."
+    },
+    {
+      "id": "fpga_build",
+      "status": "family-mapping-and-functional-simulation-pass-device-fit-and-timing-unproved"
+    },
+    {
+      "id": "software_validation",
+      "status": "engineering-tests-in-progress"
+    },
+    {
+      "id": "bringup_procedure",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_bundle",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_test_scope",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "link_prototype_measurement",
+      "status": "requires-engineering-host-and-fpga-evaluation-board-physical-measurement"
+    },
+    {
+      "id": "pcbway_quote",
+      "status": "not-requested-design-incomplete",
+      "requires": [
+        "assembly_drawing",
+        "bom",
+        "drc",
+        "erc",
+        "fabrication_spec",
+        "fabrication_zip",
+        "full_schematic",
+        "pcb_layout",
+        "placement",
+        "programming_bundle",
+        "programming_test_scope"
+      ],
+      "quantities": [
+        1,
+        10,
+        100,
+        1000
+      ],
+      "quantities_basis": "docs/BUILD_PLAN.md cost gate study quantities; the quantity actually ordered is a user decision",
+      "submission": null
+    },
+    {
+      "id": "hardware_test",
+      "status": "requires-physical-prototype"
+    },
+    {
+      "id": "loaded_realtime_test",
+      "status": "requires-selected-host-and-motion-link"
+    },
+    {
+      "id": "factory_test",
+      "status": "requires-fixture-and-accepted-board"
+    },
+    {
+      "id": "system_integration_test",
+      "status": "ui-display-motion-integration-pending"
+    },
+    {
+      "id": "final_cost",
+      "status": "incomplete-quotes"
+    },
+    {
+      "id": "compliance_review",
+      "status": "requires-final-product-and-intended-markets"
+    }
+  ],
+  "manufacturing_ready": false,
+  "partial_candidate": {
+    "scope": "327-part integrated motion card only; not a complete controller",
+    "source_revision": "motion-card-r0.4-proposed-IS2",
+    "published_native_revision": "20260930-14",
+    "erc_violations": 0,
+    "drc_regular_violations": 0,
+    "drc_pass": false,
+    "drc_reported_unconnected_items": 499,
+    "uncapped_physical_missing_joins": 711,
+    "proposed_outline_mm": [
+      220,
+      100
+    ],
+    "proposed_copper_layers": 6,
+    "proposed_thickness_mm": 1.6,
+    "final_stackup_qualified": false,
+    "evidence": [
+      {
+        "path": "hardware/board_review/revisions/20260930-14/motion-card-route-candidate.kicad_pcb",
+        "sha256": "f7cf30a7bb6951c06136802a9b3f65abb4b9fea9499e7223f829be6d8962acd2"
+      },
+      {
+        "path": "reports/board-completion-20260930/mc-integrated-r04/review.json",
+        "sha256": "2fb03c39db96d983cada967ebc1ae81f2c0f67c053cb26d7ccba6bd1e24fb526"
+      },
+      {
+        "path": "reports/board-completion-20260930/mc-integrated-r04/fresh-native-routing-inventory/review.json",
+        "sha256": "c1af7d93a4bb6862d3e5801c62ce4ac2b2643216ff51ef5900d38da1fabbdb22"
+      }
+    ],
+    "fabrication_outputs": []
+  }
+}

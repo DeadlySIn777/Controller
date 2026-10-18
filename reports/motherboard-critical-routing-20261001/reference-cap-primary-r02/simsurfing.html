@@ -1,0 +1,932 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+	<head>
+		<!-- 		APIの読み込み -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8" />
+		<!-- 積層セラミックコンデンサ -->
+		<meta name="description" content="村田製作所の積層セラミックコンデンサの製品情報、生産情報、特性データ、詳細特性など、さまざまな情報を提供するオンラインソフトウェアです。" />
+		<meta
+			name="keywords"
+			content="村田製作所,SimSurfing,積層セラミックコンデンサ,インピーダンス特性,レジスタンス特性,リアクタンス特性,Q特性,DF-周波数特性,インダクタンス特性,C-周波数特性,S11特性, S21特性, S12特性, S22特性,C-DC bias,DCバイアス特性,C-Temp,Temp rise,リップル発熱特性,C-AC voltage,AC電圧特性,民生用,車載用,温度補償用,高誘電率系,周波数特性,スミスチャート,S-parameter,SPICE Netlist,Tech PDF,DCバイアス,使用温度,静電容量,定格電圧,温度特性,Size Code,T寸法,静電容量許容差,Type"
+		/>
+		<!-- 		スタイルシート -->
+		<link rel="icon" type="favicon.ico" href="./img/favicons/capacitor/favicon.ico" />
+		<link rel="stylesheet" href="./lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" media="screen" />
+		<link rel="stylesheet" href="./muratalib/styles/simsurfing_simvideo.css?md5=86a6bf3b2143d885032c19bd34158005s" />
+		<link rel="stylesheet" href="./lib/jqwidgets/styles/jqx.base.min.css" />
+		<link rel="stylesheet" href="./lib/jqwidgets/styles/jqx.energyblue.min.css" />
+		<link rel="stylesheet" href="./lib/jqwidgets/styles/jqx.classic.min.css" />
+		<link rel="stylesheet" href="./lib/jquery.qtip.min.css" />
+		<link rel="stylesheet" href="./lib/jstree-3.3.12/themes/default/style.min.css" />
+		<link rel="stylesheet" href="./muratalib/styles/style_agree.css?md5=1fb1549c07e6a00974d4c3809658ca08s" />
+		<link rel="stylesheet" href="./muratalib/styles/style.css?md5=14967241946a0beb5bf5b3b9fac56fc3s" />
+		<!-- OneTrust Cookies Consent Notice -->
+		<!-- murata.com に対する OneTrust Cookie 同意通知の始点 -->
+		<script src="./muratalib/js/simsurfing_one_trust_adobe.min.js"></script>
+		<!-- murata.co.jp に対する OneTrust Cookie 同意通知の終点 -->
+		<script data-ot-ignore src="./lib/raphael.min.js"></script>
+		<!-- 		<script src="./lib/jquery-1.11.2.min.js"></script> -->
+		<script data-ot-ignore src="./lib/jquery-3.4.1.min.js"></script>
+		<script data-ot-ignore src="./lib/jstree-3.3.12/jstree.min.js"></script>
+		<script data-ot-ignore src="./lib/jquery.qtip.min.js"></script>
+		<script data-ot-ignore src="./lib/murata-simgraph.min.js?md5=16813ed35a38cb0146fec78929db80b3s"></script>
+		<!-- 		ZIP解凍 -->
+		<script data-ot-ignore src="./lib/Stuk-jszip/dist/jszip.min.js"></script>
+		<script data-ot-ignore src="./lib/Stuk-jszip/dist/jszip-utils.min.js"></script>
+		<!-- 		UI_jQuery -->
+		<script data-ot-ignore src="./lib/jquery-ui-custom.min.js"></script>
+		<!-- 		jqWidgetsライブラリの読み込み -->
+		<script data-ot-ignore src="./lib/jqwidgets/jqwidgets.min.js"></script>
+		<script data-ot-ignore src="./lib/jqwidgets/jqxpopover.min.js"></script>
+		<!-- 		encodingライブラリの読み込み -->
+		<script data-ot-ignore src="./lib/encoding.min.js"></script>
+		<!-- 		SimSurfing機能 -->
+		<script data-ot-ignore src="../simsurfing_data/simsurfing_conf.js?md5=857433f75c563b984e7518979e11f185s"></script>
+		<script data-ot-ignore src="../simsurfing_data/rgear/lib/rgear.min.js?md5=82d4a1c7f9a40935ee75aba37a4d47a8s"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_common.min.js?md5=fb16a55c682ab93638bdbc96ca36ba04s"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_simgraph_custom.min.js?md5=55fa2af75eddd91b43393f6282184180s"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_windows.min.js?md5=84ba7832fec9893f8e0d04d4d3908854s"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_jqw_extend.min.js?md5=19fdac7465a65af4e959e3fdb277d07es"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_graph.min.js?md5=1f3232d10b6bdf43006d3b13cc26bfe6s"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_simvideo.min.js?md5=f20262ce94326689c446106d91b4c17as"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_agree.min.js?md5=acd5450e3296454f0a683874899d177as"></script>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_allsearch.min.js?md5=37f503ca60284104dc86e377c1a13b14s"></script>
+		<script data-ot-ignore src="./muratalib/js/product/simsurfing_mlcc_func.min.js?md5=dce82b9c5a5cb53b52ec16e0c9feddafs"></script>
+		<script data-ot-ignore>
+			simsurfing_languagedata = {};
+			simsurfing_gridId = '#simsurfing_grid';
+			/**
+			初期表示時、データ受け渡しがあった場合に実行
+		*/
+			$(window).resize(function (e) {
+				// リストの大きさを変更
+				updateGridSize(e);
+			});
+			/**
+			初期表示時、CSVからデータ取得
+		*/
+			$(document).ready(function () {
+				//共通初期化処理
+				initialSetting_Common();
+				//各製品カテゴリ毎の初期化
+				initialSetting();
+				//共通初期化処理（クエリーパラメータの処理）とか
+			});
+
+			$(() => {
+				//謝罪文リンクをセットする
+				setupApologiesLink();
+			});
+		</script>
+		<title>SimSurfing</title>
+	</head>
+	<body>
+		<div class="div_header" id="div_header">
+			<!-- ロゴ -->
+			<a id="header_link_logo" href="#" target="" style="text-decoration: none" onclick="moveTopPage()">
+				<img data-ot-ignore class="header_murata_logo" src="img/logo_no_shadow.png" alt="SimSurfing Top" />
+			</a>
+			<!-- リンク選択-->
+			<div id="div_header_top" style="display: inline-block"></div>
+			<!-- 全品番横断検索-->
+			<div id="all_search_outer" class="div_all_search_outer"></div>
+			<!-- APIリンク -->
+			<div id="api-link-product"></div>
+			<!-- 更新日(What's Newから) -->
+			<div id="update_whatnew" class="div_header_update_whatnew"></div>
+			<!-- 言語 -->
+			<div id="select_language" class="div_header_language"></div>
+		</div>
+		<!-- メニューバー -->
+		<table id="table_header" class="table-header">
+			<tr>
+				<td colspan="6" class="td-menubar">
+					<!-- メニューバー -->
+					<ul id="menu_bar" class="menu__first">
+						<!-- 検索/表示 -->
+						<li class="menu__multi">
+							<a href="#" tabindex="-1"><label class="simsurfing_lang_menu_view"></label></a>
+							<ul class="menu__second-level" style="width: 180px">
+								<!-- 検索ON/OFF -->
+								<li id="menu_search_function_onoff">&emsp;<label class="simsurfing_lang_search_function_onoff"></label></li>
+								<!-- 全条件クリア -->
+								<li id="menu_condition_all_clear">&emsp;<label class="simsurfing_lang_condition_all_clear"></label></li>
+								<!-- 製品詳細Windowの表示 -->
+								<li id="menu_open_product_details">&emsp;<label class="simsurfing_lang_menu_view_searchwinpop"></label></li>
+							</ul>
+						</li>
+						<!-- 回路 -->
+						<li class="menu__multi">
+							<a href="#" tabindex="-1"><label class="simsurfing_lang_menu_circuit"></label></a>
+							<ul class="menu__second-level" style="width: 70px">
+								<!-- Series -->
+								<li id="menu_circuit_series" class="menu_circuit" data-value="series">
+									<label id="menu_circuit_select_series">・</label>
+									<label>Series</label>
+								</li>
+								<!-- Shunt(初期は選択不可) -->
+								<li id="menu_circuit_shunt" class="menu_circuit menu_events_none" data-value="shunt">
+									<label id="menu_circuit_select_shunt" class="menu_circuit_unselect">・</label>
+									<label>Shunt</label>
+								</li>
+							</ul>
+						</li>
+						<!-- 特性グラフ -->
+						<li class="menu__multi">
+							<a href="#" tabindex="-1"><label class="simsurfing_lang_menu_chargraph"></label></a>
+							<ul class="menu__second-level" style="width: 190px">
+								<!-- 基本特性 -->
+								<li>
+									<a href="#" class="init-right" tabindex="-1">&emsp;<label class="simsurfing_lang_BasicChara"></label></a>
+									<ul class="menu__third-level" style="width: 120px">
+										<!-- C-DC bias -->
+										<li>
+											<a href="#" class="init-right" tabindex="-1">&emsp;<label>C-DC bias</label></a>
+											<ul class="menu__fourth-level" style="width: 100px">
+												<!--  Capacitance -->
+												<li class="menu_graph" data-value="c_dcbias_capacitance" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>Capacitance</label></a>
+												</li>
+												<!--  Cap Change -->
+												<li class="menu_graph" data-value="c_dcbias_capchange_cap" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>CapChange</label></a>
+												</li>
+											</ul>
+										</li>
+										<!-- C-Temp. -->
+										<li>
+											<a href="#" class="init-right" tabindex="-1">&emsp;<label>C-Temp.</label></a>
+											<ul class="menu__fourth-level" style="width: 100px">
+												<!--  Capacitance -->
+												<li class="menu_graph" data-value="c_temp_capacitance_capchange" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>Capacitance</label></a>
+												</li>
+												<!--  Cap Change -->
+												<li class="menu_graph" data-value="c_temp_capchange_cap" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>CapChange</label></a>
+												</li>
+											</ul>
+										</li>
+										<!-- Temp.rise -->
+										<li id="menu_detail_temp_rise" class="menu_graph" data-value="temp_rise" data-type="xy">&emsp;<label>Temp.rise</label></li>
+										<!-- C-AC Voltage -->
+										<li id="menu_detail_c_acvoltage">
+											<a href="#" class="init-right" tabindex="-1">&emsp;<label>C-AC Voltage</label></a>
+											<ul class="menu__fourth-level" style="width: 100px">
+												<!--  Capacitance -->
+												<li class="menu_graph" data-value="c_acvoltage_capacitance" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>Capacitance</label></a>
+												</li>
+												<!--  Cap Change -->
+												<li class="menu_graph" data-value="c_acvoltage_capchange_cap" data-type="xy" data-tab="dtl">
+													<a href="#" tabindex="-1">&emsp;<label>CapChange</label></a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<!-- 周波数特性 -->
+								<li>
+									<a href="#" class="init-right" tabindex="-1">&emsp;<label class="simsurfing_lang_frequency_characteristic"></label></a>
+									<ul class="menu__third-level" style="width: 40px">
+										<!-- |Z| -->
+										<li class="menu_graph" data-value="z" data-type="xy">&emsp;<label>|Z|</label></li>
+										<!-- R -->
+										<li class="menu_graph" data-value="r" data-type="xy">&emsp;<label>R</label></li>
+										<!-- |X| -->
+										<li class="menu_graph" data-value="x" data-type="xy">&emsp;<label>|X|</label></li>
+										<!-- Q -->
+										<li class="menu_graph" data-value="q" data-type="xy">&emsp;<label>Q</label></li>
+										<!-- DF -->
+										<li class="menu_graph" data-value="df" data-type="xy">&emsp;<label>DF</label></li>
+										<!-- L -->
+										<li class="menu_graph" data-value="l" data-type="xy">&emsp;<label>L</label></li>
+										<!-- C -->
+										<li class="menu_graph" data-value="c" data-type="xy">&emsp;<label>C</label></li>
+									</ul>
+								</li>
+								<!-- S-Parameter -->
+								<li>
+									<a href="#" class="init-right" tabindex="-1">&emsp;<label>S-parameter</label></a>
+									<ul class="menu__third-level" style="width: 70px">
+										<!-- S11 -->
+										<li>
+											<a href="#" class="init-right" tabindex="-1">&emsp;<label>S11</label></a>
+											<ul class="menu__fourth-level" style="width: 140px">
+												<!--  スミスチャート -->
+												<li class="menu_graph" data-value="s11" data-type="smith">
+													<a href="#" tabindex="-1">&emsp;<label class="simsurfing_lang_smithchart"></label></a>
+												</li>
+												<!--  周波数特性 -->
+												<li class="menu_graph" data-value="s11" data-type="xy">
+													<a href="#" tabindex="-1">&emsp;<label class="simsurfing_lang_frequency_characteristic"></label></a>
+												</li>
+											</ul>
+										</li>
+										<!-- S21 -->
+										<li class="menu_graph" data-value="s21" data-type="xy">&emsp;<label>S21</label></li>
+										<!-- S21 -->
+										<li class="menu_graph" data-value="s12" data-type="xy">&emsp;<label>S12</label></li>
+										<!-- S22 -->
+										<li>
+											<a href="#" class="init-right" tabindex="-1">&emsp;<label>S22</label></a>
+											<ul class="menu__fourth-level" style="width: 140px">
+												<!--  スミスチャート -->
+												<li class="menu_graph" data-value="s11" data-type="smith">
+													<a href="#" tabindex="-1">&emsp;<label class="simsurfing_lang_smithchart"></label></a>
+												</li>
+												<!--  周波数特性 -->
+												<li class="menu_graph" data-value="s11" data-type="xy">
+													<a href="#" tabindex="-1">&emsp;<label class="simsurfing_lang_frequency_characteristic"></label></a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<!-- ダウンロード -->
+						<li class="menu__multi">
+							<a href="#" tabindex="-1"><label class="simsurfing_lang_menu_donload"></label></a>
+							<ul class="menu__second-level" style="width: 100px">
+								<!-- Data Export -->
+								<li id="menu_data_export">&emsp;<label>Data Export</label></li>
+								<!-- Data Sheet -->
+								<li id="menu_data_sheet">&emsp;<label class="simsurfing_lang_pp_prod_detail"></label></li>
+								<!-- Netlist -->
+								<li id="menu_net_list">&emsp;<label>SPICE Netlist</label></li>
+								<!-- Sparameter -->
+								<li id="menu_net_Sparameter">&emsp;<label>S-parameter</label></li>
+							</ul>
+						</li>
+						<!-- 測定条件 -->
+						<li id="menu_measure">
+							<a target="_blank" tabindex="-1"><label class="simsurfing_lang_menu_measure"></label></a>
+						</li>
+						<!-- 使い方動画 -->
+						<li id="menu_usage">
+							<label id="usage_video_label" class="simsurfing_lang_menu_usage_video"></label>
+						</li>
+						<!-- ウィンドウ -->
+						<li class="menu__multi">
+							<a href="#" tabindex="-1"><label class="simsurfing_lang_menu_window"></label></a>
+							<ul class="menu__second-level" style="width: 140px">
+								<!-- ウィンドウを全て閉じる -->
+								<li id="menu_window_allclose">&emsp;<label class="simsurfing_lang_menu_window_allclose"></label></li>
+							</ul>
+						</li>
+						<!-- ムラタウェブサイト -->
+						<li id="menu_open_murata_toppage" class="menu__multi">
+							<a href="#" target="_blank" tabindex="-1">&emsp;<label class="simsurfing_lang_menu_open_murata_home"></label></a>
+						</li>
+						<!-- バージョン情報 -->
+						<li id="menu_open_version_window" class="menu__multi">
+							<a href="#" target="" tabindex="-1">&emsp;<label class="simsurfing_lang_menu_help_versioninfo"></label></a>
+						</li>
+						<!-- Site Policy -->
+						<li id="menu_open_site_policy" class="menu__multi">
+							<a href="https://www.murata.com/sitepolicy" target="_blank">Site Policy</a>
+						</li>
+						<!-- Privacy Policy -->
+						<li id="menu_open_privacy_policy" class="menu__multi">
+							<a href="https://www.murata.com/privacy" target="_blank">Privacy Policy</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+			<tr class="tr-header">
+				<td class="td-header-model">
+					<b>&lt;Model&gt;</b>
+					<div id="precise_model" class="graph_model">Precise</div>
+					<div id="simple_model" class="graph_model">Simple</div>
+				</td>
+				<td class="td-header-circuit">
+					<div class="div-header-circuit">
+						<input type="radio" name="circuit_model" value="series" checked="checked" onclick="setMenuCircuit('series')" />Series
+						<img data-ot-ignore src="./img/Series_1.png" />
+					</div>
+					<p class="grayline"></p>
+					<div class="div-header-circuit">
+						<input type="radio" name="circuit_model" value="shunt" disabled="disabled" onclick="setMenuCircuit('shunt')" />Shunt
+						<img data-ot-ignore src="./img/Shunt_1.png" />
+					</div>
+				</td>
+				<td id="td-header-graph" class="td-header-graph">
+					<div id="ui-tab">
+						<!-- DCバイアスと使用温度の設定項目 -->
+						<div class="setting_listinfo">
+							<div id="graph_dcbias" class="setting_value">
+								<div>
+									<label class="simsurfing_lang_DCV"></label>
+								</div>
+								<input id="graph_dcbias_value" onkeydown="return checkNumOnly();" onkeyup="return checkNumberEffectiveDigits(event, 3);" />
+								<label id="graph_dcbias_label"></label>
+								<label id="graph_dcbias_label_changed" class="change_label change_label_postion">Changed!</label>
+							</div>
+							<div id="graph_using_tempture" class="setting_value">
+								<div>
+									<label class="simsurfing_lang_Temp"></label>
+								</div>
+								<input id="graph_using_tempture_value" onkeydown="return checkNumOnly();" onkeyup="return checkNumberEffectiveDigits(event, 0);" />
+								<label id="graph_using_tempture_label"></label>
+								<label id="graph_using_tempture_label_changed" class="change_label change_label_postion">Changed!</label>
+							</div>
+						</div>
+						<ul>
+							<li data-aa-tag-name="basic">
+								<a href="#fragment-1" name="detail"
+									><span><label class="simsurfing_lang_BasicChara"></label></span
+								></a>
+							</li>
+							<li data-aa-tag-name="frequency">
+								<a href="#fragment-2" name="standard"
+									><span><label class="simsurfing_lang_frequency_characteristic"></label></span
+								></a>
+							</li>
+							<li data-aa-tag-name="sparameter">
+								<a href="#fragment-3" name="sparameter"
+									><span><label class="simsurfing_lang_Spara"></label></span
+								></a>
+							</li>
+							<li data-aa-tag-name="usage">
+								<a href="#fragment-4" name="attention"
+									><span><img data-ot-ignore class="simsurfing_caution_img" src="./img/alert20.png" /><label class="simsurfing_lang_caution"></label></span
+								></a>
+							</li>
+							<li data-aa-tag-name="custom">
+								<a id="li_fragment-5" href="#fragment-5" name="custom"
+									><span><label>Custom</label></span></a
+								>
+							</li>
+						</ul>
+						<!-- 重ね書き機能 -->
+						<div id="fragment-1">
+							<div class="detail_button_row">
+								<div class="detail_button_panel1">
+									<div>
+										<div style="float: left">Temp.[degC]</div>
+										<div style="float: right">
+											<label id="detail_cDCbias_temp_deg_label_changed" class="change_label">*</label>
+											<input id="detail_cDCbias_temp_deg" type="text" name="cDCbias_temp_deg" value="" onkeydown="return checkNumOnly();" />
+										</div>
+									</div>
+									<div style="clear: right">
+										<div style="float: left">AC[Vrms]</div>
+										<div id="detail_cDCbias_ac_vrms" style="float: right"></div>
+									</div>
+									<div style="clear: right">
+										<input id="chara_type_c-DC_bias" type="button" name="chara_type" value="C-DC bias" onclick="pullDownMenu(this, 'button_c-dc')" />
+									</div>
+								</div>
+
+								<div class="detail_button_panel1">
+									<div>
+										<div style="float: left">DC[V]</div>
+										<div style="float: right">
+											<label id="detail_ctemp_dc_bias_label_changed" class="change_label">*</label>
+											<input id="detail_ctemp_dc_bias" style="float: right" type="text" name="ctemp_dc_bias" value="" onkeydown="return checkNumOnly();" />
+										</div>
+									</div>
+									<div style="clear: right">
+										<div style="float: left">AC[Vrms]</div>
+										<div id="detail_ctemp_ac_vrms" style="float: right" class="select-ctemp_ac_vrms"></div>
+									</div>
+									<div style="clear: right">
+										<input id="chara_type_C_Temp" type="button" name="chara_type" value="C-Temp." onclick="pullDownMenu(this, 'button_c-temp')" />
+									</div>
+								</div>
+
+								<div class="detail_button_panel2">
+									<input id="chara_type_Temprise" type="button" name="chara_type" value="Temp. rise" onclick="makeDispGraph('temp_rise', 'xy', 'dtl')" />
+								</div>
+
+								<div class="detail_button_panel2">
+									<input id="chara_type_C_AC_Voltage" type="button" name="chara_type" value="C-AC voltage" onclick="pullDownMenu(this, 'button_c-ac')" />
+								</div>
+							</div>
+						</div>
+						<div id="fragment-2" class="mlcc-freq-chara">
+							<input type="button" name="chara_type" value="|Ｚ|" onclick="makeDispGraph('z', 'xy')" />
+							<input type="button" name="chara_type" value="Ｒ" onclick="makeDispGraph('r', 'xy')" />
+							<input type="button" name="chara_type" value="|Ｘ|" onclick="makeDispGraph('x', 'xy')" />
+							<input type="button" name="chara_type" value="Ｑ" onclick="makeDispGraph('q', 'xy')" />
+							<div class="freq-chara-break"></div>
+							<input type="button" name="chara_type" value="ＤＦ" onclick="makeDispGraph('df', 'xy')" />
+							<input type="button" name="chara_type" value="Ｌ" onclick="makeDispGraph('l', 'xy')" />
+							<input type="button" name="chara_type" value="Ｃ" onclick="makeDispGraph('c', 'xy')" />
+						</div>
+						<div id="fragment-3">
+							<br /><label>&nbsp;</label>
+							<input id="chara_type_s11" type="button" name="chara_type" value="S11" onclick="pullDownMenu(this, 'button_s11')" />
+							<input id="chara_type_s21" type="button" name="chara_type" value="S21" onclick="makeDispGraph('s21', 'xy')" />
+							<input id="chara_type_s12" type="button" name="chara_type" value="S12" onclick="makeDispGraph('s12', 'xy')" />
+							<input id="chara_type_s22" type="button" name="chara_type" value="S22" onclick="pullDownMenu(this, 'button_s22')" />
+						</div>
+						<div id="fragment-4"></div>
+						<div id="fragment-5">
+							<table>
+								<tr>
+									<td class="custom_tab_table">
+										<div class="custom_tab_title">
+											<label>Parts Number Filter</label>
+										</div>
+										<div>
+											<div class="custom_tab_main">
+												<button id="btn_partnumber_file_read" class="custom_tab_btn" value="" tabindex="-1">
+													<span>Parts Number List Import</span>
+													<br />
+													<img data-ot-ignore src="./img/normal_icon.png" />
+												</button>
+												<input type="file" id="file_open_partnumber" class="disp_none" />
+												<br />
+											</div>
+											<div class="custom_tab_main">
+												<button id="csv_output_custom" class="custom_tab_btn" value="sam" tabindex="-1">
+													<span>Customized CSV Export</span>
+													<br />
+													<img data-ot-ignore src="./img/csv.png" />
+												</button>
+												<input type="file" id="file_custom_csv" class="disp_none" />
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div id="initial_what_news_panel" style="white-space: nowrap">
+						&emsp;&emsp;<img data-ot-ignore id="img_whatnews" src="./img/whatnew.png" />
+						<div id="initial_what_news_panel_main">
+							<ul class="what_new_main_ul"></ul>
+						</div>
+					</div>
+				</td>
+				<td class="td-header-other" valign="top">
+					<button id="header_netlist" class="" name="header_netlist" onclick="CheckModelMlcc(this, 'NetList')" disabled="disabled">
+						SPICE Netlist
+						<span class="icon_btn_download"></span>
+					</button>
+					<button id="header_sparameter" class="" name="header_sparameter" onclick="CheckModelMlcc(this, 'Sparameter')" disabled="disabled">
+						S-parameter
+						<span class="icon_btn_download"></span>
+					</button>
+					<br />
+					<button id="header_techpdf" class="" value="ec_data" name="header_techpdf" onclick="pullDownMenu(this, 'button_multipdf_select_partnum')" disabled="disabled">
+						EC-DATA
+						<span class="icon_btn_download"></span>
+					</button>
+				</td>
+				<td class="td-header-other2" valign="top">
+					<button
+						id="datasheet_btn"
+						class=""
+						name="header_datasheet"
+						value="pp_prod_detail"
+						onclick="clickDataSheet(defSimSurfing.LastSelectedPartnumberId, defSimSurfing.Category)"
+						disabled="disabled"
+					>
+						<span class="icon_btn_link_white"></span>
+					</button>
+					<br />
+					<button id="stock_check_btn" class="disp_none" name="header_techpdf" value="pp_stock_check">
+						<span class="icon_btn_link_white"></span>
+					</button>
+					<br />
+					<button id="contact_btn" class="disp_none" name="header_datasheet" value="pp_contact">
+						<span class="icon_btn_link_white"></span>
+					</button>
+				</td>
+				<td class="td-header-other3">
+					<div>
+						<a id="banner_link" class="banner_link" target="_blank" href="./cst.html" style="cursor: pointer" data-banner-target="cst" data-tooltip-lang-id="description_mmcsv">
+							<img data-ot-ignore id="cst_banner_link" src="" />
+						</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!-- ボタン押下時の項目表示 -->
+		<div id="submenu" style="display: block"></div>
+		<div id="submenu_second" style="display: block"></div>
+
+		<!-- リスト表示部分 -->
+		<div id="listgroup">
+			<table>
+				<tr>
+					<td class="td-listgroup td-listgroup-function">
+						<div class="div-listgroup">
+							<div class="flex">
+								<!-- 検索機能 ON/OFF -->
+								<div id="search_function_check"><label class="simsurfing_lang_search_function_onoff"></label></div>
+								<!-- 単位指定 -->
+								<div id="unitset_check"><label class="simsurfing_lang_SubUnitSettings"></label></div>
+								&emsp;
+								<!-- 重ね書き機能 -->
+								<div id="graph_overwrite">
+									<label class="simsurfing_lang_graph_overwrite"></label>
+								</div>
+								<!-- CSVダウンロード -->
+								<!-- 							<input id = "list_csvdownload" type="button" value=""/> -->
+								<button id="list_csvdownload" value="SaveListData">
+									<span class="icon_btn_download8"></span>
+								</button>
+								<!-- 表示項目の選択 -->
+								<div id="list_display_item">
+									<label class="simsurfing_lang_display_setting_title"></label>
+								</div>
+							</div>
+							<!-- 選定品番 -->
+							<div class="div-select-partnumber">
+								<b><label class="simsurfing_lang_Select_PN"></label><label id="last_selected_partnumber"></label></b>
+							</div>
+							<!-- 表示品番件数 -->
+							<div class="div-partnumber-num">
+								<b>
+									<label class="simsurfing_lang_PNnum"></label>
+									<label id="disp_partnumber_num"></label>
+									<label class="simsurfing_lang_num"></label>
+								</b>
+							</div>
+						</div>
+					</td>
+					<!-- 第一優先検索 -->
+					<td class="d-none td-listgroup td-listgroup-check-search td-listgroup-check-1">
+						<div style="display: inline">
+							<div id="first_search_general"><label class="simsurfing_lang_consumer_use"></label></div>
+							<div id="first_search_automotive"><label class="simsurfing_lang_automotive_use"></label></div>
+						</div>
+					</td>
+					<td class="td-listgroup td-listgroup-check-search td-listgroup-check-2">
+						<div style="display: inline">
+							<div id="first_search_eia"><label class="simsurfing_lang_EIA"></label></div>
+							<div id="first_search_jis"><label class="simsurfing_lang_JIS"></label></div>
+						</div>
+					</td>
+					<td class="td-listgroup td-listgroup-check-search td-listgroup-check-3">
+						<div style="display: inline-block">
+							<div id="first_search_temp_compention"><label class="simsurfing_lang_temperature_compensating_use"></label></div>
+							<div id="first_search_high_permittivity"><label class="simsurfing_lang_high_permittivity"></label></div>
+						</div>
+					</td>
+					<!-- 					<td class = "td-listgroup td-listgroup-check-search td-listgroup-check-4"> -->
+					<!-- 						<div> -->
+					<!-- 							<div style = "float:left"> -->
+					<!-- 					            <div id='first_search_general_purpose'><label class = "simsurfing_lang_general-purpose-product"></label></div> -->
+					<!-- 					            <div id='first_search_low_esl'><label  class = "simsurfing_lang_low_esl"></label></div> -->
+					<!-- 				            </div> -->
+					<!-- 				            <div style = "float:left"> -->
+					<!-- 					            <div id='first_search_low_loss'><label class = "simsurfing_lang_hi-q"></label></div> -->
+					<!-- 					            <div id='first_search_middle_high_pressure'><label class = "simsurfing_lang_high-voltage"></label></div> -->
+					<!-- 					        </div> -->
+					<!-- 						</div> -->
+					<!-- 					</td> -->
+					<!-- SimSearchイメージ -->
+					<td class="td-listgroup td-listgroup-check-search">
+						<div class="div_simsearch_btn">
+							<button id="simsearch_btn" class="simsearch_btn" name="" value="adv_sch_btn">
+								<span class="icon_btn_link_simsearch"></span>
+							</button>
+						</div>
+						<div class="simsearch_btn_explanatin">
+							<label class="simsurfing_lang_reverse_search_attention"> </label>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div id="jqxFilterPanel">
+				<!-- 品番 -->
+				<div id="filterpanel_part_number" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_part_number"></label>
+					</div>
+					<div id="" class="simsurfing_lang_filterbox_part_number">&nbsp;<label class="simsurfing_lang_search_word_partnumber"></label><br /></div>
+					&nbsp;&nbsp;<input id="filter_part_number_input" type="text" name="search_part_number" value="" /><br />
+					&nbsp;&nbsp;<input id="init_search_condition" type="button" value="" />
+				</div>
+				<!-- 適用用途 -->
+				<div id="filterpanel_spec_application" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_spec_application"></label>
+						<a href="https://www.murata.com/support/productsearch/application" target="_blank">
+							<img data-ot-ignore id="specApplication_help" src="./img/help_on.png" style="position: relative; top: -3px; width: 1.5em; height: 1.5em" data-tooltip-maked="false" />
+						</a>
+					</div>
+					<div id="filter_spec_application_checklist" class="filterbox" datafield="spec_application"></div>
+				</div>
+				<!-- 供給ステータス -->
+				<div id="filterpanel_supplystatus" class="filter_small_panel" data-datafield="supplystatus_sort" data-filtername="supplystatus">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_supplystatus"></label>
+						<img
+							data-ot-ignore
+							id="supply_status_help"
+							src="./img/help_on.png"
+							style="position: relative; top: -3px; width: 1.5em; height: 1.5em"
+							data-tooltip-maked="false"
+							onmouseover="supplyStatusHelp()"
+						/>
+					</div>
+					<div id="filter_supplystatus_checklist" class="filterbox" datafield="supplystatus"></div>
+				</div>
+				<!-- 実効静電容量(逆引き) -->
+				<div id="filterpanel_effective_capacitance" class="filter_small_panel filterpanel_none filterpanel_effective_capacitance">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_effective_cap"></label>
+					</div>
+					<div id="filter_effective_capacitance" datafield="effective_capacitance">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_effective_capacitance_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_effective_capacitance_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_effective_capacitance_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+						</div>
+					</div>
+				</div>
+				<!-- インピーダンス(逆引き) -->
+				<div id="filterpanel_impedance" class="filter_small_panel filterpanel_none">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_impedance"></label>
+					</div>
+					<div id="filter_impedance" datafield="impedance">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_impedance_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_impedance_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_impedance_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+						</div>
+					</div>
+				</div>
+				<!-- ESR(逆引き) -->
+				<div id="filterpanel_esr" class="filter_small_panel filterpanel_none">
+					<div class="filterbox_title">
+						<label>ESR</label>
+					</div>
+					<div id="filter_esr" datafield="esr">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_esr_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_esr_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_esr_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+						</div>
+					</div>
+				</div>
+				<!-- ESL(逆引き) -->
+				<div id="filterpanel_esl" class="filter_small_panel filterpanel_none">
+					<div class="filterbox_title">
+						<label>ESL</label>
+					</div>
+					<div id="filter_esl" datafield="esl">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_esl_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_esl_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_esl_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+						</div>
+					</div>
+				</div>
+				<!-- SRF(逆引き) -->
+				<div id="filterpanel_srf" class="filter_small_panel filterpanel_none">
+					<div class="filterbox_title">
+						<label>SRF[MHz]</label>
+					</div>
+					<div id="filter_srf" datafield="srf">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_srf_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+							<label>MHz</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_srf_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+							<label>MHz</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_srf_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+							<label>MHz</label>
+						</div>
+					</div>
+				</div>
+				<!-- リップル発熱(逆引き) -->
+				<div id="filterpanel_temprise" class="filter_small_panel filterpanel_none">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_temprise"></label>
+					</div>
+					<div id="filter_temprise_checklist" class="filterbox" datafield="temprise"></div>
+				</div>
+				<!-- 静電容量 -->
+				<div id="filterpanel_capacitance" class="filter_small_panel" data-datafield="capacitance_sort">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_capacitance_pu"></label>
+					</div>
+					<div id="filter_capacitance" datafield="capacitance_sort">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_capacitance_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+							<div id="filter_capacitance_greater_combo" class="filter_capacitance_combo"></div>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_capacitance_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+							<div id="filter_capacitance_equal_combo" class="filter_capacitance_combo"></div>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_capacitance_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+							<div id="filter_capacitance_less_combo" class="filter_capacitance_combo"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 定格電圧(DC) -->
+				<div id="filterpanel_rvol" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_rvol_dc"></label>
+					</div>
+					<div id="filter_rvol" datafield="rvol">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_rvol_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+							<label>V</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_rvol_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+							<label>V</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_rvol_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+							<label>V</label>
+						</div>
+					</div>
+				</div>
+				<!-- 定格電圧(AC) -->
+				<div id="filterpanel_rvol_ac_list" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_rvol_ac"></label>
+					</div>
+					<div id="filter_rvol_ac_list_checklist" class="filterbox" datafield="rvol_ac_list"></div>
+				</div>
+				<!-- 最高使用温度 -->
+				<div id="filterpanel_opetemp-max" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_MaxOperatingTemp"></label>
+					</div>
+					<div id="filter_opetemp-max" datafield="opetemp-max">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_opetemp-max_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+							<label>℃</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_opetemp-max_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+							<label>℃</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_opetemp-max_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+							<label>℃</label>
+						</div>
+					</div>
+				</div>
+				<!-- 温度特性 -->
+				<div id="filterpanel_tcc" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_tempchar"></label>
+					</div>
+					<div id="filter_tcc_checklist" class="filterbox" datafield="tcc"></div>
+				</div>
+				<!-- L×W寸法(チップサイズコード) -->
+				<div id="filterpanel_LWSize_mm_inch" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_chip_size_code"></label>
+					</div>
+					<div id="filter_LWSize_mm_inch_checklist" class="filterbox" datafield="LWSize_mm_inch"></div>
+				</div>
+				<!-- T寸法 -->
+				<div id="filterpanel_size_thickness_max" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_size_thickness_max"></label>
+					</div>
+					<div id="filter_size_thickness_max" datafield="size_thickness_max">
+						<div class="filter_input">
+							<div class="filter_symbol">≦</div>
+							<input id="filter_size_thickness_max_greater_input" type="text" name="greater" onkeydown="return checkNumOnly();" />
+							<label class="filter_unit">mm</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">=</div>
+							<input id="filter_size_thickness_max_equal_input" type="text" name="equal" onkeydown="return checkNumOnly();" />
+							<label class="filter_unit">mm</label>
+						</div>
+						<div class="filter_input">
+							<div class="filter_symbol">≧</div>
+							<input id="filter_size_thickness_max_less_input" type="text" name="less" onkeydown="return checkNumOnly();" />
+							<label class="filter_unit">mm</label>
+						</div>
+					</div>
+				</div>
+				<!-- 許容差 -->
+				<div id="filterpanel_tolerance" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_tolerance"></label>
+					</div>
+					<div id="filter_tolerance_checklist" class="filterbox" datafield="tolerance"></div>
+				</div>
+				<!-- Type -->
+				<div id="filterpanel_Type" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_type"></label>
+					</div>
+					<div id="filter_Type_checklist" class="filterbox" datafield="Type"></div>
+				</div>
+				<!-- Caution -->
+				<div id="filterpanel_caution" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_caution"></label>
+						<a
+							style="margin: 0px; width: 18px"
+							onclick="event.stopPropagation()"
+							target="_blank"
+							href="https://www.murata.com/products/capacitor/ceramiccapacitor/help/caution?intcid5=com_xxx_xxx_cmn_hd_xxx"
+						>
+							<img data-ot-ignore id="supply_status_help" src="./img/help_on.png" style="position: relative; top: -3px; width: 1.5em; height: 1.5em" data-tooltip-maked="false" />
+						</a>
+					</div>
+					<div id="filter_caution_checklist" class="filterbox" datafield="caution"></div>
+				</div>
+				<!-- file_information -->
+				<div id="filterpanel_file_information" class="filter_small_panel">
+					<div class="filterbox_title">
+						<label class="simsurfing_lang_pp_file_information"></label>
+						<img
+							data-ot-ignore
+							id="file_icon_help"
+							src="./img/help_on.png"
+							style="position: relative; top: -3px; left: 1px; width: 1.5em; height: 1.5em"
+							data-tooltip-maked="false"
+							onmouseover="fileIconHelp()"
+						/>
+					</div>
+					<div id="filter_file_information_checklist" class="filterbox" datafield="file_information"></div>
+				</div>
+				<!-- フィルタ展開ボタンのテンプレート IEがtemplateタグ非対応のため非表示divで代替 スクロールバーが発生するパネルにこの要素のクローンを動的に追加 -->
+				<div id="template_btn_expand" class="disp_none">
+					<!-- 展開ボタン -->
+					<label class="btn_expand" style="position: relative; width: 100%; height: 12px">
+						<div>
+							<input type="checkbox" />
+							<img data-ot-ignore class="img_expand" src="./img/triangle-16.png" alt="expand" />
+						</div>
+					</label>
+				</div>
+			</div>
+			<!-- 単位指定(空) -->
+			<div id="jqxUnitsetPanel">
+				<div id="change_capacitance_list" style="position: relative; left: 450px"></div>
+			</div>
+			<!-- リスト -->
+			<div id="simsurfing_grid"></div>
+		</div>
+		<!-- 逆引き用ウィンドウ -->
+		<div id="simsurfing_reverse_window"></div>
+		<!-- WaitingDailogウィンドウ -->
+		<div id="simsurfing_loader"></div>
+		<!-- 画面フッター項目(小売用) -->
+		<div id="footer_floating"></div>
+		<script data-ot-ignore src="./muratalib/js/simsurfing_marketo.min.js?md5=0f6412377b6ae63db582e98b0213ce54s"></script>
+	</body>
+	<!-- AAタグ呼出し -->
+	<script data-ot-ignore src="./muratalib/js/simsurfing_aalog.min.js?md5=cd95535c8a70faaca5dc9f51d965782as"></script>
+	<script>
+		if (typeof _satellite != 'undefined') {
+			_satellite.pageBottom();
+		}
+	</script>
+</html>

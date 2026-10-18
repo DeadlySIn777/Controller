@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "scope": "Independent read-only exact-source review of two frozen report-local diagnostic RTL files. No simulation rerun, vendor fit, real target/board loaded timing, endpoint completion or authority qualification.",
+  "input_sha256": {
+    "reports\\cnc3-iol1-acquisition-20261001\\diagnostic-replay-candidate-r01\\cnc_iol1_acquisition_master.v": "dca65758fdb80761a84b61bcdd968458caf537b64c13169e032ca00367f11512",
+    "reports\\cnc3-iol1-acquisition-20261001\\diagnostic-replay-candidate-r01\\cnc_iol1_diagnostic_acquisition.v": "73f0b8180dfe6dfe55ffd94bb2fafd03a861d3f171ce8b72253f3ea246d80a1f",
+    "reports\\cnc3-iol1-acquisition-20261001\\diagnostic-replay-full-r01\\report.json": "8b98a2f4012cf49233a06b689836a9fe108995c120748ed7c8fe27c7003834eb",
+    "reports\\cnc3-iol1-acquisition-20261001\\diagnostic-replay-candidate-r01\\bundle-manifest.json": "0fd8293650523f2080f38845ba8b413838032134423d8718059b99a5219c9133"
+  },
+  "reviewed_source_sha256": [
+    "dca65758fdb80761a84b61bcdd968458caf537b64c13169e032ca00367f11512",
+    "73f0b8180dfe6dfe55ffd94bb2fafd03a861d3f171ce8b72253f3ea246d80a1f"
+  ],
+  "findings": [
+    {
+      "topic": "Read-only authority and cold state",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "Transmitted command payload stays zero with initial SYNC only; commercial_active/factory_identity_verified/analog_valid remain hard false. Reset invalidates samples. Diagnostic accepted progress cannot authorize outputs or claim factory identity."
+    },
+    {
+      "topic": "Exact supported header",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "Returned byte3 compares exact expected hardware-major0 plus slot. This explicitly supports the archived read-only diagnostic target profile; upper nibble is hardware major, not universally reserved. Other majors cannot obtain accepted diagnostic progress."
+    },
+    {
+      "topic": "Previous-command sequence/CRC/state binding",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "CRC32C is computed from first36 response bytes; exact class/epoch/previous-command sequence and reset/fault/power/state/zero-output observations gate accepted. Completed synced polls advance bookkeeping even on rejected response, without advancing accepted progress. Sequence rollover skips zero."
+    },
+    {
+      "topic": "Shared response wire sampling",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "After HOLD and CHECK, accepted/frame_seen/header_crc_good pulse with stable rx_shift. The provider samples that tuple on the next edge before START clears the next response; rejected frames do not overwrite last_valid_realtime."
+    },
+    {
+      "topic": "Residence and age",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "One50MHz microsecond divider increments per-lane saturating16-bit residency; previousCS release residency plus1us is latched.17-bit reported-age sum saturates, first reply cannot qualify, and exact configured250..440us limits gate valid. Samples continue aging through bad CRCs; trusted invalid health clears immediately; third failure latches. No saturation rollover creates fresh data."
+    },
+    {
+      "topic": "Re-enable and qualification boundary",
+      "result": "PASS_SOURCE_INSPECTION",
+      "evidence": "Disabling an already synced port latches the master fault, so re-enable alone cannot reuse a running session. INIT readiness does not create valid observations. Factory/ACTIVE/analog providers remain unavailable rather than inferred from diagnostic link success."
+    }
+  ],
+  "actionable_findings": [],
+  "frozen_peer_simulation_evidence": "reports\\cnc3-iol1-acquisition-20261001\\diagnostic-replay-full-r01\\report.json",
+  "live_Source26_Source27_or_shared_files_changed": false,
+  "commercial_ACTIVE_factory_identity_or_analog_valid_qualified": false,
+  "physical_qualification": false,
+  "manufacturing_ready": false
+}

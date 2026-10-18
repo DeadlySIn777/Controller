@@ -1,0 +1,5 @@
+read_verilog -formal -sv comparator-miter.v
+prep -top cmp_miter -flatten
+opt
+chformal -lower
+sat -prove-asserts -set-def-inputs -verify

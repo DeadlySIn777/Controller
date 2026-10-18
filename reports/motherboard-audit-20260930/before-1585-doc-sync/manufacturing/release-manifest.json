@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "product_revision": "engineering-r0",
+  "board_revision": "full-controller-not-frozen",
+  "manufacturer": "PCBWay",
+  "manufacturing_order_placed": false,
+  "artifacts": [
+    {
+      "id": "full_schematic",
+      "status": "partial-980-motherboard-source-required-circuits-incomplete",
+      "note": "The reconciled electrical source has **980 physical footprints: 960 purchased fitted parts, 18 bare PCB test pads and two DNP footprints**, across twelve source blocks. It includes all twelve motor interfaces, four ABZ receiving paths, 24 DI, 16 smart DO, power-health and actual I/O acquisition/control. Native integrated ERC is **zero errors, 94 warnings, no ignored checks**; 92 isolated-pin labels and two ground-name warnings remain explicitly unresolved. Independent native pin/MPN/footprint and bounded original-pin/topology checks pass, with **19 integration tests passed**. The 100 I/O-control footprints are not yet populated on the published 880-part PCB."
+    },
+    {
+      "id": "pcb_layout",
+      "status": "partial-880-motherboard-routing-full-controller-incomplete",
+      "note": "Published native CAD **20260930-20** contains the frozen **880-footprint / 878 fitted** snapshot, all source-backed. It preserves the original 327 footprints and all **1,907 track/via items and five filled zones**. Independent uncapped connectivity finds **1,637 missing joins**, 81 of 637 multi-pad nets fully joined, 556 incomplete, 3,317 numbered copper pads, 120 native NC pads and no orphan copper. Native DRC reports **zero regular violations, no ignored checks, 499 capped unconnected items**; this is a failing routing result. The **460 \u00d7 340 mm, six-layer, 1.6 mm** outline remains provisional; existing planes occupy the retained core region rather than completing the field/whole-board distribution."
+    },
+    {
+      "id": "fabrication_zip",
+      "status": "blocked-by-incomplete-schematic-routing-and-physical-contract",
+      "note": "No placeholder Gerbers/drills/ZIP generated."
+    },
+    {
+      "id": "fabrication_spec",
+      "status": "blocked-by-incomplete-design-final-stackup-not-qualified",
+      "note": "Six layers/1.6mm are MC layout assumptions, not a final manufacturing stackup."
+    },
+    {
+      "id": "bom",
+      "status": "partial-980-source-cost-required-circuits-and-prices-incomplete",
+      "note": "The frozen **980-part source cost snapshot** prices 60 MPNs and leaves 34 unpriced (185 fitted pieces per board). Known-priced consumed component value per board at **1/10/100 units is US$379.67/$314.26/$280.60**, excluding unpriced parts, missing circuits, PCB/assembly/test and purchased compute/ESP/storage/screens. Catalogue cash includes MOQ excess and is not a stock-covered purchasing basket. Every complete manufacture/controller/package total remains null. Bare copper test pads have no purchased part or assembly placement."
+    },
+    {
+      "id": "placement",
+      "status": "partial-880-source-native-placement-not-assembly-cpl",
+      "note": "Required additional circuits and modules/terminals, mating/clearance and production CPL are unfinished."
+    },
+    {
+      "id": "assembly_drawing",
+      "status": "blocked-by-incomplete-board-and-mechanical-contract",
+      "note": "Native review/3D renders are not a final PCBWay assembly drawing."
+    },
+    {
+      "id": "erc",
+      "status": "partial-980-erc-zero-errors-94-warnings-full-controller-pending",
+      "note": "Zero errors, 94 warnings, ignored_checks=[]; circuitry incomplete; warnings remain documented, not suppressed."
+    },
+    {
+      "id": "drc",
+      "status": "partial-880-drc-fails-connectivity",
+      "note": "Zero regular violations/ignored checks,499 capped unconnected items; independent missing joins1637."
+    },
+    {
+      "id": "electrical_review",
+      "status": "partial-motherboard-source-native-and-topology-review",
+      "note": "Original327-pin/copper retention and64 bounded FPGA promotions; actual watchdog-clear-input repair. Power, timing, full I/O and mechanics remain open."
+    },
+    {
+      "id": "fpga_build",
+      "status": "family-mapping-and-functional-simulation-pass-device-fit-and-timing-unproved"
+    },
+    {
+      "id": "software_validation",
+      "status": "engineering-tests-in-progress"
+    },
+    {
+      "id": "bringup_procedure",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_bundle",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_test_scope",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "link_prototype_measurement",
+      "status": "requires-engineering-host-and-fpga-evaluation-board-physical-measurement"
+    },
+    {
+      "id": "pcbway_quote",
+      "status": "not-requested-design-incomplete",
+      "requires": [
+        "assembly_drawing",
+        "bom",
+        "drc",
+        "erc",
+        "fabrication_spec",
+        "fabrication_zip",
+        "full_schematic",
+        "pcb_layout",
+        "placement",
+        "programming_bundle",
+        "programming_test_scope"
+      ],
+      "quantities": [
+        1,
+        10,
+        100,
+        1000
+      ],
+      "quantities_basis": "docs/BUILD_PLAN.md cost gate study quantities; the quantity actually ordered is a user decision",
+      "submission": null
+    },
+    {
+      "id": "hardware_test",
+      "status": "requires-physical-prototype"
+    },
+    {
+      "id": "loaded_realtime_test",
+      "status": "requires-selected-host-and-motion-link"
+    },
+    {
+      "id": "factory_test",
+      "status": "requires-fixture-and-accepted-board"
+    },
+    {
+      "id": "system_integration_test",
+      "status": "ui-display-motion-integration-pending"
+    },
+    {
+      "id": "final_cost",
+      "status": "incomplete-quotes"
+    },
+    {
+      "id": "compliance_review",
+      "status": "requires-final-product-and-intended-markets"
+    }
+  ],
+  "manufacturing_ready": false,
+  "partial_candidate": {
+    "scope": "880-source-footprint native PCB; newer980 electrical source; required circuits unfinished",
+    "source_revision": "motherboard-r0.2-IS2-980-source",
+    "published_native_revision": "20260930-20",
+    "electrical_source_footprints": 980,
+    "native_pcb_footprints": 880,
+    "purchased_fitted_source_parts": 960,
+    "bare_test_pad_footprints": 18,
+    "source_erc_errors": 0,
+    "source_erc_warnings": 94,
+    "drc_regular_violations": 0,
+    "drc_pass": false,
+    "drc_reported_unconnected_items": 499,
+    "uncapped_physical_missing_joins": 1637,
+    "proposed_outline_mm": [
+      460,
+      340
+    ],
+    "proposed_copper_layers": 6,
+    "proposed_thickness_mm": 1.6,
+    "final_stackup_qualified": false,
+    "evidence": [
+      {
+        "path": "hardware/board_review/revisions/20260930-20/motherboard-populated-candidate.kicad_pcb",
+        "sha256": "b4758c4d33e964fd6c3385304d27ce47005ad628c2941efd4f10888e5c01f1f3"
+      },
+      {
+        "path": "hardware/board_review/revisions/20260930-20/publication-connectivity/review.json",
+        "sha256": "34c224b0282c8be7b1c2231a14cb6cf5b3c81a459a1661bdb016f5695ff71cdf"
+      }
+    ],
+    "fabrication_outputs": []
+  }
+}

@@ -1,0 +1,1936 @@
+AM26LV32E Low-Voltage High-Speed Quadruple Differential Line Receiver
+With ±15-KV IEC ESD Protection
+1 Features
+•
+Meets or exceeds standard TIA/EIA-422-B and 
+ITU recommendation V.11
+•
+Operates from a single 3.3-V power supply
+•
+Switching rates up to 32 MHz
+•
+ESD Protection for RS422 bus pins
+(See ESD Ratings)
+•
+Low power dissipation: 27 mW typical
+•
+Open circuit fail-safe
+•
+±7-V Common-mode input voltage range with 
+±200-mV sensitivity
+•
+Accepts 5-V logic inputs with 3.3-V supply (enable 
+inputs)
+•
+Input hysteresis: 35 mV typical
+•
+Pin-to-pin compatible with AM26C32, AM26LS32
+•
+Ioff Supports partial-power-down mode operation
+2 Applications
+•
+High-reliability automotive applications
+•
+Configuration control and print support
+•
+ATM and cash counters
+•
+Smart grid
+•
+AC and servo motor drives
+3 Description
+The AM26LV32E device consists of quadruple 
+differential line receivers with 3-state outputs. This 
+device is designed to meet TIA/EIA-422-B and ITU 
+recommendation V.11 drivers with reduced supply 
+voltage. The device is optimized for balanced bus 
+transmission at switching rates up to 32 MHz. The 
+3-state outputs permit connection directly to a bus-
+organized system. The AM26LV32E has an internal 
+fail-safe circuitry that prevents the device from putting 
+an unknown voltage signal at the receiver outputs. 
+In the open fail-safe, a high state is produced at 
+the respective output. This device is supported for 
+partial-power-down applications using Ioff. Ioff circuitry 
+disables the outputs, preventing damaging current 
+back-flow through the device when it is powered 
+down.
+Package Information
+PART NUMBER
+PACKAGE(1)
+PACKAGE SIZE(2)
+AM26LV32E
+SO (16)
+10.2 mm × 7.8 mm
+SOIC (16)
+9.9 mm x 6 mm
+VQFN (16)
+4 mm x 3.5 mm
+TSSOP (16)
+5 mm x 6.4 mm
+(1)
+For all available packages, see the orderable addendum at 
+the end of the data sheet.
+(2)
+The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+4Y
+3Y
+2Y
+1Y
+13
+11
+5
+3
+4B
+4A
+3B
+3A
+2B
+2A
+1B
+1A
+G
+G
+15
+14
+9
+10
+7
+6
+1
+2
+12
+4
+Logic Diagram (Positive Logic)
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Revision History.............................................................. 2
+5 Pin Configuration and Functions...................................3
+6 Specifications.................................................................. 4
+6.1 Absolute Maximum Ratings........................................ 4
+6.2 ESD Ratings............................................................... 4
+6.3 Recommended Operating Conditions.........................4
+6.4 Thermal Information....................................................5
+6.5 Electrical Characteristics.............................................5
+6.6 Switching Characteristics............................................6
+6.7 Typical Characteristics................................................6
+7 Parameter Measurement Information............................7
+8 Detailed Description........................................................8
+8.1 Overview.....................................................................8
+8.2 Functional Block Diagram...........................................8
+8.3 Feature Description.....................................................8
+8.4 Device Functional Modes............................................9
+9 Application Information Disclaimer.............................10
+9.1 Application Information............................................. 10
+9.2 Typical Application.................................................... 10
+10 Power Supply Recommendations..............................11
+11 Layout...........................................................................12
+11.1 Layout Guidelines................................................... 12
+11.2 Layout Example...................................................... 12
+12 Device and Documentation Support..........................13
+12.1 Receiving Notification of Documentation Updates..13
+12.2 Support Resources................................................. 13
+12.3 Trademarks.............................................................13
+12.4 Electrostatic Discharge Caution..............................13
+12.5 Glossary..................................................................13
+13 Mechanical, Packaging, and Orderable 
+Information.................................................................... 13
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision D (December 2020) to Revision E (August 2023)
+Page
+•
+Changed the Device Information table to the Package Information table.......................................................... 1
+•
+Changed the Thermal Information .....................................................................................................................5
+•
+Changed the Typical Characteristics ................................................................................................................. 6
+Changes from Revision C (July 2018) to Revision D (December 2020)
+Page
+•
+Changed feature From: Open Circuit, Short Circuit, and Terminated Fail-Safe To: Open Circuit Fail-Safe ...... 1
+•
+Deleted text from the Description: shorted fail-safe, and terminated fail-safe To: Open Circuit Fail-Safe .........1
+•
+Deleted text from the last paragraph in Input Fail-Safe Circuitry: terminated or short .......................................8
+•
+Deleted text from Table 8-1: shorted, or terminated .......................................................................................... 9
+Changes from Revision B (July 2015) to Revision C (July 2018)
+Page
+•
+Changed the pinout image appearance .............................................................................................................3
+•
+Changed the A and B Input signals on the waveform of Figure 7-1 .................................................................. 7
+Changes from Revision A (May 2008) to Revision B (July 2015)
+Page
+•
+Added Pin Configuration and Functions section, ESD Ratings table, Feature Description section, Device 
+Functional Modes, Application and Implementation section, Power Supply Recommendations section, Layout 
+section, Device and Documentation Support section, and Mechanical, Packaging, and Orderable Information 
+section ............................................................................................................................................................... 1
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+5 Pin Configuration and Functions
+1
+1B
+16
+ VCC
+2
+1A
+15
+ 4B
+3
+1Y
+14
+ 4A
+4
+G
+13
+ 4Y
+5
+2Y
+12
+ G
+6
+2A
+11
+ 3Y
+7
+2B
+10
+ 3A
+8
+GND
+9
+ 3B
+Not to scale
+Figure 5-1. D, NS, or PW Package, 16-Pin SOIC, 
+SO, or TSSOP
+(Top View)
+Thermal
+Pad
+2
+1A
+3
+1Y
+4
+G
+5
+2Y
+6
+2A
+7
+2B
+8
+GND
+9
+3B
+10
+3A
+11
+3Y
+12
+G
+13
+4Y
+14
+4A
+15
+4B
+16
+VCC
+1
+1B   
+Not to scale
+Figure 5-2. RGY Package 16-Pin VQFN
+(Top View) 
+Table 5-1. Pin Functions
+PIN
+TYPE
+DESCRIPTION
+NAME
+NO.
+1A
+2
+I
+RS422/RS485 differential input (noninverting)
+1B
+1
+I
+RS422/RS485 differential input (inverting)
+1Y
+3
+O
+Logic level output
+2A
+6
+I
+RS422/RS485 differential input (noninverting)
+2B
+7
+I
+RS422/RS485 differential input (inverting)
+2Y
+5
+O
+Logic level output
+3A
+10
+I
+RS422/RS485 differential input (noninverting)
+3B
+9
+I
+RS422/RS485 differential input (inverting)
+3Y
+11
+O
+Logic level output
+4A
+14
+I
+RS422/RS485 differential input (noninverting)
+4B
+15
+I
+RS422/RS485 differential input (inverting)
+4Y
+13
+O
+Logic level output
+G
+4
+I
+Active-high select
+G
+12
+I
+Active-low select
+GND
+8
+—
+Ground
+VCC
+16
+—
+Power Supply
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: AM26LV32E
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1) (3)
+MIN
+MAX
+UNIT
+VCC
+Supply voltage(2)
+-0.5
+6
+V
+VI
+Input voltage
+A or B inputs
+–14
+14
+V
+G or G inputs
+–0.5
+6
+VID
+Differential input voltage(4)
+–14
+14
+V
+VO
+Output voltage
+–0.5
+6
+V
+IO
+Output current
+±20
+mA
+IIK
+Input clamp current
+VI < 0
+-20
+mA
+IOK
+Output clamp current
+VO < 0
+-20
+mA
+TJ
+Operating virtual junction temperature
+150
+°C
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress 
+ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under 
+Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device 
+reliability.
+(2)
+All voltage values except differential input voltage are with respect to the network GND.
+(3)
+This device is designed to meet TIA/EIA-422-B and ITU.
+(4)
+Differential input voltage is measured at the non-inverting input with respect to the corresponding inverting input.
+6.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic discharge
+Human body model (HBM), per ANSI/ESDA/JEDEC JS-001(1)
+±15000
+V
+IEC61000-4-2, Contact Gap Discharge
+±8000
+IEC61000-4-2, Air Gap Discharge
+±15000
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process. Manufacturing with 
+less than 500-V HBM is possible with the necessary precautions. Pins listed as ±15000 V may actually have higher performance.
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+VCC
+Supply voltage
+3
+3.3
+3.6
+V
+VIH
+High-level input voltage
+2
+5.5
+V
+VIL
+Low-level input voltage
+0
+0.8
+V
+VIC
+Common-mode input voltage
+–7
+7
+V
+VID
+Differential input voltage
+–7
+7
+V
+IOH
+High-level output current
+–5
+mA
+IOL
+Low-level output current
+5
+mA
+TA
+Operating free-air temperature
+–40
+85
+°C
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+6.4 Thermal Information
+THERMAL METRIC(1)
+AM26LV32E
+UNIT
+D (SOIC)
+DR (SOIC-
+Reel)
+PW 
+(TSSOP)
+PWR 
+(TSSOP-
+Reel)
+NS (SOP)
+NSR (SOP-
+Reel)
+RGY 
+(VQFN)
+RGY 
+(VQFN)
+16 PINS
+16 PINS
+16 PINS
+16 PINS
+16 PINS
+16 PINS
+16 PINS
+16 PINS
+RθJA
+Junction-to-ambient 
+thermal resistance
+73.1
+84.6
+109
+107.5
+69
+88.5
+92
+48.4
+°C/W
+Rθ
+JC(top)
+Junction-to-case (top) 
+thermal resistance
+38.4
+43.5
+34
+38.4
+34
+46.2
+40
+46.4
+°C/W
+RθJB
+Junction-to-board thermal 
+resistance
+N/A
+43.2
+N/A
+53.7
+N/A
+50.7
+N/A
+24.6
+°C/W
+ΨJT
+Junction-to-top 
+characterization parameter
+N/A
+10.4
+N/A
+3.2
+N/A
+13.5
+N/A
+2.3
+°C/W
+ΨJB
+Junction-to-board 
+characterization parameter
+N/A
+42.8
+N/A
+53.1
+N/A
+50.3
+N/A
+24.5
+°C/W
+Rθ
+JC(bottom
+)
+Junction-to-case (bottom) 
+thermal resistance
+N/A
+N/A
+N/A
+N/A
+N/A
+N/A
+N/A
+8.5
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application 
+report.
+6.5 Electrical Characteristics
+over recommended ranges of common-mode input, supply voltage, and operating free-air temperature (unless otherwise 
+noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+VIT+
+Positive-going input threshold voltage, 
+differential input
+0.2
+V
+VIT–
+Negative-going input threshold voltage, 
+differential input
+–0.2
+V
+Vhys
+Input hysteresis (VIT+ – VIT–)
+35
+mV
+VIK
+Input clamp voltage, G and G
+II = –18 mA
+–1.5
+V
+VOH
+High-level output voltage
+VID = 200 mV, IOH = –5 mA
+2.4
+3.2
+V
+VID = 200 mV, IOH = –100 μA
+VCC – 
+0.1
+VOL
+Low-level output voltage
+VID = –200 mV, IOL = 5 mA
+0.17
+0.5
+V
+VID = –200 mV, IOL = 100 μA
+0.1
+IOZ
+High-impedance state output current
+VO = VCC or GND
+±50
+μA
+Ioff
+Output current with power off
+VCC = 0 V, VO = 0 or 5.5 V
+±100
+μA
+II
+Line input current
+Other input at 0 V
+VI = 10 V
+1.5
+mA
+VI = –10 V
+–2.5
+II
+Enable input current, G and G
+VI = VCC or GND
+±1
+μA
+ri
+Input resistance
+VIC = –7 V to 7 V, Other input at 0 V
+4
+17
+kΩ
+ICC
+Supply current (total package)
+G, G = VCC or GND, No load, Line inputs open
+8
+17
+mA
+Cpd
+Power dissipation capacitance
+One channel
+150
+pF
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: AM26LV32E
+6.6 Switching Characteristics
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP(1)
+MAX
+UNIT
+tPLH
+Propagation delay time, low- to high-level output
+See Figure 7-1
+8
+16
+26
+ns
+tPHL
+Propagation delay time, high- to low-level output
+8
+16
+26
+ns
+tt
+Transition time
+See Figure 7-1
+5
+ns
+tPZH
+Output-enable time to high-level
+See Figure 7-2
+17
+40
+ns
+tPZL
+Output-enable time to low-level
+See Figure 7-2
+10
+40
+ns
+tPHZ
+Output-disable time from high-level
+See Figure 7-2
+20
+40
+ns
+tPLZ
+Output-disable time from low-level
+See Figure 7-2
+16
+40
+ns
+tsk(p)
+Pulse skew
+See Figure 7-1 Figure 7-2
+4
+6
+ns
+tsk(o)
+Pulse skew
+See Figure 7-1 Figure 7-2
+4
+6
+ns
+tsk(pp)
+Pulse skew (device to device)
+See Figure 7-1 Figure 7-2
+6
+9
+ns
+f(max)
+Maximum operating frequency
+See Figure 7-1
+32
+MHz
+(1)
+All typical values are at VCC = 3.3 V, TA = 25°C.
+6.7 Typical Characteristics
+Figure 6-1. Output Voltage vs Input Current
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+7 Parameter Measurement Information
+50Ÿ
+50Ÿ
+Generator
+(see Note B)
+VCC
+CL = 15 pF
+(see Note A)
+tPLH
+tPHL
+90%
+90%
+50%
+50%
+10%
+10%
+tr
+tf
+B
+A
+Input
+Output
+2 V
+1 V
+VOH
+VOL
+A
+B
+Y
+VO
+G
+G
+(see Note C)
+A.
+CL includes probe and jig capacitance.
+Figure 7-1. Switching Test Circuit and Voltage Waveforms
+50%
+Input
+tPZH
+tPHZ
+VOH
+50%
+Voff ≈0
+0 V
+VCC
+Output
+Generator
+(see Note B)
+50 Ω
+RL = 2 kΩ
+CL = 15 pF
+(see Note A)
+VCC
+(see Note C)
+VID = 1 V
+A
+B
+Y
+VO
+G
+G
+VOH - 0.3 V
+A.
+CL includes probe and jig capacitance.
+B.
+The input pulse is supplied by a generator having the following characteristics: PRR = 1 MHz, duty cycle ≤ 50%, tr = tf = 6 ns.
+Figure 7-2. Enable/Disable Time Test Circuit and Output Voltage Waveforms
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: AM26LV32E
+8 Detailed Description
+8.1 Overview
+The AM26LV32E is a low-voltage, quadruple-differential line receiver that meets the necessary requirements for 
+NSI TIA/EIA-422-B, TIA/EIA-423-B, and ITU Recommendation V.10 and V.11. This device allows a low power or 
+low voltage MCU to interface with heavy machinery, subsystems and other devices through long wires of up to 
+1000 m, giving any design a reliable and easy to use connection. As with any RS422 interface, the AM26LV32E 
+works in a differential voltage range, which enables very good signal integrity.
+8.2 Functional Block Diagram
+Enable
+G, G
+EQUIVALENT OF EACH
+ENABLE INPUT (G, G)
+VCC
+GND
+EQUIVALENT OF EACH INPUT (A, B)
+TYPICAL OF EACH RECEIVER OUTPUT
+Output
+VCC
+GND
+GND
+V
+or
+GND(B)
+CC(A)
+A, B
+2.4 kΩ
+2.4 kΩ
+1.5 kΩ
+1.5 kΩ
+5 kΩ
+200 kΩ
+7 kΩ
+VCC
+8.3 Feature Description
+8.3.1 ±7-V Common-Mode Range With ±200-mV Sensitivity
+For a common-mode voltage varying from –7 V to 7 V, the input voltage is acceptable in low ranges greater than 
+200 mV as a standard.
+8.3.2 Input Fail-Safe Circuitry
+RS-485 specifies that the receiver output state should be logic high for differential input voltages of VAB ≥ +200 
+mV and logic low for VAB ≤ –200 mV. For input voltages in between these limits, a receiver’s output state is 
+not defined and can randomly assume high or low. Removing the uncertainty of random output states, modern 
+transceiver designs include internal biasing circuits that put the receiver output into a defined state (typically 
+high) in the absence of a valid input signal. A loss of input signal can be caused by:
+•
+an open circuit caused by a wire break or the unintentional disconnection of a transceiver from the bus
+•
+a short circuit due to an insulation fault, connecting both conductors of a differential pair to one another
+•
+an idle bus when none of the bus transceivers are active.
+An open circuit caused by a wire break or the unintentional disconnection of a transceiver from the bus. The 
+AM26LV32E has an internal circuit that ensures functionality during an open failure.
+8.3.3 Active-High and Active-Low
+The device can be configure using the G and G logic inputs to select receiver output. The high voltage or logic 1 
+on the G pin, allows the device to operate on an active-high and having a low voltage or logic 0 on the G enables 
+active low operation. These are simply a way to configure the logic to match that of the receiving or transmitting 
+controller or microprocessor.
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+8.4 Device Functional Modes
+8.4.1 Enable and Disable
+The receivers implemented in these RS422 devices can be configured using the G and G pins to be enabled or 
+disabled. This allows users to ignore or filter out transmissions as desired.
+Table 8-1. Function Table (Each Driver)
+DIFFERENTIAL
+INPUT
+ENABLES(1)
+OUTPUT
+G
+G
+VID ≥ 0.2 V
+H
+X
+H
+X
+L
+H
+–0.2 V < VID < 0.2 V
+H
+X
+?
+X
+L
+?
+VID ≤ –0.2 V
+H
+X
+L
+X
+L
+L
+Open
+H
+X
+H
+X
+L
+H
+X
+L
+H
+Z
+(1)
+H = high-level, L = low-level, X = irrelevant,
+Z = high impedance (off), ? = indeterminate
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: AM26LV32E
+9 Application Information Disclaimer
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+9.1 Application Information
+When designing a system that uses drivers, receivers, and transceivers that comply with RS-422 or RS-485, 
+proper cable termination is essential for highly reliable applications with reduced reflections in the transmission 
+line. Because RS-422 allows only one driver on the bus, if termination is used, it is placed only at the end 
+of the cable near the last receiver. In general, RS-485 requires termination at both ends of the cable. Factors 
+to consider when determining the type of termination usually are performance requirements of the application 
+and the ever-present factor, cost. The different types of termination techniques discussed are unterminated 
+lines, parallel termination, ac termination, and multipoint termination. Laboratory waveforms for each termination 
+technique (except multipoint termination) illustrate the usefulness and robustness of RS-422 (and, indirectly, 
+RS- 485). Similar results can be obtained if 485-compliant devices and termination techniques are used. For 
+laboratory experiments, 100 feet of 100-Ω, 24-AWG, twisted-pair cable (Bertek) was used. A single driver and 
+receiver, TI AM26LV31E and AM26LV32E, respectively, were tested at room temperature with a 3.3-V supply 
+voltage. Two plots per termination technique are shown. In each plot, the top waveform is the driver input and 
+the bottom waveform is the receiver output. To show voltage waveforms related to transmission-line reflections, 
+the first plot shows output waveforms from the driver at the start of the cable; the second plot shows input 
+waveforms to the receiver at the far end of the cable.
+9.2 Typical Application
+DIN
+D
+AM26LV31E
+(One Driver)
+D
+RT
+AM26LV32E
+(One Receiver)
+ROUT
+Figure 9-1. Differential Terminated Configuration
+9.2.1 Design Requirements
+Resistor and capacitor (if used) termination values are shown for each laboratory experiment, but vary 
+from system to system. For example, the termination resistor, RT, must be within 20% of the characteristic 
+impedance, ROUT , of the cable and can vary from about 80 Ω to 120 Ω.
+9.2.2 Detailed Design Procedure
+Figure 9-1 shows a configuration with RT as termination. Although reflections are present at the receiver inputs 
+at a data signaling rate of 200 kbps with no termination, the RS-422-compliant receiver reads only the input 
+differential voltage and produces a clean signal at the output.
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+9.2.3 Application Curve
+±4 
+±3 
+±2 
+±1 
+0
+1
+2
+3
+4
+5
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+Voltage (V) 
+Time (s) 
+Y
+A/B
+C001 
+Figure 9-2. Differential 120-Ω Terminated Output Waveforms (CAT 5E Cable)
+10 Power Supply Recommendations
+Place 0.1-μF bypass capacitors close to the power-supply pins to reduce errors coupling in from noisy or 
+high-impedance power supplies.
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: AM26LV32E
+11 Layout
+11.1 Layout Guidelines
+For best operational performance of the device, use good PCB layout practices, including:
+•
+Noise can propagate into analog circuitry through the power pins of the circuit as a whole, as well as the 
+operational amplifier. Bypass capacitors are used to reduce the coupled noise by providing low impedance 
+power sources local to the analog circuitry.
+–
+Connect low-ESR, 0.1-μF ceramic bypass capacitors between each supply pin and ground, placed as 
+close to the device as possible. A single bypass capacitor from V+ to ground is applicable for single 
+supply applications.
+•
+Separate grounding for analog and digital portions of circuitry is one of the simplest and most-effective 
+methods of noise suppression. One or more layers on multilayer PCBs are usually devoted to ground planes. 
+A ground plane helps distribute heat and reduces EMI noise pickup. Make sure to physically separate digital 
+and analog grounds, paying attention to the flow of the ground current.
+•
+To reduce parasitic coupling, run the input traces as far away from the supply or output traces as possible. If it 
+is not possible to keep them separate, it is much better to cross the sensitive trace perpendicular as opposed 
+to in parallel with the noisy trace.
+•
+Place the external components as close to the device as possible. Keeping RF and RG close to the inverting 
+input minimizes parasitic capacitance.
+•
+Keep the length of input traces as short as possible. Always remember that the input traces are the most 
+sensitive part of the circuit.
+•
+Consider a driven, low-impedance guard ring around the critical traces. A guard ring can significantly reduce 
+leakage currents from nearby traces that are at different potentials.
+11.2 Layout Example
+AM26LV32E
+1
+2
+3
+4
+5
+6
+7
+8
+16
+15
+14
+13
+12
+11
+10
+9
+1B
+1A
+1Y
+G
+2Y
+2A
+2B
+GND
+VCC
+4B
+4A
+4Y
+G
+3Y
+3A
+3B
+0.1µF
+VDD
+Termination Resistor
+Reduce logic signal trace 
+when possible
+Figure 11-1. Trace Layout on PCB and Recommendations
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: AM26LV32E
+12 Device and Documentation Support
+12.1 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For 
+change details, review the revision history included in any revised document.
+12.2 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+12.3 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+12.4 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+12.5 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+www.ti.com
+AM26LV32E
+SLLS849E – APRIL 2008 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: AM26LV32E
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+AM26LV32EIDR
+Active
+Production
+SOIC (D) | 16
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+AM26LV32EI
+AM26LV32EIDR.A
+Active
+Production
+SOIC (D) | 16
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+AM26LV32EI
+AM26LV32EIDRG4
+Active
+Production
+SOIC (D) | 16
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+AM26LV32EI
+AM26LV32EINSR
+Active
+Production
+SOP (NS) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+26LV32EI
+AM26LV32EINSR.A
+Active
+Production
+SOP (NS) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+26LV32EI
+AM26LV32EINSRG4
+Active
+Production
+SOP (NS) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+26LV32EI
+AM26LV32EINSRG4.A
+Active
+Production
+SOP (NS) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+26LV32EI
+AM26LV32EIPWR
+Active
+Production
+TSSOP (PW) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+AM26LV32EIPWR.A
+Active
+Production
+TSSOP (PW) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+AM26LV32EIPWRG4
+Active
+Production
+TSSOP (PW) | 16
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+AM26LV32EIRGYR
+Active
+Production
+VQFN (RGY) | 16
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+AM26LV32EIRGYR.A
+Active
+Production
+VQFN (RGY) | 16
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+AM26LV32EIRGYRG4
+Active
+Production
+VQFN (RGY) | 16
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+SB32
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+ OTHER QUALIFIED VERSIONS OF AM26LV32E :
+• Enhanced Product : AM26LV32E-EP
+ NOTE: Qualified Version Definitions:
+• Enhanced Product - Supports Defense, Aerospace and Medical Applications
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+24-Jul-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+AM26LV32EIDR
+SOIC
+D
+16
+2500
+330.0
+16.4
+6.5
+10.3
+2.1
+8.0
+16.0
+Q1
+AM26LV32EINSR
+SOP
+NS
+16
+2000
+330.0
+16.4
+8.1
+10.4
+2.5
+12.0
+16.0
+Q1
+AM26LV32EINSRG4
+SOP
+NS
+16
+2000
+330.0
+16.4
+8.1
+10.4
+2.5
+12.0
+16.0
+Q1
+AM26LV32EIPWR
+TSSOP
+PW
+16
+2000
+330.0
+12.4
+6.9
+5.6
+1.6
+8.0
+12.0
+Q1
+AM26LV32EIRGYR
+VQFN
+RGY
+16
+3000
+330.0
+12.4
+3.8
+4.3
+1.5
+8.0
+12.0
+Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+24-Jul-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+AM26LV32EIDR
+SOIC
+D
+16
+2500
+353.0
+353.0
+32.0
+AM26LV32EINSR
+SOP
+NS
+16
+2000
+353.0
+353.0
+32.0
+AM26LV32EINSRG4
+SOP
+NS
+16
+2000
+353.0
+353.0
+32.0
+AM26LV32EIPWR
+TSSOP
+PW
+16
+2000
+353.0
+353.0
+32.0
+AM26LV32EIRGYR
+VQFN
+RGY
+16
+3000
+360.0
+360.0
+36.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+8.2
+7.4 TYP
+14X 1.27
+16X 0.51
+0.35
+2X
+8.89
+0.15 TYP
+0 - 10
+0.3
+0.1
+2.00 MAX
+(1.25)
+0.25
+GAGE PLANE
+1.05
+0.55
+A
+10.4
+10.0
+NOTE 3
+B
+5.4
+5.2
+NOTE 4
+4220735/A   12/2021
+SOP - 2.00 mm max height
+NS0016A
+SOP
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm, per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm, per side.
+ 
+ 
+1
+16
+0.25
+C A B
+9
+8
+PIN 1 ID
+AREA
+SEATING PLANE
+0.1 C
+ SEE DETAIL A
+DETAIL A
+TYPICAL
+SCALE  1.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+ 
+14X (1.27)
+(R0.05) TYP
+(7)
+16X (1.85)
+16X (0.6)
+4220735/A   12/2021
+SOP - 2.00 mm max height
+NS0016A
+SOP
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+METAL
+SOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+SOLDER MASK DETAILS
+OPENING
+SOLDER MASK
+METAL
+SOLDER MASK
+DEFINED
+LAND PATTERN EXAMPLE
+SCALE:7X
+SYMM
+1
+8
+9
+16
+SEE
+DETAILS
+SYMM
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(7)
+(R0.05) TYP
+16X (1.85)
+16X (0.6)
+14X (1.27)
+4220735/A   12/2021
+SOP - 2.00 mm max height
+NS0016A
+SOP
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE:7X
+SYMM
+SYMM
+1
+8
+9
+16
+www.ti.com
+PACKAGE OUTLINE
+3.65
+3.35
+4.15
+3.85
+1.0
+0.8
+0.05
+0.00
+2X 2.5
+10X 0.5
+2X 1.5
+16X 0.5
+0.3
+16X 0.30
+0.18
+2.55
+0.1
+2.05
+0.1
+(0.2) TYP
+VQFN - 1 mm max height
+RGY0016A
+PLASTIC QUAD FLATPACK - NO LEAD
+4225140/A   07/2019
+0.08 C
+0.1
+C A B
+0.05
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. The package thermal pad must be soldered to the printed circuit board for thermal and mechanical performance.
+PIN 1 INDEX AREA
+SEATING PLANE
+PIN 1 ID
+SYMM
+EXPOSED
+THERMAL PAD
+SYMM
+1
+2
+7
+8
+9
+10
+15
+16
+17
+SCALE  3.000
+A
+B
+C
+www.ti.com
+EXAMPLE BOARD LAYOUT
+10X (0.5)
+(1.025)
+(0.775)
+(R0.05) TYP
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+16X (0.6)
+16X (0.24)
+(3.3)
+(3.8)
+(2.55)
+(2.05)
+(
+0.2) TYP
+VIA
+2X (1.5)
+VQFN - 1 mm max height
+RGY0016A
+PLASTIC QUAD FLATPACK - NO LEAD
+4225140/A   07/2019
+SEE SOLDER MASK
+DETAIL
+NOTES: (continued)
+ 
+4. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+    number SLUA271 (www.ti.com/lit/slua271).
+5. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+    on this view. It is recommended that vias under paste be filled, plugged or tented.
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 20X
+1
+2
+7
+8
+9
+10
+15
+16
+17
+METAL EDGE
+SOLDER MASK
+OPENING
+EXPOSED METAL
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED
+METAL
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DEFINED
+SOLDER MASK DETAILS
+www.ti.com
+EXAMPLE STENCIL DESIGN
+16X (0.6)
+16X (0.24)
+10X (0.5)
+(3.3)
+(3.8)
+(0.56) TYP
+(0.665) TYP
+4X (1.13)
+4X (0.92)
+(R0.05) TYP
+2X (1.5)
+VQFN - 1 mm max height
+RGY0016A
+PLASTIC QUAD FLATPACK - NO LEAD
+4225140/A   07/2019
+NOTES: (continued)
+ 
+6. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 MM THICK STENCIL
+SCALE: 20X
+ 
+EXPOSED PAD 17
+80% PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+SYMM
+SYMM
+1
+2
+7
+8
+9
+10
+15
+16
+17
+www.ti.com
+PACKAGE OUTLINE
+C
+14X 0.65
+2X
+4.55
+16X 0.30
+0.17
+6.6
+6.2 TYP
+1.2 MAX
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+4X (0 -12 )
+B
+4.5
+4.3
+NOTE 4
+A
+5.1
+4.9
+NOTE 3
+0.75
+0.50
+(0.15) TYP
+TSSOP - 1.2 mm max height
+PW0016A
+SMALL OUTLINE PACKAGE
+4220204/B   12/2023
+1
+8
+9
+16
+0.1
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-153.
+ 
+SEATING
+PLANE
+A  20
+DETAIL A
+TYPICAL
+SCALE  2.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+16X (1.5)
+16X (0.45)
+14X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max height
+PW0016A
+SMALL OUTLINE PACKAGE
+4220204/B   12/2023
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 10X
+SYMM
+SYMM
+1
+8
+9
+16
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+16X (1.5)
+16X (0.45)
+14X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max height
+PW0016A
+SMALL OUTLINE PACKAGE
+4220204/B   12/2023
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 10X
+SYMM
+SYMM
+1
+8
+9
+16
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

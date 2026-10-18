@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "retrieved_date_utc": "2026-09-28",
+  "retrieved_time_precision": "date",
+  "retrieved_time_note": "The exact timestamp of the product-page reads was not retained. This records the verified UTC retrieval date only.",
+  "currency": "USD",
+  "source_type": "manufacturer_store",
+  "extraction_method": {
+    "transport": "Python urllib.request.urlopen over HTTPS",
+    "parser": "Decoded HTML, stripped tags, HTML-unescaped text, normalized whitespace, then inspected manufacturer product title, Product Code, Availability, price and quantity-tier text.",
+    "reason": "The web browsing tool returned HTTP 502 for the Mesa store; direct HTTPS reads succeeded.",
+    "reproduction_python": "import urllib.request, re, html\nurl = 'https://store.mesanet.com/index.php?route=product/product&product_id=374'\nbody = urllib.request.urlopen(url, timeout=20).read().decode()\ntext = re.sub(r'\\s+', ' ', html.unescape(re.sub('<[^>]+>', ' ', body)))\nstart = text.find('Brand:')\nprint(text[max(0, start-160):start+550])",
+    "raw_html_saved": false
+  },
+  "scope": {
+    "included": "The named motion-control/I/O board described on each manufacturer product page.",
+    "excluded": [
+      "LinuxCNC host computer",
+      "Touchscreen or other display"
+    ],
+    "price_note": "Displayed product prices only; tax, freight, duties and a complete installed system are not included in this snapshot. Availability and prices may change. Quantity prices are the manufacturer's published tiers, not negotiated quotations."
+  },
+  "products": [
+    {
+      "model": "7I96S",
+      "title": "7I96S STEP/IO Step & dir plus I/O with analog spindle card",
+      "url": "https://store.mesanet.com/index.php?route=product/product&product_id=374",
+      "unit_price_usd": 149.00,
+      "quantity_tiers": [
+        { "minimum_quantity": 10, "unit_price_usd": 119.00 },
+        { "minimum_quantity": 25, "unit_price_usd": 113.00 },
+        { "minimum_quantity": 100, "unit_price_usd": 108.00 }
+      ],
+      "availability_displayed": "47",
+      "includes_host_computer": false,
+      "includes_touchscreen": false
+    },
+    {
+      "model": "7I76EU",
+      "title": "7I76EU STEP/IO Step & dir plus I/O card - universal output version",
+      "url": "https://store.mesanet.com/index.php?route=product/product&product_id=399",
+      "unit_price_usd": 219.00,
+      "quantity_tiers": [
+        { "minimum_quantity": 10, "unit_price_usd": 175.00 },
+        { "minimum_quantity": 25, "unit_price_usd": 166.00 },
+        { "minimum_quantity": 100, "unit_price_usd": 158.00 }
+      ],
+      "availability_displayed": "88",
+      "includes_host_computer": false,
+      "includes_touchscreen": false
+    },
+    {
+      "model": "7I95T",
+      "title": "7I95T Ethernet interfaced Step/dir +encoder + I/O",
+      "url": "https://store.mesanet.com/index.php?route=product/product&product_id=383",
+      "unit_price_usd": 249.00,
+      "quantity_tiers": [
+        { "minimum_quantity": 10, "unit_price_usd": 199.00 },
+        { "minimum_quantity": 25, "unit_price_usd": 189.00 },
+        { "minimum_quantity": 100, "unit_price_usd": 180.00 }
+      ],
+      "availability_displayed": "Out Of Stock",
+      "includes_host_computer": false,
+      "includes_touchscreen": false
+    }
+  ]
+}

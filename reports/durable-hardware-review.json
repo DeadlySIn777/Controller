@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-28T08:50:16.887030+00:00",
+  "scope": "Frozen implementation and evidence review; shared workspace continues to receive edits from an unidentified writer. This is not a manufacturing or physical-machine release.",
+  "artifact_root": "reports/root-verification-20260928",
+  "python": {
+    "tests": 290,
+    "seconds": 16.286,
+    "result": "PASS",
+    "source_manifest": "source-snapshot.json",
+    "verified_snapshot_files": 104,
+    "output": "python-tests.txt",
+    "initial_snapshot_failure": "Missing backend profile assets caused 27 errors; original output retained, assets copied and all290 tests rerun successfully."
+  },
+  "runtime": {
+    "source": "proven-runtime/manifest.json",
+    "verified_source_evidence_entries": 62,
+    "verified_module_sha256": "167d63b0a368673590a91f7bc37c6a77349dda8edab965ab3ff4b95dcc7ceea1",
+    "compiled_checks": 192,
+    "linuxcnc_checks": 26,
+    "persistent_checks": 59,
+    "separate_launches": 9,
+    "runtime_run_id": "48ea1de2-adee-46e0-8978-95e9be1d7dde",
+    "persistent_run_id": "f2795893-e4e9-4ec0-a93a-db0a79d832f0",
+    "scope": "Actual LinuxCNC and compiled HAL with simulated RTL; existing exact-source tests verified, not rerun by snapshot audit. Later driver edits are outside this proof."
+  },
+  "spi": {
+    "source": "proven-spi/manifest.json",
+    "verified_entries": 17,
+    "checks": {
+      "normal_assertions": 892,
+      "asan_ubsan_assertions": 892,
+      "cpp_header_c_object_link": "passed",
+      "physical_device_opens": 0
+    },
+    "scope": "Mocked Linux syscalls; preserved exact previously tested header; no physical device qualification."
+  },
+  "synthesis": {
+    "manifests": [
+      {
+        "manifest": "gateware/synthesis/manifest.json",
+        "verified_entries": 23,
+        "sha256": "5f03bc93e00d82fa737e2f87290a0bc91c080d73749541e10ddeda1a10af014d"
+      },
+      {
+        "manifest": "gateware/synthesis/postmap/manifest.json",
+        "verified_entries": 18,
+        "sha256": "259accc45dce2cbce1eaf3f207f0f5f63b8ea45c0442294ccef65b1e484f8150"
+      }
+    ],
+    "mapped_driver_assertions": 179,
+    "scope": "Efinix family mapping and mapped primitive simulation; frozen pre-persistence driver. No selected-device fit, placement/routing, timing closure or bitstream."
+  },
+  "hardware": {
+    "ledger_errors": 0,
+    "open_design_items": 54,
+    "blocks": {
+      "tx_six": {
+        "consistency_errors": [],
+        "recorded_erc_violations": 0,
+        "kicad_version": "10.0.4",
+        "erc_rerun": false
+      },
+      "rx_abz": {
+        "consistency_errors": [],
+        "recorded_erc_violations": 0,
+        "kicad_version": "10.0.4",
+        "erc_rerun": false
+      }
+    },
+    "scope": "Fresh netlist/ledger/arithmetic checks; existing ERC exports were inspected, not rerun. No physical qualification."
+  },
+  "workspace_changes_since_python_snapshot": [
+    "controller_backend/fetch_debian_rootfs.py",
+    "controller_backend/linuxcnc_backend.py",
+    "hardware/electrical-design.json",
+    "hardware/validation-report.json",
+    "tests/test_hardware_validation.py",
+    "tools/hardware_build_design.py",
+    "tools/hardware_validate.py"
+  ],
+  "latest_component_drift_record": "component-verification.json",
+  "manufacturing_ready": false,
+  "remaining": [
+    "Complete power/protection/permission/carrier/remaining I/O schematics and exact parts",
+    "FPGA device/package pin map, vendor implementation, timing closure and bitstream",
+    "Qualified physical host link and real-time Linux workload measurements",
+    "PCB layout, full ERC/DRC and fabrication/assembly/programming/test package",
+    "Physical electrical/motion/fault/thermal/EMC qualification",
+    "Complete turnkey/display/enclosure costs and confirmed UI integration"
+  ],
+  "no_hardware_ordered_or_connected": true,
+  "review_artifact_sha256": {
+    "source-snapshot.json": "2bb1784d302296dbccf6befe4cc0b51652bd69a134840b9b99b95b82106996dd",
+    "python-tests.txt": "8b68cecf7fc7dfd59cd93b8ecb11f5301c6fd38458c6167bbf980caea77fbb6a",
+    "hardware-check.json": "4d7e57c55ae5d0b84c0288882eb54f1a39cf733479c922b047fb60667f50e331",
+    "proven-runtime-check.json": "ede2de571725df4a5933d6d294f8be581fc7805d23244a1be614ea47d7ce5857",
+    "component-verification.json": "484d0be0eb5b278a904ab298834a506973bda25909ba6e6f51199cd573d9853b"
+  }
+}

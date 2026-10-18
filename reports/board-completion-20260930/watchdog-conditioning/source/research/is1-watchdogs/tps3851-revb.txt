@@ -1,0 +1,1702 @@
+PAGE 1
+TPS3851 Precision Voltage Supervisor with Integrated Watchdog Timer
+1 Features 3 Description
+• Input voltage range: V = 1.6V to 6.5V The TPS3851 combines a precision voltage
+DD
+• 0.8% Voltage threshold accuracy supervisor with a programmable watchdog timer. The
+• Low quiescent current: I = 10µA (typical) TPS3851 comparator achieves a 0.8% accuracy
+DD
+• User-programmable watchdog timeout (–40°C to +125°C) for the undervoltage (V )
+ITN
+• Open-drain outputs threshold on the VDD pin. The TPS3851 also includes
+• Precision undervoltage monitoring: accurate hysteresis on the undervoltage threshold
+– Supports common rails from 1.8V to 5.0V making the device an excellent choice for use with
+– 4% and 7% Undervoltage thresholds available tight tolerance systems. The supervisor RESET delay
+– 0.5% Hysteresis features a 15% accuracy, high-precision delay timing.
+• Watchdog disable feature
+The TPS3851 includes a programmable watchdog
+• Factory-programmed precision watchdog and
+timer for a wide variety of applications. The dedicated
+reset timers
+watchdog output (WDO) enables increased resolution
+• Manual reset input (MR)
+to help determine the nature of fault conditions.
+• Available in a small 3mm × 3mm, 8 pin VSON
+The watchdog timeouts can be programmed either
+package
+by an external capacitor, or by factory-programmed
+• Junction operating temperature range:
+default delay settings. The watchdog can be disabled
+–40°C to +125°C
+via logic pins to avoid undesired watchdog timeouts
+2 Applications during the development process.
+TPS3851 is available in a small 3.00mm × 3.00mm,
+• WLAN/Wi-Fi access point
+8-pin VSON package.
+• Wireless security camera
+• IP network camera Device Information
+• String inverter
+BODY SIZE(2)
+• Blood pressure monitor PART NUMBER PACKAGE (1) (NOM)
+• Electricity meter
+TPS3851 VSON (8) 3.00mm × 3.00mm
+(1) For all available packages, see the orderable addendum at
+the end of the data sheet.
+(2) The package size (length × width) is a nominal value and
+includes pins, where applicable.
+1.8 V
+TPS3851 VDD
+Microcontroller
+VDD RESET RESET
+SET1 WDO NMI
+MR WDI GPIO
+CWD GND
+GND
+Copyright © 2016, Texas Instruments Incorporated
+Fully Integrated Microcontroller Supervisory
+Circuit
+Temperature (qC)
+)%(
+ycaruccA
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+0.5
+Unit 1 Unit 3 Unit 5
+Unit 2 Unit 4 Average
+0.3
+0.1
+-0.1
+-0.3
+-0.5
+-50 -25 0 25 50 75 100 125
+Undervoltage Threshold (V ) Accuracy vs
+ITN
+Temperature
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+
+PAGE 2
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+Table of Contents
+1 Features............................................................................1 6.4 Device Functional Modes..........................................15
+2 Applications.....................................................................1 7 Application and Implementation..................................16
+3 Description.......................................................................1 7.1 Application Information.............................................16
+4 Pin Configuration and Functions...................................3 7.2 Typical Application....................................................19
+5 Specifications..................................................................4 7.3 Power Supply Recommendations.............................21
+5.1 Absolute Maximum Ratings........................................4 7.4 Layout.......................................................................22
+5.2 ESD Ratings...............................................................4 8 Device and Documentation Support............................23
+5.3 Recommended Operating Conditions.........................4 8.1 Device Support.........................................................23
+5.4 Thermal Information....................................................5 8.2 Documentation Support............................................23
+5.5 Electrical Characteristics.............................................5 8.3 Receiving Notification of Documentation Updates....23
+5.6 Timing Requirements..................................................6 8.4 Support Resources...................................................23
+5.7 Timing Diagrams.........................................................7 8.5 Trademarks...............................................................23
+5.8 Typical Characteristics................................................8 8.6 Electrostatic Discharge Caution................................23
+6 Detailed Description......................................................12 8.7 Glossary....................................................................23
+6.1 Overview...................................................................12 9 Revision History............................................................24
+6.2 Functional Block Diagram.........................................12 10 Mechanical, Packaging, and Orderable
+6.3 Feature Description...................................................12 Information....................................................................24
+2 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 3
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+4 Pin Configuration and Functions
+VDD 1 8 RESET
+CWD 2 7 WDO
+Thermal
+Pad
+MR 3 6 WDI
+GND 4 5 SET1
+Not to scale
+Figure 4-1. DRB Package: TPS3851
+3mm × 3mm VSON-8
+Top View
+Table 4-1. Pin Functions
+NAME NO. I/O DESCRIPTION
+Programmable watchdog timeout input. The watchdog timeout is set by connecting a capacitor between this pin and
+ground. Connecting via a 10kΩ resistor to VDD or leaving unconnected further enables the selection of the preset
+CWD 2 I watchdog timeouts; see the CWD Functionality section.
+The TPS3851 determines the watchdog timeout using either Equation 1 or Equation 2 with standard or extended
+timing, respectively.
+GND 4 — Ground pin
+Manual reset pin. A logical low on this pin issues a RESET. This pin is internally pulled up. RESET remains low for a
+MR 3 I
+fixed reset delay (tRST) time after MR is deasserted (high).
+Reset output. Connect RESET using a 1kΩ to 100kΩ resistor to the correct pullup voltage rail (VPU). RESET goes low
+when VDD goes below the undervoltage threshold (VITN). When VDD is within the normal operating range, the RESET
+RESET 8 O timeout-counter starts. At completion, RESET goes high. During startup, the state of RESET is undefined below the
+specified power-on-reset (POR) voltage (VPOR). Above POR, RESET goes low and remains low until the monitored
+voltage is within the correct operating range (above VITN+VHYST) and the RESET timeout is complete.
+Logic input. Grounding the SET1 pin disables the watchdog timer. SET1 and CWD select the watchdog timeouts; see
+SET1 5 I
+the SET1 section.
+VDD 1 I Supply voltage pin. For noisy systems, connecting a 0.1μF bypass capacitor is recommended.
+Watchdog input. A falling edge must occur at WDI before the timeout (tWD) expires.
+When the watchdog is not in use, the SET1 pin can be used to disable the watchdog. WDI is ignored when RESET
+WDI 6 I
+or WDO are low (asserted) and when the watchdog is disabled. If the watchdog is disabled, WDI cannot be left
+unconnected and must be driven to either VDD or GND.
+Watchdog output. Connect WDO with a 1kΩ to 100kΩ resistor to the correct pullup voltage rail (VPU). WDO goes
+low (asserts) when a watchdog timeout occurs. WDO only asserts when RESET is high. When a watchdog timeout
+WDO 7 O
+occurs, WDO goes low (asserts) for the set RESET timeout delay (tRST). When RESET goes low, WDO is in a
+high-impedance state.
+Thermal pad — Connect the thermal pad to a large-area ground plane. The thermal pad is internally connected to GND.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 3
+Product Folder Links: TPS3851
+
+PAGE 4
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+5 Specifications
+5.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1)
+MIN MAX UNIT
+Supply voltage range VDD –0.3 7 V
+Output voltage range RESET, WDO –0.3 7 V
+SET1, WDI, MR –0.3 7
+Voltage ranges V
+CWD –0.3 V + 0.3 (3)
+DD
+Output pin current RESET, WDO ±20 mA
+Input current (all pins) ±20 mA
+Continuous total power dissipation See Section 5.4
+Operating junction, T (2) –40 150
+J
+Temperature Operating free-air, T (2) –40 150 °C
+A
+Storage, T –65 150
+stg
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress
+ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under
+Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device
+reliability.
+(2) Assume that T = T as a result of the low dissipated power in this device.
+J A
+(3) The absolute maximum rating is V + 0.3V or 7.0V, whichever is smaller.
+DD
+5.2 ESD Ratings
+VALUE UNIT
+Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001 (1) ±4000
+V Electrostatic discharge V
+(ESD) Charged-device model (CDM), per JEDEC specification JESD22-C101 (2) ±1000
+(1) JEDEC document JEP155 states that 500V HBM allows safe manufacturing with a standard ESD control process. Manufacturing with
+less than 500V HBM is possible with the necessary precautions.
+(2) JEDEC document JEP157 states that 250V CDM allows safe manufacturing with a standard ESD control process. Manufacturing with
+less than 250V CDM is possible with the necessary precautions.
+5.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN TYP MAX UNIT
+V Supply pin voltage 1.6 6.5 V
+DD
+V SET1 pin voltage 0 6.5 V
+SET1
+C Watchdog timing capacitor 0.1 (1) (2) 1000 (1) (2) nF
+CWD
+CWD Pullup resistor to VDD 9 10 11 kΩ
+R Pullup resistor, RESET and WDO 1 10 100 kΩ
+PU
+I RESET pin current 10 mA
+RESET
+I Watchdog output current 10 mA
+WDO
+T Junction temperature –40 125 °C
+J
+(1) Using standard timing with a C capacitor of 0.1nF or 1000nF gives a t of 0.704ms or 3.23 seconds, respectively.
+CWD WD(typ)
+(2) Using extended timing with a C capacitor of 0.1nF or 1000nF gives a t of 62.74ms or 77.45 seconds, respectively.
+CWD WD(typ)
+4 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 5
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+5.4 Thermal Information
+TPS3851
+THERMAL METRIC (1) DRB (VSON) UNIT
+8 PINS
+R Junction-to-ambient thermal resistance 50.7 °C/W
+θJA
+R Junction-to-case (top) thermal resistance 51.6 °C/W
+θJC(top)
+R Junction-to-board thermal resistance 25.8 °C/W
+θJB
+ψ Junction-to-top characterization parameter 1.3 °C/W
+JT
+ψ Junction-to-board characterization parameter 25.8 °C/W
+JB
+R Junction-to-case (bottom) thermal resistance 7.1 °C/W
+θJC(bot)
+(1) For more information about traditional and new thermal metrics, see the IC Package Thermal Metrics application report.
+5.5 Electrical Characteristics
+at V + V ≤ V ≤ 6.5V over the operating temperature range of –40°C ≤ T , T ≤ 125°C (unless otherwise noted); the
+ITN HYST DD A A
+open-drain pullup resistors are 10kΩ for each output; typical values are at T = 25°C
+A
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+GENERAL CHARACTERISTICS
+VDD (1) (2) (3) Supply voltage 1.6 6.5 V
+IDD Supply current 10 19 µA
+RESET FUNCTION
+VPOR (2) Power-on reset voltage I RESET = 15µA, VOL(MAX) = 0.25V 0.8 V
+VUVLO (1) Undervoltage lockout voltage 1.35 V
+Undervoltage threshold accuracy, entering
+VITN
+RESET
+VDD falling VITN – 0.8% VITN + 0.8%
+VHYST Hysteresis voltage VDD rising 0.2% 0.5% 0.8%
+I MR MR pin internal pullup current V MR = 0V 500 620 700 nA
+WATCHDOG FUNCTION
+ICWD CWD pin charge current CWD = 0.5V 347 375 403 nA
+VCWD CWD pin threshold voltage 1.196 1.21 1.224 V
+VOL RESET, WDO output low VDD = 5V, ISINK = 3mA 0.4 V
+ID R
+op
+E
+e
+S
+n
+E
+-d
+T
+r
+,
+a
+W
+in
+DO output leakage current,
+V
+V
+R
+D
+E
+D
+S E
+=
+T
+V
+=
+I T
+V
+N
+W
++
+D O
+V H
+=
+Y
+6
+S
+.
+T
+5
+,
+V
+1 µA
+VIL Low-level input voltage ( MR, SET1) 0.25 V
+VIH High-level input voltage ( MR, SET1) 0.8 V
+VIL(WDI) Low-level input voltage (WDI) 0.3 × VDD V
+VIH(WDI) High-level input voltage (WDI) 0.8 × VDD V
+(1) When V falls below V , RESET is driven low.
+DD UVLO
+(2) When V falls below V , RESET and WDO are undefined.
+DD POR
+(3) During power-on, V must be a minimum 1.6V for at least 300µs before RESET correlates with V .
+DD DD
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 5
+Product Folder Links: TPS3851
+
+PAGE 6
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+5.6 Timing Requirements
+at V + V ≤ V ≤ 6.5V over the operating temperature range of –40°C ≤ T , T ≤ 125°C (unless otherwise noted); the
+ITN HYST DD A A
+open-drain pullup resistors are 10kΩ for each output; typical values are at T = 25°C
+A
+MIN NOM MAX UNIT
+GENERAL
+t CWD pin evaluation period (1) 381 µs
+INIT
+Minimum MR, SET1 pin pulse duration 1 µs
+Startup delay (2) 300 µs
+RESET FUNCTION
+t Reset timeout period 170 200 230 ms
+RST
+V = V + V + 2.5% 35
+DD ITN HYST
+t V to RESET delay µs
+RST-DEL DD
+V = V – 2.5% 17
+DD ITN
+t MR to RESET delay 200 ns
+MR-DEL
+WATCHDOG FUNCTION
+CWD = NC, SET1 = 0 (4) Watchdog disabled
+CWD = NC, SET1 = 1 (4) 1360 1600 1840 ms
+t WD Watchdog timeout (3) C SE W T D 1 = = 1 0 0 ( k 4 Ω ) to VDD, Watchdog disabled
+CWD = 10kΩ to VDD,
+170 200 230 ms
+SET1 = 1 (4)
+t Setup time required for device to respond to changes on WDI after
+WD- 150 µs
+being enabled
+setup
+Minimum WDI pulse duration 50 ns
+t WDI to WDO delay 50 ns
+WD-del
+(1) Refer to Section 7.1.1.2
+(2) During power-on, V must be a minimum 1.6V for at least 300µs before RESET correlates with V
+DD DD
+(3) The fixed watchdog timing covers both standard and extended versions.
+(4) SET1 = 0 means V < V ; SET1 = 1 means V > V .
+SET1 IL SET1 IH
+6 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 7
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+5.7 Timing Diagrams
+VITN + VHYST
+VDD
+VPOR
+VITN
+tRST
+VITN
+tRST
+tRST-DEL
+RESET
+t < tWD
+t < tWD t = tWD (1)
+WDI X X
+WDO
+tRST
+A. See Figure 5-2 for WDI timing requirements.
+Figure 5-1. Timing Diagram
+Correct
+WDI
+Operation
+WDO
+Late Fault
+WDI
+WDO
+Valid
+Timing Region
+tWD(MIN)
+tWD(TYP)
+tWD(MAX)
+= Tolerance Window
+Figure 5-2. Watchdog Timing Diagram
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 7
+Product Folder Links: TPS3851
+
+PAGE 8
+5.8 Typical Characteristics
+all typical characteristics curves are taken at 25°C with 1.6V ≤ VDD ≤ 6.5V (unless other wise noted)
+VDD (V)
+)AP(
+tnerruC
+ylppuS
+16
+12
+8
+-40qC
+4 0qC
+25qC
+105qC
+125qC
+0
+0 1 2 3 4 5 6 7
+Temperature (qC)
+Figure 5-3. Supply Current vs V
+DD
+)V(
+dlohserhT
+teseR
+launaM
+0.7
+0.6
+0.5
+0.4
+VIL VIH
+0.3
+-50 -25 0 25 50 75 100 125
+VDD = 1.6V
+Figure 5-4. MR Threshold vs Temperature
+Temperature (qC)
+)An(
+tnerruC
+gnigrahC
+DWC
+380
+376
+372
+368
+1.6 V
+6.5 V
+364
+-50 -25 0 25 50 75 100 125
+Temperature (qC)
+Figure 5-5. CWD Charging Current vs Temperature
+)%(
+ycaruccA
+0.5
+Unit 1 Unit 3 Unit 5
+Unit 2 Unit 4 Average
+0.3
+0.1
+-0.1
+-0.3
+-0.5
+-50 -25 0 25 50 75 100 125
+TPS3851G18, V = 1.728V
+ITN
+Figure 5-6. V + V Accuracy vs Temperature
+ITN HYST
+Temperature (qC)
+)%(
+ycaruccA
+0.5
+Unit 1 Unit 3 Unit 5
+Unit 2 Unit 4 Average
+0.3
+0.1
+-0.1
+-0.3
+-0.5
+-50 -25 0 25 50 75 100 125
+Temperature (qC)
+TPS3851G18, V = 1.728V
+ITN
+Figure 5-7. V Accuracy vs Temperature
+ITN
+)%(
+ycaruccA
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+0.5
+Unit 1 Unit 3 Unit 5
+Unit 2 Unit 4 Average
+0.3
+0.1
+-0.1
+-0.3
+-0.5
+-50 -25 0 25 50 75 100 125
+TPS3851G50, V = 4.8V
+ITN
+Figure 5-8. V + V Accuracy vs Temperature
+ITN HYST
+8 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 9
+5.8 Typical Characteristics (continued)
+all typical characteristics curves are taken at 25°C with 1.6V ≤ VDD ≤ 6.5V (unless other wise noted)
+Temperature (qC)
+)%(
+ycaruccA
+0.5
+Unit 1 Unit 3 Unit 5
+Unit 2 Unit 4 Average
+0.3
+0.1
+-0.1
+-0.3
+-0.5
+-50 -25 0 25 50 75 100 125
+VITN + VHYST Accuracy (%)
+TPS3851G50, V = 4.8V
+ITN
+Figure 5-9. V Accuracy vs Temperature
+ITN
+)%(
+ycneuqerF
+50
+45
+40
+35
+30
+25
+20
+15
+10
+5
+0
+-0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8
+Includes G and H versions; 1.8V, 2.5V, 3.0V, 3.3V, and 5V
+thresholds; total units = 36,627
+Figure 5-10. V + V Accuracy Histogram
+ITN HYST
+VITN Accuracy (%)
+)%(
+ycneuqerF
+50
+45
+40
+35
+30
+25
+20
+15
+10
+5
+0
+-0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8
+Hysteresis (%)
+Includes G and H versions; 1.8V, 2.5V, 3.0V, 3.3V, and 5V
+thresholds; total units = 36,627
+Figure 5-11. V Accuracy Histogram
+ITN
+)%(
+ycneuqerF
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+80
+60
+40
+20
+0
+0.2 0.35 0.5 0.8
+Includes G and H versions; 1.8V, 2.5V, 3.0V, 3.3V, and 5V
+thresholds; total units = 36,627
+Figure 5-12. Hysteresis Histogram
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 9
+Product Folder Links: TPS3851
+
+PAGE 10
+5.8 Typical Characteristics (continued)
+all typical characteristics curves are taken at 25°C with 1.6V ≤ VDD ≤ 6.5V (unless other wise noted)
+IRESET (mA)
+)V(
+LOV
+1.6
+-40qC
+1.4 0qC
+25qC
+1.2
+105qC
+125qC
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 1 2 3 4 5 6
+IRESET (mA)
+VDD = 1.6V
+Figure 5-13. Low-Level RESET Voltage vs RESET Current
+)V(
+LOV
+1.6
+-40qC
+1.4 0qC
+25qC
+1.2
+105qC
+125qC
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 1 2 3 4 5 6
+VDD = 6.5V
+Figure 5-14. Low-Level RESET Voltage vs RESET Current
+Overdrive (%)
+)sP(
+yaleD
+noitagaporP
+100
+90 -40qC 25qC 125qC
+0qC 105qC
+80
+70
+60
+50
+40
+30
+20
+10
+0
+0 2 4 6 8 10
+Overdrive (%)
+TPS3851G18 entering undervoltage
+Figure 5-15. Propagation Delay vs Overdrive
+)sP(
+yaleD
+noitagaporP
+50
+45 -40qC 25qC 125qC
+0qC 105qC
+40
+35
+30
+25
+20
+15
+10
+5
+0
+0 2 4 6 8 10
+TPS3851G50 entering undervoltage
+Figure 5-16. Propagation Delay vs Overdrive
+Overdrive (%)
+)sm(
+yaleD
+noitagaporP
+210
+205
+200
+195
+-40qC 25qC 125qC
+0qC 105qC
+190
+0 2 4 6 8 10
+Overdrive (%)
+TPS3851G18 exiting undervoltage
+Figure 5-17. Propagation Delay (t ) vs Overdrive
+RST
+)sm(
+yaleD
+noitagaporP
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+210
+-40qC 25qC 125qC
+0qC 105qC
+205
+200
+195
+190
+0 2 4 6 8 10
+TPS3851G50 exiting undervoltage
+Figure 5-18. Propagation Delay (t ) vs Overdrive
+RST
+10 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 11
+5.8 Typical Characteristics (continued)
+all typical characteristics curves are taken at 25°C with 1.6V ≤ VDD ≤ 6.5V (unless other wise noted)
+Temperature (qC)
+)sP(
+ytinummI
+hctilG
+25
+Overdrive = 3% Overdrive = 9%
+Overdrive = 5% Overdrive = 10%
+Overdrive = 7%
+20
+15
+10
+5
+-50 -25 0 25 50 75 100 125
+Temperature (qC)
+V = 1.728V
+ITN
+Figure 5-19. High-to-Low Glitch Immunity vs Temperature
+)sP(
+ytinummI
+hctilG
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+25
+Overdrive = 3% Overdrive = 9%
+Overdrive = 5% Overdrive = 10%
+Overdrive = 7%
+20
+15
+10
+5
+-50 -25 0 25 50 75 100 125
+V = 4.8V
+ITN
+Figure 5-20. High-to-Low Glitch Immunity vs Temperature
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 11
+Product Folder Links: TPS3851
+
+PAGE 12
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+6 Detailed Description
+6.1 Overview
+The TPS3851 is a high-accuracy voltage supervisor with an integrated watchdog timer. This device includes a
+precision undervoltage supervisor with a threshold that achieves 0.8% accuracy over the specified temperature
+range of –40°C to +125°C. In addition, the TPS3851 includes accurate hysteresis on the threshold, and is
+designed for use with tight tolerance systems where voltage supervisors must make sure a RESET before the
+minimum supply tolerance of the microprocessor or system-on-a-chip (SoC) is reached. There are two options
+for the watchdog timing standard and extended timing. To get standard timing use the TPS3851Xyy(y)S, for
+extended timing use the TPS3851Xyy(y)E.
+6.2 Functional Block Diagram
+VDD
+R1
+RESET
+R2
+Precision
+Clock
+Reference
+VDD WDO
+State
+Machine
+Cap
+CWD
+Control
+MR WDI SET1 GND
+A. Note: R + R = 4.5MΩ.
+1 2
+6.3 Feature Description
+6.3.1 RESET
+Connect RESET to V through a 1kΩ to 100kΩ pullup resistor. RESET remains high (deasserted) when V is
+PU DD
+greater than the negative threshold voltage (V ). If V falls below the negative threshold (V ), then RESET
+ITN DD ITN
+is asserted, driving the RESET pin to low impedance. When V rises above V + V , a delay circuit is
+DD ITN HYST
+enabled that holds RESET low for a specified reset delay period (t ). When the reset delay has elapsed, the
+RST
+RESET pin goes to a high-impedance state and uses a pullup resistor to hold RESET high. The pullup resistor
+must be connected to the proper voltage rail to allow other devices to be connected at the correct interface
+voltage. To confirm proper voltage levels, give some consideration when choosing the pullup resistor values. The
+pullup resistor value is determined by output logic low voltage (V ), capacitive loading, leakage current (I ), and
+OL D
+the current through the RESET pin I .
+RESET
+12 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 13
+6.3.2 Manual Reset MR
+The manual reset ( MR) input allows a processor or other logic circuits to initiate a reset. A logic low on MR
+causes RESET to assert. After MR returns to a logic high and V is above V + V , RESET is deasserted
+DD ITN HYST
+after the reset delay time (t ). If MR is not controlled externally, then MR can either be connected to V or left
+RST DD
+floating because the MR pin is internally pulled up.
+6.3.3 UV Fault Detection
+The TPS3851 features undervoltage detection for common rails between 1.8V and 5V. The voltage is monitored
+on the input rail of the device. If V drops below V , then RESET is asserted (driven low). When V is
+DD ITN DD
+above V + V , RESET deasserts after t , as shown in Figure 6-1. The internal comparator has built-in
+ITN HYST RST
+hysteresis that provides some noise immunity and stable operation. Although not required in most cases, for
+noisy applications, good analog design practice is to place a 1nF to 100nF bypass capacitor close to the VDD
+pin to reduce sensitivity to transient voltages on the monitored signal.
+VDD
+VITN + VHYST
+Undervoltage Limit
+VITN
+RESET
+LED-TSRt
+tRST
+LED-TSRt
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+Figure 6-1. Undervoltage Detection
+6.3.4 Watchdog Mode
+This section provides information for the watchdog mode of operation.
+6.3.4.1 CWD
+The CWD pin provides the user the functionality of both high-precision, factory-programmed watchdog timing
+options and user-programmable watchdog timing. The TPS3851 features three options for setting the watchdog
+timer: connecting a capacitor to the CWD pin, connecting a pullup resistor to VDD, and leaving the CWD pin
+unconnected. The configuration of the CWD pin is evaluated by the device every time V enters the valid
+DD
+region (V + V < V ). The pin evaluation is controlled by an internal state machine that determines which
+ITN HYST DD
+option is connected to the CWD pin. The sequence of events typically takes 381μs (t ) to determine if the
+INIT
+CWD pin is left unconnected, pulled-up through a resistor, or connected to a capacitor. If the CWD pin is being
+pulled up to VDD, a 10kΩ resistor is required.
+6.3.4.2 Watchdog Input WDI
+WDI is the watchdog timer input that controls the WDO output. The WDI input is triggered by the falling edge
+of the input signal. To confirm proper functionality of the watchdog timer, always issue the WDI pulse before
+t . If the pulse is issued in this region, then WDO remains unasserted. Otherwise, the device asserts WDO,
+WD(min)
+putting the WDO pin into a low-impedance state.
+The watchdog input (WDI) is a digital pin. To make sure there is no increase in I , drive the WDI pin to either
+DD
+VDD or GND at all times. Putting the pin to an intermediate voltage can cause an increase in supply current (I )
+DD
+because of the architecture of the digital logic gates. When RESET is asserted, the watchdog is disabled and all
+signals input to WDI are ignored. When RESET is no longer asserted, the device resumes normal operation and
+no longer ignores the signal on WDI. If the watchdog is disabled, drive the WDI pin to either VDD or GND.
+Figure 6-2 shows the valid region for a WDI pulse to be issued to prevent WDO from being triggered and pulled
+low.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 13
+Product Folder Links: TPS3851
+
+PAGE 14
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+Correct
+WDI
+Operation
+WDO
+Late Fault
+WDI
+WDO
+Valid
+Timing Region
+tWD(MIN)
+tWD(TYP)
+tWD(MAX)
+= Tolerance Window
+Figure 6-2. Watchdog Timing Diagram
+6.3.4.3 Watchdog Output WDO
+The TPS3851 features a watchdog timer with an independent watchdog output (WDO). The independent
+watchdog output provides the flexibility to flag a fault in the watchdog timing without performing an entire system
+reset. When RESET is not asserted (high), the WDO signal maintains normal operation. When asserted, WDO
+remains low for t . When the RESET signal is asserted (low), the WDO pin goes to a high-impedance state.
+RST
+When RESET is unasserted, the watchdog timer resumes normal operation.
+14 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 15
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+6.3.4.4 SET1
+The SET1 pin can enable and disable the watchdog timer. If SET1 is set to GND, the watchdog timer is disabled
+and WDI is ignored. If the watchdog timer is disabled, drive the WDI pin to either GND or VDD to make sure
+that there is no increase in I . When SET1 is logic high, the watchdog operates normally. The SET1 pin can
+DD
+be changed dynamically; however, if the watchdog is going from disabled to enabled there is a 150µs setup time
+where the watchdog does not respond to changes on WDI, as shown in Figure 6-3.
+VDD
+RESET
+SET1
+150 µs
+Watchdog
+Enabled/Disabled Enabled Disabled Enabled
+Figure 6-3. Enabling and Disabling the Watchdog
+6.4 Device Functional Modes
+Table 6-1 summarises the functional modes of the TPS3851.
+Table 6-1. Device Functional Modes
+V WDI WDO RESET
+DD
+V < V --- --- Undefined
+DD POR
+V ≤ V < V Ignored High Low
+POR DD DD(min)
+V ≤ V ≤ V + V (1) Ignored High Low
+DD(min) DD ITN HYST
+V > V (2) t < t (3) High High
+DD ITN PULSE WD(min)
+V > V (2) t > t (3) Low High
+DD ITN PULSE WD(min)
+(1) Only valid before V has gone above V + V .
+DD ITN HYST
+(2) Only valid after V has gone above V + V .
+DD ITN HYST
+(3) Where t is the time between the falling edges on WDI.
+pulse
+6.4.1 V is Below V ( V < V )
+DD POR DD POR
+When V is less than V , RESET is undefined and can be either high or low. The state of RESET largely
+DD POR
+depends on the load that the RESET pin is experiencing.
+6.4.2 Above Power-On-Reset, But Less Than V (V ≤ V < V )
+DD(min) POR DD DD(min)
+When the voltage on V is less than V , and greater than or equal to V , the RESET signal is asserted
+DD DD(min) POR
+(logic low). When RESET is asserted, the watchdog output WDO is in a high-impedance state regardless of the
+WDI signal that is input to the device.
+6.4.3 Normal Operation (V ≥ V )
+DD DD(min)
+When V is greater than or equal to V , the RESET signal is determined by V . When RESET is
+DD DD(min) DD
+asserted, WDO goes to a high-impedance state. WDO is then pulled high through the pullup resistor.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 15
+Product Folder Links: TPS3851
+
+PAGE 16
+7 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification,
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for
+determining suitability of components for their purposes, as well as validating and testing their design
+implementation to confirm system functionality.
+7.1 Application Information
+The following sections describe in detail proper device implementation, depending on the final application
+requirements.
+7.1.1 CWD Functionality
+The TPS3851 features three options for setting the watchdog timer: connecting a capacitor to the CWD pin,
+connecting a pullup resistor to VDD, and leaving the CWD pin unconnected. Figure 7-1 shows a schematic
+drawing of all three options. If this pin is connected to VDD through a 10kΩ pullup resistor or left unconnected
+(high impedance), then the factory-programmed watchdog timeouts are enabled; see the Section 7.1.1.1 section.
+Otherwise, the watchdog timeout can be adjusted by placing a capacitor from the CWD pin to ground.
+VDD
+VDD
+375 nA
+CWD
+CWD
+CCWD
+Cap
+Control
+10
+k(cid:13)
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+VDD VDD VDD
+TPS3851 TPS3851 TPS3851
+VDD
+375 nA 375 nA
+CWD
+Cap Cap
+Control Control
+User Programmable 10 NŸ(cid:3)5HVLVWRU(cid:3) CWD
+Capacitor to GND to VDD Unconnected
+Figure 7-1. CWD Charging Circuit
+7.1.1.1 Factory-Programmed Timing Options
+If using the factory-programmed timing options (listed in Table 7-1), the CWD pin must either be unconnected
+or pulled up to VDD through a 10kΩ pullup resistor. Using these options enables high-precision, 15% accurate
+watchdog timing.
+Table 7-1. Factory Programmed Watchdog Timing
+INPUT STANDARD AND EXTENDED TIMING WDT (t )
+WD
+UNIT
+CWD SET1 MIN TYP MAX
+NC 0 Watchdog disabled
+NC 1 1360 1600 1840 ms
+10kΩ to VDD 0 Watchdog disabled
+10kΩ to VDD 1 170 200 230 ms
+16 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 17
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+7.1.1.2 Adjustable Capacitor Timing
+Adjustable capacitor timing is achievable by connecting a capacitor to the CWD pin. If a capacitor is connected
+to CWD, then a 375nA, constant-current source charges C until V = 1.21V. Table 7-2 shows how to
+CWD CWD
+calculate t using Equation 1 and Equation 2 and the SET1 pin. The TPS3851 determines the watchdog
+WD
+timeout with the formulas given in Equation 1 and Equation 2, where C is in nanofarads and t is in
+CWD WD
+milliseconds.
+t (ms) = 3.23 x C (nF) + 0.381 (ms) (1)
+WD(standard) CWD
+t (ms) = 77.4 x C (nF) + 55 (ms) (2)
+WD(extended) CWD
+The TPS3851 is designed and tested using C capacitors between 100pF and 1µF. Note that Equation 1 and
+CWD
+Equation 2 are for ideal capacitors, capacitor tolerances vary the actual device timing. For the most accurate
+timing, use ceramic capacitors with COG dielectric material. If a C capacitor is used, Equation 1 can be
+CWD
+used to set t for standard timing. Use Equation 2 to calculate t for extended timing. Table 7-3 shows the
+WD WD
+minimum and maximum calculated t values using an ideal capacitor for both the standard and extended
+WD
+timing.
+Table 7-2. Programmable CWD Timing
+INPUT STANDARD TIMING WDT (t ) EXTENDED TIMING WDT (t )
+WD WD
+UNIT
+CWD SET1 MIN TYP MAX MIN TYP MAX
+C 0 Watchdog disabled Watchdog disabled
+CWD
+C 1 t × 0.905 t (1) t × 1.095 t × 0.905 t (2) t × 1.095 ms
+CWD WD(std) WD(std) WD(std) WD(ext) WD(ext) WD(ext)
+(1) Calculated from Equation 1 using an ideal capacitor.
+(2) Calculated from Equation 2 using an ideal capacitor.
+Table 7-3. t Values for Common Ideal Capacitor Values
+WD
+STANDARD TIMING WDT (t ) EXTENDED TIMING WDT (t )
+WD WD
+C UNIT
+CWD MIN(1) TYP MAX(1) MIN(1) TYP MAX(1)
+100pF 0.637 0.704 0.771 56.77 62.74 68.7 ms
+1nF 3.268 3.611 3.954 119.82 132.4 144.98 ms
+10nF 29.58 32.68 35.79 750 829 908 ms
+100nF 292.7 323.4 354.1 7054 7795 8536 ms
+1μF 2923 3230 3537 70096 77455 84814 ms
+(1) The minimum and maximum values are calculated using an ideal capacitor.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 17
+Product Folder Links: TPS3851
+
+PAGE 18
+7.1.2 Overdrive Voltage
+Forcing a RESET is dependent on two conditions: the amplitude V is beyond the trip point (ΔV and ΔV ), and
+DD 1 2
+the length of time that the voltage is beyond the trip point (t and t ). If the voltage is just under the trip point for
+1 2
+a long period of time, RESET asserts and the output is pulled low. However, if V is just under the trip point for
+DD
+a few nanoseconds, RESET does not assert and the output remains high. The length of time required for RESET
+to assert can be changed by increasing the amount V goes under the trip point. If V is under the trip point
+DD DD
+by 10%, the amount of time required for the comparator to respond is much faster and causes RESET to assert
+much quicker than when barely under the trip point voltage. Equation 3 shows how to calculate the percentage
+overdrive.
+Overdrive = |((V / V ) – 1) × 100% | (3)
+DD ITX
+In Equation 3, V corresponds to the threshold trip point. If V is exceeding the positive threshold,
+ITX DD
+V + V is used. V is used when V is falling below the negative threshold. In Figure 7-2, t and t
+ITN HYST ITN DD 1 2
+correspond to the amount of time that V is over the threshold; the propagation delay versus overdrive for V
+DD ITN
+and V + V is illustrated in Figure 5-16 and Figure 5-18, respectively.
+ITN HYST
+The TPS3851 is relatively immune to short positive and negative transients on VDD because of the overdrive
+voltage curve.
+Time
+egatloV
+tupnI
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+ûV1
+t1
+VITN + VHYST
+VDD
+VITN
+ûV2 t2
+Figure 7-2. Overdrive Voltage
+18 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 19
+7.2 Typical Application
+1.8 V
+V
+CORE
+TPS3851 Microcontroller
+TPS3890
+VDD RESET RESET
+VDD SENSE
+WDO NMI
+MR
+RESET SET1 WDI GPIO
+CT
+CWD GND GND
+GND
+(cid:13)k
+001
+(cid:13)k
+001
+(cid:13)k
+001
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+MR
+4.7 µF
+2.7 nF
+Copyright © 2016, Texas Instruments Incorporated
+Figure 7-3. Monitoring the Supply Voltage and Watchdog Supervision of a Microcontroller
+7.2.1 Design Requirements
+PARAMETER DESIGN REQUIREMENT DESIGN RESULT
+Watchdog disable for initialization Watchdog must remain disabled for 5 seconds
+5.02 seconds (typ)
+period until logic enables the watchdog timer
+Output logic voltage 1.8V CMOS 1.8V CMOS
+Monitored rail 1.8V with a 5% threshold Worst-case V = 1.714V – 4.7%
+ITN
+Watchdog timeout 10ms typical t = 7.3ms, t = 9.1ms, t = 11ms
+WD(min) WD(TYP) WD(max)
+Maximum device current
+50µA 37µA when RESET or WDO is asserted (1)
+consumption
+(1) Only includes the TPS3851G18S current consumption.
+7.2.2 Detailed Design Procedure
+7.2.2.1 Monitoring the 1.8V Rail
+The undervoltage comparator allows for precise voltage supervision of common rails between 1.8V and 5.0V.
+This application calls for very tight monitoring of the rail with only 5% of variation allowed on the rail. To make
+sure this requirement is met, the TPS3851G18S is chosen for the –4% threshold. To calculate the worst-case for
+V , the accuracy must also be taken into account. The worst-case for V can be calculated by Equation 4:
+ITN ITN
+V = V x 0.992 = 1.8 x 0.96 x 0.992 = 1.714V (4)
+ITN(Worst Case) ITN(typ)
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 19
+Product Folder Links: TPS3851
+
+PAGE 20
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+7.2.2.2 Calculating RESET and WDO Pullup Resistor
+The TPS3851 uses an open-drain configuration for the RESET circuit, as shown in Figure 7-4. When the FET
+is off, the resistor pulls the drain of the transistor to VDD and when the FET is turned on, the FET attempts to
+pull the drain to ground, thus creating an effective resistor divider. The resistors in this divider must be chosen
+to make sure that V is below the maximum value. To choose the proper pullup resistor, there are three
+OL
+key specifications to keep in mind: the pullup voltage (V ), the recommended maximum RESET pin current
+PU
+(I ), and V . The maximum V is 0.4V, meaning that the effective resistor divider created must be able
+RESET OL OL
+to bring the voltage on the reset pin below 0.4V with I kept below 10mA. For this example, with a V of
+RESET PU
+1.8V, a resistor must be chosen to keep I below 50μA because this value is the maximum consumption
+RESET
+current allowed. To make sure this specification is met, a pullup resistor value of 100kΩ is selected, which sinks
+a maximum of 18μA when RESET or WDO is asserted. As illustrated in Figure 5-13, the RESET current is at
+18μA and the low-level output voltage is approximately zero.
+V
+PU
+RESET
+RESET
+CONTROL
+Figure 7-4. RESET Open-Drain Configuration
+7.2.2.3 Setting the Watchdog
+As illustrated in Figure 7-1 there are three options for setting the watchdog timer. The design specifications
+in this application require the programmable timing option (external capacitor connected to CWD). When a
+capacitor is connected to the CWD pin, the watchdog timer is governed by Equation 1 for the standard timing
+version. Note that only the standard version is capable of meeting this timing requirement. Equation 1 is only
+valid for ideal capacitors, any temperature or voltage derating must be accounted for separately.
+C (nF) = (t (ms) – 0.0381) / 3.23 = (10 – 0.381) / 3.23 = 2.97nF (5)
+CWD WD
+The nearest standard capacitor value to 2.9nF is 2.7nF. Selecting 2.7nF for the C capacitor gives the
+CWD
+following minimum timing parameters:
+t = 0.905 x t = 0.905 x (3.23 x 2.7 + 0.381) = 8.24ms (6)
+WD(MIN) WD(TYP)
+t = 1.095 x t = 1.095 x (3.23 x 2.7 + 0.381) = 9.97ms (7)
+WD(MAX) WD(TYP)
+Capacitor tolerance also influences t and t . Select a ceramic COG dielectric capacitor for high
+WD(MIN) WD(MAX)
+accuracy. For 2.7nF, COG capacitors are readily available with 5% tolerances. This selection results in a 5%
+decrease in t and a 5% increase in t , giving 7.34ms and 11ms, respectively. To make sure proper
+WD(MIN) WD(MAX)
+functionality, a falling edge must be issued before t . Figure 7-6 illustrates that a WDI signal with a period
+WD(min)
+of 5ms keeps WDO from asserting.
+20 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 21
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+7.2.2.4 Watchdog Disabled During Initialization Period
+The watchdog is often needed to be disabled during startup to allow for an initialization period. When the
+initialization period is over, the watchdog timer is turned back on to allow the microcontroller to be monitored
+by the TPS3851. To achieve this setup, SET1 must start at GND. In this design, SET1 is controlled by a
+TPS3890 supervisor. In this application, the TPS3890 is chosen to monitor VDD as well, which means that
+the RESET on the TPS3890 stays low until V rises above V . When VDD comes up, the delay time can
+DD ITN
+be adjusted through the CT capacitor on the TPS3890. With this approach, the RESET delay can be adjusted
+from a minimum of 25μs to a maximum of 30 seconds. For this design, a typical delay of 5 seconds is needed
+before the watchdog timer is enabled. The CT capacitor calculation (see the TPS3890 data sheet) yields an
+ideal capacitance of 4.67μF, giving a closest standard ceramic capacitor value of 4.7μF. When connecting a
+4.7μF capacitor from CT to GND, the typical delay time is 5 seconds. Figure 7-5 shows that when the watchdog
+is disabled, the WDO output remains high. However when SET1 goes high and there is no WDI signal, WDO
+begins to assert. See the TPS3890 data sheet for detailed information on the TPS3890.
+7.2.3 Glitch Immunity
+Figure 7-8 shows the high-to-low glitch immunity for the TPS3851G18S with a 7% overdrive with V starting at
+DD
+1.8V. This curve shows that V can go below the threshold for at least 6µs before RESET asserts.
+DD
+7.2.4 Application Curves
+Unless otherwise stated, application curves are taken at T = 25°C.
+A
+VDD
+2V/div VDD
+2V/div
+6 seconds
+SET1 5ms
+2V/div
+WDI
+2V/div
+WDO
+2V/div
+WDO
+2V/div
+RESET
+2V/div
+RESET
+2V/div
+1s/div 2ms/div
+Figure 7-5. Startup Without a WDI Signal Figure 7-6. Typical WDI Signal
+VDD VDD
+500mV/div 500mV/div
+6µs
+WDO WDO
+2V/div 2V/div
+195 ms
+RESET RESET
+2V/div 50ms/div 2V/div 2µs/div
+Figure 7-7. Typical RESET Delay Figure 7-8. High-to-Low Glitch Immunity
+7.3 Power Supply Recommendations
+This device is designed to operate from an input supply with a voltage range between 1.6V and 6.5V. An input
+supply capacitor is not required for this device; however, if the input supply is noisy, then good analog practice is
+to place a 0.1µF capacitor between the VDD pin and the GND pin.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 21
+Product Folder Links: TPS3851
+
+PAGE 22
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+7.4 Layout
+7.4.1 Layout Guidelines
+• Make sure that the connection to the VDD pin is low impedance. Good analog design practice is to place a
+0.1µF ceramic capacitor as near as possible to the VDD pin.
+• If a C capacitor or pullup resistor is used, place these components as close as possible to the CWD pin. If
+CWD
+the CWD pin is left unconnected, make sure to minimize the amount of parasitic capacitance on the pin.
+• Place the pullup resistors on RESET and WDO as close to the pin as possible.
+7.4.2 Layout Example
+Vin
+C VDD R PU1
+Vin
+R
+PU2
+Vin VDD 1 8 RESET
+C CWD CWD 2 7 WDO
+MR 3 6 WDI
+GND 4 5 SET1
+GND Plane
+Denotes a via
+Figure 7-9. TPS3851 Recommended Layout
+22 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 23
+TPS3851
+www.ti.com SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025
+8 Device and Documentation Support
+8.1 Device Support
+8.1.1 Device Nomenclature
+Table 8-1. Device Nomenclature
+DESCRIPTION NOMENCLATURE VALUE
+TPS3851
+— —
+(high-accuracy supervisor with watchdog)
+X G V = –4%
+ITN
+(nominal threshold as a percent of the nominal
+monitored voltage) H V ITN = –7%
+18 1.8V
+25 2.5V
+yy(y)
+30 3.0V
+(nominal monitored voltage option)
+33 3.3V
+50 5.0V
+z S t WD (ms) = 3.23 x C WD (nF) + 0.381 (ms)
+(nominal watchdog timeout period) E t (ms) = 77.4 x C (nF) + 55.2 (ms)
+WD WD
+8.2 Documentation Support
+8.2.1 Related Documentation
+For related documentation see the following:
+• TPS3890 Low Quiescent Current, 1% Accurate Supervisor with Programmable Delay (SLVSD65)
+• TPS3851EVM-780 Evaluation Module (SBVU033)
+8.3 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on
+Notifications to register and receive a weekly digest of any product information that has changed. For change
+details, review the revision history included in any revised document.
+8.4 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do
+not necessarily reflect TI's views; see TI's Terms of Use.
+8.5 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+8.6 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published
+specifications.
+8.7 Glossary
+TI Glossary This glossary lists and explains terms, acronyms, and definitions.
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 23
+Product Folder Links: TPS3851
+
+PAGE 24
+TPS3851
+SBVS300B – NOVEMBER 2016 – REVISED JUNE 2025 www.ti.com
+9 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision A (September 2021) to Revision B (June 2025) Page
+• Updated MR pin internal pull up information in Pin Functions............................................................................3
+Changes from Revision * (November 2016) to Revision A (September 2021) Page
+• Updated the numbering format for tables, figures, and cross-references throughout the document.................1
+• Removed "±15% Accurate WDT and RST Delays"............................................................................................1
+• Added "on the VDD pin".....................................................................................................................................1
+• Changed V values to ±4000V and ±1000 V..................................................................................................4
+ESD
+• Changed I min and max spec .....................................................................................................................5
+CWD
+• Changed V min and max spec ....................................................................................................................5
+CWD
+• Added a footnote to for t ...............................................................................................................................6
+INIT
+• Updated t min and max multipliers from 0.85 and 1.15 to 0.905 and 1.095 respectively..........................17
+WDU
+• Updated t min and max values for all capacitors.......................................................................................17
+WDU
+• Updated equation 6 and 7 to replace 0.85 and 1.15 with 0.905 and 1.095 respectively..................................20
+10 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+24 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Product Folder Links: TPS3851
+
+PAGE 25
+PACKAGE OPTION ADDENDUM
+www.ti.com 15-Aug-2026
+PACKAGING INFORMATION
+Orderable part number Status Material type Package | Pins Package qty | Carrier RoHS Lead finish/ MSL rating/ Op temp (°C) Part marking
+(1) (2) (3) Ball material Peak reflow (6)
+(4) (5)
+TPS3851G18EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18EDRBRG4 Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18EDRBRG4.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DD
+TPS3851G18SDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G18SDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G18SDRBRG4 Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G18SDRBRG4.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G18SDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G18SDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851DC
+TPS3851G25EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ED
+TPS3851G25EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ED
+TPS3851G25EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ED
+TPS3851G25EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ED
+TPS3851G30EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851FD
+TPS3851G30EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851FD
+TPS3851G30EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851FD
+TPS3851G30EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851FD
+TPS3851G33EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GD
+TPS3851G33EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GD
+TPS3851G33EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GD
+TPS3851G33EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GD
+TPS3851G33SDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GC
+TPS3851G33SDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GC
+TPS3851G33SDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GC
+TPS3851G33SDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851GC
+TPS3851G50EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HD
+Addendum-Page 1
+
+PAGE 26
+PACKAGE OPTION ADDENDUM
+www.ti.com 15-Aug-2026
+Orderable part number Status Material type Package | Pins Package qty | Carrier RoHS Lead finish/ MSL rating/ Op temp (°C) Part marking
+(1) (2) (3) Ball material Peak reflow (6)
+(4) (5)
+TPS3851G50EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HD
+TPS3851G50EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HD
+TPS3851G50EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HD
+TPS3851G50SDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HC
+TPS3851G50SDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HC
+TPS3851G50SDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HC
+TPS3851G50SDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851HC
+TPS3851H18EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851LD
+TPS3851H18EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851LD
+TPS3851H18EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851LD
+TPS3851H18EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851LD
+TPS3851H25EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851MD
+TPS3851H25EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851MD
+TPS3851H25EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851MD
+TPS3851H25EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851MD
+TPS3851H30EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ND
+TPS3851H30EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ND
+TPS3851H30EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ND
+TPS3851H30EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851ND
+TPS3851H33EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H33EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H33EDRBRG4 Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H33EDRBRG4.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H33EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H33EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851PD
+TPS3851H50EDRBR Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851RD
+TPS3851H50EDRBR.A Active Production SON (DRB) | 8 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 851RD
+TPS3851H50EDRBT Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851RD
+TPS3851H50EDRBT.A Active Production SON (DRB) | 8 250 | SMALL T&R Yes SN Level-1-260C-UNLIM -40 to 125 851RD
+(1) Status: For more details on status, see our product life cycle.
+Addendum-Page 2
+
+PAGE 27
+PACKAGE OPTION ADDENDUM
+www.ti.com 15-Aug-2026
+(2) Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+(3) RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+(4) Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+(5) MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+(6) Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+OTHER QUALIFIED VERSIONS OF TPS3851 :
+•Automotive : TPS3851-Q1
+NOTE: Qualified Version Definitions:
+•Automotive - Q100 devices qualified for high-reliability automotive applications targeting zero defects
+Addendum-Page 3
+
+PAGE 28
+PACKAGE MATERIALS INFORMATION
+www.ti.com 3-Sep-2026
+TAPE AND REEL INFORMATION
+REEL DIMENSIONS TAPE DIMENSIONS
+K0 P1
+W
+B0
+Reel
+Diameter
+Cavity A0
+A0 Dimension designed to accommodate the component width
+B0 Dimension designed to accommodate the component length
+K0 Dimension designed to accommodate the component thickness
+W Overall width of the carrier tape
+P1 Pitch between successive cavity centers
+Reel Width (W1)
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Sprocket Holes
+Q1 Q2 Q1 Q2
+Q3 Q4 Q3 Q4 User Direction of Feed
+Pocket Quadrants
+*All dimensions are nominal
+Device Package Package Pins SPQ Reel Reel A0 B0 K0 P1 W Pin1
+Type Drawing Diameter Width (mm) (mm) (mm) (mm) (mm) Quadrant
+(mm) W1 (mm)
+TPS3851G18EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18EDRBRG4 SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18SDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18SDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18SDRBRG4 SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G18SDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G25EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G25EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G30EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G30EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G33EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G33EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G33SDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G33SDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G50EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+Pack Materials-Page 1
+
+PAGE 29
+PACKAGE MATERIALS INFORMATION
+www.ti.com 3-Sep-2026
+Device Package Package Pins SPQ Reel Reel A0 B0 K0 P1 W Pin1
+Type Drawing Diameter Width (mm) (mm) (mm) (mm) (mm) Quadrant
+(mm) W1 (mm)
+TPS3851G50EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G50SDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851G50SDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H18EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H18EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H25EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H25EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H30EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H30EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H33EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H33EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H33EDRBRG4 SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H33EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H50EDRBR SON DRB 8 3000 330.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+TPS3851H50EDRBT SON DRB 8 250 180.0 12.4 3.3 3.3 1.1 8.0 12.0 Q2
+Pack Materials-Page 2
+
+PAGE 30
+PACKAGE MATERIALS INFORMATION
+www.ti.com 3-Sep-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm) H
+W L
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS3851G18EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G18EDRBRG4 SON DRB 8 3000 367.0 367.0 35.0
+TPS3851G18EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G18SDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G18SDRBR SON DRB 8 3000 353.0 353.0 32.0
+TPS3851G18SDRBRG4 SON DRB 8 3000 367.0 367.0 35.0
+TPS3851G18SDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G25EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G25EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G30EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G30EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G33EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G33EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G33SDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G33SDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G50EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851G50EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851G50SDRBR SON DRB 8 3000 360.0 360.0 36.0
+Pack Materials-Page 3
+
+PAGE 31
+PACKAGE MATERIALS INFORMATION
+www.ti.com 3-Sep-2026
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS3851G50SDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851H18EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851H18EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851H25EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851H25EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851H30EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851H30EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851H33EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851H33EDRBR SON DRB 8 3000 353.0 353.0 32.0
+TPS3851H33EDRBRG4 SON DRB 8 3000 367.0 367.0 35.0
+TPS3851H33EDRBT SON DRB 8 250 210.0 185.0 35.0
+TPS3851H50EDRBR SON DRB 8 3000 360.0 360.0 36.0
+TPS3851H50EDRBT SON DRB 8 250 210.0 185.0 35.0
+Pack Materials-Page 4
+
+PAGE 32
+
+
+PAGE 33
+PACKAGE OUTLINE
+DRB0008A VSON - 1 mm max height
+SCALE 4.000
+PLASTIC SMALL OUTLINE - NO LEAD
+3.1 B
+A
+2.9
+PIN 1 INDEX AREA
+3.1
+2.9
+C
+1 MAX
+SEATING PLANE
+0.05 0.08 C DIM A
+0.00
+OPT 1 OPT 2
+1.5 0.1 (0.1) (0.2)
+4X (0.23)
+EXPOSED (DIM A) TYP
+THERMAL PAD
+4 5
+2X
+1.95 1.75 0.1
+8
+1
+6X 0.65
+0.37
+8X
+0.25
+PIN 1 ID
+0.1 C A B
+(OPTIONAL)
+(0.65) 0.05 C
+0.5
+8X
+0.3
+4218875/A 01/2018
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. The package thermal pad must be soldered to the printed circuit board for thermal and mechanical performance.
+www.ti.com
+
+PAGE 34
+EXAMPLE BOARD LAYOUT
+DRB0008A VSON - 1 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+(1.5)
+(0.65)
+SYMM
+8X (0.6)
+(0.825)
+8X (0.31) 1 8
+SYMM
+(1.75)
+(0.625)
+6X (0.65)
+4
+5
+(R0.05) TYP
+( 0.2) VIA
+TYP (0.23)
+(0.5)
+(2.8)
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:20X
+0.07 MAX 0.07 MIN
+ALL AROUND ALL AROUND
+EXPOSED EXPOSED
+METAL METAL
+SOLDER MASK METAL METAL UNDER SOLDER MASK
+OPENING SOLDER MASK OPENING
+NON SOLDER MASK
+SOLDER MASK
+DEFINED
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+4218875/A 01/2018
+NOTES: (continued)
+4. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+number SLUA271 (www.ti.com/lit/slua271).
+5. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+on this view. It is recommended that vias under paste be filled, plugged or tented.
+www.ti.com
+
+PAGE 35
+EXAMPLE STENCIL DESIGN
+DRB0008A VSON - 1 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+(0.65)
+4X (0.23)
+SYMM
+METAL
+TYP
+8X (0.6)
+4X
+(0.725)
+8X (0.31) 1 8
+(2.674)
+SYMM
+(1.55)
+6X (0.65)
+4
+5
+(R0.05) TYP
+(1.34)
+(2.8)
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+EXPOSED PAD
+84% PRINTED SOLDER COVERAGE BY AREA
+SCALE:25X
+4218875/A 01/2018
+NOTES: (continued)
+6. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+www.ti.com
+
+PAGE 36
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

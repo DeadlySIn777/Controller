@@ -1,0 +1,25 @@
+"""Make six prospective terminal contacts explicit; bind R450 whole path."""
+import sys,json,pickle,time,uuid,math
+from pathlib import Path
+from shapely.geometry import Point,LineString
+from shapely.ops import unary_union
+P=Path(__file__).resolve().parent;H=P.parent
+for d in ('field-power','sbc-power','coupled-recovery'):sys.path.insert(0,str(H/d))
+import search_remaining_CM_actual_source_local_ground_ports_r452 as S
+K=S.K;L=S.L;sha=S.sha
+OUT=P/'CM51-explicit-only-NEW-ground-terminal-joints-and-named-R450-path-r457'
+def put(n,v):(OUT/n).write_text(json.dumps(v,indent=1,allow_nan=False)+'\n',encoding='utf-8')
+def main():
+    started=time.monotonic();assert not OUT.exists();OUT.mkdir();ctx,c,alt,prev,nt,nv=S.assemble();d=P/'CM51-fresh-joint-alternate-ground-analytic-guards-and-finite-SOURCE-before-graph-r454';errors=json.loads((d/'all-new-and-moved-true-analytic-errors.json').read_bytes());newids={t['uuid']for t in nt};activeids={t['uuid']for t in ctx['current_Cu_and_local_native_pads']['tracks']};retired=[];added=[];rows=[]
+    for e in errors:
+        uid=e['new_UUID'];t=next(t for t in nt if t['uuid']==uid);v=next(v for v in nv if v['uuid']==e['other_UUID']);assert L.norm(t['net'])==L.norm(v['net'])=='/LOGIC_GND'and uid not in activeids
+        if uid=='b49eb65d-ec16-53f2-a90e-4cc942d55fd7':continue
+        axis=LineString([t['a'],t['b']]);p=Point(v['x'],v['y']);near=axis.interpolate(axis.project(p));dist=near.distance(p);endpoint=min(math.dist(xy,[v['x'],v['y']])for xy in(t['a'],t['b']))
+        if dist<v['d']/2 and endpoint>v['d']/2:
+            q=[round(near.x,6),round(near.y,6)];segments=[(t['a'],q),(q,t['b'])];op='explicit_inline_same-ground_terminal_joint_at_axis_projection'
+        else:
+            assert uid=='d859ef3c-4205-54ad-9ea7-df113dbd9c84';segments=[(t['a'],[v['x'],v['y']])];op='minimal_owned_terminal_tail_extended_to_exact_port_centre'
+        ts=[{**t,'uuid':str(uuid.uuid5(uuid.NAMESPACE_URL,'CM-R457-terminal:'+uid+':'+str(i))),'a':a,'b':b}for i,(a,b)in enumerate(segments)];retired.append(uid);added+=ts;oldbody=axis.buffer(.1,quad_segs=128);body=unary_union([LineString([x['a'],x['b']]).buffer(.1,quad_segs=128)for x in ts]);cap=p.buffer(.525,quad_segs=128);outside=body.difference(cap);ann=p.buffer(.25,quad_segs=128).difference(p.buffer(.1,quad_segs=128));assert body.intersection(ann).area>0 and(outside.is_empty or outside.distance(p.buffer(.1,quad_segs=128))>=.28);rows.append({'retired_ONLY_NEW_UUID':uid,'operation':op,'owned_named_ground_terminal_UUID':v['uuid'],'new_tracks':ts,'old_axis_distance_to_port_mm':dist,'finite_incident_port_annulus_contact_mm2':body.intersection(ann).area,'new_Cu_gain_mm2':body.difference(oldbody).area,'old_NEW_Cu_retreat_mm2':oldbody.difference(body).area,'gain_outside_exact_owned525cap_mm2':body.difference(oldbody).difference(cap).area})
+    de=S.load('CM73-original-prospective-de03-site-alternate-CDONE-LG16-r450','only-qualified-prospective-de03-source-port-two-owned-tracks.pkl');v=de['via'];p=Point(v['x'],v['y']);body=unary_union([LineString([t['a'],t['b']]).buffer(.1,quad_segs=128)for t in de['tracks']]);outside=body.difference(p.buffer(.525,quad_segs=128));ann=p.buffer(.25,quad_segs=128).difference(p.buffer(.1,quad_segs=128));pad=next(p for p in c['pads']if(p['ref'],str(p['num']))==('J15002','73'));assert body.intersection(ann).area>0 and body.intersection(unary_union(L.poly(pad['layers']['F.Cu']))).area>0 and(outside.is_empty or outside.distance(p.buffer(.1,quad_segs=128))>=.28);ownership={'via_UUID':v['uuid'],'tracks':[t['uuid']for t in de['tracks']],'exact_declared_R450_pad73_to_own_port_path':True,'finite_whole_path_own_annulus_contact_mm2':body.intersection(ann).area,'finite_whole_path_own_pad73_contact_mm2':body.intersection(unary_union(L.poly(pad['layers']['F.Cu']))).area,'owncap_radius_mm':.525,'outside_wholepath_owncap_drill_gap_mm':None if outside.is_empty else outside.distance(p.buffer(.1,quad_segs=128))}
+    pkt={'retired_ONLY_NEW_tracks':retired,'replacement_ONLY_NEW_tracks':added,'exact_whole_terminal_path_ownership':[ownership],'source_receipt_R454':sha(d/'receipt.json'),'raw_R454_errors_retained':True,'original_Cu_changes':0,'current_native_after_SOURCE_oldrefs_masks_current_thermal':'OPEN'};(OUT/'only-NEW-six-terminal-joint-repairs-one-path-ownership.pkl').write_bytes(pickle.dumps(pkt,protocol=5));put('six-controlled-only-new-terminal-joint-deltas.json',rows);put('exact-named-R450-two-track-terminal-path-ownership.json',ownership);put('receipt.json',{'status':'ONLY_NEW_CONTROLLED_TERMINAL_JOINTS_READY_FOR_FRESH_REAUDIT','retired_ONLY_NEW_count':len(retired),'new_replacement_tracks':len(added),'explicit_whole_terminal_path_count':1,'original_Cu_holes_pad_FP_zones_changed':0,'no_global_or_other_hole_cap_exemption':True,'packet_SHA256':sha(OUT/'only-NEW-six-terminal-joint-repairs-one-path-ownership.pkl'),'native_jobs':0,'adopted':False,'elapsed_seconds':time.monotonic()-started});print('R457_COMPLETE',sha(OUT/'receipt.json'),len(retired),len(added),flush=True)
+if __name__=='__main__':main()

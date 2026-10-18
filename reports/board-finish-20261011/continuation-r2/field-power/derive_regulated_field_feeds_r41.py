@@ -1,0 +1,21 @@
+"""Reuse proven B5 constructor for the exact remaining four regulated rails."""
+from pathlib import Path
+P=Path(__file__).resolve().parent;s=(P/'b5_source_rooted_feeds_r4.py').read_text();s=s.replace("OUT=HERE/'b5-source-rooted-feeds-r4'","OUT=HERE/'regulated-field-source-feeds-r41'")
+a=s.index("    assert not OUT.exists();");b=s.index("    for line in dru.splitlines():",a)
+setup='''    assert not OUT.exists();OUT.mkdir();bp=HERE/'local-and-b5-return-audit-r25';br=json.loads((bp/'receipt.json').read_text());assert sha(bp/'geometry.pkl')==br['geometry_sha256'];g=pickle.loads((bp/'geometry.pkl').read_bytes());assert sha(bp/'proposed-zones.pkl')==br['proposed_zones_sha256'];planes=pickle.loads((bp/'proposed-zones.pkl').read_bytes());baseplanes=planes;r6adds=[];ports=[('FIELD5','/motherboard_power_entry/FIELD_5V','L11003','2',.360),('A3V3','/motherboard_do/DOA_FIELD_3V3','U11017','1',.050),('B3V3','/motherboard_do/DOB_FIELD_3V3','U11018','1',.090),('BDO3V3','DOB_DO_FIELD_3V3','U11038','1',.040)];groups={net:F.graph(g,net) for _,net,_,_,_ in ports};rec,trees=F.build({**g,'zones':[]});outline=unary_union(C.poly(g['outline'])).buffer(-.526);res=json.loads((C.BASE/'recovery-composite/c06/alternate-r07/reserved-r07.json').read_text());dru=(C.BASE/'recovery-composite/c06/alternate-r07/reserve/board.kicad_dru').read_text();exceptions={}
+'''
+s=s[:a]+setup+s[b:]
+s=s.replace("for bank,net,rootref in [('B5','/motherboard_safety_sensor/FIELD_B_5V_PRE','L19001')]", "for bank,net,rootref,rootpin,policy in ports")
+s=s.replace("==(rootref,'2')", "==(rootref,rootpin)").replace("== (rootref,'2')", "== (rootref,rootpin)")
+a=s.index("        for row in r6['rows']:");b=s.index("        currentgroups=",a);s=s[:a]+s[b:]
+s=s.replace("foreign={l:[q for q in planes if", "foreign={l:[q for q in planes+adds if")
+s=s.replace("for l in INNER};foreign=", "for l in INNER};connected|={ri} if any(not sh.is_empty for sh in source.values()) else set();foreign=")
+s=s.replace("normal_full_feed_capacity_policy_A':.14", "normal_full_feed_capacity_policy_A':policy")
+s=s.replace("cuts=[obstacles[l][int(j)][1] for j in ii]+[q['shape'].buffer(gap(q['net'])+.025) for q in adds if", "cuts=[obstacles[l][int(j)][1] for j in ii]+[q['shape'].buffer(gap(q['net'])+.025) for q in adds+newcu if")
+s=s.replace("controller-b5-source-feeds-r4/", "controller-regulated-field-feeds-r41/")
+s=s.replace("'source_root':rootref+'.2'", "'source_root':rootref+'.'+rootpin")
+s=s.replace("'complete_B5_feed_routing_policy_A':.14", "'complete_rail_feed_routing_policy_A':policy")
+a=s.index("    receipt={'verdict':");b=s.index(";write(OUT/'receipt.json',receipt)",a)
+receipt="""    receipt={'verdict':'CONSTRUCTIVE_REGULATED_FIELD_FEEDS_COMPLETE_MUTUAL_CURRENT_NATIVE_PENDING' if not missing else 'REGULATED_FIELD_FEEDS_INCOMPLETE','rows':rows,'remaining':missing,'new_vias':len(vias),'new_stubs':len(tracks),'new_inner_source_bridges':len(adds),'proposed_discrete_sha256':sha(OUT/'proposed-discrete.pkl'),'proposed_zones_sha256':sha(OUT/'proposed-zones.pkl'),'parent_R25_receipt_SHA256':sha(bp/'receipt.json'),'source_bound_R40_census_SHA256':sha(HERE/'field-supply-census-r40/receipt.json'),'every_SMD_hole_guard_mm':.275,'dynamic_new_native_hole_edge_guard_mm':.275,'minimum_track_width_mm':.20,'same_raw_plated_source_annuli_preserved':True,'source_goals_include_all_four_screened_prospective_inner_annuli_of_each_rooted_plated_barrel':True,'additional_native_flash_on_every_used_barrel_plane_contact_required':True,'intended_native_outline_and_effective_drill_subtracted_Cu_separate':True,'full_normal_load_and_routing_reservation_basis':{'normal_model_r3_SHA256':sha(HERE/'normal-model-r3.json'),'rail_policy_A':{bank:policy for bank,net,ref,pin,policy in ports}},'native_discrete_sha256':br['native_discrete_base_sha256'],'all_frozen_R25_shapes_unchanged':True,'root_protected24_and_later_CORE_and_U11015_not_composed':True,'old_cached_fill_only_endpoints':False,'full_original_contact_signed_current_mutual_mesh_native_gates':'OPEN','board_written':False,'native_jobs':0}"""
+s=s[:a]+receipt+s[b:]
+(P/'regulated_field_source_feeds_r41.py').write_text(s,encoding='utf-8');compile(s,'regulated_field_source_feeds_r41.py','exec');print('derived',len(s))

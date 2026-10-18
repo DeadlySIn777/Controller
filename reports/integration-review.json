@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-28",
+  "scope": "Root integration review; no physical hardware qualification",
+  "status": "superseded snapshot",
+  "superseded_by": "reports/implementation-review.json",
+  "snapshot_note": "Source hashes record the files as reviewed on this date; controller_config/__main__.py has since changed (current identity in reports/implementation-review.json).",
+  "observed_checks": {
+    "python_unittest_discover": {
+      "passed": 168,
+      "exit_code": 0
+    },
+    "configuration_api_demo": {
+      "exit_code": 0,
+      "revisions": [
+        1,
+        2,
+        3
+      ],
+      "restored_configuration_matches_original": true,
+      "physical_commands": 0
+    },
+    "compute_display_matrix": {
+      "exit_code": 0,
+      "cases": 144,
+      "complete_manufactured_totals": 0
+    }
+  },
+  "source_sha256": {
+    "controller_config/model.py": "3bcfc8e16e191c1a5855c6187ef9091797d94d8e49042445a72de646ebe6c1ab",
+    "controller_config/service.py": "8205be4fa424ce007b323d65c1ae8d3200421afe08f71027033411b389baa87a",
+    "controller_config/__main__.py": "b271e93dc521d1c21f7530369a489e4d4d54a9d953df852a8e199627c408aabc",
+    "tests/test_configuration_service.py": "7cffa27f816659d8c4bf3238df24f2ab20337667007e2cdd3a5a08be02c514e3",
+    "examples/configuration/demo.py": "5609e716d8f2d0ea67458f7ff1c668469112e998ebd40abb64d99e5a7a1c86f5",
+    "tools/build_compute_display_matrix.py": "12a8b362486c665d1a49e57eabd712d7eee1539ba0e051568fecec49568a205c"
+  },
+  "limitations": [
+    "Configuration service is disconnected and not bound to CNC1 runtime authority.",
+    "Cost matrix contains incomplete manufacturing totals.",
+    "CNC1 source/runtime evidence is recorded separately by its own manifest."
+  ],
+  "review_changes": [
+    "Driver emitted-count plausibility and host-age validation.",
+    "Scale/mask immutable after first feedback; no implicit motion from configuration edits.",
+    "Encoder/index wrap coherence and explicit limits.",
+    "ESP unknown readiness separated from service lifecycle state."
+  ]
+}

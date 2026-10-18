@@ -1,0 +1,1549 @@
+{
+ "results": [
+  {
+   "net": "/motherboard_do/DOA_SDO_FIELD",
+   "domain": "DOM_FIELD_A",
+   "controlled_policy": {
+    "group": "SE_CHAIN",
+    "pair_partner": null,
+    "rule": "R2+R4",
+    "chain_members": [
+     "/motherboard_do/DOA_SDO_FIELD"
+    ],
+    "chain_series_resistors": [],
+    "chain_driver": "U10004.7 TPS274C65ASRHAR on DOA_SDO_FIELD",
+    "t_r_ns": 1.0,
+    "t_r_basis": "TPS274C65ASRHAR: no output rise-time specification in the project's sources (LVC datasheets point to input transition only) -> 1.0 ns assumed (inference, conservative)",
+    "t_r_citation": [
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.txt",
+      "line": 1536,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.pdf",
+      "pdf_page": 14,
+      "text": "For rise time and fall time specification, see (\u0394t/\u0394V) in the Recommended Operating Conditions table."
+     }
+    ],
+    "l_crit_mm": 14.1,
+    "l_crit_basis": "0.1 * t_r / t_pd (ISOW1432 Eq. 3); t_pd(In3 stripline, Cohn) = 7.090 ps/mm, t_pd(outer microstrip, H&J) = 5.896 ps/mm; L_crit uses the slower 7.090 ps/mm",
+    "l_crit_citation": [
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3930,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "9.2.2.2 Stub Length"
+     },
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3934,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "or round-trip delay, of a stub must be less than one-tenth of the rise time of the driver as a general guideline."
+     },
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3936,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "L STUB \u22640.1 \u00d7 tr \u00d7 v \u00d7 c"
+     }
+    ],
+    "chain_l_est_mm": 271.1,
+    "edge_sensitive_evidence": [],
+    "edge_evidence_tiers": [],
+    "edge_evidence_strongest": null,
+    "settle_ns": 11.5,
+    "level_sampled_max_clock_MHz": 43.4,
+    "skew": {
+     "intra_pair_mm": null,
+     "source": "single-ended net: no length-match requirement found in the driver/receiver datasheets; bus timing budgets were not analysed here (inference)"
+    },
+    "interface": "single-ended level/static",
+    "class": "NONE",
+    "target_ohm": null,
+    "tolerance_pct": null,
+    "source_citations": [],
+    "rationale": "no controlled impedance required: level-sampled/static signal (no clock or counted-edge receiver); reflections settle in 11.5 ns (6 one-way delays over chain L_est 271 mm), adequate for synchronous sampling up to 43 MHz bus clock; bus clock check: DO SPI (TPS274C65 via ISO7762) at 10 MHz vs settle limit 43.4 MHz -> PASS (margin x4.34)",
+    "bus_clock_check": {
+     "bus": "DO SPI (TPS274C65 via ISO7762)",
+     "bus_clock_or_bit_rate_MHz": 10.0,
+     "basis": "TPS274C65: SCLK period min 100 ns (next line) -> 10 MHz",
+     "source": [
+      {
+       "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-do-20260930/sources/tps274c65.txt",
+       "line": 993,
+       "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-do-20260930/sources/tps274c65.pdf",
+       "pdf_page": 14,
+       "text": "tSPI SPI clock (SCLK) period CSDO = 30 pF;"
+      }
+     ],
+     "settle_limit_MHz": 43.4,
+     "margin_x": 4.34,
+     "pass": true
+    },
+    "net": "/motherboard_do/DOA_SDO_FIELD",
+    "mst_mm": 208.54,
+    "routed_mm": 6.93,
+    "missing_joins": 2,
+    "routed_by_layer_mm": {
+     "F.Cu": 6.93
+    },
+    "l_est_mm": 271.1,
+    "l_est_basis": "max(1.3 x MST, min daisy chain, routed so far)",
+    "daisy_chain_mm": 208.54,
+    "end_parts": [
+     {
+      "ref": "R10013",
+      "pin": "1",
+      "part": "CRCW060310K0FKEA",
+      "pintype": "passive",
+      "pinfunction": ""
+     },
+     {
+      "ref": "U10003",
+      "pin": "11",
+      "part": "ISO7762FDBQR",
+      "pintype": "input",
+      "pinfunction": "INE_11"
+     },
+     {
+      "ref": "U10004",
+      "pin": "7",
+      "part": "TPS274C65ASRHAR",
+      "pintype": "tri_state",
+      "pinfunction": "SDO_7"
+     },
+     {
+      "ref": "U10009",
+      "pin": "7",
+      "part": "TPS274C65ASRHAR",
+      "pintype": "tri_state",
+      "pinfunction": "SDO_7"
+     }
+    ],
+    "reference_samples_on_mst": {
+     "samples": 211,
+     "in1_logic_gnd": 97,
+     "in4_logic_gnd": 136,
+     "in2_nets": {
+      "<none>": 112,
+      "/IO_3V3": 99
+     },
+     "in3_nets": {
+      "<none>": 211
+     }
+    },
+    "candidate_sources": [
+     "classify_ci:isolated_ADC_DAC_DO_SPI",
+     "classified:b:B-g",
+     "netname_regex"
+    ]
+   },
+   "width_mm": 0.2,
+   "via_size_drill_mm": [
+    0.5,
+    0.2
+   ],
+   "native_relationships": [
+    {
+     "r06_pad_relationship": [
+      "R10013.1#0",
+      "U10003.11#0"
+     ],
+     "current_split_native_groups": [
+      [
+       "R10013.1#0"
+      ],
+      [
+       "U10003.11#0"
+      ]
+     ]
+    }
+   ],
+   "paths": [],
+   "windows": [
+    {
+     "window_mm": [
+      207.5,
+      136.4695,
+      228.275,
+      152.942
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "B.Cu",
+       "seed_counts": [
+        0,
+        0
+       ],
+       "search": {
+        "reason": "no strict source-reference attachment",
+        "nodes": 0
+       },
+       "blocker_count": 550
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "B.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "B.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 0.0,
+     "via_blocker_classes": {
+      "hole": 444,
+      "via": 450,
+      "track": 636,
+      "pad": 98,
+      "reserved_corridor": 24,
+      "native_rule_area": 12,
+      "fill": 20,
+      "barrier_courtyard": 2
+     },
+     "qualified_existing_returns": 0,
+     "landing_pairs": 0,
+     "middle_searches": []
+    },
+    {
+     "window_mm": [
+      201.5,
+      130.4695,
+      234.275,
+      158.942
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "B.Cu",
+       "seed_counts": [
+        0,
+        0
+       ],
+       "search": {
+        "reason": "no strict source-reference attachment",
+        "nodes": 0
+       },
+       "blocker_count": 1055
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "B.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "B.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 0.0,
+     "via_blocker_classes": {
+      "via": 906,
+      "track": 1303,
+      "hole": 870,
+      "pad": 192,
+      "reserved_corridor": 36,
+      "native_rule_area": 14,
+      "fill": 45,
+      "barrier_courtyard": 4
+     },
+     "qualified_existing_returns": 0,
+     "landing_pairs": 0,
+     "middle_searches": []
+    }
+   ],
+   "current_retained_copper_items": 93914,
+   "current_policy": "Ordinary signal, not listed power trunk; .2mm effective domain default. Driver/current/timing remains electrical gate open.",
+   "physical_pad_groups": [
+    [
+     "R10013.1#0"
+    ],
+    [
+     "U10003.11#0"
+    ]
+   ],
+   "reference_witnesses": {
+    "In1.Cu": {
+     "source_pad": "J11003.2#0",
+     "source_uuid": "90e29980-abc1-4ab4-9a91-51b0fe73332f",
+     "source_net": "/motherboard_motors/FIELD_GND",
+     "current_foreign_antipads": 232,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 488.24223275000026
+    },
+    "In4.Cu": {
+     "source_pad": "J11003.2#0",
+     "source_uuid": "90e29980-abc1-4ab4-9a91-51b0fe73332f",
+     "source_net": "/motherboard_motors/FIELD_GND",
+     "current_foreign_antipads": 232,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 488.2422327500003
+    }
+   },
+   "verdict": "NO_PATH_IN_BOUNDED_STRICT_SOURCE_MODEL"
+  },
+  {
+   "net": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+   "domain": "DOM_LOGIC",
+   "controlled_policy": {
+    "group": "SE_CHAIN",
+    "pair_partner": null,
+    "rule": "R2+R4",
+    "chain_members": [
+     "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+     "/motherboard_io_control/DIC_IOL1_CS_MCU"
+    ],
+    "chain_series_resistors": [
+     {
+      "from": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+      "to": "/motherboard_io_control/DIC_IOL1_CS_MCU",
+      "resistor": "R13013",
+      "ohm": 22.0
+     },
+     {
+      "from": "/motherboard_io_control/DIC_IOL1_CS_MCU",
+      "to": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+      "resistor": "R13013",
+      "ohm": 22.0
+     }
+    ],
+    "chain_driver": "U13003.3 74LVC125APW,118 on DIC_IOL1_CS_BUFFER",
+    "t_r_ns": 1.0,
+    "t_r_basis": "74LVC125APW,118: no output rise-time specification in the project's sources (LVC datasheets point to input transition only) -> 1.0 ns assumed (inference, conservative)",
+    "t_r_citation": [
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.txt",
+      "line": 1536,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.pdf",
+      "pdf_page": 14,
+      "text": "For rise time and fall time specification, see (\u0394t/\u0394V) in the Recommended Operating Conditions table."
+     }
+    ],
+    "l_crit_mm": 14.1,
+    "l_crit_basis": "0.1 * t_r / t_pd (ISOW1432 Eq. 3); t_pd(In3 stripline, Cohn) = 7.090 ps/mm, t_pd(outer microstrip, H&J) = 5.896 ps/mm; L_crit uses the slower 7.090 ps/mm",
+    "l_crit_citation": [
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3930,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "9.2.2.2 Stub Length"
+     },
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3934,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "or round-trip delay, of a stub must be less than one-tenth of the rise time of the driver as a general guideline."
+     },
+     {
+      "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+      "line": 3936,
+      "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+      "pdf_page": 39,
+      "text": "L STUB \u22640.1 \u00d7 tr \u00d7 v \u00d7 c"
+     }
+    ],
+    "chain_l_est_mm": 39.11,
+    "edge_sensitive_evidence": [],
+    "edge_evidence_tiers": [],
+    "edge_evidence_strongest": null,
+    "settle_ns": 1.7,
+    "level_sampled_max_clock_MHz": 300.5,
+    "skew": {
+     "intra_pair_mm": null,
+     "source": "single-ended net: no length-match requirement found in the driver/receiver datasheets; bus timing budgets were not analysed here (inference)"
+    },
+    "interface": "single-ended level/static",
+    "class": "NONE",
+    "target_ohm": null,
+    "tolerance_pct": null,
+    "source_citations": [],
+    "rationale": "no controlled impedance required: level-sampled/static signal (no clock or counted-edge receiver); reflections settle in 1.7 ns (6 one-way delays over chain L_est 39 mm), adequate for synchronous sampling up to 301 MHz bus clock; bus clock check: IOL1 card link at 8.333 MHz vs settle limit 300.5 MHz -> PASS (margin x36.06)",
+    "bus_clock_check": {
+     "bus": "IOL1 card link",
+     "bus_clock_or_bit_rate_MHz": 8.333,
+     "basis": "IS-1 4.1: SCLK = core/6 = 8.333 MHz",
+     "source": [
+      {
+       "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-is2-contract-20260930/inputs/docs/interface-spec/01-protocol-and-schedule.md",
+       "line": 706,
+       "pdf": null,
+       "pdf_page": null,
+       "text": "Point-to-point from the motion card, one FPGA SPI master per card slot, four wires per port: SCLK, CMD (FPGA \u2192 card), RSP (card \u2192 FPGA), CS_N. 3.3 V LVCMOS with an Ioff buffer and series termination at each card connector (power-off service"
+      }
+     ],
+     "settle_limit_MHz": 300.5,
+     "margin_x": 36.06,
+     "pass": true
+    },
+    "net": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+    "mst_mm": 7.91,
+    "routed_mm": 20.9,
+    "missing_joins": 0,
+    "routed_by_layer_mm": {
+     "F.Cu": 4.7,
+     "B.Cu": 16.2
+    },
+    "l_est_mm": 20.9,
+    "l_est_basis": "routed length (net fully joined)",
+    "daisy_chain_mm": 7.91,
+    "end_parts": [
+     {
+      "ref": "R13013",
+      "pin": "1",
+      "part": "CRCW060322R0FKEA",
+      "pintype": "passive",
+      "pinfunction": ""
+     },
+     {
+      "ref": "U13003",
+      "pin": "3",
+      "part": "74LVC125APW,118",
+      "pintype": "output",
+      "pinfunction": "1Y_3"
+     }
+    ],
+    "reference_samples_on_mst": {
+     "samples": 8,
+     "in1_logic_gnd": 8,
+     "in4_logic_gnd": 8,
+     "in2_nets": {
+      "<none>": 1,
+      "/IO_3V3": 7
+     },
+     "in3_nets": {
+      "<none>": 8
+     }
+    },
+    "candidate_sources": [
+     "classify_ci:IOL1_SPI_lanes_and_IO_MCU_resets",
+     "damping_partner_of:/motherboard_io_control/DIC_IOL1_CS_MCU:R13013"
+    ]
+   },
+   "width_mm": 0.2,
+   "via_size_drill_mm": [
+    0.5,
+    0.2
+   ],
+   "native_relationships": [
+    {
+     "r06_pad_relationship": [
+      "R13013.1#0",
+      "U13003.3#0"
+     ],
+     "current_split_native_groups": [
+      [
+       "R13013.1#0"
+      ],
+      [
+       "U13003.3#0"
+      ]
+     ]
+    }
+   ],
+   "paths": [],
+   "windows": [
+    {
+     "window_mm": [
+      116.4067,
+      82.8784,
+      137.4696,
+      103.3663
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        1,
+        1
+       ],
+       "search": {
+        "reason": "bounded open set exhausted",
+        "nodes": 176
+       },
+       "blocker_count": 587
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.034556353005514184,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0.0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.3991025570512754,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0.0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 42.63595885836023,
+     "via_blocker_classes": {
+      "track": 580,
+      "via": 486,
+      "hole": 462,
+      "pad": 100,
+      "fill": 5,
+      "reserved_corridor": 27
+     },
+     "qualified_existing_returns": 19,
+     "landing_pairs": 0,
+     "middle_searches": []
+    },
+    {
+     "window_mm": [
+      110.4067,
+      76.8784,
+      143.4696,
+      109.3663
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        1,
+        1
+       ],
+       "search": {
+        "reason": "bounded open set exhausted",
+        "nodes": 176
+       },
+       "blocker_count": 1274
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.03455635300550886,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0.0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.39910255705128084,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0.0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 130.93522541184325,
+     "via_blocker_classes": {
+      "track": 1330,
+      "hole": 1170,
+      "via": 1176,
+      "pad": 216,
+      "fill": 13,
+      "reserved_corridor": 65,
+      "native_rule_area": 1,
+      "barrier_courtyard": 1
+     },
+     "qualified_existing_returns": 39,
+     "landing_pairs": 0,
+     "middle_searches": []
+    }
+   ],
+   "current_retained_copper_items": 93914,
+   "current_policy": "Ordinary signal, not listed power trunk; .2mm effective domain default. Driver/current/timing remains electrical gate open.",
+   "physical_pad_groups": [
+    [
+     "R13013.1#0"
+    ],
+    [
+     "U13003.3#0"
+    ]
+   ],
+   "reference_witnesses": {
+    "In1.Cu": {
+     "source_pad": "J11001.2#0",
+     "source_uuid": "9ca5f89d-b510-450a-ba65-b2fe495fe5bd",
+     "source_net": "/LOGIC_GND",
+     "current_foreign_antipads": 237,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 52724.784459774
+    },
+    "In4.Cu": {
+     "source_pad": "J11001.2#0",
+     "source_uuid": "9ca5f89d-b510-450a-ba65-b2fe495fe5bd",
+     "source_net": "/LOGIC_GND",
+     "current_foreign_antipads": 237,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 52747.13597515008
+    }
+   },
+   "verdict": "NO_PATH_IN_BOUNDED_STRICT_SOURCE_MODEL"
+  },
+  {
+   "net": "/motherboard_do/DOA_Q0_READY_N",
+   "domain": "DOM_FIELD_A",
+   "controlled_policy": null,
+   "width_mm": 0.2,
+   "via_size_drill_mm": [
+    0.5,
+    0.2
+   ],
+   "native_relationships": [
+    {
+     "r06_pad_relationship": [
+      "R10016.1#0",
+      "U10004.1#0"
+     ],
+     "current_split_native_groups": [
+      [
+       "R10016.1#0"
+      ],
+      [
+       "U10004.1#0"
+      ]
+     ]
+    }
+   ],
+   "paths": [],
+   "windows": [
+    {
+     "window_mm": [
+      221.66,
+      150.037,
+      237.66,
+      174.687
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        0,
+        0
+       ],
+       "search": {
+        "reason": "no strict source-reference attachment",
+        "nodes": 0
+       },
+       "blocker_count": 526
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 0.0,
+     "via_blocker_classes": {
+      "pad": 93,
+      "track": 538,
+      "hole": 552,
+      "via": 552,
+      "fill": 15,
+      "native_rule_area": 18,
+      "reserved_corridor": 5,
+      "barrier_courtyard": 4
+     },
+     "qualified_existing_returns": 0,
+     "landing_pairs": 0,
+     "middle_searches": []
+    },
+    {
+     "window_mm": [
+      215.66,
+      144.037,
+      243.66,
+      180.687
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        0,
+        0
+       ],
+       "search": {
+        "reason": "no strict source-reference attachment",
+        "nodes": 0
+       },
+       "blocker_count": 1084
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 0.0,
+       "source_seed_count": 0,
+       "continuous_return_intersection_components": 0,
+       "continuous_return_intersection_area_mm2": 0,
+       "selected_sites": 0,
+       "sites": []
+      }
+     ],
+     "via_landing_area_mm2": 0.0,
+     "via_blocker_classes": {
+      "via": 960,
+      "track": 1275,
+      "pad": 196,
+      "hole": 936,
+      "fill": 19,
+      "native_rule_area": 24,
+      "reserved_corridor": 24,
+      "barrier_courtyard": 7
+     },
+     "qualified_existing_returns": 0,
+     "landing_pairs": 0,
+     "middle_searches": []
+    }
+   ],
+   "current_retained_copper_items": 93914,
+   "current_policy": "Ordinary signal, not listed power trunk; .2mm effective domain default. Driver/current/timing remains electrical gate open.",
+   "physical_pad_groups": [
+    [
+     "R10016.1#0"
+    ],
+    [
+     "U10004.1#0"
+    ]
+   ],
+   "reference_witnesses": {
+    "In1.Cu": {
+     "source_pad": "J11003.2#0",
+     "source_uuid": "90e29980-abc1-4ab4-9a91-51b0fe73332f",
+     "source_net": "/motherboard_motors/FIELD_GND",
+     "current_foreign_antipads": 232,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 488.24223275000026
+    },
+    "In4.Cu": {
+     "source_pad": "J11003.2#0",
+     "source_uuid": "90e29980-abc1-4ab4-9a91-51b0fe73332f",
+     "source_net": "/motherboard_motors/FIELD_GND",
+     "current_foreign_antipads": 232,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 488.2422327500003
+    }
+   },
+   "verdict": "NO_PATH_IN_BOUNDED_STRICT_SOURCE_MODEL"
+  },
+  {
+   "net": "/motherboard_operator/XF_REQUEST_BUFFER",
+   "domain": "DOM_LOGIC",
+   "controlled_policy": null,
+   "width_mm": 0.2,
+   "via_size_drill_mm": [
+    0.5,
+    0.2
+   ],
+   "native_relationships": [
+    {
+     "r06_pad_relationship": [
+      "U14016.4#0",
+      "U14019.2#0"
+     ],
+     "current_split_native_groups": [
+      [
+       "U14016.4#0"
+      ],
+      [
+       "U14019.2#0"
+      ]
+     ]
+    }
+   ],
+   "paths": [],
+   "windows": [
+    {
+     "window_mm": [
+      289.7,
+      87.291,
+      305.7,
+      115.85
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        1,
+        1
+       ],
+       "search": {
+        "reason": "bounded open set exhausted",
+        "nodes": 8437
+       },
+       "blocker_count": 478
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 18.8836454680062,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 4,
+       "continuous_return_intersection_area_mm2": 0.8135113938240477,
+       "selected_sites": 6,
+       "sites": [
+        {
+         "point_mm": [
+          300.228967,
+          101.934355
+         ],
+         "return_via": {
+          "uuid": "fbea2f4e-4402-4cec-824a-dd2bf50d5e9f",
+          "x": 301.05,
+          "y": 102.05,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8291374754007926,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          300.219955,
+          101.673194
+         ],
+         "return_via": {
+          "uuid": "fbea2f4e-4402-4cec-824a-dd2bf50d5e9f",
+          "x": 301.05,
+          "y": 102.05,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9115686829092886,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          298.126064,
+          93.745824
+         ],
+         "return_via": {
+          "uuid": "ee8a23af-db5f-40cb-8fef-ea9890e26225",
+          "x": 298.95,
+          "y": 93.45,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8754326764931746,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.287624,
+          92.339877
+         ],
+         "return_via": {
+          "uuid": "da65181c-15cd-496b-8450-5752eadffedd",
+          "x": 297.2,
+          "y": 92.35,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9124321566587789,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.533841,
+          88.569826
+         ],
+         "return_via": {
+          "uuid": "4e833849-4d9c-42c2-8dc5-cf39e0e2efa1",
+          "x": 297.35,
+          "y": 88.1,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.941728189849415,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.490725,
+          88.405298
+         ],
+         "return_via": {
+          "uuid": "4e833849-4d9c-42c2-8dc5-cf39e0e2efa1",
+          "x": 297.35,
+          "y": 88.1,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9118993334952317,
+         "contact_layer": "F.Cu"
+        }
+       ]
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 24.45830898380552,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 2,
+       "continuous_return_intersection_area_mm2": 0.10198013966648567,
+       "selected_sites": 5,
+       "sites": [
+        {
+         "point_mm": [
+          292.528187,
+          107.514881
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.99998957551066,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.480024,
+          107.543222
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9817400785645803,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.43186,
+          107.571564
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9663811182427036,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.934353,
+          109.324579
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.85723500619725,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.863922,
+          109.382588
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8976814578835867,
+         "contact_layer": "F.Cu"
+        }
+       ]
+      }
+     ],
+     "via_landing_area_mm2": 56.58121310868836,
+     "via_blocker_classes": {
+      "track": 689,
+      "hole": 552,
+      "via": 570,
+      "pad": 83,
+      "fill": 9,
+      "native_rule_area": 2,
+      "reserved_corridor": 11
+     },
+     "qualified_existing_returns": 14,
+     "landing_pairs": 30,
+     "middle_searches": [
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 1914
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 8028
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 8028
+      }
+     ]
+    },
+    {
+     "window_mm": [
+      283.7,
+      81.291,
+      311.7,
+      121.85
+     ],
+     "zero_via": [
+      {
+       "layer": "F.Cu",
+       "seed_counts": [
+        1,
+        1
+       ],
+       "search": {
+        "reason": "bounded open set exhausted",
+        "nodes": 12457
+       },
+       "blocker_count": 1053
+      },
+      {
+       "layer": "B.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      },
+      {
+       "layer": "In3.Cu",
+       "reason": "no actual flashed/KEEP_ALL contact layer on both components"
+      }
+     ],
+     "landings": [
+      {
+       "component": 0,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 21.891720931212543,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 5,
+       "continuous_return_intersection_area_mm2": 0.8403156197427697,
+       "selected_sites": 8,
+       "sites": [
+        {
+         "point_mm": [
+          300.228967,
+          101.934355
+         ],
+         "return_via": {
+          "uuid": "fbea2f4e-4402-4cec-824a-dd2bf50d5e9f",
+          "x": 301.05,
+          "y": 102.05,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8291374754007926,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          300.219955,
+          101.673194
+         ],
+         "return_via": {
+          "uuid": "fbea2f4e-4402-4cec-824a-dd2bf50d5e9f",
+          "x": 301.05,
+          "y": 102.05,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9115686829092886,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          289.301623,
+          101.183107
+         ],
+         "return_via": {
+          "uuid": "564fc3e2-c04e-47e6-b308-21ece127c49c",
+          "x": 289.925,
+          "y": 101.799009,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8763185252709174,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          289.244671,
+          101.166981
+         ],
+         "return_via": {
+          "uuid": "564fc3e2-c04e-47e6-b308-21ece127c49c",
+          "x": 289.925,
+          "y": 101.799009,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9286048357751687,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          298.126064,
+          93.745824
+         ],
+         "return_via": {
+          "uuid": "ee8a23af-db5f-40cb-8fef-ea9890e26225",
+          "x": 298.95,
+          "y": 93.45,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8754326764931746,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.287624,
+          92.339877
+         ],
+         "return_via": {
+          "uuid": "da65181c-15cd-496b-8450-5752eadffedd",
+          "x": 297.2,
+          "y": 92.35,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9124321566587789,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.533841,
+          88.569826
+         ],
+         "return_via": {
+          "uuid": "4e833849-4d9c-42c2-8dc5-cf39e0e2efa1",
+          "x": 297.35,
+          "y": 88.1,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.941728189849415,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          296.490725,
+          88.405298
+         ],
+         "return_via": {
+          "uuid": "4e833849-4d9c-42c2-8dc5-cf39e0e2efa1",
+          "x": 297.35,
+          "y": 88.1,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9118993334952317,
+         "contact_layer": "F.Cu"
+        }
+       ]
+      },
+      {
+       "component": 1,
+       "layer": "F.Cu",
+       "reachable_landing_area_mm2": 36.77953050103963,
+       "source_seed_count": 1,
+       "continuous_return_intersection_components": 2,
+       "continuous_return_intersection_area_mm2": 0.10198013966648567,
+       "selected_sites": 5,
+       "sites": [
+        {
+         "point_mm": [
+          292.528187,
+          107.514881
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.99998957551066,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.480024,
+          107.543222
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9817400785645803,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.43186,
+          107.571564
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.9663811182427036,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.934353,
+          109.324579
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.85723500619725,
+         "contact_layer": "F.Cu"
+        },
+        {
+         "point_mm": [
+          292.863922,
+          109.382588
+         ],
+         "return_via": {
+          "uuid": "fec1d11f-003d-47bf-a668-9fa8cea8e940",
+          "x": 292.7,
+          "y": 108.5,
+          "diameter": 0.6,
+          "return_net": "/LOGIC_GND",
+          "source_anchor_proven_host": true,
+          "annulus_provenance": "unchanged r06 native"
+         },
+         "return_distance_mm": 0.8976814578835867,
+         "contact_layer": "F.Cu"
+        }
+       ]
+      }
+     ],
+     "via_landing_area_mm2": 102.37979305543945,
+     "via_blocker_classes": {
+      "track": 1706,
+      "via": 1260,
+      "hole": 1242,
+      "pad": 209,
+      "fill": 14,
+      "native_rule_area": 2,
+      "barrier_courtyard": 1,
+      "reserved_corridor": 33
+     },
+     "qualified_existing_returns": 38,
+     "landing_pairs": 40,
+     "middle_searches": [
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 10193
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 4285
+      },
+      {
+       "reason": "bounded open set exhausted",
+       "nodes": 4285
+      }
+     ]
+    }
+   ],
+   "current_retained_copper_items": 93914,
+   "current_policy": "Ordinary signal, not listed power trunk; .2mm effective domain default. Driver/current/timing remains electrical gate open.",
+   "physical_pad_groups": [
+    [
+     "U14016.4#0"
+    ],
+    [
+     "U14019.2#0"
+    ]
+   ],
+   "reference_witnesses": {
+    "In1.Cu": {
+     "source_pad": "J11001.2#0",
+     "source_uuid": "9ca5f89d-b510-450a-ba65-b2fe495fe5bd",
+     "source_net": "/LOGIC_GND",
+     "current_foreign_antipads": 237,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 52724.784459774
+    },
+    "In4.Cu": {
+     "source_pad": "J11001.2#0",
+     "source_uuid": "9ca5f89d-b510-450a-ba65-b2fe495fe5bd",
+     "source_net": "/LOGIC_GND",
+     "current_foreign_antipads": 237,
+     "prospective_signal_antipads": 0,
+     "unflashed_or_unknown_own_vias_excluded": 0,
+     "source_connected_fill_area_mm2": 52747.13597515008
+    }
+   },
+   "verdict": "NO_PATH_IN_BOUNDED_STRICT_SOURCE_MODEL"
+  }
+ ]
+}

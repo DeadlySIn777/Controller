@@ -1,0 +1,5 @@
+{
+ "records": "def records(sh):return [[list(q.exterior.coords),[list(x.coords) for x in q.interiors]] for q in p.hubs.components(sh)]\n",
+ "components": "def components(shape):\n    if shape.is_empty:\n        return []\n    if shape.geom_type == \"Polygon\":\n        return [shape]\n    return [part for part in shape.geoms if part.geom_type == \"Polygon\" and not part.is_empty]\n",
+ "poly": "def poly(records): return overlay_tool.base.polygons(records)\n"
+}

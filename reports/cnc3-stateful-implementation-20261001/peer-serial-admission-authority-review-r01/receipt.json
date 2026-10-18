@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "scope": "Independent read-only serial admission/frame identity/reset/authority review of the exact seven report-local motion RTL files. No independent execution of the peer behavioral proofs and no complete endpoint or physical qualification claim.",
+  "input_sha256": {
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_alarm_filter.v": "c02ff736f523f44c79940471fbb43f05e0a5d8e1a417a2f3bf2e031f6cc2c39d",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_encoder_runtime.v": "f92a47bc75e7f3b51f8ab445ffa34c91b43a2baf2152e638c7aa8d257908da7b",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_motion_spi.v": "d6bb4aa0af489bda3de3ec5c99ee21552775a62b3a8357046157ec5a9ded3aff",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_motion_state.v": "4317ddad0c64fffeadafaee1a35ca74661a26acdace540714b7ffc92e2d171bf",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_rate_admission_serial.v": "209326f95eb8f92f3629d9149147ced49d750eec2edb489552f3e42264e2bc7b",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_spi_transport_stateful.v": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r02\\cnc3_stepgen_runtime.v": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3"
+  },
+  "findings": [
+    {
+      "topic": "Exact rate word identity",
+      "finding": "CMD transport publishes exactly12 signed32-bit words from bits128..511 with monotonically0..11 channels. Serial checker requires that exact order, resets transaction state at snapshot_start, poisons duplicated/out-of-order/overlapped words and requires all12 completed good bits with busyLOW."
+    },
+    {
+      "topic": "Overflow and bounded timing",
+      "finding": "Unsigned magnitude handles INT_MIN without signed abs overflow; magnitude above0x01000000 forces base_goodLOW even though multiplicand is25bits. Validated100..1023 high/low timing makes high+low+1 fit11bits; the shared shift/add product and2^32 comparison use36bits. Truncated upper timing bits cannot authorize because base_good separately rejects the full16-bit out-of-range words."
+    },
+    {
+      "topic": "Physical completed-frame binding",
+      "finding": "At accepted transaction completion, frame/frame_cs/frame_rates_good latch on the same clock after streamed CRC and length/timing guards. The state sees that stable tuple on the next clock. CMD admission is never credited to FB. A new transaction clears frame_rates_good and serial channel state; reset clears all good/authority flags."
+    },
+    {
+      "topic": "No request-queue inference",
+      "finding": "This motion top consumes one-clock validated requests directly. It has no backpressure queue; physical frame spacing is hundreds of clocks beyond the11-cycle checker. Public structural queue semantics are a separate implementation and are not claimed by this motion stage."
+    },
+    {
+      "topic": "Bad frame/config authority",
+      "finding": "A rejected physical transaction emits rejection metadata only for an actually captured six-byte header; exact magic/ABI/opcode matching can invalidate configuration, never authorize a request. Unknown headers, FB rate checks, poisoned/busy admission and transport frame_bad cannot admit UPDATE. Same-cycle state fault cut remains downstream of this admission predicate."
+    }
+  ],
+  "actionable_issues": [],
+  "source_or_shared_RTL_mutated": false,
+  "host_runtime_proof_rerun": false,
+  "vendor_fit_or_provider_Hardware_qualification": false,
+  "physical_ready": false,
+  "known_scope_limits": [
+    "General IOL1/output-session authority remains explicitly disabled.",
+    "Full provider/safety qualification/event/page/HAL implementation and vendor fit remain separate gates.",
+    "Defensive timing rejection is root-approved bounded correction; host still owns negotiated drive/machine caps."
+  ]
+}

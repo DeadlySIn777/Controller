@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-30",
+  "scope": "Disconnected host checks and fresh native circuit exports; no physical target execution or manufacturing approval",
+  "checks": [
+    {
+      "name": "python-tests",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "-c",
+        "import json,sys,unittest\nfrom pathlib import Path\nsuite=unittest.defaultTestLoader.discover(\"tests\")\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nPath(sys.argv[1]).write_text(json.dumps({\"tests_run\":result.testsRun,\"failures\":len(result.failures),\"errors\":len(result.errors),\"skipped\":len(result.skipped),\"checks_pass\":result.wasSuccessful()},indent=2)+\"\\n\",encoding=\"utf-8\")\nsys.exit(0 if result.wasSuccessful() else 1)\n",
+        "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\audit-2026-09-30\\python-result.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 23.681,
+      "log": "python-tests.txt"
+    },
+    {
+      "name": "build_compute_display_matrix",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "tools/build_compute_display_matrix.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 0.096,
+      "log": "build_compute_display_matrix.txt"
+    },
+    {
+      "name": "build_feature_catalog",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "tools/build_feature_catalog.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 0.102,
+      "log": "build_feature_catalog.txt"
+    },
+    {
+      "name": "build_hardware_cost_data",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "tools/build_hardware_cost_data.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 0.061,
+      "log": "build_hardware_cost_data.txt"
+    },
+    {
+      "name": "native-exports-run",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "tools/hardware_export_evidence.py",
+        "--source-root",
+        "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "--output-dir",
+        "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\audit-2026-09-30\\native-exports"
+      ],
+      "exit_code": 2,
+      "elapsed_s": 0.103,
+      "log": "native-exports-run.txt"
+    },
+    {
+      "name": "native-exports-external",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_export_evidence.py",
+        "--source-root",
+        "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "--output-dir",
+        "C:\\Users\\Gluis\\AppData\\Local\\Temp\\controller-audit-20260930-i7avwxkg\\native-exports"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 38.771,
+      "log": "native-exports-external.txt",
+      "note": "Initial attempt was rejected because its output was within the supplied source root. External output retained and copied without changing project inputs."
+    }
+  ],
+  "source_file_count": 9181,
+  "changed_during_checks": [],
+  "frozen_archive": {
+    "path": "reports\\processor-hardware-20260929",
+    "declared_files": 521,
+    "copy_mismatches": [],
+    "working_tree_mismatches": []
+  },
+  "manufacturing_ready": false
+}

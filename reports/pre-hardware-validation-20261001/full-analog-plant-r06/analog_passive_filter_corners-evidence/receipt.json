@@ -1,0 +1,4052 @@
+{
+  "passed": true,
+  "source_unchanged": true,
+  "manufacturing_ready": false,
+  "physical_qualified": false,
+  "scope": "Source26 four actual RC input-filter sections only, ideal buffer output and infinite-impedance ADC. Numerical agreement of native SPICE response with independent first-order transfer/step equation.",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\netlist.xml": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\AI-passive-manufacturer-sources-r01\\murata-GRM1885C1H222JA01.pdf": "6f8d8821abc96f97f136ebaf8d21f417d8d1ad2e25c7761f4749834585dffd35",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\AI-passive-manufacturer-sources-r01\\vishay-CRCW-20035.pdf": "27093950db7794935ec5114bb2c516173fab07738873e3daedbbc511077414d0",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\run_AI_passive_SPICE_r02.py": "443f03f15703c4b935dc80da2d67dc0ee226a69666ae30badac1d5aca2434335",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\characterize_stepgen12.py": "b8c057a9a180ac24c529163e9c4a01fe23b2fe19db686f03f7c6b05fd3ac5d35"
+  },
+  "ngspice_version": {
+    "command": [
+      "wsl.exe",
+      "-d",
+      "GarciaMechBuilder",
+      "--",
+      "ngspice",
+      "--version"
+    ],
+    "started_utc": "2026-10-02T02:34:37.934937+00:00",
+    "returncode": 0,
+    "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\ngspice-version.log",
+    "log_sha256": "aa81398716840a1d86b5e553569a2356886dd924c76abc99aaed993b79b9f06e"
+  },
+  "source_channels": [
+    {
+      "channel": 0,
+      "resistor_ref": "R14728",
+      "resistor": {
+        "kind": "R",
+        "mpn": "CRCW060347R0FKEA",
+        "value": "47R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI0_BUFFERED",
+          "2": "AI0_ADC_IN"
+        },
+        "resistance_ohm": 47,
+        "tolerance": 0.01,
+        "tcr_ppm_K": 100,
+        "power_rating_w": 0.1,
+        "role": "ADCdriverisolatescapacitivefilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "R14728"
+      },
+      "capacitor_ref": "C14727",
+      "capacitor": {
+        "kind": "C",
+        "mpn": "GRM1885C1H222JA01D",
+        "value": "2.2nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI0_ADC_IN",
+          "2": "AI_AGND"
+        },
+        "capacitance_f": 2.2000000000000003e-09,
+        "voltage_rating_v": 50,
+        "role": "actualADCinputHFfilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "C14727"
+      }
+    },
+    {
+      "channel": 1,
+      "resistor_ref": "R14737",
+      "resistor": {
+        "kind": "R",
+        "mpn": "CRCW060347R0FKEA",
+        "value": "47R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI1_BUFFERED",
+          "2": "AI1_ADC_IN"
+        },
+        "resistance_ohm": 47,
+        "tolerance": 0.01,
+        "tcr_ppm_K": 100,
+        "power_rating_w": 0.1,
+        "role": "ADCdriverisolatescapacitivefilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "R14737"
+      },
+      "capacitor_ref": "C14731",
+      "capacitor": {
+        "kind": "C",
+        "mpn": "GRM1885C1H222JA01D",
+        "value": "2.2nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI1_ADC_IN",
+          "2": "AI_AGND"
+        },
+        "capacitance_f": 2.2000000000000003e-09,
+        "voltage_rating_v": 50,
+        "role": "actualADCinputHFfilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "C14731"
+      }
+    },
+    {
+      "channel": 2,
+      "resistor_ref": "R14746",
+      "resistor": {
+        "kind": "R",
+        "mpn": "CRCW060347R0FKEA",
+        "value": "47R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI2_BUFFERED",
+          "2": "AI2_ADC_IN"
+        },
+        "resistance_ohm": 47,
+        "tolerance": 0.01,
+        "tcr_ppm_K": 100,
+        "power_rating_w": 0.1,
+        "role": "ADCdriverisolatescapacitivefilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "R14746"
+      },
+      "capacitor_ref": "C14735",
+      "capacitor": {
+        "kind": "C",
+        "mpn": "GRM1885C1H222JA01D",
+        "value": "2.2nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI2_ADC_IN",
+          "2": "AI_AGND"
+        },
+        "capacitance_f": 2.2000000000000003e-09,
+        "voltage_rating_v": 50,
+        "role": "actualADCinputHFfilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "C14735"
+      }
+    },
+    {
+      "channel": 3,
+      "resistor_ref": "R14755",
+      "resistor": {
+        "kind": "R",
+        "mpn": "CRCW060347R0FKEA",
+        "value": "47R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI3_BUFFERED",
+          "2": "AI3_ADC_IN"
+        },
+        "resistance_ohm": 47,
+        "tolerance": 0.01,
+        "tcr_ppm_K": 100,
+        "power_rating_w": 0.1,
+        "role": "ADCdriverisolatescapacitivefilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "R14755"
+      },
+      "capacitor_ref": "C14739",
+      "capacitor": {
+        "kind": "C",
+        "mpn": "GRM1885C1H222JA01D",
+        "value": "2.2nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "AI3_ADC_IN",
+          "2": "AI_AGND"
+        },
+        "capacitance_f": 2.2000000000000003e-09,
+        "voltage_rating_v": 50,
+        "role": "actualADCinputHFfilter",
+        "source_block": "motherboard_analog_input",
+        "source_reference": "C14739"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72485e-08,
+        "t63_1": 9.72485e-08,
+        "t63_2": 9.72485e-08,
+        "t63_3": 9.72485e-08
+      },
+      "deck_sha256": "71716d98a1f20705cca11f40a77328dbf13f209a7ad26567ff57f85a4a2eecc7",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-000.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.040617+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-000.log",
+        "log_sha256": "5e13c4f856087807544880288143368dbead12175dc682a29c72e0eb7a7aa292"
+      }
+    },
+    {
+      "case": 1,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72482e-08,
+        "t63_1": 9.72482e-08,
+        "t63_2": 9.72482e-08,
+        "t63_3": 9.72482e-08
+      },
+      "deck_sha256": "1b61b45cdae5709fccebbeae88a537b35c991501eb7d3613fe3ba9a3b1bf44ee",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-001.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.195773+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-001.log",
+        "log_sha256": "0db59979d69b62e472afa75d28770fbb86c28af59e24a87784c670b96ab6dd41"
+      }
+    },
+    {
+      "case": 2,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72481e-08,
+        "t63_1": 9.72481e-08,
+        "t63_2": 9.72481e-08,
+        "t63_3": 9.72481e-08
+      },
+      "deck_sha256": "d0c310802fd07db876fe9e1719a831ea812a9c8075f524692e24e0007b12cf91",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-002.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.311762+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-002.log",
+        "log_sha256": "7442068551f6037fd3ee8ee3211b5ef1508ddfe8b7207c574386801f3882051b"
+      }
+    },
+    {
+      "case": 3,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72485e-08,
+        "t63_1": 9.72485e-08,
+        "t63_2": 9.72485e-08,
+        "t63_3": 9.72485e-08
+      },
+      "deck_sha256": "f7a3e7f01e25a8db3435489a0fb1253f774d782e3f44ae2508feab149a44ac71",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-003.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.435046+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-003.log",
+        "log_sha256": "224cba742a61835305bbaf2a69e2d963c9c04af90014440e81a10c1f4668df63"
+      }
+    },
+    {
+      "case": 4,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72482e-08,
+        "t63_1": 9.72482e-08,
+        "t63_2": 9.72482e-08,
+        "t63_3": 9.72482e-08
+      },
+      "deck_sha256": "17ae14a432b6f749b45a1bbdca36bf2f446ddff421eea5ffa86cd861c6289045",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-004.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.581412+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-004.log",
+        "log_sha256": "25f88d175938d77fbdb48a5bae84d8db5b2a394b30ccc84be7393fd87baa7942"
+      }
+    },
+    {
+      "case": 5,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72481e-08,
+        "t63_1": 9.72481e-08,
+        "t63_2": 9.72481e-08,
+        "t63_3": 9.72481e-08
+      },
+      "deck_sha256": "704b5f30efdc71dbe82890767510036ae5d9f9a61c41564fbf155f14ca23c52d",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-005.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.700039+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-005.log",
+        "log_sha256": "1b9ca4303398eb3892ee6a85701150a8c2787ed3f704cc8d42fb0209c4f37800"
+      }
+    },
+    {
+      "case": 6,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72485e-08,
+        "t63_1": 9.72485e-08,
+        "t63_2": 9.72485e-08,
+        "t63_3": 9.72485e-08
+      },
+      "deck_sha256": "3abd323a1c76a3e58eee5820c11e317a1141e90b17875414c35e8b2faba20c84",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-006.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:38.885045+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-006.log",
+        "log_sha256": "ef2a97954666339c4c9e3d23bd4ed14904265fe81cefc05e16e49233b609c2e9"
+      }
+    },
+    {
+      "case": 7,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72482e-08,
+        "t63_1": 9.72482e-08,
+        "t63_2": 9.72482e-08,
+        "t63_3": 9.72482e-08
+      },
+      "deck_sha256": "a15270b01605cd8568f074b854e008dd046f97603e30483319765b3ca3f1735f",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-007.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.004317+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-007.log",
+        "log_sha256": "d670e2813ad8400860ab0eae918bf7cd4fb3f683a7454f7aafabdf4d73367ec1"
+      }
+    },
+    {
+      "case": 8,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72481e-08,
+        "t63_1": 9.72481e-08,
+        "t63_2": 9.72481e-08,
+        "t63_3": 9.72481e-08
+      },
+      "deck_sha256": "04940d3383622040e6ee2743e7b3d43f324660a6768e8728ab952d6f1eea331d",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-008.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.154335+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-008.log",
+        "log_sha256": "d7eb4eece5be0b92145b3a11a42cd1b20163b40442f6cca3a618b4adae063dc1"
+      }
+    },
+    {
+      "case": 9,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72485e-08,
+        "t63_1": 9.72485e-08,
+        "t63_2": 9.72485e-08,
+        "t63_3": 9.72485e-08
+      },
+      "deck_sha256": "dd97105822500cc49737b9796bd8a38b763094045ed09323df0aa95b316540ac",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-009.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.274413+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-009.log",
+        "log_sha256": "d5481205d3aa84cf4961b3608fa7f3b8cf5f8f4bea36ff9e073089cad5102396"
+      }
+    },
+    {
+      "case": 10,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72482e-08,
+        "t63_1": 9.72482e-08,
+        "t63_2": 9.72482e-08,
+        "t63_3": 9.72482e-08
+      },
+      "deck_sha256": "ef1b56dc2728cadea62279d6aab16157b124cfb7c028b4860198e00933645dc5",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-010.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.398575+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-010.log",
+        "log_sha256": "71e5833697a5749a7bd2cb6136e94dec2ab015c76e781f7eef06789f65b20a92"
+      }
+    },
+    {
+      "case": 11,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1636593.3908143367,
+      "analytical_tau_s": 9.724769999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1636600.0,
+        "f3_1": 1636600.0,
+        "f3_2": 1636600.0,
+        "f3_3": 1636600.0,
+        "t63_0": 9.72481e-08,
+        "t63_1": 9.72481e-08,
+        "t63_2": 9.72481e-08,
+        "t63_3": 9.72481e-08
+      },
+      "deck_sha256": "c394bb2eec0b73b2fa9f20638f7ff2507b2d194c4a2def8dea81c824e0742022",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-011.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.507554+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-011.log",
+        "log_sha256": "97cadf57b3dcaf1b32a82aa25196519c0ec536d9fab095351c11e01486c11406"
+      }
+    },
+    {
+      "case": 12,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "84c9b5196fc279e54401402b9d198045222c0b17d212dc2e4c6936487d25c3ed",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-012.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.618426+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-012.log",
+        "log_sha256": "e624a92476061a481f42b35842bbff0ca60f4f2019b4a55a675fdf0db1ed4ef9"
+      }
+    },
+    {
+      "case": 13,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "78a376bcac6ebafd7a806f3011fc174fe05c46e58793addc0a7a2f8702e51ed4",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-013.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.731228+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-013.log",
+        "log_sha256": "f301819a823b1618832f87e04cd01606f585dbfb34c91e31f94a062a8e89bf0a"
+      }
+    },
+    {
+      "case": 14,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "897a4a81fe45e957ae1919be5196a9932e8c66083302533924005fbab1108a8f",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-014.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.878013+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-014.log",
+        "log_sha256": "dfa894b757d5733830ce7b8d9d12c62206fd094a50e6ff38a0fff506f5ade24c"
+      }
+    },
+    {
+      "case": 15,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "a7bcc230222811307aa5b0a14a44567683f1168515ea9017965904c244857b39",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-015.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:39.987952+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-015.log",
+        "log_sha256": "14c83f3efabd766f962954c996731178cb70e45cfe3f5ae4c90294ed0d9cbd73"
+      }
+    },
+    {
+      "case": 16,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "7e1347cb0825f192a9f59b66c9aedf0784a90814dcb8dfe03d6de1326428ef92",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-016.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.136231+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-016.log",
+        "log_sha256": "da365bd49172572725d8439e7bb88bbce25189305f361f7921b40ec2e024d1e9"
+      }
+    },
+    {
+      "case": 17,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "bcae7a98d0d4dcadc399399e500c1c27f55eff4eb5d63a96f6740f6916a81a8d",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-017.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.253514+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-017.log",
+        "log_sha256": "9dc0cd29c54b0fdd9d41bfb6d86cef94ad134458896b832e1d95d393c918a38e"
+      }
+    },
+    {
+      "case": 18,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "244b2c08290e4ccf2dd7c0d52244641cc4067587a94654ce7360dc8e1e633841",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-018.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.381418+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-018.log",
+        "log_sha256": "406321b4e9537a938caba530e9180c656192d5635c0f82b66ebfdb48ddf33cee"
+      }
+    },
+    {
+      "case": 19,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "3c7cfb2df17ca8a331d5e164227e15ad44f7388d5465ec80b77501b0011d2279",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-019.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.516706+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-019.log",
+        "log_sha256": "02ca773d28a51d46e146b536a0089db84b36b3a5df27e06875a3bf51d4303237"
+      }
+    },
+    {
+      "case": 20,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "2d4b0311b7b1b4c249daa5d266f60e442bb17cd58bff989b4e239649c2c327f5",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-020.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.627840+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-020.log",
+        "log_sha256": "cb033a29168215d0fbefeb1495d8c97d26daecb7da2aea96c285e2e5645c2fbf"
+      }
+    },
+    {
+      "case": 21,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "c3866d8867d41e371e9f53fb0906e1fa8046831df16a2e2029fa6af87ccc6c31",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-021.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.738312+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-021.log",
+        "log_sha256": "3321e3bc728b3a9d07f84666eed130139fbd18423bbb169995cbe26bae7b090c"
+      }
+    },
+    {
+      "case": 22,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "5bad4c0d9fe84fbba1dac00563c3cc8126eb2e8a597005480351240debcea684",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-022.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:40.877612+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-022.log",
+        "log_sha256": "de6903e79833f3c5d869858a2397a2b791cc3a5d7b164d259937067e31e4d9a1"
+      }
+    },
+    {
+      "case": 23,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.53,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1480727.3535939232,
+      "analytical_tau_s": 1.074843e-07,
+      "ngspice_measurements": {
+        "f3_0": 1480750.0,
+        "f3_1": 1480750.0,
+        "f3_2": 1480750.0,
+        "f3_3": 1480750.0,
+        "t63_0": 1.07485e-07,
+        "t63_1": 1.07485e-07,
+        "t63_2": 1.07485e-07,
+        "t63_3": 1.07485e-07
+      },
+      "deck_sha256": "49db3624a5f5ec9aca653251e8b54908a1d00ea9f9da596d42d447a5ea508753",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-023.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.021715+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-023.log",
+        "log_sha256": "5b3f1682b902723c367012ca7e28401b0e50039d97b8e7a8240e7b5a1c3099b2"
+      }
+    },
+    {
+      "case": 24,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.9213e-08,
+        "t63_1": 9.9213e-08,
+        "t63_2": 9.9213e-08,
+        "t63_3": 9.9213e-08
+      },
+      "deck_sha256": "4d10aec8fc1769dfd29671e1840cbab3cc18f2124c4902a75e945a06bf0734ca",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-024.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.195216+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-024.log",
+        "log_sha256": "d403156dedc8e6135029dad474b336f80a204d9e57879c87a56739943854831a"
+      }
+    },
+    {
+      "case": 25,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92127e-08,
+        "t63_1": 9.92127e-08,
+        "t63_2": 9.92127e-08,
+        "t63_3": 9.92127e-08
+      },
+      "deck_sha256": "ab4ea33fd9ab6864f71c6137aaaa9b03d5010401aee6eec6fc643a099a3ed369",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-025.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.352815+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-025.log",
+        "log_sha256": "09845361f99854d537a734bf92ef8a74f5e446f9d317ce85ca8d8c8cf6ee8541"
+      }
+    },
+    {
+      "case": 26,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92125e-08,
+        "t63_1": 9.92125e-08,
+        "t63_2": 9.92125e-08,
+        "t63_3": 9.92125e-08
+      },
+      "deck_sha256": "c8fc36bbf4302c9cb0813c81b812f8fa80c44724c4bc2d6136252cc9f480ddc3",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-026.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.521623+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-026.log",
+        "log_sha256": "13986352891b837a1cf9eccbcb526db809d03429e8c9fa5ed1c1e0837d90e88a"
+      }
+    },
+    {
+      "case": 27,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.9213e-08,
+        "t63_1": 9.9213e-08,
+        "t63_2": 9.9213e-08,
+        "t63_3": 9.9213e-08
+      },
+      "deck_sha256": "f448d858e31d514c021ee3af5e923aae45b7b12e91024aa7bbd3ee8da2d3a38c",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-027.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.634172+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-027.log",
+        "log_sha256": "37fcb9454969f64746cc23f8db7690c52914e90b4e020ceff5cb38f6c30595bb"
+      }
+    },
+    {
+      "case": 28,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92127e-08,
+        "t63_1": 9.92127e-08,
+        "t63_2": 9.92127e-08,
+        "t63_3": 9.92127e-08
+      },
+      "deck_sha256": "9bb7b1636f59f114a06427d0a6577fe09e503e1ba38aaa5119f714d06e2c62d3",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-028.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.763562+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-028.log",
+        "log_sha256": "dbdd1b9fd09d008b49af6cebd5a05fbca18f23c5ef04ea9d5e04a45f147e7c33"
+      }
+    },
+    {
+      "case": 29,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92125e-08,
+        "t63_1": 9.92125e-08,
+        "t63_2": 9.92125e-08,
+        "t63_3": 9.92125e-08
+      },
+      "deck_sha256": "cdabdbb2f64db38a7a29c6cf533c95ea729843759033c142f93c3d1c5752c30a",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-029.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:41.913624+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-029.log",
+        "log_sha256": "78db47bec9a8675413ea755685d27b2d1661e57a491254d404d0d802539b2334"
+      }
+    },
+    {
+      "case": 30,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.9213e-08,
+        "t63_1": 9.9213e-08,
+        "t63_2": 9.9213e-08,
+        "t63_3": 9.9213e-08
+      },
+      "deck_sha256": "fe580239ce5fbb47f67dbc54b854b81025981675928e8bf6e8e625fa1081d781",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-030.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.026648+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-030.log",
+        "log_sha256": "b64a908707cfba22f5ef2b728a04128e4bf631b29208122a0f4df8d8e041ff5c"
+      }
+    },
+    {
+      "case": 31,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92127e-08,
+        "t63_1": 9.92127e-08,
+        "t63_2": 9.92127e-08,
+        "t63_3": 9.92127e-08
+      },
+      "deck_sha256": "327316f65475fdfc2ed1a5351dd0c5bcab340ab1f1b184af6c33818d52e4dbd7",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-031.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.142493+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-031.log",
+        "log_sha256": "a1ec04055006ccc6cf2e993628715d836b7f5561e95165715da2c34652419ff8"
+      }
+    },
+    {
+      "case": 32,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92125e-08,
+        "t63_1": 9.92125e-08,
+        "t63_2": 9.92125e-08,
+        "t63_3": 9.92125e-08
+      },
+      "deck_sha256": "8e16a04ae14bb2de901a9f2f2e15d48aa8e2f7a38dcace692a0f9cf63faf6613",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-032.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.256368+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-032.log",
+        "log_sha256": "06fa7978bd2882fc6a8d349ab2da74246812ebc87d255b1a9d4c990abafb9daa"
+      }
+    },
+    {
+      "case": 33,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.9213e-08,
+        "t63_1": 9.9213e-08,
+        "t63_2": 9.9213e-08,
+        "t63_3": 9.9213e-08
+      },
+      "deck_sha256": "9a5fccebb5d7d54e573957fedcd13d58cb1a75695f1e23edfa1ab354039fb7ae",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-033.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.401609+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-033.log",
+        "log_sha256": "cfffd776d53feee77de69bcd8e73f3525dae973adfabb2fa855a633f79b86ebb"
+      }
+    },
+    {
+      "case": 34,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92127e-08,
+        "t63_1": 9.92127e-08,
+        "t63_2": 9.92127e-08,
+        "t63_3": 9.92127e-08
+      },
+      "deck_sha256": "ab807af42bc6670bd29f5f6b6581780fbe44dcf732aaca5ad71997cd68d8ded8",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-034.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.551257+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-034.log",
+        "log_sha256": "246d94bb6311b3148181f43b68b707ec299e5a778c4660b164b93cbdda1b1df7"
+      }
+    },
+    {
+      "case": 35,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.0899999999999996e-09,
+      "analytical_fc_Hz": 1604185.6008972214,
+      "analytical_tau_s": 9.921229999999998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1604200.0,
+        "f3_1": 1604200.0,
+        "f3_2": 1604200.0,
+        "f3_3": 1604200.0,
+        "t63_0": 9.92125e-08,
+        "t63_1": 9.92125e-08,
+        "t63_2": 9.92125e-08,
+        "t63_3": 9.92125e-08
+      },
+      "deck_sha256": "f43106d5285a0bac0081f7ef6225a9d2a0106e7fd923753e5ca0beb4eab86b88",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-035.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.684158+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-035.log",
+        "log_sha256": "4eda42865625fd760f4872e8e3cca3092c66dd2ada1fb79d0a73a5b24011f2be"
+      }
+    },
+    {
+      "case": 36,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09656e-07,
+        "t63_1": 1.09656e-07,
+        "t63_2": 1.09656e-07,
+        "t63_3": 1.09656e-07
+      },
+      "deck_sha256": "7d0624ad9ed9c3ed4d1876f0bba1b065a180c37a099f3b4a7ad1decab08e2746",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-036.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.800383+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-036.log",
+        "log_sha256": "a5b75814ce7e45801adccfc9bec6dd41ef8f8b55d01118883ef9a8701cf7570f"
+      }
+    },
+    {
+      "case": 37,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "61d36144c7216585381ab1c52903a659f41f43fe98ae38de17a6e3f385c1c4bf",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-037.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:42.936682+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-037.log",
+        "log_sha256": "a7f1c960973f0ed2ca31a40729fa2fb992a10d2cb8f4d9f433f34a9bd3349a99"
+      }
+    },
+    {
+      "case": 38,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "0e01e8990cca5b26ad84756725e1f93a26d81d2229c050f9c07d13cea3730e3f",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-038.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.051962+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-038.log",
+        "log_sha256": "b3f5d0d491b7974c89b96e9d538dadaee5550369b7edb05c9edfbb989612a331"
+      }
+    },
+    {
+      "case": 39,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09656e-07,
+        "t63_1": 1.09656e-07,
+        "t63_2": 1.09656e-07,
+        "t63_3": 1.09656e-07
+      },
+      "deck_sha256": "2e57be76d8e2fe5994a44e7d32c2b6e064a06bf779c46499d971a52fbcc24eac",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-039.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.186910+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-039.log",
+        "log_sha256": "0815cc59adfe7801f43bfdf85a7c36b8ac71ef018fd223f8cb2fe394c7bebb6a"
+      }
+    },
+    {
+      "case": 40,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "5c929826e78d7f21e25be5d3d12448c311d327c7e01077cfdc4bdafaca206864",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-040.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.332570+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-040.log",
+        "log_sha256": "0ac94889b652cadb9bd9f980f8ff4248ea43f2212c5b9841b880594e01880e07"
+      }
+    },
+    {
+      "case": 41,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "500127481dd96646cfe4749757ba441e6fceabbb97a959aa10fb493a78a6f815",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-041.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.451740+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-041.log",
+        "log_sha256": "f9f9d8335142de549dae91170c23a5f03f5224d85270ba55b1c54a9fcb46e560"
+      }
+    },
+    {
+      "case": 42,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09656e-07,
+        "t63_1": 1.09656e-07,
+        "t63_2": 1.09656e-07,
+        "t63_3": 1.09656e-07
+      },
+      "deck_sha256": "181ba3d59ec1b825b35b5ac5b16b1f17fda85cb9e9a68d05775853d482a3e5ef",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-042.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.566793+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-042.log",
+        "log_sha256": "aaf22247e6ff83745ff5eefe7e2349a2f79f9edb1d188cfa8ebf096c013c5f0d"
+      }
+    },
+    {
+      "case": 43,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "fcd301bf22ed0e10af8c15cb65c517706c4933f5760a815b55a0a016a127f1df",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-043.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.725023+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-043.log",
+        "log_sha256": "4bb149ed618ace8cec8c4bec61760e08f847bc4e4752a68da1540871a45e5313"
+      }
+    },
+    {
+      "case": 44,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "152b8522df776ba992ab882c42ece1a48e5ada83089f6f771dc2855e393b1549",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-044.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.834672+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-044.log",
+        "log_sha256": "db8750c5bc0b97dc2f23ac16e821116d86d7dad2786ae0132e702ef13ff77681"
+      }
+    },
+    {
+      "case": 45,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09656e-07,
+        "t63_1": 1.09656e-07,
+        "t63_2": 1.09656e-07,
+        "t63_3": 1.09656e-07
+      },
+      "deck_sha256": "40db472f83c82fa82807617a7540cbff067632bcfe6584be349cbd4963b407f1",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-045.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:43.971343+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-045.log",
+        "log_sha256": "08f78f5fef5627ea66514ed78531cad6070598c147bfecea3bde28a78fcae8ac"
+      }
+    },
+    {
+      "case": 46,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "d960d7124728e62916b40bd42ec97bdf65e86fd891d3a66adce4a248eb67834e",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-046.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.102490+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-046.log",
+        "log_sha256": "8bba4248fdb63d11fc0f741f89876625fa818f715369ed3eed3b52a6b690aee0"
+      }
+    },
+    {
+      "case": 47,
+      "passed": true,
+      "temperature_C": 25,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.47,
+      "capacitance_F": 2.31e-09,
+      "analytical_fc_Hz": 1451406.0198593903,
+      "analytical_tau_s": 1.096557e-07,
+      "ngspice_measurements": {
+        "f3_0": 1451420.0,
+        "f3_1": 1451420.0,
+        "f3_2": 1451420.0,
+        "f3_3": 1451420.0,
+        "t63_0": 1.09657e-07,
+        "t63_1": 1.09657e-07,
+        "t63_2": 1.09657e-07,
+        "t63_3": 1.09657e-07
+      },
+      "deck_sha256": "dfe765151b0f72476457dc831120595d3f5a5d283dda3cc992713d93acfe1b9c",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-047.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.227537+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-047.log",
+        "log_sha256": "d268b9a7256c20b5a8c02f28db5dd49223fe35b93e837b46659d4a9aa95595f8"
+      }
+    },
+    {
+      "case": 48,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1642996.6416257445,
+      "analytical_tau_s": 9.686869653879e-08,
+      "ngspice_measurements": {
+        "f3_0": 1643020.0,
+        "f3_1": 1643020.0,
+        "f3_2": 1643020.0,
+        "f3_3": 1643020.0,
+        "t63_0": 9.68684e-08,
+        "t63_1": 9.68684e-08,
+        "t63_2": 9.68684e-08,
+        "t63_3": 9.68684e-08
+      },
+      "deck_sha256": "614b093039d60a5667409217d807456b35552fc6a553784a773cf884c37e953c",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-048.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.368705+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-048.log",
+        "log_sha256": "7c936d5070d11d995d715c13ffc6a7f0d22808c7f39a8dd1229ec857a3169bf2"
+      }
+    },
+    {
+      "case": 49,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1642996.6416257445,
+      "analytical_tau_s": 9.686869653879e-08,
+      "ngspice_measurements": {
+        "f3_0": 1643020.0,
+        "f3_1": 1643020.0,
+        "f3_2": 1643020.0,
+        "f3_3": 1643020.0,
+        "t63_0": 9.6869e-08,
+        "t63_1": 9.6869e-08,
+        "t63_2": 9.6869e-08,
+        "t63_3": 9.6869e-08
+      },
+      "deck_sha256": "2999226fe0c7771256c8f1432c4b2fcf5e6e2e200bf9e3554fa054f590a732db",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-049.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.535986+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-049.log",
+        "log_sha256": "7fad4db7ba1f47b32e84401338dbb9ed6853a2ca9aeaf823f646586502b024cc"
+      }
+    },
+    {
+      "case": 50,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1642996.6416257445,
+      "analytical_tau_s": 9.686869653879e-08,
+      "ngspice_measurements": {
+        "f3_0": 1643020.0,
+        "f3_1": 1643020.0,
+        "f3_2": 1643020.0,
+        "f3_3": 1643020.0,
+        "t63_0": 9.68691e-08,
+        "t63_1": 9.68691e-08,
+        "t63_2": 9.68691e-08,
+        "t63_3": 9.68691e-08
+      },
+      "deck_sha256": "24b42e05236808df449c925b5ed1afb90ebd76f4fc4f4315bbc786418c6fe697",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-050.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.650302+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-050.log",
+        "log_sha256": "8713555544c9bdd45fa38d072ca36c52344b6b7a35ea4147794e2fd32f1ce333"
+      }
+    },
+    {
+      "case": 51,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1640041.9069320427,
+      "analytical_tau_s": 9.704321726120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1640060.0,
+        "f3_1": 1640060.0,
+        "f3_2": 1640060.0,
+        "f3_3": 1640060.0,
+        "t63_0": 9.70435e-08,
+        "t63_1": 9.70435e-08,
+        "t63_2": 9.70435e-08,
+        "t63_3": 9.70435e-08
+      },
+      "deck_sha256": "1951203fcd0e46283f52e023162e0fba781acb167340339ab77cd355caa969dc",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-051.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.803776+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-051.log",
+        "log_sha256": "3207bce6e06c6b2cf8a9d10a866813b91665dc48c52bbebc362422867604d595"
+      }
+    },
+    {
+      "case": 52,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1640041.9069320427,
+      "analytical_tau_s": 9.704321726120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1640060.0,
+        "f3_1": 1640060.0,
+        "f3_2": 1640060.0,
+        "f3_3": 1640060.0,
+        "t63_0": 9.70429e-08,
+        "t63_1": 9.70429e-08,
+        "t63_2": 9.70429e-08,
+        "t63_3": 9.70429e-08
+      },
+      "deck_sha256": "ee176edce395799c04fce58eba439223b67f3d39447b7d3343f06f098db1c7a4",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-052.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:44.925134+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-052.log",
+        "log_sha256": "11b1c291bb21ac9031fee0af1a83f949b5c9dfe2f312ba848f92436fa7fcacd8"
+      }
+    },
+    {
+      "case": 53,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1640041.9069320427,
+      "analytical_tau_s": 9.704321726120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1640060.0,
+        "f3_1": 1640060.0,
+        "f3_2": 1640060.0,
+        "f3_3": 1640060.0,
+        "t63_0": 9.70429e-08,
+        "t63_1": 9.70429e-08,
+        "t63_2": 9.70429e-08,
+        "t63_3": 9.70429e-08
+      },
+      "deck_sha256": "09f4825b878fceee10d3ca2eed28fbd19a52d1198872a57bab706f8d6365e993",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-053.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.066811+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-053.log",
+        "log_sha256": "e1aa7a6c0123952f14e0aaa3b61af3092b0cf6be64484c5c3f52a9069d1c4aab"
+      }
+    },
+    {
+      "case": 54,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1633168.1472590903,
+      "analytical_tau_s": 9.745165760120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1633170.0,
+        "f3_1": 1633170.0,
+        "f3_2": 1633170.0,
+        "f3_3": 1633170.0,
+        "t63_0": 9.74526e-08,
+        "t63_1": 9.74526e-08,
+        "t63_2": 9.74526e-08,
+        "t63_3": 9.74526e-08
+      },
+      "deck_sha256": "f5ae4c5e1718b8a0371e0cccc650a8157901f02cdf1bb3abb278752357c48fe4",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-054.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.185968+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-054.log",
+        "log_sha256": "6441cd6eedc89428ab9ecd80ab677c42e9f2875a353b4333063f7ac4c2d8bdab"
+      }
+    },
+    {
+      "case": 55,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1633168.1472590903,
+      "analytical_tau_s": 9.745165760120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1633170.0,
+        "f3_1": 1633170.0,
+        "f3_2": 1633170.0,
+        "f3_3": 1633170.0,
+        "t63_0": 9.74526e-08,
+        "t63_1": 9.74526e-08,
+        "t63_2": 9.74526e-08,
+        "t63_3": 9.74526e-08
+      },
+      "deck_sha256": "c0cd5eb3eeecb22ac5f6da0b7c050905f44fa18afb3959436586000314bb50ae",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-055.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.306390+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-055.log",
+        "log_sha256": "38321030c38f4d4fc11afd9ae561bc83eef273ef7784ad7aef49229660783e3e"
+      }
+    },
+    {
+      "case": 56,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1633168.1472590903,
+      "analytical_tau_s": 9.745165760120999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1633170.0,
+        "f3_1": 1633170.0,
+        "f3_2": 1633170.0,
+        "f3_3": 1633170.0,
+        "t63_0": 9.74525e-08,
+        "t63_1": 9.74525e-08,
+        "t63_2": 9.74525e-08,
+        "t63_3": 9.74525e-08
+      },
+      "deck_sha256": "fefce225cee248f3a87b02ca8183acd177887d281dbfc7a4b7a614036e402cdd",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-056.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.421550+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-056.log",
+        "log_sha256": "ef2019ffaeb8d72764175a4b9c666d670eb109f79b577e85476d16acf10feb57"
+      }
+    },
+    {
+      "case": 57,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1630231.0879474045,
+      "analytical_tau_s": 9.762722859878998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1630240.0,
+        "f3_1": 1630240.0,
+        "f3_2": 1630240.0,
+        "f3_3": 1630240.0,
+        "t63_0": 9.76279e-08,
+        "t63_1": 9.76279e-08,
+        "t63_2": 9.76279e-08,
+        "t63_3": 9.76279e-08
+      },
+      "deck_sha256": "0575344e5c02163ecc9ef77701fe78470356f943bcf17d06b3ea32f885c911ba",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-057.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.531088+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-057.log",
+        "log_sha256": "dbacbd50bed58b28e61e1941fcbd3081649f078ba02467d4aeea4b274f74dbbd"
+      }
+    },
+    {
+      "case": 58,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1630231.0879474045,
+      "analytical_tau_s": 9.762722859878998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1630240.0,
+        "f3_1": 1630240.0,
+        "f3_2": 1630240.0,
+        "f3_3": 1630240.0,
+        "t63_0": 9.76281e-08,
+        "t63_1": 9.76281e-08,
+        "t63_2": 9.76281e-08,
+        "t63_3": 9.76281e-08
+      },
+      "deck_sha256": "701306b517133c04671247087dedb806a475026c56b64d4008d3955cff6d9dce",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-058.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.656549+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-058.log",
+        "log_sha256": "cd76e387cfca5e598f8f52c5d027add507f50b96573a92a53d865947525c9481"
+      }
+    },
+    {
+      "case": 59,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1630231.0879474045,
+      "analytical_tau_s": 9.762722859878998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1630240.0,
+        "f3_1": 1630240.0,
+        "f3_2": 1630240.0,
+        "f3_3": 1630240.0,
+        "t63_0": 9.76281e-08,
+        "t63_1": 9.76281e-08,
+        "t63_2": 9.76281e-08,
+        "t63_3": 9.76281e-08
+      },
+      "deck_sha256": "178e4845282d8b47b02c0f6ed1016a0374680128751074f719ed7f903a128519",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-059.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.826927+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-059.log",
+        "log_sha256": "a41ec4403b931a0fab4b401dfe9d8e81da3c50669a1c06e219a44e4f2fcccffe"
+      }
+    },
+    {
+      "case": 60,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1486520.770994721,
+      "analytical_tau_s": 1.0706540143761e-07,
+      "ngspice_measurements": {
+        "f3_0": 1486530.0,
+        "f3_1": 1486530.0,
+        "f3_2": 1486530.0,
+        "f3_3": 1486530.0,
+        "t63_0": 1.07066e-07,
+        "t63_1": 1.07066e-07,
+        "t63_2": 1.07066e-07,
+        "t63_3": 1.07066e-07
+      },
+      "deck_sha256": "d376f8684f2ad44194bcc318a5cb3e4a0077ca951c8e562cc1b9684b9acfdbcd",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-060.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:45.933046+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-060.log",
+        "log_sha256": "90a496ea6c31965b743bebc51b9a8ef884f1c1d98b60e468f2395d6925e8dcfa"
+      }
+    },
+    {
+      "case": 61,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1486520.770994721,
+      "analytical_tau_s": 1.0706540143761e-07,
+      "ngspice_measurements": {
+        "f3_0": 1486530.0,
+        "f3_1": 1486530.0,
+        "f3_2": 1486530.0,
+        "f3_3": 1486530.0,
+        "t63_0": 1.07065e-07,
+        "t63_1": 1.07065e-07,
+        "t63_2": 1.07065e-07,
+        "t63_3": 1.07065e-07
+      },
+      "deck_sha256": "d181123525790fe40c50ec9d6f924ecc58feb1e18e2cbf0e68c0e5c32d019d74",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-061.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.062127+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-061.log",
+        "log_sha256": "2a845d72acf3047723e4a0201e338d27e355d6268aacc1f25a04d702693e4727"
+      }
+    },
+    {
+      "case": 62,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1486520.770994721,
+      "analytical_tau_s": 1.0706540143761e-07,
+      "ngspice_measurements": {
+        "f3_0": 1486530.0,
+        "f3_1": 1486530.0,
+        "f3_2": 1486530.0,
+        "f3_3": 1486530.0,
+        "t63_0": 1.07065e-07,
+        "t63_1": 1.07065e-07,
+        "t63_2": 1.07065e-07,
+        "t63_3": 1.07065e-07
+      },
+      "deck_sha256": "c296643887771c44cb47d2d33c974ba9e1e2a3b5a73a85b937194544e8907a8d",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-062.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.217673+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-062.log",
+        "log_sha256": "d7fffb683a3d656a6ddeaad39d8fb2400e717b3eefb6045ed958efb4e0bff54c"
+      }
+    },
+    {
+      "case": 63,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1483847.4396051813,
+      "analytical_tau_s": 1.0725829276239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1483870.0,
+        "f3_1": 1483870.0,
+        "f3_2": 1483870.0,
+        "f3_3": 1483870.0,
+        "t63_0": 1.07259e-07,
+        "t63_1": 1.07259e-07,
+        "t63_2": 1.07259e-07,
+        "t63_3": 1.07259e-07
+      },
+      "deck_sha256": "f28029ec1de394df73f1515f15555a909b266377cb5f96850ad0d144b3c84ac4",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-063.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.328652+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-063.log",
+        "log_sha256": "d787a6617e55543d2694c7559a0eec1710e6c9099e86435ed8a33e5230720d51"
+      }
+    },
+    {
+      "case": 64,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1483847.4396051813,
+      "analytical_tau_s": 1.0725829276239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1483870.0,
+        "f3_1": 1483870.0,
+        "f3_2": 1483870.0,
+        "f3_3": 1483870.0,
+        "t63_0": 1.07259e-07,
+        "t63_1": 1.07259e-07,
+        "t63_2": 1.07259e-07,
+        "t63_3": 1.07259e-07
+      },
+      "deck_sha256": "bca3371d14b5269a83282206b2688543f01bf26c277ab5ea28bdf64dd4d598c8",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-064.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.453731+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-064.log",
+        "log_sha256": "eb31452fc8b93103a3f426ead5ae5ec5ded0f0188778c359cfd04dd68854977f"
+      }
+    },
+    {
+      "case": 65,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.39041,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1483847.4396051813,
+      "analytical_tau_s": 1.0725829276239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1483870.0,
+        "f3_1": 1483870.0,
+        "f3_2": 1483870.0,
+        "f3_3": 1483870.0,
+        "t63_0": 1.07259e-07,
+        "t63_1": 1.07259e-07,
+        "t63_2": 1.07259e-07,
+        "t63_3": 1.07259e-07
+      },
+      "deck_sha256": "81aeddfce2d779489b2f6889307764d60aebbafdc79f9d45f50833bc8ed32167",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-065.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.562465+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-065.log",
+        "log_sha256": "7895f7deb6ddd175d36fff2f8ab0077e08c7c337422e4266d5deb63af2f6a8d1"
+      }
+    },
+    {
+      "case": 66,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1477628.3237106053,
+      "analytical_tau_s": 1.0770972682239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1477650.0,
+        "f3_1": 1477650.0,
+        "f3_2": 1477650.0,
+        "f3_3": 1477650.0,
+        "t63_0": 1.0771e-07,
+        "t63_1": 1.0771e-07,
+        "t63_2": 1.0771e-07,
+        "t63_3": 1.0771e-07
+      },
+      "deck_sha256": "ce28da6e7eed61410b70f8793b2d7d96c14ca1c5136ce96760f1880c3d1f3670",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-066.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.686707+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-066.log",
+        "log_sha256": "95bf3a7bb1ef4293d5fa22643a96afbe6f7a60fd22cf58588a6d97ba7e0fac7f"
+      }
+    },
+    {
+      "case": 67,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1477628.3237106053,
+      "analytical_tau_s": 1.0770972682239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1477650.0,
+        "f3_1": 1477650.0,
+        "f3_2": 1477650.0,
+        "f3_3": 1477650.0,
+        "t63_0": 1.07711e-07,
+        "t63_1": 1.07711e-07,
+        "t63_2": 1.07711e-07,
+        "t63_3": 1.07711e-07
+      },
+      "deck_sha256": "a965c7839ccfa72c2fd8150747b44048f4d0f651dc48bbd8a82282535c774a98",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-067.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.792278+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-067.log",
+        "log_sha256": "25ca82c50d43da513c800c549be2a81bd24cc4cd409547c067dd83cb885da449"
+      }
+    },
+    {
+      "case": 68,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1477628.3237106053,
+      "analytical_tau_s": 1.0770972682239e-07,
+      "ngspice_measurements": {
+        "f3_0": 1477650.0,
+        "f3_1": 1477650.0,
+        "f3_2": 1477650.0,
+        "f3_3": 1477650.0,
+        "t63_0": 1.07711e-07,
+        "t63_1": 1.07711e-07,
+        "t63_2": 1.07711e-07,
+        "t63_3": 1.07711e-07
+      },
+      "deck_sha256": "977d27d243dce31a2d09c70537a189bed3fbb771bb54fe0249825f353d143fa7",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-068.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:46.928225+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-068.log",
+        "log_sha256": "00f293b7c966b5e8a1bf161c63d37785e1a7c1441cb75253e17cb20889ed7ffa"
+      }
+    },
+    {
+      "case": 69,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1474970.9843333657,
+      "analytical_tau_s": 1.0790377897760998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1474990.0,
+        "f3_1": 1474990.0,
+        "f3_2": 1474990.0,
+        "f3_3": 1474990.0,
+        "t63_0": 1.07904e-07,
+        "t63_1": 1.07904e-07,
+        "t63_2": 1.07904e-07,
+        "t63_3": 1.07904e-07
+      },
+      "deck_sha256": "b6ea5efcee090f83b5bed6fa694ea9fbf72408a2547f0af3bebf268fa58bed79",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-069.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.035595+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-069.log",
+        "log_sha256": "ead242406501be89981cc5ad3aaf63846f9a50baf8752528be397a0a2fe4a06c"
+      }
+    },
+    {
+      "case": 70,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1474970.9843333657,
+      "analytical_tau_s": 1.0790377897760998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1474990.0,
+        "f3_1": 1474990.0,
+        "f3_2": 1474990.0,
+        "f3_3": 1474990.0,
+        "t63_0": 1.07904e-07,
+        "t63_1": 1.07904e-07,
+        "t63_2": 1.07904e-07,
+        "t63_3": 1.07904e-07
+      },
+      "deck_sha256": "48ffcf90c1890832dbbe7fbe651ce5ba1c4e3a67b66aec5308f57d73924f0045",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-070.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.145004+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-070.log",
+        "log_sha256": "872c24a595dd4abef3a03d566c7ffae457b4f5c7bd621a8176af2bb99e8b4d06"
+      }
+    },
+    {
+      "case": 71,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": -1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 46.66959,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1474970.9843333657,
+      "analytical_tau_s": 1.0790377897760998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1474990.0,
+        "f3_1": 1474990.0,
+        "f3_2": 1474990.0,
+        "f3_3": 1474990.0,
+        "t63_0": 1.07904e-07,
+        "t63_1": 1.07904e-07,
+        "t63_2": 1.07904e-07,
+        "t63_3": 1.07904e-07
+      },
+      "deck_sha256": "87806b10ee46490f4c427df2e701cb5e82e2d008b12f85e8b1fa5fb5bbe9439a",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-071.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.258917+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-071.log",
+        "log_sha256": "cf4d9f6c35cea4454f6763ca063905c142fee38bd28784c011718564da36fde5"
+      }
+    },
+    {
+      "case": 72,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1610462.0546628584,
+      "analytical_tau_s": 9.882563990320999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1610470.0,
+        "f3_1": 1610470.0,
+        "f3_2": 1610470.0,
+        "f3_3": 1610470.0,
+        "t63_0": 9.88258e-08,
+        "t63_1": 9.88258e-08,
+        "t63_2": 9.88258e-08,
+        "t63_3": 9.88258e-08
+      },
+      "deck_sha256": "d945757e4bddac23f98eadb58b5c6b0f3815aabcde37e642690867f36e726e6f",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-072.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.395758+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-072.log",
+        "log_sha256": "8e6d1406407348cf583da91c7e2bc65253958b1d4220a02adcbf6d1750c81ed0"
+      }
+    },
+    {
+      "case": 73,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1610462.0546628584,
+      "analytical_tau_s": 9.882563990320999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1610470.0,
+        "f3_1": 1610470.0,
+        "f3_2": 1610470.0,
+        "f3_3": 1610470.0,
+        "t63_0": 9.88261e-08,
+        "t63_1": 9.88261e-08,
+        "t63_2": 9.88261e-08,
+        "t63_3": 9.88261e-08
+      },
+      "deck_sha256": "509263d707ac08732cf1078c2c32ff2e09f9adc019ab6fc5c22cc7e3b15583f0",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-073.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.516915+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-073.log",
+        "log_sha256": "317716ca3782ff75b5f1c7434a1b25d59a9dc70c9a9a6ecdccfd2871f2eb63ce"
+      }
+    },
+    {
+      "case": 74,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1610462.0546628584,
+      "analytical_tau_s": 9.882563990320999e-08,
+      "ngspice_measurements": {
+        "f3_0": 1610470.0,
+        "f3_1": 1610470.0,
+        "f3_2": 1610470.0,
+        "f3_3": 1610470.0,
+        "t63_0": 9.88263e-08,
+        "t63_1": 9.88263e-08,
+        "t63_2": 9.88263e-08,
+        "t63_3": 9.88263e-08
+      },
+      "deck_sha256": "8af06b84d17a0b5d6e9a9cf40d1e982830e83c39a37c0342fa3b45520abcfb60",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-074.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.632868+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-074.log",
+        "log_sha256": "681cb6d720723d3172d2460642dddab43e8494b946cec17f13c185dc1050446c"
+      }
+    },
+    {
+      "case": 75,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1607565.8295670517,
+      "analytical_tau_s": 9.900368629678997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1607570.0,
+        "f3_1": 1607570.0,
+        "f3_2": 1607570.0,
+        "f3_3": 1607570.0,
+        "t63_0": 9.90037e-08,
+        "t63_1": 9.90037e-08,
+        "t63_2": 9.90037e-08,
+        "t63_3": 9.90037e-08
+      },
+      "deck_sha256": "d86187debdfb625390121c9714d8e4df50c09f121f2625b0a1b1a91775f9cb04",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-075.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.774274+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-075.log",
+        "log_sha256": "516f450ddc8dbc4160af71c6ee04edbd67d9f9c2a73b1115baeb4a6fe75b5f80"
+      }
+    },
+    {
+      "case": 76,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1607565.8295670517,
+      "analytical_tau_s": 9.900368629678997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1607570.0,
+        "f3_1": 1607570.0,
+        "f3_2": 1607570.0,
+        "f3_3": 1607570.0,
+        "t63_0": 9.90035e-08,
+        "t63_1": 9.90035e-08,
+        "t63_2": 9.90035e-08,
+        "t63_3": 9.90035e-08
+      },
+      "deck_sha256": "18699ca2588819b1cce9c6fd5bc99a3341a8f9b680f3b6591b5507a2987b9ad1",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-076.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:47.895501+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-076.log",
+        "log_sha256": "432394b39f627443f0305bb6197cdb049abe346c229804d6b944076d72d25aad"
+      }
+    },
+    {
+      "case": 77,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1607565.8295670517,
+      "analytical_tau_s": 9.900368629678997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1607570.0,
+        "f3_1": 1607570.0,
+        "f3_2": 1607570.0,
+        "f3_3": 1607570.0,
+        "t63_0": 9.90037e-08,
+        "t63_1": 9.90037e-08,
+        "t63_2": 9.90037e-08,
+        "t63_3": 9.90037e-08
+      },
+      "deck_sha256": "ede5065c565bbc837a3a2c9fbf0b8b2101f21db23fff7aaf5ea95333408ef2de",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-077.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.013659+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-077.log",
+        "log_sha256": "353faf425618d15f42bf3ac8428113039a02bc13a2457b3cbe1e5670e83892f8"
+      }
+    },
+    {
+      "case": 78,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1600828.183947029,
+      "analytical_tau_s": 9.942037795678998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1600850.0,
+        "f3_1": 1600850.0,
+        "f3_2": 1600850.0,
+        "f3_3": 1600850.0,
+        "t63_0": 9.94213e-08,
+        "t63_1": 9.94213e-08,
+        "t63_2": 9.94213e-08,
+        "t63_3": 9.94213e-08
+      },
+      "deck_sha256": "debdca634c4f44066567ec956113c9854f911dffae174321e59248db166048af",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-078.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.145308+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-078.log",
+        "log_sha256": "de98ec16565c2ca150a32207ca8a9a18c1149338d8244ece3b6baa37a8584c2e"
+      }
+    },
+    {
+      "case": 79,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1600828.183947029,
+      "analytical_tau_s": 9.942037795678998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1600850.0,
+        "f3_1": 1600850.0,
+        "f3_2": 1600850.0,
+        "f3_3": 1600850.0,
+        "t63_0": 9.94212e-08,
+        "t63_1": 9.94212e-08,
+        "t63_2": 9.94212e-08,
+        "t63_3": 9.94212e-08
+      },
+      "deck_sha256": "e1b52da0c57ec69db4f7488127833059ccba86fa0e3c8bce05ea2b2446744c4a",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-079.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.265677+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-079.log",
+        "log_sha256": "5cd3b9bbf8c90a6c3e7abb1fb244106e438c72a9a614651f0c810ed752e1c344"
+      }
+    },
+    {
+      "case": 80,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0881189999999997e-09,
+      "analytical_fc_Hz": 1600828.183947029,
+      "analytical_tau_s": 9.942037795678998e-08,
+      "ngspice_measurements": {
+        "f3_0": 1600850.0,
+        "f3_1": 1600850.0,
+        "f3_2": 1600850.0,
+        "f3_3": 1600850.0,
+        "t63_0": 9.94211e-08,
+        "t63_1": 9.94211e-08,
+        "t63_2": 9.94211e-08,
+        "t63_3": 9.94211e-08
+      },
+      "deck_sha256": "6380554f833c21963256a9844f43f6fe5715f0a4ad96f50fb8a5d95204b55354",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-080.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.403779+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-080.log",
+        "log_sha256": "ca96a5670a2a13fa1389a203b32f40da58f8720106bc7a7a0d2f5e4d3e4eee14"
+      }
+    },
+    {
+      "case": 81,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1597949.2842256736,
+      "analytical_tau_s": 9.959949584320997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1597970.0,
+        "f3_1": 1597970.0,
+        "f3_2": 1597970.0,
+        "f3_3": 1597970.0,
+        "t63_0": 9.96003e-08,
+        "t63_1": 9.96003e-08,
+        "t63_2": 9.96003e-08,
+        "t63_3": 9.96003e-08
+      },
+      "deck_sha256": "8b529c62749e0620699865129027d0680c4e0c5c00a1cf3bc9be79829323b7c1",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-081.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.563460+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-081.log",
+        "log_sha256": "1b336cea90a750c9143cca48d09d4faaa6a5ad1acf0ac25e2a06ee9c6d4b1106"
+      }
+    },
+    {
+      "case": 82,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1597949.2842256736,
+      "analytical_tau_s": 9.959949584320997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1597970.0,
+        "f3_1": 1597970.0,
+        "f3_2": 1597970.0,
+        "f3_3": 1597970.0,
+        "t63_0": 9.96004e-08,
+        "t63_1": 9.96004e-08,
+        "t63_2": 9.96004e-08,
+        "t63_3": 9.96004e-08
+      },
+      "deck_sha256": "478015ed8191c1c24d0e484795d0777056e4fb98861f7ec36df84f7b085f2904",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-082.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.714102+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-082.log",
+        "log_sha256": "df0c6661ec7d72f11bdc2991d72f982b727de56dddda24eafbf4c3b02c952a83"
+      }
+    },
+    {
+      "case": 83,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": -1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.0918809999999995e-09,
+      "analytical_fc_Hz": 1597949.2842256736,
+      "analytical_tau_s": 9.959949584320997e-08,
+      "ngspice_measurements": {
+        "f3_0": 1597970.0,
+        "f3_1": 1597970.0,
+        "f3_2": 1597970.0,
+        "f3_3": 1597970.0,
+        "t63_0": 9.96004e-08,
+        "t63_1": 9.96004e-08,
+        "t63_2": 9.96004e-08,
+        "t63_3": 9.96004e-08
+      },
+      "deck_sha256": "7b4f732c284a14d6b7c9ce37a33f2516d5c7afca864fa62d44e9b41efb7a57b7",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-083.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.833883+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-083.log",
+        "log_sha256": "0cc8a47d66ebaa0ef289ff412259657600e2bc7d1934ca2f75e986bce0e2832b"
+      }
+    },
+    {
+      "case": 84,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1457084.7161235386,
+      "analytical_tau_s": 1.0922833884039e-07,
+      "ngspice_measurements": {
+        "f3_0": 1457110.0,
+        "f3_1": 1457110.0,
+        "f3_2": 1457110.0,
+        "f3_3": 1457110.0,
+        "t63_0": 1.09229e-07,
+        "t63_1": 1.09229e-07,
+        "t63_2": 1.09229e-07,
+        "t63_3": 1.09229e-07
+      },
+      "deck_sha256": "f15db8bf55e30cb7c096711c0a4a0502dca00a28f4e5c70c157fa4453028198c",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-084.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:48.952506+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-084.log",
+        "log_sha256": "835dcc857b8654cbf8ef0e425d3e8c32dc63373b544d0bb1b721f4f41d6b12df"
+      }
+    },
+    {
+      "case": 85,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1457084.7161235386,
+      "analytical_tau_s": 1.0922833884039e-07,
+      "ngspice_measurements": {
+        "f3_0": 1457110.0,
+        "f3_1": 1457110.0,
+        "f3_2": 1457110.0,
+        "f3_3": 1457110.0,
+        "t63_0": 1.09229e-07,
+        "t63_1": 1.09229e-07,
+        "t63_2": 1.09229e-07,
+        "t63_3": 1.09229e-07
+      },
+      "deck_sha256": "cbf34210be7c51c858e5ad83e32b8467389437cc34d5e946f6929fcdae4d71da",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-085.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.082409+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-085.log",
+        "log_sha256": "b96ec415bac06ab0328c2312201b49cad5579afba7ca7e61b2437d4436fb2c2f"
+      }
+    },
+    {
+      "case": 86,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1457084.7161235386,
+      "analytical_tau_s": 1.0922833884039e-07,
+      "ngspice_measurements": {
+        "f3_0": 1457110.0,
+        "f3_1": 1457110.0,
+        "f3_2": 1457110.0,
+        "f3_3": 1457110.0,
+        "t63_0": 1.09228e-07,
+        "t63_1": 1.09228e-07,
+        "t63_2": 1.09228e-07,
+        "t63_3": 1.09228e-07
+      },
+      "deck_sha256": "8ebf4b3bd7a6079e2dc284f1903d8e8a49350f0feae0813bcd0010477b35eabb",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-086.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.202140+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-086.log",
+        "log_sha256": "5c39ffa4afbba76551250011baa0577585a298ae728735c84044460c02b2f1b6"
+      }
+    },
+    {
+      "case": 87,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1454464.321989237,
+      "analytical_tau_s": 1.0942512695960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1454490.0,
+        "f3_1": 1454490.0,
+        "f3_2": 1454490.0,
+        "f3_3": 1454490.0,
+        "t63_0": 1.09426e-07,
+        "t63_1": 1.09426e-07,
+        "t63_2": 1.09426e-07,
+        "t63_3": 1.09426e-07
+      },
+      "deck_sha256": "7f2c60266a0e752af880359d445b6cb3169a8ae1b9fca64c3f572f9d0a35a59d",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-087.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.321449+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-087.log",
+        "log_sha256": "930dd711311022e10881df52a57154895259d18c1f5c5aae05b877d3f3e0ff80"
+      }
+    },
+    {
+      "case": 88,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1454464.321989237,
+      "analytical_tau_s": 1.0942512695960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1454490.0,
+        "f3_1": 1454490.0,
+        "f3_2": 1454490.0,
+        "f3_3": 1454490.0,
+        "t63_0": 1.09426e-07,
+        "t63_1": 1.09426e-07,
+        "t63_2": 1.09426e-07,
+        "t63_3": 1.09426e-07
+      },
+      "deck_sha256": "9b4136ef5a68f37cb36d30049adb6e71ab175e4a19d2e13b5a002715a4d11685",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-088.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.429320+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-088.log",
+        "log_sha256": "db92bcf5fe1633443e7cc8d6f1a26a94d2aba21b269d0526e697d35c419795c0"
+      }
+    },
+    {
+      "case": 89,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": -1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.32759,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1454464.321989237,
+      "analytical_tau_s": 1.0942512695960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1454490.0,
+        "f3_1": 1454490.0,
+        "f3_2": 1454490.0,
+        "f3_3": 1454490.0,
+        "t63_0": 1.09426e-07,
+        "t63_1": 1.09426e-07,
+        "t63_2": 1.09426e-07,
+        "t63_3": 1.09426e-07
+      },
+      "deck_sha256": "ddd014c49642024faf6bb2a9ba36c8932cde5529087316d88c3c8c8787879e48",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-089.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.550431+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-089.log",
+        "log_sha256": "5ee74bbf8ffb072e9e3fa3482202cea6c982a330c999513031768ca7c4299f43"
+      }
+    },
+    {
+      "case": 90,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1448368.3569044548,
+      "analytical_tau_s": 1.0988568089960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1448380.0,
+        "f3_1": 1448380.0,
+        "f3_2": 1448380.0,
+        "f3_3": 1448380.0,
+        "t63_0": 1.09886e-07,
+        "t63_1": 1.09886e-07,
+        "t63_2": 1.09886e-07,
+        "t63_3": 1.09886e-07
+      },
+      "deck_sha256": "f1887120086a9b626248436693874be06a2f4e5e21a9dbdc6e4e9fdef5067e19",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-090.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.661669+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-090.log",
+        "log_sha256": "81cb627e1a00f901ae7e5454190a2b36a706c70566197744faae55d0793fa890"
+      }
+    },
+    {
+      "case": 91,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1448368.3569044548,
+      "analytical_tau_s": 1.0988568089960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1448380.0,
+        "f3_1": 1448380.0,
+        "f3_2": 1448380.0,
+        "f3_3": 1448380.0,
+        "t63_0": 1.09886e-07,
+        "t63_1": 1.09886e-07,
+        "t63_2": 1.09886e-07,
+        "t63_3": 1.09886e-07
+      },
+      "deck_sha256": "3c60f8c998148e81da118a23ca8568aa8c3e68fcf410bf8bb8ac782507685c1a",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-091.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.782910+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-091.log",
+        "log_sha256": "6850df1b59793c201f770a398d5fb0a1989e21a1f0154cc10e93032713dee76b"
+      }
+    },
+    {
+      "case": 92,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": -1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.307921e-09,
+      "analytical_fc_Hz": 1448368.3569044548,
+      "analytical_tau_s": 1.0988568089960999e-07,
+      "ngspice_measurements": {
+        "f3_0": 1448380.0,
+        "f3_1": 1448380.0,
+        "f3_2": 1448380.0,
+        "f3_3": 1448380.0,
+        "t63_0": 1.09886e-07,
+        "t63_1": 1.09886e-07,
+        "t63_2": 1.09886e-07,
+        "t63_3": 1.09886e-07
+      },
+      "deck_sha256": "5428403a85dcf255f4827ca924c327be263d8ccf78c77662f0bf82bf0c3a42be",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-092.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:49.891099+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-092.log",
+        "log_sha256": "02eb1e073b229ecf5b5241a9a903a75eda2289fc12e840340aea4b2dcff2886b"
+      }
+    },
+    {
+      "case": 93,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 0.1,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1445763.638108943,
+      "analytical_tau_s": 1.1008365330038998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1445760.0,
+        "f3_1": 1445760.0,
+        "f3_2": 1445760.0,
+        "f3_3": 1445760.0,
+        "t63_0": 1.10084e-07,
+        "t63_1": 1.10084e-07,
+        "t63_2": 1.10084e-07,
+        "t63_3": 1.10084e-07
+      },
+      "deck_sha256": "fd7c2d429226f63d035f131c2cd87aac521522c1e83ba78e6b53a0d195204583",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-093.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:50.023031+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-093.log",
+        "log_sha256": "ba1829f97a383b4d9c5b57f1065b5e33ff92a1e1b8fb13bac29b8bbd3a7ab059"
+      }
+    },
+    {
+      "case": 94,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 1.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1445763.638108943,
+      "analytical_tau_s": 1.1008365330038998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1445760.0,
+        "f3_1": 1445760.0,
+        "f3_2": 1445760.0,
+        "f3_3": 1445760.0,
+        "t63_0": 1.10083e-07,
+        "t63_1": 1.10083e-07,
+        "t63_2": 1.10083e-07,
+        "t63_3": 1.10083e-07
+      },
+      "deck_sha256": "e6809b4529b0bdde5e89333e78b2e43510b17c7ffdb40c6c40addd3cb2a557f6",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-094.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:50.176655+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-094.log",
+        "log_sha256": "965780982bfc6b865a8230b5cb0fdbca5e186ffc75f5672938da25087e64bc96"
+      }
+    },
+    {
+      "case": 95,
+      "passed": true,
+      "temperature_C": 55,
+      "step_amplitude_V": 5.0,
+      "R_tolerance_sign": 1,
+      "C_tolerance_sign": 1,
+      "R_TCR_sign": 1,
+      "C_TCR_sign": 1,
+      "resistance_ohm": 47.61241,
+      "capacitance_F": 2.312079e-09,
+      "analytical_fc_Hz": 1445763.638108943,
+      "analytical_tau_s": 1.1008365330038998e-07,
+      "ngspice_measurements": {
+        "f3_0": 1445760.0,
+        "f3_1": 1445760.0,
+        "f3_2": 1445760.0,
+        "f3_3": 1445760.0,
+        "t63_0": 1.10084e-07,
+        "t63_1": 1.10084e-07,
+        "t63_2": 1.10084e-07,
+        "t63_3": 1.10084e-07
+      },
+      "deck_sha256": "2425b72573a9b0e95acbd56eca9ee7b2d3c1af741dbb93279fb92fae6c26e974",
+      "run": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "ngspice",
+          "-b",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-analog-plant-r06/analog_passive_filter_corners-evidence/corner-095.cir"
+        ],
+        "started_utc": "2026-10-02T02:34:50.284791+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-analog-plant-r06\\analog_passive_filter_corners-evidence\\corner-095.log",
+        "log_sha256": "d7a2f3b13afc192b35e29af29f9eef81536bec071cfc8af954cc7a2a0e1421eb"
+      }
+    }
+  ],
+  "required_cases": 96,
+  "component_temperature_corners_C": [
+    25,
+    55
+  ],
+  "temperature_range_0_to_55_complete": false,
+  "capacitor_temperature_provenance": "Murata current downloaded Jun19,2026 reference: page2 5% capacitance and0+/-30ppm/C from25to125C at25C reference; page3 no-bias measurement. Values below25C require TableA and complete application review, not extrapolation.",
+  "resistor_provenance": "Vishay document20035 Apr14,2026 page3 F=1%,K=100ppm/K; exact Source26 CRCW060347R0FKEA",
+  "model_limitations": [
+    "No capacitor ESR/ESL/DC-bias/frequency or hysteresis/load-aging model",
+    "No amplifier source impedance, output drive, stability, slew or input/common-mode behavior",
+    "No ADC input model, acquisition kickback, reference noise, quantization or calibration",
+    "No signal/copper parasitics or full routed-board extraction",
+    "Stepped voltage scenarios exercise an ideal linear transfer, not measured voltage independence",
+    "No startup, fault, thermal, protection or complete analog-accuracy qualification"
+  ],
+  "hardware_qualified_bandwidth_Hz": null,
+  "whole_analog_chain_passed": false,
+  "physical_validation_required": true,
+  "simulated_passive_fc_range_Hz": [
+    1445760.0,
+    1643020.0
+  ]
+}

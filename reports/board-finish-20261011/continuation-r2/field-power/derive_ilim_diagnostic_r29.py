@@ -1,0 +1,10 @@
+from pathlib import Path
+P=Path(__file__).resolve().parent;s=(P/'repair_u11015_ilim_barrel_r26.py').read_text()
+s=s.replace("OUT=HERE/'u11015-ilim-barrel-repair-r26'","OUT=HERE/'u11015-ilim-route-diagnostic-r29'")
+s=s.replace("result=None;attempts=0;annularCandidates=0", "result=None;attempts=0;annularCandidates=0;counts={'outer_ground_routes':0,'ILIM_restores':0,'inner_bridges':0};examples=[]")
+s=s.replace("if rr is None:continue\n         ir=", "if rr is None:continue\n         counts['outer_ground_routes']+=1\n         ir=")
+s=s.replace("if ir is None:continue\n         inner,", "if ir is None:\n          if len(examples)<12:examples.append({'at':xy,'ground_route':{k:v for k,v in rr.items() if k!='body'},'ILIM_restore':False})\n          continue\n         counts['ILIM_restores']+=1\n         inner,")
+s=s.replace("if inner is None:continue\n         uid=", "if inner is None:\n          if len(examples)<12:examples.append({'at':xy,'ground_route':{k:v for k,v in rr.items() if k!='body'},'ILIM_restore':True,'inner_bridge':False})\n          continue\n         counts['inner_bridges']+=1\n         uid=")
+s=s.replace("'all_layer_legal_rooted_annulus_candidates':annularCandidates", "'all_layer_legal_rooted_annulus_candidates':annularCandidates,'stage_counts':counts,'first_route_examples':examples")
+(P/'diagnose_u11015_routes_r29.py').write_text(s,encoding='utf-8');compile(s,'diagnose_u11015_routes_r29.py','exec')
+print('derived diagnostic')

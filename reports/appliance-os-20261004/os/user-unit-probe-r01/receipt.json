@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "utc": "2026-10-04T11:57:58.350602+00:00",
+  "status": "PASS_USER_RECOVERY_UNIT_SYNTAX",
+  "scope": "Offline systemd user-unit parser for two exact staged recovery units, isolated chroot runtime directory; no manager activation or GUI service execution",
+  "executions": [
+    {
+      "stage": "create-own-runtime-directory",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "-u",
+        "root",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "mkdir",
+        "-m",
+        "700",
+        "/work/controller-os-3488551ab5ee4d959a27dc7c1591250b/unit-probe-runtime"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "user-recovery-syntax",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "-u",
+        "root",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/usr/bin/env",
+        "XDG_RUNTIME_DIR=/work/controller-os-3488551ab5ee4d959a27dc7c1591250b/unit-probe-runtime",
+        "SYSTEMD_UNIT_PATH=/work/controller-os-3488551ab5ee4d959a27dc7c1591250b/rootfs/etc/systemd/user/:/usr/lib/systemd/user",
+        "systemd-analyze",
+        "--user",
+        "verify",
+        "/work/controller-os-3488551ab5ee4d959a27dc7c1591250b/rootfs/etc/systemd/user/controller-kiosk-recovery.service",
+        "/work/controller-os-3488551ab5ee4d959a27dc7c1591250b/rootfs/etc/systemd/user/controller-kiosk-recovery.target"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "staged_user_unit_sha256": {
+    "image-a/rootfs/etc/systemd/user/controller-kiosk-recovery.service": "d6a1bf4134ff16eac8f842cc7f5246d66c33ee3ab00eee2d8afd478b57fc32f1",
+    "image-a/rootfs/etc/systemd/user/controller-kiosk-recovery.target": "cbf5336646a83382af764c7ec2b6361570706f889e189f953b000d5fb5f8255a",
+    "image-a/rootfs/etc/systemd/user/controller-kiosk.service": "061f772ee190751d7b1d30f688c63cb3e1d91d4f702b28cb31c532840aaaea01"
+  },
+  "staged_unit_artifact_base": "reports/appliance-os-20261004/os/run-r01",
+  "units_unchanged": true,
+  "runner_sha256": "84916468079197363c18e25f04f77f5509ea5e4507cb789a60b5abe363e225d5",
+  "base_receipt_sha256": "089896d64e7b701d9965b97dc5766d7ea0a1bf430217f0daf412720ad1027dc5",
+  "retained_initial_probe": "run-r01/systemd-user-recovery-syntax.log",
+  "initial_probe_failure": "Inherited WSLg runtime directory does not exist inside isolated rootfs",
+  "unit_startup_executed": false,
+  "browser_launched": false,
+  "systemd_manager_activated": false,
+  "actual_physical_boot": false,
+  "services_installed_or_enabled": false,
+  "desktop_or_network_config_modified": false,
+  "paid_api_calls": 0,
+  "physical_device_connections": 0
+}

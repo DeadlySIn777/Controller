@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-28",
+  "sdk": "ESP-IDF 5.5.4",
+  "sdk_commit": "735507283d5b2f9fb363a1901172dbd9e847945d",
+  "target": "esp32s3",
+  "compiler": "Xtensa GCC 14.2.0, esp-14.2.0_20260121",
+  "target_builds": [
+    {
+      "variant": "esp32s3",
+      "result": "compiled-and-linked",
+      "host_rx_gpio": -1,
+      "size_bytes": 177376,
+      "sha256": "a43b3f4e6f7453f95aca32d40421f00d68f39220c6ba8b25724963202cc07710",
+      "gpio_approved_for_hardware": false
+    },
+    {
+      "variant": "uart-compile-check",
+      "result": "compiled-and-linked",
+      "host_rx_gpio": 4,
+      "size_bytes": 202352,
+      "sha256": "42b53c37cdc884e7277ab43515604f1a076694354ef34b88b5e4f83e67a3ee05",
+      "gpio_approved_for_hardware": false
+    }
+  ],
+  "source_sha256": {
+    "firmware/esp32_service/core/service_health.c": "e1fd78b8ba3a9e2277076447e73021aad99641ca074146655a618d0c126b7c26",
+    "firmware/esp32_service/core/service_health.h": "cd80987d6253f5f2a756f198b45330f4abadff4be4e5e35936f8ae8431da5933",
+    "firmware/esp32_service/main/service_main.c": "7cf009b6d75317a3bb5c5292338863635761e51c84b930ddf285c325b13cd5a9",
+    "firmware/esp32_service/main/CMakeLists.txt": "cd060313778e90301d9e8680e7e6d5a293f5da8ddd0717bfe1849da9d22feb89",
+    "firmware/esp32_service/CMakeLists.txt": "e9cebfca2b1656a64fb5d4b4e27e2621ff20105d06370813b69cc2eb13e01671",
+    "firmware/esp32_service/sdkconfig.defaults": "87c8a4da3bb36b79c9273ec7f5860b5e44785150daa21e3d325bfbcfe5fb7752",
+    "firmware/esp32_service/sdkconfig.uart-build-check.defaults": "0c6d4ba7871bceb64d11ce1dbfa13391926378a8abc693ba3301f467c81e3165",
+    "firmware/esp32_service/main/Kconfig.projbuild": "db42b6eb1be719f196fea05ebc9017efc714a768aa715c80f26139002179a406",
+    "firmware/esp32_service/tests/test_service_health.c": "500b6c3884828134078dab5ffd300c9fc1fc4ed834fc18b4d42d4cfe0527b8d7",
+    "controller_lab/service_health.py": "bc0948d062c70a7da90bd3dfde1b05df438b5a5540dc401006b085a02ddd7659",
+    "tests/test_service_health.py": "b3ec8df079d8feb87b7f5d95278c3af4dcdfffc46fbd66171de664fcbb2d8c88"
+  },
+  "host_core_validation": {
+    "compiler": "WSL Alpine GCC",
+    "warnings": "-Wall -Wextra -Werror -pedantic",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "result": "passed",
+    "noise_bytes": 100000,
+    "single_byte_corruption_positions": 40
+  },
+  "evidence_retention": {
+    "policy": "retained-copies",
+    "reproducible_build": false,
+    "note": "CONFIG_APP_REPRODUCIBLE_BUILD is not set and CONFIG_APP_COMPILE_TIME_DATE=y, so a rebuild embeds a new timestamp and will not match these hashes bit-for-bit. Build directories are git-ignored; the hashed images and build logs are retained in firmware/esp32_service/evidence/ with SHA256SUMS.",
+    "files": {
+      "esp32s3": "firmware/esp32_service/evidence/cnc_service-esp32s3.bin",
+      "uart-compile-check": "firmware/esp32_service/evidence/cnc_service-uart-compile-check.bin",
+      "default_build_log": "firmware/esp32_service/evidence/default-build.log",
+      "uart_build_check_log": "firmware/esp32_service/evidence/uart-build-check.log"
+    }
+  },
+  "physical_hardware_tested": false,
+  "flashed": false,
+  "machine_control_outputs_implemented": false,
+  "independent_review": "First-sample progress overclaim corrected; subsequent same-boot counter advance required. UART-buffer age and cross-boot authentication remain advisory limitations."
+}

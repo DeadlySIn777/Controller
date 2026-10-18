@@ -1,0 +1,6661 @@
+{
+ "spec_revision": "IS-1",
+ "section": "01 protocol and schedule",
+ "companion_document": "docs/interface-spec/01-protocol-and-schedule.md",
+ "date": "2026-09-28",
+ "status": "specification only; no RTL, driver, firmware, schematic or measurement exists for anything defined here; nothing is ready for manufacture",
+ "historical_baseline": "gateware/PROTOCOL.md (ABI v1, CNC1, 64 B) and cnc1/PROTOCOL_V2.md (ABI v2 discovery) stay as they are and remain six-joint/two-encoder evidence; ABI 3 frames here never fall back to them",
+ "evidence_labels": {
+  "DS": "manufacturer datasheet or product page opened for this section",
+  "DDR": "datasheet desk review recorded earlier in the repository",
+  "AR": "arithmetic from stated inputs, including scripted exhaustive CRC syndrome searches; not a measurement",
+  "SI": "source inspection of repository files",
+  "REQ": "requirement or budget allocation set by IS-1; not evidence that anything meets it",
+  "ME": "physical measurement; none exists for anything in this section"
+ },
+ "consistency": {
+  "section_03": "HAL names and logical field names adopted from docs/interface-spec/03-terminals-and-allocations.md; this section is authoritative for byte offsets and HAL names where they differ",
+  "section_04": "timing classes, safety status fields, fault bits, watchdog progress pulses, OPI and pos_continuity adopted from docs/interface-spec/04-safety-power-timing.md"
+ },
+ "host_link": {
+  "physical": "one SPI bus, mode 0, MSB first, active-low chip selects, FPGA oversampled at 50 MHz core; SCLK <= core/8 = 6.25 MHz; budget cases 5.00 and 6.25 MHz",
+  "chip_selects": {
+   "CS_FB": {
+    "frame_bytes": 176,
+    "command_magic": "CNC3",
+    "response_magic": "CNF3 (or a page: CAP3, FLT3, IDP3, card MAINT response)",
+    "opcodes": [
+     "0x05",
+     "0x06",
+     "0x07",
+     "0x0C",
+     "0x10"
+    ]
+   },
+   "CS_CMD": {
+    "frame_bytes": 96,
+    "command_magic": "CNC3",
+    "response_magic": "CNS3",
+    "opcodes": [
+     "0x00",
+     "0x01",
+     "0x02",
+     "0x03",
+     "0x04",
+     "0x08",
+     "0x09",
+     "0x0A",
+     "0x0B",
+     "0x0D",
+     "0x0E"
+    ]
+   }
+  },
+  "rules": [
+   "exact length per chip select (1408 or 768 rising SCLK edges); shorter, longer, early release or both chip selects asserted together: rejected, LINK fault",
+   "snapshot at synchronized CS assertion; commit only after CS release with exact length, CRC and semantic validation",
+   "CS guards >= 8 core ticks before the first rising edge and after the last falling edge, >= 8 ticks high between transactions",
+   "big-endian fields; u24 counters are low 24 bits of 32-bit FPGA counters, unwrapped by the host modulo 2^24",
+   "one sequence counter shared by both chip selects: next = last + 1, nonzero, no wrap; FB_READ, READ_PAGE, MAINT and NOP use sequence 0 and do not advance it",
+   "ABI byte 0x03 in every frame; no fallback to ABI 1 or 2 (CNC1_BAD_CAPS)"
+  ],
+  "per_cycle_order": [
+   "servo thread wakes",
+   "cnc1.read: CS_FB FB_READ (event ack) -> CNF3 feedback",
+   "LinuxCNC motion, kinematics and HAL functions",
+   "cnc1.write: CS_CMD UPDATE (rates + outputs) -> CNS3 (event, telemetry, timing)"
+  ]
+ },
+ "crc": {
+  "host_frames": {
+   "name": "CRC-16/CCITT-FALSE",
+   "poly": "0x1021",
+   "init": "0xFFFF",
+   "refin": false,
+   "refout": false,
+   "xorout": "0x0000",
+   "check_123456789": "0x29B1",
+   "coverage": "bytes 0..n-3, stored MSB first in the last two bytes",
+   "hamming_distance": "4 at 1408-bit and 768-bit codewords: exhaustive search found no undetected pattern of weight 2 or 3 and found weight-4 patterns [AR]; the generator has the factor (x+1) and period 32767, so HD 4 holds to 32751 data bits",
+   "why_kept": "existing RTL streams it; the host link is a short internal bus whose other defences are exact length, magic, sequence, session and semantic checks; any rejection latches a fault rather than being retried"
+  },
+  "io_link": {
+   "name": "CRC-32C (Castagnoli, iSCSI)",
+   "poly": "0x1EDC6F41",
+   "init": "0xFFFFFFFF",
+   "refin": true,
+   "refout": true,
+   "xorout": "0xFFFFFFFF",
+   "check_123456789": "0xE3069283",
+   "coverage": "bytes 0-35 of each 40-byte IOL1 frame, stored MSB first in bytes 36-39",
+   "hamming_distance": "6 at the 320-bit codeword (288 data bits): exhaustive search found no undetected pattern of weight <= 5 and found weight-6 patterns [AR]; comparison at the same length: CRC-32/IEEE HD 5, CRC-16/CCITT HD 4",
+   "why": "output-card frames change physical outputs and cross board-to-board connectors; HD 6 detects every error of up to 5 bits and every burst up to 32 bits; the card MCU computes it in hardware (STM32G0 CRC unit, programmable polynomial [DS])"
+  },
+  "vectors": {
+   "fb_read_session0": {
+    "hex": "434e433303100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004cfc",
+    "crc": "4cfc"
+   },
+   "read_page0": {
+    "hex": "434e433303050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001724",
+    "crc": "1724"
+   },
+   "sync_session1": {
+    "hex": "434e4333030100000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d968",
+    "crc": "d968"
+   },
+   "nop_cmd": {
+    "hex": "434e43330300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002222",
+    "crc": "2222"
+   },
+   "update_8ch_do5": {
+    "hex": "434e4333030300ff0000000100000003000003e8fffff83000000bb8fffff06000001388ffffe89000001b58ffffe0c000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000a792",
+    "crc": "a792"
+   },
+   "iol1_sync_doa": {
+    "hex": "a70121010001000001ff00000000000000000000000000000000000000000000000000008feb9757",
+    "crc": "8feb9757"
+   }
+  }
+ },
+ "opcodes": [
+  {
+   "code": "0x00",
+   "name": "NOP",
+   "cs": "CS_CMD",
+   "session_seq": "session 0 or the current session; sequence 0",
+   "accepted_when": "always; bytes 6-7 and 16-93 zero",
+   "effect": "returns CNS3; changes nothing; never feeds a watchdog"
+  },
+  {
+   "code": "0x01",
+   "name": "SYNC",
+   "cs": "CS_CMD",
+   "session_seq": "new nonzero session != current, sequence 0",
+   "accepted_when": "disarmed; I/O disabled; qualification complete; no power-cycle fault; inhibit released; payload zero",
+   "effect": "new session; clears clearable faults and per-channel latches; restarts faulted IOL1 ports with new epochs; does not set pos_continuity"
+  },
+  {
+   "code": "0x02",
+   "name": "ARM",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "record 5.3 rules (config_valid, mask == required_mask, installed, no asserted tripping alarm, rates zero) plus: both watchdog self-tests passed since power-up or motion-card change; every encoder in required_encoder_mask valid; motion-critical ports active; and the safety-interface preconditions of section 3.4a (accepted RESET_ARM release within reset_arm_window_ms when required, contactor de-energized, STO state as expected, reset/arm not held); otherwise refused with ARM_REFUSED",
+   "effect": "arms at zero rate; raises FPGA_MOTION_REQUEST and PERMIT_OUT_REQ; strobes OPI rearm (TX, A, B, BOE); starts 5 ms watchdog; consumes the reset/arm release; one progress_m pulse"
+  },
+  {
+   "code": "0x03",
+   "name": "UPDATE",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "armed, fault-free, mask == armed mask, unmasked rates zero, |rate| within clamp, I/O payload valid (zero while I/O disabled)",
+   "effect": "atomically replaces 12 rates and the whole output image; restarts the 5 ms motion watchdog and, when I/O is enabled, the 5 ms I/O watchdog; one progress_m pulse; one progress_o pulse when I/O enabled"
+  },
+  {
+   "code": "0x04",
+   "name": "DISARM",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "mask and rates zero; accepted with faults latched",
+   "effect": "clean commanded stop (section 04 4.2): no new STEP pulses, current pulse completes, then request drops; pos_continuity kept only if the stop was clean"
+  },
+  {
+   "code": "0x05",
+   "name": "READ_PAGE",
+   "cs": "CS_FB",
+   "session_seq": "session 0 or current, sequence 0",
+   "accepted_when": "motion disarmed; byte 16 = page 0-3; bytes 17-173 zero",
+   "effect": "the next completed CS_FB transaction returns the page instead of CNF3 and consumes it (v2 rule)"
+  },
+  {
+   "code": "0x06",
+   "name": "CONFIGURE",
+   "cs": "CS_FB",
+   "session_seq": "record 5.3 rule (session 0/sequence 0 before a session, else current session and next sequence)",
+   "accepted_when": "disarmed; I/O disabled; qualification complete; payload valid",
+   "effect": "record 5.3 accept/reject semantics; rejection clears config_valid, required_mask and alarm masks"
+  },
+  {
+   "code": "0x07",
+   "name": "CONFIGURE_IO",
+   "cs": "CS_FB",
+   "session_seq": "as CONFIGURE",
+   "accepted_when": "disarmed; I/O disabled; page 0-9 valid",
+   "effect": "page 0 or 1 replaces that page atomically and clears io_config_valid until page 0 is re-accepted with a matching io_config_hash; pages 2-9 queue a CONFIG_WRITE to the named port; any rejection clears io_config_valid"
+  },
+  {
+   "code": "0x08",
+   "name": "IO_CLEAR_FAULTS",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "motion disarmed; I/O enabled; each cleared output commanded 0 in this frame's dout_image; rates and mask zero (while armed the same clear travels in UPDATE bytes 80-81)",
+   "effect": "clears the named output fault latches (FPGA and card); does not re-energize anything; one progress_o pulse"
+  },
+  {
+   "code": "0x09",
+   "name": "IO_WRITE",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "motion disarmed; I/O enabled; rates and mask zero",
+   "effect": "replaces the output image; restarts the I/O watchdog; one progress_o pulse"
+  },
+  {
+   "code": "0x0A",
+   "name": "IO_ENABLE",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "io_config_valid; required ports active and identity-matched; no I/O fault; output self-test passed; payload zero",
+   "effect": "raises FPGA_OUTPUT_REQUEST (SET1 of WD_O, OUT arm latch); strobes OPI_REARM_O; each card re-arms its own output-enable latch only after this and a new epoch (section 4.7); IOL1 frames carry OUT_REQ while OUT_PERMIT is high; one progress_o pulse"
+  },
+  {
+   "code": "0x0B",
+   "name": "IO_DISABLE",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "payload zero; accepted with faults latched",
+   "effect": "zeroes the output image, drops OUT_REQ and FPGA_OUTPUT_REQUEST"
+  },
+  {
+   "code": "0x0C",
+   "name": "MAINT",
+   "cs": "CS_FB",
+   "session_seq": "current session, sequence 0",
+   "accepted_when": "motion disarmed; I/O disabled; byte 16 = port 0-3, bytes 17-56 = one complete 40-byte IOL1 frame with control b5 set; rest zero",
+   "effect": "forwards the frame to the port; the card response returns as the next CS_FB response (page mechanism); used for card firmware update and identity reads"
+  },
+  {
+   "code": "0x0D",
+   "name": "SELFTEST",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "disarmed; I/O disabled; no self-test running (the two tests never overlap); byte 16 = 1 motion watchdog, 2 output watchdog; rest zero",
+   "effect": "section 04 5.4: the FPGA enters SELFTEST and raises the request with EN_N_i forced high, rates zero, PEN/PWM/AO requests zero, PERMIT_OUT_REQ low (PERMIT_OUT stays open) and OUT_REQ zero in every IOL1 frame (card enables stay low); result in safety word b21/b22 and fault bit WATCHDOG_SELFTEST_FAILED"
+  },
+  {
+   "code": "0x0E",
+   "name": "CLEAR_CONTINUITY",
+   "cs": "CS_CMD",
+   "session_seq": "current session, next sequence",
+   "accepted_when": "disarmed; channel_mask names channels whose re-reference the host has completed; rest zero",
+   "effect": "sets pos_continuity for those channels"
+  },
+  {
+   "code": "0x10",
+   "name": "FB_READ",
+   "cs": "CS_FB",
+   "session_seq": "session 0 or current session; sequence 0",
+   "accepted_when": "payload per fb_read_payload",
+   "effect": "returns CNF3; pops the event ring when event_ack equals the event last shown; never feeds a watchdog"
+  }
+ ],
+ "frames": {
+  "fb_command": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "exactly 'CNC3' (43 4E 43 33)",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "exactly 0x03",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "opcode",
+    "type": "u8",
+    "rule": "listed opcode valid on this chip select",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "channel_mask",
+    "type": "u16",
+    "rule": "bits 12-15 zero; per-opcode rule",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "session",
+    "type": "u32",
+    "rule": "per-opcode rule (section 3.4)",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "sequence",
+    "type": "u32",
+    "rule": "per-opcode rule (section 3.4)",
+    "offset": 12
+   },
+   {
+    "size": 158,
+    "name": "payload",
+    "type": "bytes",
+    "rule": "opcode-specific; FB_READ: see fb_read_payload; unused bytes zero",
+    "offset": 16
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC-16/CCITT-FALSE over bytes 0-173, MSB first",
+    "offset": 174
+   }
+  ],
+  "fb_read_payload_at_16": [
+   {
+    "size": 1,
+    "name": "event_ack",
+    "type": "u8",
+    "rule": "sequence number of the last event record the host has stored; 0 = none",
+    "logical": "CMD.event_ack",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "telemetry_priority_source",
+    "type": "u8",
+    "rule": "telemetry source id to deliver next; 0xFF = automatic rotation; served in at most every other mirror slot (section 3.12)",
+    "logical": "CMD.telemetry_request.source",
+    "offset": 1
+   },
+   {
+    "size": 1,
+    "name": "telemetry_priority_page",
+    "type": "u8",
+    "rule": "page of that source; ignored when source is 0xFF",
+    "logical": "CMD.telemetry_request.page",
+    "offset": 2
+   },
+   {
+    "size": 155,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "offset": 3
+   }
+  ],
+  "fb_response_CNF3": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'CNF3' (43 4E 46 33)",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "0x03",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "state",
+    "type": "u8",
+    "rule": "b0 motion permission effective; b1 endpoint ready; b2 qualification complete; b3 config_valid; b4 io_config_valid; b5 io_enabled; b6 first-fault snapshot frozen; b7 zero",
+    "logical": "STS.state",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "armed_mask",
+    "type": "u16",
+    "rule": "0 when disarmed",
+    "logical": "STS.armed_mask",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "session",
+    "type": "u32",
+    "rule": "current session",
+    "logical": "STS.session",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "last_sequence",
+    "type": "u32",
+    "rule": "last accepted sequence",
+    "logical": "STS.last_sequence",
+    "offset": 12
+   },
+   {
+    "size": 4,
+    "name": "snapshot_ticks",
+    "type": "u32",
+    "rule": "core-tick timestamp of this snapshot (CS assertion)",
+    "logical": "STS.timestamp",
+    "offset": 16
+   },
+   {
+    "size": 4,
+    "name": "fault_word",
+    "type": "u32",
+    "rule": "section 3.9",
+    "logical": "STS.fault_word",
+    "offset": 20
+   },
+   {
+    "size": 2,
+    "name": "installed_mask",
+    "type": "u16",
+    "rule": "motion channels installed (record rules)",
+    "logical": "STS.installed_mask",
+    "offset": 24
+   },
+   {
+    "size": 2,
+    "name": "step_timing_latched",
+    "type": "u16",
+    "rule": "sticky until SYNC",
+    "logical": "STS.step_timing_latched",
+    "offset": 26
+   },
+   {
+    "size": 2,
+    "name": "alarm_levels",
+    "type": "u16",
+    "rule": "filtered alarm inputs, 1 = input current flowing",
+    "logical": "STS.alarm",
+    "offset": 28
+   },
+   {
+    "size": 2,
+    "name": "alarm_trip_latched",
+    "type": "u16",
+    "rule": "sticky until SYNC",
+    "logical": "STS.alarm_latched",
+    "offset": 30
+   },
+   {
+    "size": 2,
+    "name": "enable_after_gating",
+    "type": "u16",
+    "rule": "logical EN_i driven to EN_N_i (commanded, not physical readback)",
+    "logical": "STS.enable_cmd_state",
+    "offset": 32
+   },
+   {
+    "size": 2,
+    "name": "pos_continuity",
+    "type": "u16",
+    "rule": "section 04 4.2; 1 = no interruption since CLEAR_CONTINUITY",
+    "logical": "STS.pos_continuity",
+    "offset": 34
+   },
+   {
+    "size": 3,
+    "name": "step_count_0",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M0; host unwraps modulo 2^24",
+    "logical": "STS.motor[0].position",
+    "offset": 36
+   },
+   {
+    "size": 3,
+    "name": "step_count_1",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M1; host unwraps modulo 2^24",
+    "logical": "STS.motor[1].position",
+    "offset": 39
+   },
+   {
+    "size": 3,
+    "name": "step_count_2",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M2; host unwraps modulo 2^24",
+    "logical": "STS.motor[2].position",
+    "offset": 42
+   },
+   {
+    "size": 3,
+    "name": "step_count_3",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M3; host unwraps modulo 2^24",
+    "logical": "STS.motor[3].position",
+    "offset": 45
+   },
+   {
+    "size": 3,
+    "name": "step_count_4",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M4; host unwraps modulo 2^24",
+    "logical": "STS.motor[4].position",
+    "offset": 48
+   },
+   {
+    "size": 3,
+    "name": "step_count_5",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M5; host unwraps modulo 2^24",
+    "logical": "STS.motor[5].position",
+    "offset": 51
+   },
+   {
+    "size": 3,
+    "name": "step_count_6",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M6; host unwraps modulo 2^24",
+    "logical": "STS.motor[6].position",
+    "offset": 54
+   },
+   {
+    "size": 3,
+    "name": "step_count_7",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M7; host unwraps modulo 2^24",
+    "logical": "STS.motor[7].position",
+    "offset": 57
+   },
+   {
+    "size": 3,
+    "name": "step_count_8",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M8; host unwraps modulo 2^24",
+    "logical": "STS.motor[8].position",
+    "offset": 60
+   },
+   {
+    "size": 3,
+    "name": "step_count_9",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M9; host unwraps modulo 2^24",
+    "logical": "STS.motor[9].position",
+    "offset": 63
+   },
+   {
+    "size": 3,
+    "name": "step_count_10",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M10; host unwraps modulo 2^24",
+    "logical": "STS.motor[10].position",
+    "offset": 66
+   },
+   {
+    "size": 3,
+    "name": "step_count_11",
+    "type": "u24",
+    "rule": "low 24 bits of the emitted-step counter of channel M11; host unwraps modulo 2^24",
+    "logical": "STS.motor[11].position",
+    "offset": 69
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_0",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC0; zero and invalid when not installed",
+    "logical": "STS.enc[0].count",
+    "offset": 72
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_1",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC1; zero and invalid when not installed",
+    "logical": "STS.enc[1].count",
+    "offset": 75
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_2",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC2; zero and invalid when not installed",
+    "logical": "STS.enc[2].count",
+    "offset": 78
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_3",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC3; zero and invalid when not installed",
+    "logical": "STS.enc[3].count",
+    "offset": 81
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_4",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC4; zero and invalid when not installed",
+    "logical": "STS.enc[4].count",
+    "offset": 84
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_5",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC5; zero and invalid when not installed",
+    "logical": "STS.enc[5].count",
+    "offset": 87
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_6",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC6; zero and invalid when not installed",
+    "logical": "STS.enc[6].count",
+    "offset": 90
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_7",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC7; zero and invalid when not installed",
+    "logical": "STS.enc[7].count",
+    "offset": 93
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_8",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC8; zero and invalid when not installed",
+    "logical": "STS.enc[8].count",
+    "offset": 96
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_9",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC9; zero and invalid when not installed",
+    "logical": "STS.enc[9].count",
+    "offset": 99
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_10",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC10; zero and invalid when not installed",
+    "logical": "STS.enc[10].count",
+    "offset": 102
+   },
+   {
+    "size": 3,
+    "name": "encoder_count_11",
+    "type": "u24",
+    "rule": "low 24 bits of the x4 quadrature count of ENC11; zero and invalid when not installed",
+    "logical": "STS.enc[11].count",
+    "offset": 105
+   },
+   {
+    "size": 2,
+    "name": "encoder_valid_mask",
+    "type": "u16",
+    "rule": "installed, qualified and supply OK, bits 0-11",
+    "logical": "STS.enc.valid",
+    "offset": 108
+   },
+   {
+    "size": 2,
+    "name": "encoder_illegal_mask",
+    "type": "u16",
+    "rule": "illegal AB transition seen, sticky until SYNC",
+    "logical": "STS.enc.illegal",
+    "offset": 110
+   },
+   {
+    "size": 2,
+    "name": "encoder_fault_mask",
+    "type": "u16",
+    "rule": "port supply fault (TPS2553-1 FAULT through the EIA/EX8 status registers); a single open or shorted encoder line is not detected in IS-1",
+    "logical": "STS.enc.fault",
+    "offset": 112
+   },
+   {
+    "size": 2,
+    "name": "index_armed_mask",
+    "type": "u16",
+    "rule": "one-shot index capture armed and not yet fired",
+    "logical": "STS.enc.index_armed",
+    "offset": 114
+   },
+   {
+    "size": 3,
+    "name": "mpg_count",
+    "type": "u24",
+    "rule": "low 24 bits of the handwheel x4 count",
+    "logical": "STS.mpg.count",
+    "offset": 116
+   },
+   {
+    "size": 1,
+    "name": "mpg_status",
+    "type": "u8",
+    "rule": "b0 MPG counter valid; b1 illegal transition seen; b2 EIA status register valid; b3 EX8 status register valid; b4-7 zero",
+    "logical": "STS.mpg.status",
+    "offset": 119
+   },
+   {
+    "size": 1,
+    "name": "probe_status",
+    "type": "u8",
+    "rule": "b0-1 filtered level P0/P1; b2-3 raw synchronized level; b4-5 capture armed; b6-7 capture overrun (sticky until SYNC)",
+    "logical": "STS.probe.state",
+    "offset": 120
+   },
+   {
+    "size": 1,
+    "name": "event_status",
+    "type": "u8",
+    "rule": "b0-6 min(pending events,127); b7 event ring overflow (sticky until SYNC)",
+    "logical": "STS.event_status",
+    "offset": 121
+   },
+   {
+    "size": 3,
+    "name": "freq0_count",
+    "type": "u24",
+    "rule": "FREQ0 counted edges, low 24 bits",
+    "logical": "STS.freq[0].count",
+    "offset": 122
+   },
+   {
+    "size": 4,
+    "name": "freq0_last_edge_ticks",
+    "type": "u32",
+    "rule": "core-tick time of the last counted FREQ0 edge",
+    "logical": "STS.freq[0].last_edge",
+    "offset": 125
+   },
+   {
+    "size": 3,
+    "name": "freq1_count",
+    "type": "u24",
+    "rule": "FREQ1 counted edges, low 24 bits",
+    "logical": "STS.freq[1].count",
+    "offset": 129
+   },
+   {
+    "size": 4,
+    "name": "freq1_last_edge_ticks",
+    "type": "u32",
+    "rule": "core-tick time of the last counted FREQ1 edge",
+    "logical": "STS.freq[1].last_edge",
+    "offset": 132
+   },
+   {
+    "size": 3,
+    "name": "din",
+    "type": "u24",
+    "rule": "DI0-DI23 after card filter, bit i = DIi; valid only with port L0 active and din_age <= din_stale_limit_us",
+    "logical": "STS.din",
+    "offset": 136
+   },
+   {
+    "size": 1,
+    "name": "din_age",
+    "type": "u8",
+    "rule": "age of DI data at this snapshot in 10 us units; 255 = stale or never valid; DI invalid when older than din_stale_limit_us or when port L0 has latched its fault, whichever comes first",
+    "logical": "STS.din_valid",
+    "offset": 139
+   },
+   {
+    "size": 2,
+    "name": "dout_applied",
+    "type": "u16",
+    "rule": "applied output state read back from DOA/DOB (bit i = DOi)",
+    "logical": "STS.dout_readback",
+    "offset": 140
+   },
+   {
+    "size": 2,
+    "name": "dout_fault_latched",
+    "type": "u16",
+    "rule": "any latched fault per output",
+    "logical": "STS.dout_fault",
+    "offset": 142
+   },
+   {
+    "size": 1,
+    "name": "process_pwm_state",
+    "type": "u8",
+    "rule": "b0-1 PEN0/1 command after gating; b2-3 PWM0/1 enabled after gating; b4 arm lamp; b5-7 zero",
+    "logical": "STS.proc_en_state",
+    "offset": 144
+   },
+   {
+    "size": 1,
+    "name": "aout_state",
+    "type": "u8",
+    "rule": "b0-1 AO0/1 applied equals commanded (card readback); b2-3 AO0/1 zero clamp active; b4-7 zero",
+    "logical": "STS.ao.state",
+    "offset": 145
+   },
+   {
+    "size": 2,
+    "name": "ain0",
+    "type": "s16",
+    "rule": "AI0 raw code (scale from the ACC factory record)",
+    "logical": "STS.ai[0].value",
+    "offset": 146
+   },
+   {
+    "size": 2,
+    "name": "ain1",
+    "type": "s16",
+    "rule": "AI1 raw code",
+    "logical": "STS.ai[1].value",
+    "offset": 148
+   },
+   {
+    "size": 2,
+    "name": "ain2",
+    "type": "s16",
+    "rule": "AI2 raw code",
+    "logical": "STS.ai[2].value",
+    "offset": 150
+   },
+   {
+    "size": 2,
+    "name": "ain3",
+    "type": "s16",
+    "rule": "AI3 raw code",
+    "logical": "STS.ai[3].value",
+    "offset": 152
+   },
+   {
+    "size": 1,
+    "name": "ain_status",
+    "type": "u8",
+    "rule": "b0-3 AI0-3 valid (in range, link fresh); b4-7 AI0-3 over/under range",
+    "logical": "STS.ai.valid",
+    "offset": 154
+   },
+   {
+    "size": 1,
+    "name": "ain_age",
+    "type": "u8",
+    "rule": "age of the AI samples at this snapshot, 10 us units; 255 = stale",
+    "logical": "STS.ai.age",
+    "offset": 155
+   },
+   {
+    "size": 1,
+    "name": "port_status_L0_DIC",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[L0_DIC]",
+    "offset": 156
+   },
+   {
+    "size": 1,
+    "name": "port_status_L1_DOA",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[L1_DOA]",
+    "offset": 157
+   },
+   {
+    "size": 1,
+    "name": "port_status_L2_DOB",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[L2_DOB]",
+    "offset": 158
+   },
+   {
+    "size": 1,
+    "name": "port_status_L3_ACC",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[L3_ACC]",
+    "offset": 159
+   },
+   {
+    "size": 1,
+    "name": "port_status_S0_EIA",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[S0_EIA]",
+    "offset": 160
+   },
+   {
+    "size": 1,
+    "name": "port_status_S1_EX8",
+    "type": "u8",
+    "rule": "b0-1 link state (0 down, 1 sync, 2 active, 3 fault latched); b2 identity matched; b3 card power-good (MC slot status register, section 4.10); b4 card fault; b5 outputs enabled (card report); b6 error since last FB read; b7 card watchdog tripped",
+    "logical": "STS.port[S1_EX8]",
+    "offset": 161
+   },
+   {
+    "size": 1,
+    "name": "mx4_expansion",
+    "type": "u8",
+    "rule": "b0 presence A; b1 presence B; b2 EXP_PGOOD; b3-5 MOD_ID latched; b6 class matches; b7 tamper latch",
+    "logical": "STS.expansion.mx4",
+    "offset": 162
+   },
+   {
+    "size": 1,
+    "name": "slot_summary",
+    "type": "u8",
+    "rule": "b0 MIA qualified; b1 MX4 installed; b2 EIA qualified; b3 EX8 installed; b4 XF module present; b5 any tamper latch; b6-7 zero",
+    "logical": "STS.slots",
+    "offset": 163
+   },
+   {
+    "size": 4,
+    "name": "safety_power_word",
+    "type": "u32",
+    "rule": "section 3.10",
+    "logical": "STS.safety",
+    "offset": 164
+   },
+   {
+    "size": 1,
+    "name": "config_generation",
+    "type": "u8",
+    "rule": "motion CONFIGURE generation",
+    "logical": "STS.config_generation",
+    "offset": 168
+   },
+   {
+    "size": 1,
+    "name": "io_config_generation",
+    "type": "u8",
+    "rule": "CONFIGURE_IO generation",
+    "logical": "STS.io_config_generation",
+    "offset": 169
+   },
+   {
+    "size": 2,
+    "name": "pendant_inputs",
+    "type": "u16",
+    "rule": "b0-9 MPG_SEL_X,Y,Z,A,B,C,MUL_X1,X10,X100,PEND_AUX; b10 MPG_ENABLE; b11 XF present; b12 XF supply fault; b13 MPG supply fault; b14-15 probe 0/1 supply fault",
+    "logical": "STS.mpg.select",
+    "offset": 170
+   },
+   {
+    "size": 1,
+    "name": "ex8_expansion",
+    "type": "u8",
+    "rule": "same bit layout as mx4_expansion, for EX8",
+    "logical": "STS.expansion.ex8",
+    "offset": 172
+   },
+   {
+    "size": 1,
+    "name": "port_status_L4_XS",
+    "type": "u8",
+    "rule": "same bit layout as port_status_L0_DIC; always 0 in IS-1: the XS slot, its FPGA pins, base contacts and IOL1 port L4 are reserved (section 02 section 8.2) but no XS module class is defined",
+    "offset": 173,
+    "logical": "STS.port[L4_XS]"
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC-16/CCITT-FALSE over bytes 0-173",
+    "offset": 174
+   }
+  ],
+  "cmd_command": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "exactly 'CNC3' (43 4E 43 33)",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "exactly 0x03",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "opcode",
+    "type": "u8",
+    "rule": "listed opcode valid on this chip select",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "channel_mask",
+    "type": "u16",
+    "rule": "bits 12-15 zero; per-opcode rule",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "session",
+    "type": "u32",
+    "rule": "per-opcode rule (section 3.4)",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "sequence",
+    "type": "u32",
+    "rule": "per-opcode rule (section 3.4)",
+    "offset": 12
+   },
+   {
+    "size": 4,
+    "name": "rate_0",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[0].rate",
+    "offset": 16
+   },
+   {
+    "size": 4,
+    "name": "rate_1",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[1].rate",
+    "offset": 20
+   },
+   {
+    "size": 4,
+    "name": "rate_2",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[2].rate",
+    "offset": 24
+   },
+   {
+    "size": 4,
+    "name": "rate_3",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[3].rate",
+    "offset": 28
+   },
+   {
+    "size": 4,
+    "name": "rate_4",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[4].rate",
+    "offset": 32
+   },
+   {
+    "size": 4,
+    "name": "rate_5",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[5].rate",
+    "offset": 36
+   },
+   {
+    "size": 4,
+    "name": "rate_6",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[6].rate",
+    "offset": 40
+   },
+   {
+    "size": 4,
+    "name": "rate_7",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[7].rate",
+    "offset": 44
+   },
+   {
+    "size": 4,
+    "name": "rate_8",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[8].rate",
+    "offset": 48
+   },
+   {
+    "size": 4,
+    "name": "rate_9",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[9].rate",
+    "offset": 52
+   },
+   {
+    "size": 4,
+    "name": "rate_10",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[10].rate",
+    "offset": 56
+   },
+   {
+    "size": 4,
+    "name": "rate_11",
+    "type": "s32",
+    "rule": "UPDATE: |rate| <= min(MAX_RATE, channel clamp); zero for unmasked channels and every other opcode",
+    "logical": "CMD.motor[11].rate",
+    "offset": 60
+   },
+   {
+    "size": 2,
+    "name": "dout_image",
+    "type": "u16",
+    "rule": "UPDATE/IO_WRITE/IO_CLEAR_FAULTS: DO0-DO15 requested state; zero when I/O disabled and for other opcodes; bits outside the CONFIGURE_IO enable mask zero",
+    "logical": "CMD.dout",
+    "offset": 64
+   },
+   {
+    "size": 1,
+    "name": "output_requests",
+    "type": "u8",
+    "rule": "b0-1 PEN0/1 request; b2-3 PWM0/1 enable; b4-5 AO0/1 enable; b6 arm lamp; b7 zero",
+    "logical": "CMD.proc_en",
+    "offset": 66
+   },
+   {
+    "size": 1,
+    "name": "reserved_a",
+    "type": "u8",
+    "rule": "zero",
+    "offset": 67
+   },
+   {
+    "size": 2,
+    "name": "index_arm_mask",
+    "type": "u16",
+    "rule": "level request per encoder; a 0->1 change arms a one-shot index capture; bits 12-15 zero",
+    "logical": "CMD.enc.index_enable",
+    "offset": 68
+   },
+   {
+    "size": 1,
+    "name": "probe_arm",
+    "type": "u8",
+    "rule": "b0-1 level request, 0->1 arms a one-shot capture on P0/P1; b2-7 zero",
+    "logical": "CMD.probe.arm",
+    "offset": 70
+   },
+   {
+    "size": 1,
+    "name": "reserved_b",
+    "type": "u8",
+    "rule": "zero",
+    "offset": 71
+   },
+   {
+    "size": 2,
+    "name": "pwm0_duty",
+    "type": "u16",
+    "rule": "0..65535 = 0..1 of period; <= configured max duty",
+    "logical": "CMD.pwm[0].duty",
+    "offset": 72
+   },
+   {
+    "size": 2,
+    "name": "pwm1_duty",
+    "type": "u16",
+    "rule": "as pwm0",
+    "logical": "CMD.pwm[1].duty",
+    "offset": 74
+   },
+   {
+    "size": 2,
+    "name": "aout0_code",
+    "type": "u16",
+    "rule": "<= configured AO0 max code",
+    "logical": "CMD.ao[0]",
+    "offset": 76
+   },
+   {
+    "size": 2,
+    "name": "aout1_code",
+    "type": "u16",
+    "rule": "<= configured AO1 max code",
+    "logical": "CMD.ao[1]",
+    "offset": 78
+   },
+   {
+    "size": 2,
+    "name": "dout_fault_clear",
+    "type": "u16",
+    "rule": "UPDATE, IO_WRITE or IO_CLEAR_FAULTS: outputs whose latched fault is cleared; the same bits must be 0 in dout_image; zero for other opcodes",
+    "logical": "CMD.dout_fault_clear",
+    "offset": 80
+   },
+   {
+    "size": 12,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "offset": 82
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC-16/CCITT-FALSE over bytes 0-93",
+    "offset": 94
+   }
+  ],
+  "cmd_response_CNS3": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'CNS3' (43 4E 53 33)",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "0x03",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "state",
+    "type": "u8",
+    "rule": "as CNF3 byte 5",
+    "logical": "STS.state",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "armed_mask",
+    "type": "u16",
+    "rule": "",
+    "logical": "STS.armed_mask",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "session",
+    "type": "u32",
+    "rule": "",
+    "logical": "STS.session",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "last_sequence",
+    "type": "u32",
+    "rule": "",
+    "logical": "STS.last_sequence",
+    "offset": 12
+   },
+   {
+    "size": 4,
+    "name": "snapshot_ticks",
+    "type": "u32",
+    "rule": "CS assertion of this CS_CMD transaction",
+    "logical": "STS.timestamp",
+    "offset": 16
+   },
+   {
+    "size": 4,
+    "name": "fault_word",
+    "type": "u32",
+    "rule": "section 3.9",
+    "logical": "STS.fault_word",
+    "offset": 20
+   },
+   {
+    "size": 2,
+    "name": "dout_image_in_force",
+    "type": "u16",
+    "rule": "DO image the FPGA is sending to DOA/DOB",
+    "logical": "STS.dout_image",
+    "offset": 24
+   },
+   {
+    "size": 2,
+    "name": "dout_applied",
+    "type": "u16",
+    "rule": "",
+    "logical": "STS.dout_readback",
+    "offset": 26
+   },
+   {
+    "size": 2,
+    "name": "dout_fault_latched",
+    "type": "u16",
+    "rule": "",
+    "logical": "STS.dout_fault",
+    "offset": 28
+   },
+   {
+    "size": 4,
+    "name": "safety_power_word",
+    "type": "u32",
+    "rule": "section 3.10",
+    "logical": "STS.safety",
+    "offset": 30
+   },
+   {
+    "size": 2,
+    "name": "pos_continuity",
+    "type": "u16",
+    "rule": "",
+    "logical": "STS.pos_continuity",
+    "offset": 34
+   },
+   {
+    "size": 1,
+    "name": "event_seq",
+    "type": "u8",
+    "rule": "0 = no event pending; else 1..255 wrapping, skipping 0",
+    "logical": "EVT.seq",
+    "offset": 36
+   },
+   {
+    "size": 1,
+    "name": "event_type",
+    "type": "u8",
+    "rule": "section 3.11",
+    "logical": "EVT.type",
+    "offset": 37
+   },
+   {
+    "size": 1,
+    "name": "event_source",
+    "type": "u8",
+    "rule": "probe, encoder, fault bit, port or channel number",
+    "logical": "EVT.source",
+    "offset": 38
+   },
+   {
+    "size": 1,
+    "name": "event_flags",
+    "type": "u8",
+    "rule": "per type",
+    "logical": "EVT.flags",
+    "offset": 39
+   },
+   {
+    "size": 4,
+    "name": "event_ticks",
+    "type": "u32",
+    "rule": "core-tick time of the event",
+    "logical": "EVT.timestamp",
+    "offset": 40
+   },
+   {
+    "size": 3,
+    "name": "event_value0",
+    "type": "u24",
+    "rule": "per type",
+    "logical": "EVT.value[0]",
+    "offset": 44
+   },
+   {
+    "size": 3,
+    "name": "event_value1",
+    "type": "u24",
+    "rule": "per type",
+    "logical": "EVT.value[1]",
+    "offset": 47
+   },
+   {
+    "size": 3,
+    "name": "event_value2",
+    "type": "u24",
+    "rule": "per type",
+    "logical": "EVT.value[2]",
+    "offset": 50
+   },
+   {
+    "size": 3,
+    "name": "event_value3",
+    "type": "u24",
+    "rule": "per type",
+    "logical": "EVT.value[3]",
+    "offset": 53
+   },
+   {
+    "size": 1,
+    "name": "telemetry_source",
+    "type": "u8",
+    "rule": "0x00-0x03 ports L0-L3; 0x04 reserved for L4 (XS); 0x10 EIA status; 0x11 EX8 status; 0x80 FPGA core; 0x81-0x86 FPGA per-port counters; 0xFF none",
+    "logical": "TEL.source",
+    "offset": 56
+   },
+   {
+    "size": 1,
+    "name": "telemetry_page",
+    "type": "u8",
+    "rule": "page number within the source",
+    "logical": "TEL.page",
+    "offset": 57
+   },
+   {
+    "size": 1,
+    "name": "telemetry_counter",
+    "type": "u8",
+    "rule": "increments each time this source/page is refreshed in the mirror (mod 256)",
+    "logical": "TEL.counter",
+    "offset": 58
+   },
+   {
+    "size": 1,
+    "name": "telemetry_validity",
+    "type": "u8",
+    "rule": "b0 page valid; b1 stale (mirror copy older than its source's stale limit); b2 source port faulted; b3-7 zero",
+    "logical": "TEL.validity",
+    "offset": 59
+   },
+   {
+    "size": 4,
+    "name": "telemetry_rx_ticks",
+    "type": "u32",
+    "rule": "core-tick time the FPGA accepted the page",
+    "logical": "TEL.rx_timestamp",
+    "offset": 60
+   },
+   {
+    "size": 2,
+    "name": "telemetry_card_age_us",
+    "type": "u16",
+    "rule": "card-reported age of the sampled values at transmission, us; 0xFFFF unknown",
+    "logical": "TEL.card_age",
+    "offset": 64
+   },
+   {
+    "size": 10,
+    "name": "telemetry_data",
+    "type": "bytes",
+    "rule": "page content (section 4.9)",
+    "logical": "TEL.data",
+    "offset": 66
+   },
+   {
+    "size": 2,
+    "name": "telemetry_rotation",
+    "type": "u16",
+    "rule": "mirror rotation index of this entry",
+    "logical": "TEL.rotation",
+    "offset": 76
+   },
+   {
+    "size": 2,
+    "name": "last_update_interval_us",
+    "type": "u16",
+    "rule": "time between the last two accepted UPDATEs, us, saturating at 65535",
+    "logical": "STS.timing.update_interval",
+    "offset": 78
+   },
+   {
+    "size": 2,
+    "name": "late_update_count",
+    "type": "u16",
+    "rule": "UPDATE intervals > 1.5 x configured servo period since SYNC, saturating",
+    "logical": "STS.timing.late_updates",
+    "offset": 80
+   },
+   {
+    "offset": 82,
+    "size": 4,
+    "name": "slot_status",
+    "type": "u32",
+    "rule": "MC slot status register (section 4.10), two agreeing reads: b0-2 EIA presence A, presence B, power-good; b3-5 EX8; b6-8 DIC; b9-11 DOA; b12-14 DOB; b15-17 ACC; b18-20 ESC; b21-23 CMC; b24-26 XS; b27-28 SCART presence A/B; b29 register valid (marker and agreement); b30-31 zero",
+    "logical": "STS.slot_status"
+   },
+   {
+    "offset": 86,
+    "size": 8,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC-16/CCITT-FALSE over bytes 0-93",
+    "offset": 94
+   }
+  ],
+  "configure_payload_at_16": [
+   {
+    "size": 1,
+    "name": "format",
+    "type": "u8",
+    "rule": "0x02 (IS-1); 0x01 was the record's draft and is rejected",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "expected_module_class",
+    "type": "u8",
+    "rule": "0 or a class listed in CAP3 page 0 byte 56 (1 = MX4)",
+    "offset": 1
+   },
+   {
+    "size": 2,
+    "name": "required_mask",
+    "type": "u16",
+    "rule": "nonzero; subset of installed_mask; bits 8-11 only with expected_module_class != 0",
+    "offset": 2
+   },
+   {
+    "size": 2,
+    "name": "alarm_trip_mask",
+    "type": "u16",
+    "rule": "subset of required_mask",
+    "offset": 4
+   },
+   {
+    "size": 2,
+    "name": "alarm_on_no_current",
+    "type": "u16",
+    "rule": "bits 12-15 zero",
+    "offset": 6
+   },
+   {
+    "size": 8,
+    "name": "timing_0",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 8
+   },
+   {
+    "size": 8,
+    "name": "timing_1",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 16
+   },
+   {
+    "size": 8,
+    "name": "timing_2",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 24
+   },
+   {
+    "size": 8,
+    "name": "timing_3",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 32
+   },
+   {
+    "size": 8,
+    "name": "timing_4",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 40
+   },
+   {
+    "size": 8,
+    "name": "timing_5",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 48
+   },
+   {
+    "size": 8,
+    "name": "timing_6",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 56
+   },
+   {
+    "size": 8,
+    "name": "timing_7",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 64
+   },
+   {
+    "size": 8,
+    "name": "timing_8",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 72
+   },
+   {
+    "size": 8,
+    "name": "timing_9",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 80
+   },
+   {
+    "size": 8,
+    "name": "timing_10",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 88
+   },
+   {
+    "size": 8,
+    "name": "timing_11",
+    "type": "4 x u16",
+    "rule": "STEP high, STEP low min, DIR setup, DIR hold, core ticks, each in [100, 1023]",
+    "offset": 96
+   },
+   {
+    "size": 4,
+    "name": "config_hash",
+    "type": "u32",
+    "rule": "opaque, echoed in FLT3/IDP3 pages",
+    "offset": 104
+   },
+   {
+    "size": 2,
+    "name": "servo_period_us",
+    "type": "u16",
+    "rule": "250..2500; used only for late-UPDATE counting; the 5 ms watchdog is fixed",
+    "offset": 108
+   },
+   {
+    "size": 1,
+    "name": "expected_encoder_expansion_class",
+    "type": "u8",
+    "rule": "0 none, 1 EX8",
+    "offset": 110
+   },
+   {
+    "size": 1,
+    "name": "encoder_filter_ticks",
+    "type": "u8",
+    "rule": "0..15 core ticks of AB/Z glitch filter",
+    "offset": 111
+   },
+   {
+    "size": 2,
+    "name": "required_encoder_mask",
+    "type": "u16",
+    "rule": "encoders an armed joint depends on; bits 4-11 need EX8; ARM refused unless all valid",
+    "offset": 112
+   },
+   {
+    "size": 1,
+    "name": "mpg_config",
+    "type": "u8",
+    "rule": "b0 MPG counter enabled; b1-3 MPG filter ticks/4; b4-7 zero",
+    "offset": 114
+   },
+   {
+    "size": 43,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "offset": 115
+   }
+  ],
+  "configure_io_page0_at_16": [
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "0",
+    "offset": 0
+   },
+   {
+    "size": 4,
+    "name": "expected_port_class",
+    "type": "4 x u8",
+    "rule": "class expected on L0-L3 (0 = no card expected; section 4.2)",
+    "offset": 1
+   },
+   {
+    "size": 1,
+    "name": "required_port_mask",
+    "type": "u8",
+    "rule": "b0-3 L0-L3, b4 EIA status, b5 EX8 status; IO_ENABLE refused unless all active",
+    "offset": 5
+   },
+   {
+    "size": 1,
+    "name": "motion_critical_port_mask",
+    "type": "u8",
+    "rule": "a fault on these ports also disarms motion (default 0x3F)",
+    "offset": 6
+   },
+   {
+    "size": 2,
+    "name": "dout_enable_mask",
+    "type": "u16",
+    "rule": "outputs the host may command; others must stay 0",
+    "offset": 7
+   },
+   {
+    "size": 1,
+    "name": "output_function_mask",
+    "type": "u8",
+    "rule": "b0-1 PEN0/1 usable; b2-3 PWM0/1; b4-5 AO0/1; b6 arm lamp",
+    "offset": 9
+   },
+   {
+    "size": 4,
+    "name": "io_config_hash",
+    "type": "u32",
+    "rule": "opaque, echoed",
+    "offset": 10
+   },
+   {
+    "size": 2,
+    "name": "din_stale_limit_us",
+    "type": "u16",
+    "rule": "250..440; default 440; DI invalid when older than this at the snapshot or when port L0 has latched its fault, whichever comes first (section 5.3)",
+    "offset": 14
+   },
+   {
+    "size": 2,
+    "name": "ain_stale_limit_us",
+    "type": "u16",
+    "rule": "250..440; default 440; AI invalid when older than this at the snapshot or when port L3 has latched its fault, whichever comes first (section 5.3)",
+    "offset": 16
+   },
+   {
+    "size": 1,
+    "name": "expected_port_class_L4",
+    "type": "u8",
+    "rule": "0 in IS-1 (no XS module class defined); nonzero is rejected until a revision defines a class",
+    "offset": 18
+   },
+   {
+    "size": 139,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "offset": 19
+   }
+  ],
+  "configure_io_page1_at_16": [
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "1",
+    "offset": 0,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "probe0_flags",
+    "type": "u8",
+    "rule": "b0 active-high; b1-7 zero",
+    "offset": 1,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "probe0_filter_ticks",
+    "type": "u8",
+    "rule": "0..255 core ticks",
+    "offset": 2,
+    "logical": ""
+   },
+   {
+    "size": 4,
+    "name": "probe0_capture_sources",
+    "type": "4 x u8",
+    "rule": "0x00-0x0B step count Mi; 0x10-0x1B encoder ENCk; 0x20 MPG; 0xFF none",
+    "offset": 3,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "probe1_flags",
+    "type": "u8",
+    "rule": "as probe0",
+    "offset": 7,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "probe1_filter_ticks",
+    "type": "u8",
+    "rule": "",
+    "offset": 8,
+    "logical": ""
+   },
+   {
+    "size": 4,
+    "name": "probe1_capture_sources",
+    "type": "4 x u8",
+    "rule": "",
+    "offset": 9,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "freq0_flags",
+    "type": "u8",
+    "rule": "b0 count falling instead of rising; b1-7 zero",
+    "offset": 13,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "freq0_filter_ticks",
+    "type": "u8",
+    "rule": "0..15",
+    "offset": 14,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "freq0_no_signal_ms",
+    "type": "u16",
+    "rule": "1..10000; no edge for this long => NO_SIGNAL (never shown as 0 Hz)",
+    "offset": 15,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "freq1_flags",
+    "type": "u8",
+    "rule": "",
+    "offset": 17,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "freq1_filter_ticks",
+    "type": "u8",
+    "rule": "",
+    "offset": 18,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "freq1_no_signal_ms",
+    "type": "u16",
+    "rule": "",
+    "offset": 19,
+    "logical": ""
+   },
+   {
+    "size": 4,
+    "name": "pwm0_period_ticks",
+    "type": "u32",
+    "rule": "50..50,000,000 (1 Hz..1 MHz)",
+    "offset": 21,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "pwm0_max_duty",
+    "type": "u16",
+    "rule": "clamp; commands above it are rejected",
+    "offset": 25,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "pwm0_flags",
+    "type": "u8",
+    "rule": "zero: IS-1 has no inverted PWM; the hardware-inhibited level (low) must be the connected device's off level (section 04 section 9)",
+    "offset": 27,
+    "logical": ""
+   },
+   {
+    "size": 4,
+    "name": "pwm1_period_ticks",
+    "type": "u32",
+    "rule": "",
+    "offset": 28,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "pwm1_max_duty",
+    "type": "u16",
+    "rule": "",
+    "offset": 32,
+    "logical": ""
+   },
+   {
+    "size": 1,
+    "name": "pwm1_flags",
+    "type": "u8",
+    "rule": "zero: IS-1 has no inverted PWM; the hardware-inhibited level (low) must be the connected device's off level (section 04 section 9)",
+    "offset": 34,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "aout0_max_code",
+    "type": "u16",
+    "rule": "commands above it are rejected",
+    "offset": 35,
+    "logical": ""
+   },
+   {
+    "size": 2,
+    "name": "aout1_max_code",
+    "type": "u16",
+    "rule": "",
+    "offset": 37,
+    "logical": ""
+   },
+   {
+    "offset": 39,
+    "size": 1,
+    "name": "safety_if_flags",
+    "type": "u8",
+    "rule": "b0 reset_arm_required (default 1: ARM needs an accepted RESET_ARM release; 0 only when the profile declares a machine safety relay with its own manual reset feeding EXT_PERMIT, validator rule V-EL-12); b1-2 contactor_fb_mode (0 not used, 1 NO auxiliary contact closed = energized, 2 NC mirror contact closed = de-energized); b3-4 sto_fb_mode (0 not used, 1 follows PERMIT_OUT, 2 status only: STO active while armed is a fault); b5 sto_fb_active_high (1 = input current flowing means STO active); b6-7 zero",
+    "logical": ""
+   },
+   {
+    "offset": 40,
+    "size": 2,
+    "name": "reset_arm_window_ms",
+    "type": "u16",
+    "rule": "500..10000, default 5000: an accepted release enables one ARM within this time",
+    "logical": ""
+   },
+   {
+    "offset": 42,
+    "size": 2,
+    "name": "reset_arm_press_min_ms",
+    "type": "u16",
+    "rule": "20..2000, default 50: shorter presses are ignored",
+    "logical": ""
+   },
+   {
+    "offset": 44,
+    "size": 2,
+    "name": "reset_arm_press_max_ms",
+    "type": "u16",
+    "rule": "100..5000, default 5000: a longer press is 'stuck', never an arm request (SAFETY_INTERFACE event source 1)",
+    "logical": ""
+   },
+   {
+    "offset": 46,
+    "size": 2,
+    "name": "contactor_close_ms",
+    "type": "u16",
+    "rule": "10..2000: contactor must read energized within this time after TX_PERMIT rises",
+    "logical": ""
+   },
+   {
+    "offset": 48,
+    "size": 2,
+    "name": "contactor_open_ms",
+    "type": "u16",
+    "rule": "10..2000: contactor must read de-energized within this time after TX_PERMIT falls",
+    "logical": ""
+   },
+   {
+    "offset": 50,
+    "size": 2,
+    "name": "sto_response_ms",
+    "type": "u16",
+    "rule": "1..2000: STO feedback must reach its expected state within this time",
+    "logical": ""
+   },
+   {
+    "offset": 52,
+    "size": 2,
+    "name": "chain_mismatch_ms",
+    "type": "u16",
+    "rule": "10..5000: chain status disagreeing with EXT_PERMIT for longer than this is reported (diagnostic event, no fault)",
+    "logical": ""
+   },
+   {
+    "offset": 54,
+    "size": 104,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "logical": ""
+   }
+  ],
+  "configure_io_card_pages_at_16": [
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "2..9",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "port",
+    "type": "u8",
+    "rule": "0..3",
+    "offset": 1
+   },
+   {
+    "size": 1,
+    "name": "blob_index",
+    "type": "u8",
+    "rule": "0..7",
+    "offset": 2
+   },
+   {
+    "size": 24,
+    "name": "card_config",
+    "type": "bytes",
+    "rule": "class-specific configuration forwarded verbatim in a CONFIG_WRITE link frame (section 4.8)",
+    "offset": 3
+   },
+   {
+    "size": 131,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "all zero",
+    "offset": 27
+   }
+  ],
+  "cap3_page0": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'CAP3'",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "3",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "0",
+    "offset": 5
+   },
+   {
+    "size": 1,
+    "name": "step_channels",
+    "type": "u8",
+    "rule": "12",
+    "offset": 6
+   },
+   {
+    "size": 1,
+    "name": "installed_channels",
+    "type": "u8",
+    "rule": "0, 8 or 12",
+    "offset": 7
+   },
+   {
+    "size": 1,
+    "name": "encoders_supported",
+    "type": "u8",
+    "rule": "12",
+    "offset": 8
+   },
+   {
+    "size": 1,
+    "name": "encoders_base",
+    "type": "u8",
+    "rule": "4",
+    "offset": 9
+   },
+   {
+    "size": 1,
+    "name": "encoders_installed",
+    "type": "u8",
+    "rule": "4 or 12 (0 while unqualified)",
+    "offset": 10
+   },
+   {
+    "size": 1,
+    "name": "mpg_ports",
+    "type": "u8",
+    "rule": "1",
+    "offset": 11
+   },
+   {
+    "size": 4,
+    "name": "feature_bitmap",
+    "type": "u32",
+    "rule": "b0 STEP; b1 AB; b2 index one-shot; b3 atomic update; b4 watchdog; b5 per-channel enable; b6 per-channel alarm; b7 bank B; b8 runtime timing; b9 required-mask ARM; b10 alarm trip; b11 pos_continuity; b12 OPI; b13 watchdog self-test; b14 event ring; b15 telemetry mirror; b16 two chip selects",
+    "offset": 12
+   },
+   {
+    "size": 4,
+    "name": "core_hz",
+    "type": "u32",
+    "rule": "50,000,000",
+    "offset": 16
+   },
+   {
+    "size": 4,
+    "name": "max_rate",
+    "type": "u32",
+    "rule": "0x01000000",
+    "offset": 20
+   },
+   {
+    "size": 8,
+    "name": "reference_timing",
+    "type": "4 x u16",
+    "rule": "100/100/100/100",
+    "offset": 24
+   },
+   {
+    "size": 2,
+    "name": "timing_min",
+    "type": "u16",
+    "rule": "100",
+    "offset": 32
+   },
+   {
+    "size": 2,
+    "name": "timing_max",
+    "type": "u16",
+    "rule": "1023",
+    "offset": 34
+   },
+   {
+    "size": 4,
+    "name": "watchdog_ticks",
+    "type": "u32",
+    "rule": "250,000",
+    "offset": 36
+   },
+   {
+    "size": 2,
+    "name": "alarm_sample_ticks",
+    "type": "u16",
+    "rule": "500",
+    "offset": 40
+   },
+   {
+    "size": 1,
+    "name": "filter_samples",
+    "type": "u8",
+    "rule": "4",
+    "offset": 42
+   },
+   {
+    "size": 1,
+    "name": "zero_a",
+    "type": "u8",
+    "rule": "0",
+    "offset": 43
+   },
+   {
+    "size": 2,
+    "name": "fb_frame_bytes",
+    "type": "u16",
+    "rule": "176",
+    "offset": 44
+   },
+   {
+    "size": 2,
+    "name": "cmd_frame_bytes",
+    "type": "u16",
+    "rule": "96",
+    "offset": 46
+   },
+   {
+    "size": 1,
+    "name": "min_sclk_divider",
+    "type": "u8",
+    "rule": "8",
+    "offset": 48
+   },
+   {
+    "size": 1,
+    "name": "bank_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 49
+   },
+   {
+    "size": 4,
+    "name": "bank_layout",
+    "type": "4 x u8",
+    "rule": "0,8,8,4",
+    "offset": 50
+   },
+   {
+    "size": 1,
+    "name": "expansion_state",
+    "type": "u8",
+    "rule": "record 5.6 byte 52 semantics",
+    "offset": 54
+   },
+   {
+    "size": 1,
+    "name": "mod_id_latched",
+    "type": "u8",
+    "rule": "bits 2:0",
+    "offset": 55
+   },
+   {
+    "size": 1,
+    "name": "accepted_module_class",
+    "type": "u8",
+    "rule": "1 (MX4)",
+    "offset": 56
+   },
+   {
+    "size": 1,
+    "name": "accepted_encoder_expansion_class",
+    "type": "u8",
+    "rule": "1 (EX8)",
+    "offset": 57
+   },
+   {
+    "size": 2,
+    "name": "zero_b",
+    "type": "u16",
+    "rule": "0",
+    "offset": 58
+   },
+   {
+    "size": 4,
+    "name": "qualification_ticks",
+    "type": "u32",
+    "rule": "1,048,576",
+    "offset": 60
+   },
+   {
+    "size": 4,
+    "name": "gateware_build_id",
+    "type": "u32",
+    "rule": "build identifier",
+    "offset": 64
+   },
+   {
+    "size": 4,
+    "name": "spec_revision",
+    "type": "ascii",
+    "rule": "'IS-1'",
+    "offset": 68
+   },
+   {
+    "size": 2,
+    "name": "event_ring_depth",
+    "type": "u16",
+    "rule": "256",
+    "offset": 72
+   },
+   {
+    "size": 2,
+    "name": "telemetry_entries",
+    "type": "u16",
+    "rule": "number of mirror entries",
+    "offset": 74
+   },
+   {
+    "size": 2,
+    "name": "progress_pulse_ticks",
+    "type": "u16",
+    "rule": "50 (1 us, section 04 5.1)",
+    "offset": 76
+   },
+   {
+    "size": 2,
+    "name": "zero_c",
+    "type": "u16",
+    "rule": "0",
+    "offset": 78
+   },
+   {
+    "size": 94,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 80
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC over 0-173",
+    "offset": 174
+   }
+  ],
+  "cap3_page1": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'CAP3'",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "3",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "1",
+    "offset": 5
+   },
+   {
+    "size": 1,
+    "name": "din_count",
+    "type": "u8",
+    "rule": "24",
+    "offset": 6
+   },
+   {
+    "size": 1,
+    "name": "dout_count",
+    "type": "u8",
+    "rule": "16",
+    "offset": 7
+   },
+   {
+    "size": 1,
+    "name": "probe_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 8
+   },
+   {
+    "size": 1,
+    "name": "freq_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 9
+   },
+   {
+    "size": 1,
+    "name": "pwm_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 10
+   },
+   {
+    "size": 1,
+    "name": "process_enable_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 11
+   },
+   {
+    "size": 1,
+    "name": "aout_count",
+    "type": "u8",
+    "rule": "2",
+    "offset": 12
+   },
+   {
+    "size": 1,
+    "name": "ain_count",
+    "type": "u8",
+    "rule": "4",
+    "offset": 13
+   },
+   {
+    "size": 1,
+    "name": "link_ports",
+    "type": "u8",
+    "rule": "4",
+    "offset": 14
+   },
+   {
+    "size": 1,
+    "name": "status_registers",
+    "type": "u8",
+    "rule": "2",
+    "offset": 15
+   },
+   {
+    "size": 4,
+    "name": "io_feature_bitmap",
+    "type": "u32",
+    "rule": "b0 IOL1 link; b1 output readback; b2 card telemetry; b3 port passthrough (MAINT); b4 probe capture; b5 reciprocal frequency",
+    "offset": 16
+   },
+   {
+    "size": 2,
+    "name": "link_period_us",
+    "type": "u16",
+    "rule": "100",
+    "offset": 20
+   },
+   {
+    "size": 1,
+    "name": "link_sclk_divider",
+    "type": "u8",
+    "rule": "6 (8.333 MHz)",
+    "offset": 22
+   },
+   {
+    "size": 1,
+    "name": "link_frame_bytes",
+    "type": "u8",
+    "rule": "40",
+    "offset": 23
+   },
+   {
+    "size": 1,
+    "name": "link_crc_id",
+    "type": "u8",
+    "rule": "1 = CRC-32C",
+    "offset": 24
+   },
+   {
+    "size": 1,
+    "name": "card_accept_timeout_periods",
+    "type": "u8",
+    "rule": "10",
+    "offset": 25
+   },
+   {
+    "size": 1,
+    "name": "port_fault_threshold",
+    "type": "u8",
+    "rule": "3",
+    "offset": 26
+   },
+   {
+    "size": 1,
+    "name": "zero_a",
+    "type": "u8",
+    "rule": "0",
+    "offset": 27
+   },
+   {
+    "size": 4,
+    "name": "io_watchdog_ticks",
+    "type": "u32",
+    "rule": "250,000",
+    "offset": 28
+   },
+   {
+    "size": 4,
+    "name": "pwm_min_period_ticks",
+    "type": "u32",
+    "rule": "50",
+    "offset": 32
+   },
+   {
+    "size": 4,
+    "name": "accepted_port_classes",
+    "type": "4 x u8",
+    "rule": "0x11, 0x21, 0x21, 0x31",
+    "offset": 36
+   },
+   {
+    "size": 134,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 40
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "CRC over 0-173",
+    "offset": 174
+   }
+  ],
+  "flt3_page2": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'FLT3'",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "3",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "2",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "armed_mask_at_fault",
+    "type": "u16",
+    "rule": "",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "session",
+    "type": "u32",
+    "rule": "",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "last_sequence",
+    "type": "u32",
+    "rule": "",
+    "offset": 12
+   },
+   {
+    "size": 4,
+    "name": "fault_ticks",
+    "type": "u32",
+    "rule": "core-tick time of the first latched fault",
+    "offset": 16
+   },
+   {
+    "size": 4,
+    "name": "fault_word_at_freeze",
+    "type": "u32",
+    "rule": "",
+    "offset": 20
+   },
+   {
+    "size": 4,
+    "name": "first_fault_bits",
+    "type": "u32",
+    "rule": "bits that set in the first faulting tick",
+    "offset": 24
+   },
+   {
+    "size": 4,
+    "name": "safety_power_word",
+    "type": "u32",
+    "rule": "",
+    "offset": 28
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_0",
+    "type": "s32",
+    "rule": "",
+    "offset": 32
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_1",
+    "type": "s32",
+    "rule": "",
+    "offset": 36
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_2",
+    "type": "s32",
+    "rule": "",
+    "offset": 40
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_3",
+    "type": "s32",
+    "rule": "",
+    "offset": 44
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_4",
+    "type": "s32",
+    "rule": "",
+    "offset": 48
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_5",
+    "type": "s32",
+    "rule": "",
+    "offset": 52
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_6",
+    "type": "s32",
+    "rule": "",
+    "offset": 56
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_7",
+    "type": "s32",
+    "rule": "",
+    "offset": 60
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_8",
+    "type": "s32",
+    "rule": "",
+    "offset": 64
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_9",
+    "type": "s32",
+    "rule": "",
+    "offset": 68
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_10",
+    "type": "s32",
+    "rule": "",
+    "offset": 72
+   },
+   {
+    "size": 4,
+    "name": "rate_in_force_11",
+    "type": "s32",
+    "rule": "",
+    "offset": 76
+   },
+   {
+    "size": 3,
+    "name": "step_count_0",
+    "type": "u24",
+    "rule": "",
+    "offset": 80
+   },
+   {
+    "size": 3,
+    "name": "step_count_1",
+    "type": "u24",
+    "rule": "",
+    "offset": 83
+   },
+   {
+    "size": 3,
+    "name": "step_count_2",
+    "type": "u24",
+    "rule": "",
+    "offset": 86
+   },
+   {
+    "size": 3,
+    "name": "step_count_3",
+    "type": "u24",
+    "rule": "",
+    "offset": 89
+   },
+   {
+    "size": 3,
+    "name": "step_count_4",
+    "type": "u24",
+    "rule": "",
+    "offset": 92
+   },
+   {
+    "size": 3,
+    "name": "step_count_5",
+    "type": "u24",
+    "rule": "",
+    "offset": 95
+   },
+   {
+    "size": 3,
+    "name": "step_count_6",
+    "type": "u24",
+    "rule": "",
+    "offset": 98
+   },
+   {
+    "size": 3,
+    "name": "step_count_7",
+    "type": "u24",
+    "rule": "",
+    "offset": 101
+   },
+   {
+    "size": 3,
+    "name": "step_count_8",
+    "type": "u24",
+    "rule": "",
+    "offset": 104
+   },
+   {
+    "size": 3,
+    "name": "step_count_9",
+    "type": "u24",
+    "rule": "",
+    "offset": 107
+   },
+   {
+    "size": 3,
+    "name": "step_count_10",
+    "type": "u24",
+    "rule": "",
+    "offset": 110
+   },
+   {
+    "size": 3,
+    "name": "step_count_11",
+    "type": "u24",
+    "rule": "",
+    "offset": 113
+   },
+   {
+    "size": 2,
+    "name": "alarm_levels",
+    "type": "u16",
+    "rule": "",
+    "offset": 116
+   },
+   {
+    "size": 2,
+    "name": "enable_after_gating",
+    "type": "u16",
+    "rule": "",
+    "offset": 118
+   },
+   {
+    "size": 6,
+    "name": "port_status",
+    "type": "6 x u8",
+    "rule": "",
+    "offset": 120
+   },
+   {
+    "size": 2,
+    "name": "last_update_interval_us",
+    "type": "u16",
+    "rule": "",
+    "offset": 126
+   },
+   {
+    "size": 2,
+    "name": "pos_continuity",
+    "type": "u16",
+    "rule": "",
+    "offset": 128
+   },
+   {
+    "size": 2,
+    "name": "dout_image",
+    "type": "u16",
+    "rule": "",
+    "offset": 130
+   },
+   {
+    "size": 2,
+    "name": "dout_applied",
+    "type": "u16",
+    "rule": "",
+    "offset": 132
+   },
+   {
+    "size": 2,
+    "name": "dout_fault",
+    "type": "u16",
+    "rule": "",
+    "offset": 134
+   },
+   {
+    "size": 4,
+    "name": "fault_count_since_reset",
+    "type": "u32",
+    "rule": "",
+    "offset": 136
+   },
+   {
+    "size": 4,
+    "name": "config_hash",
+    "type": "u32",
+    "rule": "",
+    "offset": 140
+   },
+   {
+    "size": 30,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 144
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "",
+    "offset": 174
+   }
+  ],
+  "idp3_page3": [
+   {
+    "size": 4,
+    "name": "magic",
+    "type": "ascii",
+    "rule": "'IDP3'",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "abi",
+    "type": "u8",
+    "rule": "3",
+    "offset": 4
+   },
+   {
+    "size": 1,
+    "name": "page",
+    "type": "u8",
+    "rule": "3",
+    "offset": 5
+   },
+   {
+    "size": 2,
+    "name": "port_valid_mask",
+    "type": "u16",
+    "rule": "",
+    "offset": 6
+   },
+   {
+    "size": 4,
+    "name": "snapshot_ticks",
+    "type": "u32",
+    "rule": "",
+    "offset": 8
+   },
+   {
+    "size": 4,
+    "name": "zero_a",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 12
+   },
+   {
+    "size": 1,
+    "name": "L0_class",
+    "type": "u8",
+    "rule": "",
+    "offset": 16
+   },
+   {
+    "size": 1,
+    "name": "L0_hw_revision",
+    "type": "u8",
+    "rule": "",
+    "offset": 17
+   },
+   {
+    "size": 2,
+    "name": "L0_fw_version",
+    "type": "u16",
+    "rule": "",
+    "offset": 18
+   },
+   {
+    "size": 4,
+    "name": "L0_serial",
+    "type": "u32",
+    "rule": "",
+    "offset": 20
+   },
+   {
+    "size": 4,
+    "name": "L0_factory_record_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 24
+   },
+   {
+    "size": 4,
+    "name": "L0_applied_config_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 28
+   },
+   {
+    "size": 1,
+    "name": "L0_reset_cause",
+    "type": "u8",
+    "rule": "b0 power-on; b1 brown-out; b2 IWDG; b3 software; b4 pin",
+    "offset": 32
+   },
+   {
+    "size": 1,
+    "name": "L0_bootloader_version",
+    "type": "u8",
+    "rule": "",
+    "offset": 33
+   },
+   {
+    "size": 1,
+    "name": "L0_card_state",
+    "type": "u8",
+    "rule": "",
+    "offset": 34
+   },
+   {
+    "size": 1,
+    "name": "L0_slot_straps",
+    "type": "u8",
+    "rule": "",
+    "offset": 35
+   },
+   {
+    "size": 2,
+    "name": "L0_capability_bits",
+    "type": "u16",
+    "rule": "",
+    "offset": 36
+   },
+   {
+    "size": 4,
+    "name": "L0_zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 38
+   },
+   {
+    "size": 1,
+    "name": "L1_class",
+    "type": "u8",
+    "rule": "",
+    "offset": 42
+   },
+   {
+    "size": 1,
+    "name": "L1_hw_revision",
+    "type": "u8",
+    "rule": "",
+    "offset": 43
+   },
+   {
+    "size": 2,
+    "name": "L1_fw_version",
+    "type": "u16",
+    "rule": "",
+    "offset": 44
+   },
+   {
+    "size": 4,
+    "name": "L1_serial",
+    "type": "u32",
+    "rule": "",
+    "offset": 46
+   },
+   {
+    "size": 4,
+    "name": "L1_factory_record_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 50
+   },
+   {
+    "size": 4,
+    "name": "L1_applied_config_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 54
+   },
+   {
+    "size": 1,
+    "name": "L1_reset_cause",
+    "type": "u8",
+    "rule": "b0 power-on; b1 brown-out; b2 IWDG; b3 software; b4 pin",
+    "offset": 58
+   },
+   {
+    "size": 1,
+    "name": "L1_bootloader_version",
+    "type": "u8",
+    "rule": "",
+    "offset": 59
+   },
+   {
+    "size": 1,
+    "name": "L1_card_state",
+    "type": "u8",
+    "rule": "",
+    "offset": 60
+   },
+   {
+    "size": 1,
+    "name": "L1_slot_straps",
+    "type": "u8",
+    "rule": "",
+    "offset": 61
+   },
+   {
+    "size": 2,
+    "name": "L1_capability_bits",
+    "type": "u16",
+    "rule": "",
+    "offset": 62
+   },
+   {
+    "size": 4,
+    "name": "L1_zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 64
+   },
+   {
+    "size": 1,
+    "name": "L2_class",
+    "type": "u8",
+    "rule": "",
+    "offset": 68
+   },
+   {
+    "size": 1,
+    "name": "L2_hw_revision",
+    "type": "u8",
+    "rule": "",
+    "offset": 69
+   },
+   {
+    "size": 2,
+    "name": "L2_fw_version",
+    "type": "u16",
+    "rule": "",
+    "offset": 70
+   },
+   {
+    "size": 4,
+    "name": "L2_serial",
+    "type": "u32",
+    "rule": "",
+    "offset": 72
+   },
+   {
+    "size": 4,
+    "name": "L2_factory_record_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 76
+   },
+   {
+    "size": 4,
+    "name": "L2_applied_config_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 80
+   },
+   {
+    "size": 1,
+    "name": "L2_reset_cause",
+    "type": "u8",
+    "rule": "b0 power-on; b1 brown-out; b2 IWDG; b3 software; b4 pin",
+    "offset": 84
+   },
+   {
+    "size": 1,
+    "name": "L2_bootloader_version",
+    "type": "u8",
+    "rule": "",
+    "offset": 85
+   },
+   {
+    "size": 1,
+    "name": "L2_card_state",
+    "type": "u8",
+    "rule": "",
+    "offset": 86
+   },
+   {
+    "size": 1,
+    "name": "L2_slot_straps",
+    "type": "u8",
+    "rule": "",
+    "offset": 87
+   },
+   {
+    "size": 2,
+    "name": "L2_capability_bits",
+    "type": "u16",
+    "rule": "",
+    "offset": 88
+   },
+   {
+    "size": 4,
+    "name": "L2_zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 90
+   },
+   {
+    "size": 1,
+    "name": "L3_class",
+    "type": "u8",
+    "rule": "",
+    "offset": 94
+   },
+   {
+    "size": 1,
+    "name": "L3_hw_revision",
+    "type": "u8",
+    "rule": "",
+    "offset": 95
+   },
+   {
+    "size": 2,
+    "name": "L3_fw_version",
+    "type": "u16",
+    "rule": "",
+    "offset": 96
+   },
+   {
+    "size": 4,
+    "name": "L3_serial",
+    "type": "u32",
+    "rule": "",
+    "offset": 98
+   },
+   {
+    "size": 4,
+    "name": "L3_factory_record_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 102
+   },
+   {
+    "size": 4,
+    "name": "L3_applied_config_crc32",
+    "type": "u32",
+    "rule": "",
+    "offset": 106
+   },
+   {
+    "size": 1,
+    "name": "L3_reset_cause",
+    "type": "u8",
+    "rule": "b0 power-on; b1 brown-out; b2 IWDG; b3 software; b4 pin",
+    "offset": 110
+   },
+   {
+    "size": 1,
+    "name": "L3_bootloader_version",
+    "type": "u8",
+    "rule": "",
+    "offset": 111
+   },
+   {
+    "size": 1,
+    "name": "L3_card_state",
+    "type": "u8",
+    "rule": "",
+    "offset": 112
+   },
+   {
+    "size": 1,
+    "name": "L3_slot_straps",
+    "type": "u8",
+    "rule": "",
+    "offset": 113
+   },
+   {
+    "size": 2,
+    "name": "L3_capability_bits",
+    "type": "u16",
+    "rule": "",
+    "offset": 114
+   },
+   {
+    "size": 4,
+    "name": "L3_zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 116
+   },
+   {
+    "size": 54,
+    "name": "zero",
+    "type": "bytes",
+    "rule": "0",
+    "offset": 120
+   },
+   {
+    "size": 2,
+    "name": "crc16",
+    "type": "u16",
+    "rule": "",
+    "offset": 174
+   }
+  ],
+  "iol1_command": [
+   {
+    "size": 1,
+    "name": "sof",
+    "type": "u8",
+    "rule": "0xA7",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "version",
+    "type": "u8",
+    "rule": "0x01",
+    "offset": 1
+   },
+   {
+    "size": 1,
+    "name": "expected_class",
+    "type": "u8",
+    "rule": "must equal the card's own class",
+    "offset": 2
+   },
+   {
+    "size": 1,
+    "name": "expected_slot",
+    "type": "u8",
+    "rule": "b0-3 slot id; b4-7 zero; must equal the base straps read by the card",
+    "offset": 3
+   },
+   {
+    "size": 2,
+    "name": "epoch",
+    "type": "u16",
+    "rule": "nonzero; changes on every link (re)start",
+    "offset": 4
+   },
+   {
+    "size": 2,
+    "name": "sequence",
+    "type": "u16",
+    "rule": "0 only in SYNC frames; otherwise last+1, wrapping 0xFFFF -> 0x0001",
+    "offset": 6
+   },
+   {
+    "size": 1,
+    "name": "control",
+    "type": "u8",
+    "rule": "b0 SYNC; b1 OUT_REQ; b2 CLEAR_FAULTS; b3 IDENT_READ; b4 CONFIG_WRITE; b5 MAINT; b6-7 zero",
+    "offset": 8
+   },
+   {
+    "size": 1,
+    "name": "telemetry_request",
+    "type": "u8",
+    "rule": "page to return next; 0xFF = card rotation",
+    "offset": 9
+   },
+   {
+    "size": 26,
+    "name": "payload",
+    "type": "bytes",
+    "rule": "class-specific (section 4.4)",
+    "offset": 10
+   },
+   {
+    "size": 4,
+    "name": "crc32c",
+    "type": "u32",
+    "rule": "CRC-32C over bytes 0-35, MSB first",
+    "offset": 36
+   }
+  ],
+  "iol1_response": [
+   {
+    "size": 1,
+    "name": "sof",
+    "type": "u8",
+    "rule": "0x7A",
+    "offset": 0
+   },
+   {
+    "size": 1,
+    "name": "version",
+    "type": "u8",
+    "rule": "0x01",
+    "offset": 1
+   },
+   {
+    "size": 1,
+    "name": "class",
+    "type": "u8",
+    "rule": "card's factory class",
+    "offset": 2
+   },
+   {
+    "size": 1,
+    "name": "slot",
+    "type": "u8",
+    "rule": "b0-3 slot straps read from the base; b4-7 hardware major revision",
+    "offset": 3
+   },
+   {
+    "size": 2,
+    "name": "epoch_echo",
+    "type": "u16",
+    "rule": "epoch of the last accepted frame",
+    "offset": 4
+   },
+   {
+    "size": 2,
+    "name": "sequence_echo",
+    "type": "u16",
+    "rule": "sequence of the last accepted frame",
+    "offset": 6
+   },
+   {
+    "size": 1,
+    "name": "card_state",
+    "type": "u8",
+    "rule": "b0-2 state (0 INIT, 1 SYNCED, 2 ACTIVE, 3 FAULT_LATCHED, 4 CONFIG_INVALID, 7 BOOT); b3 OUT_PERMIT seen; b4 outputs enabled; b5 field supply OK; b6 card fault; b7 reset cause pending",
+    "offset": 8
+   },
+   {
+    "size": 1,
+    "name": "telemetry_page",
+    "type": "u8",
+    "rule": "page carried in bytes 26-35",
+    "offset": 9
+   },
+   {
+    "size": 16,
+    "name": "realtime",
+    "type": "bytes",
+    "rule": "class-specific (section 4.4)",
+    "offset": 10
+   },
+   {
+    "size": 10,
+    "name": "telemetry",
+    "type": "bytes",
+    "rule": "class-specific page (section 4.9)",
+    "offset": 26
+   },
+   {
+    "size": 4,
+    "name": "crc32c",
+    "type": "u32",
+    "rule": "CRC-32C over bytes 0-35",
+    "offset": 36
+   }
+  ]
+ },
+ "fault_word": [
+  {
+   "bit": 0,
+   "name": "LINK",
+   "cause": "host frame rejected (any rule)",
+   "response": "disarm all; I/O disabled",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 1,
+   "name": "WATCHDOG",
+   "cause": "5 ms without accepted ARM/UPDATE while armed",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 2,
+   "name": "INHIBIT",
+   "cause": "external inhibit or authorization withheld",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 3,
+   "name": "STEP_TIMING",
+   "cause": "DDS overflow while pulse timer busy",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 4,
+   "name": "DRIVE_ALARM",
+   "cause": "alarm on an armed channel in alarm_trip_mask",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 5,
+   "name": "EXPANSION_CHANGED",
+   "cause": "MX4/EX8/MIA/EIA presence, PGOOD or tamper change after qualification",
+   "response": "disarm all, installed 0",
+   "cleared_by": "power cycle"
+  },
+  {
+   "bit": 6,
+   "name": "EXPANSION_INVALID",
+   "cause": "invalid module state at qualification",
+   "response": "whole machine inhibited",
+   "cleared_by": "power cycle"
+  },
+  {
+   "bit": 7,
+   "name": "CONFIG_REJECTED",
+   "cause": "CONFIGURE rejected or ARM mask != required_mask",
+   "response": "config_valid cleared",
+   "cleared_by": "valid CONFIGURE then SYNC"
+  },
+  {
+   "bit": 8,
+   "name": "MODULE_CLASS_MISMATCH",
+   "cause": "latched MOD_ID class != expected class",
+   "response": "ARM refused",
+   "cleared_by": "SYNC after correct CONFIGURE"
+  },
+  {
+   "bit": 9,
+   "name": "OUTPUT_PATH_INTERRUPTED",
+   "cause": "OPI_OK_TX, OPI_OK_A, OPI_OK_B or OPI_OK_BOE low while armed (section 04 4.2)",
+   "response": "disarm all; pos_continuity cleared in that domain",
+   "cleared_by": "SYNC, ARM, re-reference"
+  },
+  {
+   "bit": 10,
+   "name": "PERMISSION_PATH_STUCK",
+   "cause": "OPI or permit readback did not follow the request",
+   "response": "ARM refused",
+   "cleared_by": "SYNC after service"
+  },
+  {
+   "bit": 11,
+   "name": "WATCHDOG_SELFTEST_FAILED",
+   "cause": "section 04 5.4",
+   "response": "ARM/IO_ENABLE refused",
+   "cleared_by": "SYNC and passing self-test"
+  },
+  {
+   "bit": 12,
+   "name": "AUX_SUPPLY_FAULT",
+   "cause": "AUX24/AUX5 monitor low while armed",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 13,
+   "name": "IO_LINK_FAULT",
+   "cause": "an IOL1 port or status register latched a fault",
+   "response": "I/O disabled; motion disarmed if the port is motion-critical",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 14,
+   "name": "IO_WATCHDOG",
+   "cause": "5 ms without accepted UPDATE/IO_WRITE while I/O enabled",
+   "response": "I/O disabled",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 15,
+   "name": "OUTPUT_READBACK_MISMATCH",
+   "cause": "the state a card reports in response n (applied after command n-1) differs from the image the FPGA sent in command n-1, in two consecutive responses (section 4.8)",
+   "response": "output forced off; I/O disabled if motion-critical",
+   "cleared_by": "IO_CLEAR_FAULTS or SYNC"
+  },
+  {
+   "bit": 16,
+   "name": "DO_FAULT",
+   "cause": "a card reported an output fault latch",
+   "response": "that output forced off",
+   "cleared_by": "IO_CLEAR_FAULTS"
+  },
+  {
+   "bit": 17,
+   "name": "IO_CONFIG_REJECTED",
+   "cause": "CONFIGURE_IO rejected or card rejected CONFIG_WRITE",
+   "response": "io_config_valid cleared",
+   "cleared_by": "valid CONFIGURE_IO"
+  },
+  {
+   "bit": 18,
+   "name": "EVENT_OVERFLOW",
+   "cause": "event ring full when a new event arrived",
+   "response": "none on outputs; probe/index results after the overflow unusable",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 19,
+   "name": "ENCODER_FAULT",
+   "cause": "illegal transition or port supply fault on an encoder in required_encoder_mask while armed; a single open or shorted line is not detected in IS-1 (section 8.1)",
+   "response": "disarm all",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 20,
+   "name": "POWER_FAULT",
+   "cause": "F_PGOOD_A/B, MOTION_5V, EXP_PGOOD or CORE power-good low",
+   "response": "disarm all; I/O disabled",
+   "cleared_by": "SYNC after supply returns"
+  },
+  {
+   "bit": 21,
+   "name": "SAFETY_INPUT_OPEN",
+   "cause": "EXT_PERMIT low while armed or I/O enabled",
+   "response": "hardware already inhibits; FPGA disarms and disables I/O",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 22,
+   "name": "OUTPUT_PERMIT_LOST",
+   "cause": "OPI_OK_OUT cleared (the OUT_PERMIT final gate fell, however short) or OUT_PERMIT readback low while I/O enabled",
+   "response": "I/O disabled; FPGA_OUTPUT_REQUEST dropped; every output card has already latched its own enable off in hardware (section 4.7) and stays off until a new epoch and IO_ENABLE",
+   "cleared_by": "SYNC, then IO_ENABLE"
+  },
+  {
+   "bit": 23,
+   "name": "PROCESS_PERMIT_LOST",
+   "cause": "PROC_PERMIT fell while a PEN was requested",
+   "response": "PEN requests cleared",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 24,
+   "name": "SLOT_FAULT",
+   "cause": "presence A/B or power-good of DIC, DOA, DOB, ACC, ESC, CMC or XS fell in the MC slot status register (section 4.10; two agreeing reads)",
+   "response": "that port faulted; motion disarmed if motion-critical",
+   "cleared_by": "SYNC"
+  },
+  {
+   "bit": 25,
+   "name": "CONTACTOR_FEEDBACK",
+   "cause": "contactor_fb (XS1.7) disagrees with the expected contactor state for longer than contactor_close_ms after TX_PERMIT rose or contactor_open_ms after it fell, or the contactor does not read de-energized at ARM (CONFIGURE_IO page 1 bytes 39-49, section 3.4a)",
+   "response": "disarm all (PERMIT_OUT opens with TX_PERMIT); ARM refused while set",
+   "cleared_by": "SYNC after the input agrees with the disarmed state"
+  },
+  {
+   "bit": 26,
+   "name": "STO_FEEDBACK",
+   "cause": "sto_fb (XS1.8) disagrees with the expected STO state for longer than sto_response_ms: mode 1, STO active exactly while PERMIT_OUT is open; mode 2, STO active while armed (section 3.4a)",
+   "response": "disarm all; ARM refused while set",
+   "cleared_by": "SYNC after the input agrees with the disarmed state"
+  },
+  {
+   "bit": 27,
+   "name": "ARM_REFUSED",
+   "cause": "ARM received while a safety-interface precondition was unmet: no accepted RESET_ARM release within reset_arm_window_ms (when required), reset/arm held longer than reset_arm_press_max_ms, contactor not de-energized, STO state unexpected, or EXT_PERMIT low (section 3.4a)",
+   "response": "nothing armed; a SAFETY_INTERFACE event names the unmet precondition",
+   "cleared_by": "SYNC"
+  }
+ ],
+ "safety_power_word": [
+  {
+   "bit": 0,
+   "name": "tx_permit"
+  },
+  {
+   "bit": 1,
+   "name": "out_permit"
+  },
+  {
+   "bit": 2,
+   "name": "proc_permit"
+  },
+  {
+   "bit": 3,
+   "name": "wd_m_ok"
+  },
+  {
+   "bit": 4,
+   "name": "wd_o_ok"
+  },
+  {
+   "bit": 5,
+   "name": "wd_m_tripped"
+  },
+  {
+   "bit": 6,
+   "name": "wd_o_tripped"
+  },
+  {
+   "bit": 7,
+   "name": "opi_ok_tx"
+  },
+  {
+   "bit": 8,
+   "name": "opi_ok_a"
+  },
+  {
+   "bit": 9,
+   "name": "opi_ok_b"
+  },
+  {
+   "bit": 10,
+   "name": "ext_permit"
+  },
+  {
+   "bit": 11,
+   "name": "process_permit_ext"
+  },
+  {
+   "bit": 12,
+   "name": "aux24_ok_a"
+  },
+  {
+   "bit": 13,
+   "name": "aux24_ok_b"
+  },
+  {
+   "bit": 14,
+   "name": "aux5_ok_a"
+  },
+  {
+   "bit": 15,
+   "name": "aux5_ok_b"
+  },
+  {
+   "bit": 16,
+   "name": "f_pgood_a"
+  },
+  {
+   "bit": 17,
+   "name": "f_pgood_b"
+  },
+  {
+   "bit": 18,
+   "name": "motion5v_pgood"
+  },
+  {
+   "bit": 19,
+   "name": "exp_pgood"
+  },
+  {
+   "bit": 20,
+   "name": "core_pgood"
+  },
+  {
+   "bit": 21,
+   "name": "selftest_motion_ok"
+  },
+  {
+   "bit": 22,
+   "name": "selftest_output_ok"
+  },
+  {
+   "bit": 23,
+   "name": "reset_arm"
+  },
+  {
+   "bit": 24,
+   "name": "chain_status"
+  },
+  {
+   "bit": 25,
+   "name": "contactor_fb"
+  },
+  {
+   "bit": 26,
+   "name": "sto_fb"
+  },
+  {
+   "bit": 27,
+   "name": "enc_exp_pgood"
+  },
+  {
+   "bit": 28,
+   "name": "opi_ok_out"
+  },
+  {
+   "bit": 29,
+   "name": "opi_ok_boe"
+  },
+  {
+   "bit": 30,
+   "name": "reset_arm_ready"
+  },
+  {
+   "bit": 31,
+   "name": "zero"
+  }
+ ],
+ "events": [
+  {
+   "type": "0x01",
+   "name": "PROBE_CAPTURE",
+   "source": "probe 0/1",
+   "flags": "b0 edge was rising; b1 overrun before this event",
+   "values": "the four configured capture sources (u24 each) latched on the same core tick as the qualified edge"
+  },
+  {
+   "type": "0x02",
+   "name": "INDEX_CAPTURE",
+   "source": "encoder 0-11",
+   "flags": "0",
+   "values": "v0 x4 count at the synchronized index rising edge (u24); v1-v3 zero"
+  },
+  {
+   "type": "0x03",
+   "name": "FAULT_LATCHED",
+   "source": "lowest newly set fault bit",
+   "flags": "0",
+   "values": "v0 fault_word[23:0]; v1 fault_word[31:24]<<16 | armed_mask; v2 safety word[23:0]; v3 safety word[31:24]<<16 | pos_continuity"
+  },
+  {
+   "type": "0x04",
+   "name": "PORT_FAULT",
+   "source": "port 0-3, 0x10 EIA, 0x11 EX8",
+   "flags": "cause 1 CRC, 2 format/length/timeout, 3 sequence/epoch, 4 identity, 5 readback, 6 card watchdog, 7 card reset",
+   "values": "v0 consecutive failures; v1 total failures (low 24 bits)"
+  },
+  {
+   "type": "0x05",
+   "name": "OUTPUT_FAULT",
+   "source": "output 0-15",
+   "flags": "b0 overcurrent/current limit; b1 thermal; b2 open load on; b3 open load off; b4 short to VS",
+   "values": "v0 last ISNS code of that output, 0xFFFFFF if not measured"
+  },
+  {
+   "type": "0x06",
+   "name": "DEADLINE",
+   "source": "0",
+   "flags": "0",
+   "values": "v0 UPDATE interval us; v1 configured servo period us; v2 sequence low 24 bits"
+  },
+  {
+   "type": "0x07",
+   "name": "WATCHDOG_TRIP",
+   "source": "0 WD_M, 1 WD_O",
+   "flags": "0",
+   "values": "v0 core ticks since the last progress pulse (low 24 bits)"
+  },
+  {
+   "type": "0x08",
+   "name": "OPI",
+   "source": "0 TX, 1 A, 2 B, 3 BOE (bank-B Ioff-buffer OE), 4 OUT",
+   "flags": "b0 armed at the time",
+   "values": "0"
+  },
+  {
+   "type": "0x09",
+   "name": "SLOT_CHANGE",
+   "source": "slot id (MIR-1 class code of the slot; 0x20 = XF measurement module presence)",
+   "flags": "b0 presence A; b1 presence B; b2 PGOOD; b3 tamper",
+   "values": "0"
+  },
+  {
+   "type": "0x0A",
+   "name": "SUPPLY_CHANGE",
+   "source": "safety-word bit number",
+   "flags": "b0 new level",
+   "values": "0"
+  },
+  {
+   "type": "0x0B",
+   "name": "SAFETY_INPUT_CHANGE",
+   "source": "safety-word bit number",
+   "flags": "b0 new level",
+   "values": "0"
+  },
+  {
+   "type": "0x0C",
+   "name": "SAFETY_INTERFACE",
+   "source": "0 reset/arm release accepted; 1 reset/arm held too long (stuck); 2 chain status disagrees with EXT_PERMIT longer than chain_mismatch_ms; 3 contactor feedback mismatch; 4 STO feedback mismatch; 5 ARM refused (flags name the precondition)",
+   "flags": "source 5: b0 no reset/arm release, b1 contactor, b2 STO, b3 EXT_PERMIT low, b4 reset/arm stuck; other sources: b0 new level",
+   "values": "v0 duration in ms (press time, mismatch time); v1-v3 zero"
+  }
+ ],
+ "telemetry": {
+  "mirror_entries_is1_default": 45,
+  "delivery": "one entry per CNS3 response (1 per servo cycle); fixed round robin over all entries; a host priority request (FB_READ bytes 17-18) may take at most every other slot, so every entry is delivered at least every 45 cycles without priority requests and every 90 cycles with them",
+  "full_rotation_ms": 45,
+  "pages": {
+   "DIC": [
+    "p0: 0-1 SENS_G0 mV; 2-3 SENS_G1 mV; 4-5 SENS_G2 mV; 6 limiter fault bits; 7 safety-supply fault bits; 8-9 SAFE_24V mV",
+    "p1: 0-1 MCU temperature 0.1 C (s16); 2-3 MCU VDD mV; 4 reset cause; 5 firmware minor; 6-9 applied config CRC-32C",
+    "p2: card-side link counters u16: 0-1 CRC, 2-3 format, 4-5 sequence/epoch, 6-7 identity, 8-9 accept-timer trips"
+   ],
+   "DO8": [
+    "p0-p7 (output k): 0-1 ISNS code (10-bit; 0xFFFF = not measured: output off, ADC reported FF, or diagnostics disabled); 2-3 TSNS code; 4-5 VOUT code; 6-7 age of the ADC values at transmission, us; 8 b0 output on during sample, b1 ISNS saturated, b2 below qualified accuracy range (card factory record); 9 output index",
+    "p8: 0-1 VS code device 0; 2-3 VS code device 1; 4-5 MCU temperature 0.1 C; 6-7 MCU VDD mV; 8 reset cause; 9 firmware minor",
+    "p9: card-side link counters (as DIC p2)",
+    "p10: 0-4 fault detail, 5 bits per output (overcurrent, thermal, open load on, open load off, short to VS), packed MSB first; 5 device 0 global flags; 6 device 1 global flags; 7 FLT pin levels; 8-9 driver SPI error count",
+    "p11: 0-3 applied config CRC-32C; 4-7 factory record CRC-32C; 8-9 zero"
+   ],
+   "ACC": [
+    "p0-p3 (AI k): 0-1 raw code; 2-3 sample age us; 4 range code; 5 flags (over, under, open); 6-9 zero",
+    "p4: 0-1 AO0 readback; 2-3 AO1 readback; 4 DAC alarm flags; 5 clamp state; 6-9 zero",
+    "p5: 0-1 AI reference mV; 2-3 AI sensor supply mV; 4 sensor supply fault; 5 PWM auxiliary fault; 6 isolated-supply power-good bits (AO0, AO1, AI, RS-485, CAN); 7 zero; 8-9 MCU temperature 0.1 C",
+    "p6: card-side link counters",
+    "p7: 0-3 applied config CRC-32C; 4-7 factory record CRC-32C; 8-9 firmware version"
+   ],
+   "EIA_status_register": [
+    "p0: 0-2 raw 24-bit image; 3 marker-check failures (mod 256); 4-9 zero"
+   ],
+   "EX8_status_register": [
+    "p0: 0-1 raw 16-bit image; 2 marker-check failures; 3-9 zero"
+   ],
+   "FPGA_core_0x80": [
+    "p0: 0-1 max UPDATE interval since last delivery us; 2-3 late count; 4-5 min UPDATE interval us; 6-7 rejected host frames since power-up; 8-9 event ring high-water mark",
+    "p1: 0-3 seconds since configuration; 4-7 latched-fault count since power-up; 8-9 zero"
+   ],
+   "FPGA_port_counters_0x81_0x86": [
+    "p0: u16 counters 0-1 CRC, 2-3 format/SOF/length/timeout, 4-5 sequence/epoch, 6-7 identity, 8-9 readback mismatch"
+   ]
+  },
+  "display_rule": "every value is published with valid and age; unavailable, not measured or stale is never published as zero (T4)",
+  "worst_case_rotation_ms": 90,
+  "priority_slot_limit": "at most every other slot",
+  "entry_bytes": 22,
+  "stale_rule": "one rule: the fixed per-source stale limit of telemetry_map[].stale_ms and host_sources[].stale_ms; a value older than its limit is shown 'stale', a source with no path is 'unavailable', neither is ever shown as 0 (T4)"
+ },
+ "io_link": {
+  "name": "IOL1",
+  "topology": "point-to-point, one FPGA SPI master per card slot, 4 wires (SCLK, CMD, RSP, CS_N), 3.3 V LVCMOS through Ioff buffers at each card connector",
+  "ports": {
+   "L0": "DIC (class 0x11, slot straps 0)",
+   "L1": "DOA (class 0x21, slot 1)",
+   "L2": "DOB (class 0x21, slot 2)",
+   "L3": "ACC (class 0x31, slot 3)"
+  },
+  "timing": {
+   "sclk_hz": 8333333.3,
+   "frame_us": 38.4,
+   "guards_us": 2.0,
+   "slot_us": 40.4,
+   "period_us": 100,
+   "card_processing_window_us": 59.6,
+   "din_to_snapshot_bound_us": 240.6,
+   "commit_to_card_apply_bound_us": 160.4
+  },
+  "card_classes": [
+   {
+    "class": "0x11",
+    "name": "DIC",
+    "port": "L0",
+    "mcu": "STM32G031C8T6 (LQFP48)",
+    "command_payload": "all zero in ACTIVE; CONFIG_WRITE: blob index + 24 B",
+    "realtime": "0-2 DI filtered (24 bits); 3-5 DI raw; 6-7 sample age us; 8 sensor-group limiter fault bits; 9 safety-supply fault bits; 10-15 zero",
+    "config_blob": "0 format 1; 1-3 debounce per 8-input group, 100 us units (0-255); 4-23 zero"
+   },
+   {
+    "class": "0x21",
+    "name": "DO8 (DOA slot 1, DOB slot 2)",
+    "port": "L1, L2",
+    "mcu": "STM32G031K8T6 (LQFP32)",
+    "command_payload": "0 output image (8 bits); 1 fault-clear mask; 2-25 zero",
+    "realtime": "0 applied (SW_STATE readback AND driver enable); 1 fault any; 2 overcurrent/current limit; 3 thermal; 4 open load on; 5 open load off; 6 short to VS; 7 b0-1 FLT pins, b2-3 VS undervoltage dev0/1, b4-5 SPI/CRC error dev0/1, b6 OUT_PERMIT drop latched (OUT_EN latch cleared); 8-9 readback age us; 10-15 zero",
+    "config_blob": "0 format 1; 1-8 ILIM_REG[3:0] code per output: default 0110 = 0.72 A setting (0.62-0.82 A [DS Table 8-4 and ICL table]); codes above 0111 (0.85 A setting, 0.72-1.00 A [DS]) are rejected so the limit never exceeds section 04's 1.0 A maximum; 9 on-state open-load enable mask; 10 off-state open-load enable mask; 11 inrush code: INRUSH_LIMIT 00 (same limit) or 10 (0.5x) only; 01 (2x) and 11 (fixed 2.2 A) are rejected; 12 latch-off (retry disable) mask; 13-23 zero"
+   },
+   {
+    "class": "0x31",
+    "name": "ACC",
+    "port": "L3",
+    "mcu": "STM32G031K8T6 (LQFP32)",
+    "command_payload": "0-1 AO0 code; 2-3 AO1 code; 4 b0-1 AO enable; 5-25 zero",
+    "realtime": "0-1 AO0 applied (DAC register readback); 2-3 AO1 applied; 4-5 AI0; 6-7 AI1; 8-9 AI2; 10-11 AI3; 12-13 AI sample age us; 14 AI valid/range bits; 15 AO status (b0-1 clamp, b2-3 readback ok, b4 DAC reference alarm, b5 OUT_PERMIT drop latched, b6 PROC_PERMIT drop latched)",
+    "config_blob": "0 format 1; 1-4 AI range code per channel; 5 AI sample-rate code (>= 1 kHz per channel); 6 RS-485 termination; 7 CAN termination; 8-23 zero"
+   },
+   {
+    "class": "0x7F",
+    "name": "BOOT (any card in its bootloader)",
+    "port": "any",
+    "mcu": "-",
+    "command_payload": "MAINT update records",
+    "realtime": "bootloader status; IWDG refreshed by the SRAM erase/program routine; outputs off",
+    "config_blob": "-"
+   }
+  ],
+  "validate_before_commit": [
+   "complete 40-byte frame, CS released after exactly 320 clocks, no SPI overrun",
+   "CRC-32C",
+   "SOF 0xA7 and version 0x01",
+   "expected_class == own class",
+   "expected_slot == base slot straps",
+   "epoch == current epoch (SYNC: new nonzero epoch with sequence 0)",
+   "sequence == last + 1 (0xFFFF -> 0x0001)",
+   "reserved bits and bytes zero",
+   "class semantic checks (output bits within the configured mask, AO code <= configured maximum)",
+   "only then: apply outputs, reload the accept timer, refresh the IWDG, store epoch/sequence"
+  ],
+  "card_watchdogs": {
+   "accept_timer": "firmware timer reloaded only on a fully accepted frame; 1.0 ms (10 link periods); expiry: outputs off, FAULT_LATCHED until a new SYNC epoch",
+   "iwdg": "STM32G0 independent watchdog, hardware-started by option byte; in the application it is refreshed only in the accept path; maximum timeout <= 2 ms over the LSI tolerance [REQ]; reset leaves CARD_EN low. In the bootloader (outputs off, CARD_EN low) flash erase and program run from an SRAM routine with interrupts off that refreshes the IWDG while polling the flash busy flag, so a page erase longer than the IWDG timeout never resets the card",
+   "hardware_gates": "output enable = qualified OUT_PERMIT_k (hardwired, section 04) AND OUT_EN latch Q AND CARD_EN (MCU pin with pull-down). The OUT_EN latch (one half of an SN74LVC2G74DCUR on each DO and ACC card) has D = 1, CLK = MCU OUT_EN_ARM strobe, asynchronous CLR_N = the qualified OUT_PERMIT_k net, so any accepted OUT_PERMIT_k drop, however short, turns the outputs off and keeps them off; the MCU reads Q, reports the drop (realtime b6 of the status byte), writes SW_STATE = 0 and re-arms the latch only in ACTIVE after a new epoch and IO_ENABLE. The ACC uses the second half the same way for PROC_PERMIT (PEN latch)"
+  },
+  "output_readback": "response n carries the state applied after command n-1; the FPGA compares it with the image it sent in command n-1; two consecutive mismatches latch OUTPUT_READBACK_MISMATCH for that output",
+  "fpga_port_rules": "a response is used only after its CRC, SOF, class, slot, epoch echo and sequence echo check; 3 consecutive failures latch the port fault; DI/AI keep the last valid value with growing age and turn invalid at the earlier of their stale limit and the port fault",
+  "restart": "power-up or card reset: INIT, outputs off; FPGA sends SYNC frames with a new epoch; identity (IDENT_READ) and configuration (CONFIG_WRITE) are verified; ACTIVE only after the host's IO_ENABLE; a card reset in operation shows as an epoch mismatch and reset cause and latches the port fault; no automatic resume",
+  "status_registers": {
+   "EIA": {
+    "wires": [
+     "SR_CLK",
+     "SR_LOAD_N",
+     "SR_DATA"
+    ],
+    "bits": 24,
+    "period_us": 100,
+    "sclk": "core/8 = 6.25 MHz",
+    "layout": "bits 0-9 MPG_SEL_X..PEND_AUX; 10 MPG_ENABLE; 11 XF present; 12 XF supply fault; 13 MPG supply fault; 14-15 probe 0/1 supply fault; 16-19 ENC0-3 supply fault; 20-23 fixed marker 1010 (tied on the far end of the chain)",
+    "acceptance": "marker must read 1010 and two consecutive reads must agree before a bit changes in STS; three consecutive marker failures latch IO_LINK_FAULT on port S0"
+   },
+   "EX8": {
+    "wires": [
+     "SR_CLK",
+     "SR_LOAD_N",
+     "SR_DATA"
+    ],
+    "bits": 16,
+    "period_us": 100,
+    "sclk": "core/8",
+    "layout": "bits 0-7 ENC4-11 supply fault; 8 EX8 power-good; 9-11 zero; 12-15 marker 1010",
+    "acceptance": "as EIA; port S1"
+   },
+   "note": "Input-only status registers carry no outputs, so the validate-before-commit rule for output cards does not apply; the fixed marker plus double-read agreement detects stuck, open and shifted chains. The worst-case age of a status bit at the FB snapshot is 2 x 100 us + one read (4.16 us) [AR]. The MC slot status register collects the presence contacts and power-good of every slot that has no other path to the FPGA; its inputs arrive through the base on the MC connector (section 02 section 6).",
+   "MC_slot": {
+    "wires": [
+     "SSR_CLK",
+     "SSR_LOAD_N",
+     "SSR_DATA (local to the MC)"
+    ],
+    "bits": 40,
+    "period_us": 100,
+    "sclk": "core/6 = 8.33 MHz",
+    "layout": "bits 0-28 as CNS3 slot_status b0-28 (presence A, presence B, power-good of EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC, XS; SCART presence A/B); 29-35 zero; 36-39 fixed marker 1010",
+    "acceptance": "marker must read 1010 and two consecutive reads must agree before a bit changes in STS; a fall of a presence or power-good bit of a fitted card latches SLOT_FAULT; three consecutive marker failures latch IO_LINK_FAULT; worst-case age at the snapshot 2 x 100 us + 5.12 us read = 205.12 us [AR]"
+   }
+  },
+  "age_rules": {
+   "din_stale_limit_us": {
+    "min": 250,
+    "max": 440,
+    "default": 440
+   },
+   "ain_stale_limit_us": {
+    "min": 250,
+    "max": 440,
+    "default": 440
+   },
+   "snapshot_staleness_nominal_us": 240.6,
+   "link_period_us": 100,
+   "failures_before_port_fault": 3,
+   "basis": "the largest snapshot age a valid DI/AI can have is min(stale limit, 240.6 + 100 x 2) us: two rejected frames still leave the data valid, the third latches the port fault and invalidates it; the published bound at use is that plus the counter age of section 5.3"
+  }
+ },
+ "schedule": {
+  "allocations_us_REQ": {
+   "scheduling_delay": 80.0,
+   "fb_ioctl_pre": 25.0,
+   "fb_ioctl_post": 15.0,
+   "decode_publish": 10.0,
+   "linuxcnc_compute": 60.0,
+   "encode": 5.0,
+   "cmd_ioctl_pre": 25.0,
+   "cmd_ioctl_post": 15.0
+  },
+  "allocation_total_to_commit_us": 220.0,
+  "cases": {
+   "5.00_MHz": {
+    "fb_wire_us": 281.6,
+    "cmd_wire_us": 153.6,
+    "guards_us": 0.96,
+    "wire_plus_guards_us": 436.16,
+    "completion_C_us": 656.16,
+    "thread_end_us": 671.16,
+    "margin_to_700_us": 43.84,
+    "margin_to_1000_us": 343.84,
+    "host_overhead_allowed_for_700_us": 263.84,
+    "host_overhead_allowed_for_1000_us": 563.84,
+    "input_age_counters_us": 307.08,
+    "command_to_commit_us": 184.08
+   },
+   "6.25_MHz": {
+    "fb_wire_us": 225.28,
+    "cmd_wire_us": 122.88,
+    "guards_us": 0.96,
+    "wire_plus_guards_us": 349.12,
+    "completion_C_us": 569.12,
+    "thread_end_us": 584.12,
+    "margin_to_700_us": 130.88,
+    "margin_to_1000_us": 430.88,
+    "host_overhead_allowed_for_700_us": 350.88,
+    "host_overhead_allowed_for_1000_us": 650.88,
+    "input_age_counters_us": 250.76,
+    "command_to_commit_us": 153.36
+   }
+  },
+  "endpoints": {
+   "start": "nominal servo period boundary T(k) = a + k*P (section 5.7); scheduling (wake) latency counts against the target",
+   "end": "CS_CMD release of the accepted UPDATE, i.e. the FPGA commit, observed on a logic analyser",
+   "included": "wake latency, both ioctl entries/returns before commit, CS_FB and CS_CMD wire time and guards, CNF3 decode, all LinuxCNC computation of the cycle, UPDATE encode, spidev/DMA gaps",
+   "measured_separately": "input data age (FPGA snapshot at CS_FB assertion to use by the servo thread); output update latency (command computation to FPGA commit, and commit to the first physical output change); thread end (CMD ioctl return) against the 1 ms deadline",
+   "never_folded_in": "1 ms servo deadline, 5 ms FPGA command watchdog, 9.26-13.02 ms external watchdog, 20 ms fault-to-inhibit"
+  },
+  "rejected_alternatives_us": {
+   "record_v3_plus_separate_io_3x128B_5MHz_wire_us": 615.84,
+   "symmetric_2x176B_5MHz_wire_us": 564.16,
+   "record_v3_2x128B_5MHz_wire_us": 410.56,
+   "is1_at_2kHz_5MHz_wire_fraction_of_500us": 0.872
+  },
+  "watchdog_margins": {
+   "fpga_command_watchdog_ms": 5.0,
+   "nominal_update_interval_ms": 1.0,
+   "external_watchdog_min_ms": 9.26,
+   "progress_pulse": "one per accepted ARM or UPDATE (section 04 5.1), so the largest legal spacing is < 5 ms",
+   "external_watchdog_basis": "9.51/12.67 ms from the capacitor and IC tolerances, widened to 9.26/13.02 ms by the +/-10 nA CWD leakage allowance (section 04 5.1)"
+  },
+  "servo_period_us": 1000.0,
+  "completion_target_us": 700.0,
+  "completion_target_kind": "engineering-margin target, not a safety limit; a miss is a recorded finding",
+  "pre_commit_phases": [
+   "scheduling_delay",
+   "fb_ioctl_pre",
+   "fb_wire",
+   "fb_ioctl_post",
+   "decode_publish",
+   "linuxcnc_compute",
+   "encode",
+   "cmd_ioctl_pre",
+   "cmd_wire"
+  ],
+  "post_commit_phases": [
+   "cmd_ioctl_post"
+  ],
+  "guard_us_per_transaction": 0.48,
+  "host_overhead_measured_us": null,
+  "host_overhead_status": "allocation [REQ] only; no target compute module has been measured (blocked: CM5102016 purchase, motion-card prototype, >= 200 MS/s logic analyser)",
+  "separate_bounds_us_REQ": {
+   "counter_input_age": 400.0,
+   "di_input_age_excluding_debounce": 600.0,
+   "do_command_to_driver_excluding_switching": 400.0,
+   "motion_command_to_commit": 250.0,
+   "di_input_age_worst_valid_excluding_debounce": 750.0
+  },
+  "kept_distinct_ms": {
+   "servo_deadline": 1.0,
+   "completion_target": 0.7,
+   "fpga_command_watchdog": 5.0,
+   "external_watchdog_max": 13.02,
+   "fault_to_inhibit": 20.0
+  }
+ },
+ "connections": [
+  {
+   "id": "M0-M11 STEP/DIR",
+   "dir": "out",
+   "field": "CMD.motor[i].rate (CS_CMD UPDATE)",
+   "rate": "1 kHz servo",
+   "age": "command computation to FPGA commit <= 184.08 us at 5 MHz / 153.36 us at 6.25 MHz [AR on REQ allocations]; commit to new rate in effect <= 3 core ticks (60 ns) [SI design rule]",
+   "fault": "rejected frame, watchdog, alarm trip, OPI, supply or safety fault: all channels disarm; pos_continuity cleared unless a clean DISARM",
+   "hal": "cnc1.N.position-cmd (float in), cnc1.N.scale, cnc1.N.emitted-count (float out)",
+   "hal_pins": [
+    "cnc1.{m}.position-cmd",
+    "cnc1.{m}.scale",
+    "cnc1.{m}.emitted-count"
+   ]
+  },
+  {
+   "id": "Emitted step counts",
+   "dir": "in",
+   "field": "STS.motor[i].position (CNF3 36-71)",
+   "rate": "1 kHz",
+   "age": "<= 307.08 us at 5 MHz / 250.76 us at 6.25 MHz from snapshot to use [AR]",
+   "fault": "CRC/format/sequence/timestamp or implausible delta: CNC1_BAD_FRAME/CNC1_COUNT, feedback-valid false, driver fault",
+   "hal": "cnc1.N.position-fb (float out), cnc1.feedback-valid",
+   "hal_pins": [
+    "cnc1.{m}.position-fb",
+    "cnc1.feedback-valid"
+   ]
+  },
+  {
+   "id": "Per-channel enable EN_NO/EN_NC",
+   "dir": "out",
+   "field": "armed mask (ARM/DISARM); STS.enable_cmd_state (CNF3 32-33)",
+   "rate": "on ARM/DISARM/fault; reported 1 kHz",
+   "age": "switching times per section 04 3.1 (TLP3640A tON <= 0.5 ms, TLP4176A <= 1 ms / 3 ms [DS via 04])",
+   "fault": "any fault: LED string dark, NO open, NC closed (section 04 3.3). cnc1.N.enable must equal the required_mask bit when cnc1.enable rises (else the driver sends no ARM and reports CNC1_ENABLE_MISMATCH); a drop of any cnc1.N.enable while armed causes a clean DISARM of all channels (section 3.4a)",
+   "hal": "cnc1.N.enable (bit in, per-channel request), cnc1.N.enable-commanded (bit out), cnc1.enable (bit in, global)",
+   "hal_pins": [
+    "cnc1.{m}.enable",
+    "cnc1.{m}.enable-commanded",
+    "cnc1.enable"
+   ]
+  },
+  {
+   "id": "ALM0-ALM11",
+   "dir": "in",
+   "field": "STS.alarm / STS.alarm_latched (CNF3 28-31)",
+   "rate": "sampled every 10 us in the FPGA; reported 1 kHz",
+   "age": "filter 30-40 us; at use <= 40 us + counter age [AR]",
+   "fault": "armed channel in alarm_trip_mask: DRIVE_ALARM, disarm all within the filter time",
+   "hal": "cnc1.N.alarm, cnc1.N.alarm-latched",
+   "hal_pins": [
+    "cnc1.{m}.alarm",
+    "cnc1.{m}.alarm-latched"
+   ]
+  },
+  {
+   "id": "Position continuity",
+   "dir": "in",
+   "field": "STS.pos_continuity (CNF3 34-35, CNS3 34-35)",
+   "rate": "1 kHz",
+   "age": "snapshot",
+   "fault": "cleared: every joint J whose channel map contains the channel is unhomed through halui.joint.J.unhome (joint index, not channel index; extra joints are unhomed with motion disabled, section 7.2)",
+   "hal": "cnc1.N.position-continuity",
+   "hal_pins": [
+    "cnc1.{m}.position-continuity",
+    "halui.joint.{jt}.unhome"
+   ]
+  },
+  {
+   "id": "ENC0-ENC3 (EIA), ENC4-ENC11 (EX8)",
+   "dir": "in",
+   "field": "STS.enc[k].count (CNF3 72-107), valid/illegal/fault/index-armed masks (108-115); index via INDEX_CAPTURE event",
+   "rate": "1 kHz counts; index event delivered in the CNS3 of the same cycle when it occurs before CS_CMD assertion, otherwise the next",
+   "age": "counts as step counts; index value exact to the core tick",
+   "fault": "illegal transition or port supply fault: encoder invalid; ENCODER_FAULT and disarm when required by an armed joint. A single open or shorted line is not detected in IS-1: it shows as following error where the loop closes on the encoder, as step/encoder disagreement in the preview, and in the commissioning count check",
+   "hal": "cnc1.encoder.K.count, .position, .velocity, .scale, .index-enable (io), .valid, .fault, .supply-fault",
+   "hal_pins": [
+    "cnc1.encoder.{k}.count",
+    "cnc1.encoder.{k}.position",
+    "cnc1.encoder.{k}.velocity",
+    "cnc1.encoder.{k}.scale",
+    "cnc1.encoder.{k}.index-enable",
+    "cnc1.encoder.{k}.valid",
+    "cnc1.encoder.{k}.fault",
+    "cnc1.encoder.{k}.supply-fault"
+   ]
+  },
+  {
+   "id": "Handwheel MPG A/B and pendant inputs",
+   "dir": "in",
+   "field": "STS.mpg.count (116-118), STS.mpg.status (119), STS.mpg.select (170-171, EIA status register)",
+   "rate": "count 1 kHz; pendant bits every 100 us register read",
+   "age": "count as counters; pendant bits <= 204.16 us at the snapshot [AR]",
+   "fault": "invalid, or the enable button released when the profile declares one: counts discarded (never buffered) and never converted into motion",
+   "hal": "cnc1.mpg.counts, cnc1.mpg.valid, cnc1.mpg.enable, cnc1.mpg.sel-x/-y/-z/-a/-b/-c, cnc1.mpg.mul-x1/-x10/-x100, cnc1.mpg.pend-aux, cnc1.mpg.supply-fault",
+   "hal_pins": [
+    "cnc1.mpg.counts",
+    "cnc1.mpg.valid",
+    "cnc1.mpg.enable",
+    "cnc1.mpg.sel-x",
+    "cnc1.mpg.sel-y",
+    "cnc1.mpg.sel-z",
+    "cnc1.mpg.sel-a",
+    "cnc1.mpg.sel-b",
+    "cnc1.mpg.sel-c",
+    "cnc1.mpg.mul-x1",
+    "cnc1.mpg.mul-x10",
+    "cnc1.mpg.mul-x100",
+    "cnc1.mpg.pend-aux",
+    "cnc1.mpg.supply-fault"
+   ]
+  },
+  {
+   "id": "Probes P0/P1",
+   "dir": "in",
+   "field": "STS.probe.state (120); PROBE_CAPTURE event (CNS3 36-55)",
+   "rate": "level 1 kHz; capture per event",
+   "age": "capture latency 2-3 core ticks + configured filter [SI design]; delivery <= 1 cycle when the ring is empty",
+   "fault": "overrun sticky; host rejects the probe result",
+   "hal": "cnc1.probe.N.in, cnc1.probe.N.captured, cnc1.probe.N.capture-seq, cnc1.probe.N.capture-time, cnc1.probe.N.capture-value.J (J = 0-3), cnc1.probe.N.overrun",
+   "hal_pins": [
+    "cnc1.probe.{p}.in",
+    "cnc1.probe.{p}.captured",
+    "cnc1.probe.{p}.capture-seq",
+    "cnc1.probe.{p}.capture-time",
+    "cnc1.probe.{p}.capture-value.{j}",
+    "cnc1.probe.{p}.overrun",
+    "cnc1.probe.{p}.capture-enable"
+   ]
+  },
+  {
+   "id": "FREQ0/FREQ1 (XF measurement port)",
+   "dir": "in",
+   "field": "STS.freq[k].count / .last_edge (CNF3 122-135)",
+   "rate": "1 kHz",
+   "age": "frequency value age = snapshot - last edge; NO_SIGNAL after freqK_no_signal_ms",
+   "fault": "NO_SIGNAL: valid false, never shown as 0 Hz; XF absent or supply fault: invalid",
+   "hal": "cnc1.freq.N.frequency, cnc1.freq.N.count, cnc1.freq.N.valid, cnc1.freq.N.age, cnc1.freq.module-present, cnc1.freq.module-id-valid, cnc1.freq.supply-fault",
+   "hal_pins": [
+    "cnc1.freq.{f}.frequency",
+    "cnc1.freq.{f}.count",
+    "cnc1.freq.{f}.valid",
+    "cnc1.freq.{f}.age",
+    "cnc1.freq.module-present",
+    "cnc1.freq.module-id-valid",
+    "cnc1.freq.supply-fault"
+   ]
+  },
+  {
+   "id": "PWM0/PWM1",
+   "dir": "out",
+   "field": "CMD.pwm[k].duty (CS_CMD 72-75), enable bits (66)",
+   "rate": "1 kHz; new duty at the next PWM period boundary",
+   "age": "commit + <= one PWM period",
+   "fault": "OUT_PERMIT low: buffer disabled in hardware (output pulled low, the device's required off level; no inverted mode); ACC OUT_EN latch keeps it off until re-armed; I/O fault: enable dropped",
+   "hal": "cnc1.pwm.N.value, cnc1.pwm.N.enable, cnc1.pwm.N.frequency, cnc1.pwm.aux-fault",
+   "hal_pins": [
+    "cnc1.pwm.{w}.value",
+    "cnc1.pwm.{w}.enable",
+    "cnc1.pwm.{w}.frequency",
+    "cnc1.pwm.aux-fault"
+   ]
+  },
+  {
+   "id": "Process enables PEN0/PEN1",
+   "dir": "out",
+   "field": "CMD.proc_en (66 b0-1); STS.proc_en_state (144)",
+   "rate": "1 kHz",
+   "age": "commit + photoMOS switching (ACC part, section 03/04)",
+   "fault": "PROC_PERMIT low: opened in hardware; PROCESS_PERMIT_LOST clears the request",
+   "hal": "cnc1.proc-en.N.cmd, cnc1.proc-en.N.commanded",
+   "hal_pins": [
+    "cnc1.proc-en.{e}.cmd",
+    "cnc1.proc-en.{e}.commanded"
+   ]
+  },
+  {
+   "id": "AO0/AO1 (ACC)",
+   "dir": "out",
+   "field": "CMD.ao[k] (CS_CMD 76-79) -> IOL1 L3",
+   "rate": "1 kHz command; 10 kHz link",
+   "age": "commit to DAC write <= 160.4 us [AR, 20 us card allocation REQ] + DAC settling [DS not read here]",
+   "fault": "link loss >= card accept timeout 1.0 ms or OUT_PERMIT low: zero clamp",
+   "hal": "cnc1.aout.N.value, cnc1.aout.N.enable, cnc1.aout.N.readback, cnc1.aout.N.readback-valid",
+   "hal_pins": [
+    "cnc1.aout.{a}.value",
+    "cnc1.aout.{a}.enable",
+    "cnc1.aout.{a}.readback",
+    "cnc1.aout.{a}.readback-valid"
+   ]
+  },
+  {
+   "id": "AI0-AI3 (ACC)",
+   "dir": "in",
+   "field": "STS.ai[k] (CNF3 146-155)",
+   "rate": "card sampling >= 1 kHz per channel [REQ]; relayed every 100 us",
+   "age": "carried in ain_age; snapshot staleness <= card sample period + min(ain_stale_limit_us, 440.6 us) [AR]; at use add the counter age of section 5.3",
+   "fault": "older than ain_stale_limit_us, port L3 fault latched, or out of range: valid false",
+   "hal": "cnc1.ain.N.value, cnc1.ain.N.valid, cnc1.ain.N.age, cnc1.ain.ref-voltage, cnc1.ain.sensor-supply-voltage, cnc1.ain.sensor-supply-fault",
+   "hal_pins": [
+    "cnc1.ain.{i}.value",
+    "cnc1.ain.{i}.valid",
+    "cnc1.ain.{i}.age",
+    "cnc1.ain.ref-voltage",
+    "cnc1.ain.sensor-supply-voltage",
+    "cnc1.ain.sensor-supply-fault"
+   ]
+  },
+  {
+   "id": "DI0-DI23 (DIC)",
+   "dir": "in",
+   "field": "STS.din (CNF3 136-138), din_age (139)",
+   "rate": "10 kHz link; reported 1 kHz",
+   "age": "snapshot staleness <= din_stale_limit_us (250-440, default 440); at use <= 747.08 us at 5 MHz / 690.76 us at 6.25 MHz in the worst valid case (two rejected frames), 547.68 / 491.36 us with no rejected frame [AR on REQ]; plus configured debounce and ISO1212 propagation",
+   "fault": "older than din_stale_limit_us or port L0 fault latched: all DI invalid (never read as low); machine-enable chain drops when DI are used for machine functions",
+   "hal": "cnc1.din.N, cnc1.din.N-not, cnc1.din-valid, cnc1.din-age",
+   "hal_pins": [
+    "cnc1.din.{d}",
+    "cnc1.din.{d}-not",
+    "cnc1.din-valid",
+    "cnc1.din-age"
+   ]
+  },
+  {
+   "id": "DO0-DO15 (DOA/DOB)",
+   "dir": "out",
+   "field": "CMD.dout (CS_CMD 64-65); STS.dout_readback / dout_fault (CNF3 140-143)",
+   "rate": "1 kHz command; 10 kHz link",
+   "age": "commit to driver write <= 160.4 us [AR] + driver switching",
+   "fault": "readback mismatch or driver fault: output forced off and latched; card accept timeout 1.0 ms / IWDG <= 2 ms: outputs off; any accepted OUT_PERMIT_k drop: card OUT_EN latch off until a new epoch and IO_ENABLE (OUTPUT_PERMIT_LOST)",
+   "hal": "cnc1.dout.N (in), cnc1.dout.N-applied, cnc1.dout.N-fault, cnc1.dout.N-current, cnc1.dout.N-current-valid, cnc1.dout.N-current-age, cnc1.dout.clear-faults",
+   "hal_pins": [
+    "cnc1.dout.{o}",
+    "cnc1.dout.{o}-applied",
+    "cnc1.dout.{o}-fault",
+    "cnc1.dout.{o}-current",
+    "cnc1.dout.{o}-current-valid",
+    "cnc1.dout.{o}-current-age",
+    "cnc1.dout.clear-faults"
+   ]
+  },
+  {
+   "id": "Safety interface XS1 (EXT_PERMIT, PROCESS_PERMIT, chain status, reset/arm, contactor and STO feedback) and arm lamp",
+   "dir": "in/out",
+   "field": "STS.safety (CNF3 164-167, CNS3 30-33); CMD arm lamp (66 b6)",
+   "rate": "direct FPGA inputs; reported 1 kHz",
+   "age": "input filter (section 04, <= 1 ms allocation for EXT_PERMIT) + snapshot",
+   "fault": "EXT_PERMIT low: hardware inhibit, SAFETY_INPUT_OPEN; PROCESS_PERMIT low: both process contacts open in hardware, PROCESS_PERMIT_LOST; contactor mismatch: CONTACTOR_FEEDBACK; STO mismatch: STO_FEEDBACK; reset/arm: ARM precondition (ARM_REFUSED), stuck button reported; chain status: SAFETY_INTERFACE event (diagnostic)",
+   "hal": "cnc1.safety.ext-permit, .process-permit, .chain-status, .reset-arm, .contactor-fb, .sto-fb, .arm-lamp, .reset-arm-ready",
+   "hal_pins": [
+    "cnc1.safety.ext-permit",
+    "cnc1.safety.process-permit",
+    "cnc1.safety.chain-status",
+    "cnc1.safety.reset-arm",
+    "cnc1.safety.contactor-fb",
+    "cnc1.safety.sto-fb",
+    "cnc1.safety.arm-lamp",
+    "cnc1.safety.reset-arm-ready"
+   ]
+  },
+  {
+   "id": "Permission and watchdog readbacks",
+   "dir": "in",
+   "field": "STS.safety bits 0-9, 21-22, 28-29",
+   "rate": "1 kHz",
+   "age": "snapshot",
+   "fault": "section 04 section 8",
+   "hal": "cnc1.safety.tx-permit, .out-permit, .proc-permit, .wd-motion-ok, .wd-output-ok, .wd-motion-tripped, .wd-output-tripped, .opi-ok-tx, .opi-ok-a, .opi-ok-b, .selftest-ok, .opi-ok-out, .opi-ok-boe",
+   "hal_pins": [
+    "cnc1.safety.tx-permit",
+    "cnc1.safety.out-permit",
+    "cnc1.safety.proc-permit",
+    "cnc1.safety.wd-motion-ok",
+    "cnc1.safety.wd-output-ok",
+    "cnc1.safety.wd-motion-tripped",
+    "cnc1.safety.wd-output-tripped",
+    "cnc1.safety.opi-ok-tx",
+    "cnc1.safety.opi-ok-a",
+    "cnc1.safety.opi-ok-b",
+    "cnc1.safety.selftest-ok",
+    "cnc1.safety.opi-ok-out",
+    "cnc1.safety.opi-ok-boe"
+   ]
+  },
+  {
+   "id": "Supply monitors (AUX, field entries, MOTION_5V, EXP_5V, core, EX8)",
+   "dir": "in",
+   "field": "STS.safety bits 12-20, 27",
+   "rate": "1 kHz",
+   "age": "monitor filter + snapshot",
+   "fault": "POWER_FAULT / AUX_SUPPLY_FAULT: disarm",
+   "hal": "cnc1.safety.aux24-ok-a/-b, cnc1.safety.aux5-ok-a/-b, cnc1.power.field-a-ok, cnc1.power.field-b-ok, cnc1.power.motion5v-ok, cnc1.power.exp5v-ok, cnc1.power.core-ok",
+   "hal_pins": [
+    "cnc1.safety.aux24-ok-{bank}",
+    "cnc1.safety.aux5-ok-{bank}",
+    "cnc1.power.field-a-ok",
+    "cnc1.power.field-b-ok",
+    "cnc1.power.motion5v-ok",
+    "cnc1.power.exp5v-ok",
+    "cnc1.power.core-ok",
+    "cnc1.power.enc-exp-ok"
+   ]
+  },
+  {
+   "id": "Entry voltage and current (PSM)",
+   "dir": "in",
+   "field": "host I2C telemetry TEL.supply.* (not CNC1)",
+   "rate": "10 Hz [REQ]",
+   "age": "host timestamp carried; stale after 500 ms",
+   "fault": "diagnostic only; protection is the entry eFuses and PGOOD bits",
+   "hal": "cnc1.supply.core.voltage/.current, cnc1.supply.field-a.voltage/.current, cnc1.supply.field-b.voltage/.current (service-published, userspace)",
+   "hal_pins": [
+    "cnc1.supply.{entry}.voltage",
+    "cnc1.supply.{entry}.current"
+   ]
+  },
+  {
+   "id": "Module presence and identity",
+   "dir": "in",
+   "field": "STS.slot_status (CNS3 82-85), STS.slots, STS.expansion.mx4/ex8, STS.port[*] (1 kHz); IDP3 page and EEPROM/1-Wire identity (at qualification)",
+   "rate": "presence 1 kHz; identity at qualification and on request",
+   "age": "MIA/MX4 lines: 30-40 us filter + snapshot; other slots: MC slot status register <= 205.12 us [AR]",
+   "fault": "change under power: EXPANSION_CHANGED / SLOT_FAULT; wrong class: refused",
+   "hal": "cnc1.installed-channels, cnc1.expansion-installed, cnc1.encoder-expansion-installed, cnc1.io.P.state, cnc1.io.P.identity-ok, cnc1.io.P.card-class",
+   "hal_pins": [
+    "cnc1.installed-channels",
+    "cnc1.expansion-installed",
+    "cnc1.encoder-expansion-installed",
+    "cnc1.io.{port}.state",
+    "cnc1.io.{port}.identity-ok",
+    "cnc1.io.{port}.card-class",
+    "cnc1.module.{slot}.present",
+    "cnc1.module.{slot}.accepted",
+    "cnc1.module.{slot}.class",
+    "cnc1.module.{slot}.power-good"
+   ]
+  },
+  {
+   "id": "IOL1 ports L0-L3 and status registers S0-S1",
+   "dir": "both",
+   "field": "STS.port[*]; TEL 0x81-0x86 counters",
+   "rate": "10 kHz link; counters >= 20 Hz",
+   "age": "counter page age carried",
+   "fault": "3 consecutive failures: port fault latched (section 4.6)",
+   "hal": "cnc1.io.P.crc-errors, .format-errors, .sequence-errors, .identity-errors, .readback-errors",
+   "hal_pins": [
+    "cnc1.io.{port}.crc-errors",
+    "cnc1.io.{port}.format-errors",
+    "cnc1.io.{port}.sequence-errors",
+    "cnc1.io.{port}.identity-errors",
+    "cnc1.io.{port}.readback-errors"
+   ]
+  },
+  {
+   "id": "Host SPI link (CNC1)",
+   "dir": "both",
+   "field": "all frames; CNS3 78-81 timing",
+   "rate": "2 transactions per 1 ms cycle",
+   "age": "-",
+   "fault": "any rejected frame: LINK fault; host-side CRC error: CNC1_BAD_FRAME",
+   "hal": "cnc1.fault, cnc1.fault-word, cnc1.fault-code, cnc1.timing.update-interval-us, cnc1.timing.late-updates, cnc1.timing.completion-us, cnc1.timing.wake-latency-us, cnc1.timing.overruns, cnc1.timing.target-exceeded, cnc1.event.lost",
+   "hal_pins": [
+    "cnc1.fault",
+    "cnc1.fault-word",
+    "cnc1.fault-code",
+    "cnc1.timing.update-interval-us",
+    "cnc1.timing.late-updates",
+    "cnc1.timing.completion-us",
+    "cnc1.timing.wake-latency-us",
+    "cnc1.timing.overruns",
+    "cnc1.timing.target-exceeded",
+    "cnc1.event.lost",
+    "cnc1.link.crc-errors",
+    "cnc1.link.rejected-frames"
+   ]
+  },
+  {
+   "id": "RS-485 (ACC transceiver, host UART)",
+   "dir": "both",
+   "field": "not CNC1; Linux tty in kernel RS-485 mode",
+   "rate": "per device profile (MB2HAL transaction rates); never in the servo thread",
+   "age": "per transaction; mb2hal num_errors",
+   "fault": "profile-defined hold/inhibit; never the only run-enable path",
+   "hal": "mb2hal.<tx>.<n>.float/.int/.bit, mb2hal.<tx>.num_errors; service summary cnc1.bus.rs485.errors",
+   "hal_pins": [
+    "mb2hal.<tx>.<n>.float",
+    "mb2hal.<tx>.<n>.int",
+    "mb2hal.<tx>.<n>.bit",
+    "mb2hal.<tx>.num_errors",
+    "cnc1.bus.rs485.errors"
+   ]
+  },
+  {
+   "id": "CAN (ACC transceiver, host MCP2518FD)",
+   "dir": "both",
+   "field": "not CNC1; SocketCAN (mcp251xfd driver)",
+   "rate": "per device profile; never in the servo thread",
+   "age": "per signal, carried",
+   "fault": "profile-defined; bus-off reported",
+   "hal": "cnc1can.<signal>.value, cnc1can.<signal>.valid, cnc1can.<signal>.age-ns, cnc1can.bus-off; service summary cnc1.bus.can.errors",
+   "hal_pins": [
+    "cnc1can.<signal>.value",
+    "cnc1can.<signal>.valid",
+    "cnc1can.<signal>.age-ns",
+    "cnc1can.bus-off",
+    "cnc1.bus.can.errors"
+   ]
+  },
+  {
+   "id": "ESP service link",
+   "dir": "both",
+   "field": "not CNC1; separate UART owned by the diagnostics service",
+   "rate": "service-defined",
+   "age": "heartbeat age",
+   "fault": "missing heartbeat record; no motion or output effect",
+   "hal": "none in the servo thread",
+   "hal_pins": [],
+   "hal_note": "deliberately no HAL pin: the ESP service link is outside the servo thread and has no motion or output authority; its heartbeat is a service record"
+  },
+  {
+   "id": "Card and compute temperatures",
+   "dir": "in",
+   "field": "HOST.i2c.module[slot].temperature; HOST.sysfs.soc_temperature (not CNC1)",
+   "rate": "1 Hz",
+   "age": "carried per value; stale after 5 s",
+   "fault": "diagnostic; warning above the card's MIR-1 rated limit; never used by protection",
+   "hal": "cnc1.module.<slot>.temperature, -temperature-valid, -temperature-age (service-published)",
+   "hal_pins": [
+    "cnc1.module.{slot}.temperature",
+    "cnc1.module.{slot}.temperature-valid",
+    "cnc1.module.{slot}.temperature-age"
+   ]
+  },
+  {
+   "id": "XS synchronized expansion (reserved)",
+   "dir": "both",
+   "field": "STS.port[L4_XS] (CNF3 173, always 0 in IS-1); CONFIGURE_IO page 0 byte 18",
+   "rate": "10 kHz link when a module class is defined",
+   "age": "as IOL1 ports",
+   "fault": "a nonzero expected class is rejected in IS-1; the slot stays empty",
+   "hal": "cnc1.io.l4.* (reserved)",
+   "hal_pins": [
+    "cnc1.io.{port}.state",
+    "cnc1.io.{port}.identity-ok"
+   ]
+  }
+ ],
+ "diagnostics": [
+  {
+   "signal": "Output current, per DO",
+   "source": "TPS274C65ASRHAR ISNS -> 10-bit ADC -> DOA/DOB MCU over isolated SPI",
+   "transport": "TEL L1/L2 p0-p7 bytes 0-1 (+ age 6-7)",
+   "rate": ">= 11 Hz delivery worst case (>= 22 Hz without host priority requests); card polls each output's ADC result at least every 1 ms [REQ]",
+   "age_bound": "<= 90 ms delivery + <= 3.05 ms card sample age (1 ms poll + 2.048 ms ADC round robin) = <= 93.05 ms [AR on REQ], inside the 100 ms stale limit; carried per value",
+   "validity": "0xFFFF not measured (output off or ADC FF); below-accuracy flag; stale when older than 100 ms",
+   "hal": "cnc1.dout.N-current, -current-valid, -current-age",
+   "response": "diagnostic; sustained excess against the declared load is a bank fault (section 04 10.2); protection is the driver's own current limit",
+   "transport_refs": [
+    "TEL.dout[i].current"
+   ]
+  },
+  {
+   "signal": "Overcurrent/current-limit, thermal, open load (on/off), short to VS, per DO",
+   "source": "TPS274C65ASRHAR fault registers and FLT",
+   "transport": "IOL1 realtime (every 100 us) -> STS.dout_fault per cycle; detail TEL p10; OUTPUT_FAULT event",
+   "rate": "10 kHz link, 1 kHz host",
+   "age_bound": "<= 240.6 us to snapshot [AR]",
+   "validity": "port active",
+   "hal": "cnc1.dout.N-fault, cnc1.dout.N-overcurrent, -thermal, -open-load, -short-to-supply",
+   "response": "output forced off and latched; IO_CLEAR_FAULTS with the output commanded off",
+   "transport_refs": [
+    "STS.dout_fault",
+    "TEL.dout[i].fault_detail",
+    "EVT.type OUTPUT_FAULT"
+   ]
+  },
+  {
+   "signal": "Driver temperature and output voltage per DO",
+   "source": "TPS274C65ASRHAR TSNS/VOUT ADC",
+   "transport": "TEL L1/L2 p0-p7 bytes 2-5",
+   "rate": ">= 11 Hz",
+   "age_bound": "<= 93.05 ms",
+   "validity": "as current",
+   "hal": "cnc1.dout.N-temperature, cnc1.dout.N-voltage (+ -valid, -age)",
+   "response": "diagnostic",
+   "transport_refs": [
+    "TEL.dout[i].temperature",
+    "TEL.dout[i].vout"
+   ]
+  },
+  {
+   "signal": "Field supply at each output card (VS)",
+   "source": "TPS274C65ASRHAR VSNS",
+   "transport": "TEL L1/L2 p8",
+   "rate": ">= 11 Hz",
+   "age_bound": "<= 93.05 ms",
+   "validity": "stale 100 ms",
+   "hal": "cnc1.supply.dout-a.voltage, cnc1.supply.dout-b.voltage",
+   "response": "diagnostic; undervoltage flag also in realtime byte 7",
+   "transport_refs": [
+    "TEL.dout_bank[i].vs"
+   ]
+  },
+  {
+   "signal": "Entry voltages and currents",
+   "source": "PSM monitors (Codex part)",
+   "transport": "host I2C",
+   "rate": "10 Hz",
+   "age_bound": "carried; stale 500 ms",
+   "validity": "I2C read OK",
+   "hal": "cnc1.supply.core/field-a/field-b.voltage/.current",
+   "response": "diagnostic",
+   "transport_refs": [
+    "HOST.i2c.psm.entry[i].v",
+    "HOST.i2c.psm.entry[i].i"
+   ]
+  },
+  {
+   "signal": "Power-good: AUX24/AUX5 per bank, field entries, MOTION_5V, EXP_5V, core, EX8",
+   "source": "supervisors/monitors (section 04)",
+   "transport": "STS.safety",
+   "rate": "1 kHz",
+   "age_bound": "snapshot",
+   "validity": "direct",
+   "hal": "cnc1.safety.aux*, cnc1.power.*",
+   "response": "fault and disarm (section 04)",
+   "transport_refs": [
+    "STS.safety"
+   ]
+  },
+  {
+   "signal": "Card power-good and presence",
+   "source": "presence contacts at both connector ends and the card power-good of every slot: MIA and MX4 direct to the MC (30-40 us filter); EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC, XS and SCART presence through the MC slot status register",
+   "transport": "STS.slot_status (CNS3 82-85); STS.port[*] b3 for L0-L3 and S0-S1; STS.expansion.mx4/ex8; STS.slots",
+   "rate": "1 kHz",
+   "age_bound": "MIA/MX4 30-40 us filter + snapshot; slot status register <= 205.12 us [AR]",
+   "validity": "slot status register marker 1010 and two agreeing reads (b29)",
+   "hal": "cnc1.io.P.power-good, cnc1.module.<slot>.present, cnc1.module.<slot>.power-good",
+   "response": "SLOT_FAULT",
+   "transport_refs": [
+    "STS.slot_status",
+    "STS.port[i]",
+    "STS.expansion.mx4",
+    "STS.expansion.ex8",
+    "conductor:MIA status PRESENT_A/B, PGOOD"
+   ]
+  },
+  {
+   "signal": "Card MCU temperature and VDD",
+   "source": "STM32G031 internal sensor and VREFINT",
+   "transport": "TEL DIC p1, DO8 p8, ACC p5",
+   "rate": ">= 5 Hz",
+   "age_bound": "<= 200 ms",
+   "validity": "card calibration values present",
+   "hal": "cnc1.io.P.temperature (l0-l3), cnc1.io.P.vdd (l0-l2); always 'unavailable' on s0, s1 and l4 and for l3 vdd (no source; T4)",
+   "response": "diagnostic",
+   "transport_refs": [
+    "TEL.card[i].mcu_temperature",
+    "TEL.card[i].vdd"
+   ]
+  },
+  {
+   "signal": "Sensor-group and safety-supply voltages and limiter faults (DIC)",
+   "source": "DIC monitors (section 03)",
+   "transport": "DIC realtime bytes 8-9 (faults, every 100 us) and TEL p0 (voltages)",
+   "rate": "faults 1 kHz host; voltages >= 5 Hz",
+   "age_bound": "faults <= 240.6 us; voltages <= 200 ms",
+   "validity": "port active",
+   "hal": "cnc1.supply.sensor-N.voltage/.fault, cnc1.supply.safety-24v.voltage/.fault",
+   "response": "DI of that group invalid",
+   "transport_refs": [
+    "TEL.dic.sensor_group[i].mv",
+    "TEL.dic.limiter_fault",
+    "TEL.dic.safety_supply_fault",
+    "TEL.dic.safe24_mv"
+   ]
+  },
+  {
+   "signal": "Encoder port supply faults (single-line open/short not detected in IS-1)",
+   "source": "EIA/EX8 status registers (TPS2553-1 FAULT per port). The AM26LV32E has no fault output; its fail-safe holds the output high, so one open or shorted line with the other line toggling gives a legal back-and-forth count, not an illegal transition",
+   "transport": "STS.enc.fault",
+   "rate": "100 us read, 1 kHz host",
+   "age_bound": "<= 204.16 us",
+   "validity": "marker check",
+   "hal": "cnc1.encoder.K.fault, cnc1.encoder.K.supply-fault",
+   "response": "supply fault: encoder invalid, ENCODER_FAULT if required. Line faults are found only indirectly: following error where the loop closes on the encoder, step/encoder disagreement in the preview (service contract section 05), and the commissioning count check",
+   "transport_refs": [
+    "STS.enc.fault",
+    "TEL.eia.status_raw",
+    "TEL.ex8.status_raw"
+   ]
+  },
+  {
+   "signal": "AI reference, AI sensor supply, PWM auxiliary fault, isolated-supply power-good (ACC)",
+   "source": "ACC monitors",
+   "transport": "TEL L3 p5",
+   "rate": ">= 5 Hz",
+   "age_bound": "<= 200 ms",
+   "validity": "port active",
+   "hal": "cnc1.ain.ref-voltage, cnc1.ain.sensor-supply-voltage/-fault, cnc1.pwm.aux-fault",
+   "response": "AI invalid when the reference is out of range",
+   "transport_refs": [
+    "TEL.acc.ai_ref_mv",
+    "TEL.acc.ai_sensor_supply_mv",
+    "TEL.acc.ai_sensor_supply_fault",
+    "TEL.acc.pwm_aux_fault",
+    "TEL.acc.iso_supply_pgood"
+   ]
+  },
+  {
+   "signal": "AO readback",
+   "source": "DAC register readback (ACC)",
+   "transport": "STS.ao.state per cycle; TEL L3 p4 codes",
+   "rate": "1 kHz flag, >= 5 Hz codes",
+   "age_bound": "flag <= 240.6 us",
+   "validity": "port active",
+   "hal": "cnc1.aout.N.readback, -valid",
+   "response": "mismatch: OUTPUT_READBACK_MISMATCH, clamp",
+   "transport_refs": [
+    "STS.ao.state",
+    "TEL.ao[i].readback"
+   ]
+  },
+  {
+   "signal": "Communication error counters",
+   "source": "FPGA per-port and host-SPI counters; card-side counters",
+   "transport": "TEL 0x81-0x86 and card p2/p9/p6; CNS3 78-81; driver",
+   "rate": ">= 11 Hz",
+   "age_bound": "<= 90 ms",
+   "validity": "counters monotonic until power cycle",
+   "hal": "cnc1.io.P.*-errors, cnc1.link.crc-errors, cnc1.link.rejected-frames",
+   "response": "diagnostic; the fault itself is latched by the port rules",
+   "transport_refs": [
+    "TEL.fpga.port_counters[i]",
+    "TEL.card[i].link_counters",
+    "STS.timing.update_interval"
+   ]
+  },
+  {
+   "signal": "Servo timing (UPDATE interval, late count, host completion, wake latency)",
+   "source": "FPGA timer; driver CLOCK_MONOTONIC",
+   "transport": "CNS3 78-81; FPGA core TEL p0; HR1 record",
+   "rate": "1 kHz",
+   "age_bound": "1 cycle",
+   "validity": "-",
+   "hal": "cnc1.timing.*",
+   "response": "recorded; overrun of the 1 ms period counted",
+   "transport_refs": [
+    "STS.timing.update_interval",
+    "STS.timing.late_updates",
+    "TEL.fpga.core"
+   ]
+  },
+  {
+   "signal": "Watchdog trips, OPI, self-test results",
+   "source": "section 04 latches",
+   "transport": "STS.safety; WATCHDOG_TRIP/OPI events",
+   "rate": "1 kHz",
+   "age_bound": "snapshot",
+   "validity": "direct",
+   "hal": "section 04 section 8",
+   "response": "section 04",
+   "transport_refs": [
+    "STS.safety",
+    "EVT.type WATCHDOG_TRIP",
+    "EVT.type OPI"
+   ]
+  },
+  {
+   "signal": "Motion-card, every card's and compute temperature",
+   "source": "AT30TSE752A-XM8M-T on the MC and on every electronic card (section 02 section 9), read by the host over the CMC identity I2C branch; compute SoC thermal zone via Linux sysfs",
+   "transport": "HOST.i2c.module[slot].temperature; HOST.sysfs.soc_temperature (not CNC1)",
+   "rate": "1 Hz",
+   "age_bound": "carried per value; stale after 5 s",
+   "validity": "I2C read OK and MIR-1 accepted; else unavailable",
+   "hal": "cnc1.module.<slot>.temperature, cnc1.module.<slot>.temperature-valid, cnc1.module.<slot>.temperature-age (service-published)",
+   "response": "diagnostic; the service warns above the card's rated limit from its MIR-1 record",
+   "transport_refs": [
+    "HOST.i2c.module[i].temperature",
+    "HOST.sysfs.soc_temperature"
+   ]
+  },
+  {
+   "signal": "Module presence, power-good and identity per slot",
+   "source": "presence contacts at both connector ends, card supervisor power-good, AT30TSE752A MIR-1 record",
+   "transport": "STS.slot_status, STS.slots, STS.expansion.mx4/ex8, STS.port[*] (1 kHz); STS.safety core_pgood and motion5v_pgood for the PSM; HOST.i2c.module[slot].mir1 (at power-up and on request)",
+   "rate": "presence/power-good 1 kHz; identity at qualification",
+   "age_bound": "MIA/MX4 30-40 us filter + snapshot; other slots <= 205.12 us (slot status register); identity carries its read time",
+   "validity": "CRC-32 of the MIR-1 record; class/slot agreement",
+   "hal": "cnc1.module.<slot>.present, cnc1.module.<slot>.power-good, cnc1.module.<slot>.accepted, cnc1.module.<slot>.class",
+   "response": "change under power: EXPANSION_CHANGED or SLOT_FAULT; incompatible or unidentified card: refused and inhibited",
+   "transport_refs": [
+    "STS.slot_status",
+    "STS.slots",
+    "STS.expansion.mx4",
+    "STS.expansion.ex8",
+    "HOST.i2c.module[i].mir1"
+   ]
+  },
+  {
+   "signal": "Port 5 V / 24 V limiter voltages (encoder, MPG, XF, probe supplies)",
+   "source": "TPS2553-1 and probe/XF limiter fault outputs only; no per-port voltage ADC in IS-1",
+   "transport": "fault flags in STS.enc.fault and STS.mpg.select bits 12-15",
+   "rate": "fault flags 1 kHz",
+   "age_bound": "<= 204.16 us",
+   "validity": "marker check of the status register",
+   "hal": "cnc1.encoder.K.supply-fault, cnc1.mpg.supply-fault, cnc1.freq.supply-fault, cnc1.supply.probe-N.fault",
+   "response": "port fault; the voltage itself is shown as 'not measured' (T4), never as a number",
+   "transport_refs": [
+    "STS.enc.fault",
+    "STS.mpg.select"
+   ]
+  },
+  {
+   "signal": "Safety-interface feedback: reset/arm, contactor, STO, safety-chain status",
+   "source": "XS1.4, XS1.5, XS1.7, XS1.8 through ISO1212 channels on the DIC, direct FPGA pins",
+   "transport": "STS.safety bits 23-26 and 30; SAFETY_INTERFACE event",
+   "rate": "1 kHz",
+   "age_bound": "input filter + snapshot",
+   "validity": "EXT_PERMIT path powered (DIC present)",
+   "hal": "cnc1.safety.reset-arm, cnc1.safety.reset-arm-ready, cnc1.safety.contactor-fb, cnc1.safety.sto-fb, cnc1.safety.chain-status",
+   "response": "CONTACTOR_FEEDBACK / STO_FEEDBACK latch and disarm; ARM_REFUSED; chain-status disagreement reported (section 3.4a)",
+   "transport_refs": [
+    "STS.safety",
+    "EVT.type SAFETY_INTERFACE"
+   ]
+  }
+ ],
+ "fault_history": {
+  "fpga_event_ring": {
+   "depth": 256,
+   "record_bytes": 20,
+   "timestamp": "50 MHz core ticks",
+   "delivery": "one record per CNS3 response, acknowledged by the next FB_READ",
+   "survives": "host crash while the FPGA keeps power; lost at FPGA reset (the FLT3 first-fault page likewise)"
+  },
+  "host_rt_ring": {
+   "records": [
+    "HR1 status 64 B per cycle",
+    "HR2 command 64 B per cycle"
+   ],
+   "depth_cycles": 4096,
+   "ram_bytes": 524288,
+   "writer": "cnc1.read/cnc1.write in the servo thread, preallocated, lock-free single producer",
+   "reader": "non-real-time historian"
+  },
+  "trigger_and_window": "per section 04 12.2: 2 s before and 2 s after each trigger; snapshot written to host storage by write-temp, fsync, rename; summaries to the cartridge FM24V02A-G ring per section 04",
+  "measured_facts_only": "records hold only values from named transport fields with their timestamps and validity; diagnoses live in a separate store that cites record ids (section 04 12.1)"
+ },
+ "history_records": {
+  "HR1": [
+   {
+    "offset": 0,
+    "size": 2,
+    "name": "magic",
+    "rule": "'H1'"
+   },
+   {
+    "offset": 2,
+    "size": 1,
+    "name": "version",
+    "rule": "1"
+   },
+   {
+    "offset": 3,
+    "size": 1,
+    "name": "flags",
+    "rule": "b0 trigger cycle; b1 post-trigger; b2 FB CRC error this cycle; b3 CMD CRC error"
+   },
+   {
+    "offset": 4,
+    "size": 4,
+    "name": "cycle",
+    "rule": "u32 servo cycle counter"
+   },
+   {
+    "offset": 8,
+    "size": 4,
+    "name": "host_us",
+    "rule": "CLOCK_MONOTONIC us, low 32 bits"
+   },
+   {
+    "offset": 12,
+    "size": 2,
+    "name": "wake_latency_us",
+    "rule": "u16"
+   },
+   {
+    "offset": 14,
+    "size": 2,
+    "name": "completion_us",
+    "rule": "u16, C_n"
+   },
+   {
+    "offset": 16,
+    "size": 4,
+    "name": "snapshot_ticks",
+    "rule": "CNF3 16-19"
+   },
+   {
+    "offset": 20,
+    "size": 4,
+    "name": "fault_word",
+    "rule": ""
+   },
+   {
+    "offset": 24,
+    "size": 4,
+    "name": "safety_word",
+    "rule": ""
+   },
+   {
+    "offset": 28,
+    "size": 2,
+    "name": "armed_mask",
+    "rule": ""
+   },
+   {
+    "offset": 30,
+    "size": 2,
+    "name": "pos_continuity",
+    "rule": ""
+   },
+   {
+    "offset": 32,
+    "size": 2,
+    "name": "alarm_levels",
+    "rule": ""
+   },
+   {
+    "offset": 34,
+    "size": 2,
+    "name": "enable_after_gating",
+    "rule": ""
+   },
+   {
+    "offset": 36,
+    "size": 3,
+    "name": "din",
+    "rule": ""
+   },
+   {
+    "offset": 39,
+    "size": 1,
+    "name": "din_age",
+    "rule": ""
+   },
+   {
+    "offset": 40,
+    "size": 2,
+    "name": "dout_image",
+    "rule": ""
+   },
+   {
+    "offset": 42,
+    "size": 2,
+    "name": "dout_applied",
+    "rule": ""
+   },
+   {
+    "offset": 44,
+    "size": 2,
+    "name": "dout_fault",
+    "rule": ""
+   },
+   {
+    "offset": 46,
+    "size": 6,
+    "name": "port_status",
+    "rule": ""
+   },
+   {
+    "offset": 52,
+    "size": 2,
+    "name": "update_interval_us",
+    "rule": ""
+   },
+   {
+    "offset": 54,
+    "size": 2,
+    "name": "late_updates",
+    "rule": ""
+   },
+   {
+    "offset": 56,
+    "size": 2,
+    "name": "rate_nonzero_mask",
+    "rule": ""
+   },
+   {
+    "offset": 58,
+    "size": 1,
+    "name": "event_seq",
+    "rule": ""
+   },
+   {
+    "offset": 59,
+    "size": 1,
+    "name": "telemetry_source",
+    "rule": ""
+   },
+   {
+    "offset": 60,
+    "size": 2,
+    "name": "host_spi_errors",
+    "rule": "low 16 bits"
+   },
+   {
+    "offset": 62,
+    "size": 2,
+    "name": "crc16",
+    "rule": "CRC-16/CCITT-FALSE over 0-61"
+   }
+  ],
+  "HR2": [
+   {
+    "offset": 0,
+    "size": 1,
+    "name": "magic",
+    "rule": "'C'"
+   },
+   {
+    "offset": 1,
+    "size": 1,
+    "name": "version",
+    "rule": "1"
+   },
+   {
+    "offset": 2,
+    "size": 2,
+    "name": "cycle_low",
+    "rule": "matches HR1 cycle low 16 bits"
+   },
+   {
+    "offset": 4,
+    "size": 48,
+    "name": "rates",
+    "rule": "12 x s32 as sent"
+   },
+   {
+    "offset": 52,
+    "size": 2,
+    "name": "pwm0_duty",
+    "rule": ""
+   },
+   {
+    "offset": 54,
+    "size": 2,
+    "name": "pwm1_duty",
+    "rule": ""
+   },
+   {
+    "offset": 56,
+    "size": 2,
+    "name": "aout0_code",
+    "rule": ""
+   },
+   {
+    "offset": 58,
+    "size": 2,
+    "name": "aout1_code",
+    "rule": ""
+   },
+   {
+    "offset": 60,
+    "size": 1,
+    "name": "output_requests",
+    "rule": "CS_CMD byte 66"
+   },
+   {
+    "offset": 61,
+    "size": 1,
+    "name": "arm_summary",
+    "rule": "b0-1 probe arm; b2 any index arm"
+   },
+   {
+    "offset": 62,
+    "size": 2,
+    "name": "crc16",
+    "rule": "over 0-61"
+   }
+  ]
+ },
+ "supersedes": [
+  {
+   "old": "MOTION_EXPANSION_8_TO_12.md section 5 (symmetric 128-byte CNC3/CNS3/CAP3 draft, status layout, NOP+UPDATE per cycle)",
+   "new": "sections 3-4 here: CS_FB 176 B + CS_CMD 96 B, full I/O in the same two transactions"
+  },
+  {
+   "old": "record section 5.7 link budget",
+   "new": "section 5 here"
+  },
+  {
+   "old": "record section 9 HAL pin list (cnc1.N.alarm-in, cnc1.enc.K.*)",
+   "new": "section 7 here (cnc1.N.alarm, cnc1.encoder.K.*)"
+  },
+  {
+   "old": "record section 14.2 shift-register serialization of DI/DO with marker bits",
+   "new": "IOL1 with identity, sequence and CRC-32C for every I/O card; markers kept only for the input-only EIA/EX8 status registers"
+  },
+  {
+   "old": "record 5.1 progress_wdi toggling on accepted UPDATE",
+   "new": "section 04 5.1: one 1 us pulse per accepted ARM or UPDATE (progress_m) and per accepted I/O exchange (progress_o)"
+  },
+  {
+   "old": "record 5.4 no enable polarity",
+   "new": "section 04 section 3: one logical enable drives an NO and an NC photorelay; no polarity field is needed in CNC1"
+  },
+  {
+   "old": "per-cycle index-latched counts (v1/v2 and record)",
+   "new": "one-shot INDEX_CAPTURE events"
+  }
+ ],
+ "hardware_requirements_for_codex": [
+  "CS_CMD: a second host chip select to the FPGA; the host SPI path then needs five buffered channels (SCLK, MOSI, CS_FB, CS_CMD towards the FPGA, MISO back), so the single SN74AVC4T774PWR (four bits) needs a second buffer device or a wider part; one FPGA input; the host IRQ line of the earlier draft is dropped (the protocol is polled)",
+  "SERVO_MARK: one spare compute GPIO routed to a test point on the compute carrier for the timing bench",
+  "Host SPI path qualification at 6.25 MHz (the recorded host_spi_buffer budget is 5 MHz); until then IS-1 budgets at 5 MHz",
+  "IOL1 x4 (DIC, DOA, DOB, ACC): SCLK, CMD, RSP, CS_N point-to-point with Ioff buffers and series termination at each card; 4 slot-strap bits per slot on the base",
+  "Card MCU: STM32G031C8T6 on DIC, STM32G031K8T6 on DOA, DOB and ACC; SPI1 slave with DMA; IWDG hardware option; CARD_EN pin with pull-down ANDed with OUT_PERMIT_k into every output enable; SWD factory pads only",
+  "EIA (24-bit) and EX8 (16-bit) parallel-in status shift registers with a fixed 1010 marker at the far end",
+  "CAN: MCP2518FDT-E/SL on a compute SPI bus separate from the motion SPI; RS-485: compute UART with RTS for kernel RS-485 direction control; both transceivers isolated on ACC (section 03)",
+  "PSM entry voltage/current monitors readable on a host I2C branch",
+  "Motion-card temperature: the AT30TSE752A-XM8M-T fitted to every electronic card (section 02 section 9) is the MC board sensor; place it near the FPGA and the watchdog/permission logic",
+  "DOA/DOB: 2 x TPS274C65ASRHAR in addressable SPI mode behind one ISO7762FDBQR (4 forward: SCLK, SDI, CS_N, DO_EN; 2 reverse: SDO and the wired-OR FLT of both devices); the F variant's default-low outputs leave DO_EN low when the logic side is unpowered",
+  "MC slot status register (input-only, 40 bits, marker 1010 at the far end, 74HC165-class) reading presence A/B and power-good of EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC and XS and SCART presence A/B; those 29 lines cross the base to the MC connector; SSR_CLK/SSR_LOAD_N/SSR_DATA are local FPGA pins",
+  "OPI_OK_OUT and OPI_OK_BOE latches (SN74LVC2G74DCUR) on the MC and the OPI_REARM_O strobe; PERMIT_OUT drive = TX_PERMIT AND PERMIT_OUT_REQ (FPGA pin, 10 kOhm pull-down) on the MC (section 04 6.2)",
+  "10 kOhm pull-downs on EXT_PERMIT_3V3 and PROCESS_PERMIT_EXT_3V3 at the MC receiver, so an absent, unseated or unpowered DIC reads 'not permitted'; qualified DIC_OK (DIC presence A and B and DIC power-good) in base_ok and out_base_ok (section 04 6.2)",
+  "on every DO and ACC card an OUT_EN latch (one half of SN74LVC2G74DCUR; ACC: second half for PROC_PERMIT) with CLR_N = the qualified OUT_PERMIT_k net, in series with CARD_EN in every output enable, Q read by the card MCU",
+  "10 kOhm pull-downs on the STEP and DIR inputs of every AM26C31 on the MIA and the MX4 (idle low, matching the FPGA's STEP-low idle state)"
+ ],
+ "blockers": [
+  {
+   "item": "Measured host overhead, jitter and the 700 us distribution",
+   "blocked_by": "CM5102016 purchase (reference compute module), motion-card prototype, logic analyser >= 200 MS/s"
+  },
+  {
+   "item": "72-hour combined-load test",
+   "blocked_by": "all prototype cards, drives, quadrature/pattern generators and independent pulse counters (section 04 section 14)"
+  },
+  {
+   "item": "FPGA fit of 2 frame channels, 4 IOL1 masters with CRC-32C, 2 status registers, 256-entry event ring and telemetry mirror",
+   "blocked_by": "Efinix Efinity place-and-route (not installed)"
+  },
+  {
+   "item": "Card processing inside the 59.6 us window and the <= 20 us apply allocation",
+   "blocked_by": "an STM32G031 development board (purchase) or the built cards; firmware can be written and host-tested meanwhile"
+  },
+  {
+   "item": "TPS274C65ASRHAR complete ADC round-robin period",
+   "blocked_by": "the datasheet gives 128 us per measurement only; measure on a built DO card"
+  }
+ ],
+ "verification": {
+  "script": "tools/is1_protocol_check.py",
+  "checks": [
+   "spec_revision",
+   "field contiguity and totals",
+   "CRC coverage",
+   "CRC known answers and vectors",
+   "schedule arithmetic",
+   "opcode uniqueness and chip-select assignment",
+   "HAL/field names present in the markdown",
+   "optional --hd exhaustive CRC Hamming-distance search"
+  ]
+ },
+ "integration": {
+  "integrated": "2026-09-29",
+  "note": "IS-1 integration pass: sections 01-04 reconciled, HAL pin registry, telemetry map, host-side sources and the L4 (XS) reservation added; see docs/CONTROLLER_INTERFACE_SPEC.md section 9",
+  "repair_round": "29 Sep 2026 repair round: OUT arm-latch clear term and OPI_OUT/OPI_BOE latches, card-side OUT_EN latches, permit-input pull-downs and DIC_OK, PERMIT_OUT held open during self-tests, safety-interface faults and ARM preconditions, slot status register, DI/AI age rule, telemetry priority limit, PWM inversion removed, bootloader IWDG rule, joint-indexed unhome, probe/spindle/MPG/machine-enable nets (section 7.2)"
+ },
+ "telemetry_map": [
+  {
+   "logical": "TEL.dout[i].current",
+   "source": "L1 (DO0-7) / L2 (DO8-15)",
+   "page": "i mod 8",
+   "bytes": "0-1",
+   "age": "bytes 6-7 + FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dout[i].temperature",
+   "source": "L1/L2",
+   "page": "i mod 8",
+   "bytes": "2-3",
+   "age": "bytes 6-7",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dout[i].vout",
+   "source": "L1/L2",
+   "page": "i mod 8",
+   "bytes": "4-5",
+   "age": "bytes 6-7",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dout[i].flags",
+   "source": "L1/L2",
+   "page": "i mod 8",
+   "bytes": "8",
+   "age": "bytes 6-7",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dout_bank[i].vs",
+   "source": "L1 (bank a) / L2 (bank b)",
+   "page": "8",
+   "bytes": "0-3",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dout[i].fault_detail",
+   "source": "L1/L2",
+   "page": "10",
+   "bytes": "0-4",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.dic.sensor_group[i].mv",
+   "source": "L0",
+   "page": "0",
+   "bytes": "0-5",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.dic.limiter_fault",
+   "source": "L0",
+   "page": "0",
+   "bytes": "6",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.dic.safety_supply_fault",
+   "source": "L0",
+   "page": "0",
+   "bytes": "7",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.dic.safe24_mv",
+   "source": "L0",
+   "page": "0",
+   "bytes": "8-9",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.card[i].mcu_temperature",
+   "source": "L0 p1 / L1,L2 p8 / L3 p5",
+   "page": "see source",
+   "bytes": "DIC 0-1, DO 4-5, ACC 8-9",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.card[i].vdd",
+   "source": "L0 p1 / L1,L2 p8",
+   "page": "see source",
+   "bytes": "DIC 2-3, DO 6-7",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.card[i].link_counters",
+   "source": "L0 p2 / L1,L2 p9 / L3 p6",
+   "page": "see source",
+   "bytes": "0-9",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.ai[i].raw",
+   "source": "L3",
+   "page": "i (0-3)",
+   "bytes": "0-5",
+   "age": "bytes 2-3",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.ao[i].readback",
+   "source": "L3",
+   "page": "4",
+   "bytes": "0-3",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.acc.ai_ref_mv",
+   "source": "L3",
+   "page": "5",
+   "bytes": "0-1",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.acc.ai_sensor_supply_mv",
+   "source": "L3",
+   "page": "5",
+   "bytes": "2-3",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.acc.ai_sensor_supply_fault",
+   "source": "L3",
+   "page": "5",
+   "bytes": "4",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.acc.pwm_aux_fault",
+   "source": "L3",
+   "page": "5",
+   "bytes": "5",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.acc.iso_supply_pgood",
+   "source": "L3",
+   "page": "5",
+   "bytes": "6",
+   "age": "FPGA rx time",
+   "rate": ">= 5 Hz",
+   "stale_ms": 200
+  },
+  {
+   "logical": "TEL.eia.status_raw",
+   "source": "0x10",
+   "page": "0",
+   "bytes": "0-3",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.ex8.status_raw",
+   "source": "0x11",
+   "page": "0",
+   "bytes": "0-2",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.fpga.core",
+   "source": "0x80",
+   "page": "0-1",
+   "bytes": "0-9",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  },
+  {
+   "logical": "TEL.fpga.port_counters[i]",
+   "source": "0x81-0x86",
+   "page": "0",
+   "bytes": "0-9",
+   "age": "FPGA rx time",
+   "rate": ">= 20 Hz",
+   "stale_ms": 100
+  }
+ ],
+ "host_sources": [
+  {
+   "logical": "HOST.i2c.psm.entry[i].v",
+   "source": "INA238AIDGSR bus voltage per entry (core, field-a, field-b) on the PSM",
+   "rate": "10 Hz",
+   "stale_ms": 500
+  },
+  {
+   "logical": "HOST.i2c.psm.entry[i].i",
+   "source": "INA238AIDGSR shunt current per entry",
+   "rate": "10 Hz",
+   "stale_ms": 500
+  },
+  {
+   "logical": "HOST.i2c.module[i].temperature",
+   "source": "AT30TSE752A-XM8M-T per card",
+   "rate": "1 Hz",
+   "stale_ms": 5000
+  },
+  {
+   "logical": "HOST.i2c.module[i].mir1",
+   "source": "AT30TSE752A EEPROM MIR-1 record",
+   "rate": "power-up and on request",
+   "stale_ms": null
+  },
+  {
+   "logical": "HOST.onewire.xf.identity",
+   "source": "XF module 1-Wire EEPROM through the EIA bridge",
+   "rate": "qualification and after replacement",
+   "stale_ms": null
+  },
+  {
+   "logical": "HOST.tty.rs485.errors",
+   "source": "kernel RS-485 tty and MB2HAL num_errors",
+   "rate": "1 Hz summary",
+   "stale_ms": 5000
+  },
+  {
+   "logical": "HOST.socketcan.errors",
+   "source": "mcp251xfd SocketCAN error counters and bus-off",
+   "rate": "1 Hz summary",
+   "stale_ms": 5000
+  },
+  {
+   "logical": "HOST.sysfs.soc_temperature",
+   "source": "compute module SoC thermal zone",
+   "rate": "1 Hz",
+   "stale_ms": 5000
+  }
+ ],
+ "hal_index": {
+  "m": [
+   0,
+   11
+  ],
+  "k": [
+   0,
+   11
+  ],
+  "d": [
+   0,
+   23
+  ],
+  "o": [
+   0,
+   15
+  ],
+  "p": [
+   0,
+   1
+  ],
+  "f": [
+   0,
+   1
+  ],
+  "w": [
+   0,
+   1
+  ],
+  "e": [
+   0,
+   1
+  ],
+  "a": [
+   0,
+   1
+  ],
+  "i": [
+   0,
+   3
+  ],
+  "j": [
+   0,
+   3
+  ],
+  "g": [
+   0,
+   2
+  ],
+  "port": [
+   "l0",
+   "l1",
+   "l2",
+   "l3",
+   "l4",
+   "s0",
+   "s1"
+  ],
+  "slot": [
+   "psm",
+   "cmc",
+   "mc",
+   "mia",
+   "mx4",
+   "eia",
+   "ex8",
+   "dic",
+   "doa",
+   "dob",
+   "acc",
+   "esc",
+   "scart",
+   "xs"
+  ],
+  "entry": [
+   "core",
+   "field-a",
+   "field-b"
+  ],
+  "bank": [
+   "a",
+   "b"
+  ],
+  "jt": [
+   0,
+   15
+  ]
+ },
+ "hal_pins": [
+  {
+   "name": "cnc1.{m}.position-cmd",
+   "type": "float",
+   "dir": "in",
+   "source": "CMD.motor[m].rate",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.position-fb",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.motor[m].position",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.scale",
+   "type": "float",
+   "dir": "in",
+   "source": "configuration",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.emitted-count",
+   "type": "s32",
+   "dir": "out",
+   "source": "STS.motor[m].position",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "ARM channel_mask: must equal the required_mask bit when cnc1.enable rises; a drop while armed causes a clean DISARM of all channels (section 3.4a)",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.enable-commanded",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.enable_cmd_state",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.alarm",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.alarm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.alarm-latched",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.alarm_latched",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.timing-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.step_timing_latched",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.{m}.position-continuity",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.pos_continuity",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "global",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.reset",
+   "type": "bit",
+   "dir": "in",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.fault_word",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ready",
+   "type": "bit",
+   "dir": "out",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.armed",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.armed_mask",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.feedback-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.state",
+   "type": "s32",
+   "dir": "out",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.fault-code",
+   "type": "s32",
+   "dir": "out",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.installed-channels",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.installed_mask",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.expansion-installed",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slots",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder-expansion-installed",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slots",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.config-generation",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.config_generation",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.fault-word",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.fault_word",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io-enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "IO_ENABLE",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io-enabled",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.state",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.fault_word",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.count",
+   "type": "s32",
+   "dir": "out",
+   "source": "STS.enc[k].count",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.position",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.enc[k].count",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.velocity",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.enc[k].count",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.scale",
+   "type": "float",
+   "dir": "in",
+   "source": "configuration",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.index-enable",
+   "type": "bit",
+   "dir": "io",
+   "source": "CMD.enc.index_enable / INDEX_CAPTURE event",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.enc.valid",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.enc.fault / STS.enc.illegal",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.encoder.{k}.supply-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.enc.fault",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.counts",
+   "type": "s32",
+   "dir": "out",
+   "source": "STS.mpg.count",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.enable",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select bit 10 (MPG_ENABLE); gates jog counts when the profile declares an enable button (section 7.2)",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-x",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-y",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-z",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-a",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-b",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.sel-c",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.mul-x1",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.mul-x10",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.mul-x100",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.pend-aux",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.mpg.supply-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / STS.mpg.status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.in",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.capture-enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.captured",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.capture-seq",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.capture-time",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.overrun",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.probe.state / PROBE_CAPTURE event / CMD.probe.arm",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.probe.{p}.capture-value.{j}",
+   "type": "float",
+   "dir": "out",
+   "source": "PROBE_CAPTURE event",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.supply.probe-{p}.fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select bits 14-15",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.{f}.frequency",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.freq[f].count / STS.freq[f].last_edge",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.{f}.count",
+   "type": "s32",
+   "dir": "out",
+   "source": "STS.freq[f].count / STS.freq[f].last_edge",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.{f}.valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.freq[f].count / STS.freq[f].last_edge",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.{f}.age",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.freq[f].count / STS.freq[f].last_edge",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.module-present",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / HOST.onewire.xf.identity",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.module-id-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / HOST.onewire.xf.identity",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.freq.supply-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.mpg.select / HOST.onewire.xf.identity",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.pwm.{w}.value",
+   "type": "float",
+   "dir": "in",
+   "source": "CMD.pwm[w].duty / CMD.proc_en",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.pwm.{w}.enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.pwm[w].duty / CMD.proc_en",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.pwm.{w}.frequency",
+   "type": "float",
+   "dir": "in",
+   "source": "CMD.pwm[w].duty / CMD.proc_en",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.pwm.aux-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.acc.pwm_aux_fault",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.proc-en.{e}.cmd",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.proc_en",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.proc-en.{e}.commanded",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.proc_en_state",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.aout.{a}.value",
+   "type": "float",
+   "dir": "in",
+   "source": "CMD.ao[a] / STS.ao.state / TEL.ao[a].readback",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.aout.{a}.enable",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.ao[a] / STS.ao.state / TEL.ao[a].readback",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.aout.{a}.readback",
+   "type": "float",
+   "dir": "out",
+   "source": "CMD.ao[a] / STS.ao.state / TEL.ao[a].readback",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.aout.{a}.readback-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "CMD.ao[a] / STS.ao.state / TEL.ao[a].readback",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.{i}.value",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.ai[i].value / STS.ai.valid / STS.ai.age",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.{i}.valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.ai[i].value / STS.ai.valid / STS.ai.age",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.{i}.age",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.ai[i].value / STS.ai.valid / STS.ai.age",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.ref-voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.acc.*",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.sensor-supply-voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.acc.*",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.ain.sensor-supply-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.acc.*",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.din.{d}",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.din",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.din.{d}-not",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.din",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.din-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.din_valid",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.din-age",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.din_valid",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.dout",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-applied",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.dout_readback",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.dout_fault",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-overcurrent",
+   "type": "bit",
+   "dir": "out",
+   "source": "OUTPUT_FAULT event / TEL.dout[o].fault_detail",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-thermal",
+   "type": "bit",
+   "dir": "out",
+   "source": "OUTPUT_FAULT event",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-open-load",
+   "type": "bit",
+   "dir": "out",
+   "source": "OUTPUT_FAULT event",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-short-to-supply",
+   "type": "bit",
+   "dir": "out",
+   "source": "OUTPUT_FAULT event",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-current",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].current",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-current-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.dout[o].current",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-current-age",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].current",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-temperature",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].temperature",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-temperature-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.dout[o].temperature",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-temperature-age",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].temperature",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].vout",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-voltage-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.dout[o].vout",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.{o}-voltage-age",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout[o].vout",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.dout.clear-faults",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.dout_fault_clear",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.state",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.identity-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.card-class",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.power-good",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.port[*] b3 from the MC slot status register (STS.slot_status)",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.crc-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.format-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.sequence-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.identity-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.readback-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.port[*] / TEL.fpga.port_counters / TEL.card",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.temperature",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.card[i].mcu_temperature on l0-l3; always 'unavailable' on s0, s1 and l4 (no MCU; T4)",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.io.{port}.vdd",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.card[i].vdd on l0-l2; always 'unavailable' on l3, s0, s1 and l4 (no source; T4)",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.tx-permit",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.out-permit",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.proc-permit",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.wd-motion-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.wd-output-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.wd-motion-tripped",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.wd-output-tripped",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.opi-ok-tx",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.opi-ok-a",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.opi-ok-b",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.opi-ok-boe",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bit 29",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.opi-ok-out",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bit 28",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.ext-permit",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.process-permit",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.selftest-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.chain-status",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.reset-arm",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.reset-arm-ready",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bit 30",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.contactor-fb",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.sto-fb",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.aux24-ok-{bank}",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 12-13",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.aux5-ok-{bank}",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 14-15",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.safety.arm-lamp",
+   "type": "bit",
+   "dir": "in",
+   "source": "CMD.proc_en bit 6",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.field-a-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.field-b-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.motion5v-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.exp5v-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.core-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.power.enc-exp-ok",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.safety bits 16-20, 27",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.update-interval-us",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.late-updates",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.completion-us",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.wake-latency-us",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.overruns",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.timing.target-exceeded",
+   "type": "u32",
+   "dir": "out",
+   "source": "CNS3 78-81 / driver CLOCK_MONOTONIC",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.event.lost",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.event_status",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.link.crc-errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "driver",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.link.rejected-frames",
+   "type": "u32",
+   "dir": "out",
+   "source": "TEL.fpga.core",
+   "realtime": true
+  },
+  {
+   "name": "cnc1.supply.{entry}.voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "HOST.i2c.psm.entry[i].v",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.{entry}.current",
+   "type": "float",
+   "dir": "out",
+   "source": "HOST.i2c.psm.entry[i].i",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.dout-{bank}.voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dout_bank[i].vs",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.sensor-{g}.voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dic.sensor_group[i].mv",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.sensor-{g}.fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.dic.limiter_fault",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.safety-24v.voltage",
+   "type": "float",
+   "dir": "out",
+   "source": "TEL.dic.safe24_mv",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.supply.safety-24v.fault",
+   "type": "bit",
+   "dir": "out",
+   "source": "TEL.dic.safety_supply_fault",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.bus.rs485.errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "HOST.tty.rs485.errors",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.bus.can.errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "HOST.socketcan.errors",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.present",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slot_status (EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC, XS, SCART presence), STS.expansion.mx4/ex8 and STS.slots (MIA, MX4), STS.safety core_pgood/motion5v_pgood (PSM), CDONE and the CNC1 link (MC)",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.power-good",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slot_status (EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC, XS, SCART presence), STS.expansion.mx4/ex8 and STS.slots (MIA, MX4), STS.safety core_pgood/motion5v_pgood (PSM), CDONE and the CNC1 link (MC)",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.accepted",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slots / HOST.i2c.module[i].mir1 / HOST.i2c.module[i].temperature",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.class",
+   "type": "u32",
+   "dir": "out",
+   "source": "STS.slots / HOST.i2c.module[i].mir1 / HOST.i2c.module[i].temperature",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.temperature",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.slots / HOST.i2c.module[i].mir1 / HOST.i2c.module[i].temperature",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.temperature-valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "STS.slots / HOST.i2c.module[i].mir1 / HOST.i2c.module[i].temperature",
+   "realtime": false
+  },
+  {
+   "name": "cnc1.module.{slot}.temperature-age",
+   "type": "float",
+   "dir": "out",
+   "source": "STS.slots / HOST.i2c.module[i].mir1 / HOST.i2c.module[i].temperature",
+   "realtime": false
+  },
+  {
+   "name": "cnc1can.<signal>.value",
+   "type": "float",
+   "dir": "out",
+   "source": "HOST.socketcan",
+   "realtime": false
+  },
+  {
+   "name": "cnc1can.<signal>.valid",
+   "type": "bit",
+   "dir": "out",
+   "source": "HOST.socketcan",
+   "realtime": false
+  },
+  {
+   "name": "cnc1can.<signal>.age-ns",
+   "type": "u32",
+   "dir": "out",
+   "source": "HOST.socketcan",
+   "realtime": false
+  },
+  {
+   "name": "cnc1can.bus-off",
+   "type": "bit",
+   "dir": "out",
+   "source": "HOST.socketcan",
+   "realtime": false
+  },
+  {
+   "name": "mb2hal.<tx>.<n>.float",
+   "type": "float",
+   "dir": "io",
+   "source": "MB2HAL (LinuxCNC)",
+   "realtime": false
+  },
+  {
+   "name": "mb2hal.<tx>.<n>.int",
+   "type": "s32",
+   "dir": "io",
+   "source": "MB2HAL (LinuxCNC)",
+   "realtime": false
+  },
+  {
+   "name": "mb2hal.<tx>.<n>.bit",
+   "type": "bit",
+   "dir": "io",
+   "source": "MB2HAL (LinuxCNC)",
+   "realtime": false
+  },
+  {
+   "name": "mb2hal.<tx>.num_errors",
+   "type": "u32",
+   "dir": "out",
+   "source": "MB2HAL (LinuxCNC)",
+   "realtime": false
+  },
+  {
+   "name": "halui.joint.{jt}.unhome",
+   "type": "bit",
+   "dir": "in",
+   "source": "LinuxCNC halui; driven per joint J when any channel mapped to J loses continuity (joint index from the profile's channel-to-joint map, section 7.2)",
+   "realtime": false
+  }
+ ]
+}

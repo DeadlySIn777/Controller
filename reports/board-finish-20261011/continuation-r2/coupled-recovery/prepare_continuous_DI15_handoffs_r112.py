@@ -1,0 +1,20 @@
+"""Use fresh all-six masks and continuous actual shared reference handoffs."""
+from pathlib import Path
+import json,hashlib
+H=Path(__file__).resolve().parent;src=H/'nominate_DI15_ground_handoff_branches_r104.py';b=src.read_bytes();s=b.decode().replace('\r','').replace('r104','r112')
+old="raw38=A.read(HERE/'di15-r38-local-site-checkpoint.pkl');assert C.sha(raw38)=='7f454fd9404c280a61c12eed5be338b41bacd04be58a27223e35baa17645d18c';nom=pickle.loads(raw38);via=nom['via'][GND]"
+new="raw38=A.read(HERE/'fresh-partial-annular-return-r108-physical-checkpoint.pkl');assert C.sha(raw38)=='0aa98f5c476d32127623ca1de144bdca4e595527dc90b17db6b075af8a5be803';nom=pickle.loads(raw38);assert nom['source_model_sha256']==r['source_model_sha256'];via=nom['physical_GND_return_region']"
+assert s.count(old)==1;s=s.replace(old,new)
+old="assert stationrows;longest=max(stationrows,key=lambda q:q['end_mm']-q['start_mm']);stations=[longest['entry_handoff_at_mm'],longest['exit_handoff_at_mm']];options=[];elig=[]"
+new="""assert stationrows;longest=max(stationrows,key=lambda q:q['end_mm']-q['start_mm']);physical_island=unary_union([q['shape'] for group in saved['groups'] for q in group if q['kind']=='fill' and q['uuid']==zone['uuid'] and q['layer']=='In3.Cu']);shared=line.intersection(cur['source_planes']['In1.Cu'].buffer(-.105,quad_segs=128)).intersection(physical_island.buffer(-.105,quad_segs=128));shared_parts=lines(shared);entry=unary_union([p for p in shared_parts if max(line.project(Point(p.coords[0])),line.project(Point(p.coords[-1])))<=longest['start_mm']+1e-8]);exit=unary_union([p for p in shared_parts if min(line.project(Point(p.coords[0])),line.project(Point(p.coords[-1])))>=longest['end_mm']-1e-8]);stations=[{'role':'entry','preferred':longest['entry_handoff_at_mm'],'locus':entry},{'role':'exit','preferred':longest['exit_handoff_at_mm'],'locus':exit}];options=[];elig=[]"""
+assert s.count(old)==1;s=s.replace(old,new)
+old="for station in stations:\n  p=Point(station);reg=via.intersection(p.buffer(1,quad_segs=128)).difference(line.buffer(.535,quad_segs=128));rows=[]"
+new="for station_row in stations:\n  station=station_row['preferred'];locus=station_row['locus'];p=Point(station);reg=via.intersection(locus.buffer(1,quad_segs=128)).difference(line.buffer(.535,quad_segs=128));rows=[]"
+assert s.count(old)==1;s=s.replace(old,new)
+old="at=s['at_mm'];pt=Point(at);ann=pt.buffer(.25,quad_segs=128).difference(pt.buffer(.1,quad_segs=128));contact={l:ann.intersection(sh).area for l,sh in oldplanes.items()}"
+new="at=s['at_mm'];pt=Point(at);actual_handoff=nearest_points(locus,pt)[0];station=list(actual_handoff.coords)[0];ann=pt.buffer(.25,quad_segs=128).difference(pt.buffer(.1,quad_segs=128));contact={l:ann.intersection(sh).area for l,sh in oldplanes.items()}"
+assert s.count(old)==1;s=s.replace(old,new)
+s=s.replace("'signal_handoff_at_mm':station,'saved_ordinary_return_region_mm2'", "'role':station_row['role'],'preferred_signal_handoff_at_mm':station_row['preferred'],'actual_shared_handoff_locus_length_mm':locus.length,'fresh_ordinary_return_region_mm2'")
+s=s.replace("'R38_saved_ordinary_nomination_geometry_sha256'", "'fresh_R108_all6_ordinary_geometry_sha256'")
+s=s.replace('DI15_REAL_HANDOFF_BRANCH_OPTIONS','DI15_CONTINUOUS_REAL_HANDOFF_BRANCH_OPTIONS')
+dst=H/'nominate_DI15_continuous_ground_handoffs_r112.py';assert not dst.exists();dst.write_text(s);compile(s,str(dst),'exec');out=H/'prepare-continuous-DI15-handoffs-r112.json';assert not out.exists();out.write_text(json.dumps({'source_sha256':hashlib.sha256(b).hexdigest(),'derived_sha256':hashlib.sha256(dst.read_bytes()).hexdigest(),'delta':'Use exact freshly built R108 physical all6 return region; permit finite annular contact; find the entire actual physical In3-island/actual J1 In1 shared full-body centreline locus before/after required reference interval; choose real handoff point nearest legal return instead of fixed marks. Power/rules/nativeCu hard; no union qualification or plane expansion.'},indent=1)+'\n');print(dst)

@@ -1,0 +1,4475 @@
+{
+ "verdict": "INDEPENDENT_COUPLED_AO1_INCOMPLETE",
+ "constructor_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18.json",
+ "constructor_reference_gate_held": true,
+ "source_sha256": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+ "exact_new_chunk_sha256": "896086eaf471c9d59fa6595275c8ede7e8fab1eae08f94e1f3ad11a9a13eaf95",
+ "native_template_proof": {
+  "exact_non_copper_definitions_same": true,
+  "native_pad_identity_pose_layers_checked": 9950,
+  "old_rounded_pad_pose_count": 0,
+  "maximum_old_pose_delta_mm": 0,
+  "first_layer_pad_polygons": "fresh integer native export",
+  "other_pad_layers_holes_graphics": "unchanged native r06 source definitions; reused geometry with conservative .010mm audit uncertainty",
+  "fresh_zone_count": 514,
+  "polygon_export_inside_error_mm": 0.005
+ },
+ "latest_parent_owned_operation": {
+  "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\sbc-native-contract-r1\\sbc-owned-native-contract.kicad_pcb",
+  "sha256": "eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a",
+  "owned_chunks_and_raw_tokens_exact": true,
+  "full_combined_parent_reference_and_current": "OPEN"
+ },
+ "exact_frozen_SDI_policy": {
+  "group": "SE_CHAIN",
+  "pair_partner": null,
+  "rule": "R2+R4",
+  "chain_members": [
+   "/motherboard_analog_output/AO1_DAC_SDI"
+  ],
+  "chain_series_resistors": [],
+  "chain_driver": "U14623.14 ISO7761FDWR on AO1_DAC_SDI",
+  "t_r_ns": 1.0,
+  "t_r_basis": "ISO776x output rise time typ 1.0 ns at 3.3 V (max 3 ns)",
+  "t_r_citation": [
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-analog-20260930/sources/iso7761.txt",
+    "line": 1920,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-analog-20260930/sources/iso7761.pdf",
+    "pdf_page": 20,
+    "text": "5.16 Switching Characteristics\u20143.3-V Supply"
+   },
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-analog-20260930/sources/iso7761.txt",
+    "line": 1951,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-analog-20260930/sources/iso7761.pdf",
+    "pdf_page": 20,
+    "text": "Output signal rise time"
+   }
+  ],
+  "l_crit_mm": 14.1,
+  "l_crit_basis": "0.1 * t_r / t_pd (ISOW1432 Eq. 3); t_pd(In3 stripline, Cohn) = 7.090 ps/mm, t_pd(outer microstrip, H&J) = 5.896 ps/mm; L_crit uses the slower 7.090 ps/mm",
+  "l_crit_citation": [
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3930,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "9.2.2.2 Stub Length"
+   },
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3934,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "or round-trip delay, of a stub must be less than one-tenth of the rise time of the driver as a general guideline."
+   },
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3936,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "L STUB \u22640.1 \u00d7 tr \u00d7 v \u00d7 c"
+   }
+  ],
+  "chain_l_est_mm": 18.82,
+  "edge_sensitive_evidence": [],
+  "edge_evidence_tiers": [],
+  "edge_evidence_strongest": null,
+  "settle_ns": 0.8,
+  "level_sampled_max_clock_MHz": 624.6,
+  "skew": {
+   "intra_pair_mm": null,
+   "source": "single-ended net: no length-match requirement found in the driver/receiver datasheets; bus timing budgets were not analysed here (inference)"
+  },
+  "interface": "single-ended level/static",
+  "class": "NONE",
+  "target_ohm": null,
+  "tolerance_pct": null,
+  "source_citations": [],
+  "rationale": "no controlled impedance required: level-sampled/static signal (no clock or counted-edge receiver); reflections settle in 0.8 ns (6 one-way delays over chain L_est 19 mm), adequate for synchronous sampling up to 625 MHz bus clock; bus clock check: AO SPI (AD5683R via ISO7761, STM32G031 master) at 32 MHz vs settle limit 624.6 MHz -> PASS (margin x19.52)",
+  "bus_clock_check": {
+   "bus": "AO SPI (AD5683R via ISO7761, STM32G031 master)",
+   "bus_clock_or_bit_rate_MHz": 32.0,
+   "basis": "bounded by the STM32G031 32 Mbit/s SPI rating quoted in IS-1 (the AD5683R datasheet is not in the project sources; inference that the STM32 rate bounds this bus)",
+   "source": [
+    {
+     "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-is2-contract-20260930/inputs/docs/interface-spec/01-protocol-and-schedule.md",
+     "line": 706,
+     "pdf": null,
+     "pdf_page": null,
+     "text": "Point-to-point from the motion card, one FPGA SPI master per card slot, four wires per port: SCLK, CMD (FPGA \u2192 card), RSP (card \u2192 FPGA), CS_N. 3.3 V LVCMOS with an Ioff buffer and series termination at each card connector (power-off service"
+    }
+   ],
+   "settle_limit_MHz": 624.6,
+   "margin_x": 19.52,
+   "pass": true
+  },
+  "net": "/motherboard_analog_output/AO1_DAC_SDI",
+  "mst_mm": 14.48,
+  "routed_mm": 0.0,
+  "missing_joins": 1,
+  "routed_by_layer_mm": {},
+  "l_est_mm": 18.82,
+  "l_est_basis": "max(1.3 x MST, min daisy chain, routed so far)",
+  "daisy_chain_mm": 14.48,
+  "end_parts": [
+   {
+    "ref": "U14623",
+    "pin": "14",
+    "part": "ISO7761FDWR",
+    "pintype": "output",
+    "pinfunction": "OUTB_14"
+   },
+   {
+    "ref": "U14626",
+    "pin": "8",
+    "part": "AD5683RBRMZ-3",
+    "pintype": "input",
+    "pinfunction": "SDI_8"
+   }
+  ],
+  "reference_samples_on_mst": {
+   "samples": 15,
+   "in1_logic_gnd": 2,
+   "in4_logic_gnd": 0,
+   "in2_nets": {
+    "<none>": 13,
+    "/IO_3V3": 2
+   },
+   "in3_nets": {
+    "<none>": 15
+   }
+  },
+  "candidate_sources": [
+   "classify_ci:isolated_ADC_DAC_DO_SPI",
+   "classified:b:B-g",
+   "netname_regex"
+  ]
+ },
+ "exact_monitor_policy": null,
+ "owned_exact_MON_F_segments": [
+  "16ac4bda-32bd-47a3-8cc4-404758a78d41",
+  "6b5d7465-3e16-4492-82be-cd9ae2fb2ad5",
+  "e0c09d60-50a7-411e-9a56-ce39e23f1bff"
+ ],
+ "independent_preserved_source_MON_piece": {
+  "uuid": "ef3ff50c-761c-5edb-a55e-ac2f09aff558",
+  "source_uuid": "6b5d7465-3e16-4492-82be-cd9ae2fb2ad5",
+  "source_chunk_SHA256": "931942529b86d1882e15a035b95b3ffb07aabf0ab8b62a346669a94af1f22b9e",
+  "exact_rational_line_fraction": "0.7954545454545454545454545455",
+  "exact_rational_y_mm": "128.6499992045454545454545455",
+  "source_native_lattice_error_bound_mm": 1e-06,
+  "outside_source_plus_lattice_error_mm2": 0.0,
+  "newly_routed_reference_waivers": 0,
+  "original_source_uncovered_mm2": 0.6310983357327342,
+  "retained_body_original_uncovered_mm2": 0.6310983358216717,
+  "retained_body_final_uncovered_mm2": 0.6310983358216717,
+  "previously_covered_retained_body_lost_mm2": 0.0
+ },
+ "newly_changed_source_UUIDs": [
+  "0f8b7a4c-92e0-5174-90fa-64ead24a28f1",
+  "2e8fcb3f-d9ea-5e53-b8e7-37ee19046392",
+  "3668d132-3c8c-50ba-8feb-ed2ac9ee7fcf",
+  "45fbe577-2a04-5945-9c82-72aa8e55e4da",
+  "577ae7fc-bea0-5f73-9ff4-d265f65041df",
+  "7ae4769b-0d4b-5917-a9b5-7bd3c8dec96d",
+  "81228895-089d-5178-b2b2-238ef1142e8d",
+  "85c9e9fa-8501-5e8b-b7c6-41abc60300bb",
+  "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+  "a97a5e8d-15fa-5606-bf7b-9e5627c23c7c",
+  "b611969b-9879-575a-a001-ed511d20b4b2",
+  "b91a83b9-6bbd-5e23-80fc-de67907e7ce3",
+  "c35ca6b4-426d-5180-9a66-cc78537275f6",
+  "c67c9b3a-beef-5467-b3ac-0c2f1fcc2619",
+  "d0f11d7f-bfce-5400-8455-c5864e23647e",
+  "d239969c-0e9e-5b28-9e14-61e30b59b73e",
+  "da16ac1d-640e-5454-a300-69a8f8f12c45",
+  "fbedf4e0-b593-57b3-bfd2-b69b7e052b96",
+  "fe8dc979-0011-5113-ba87-df0280cf75e6"
+ ],
+ "new_MON_vias": 0,
+ "MON_original_width_mm": 0.2,
+ "source_native_partition_checks": [
+  {
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "pad_groups": 3,
+   "host_groups": 3,
+   "exact_native_partition_match": true
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "pad_groups": 1,
+   "host_groups": 1,
+   "exact_native_partition_match": true
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "pad_groups": 1,
+   "host_groups": 1,
+   "exact_native_partition_match": true
+  }
+ ],
+ "removed_exact_source_UUIDs": [
+  "16ac4bda-32bd-47a3-8cc4-404758a78d41",
+  "2b635368-5867-4b98-b422-f0fc9cd7464c",
+  "6b5d7465-3e16-4492-82be-cd9ae2fb2ad5",
+  "c60c0f94-483d-4146-b546-c6c4382481f4",
+  "e0c09d60-50a7-411e-9a56-ce39e23f1bff",
+  "ec401659-c4a7-4553-9a16-b82651f5fbf9",
+  "f8a3cbc3-7c6e-4390-9770-0e563c03fba3"
+ ],
+ "replaced_absent_r06_withdrawables": [
+  "4510d984-7657-4cce-bd3b-bb332360fe28",
+  "6181e9d3-c81d-4e4f-8b49-fb0d3eb51ded",
+  "6fa034ac-6456-4d37-9eb5-9afae8af9aae",
+  "a1936d78-2f9c-4f74-a9fb-b0951ae60b31",
+  "a3eee178-a147-4c06-aac3-3099ef9c3a76",
+  "b13bdecd-a456-49de-b99e-ab9374a536f8",
+  "cc7de738-df0a-4ca1-af5d-aa9ab7a3edfd"
+ ],
+ "exact_original_relation": [
+  "C14643.1#0",
+  "U14626.9#0"
+ ],
+ "all_surviving_contact_obligations": [
+  {
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "surviving_keys": [
+    [
+     "p",
+     "U14636.7#0"
+    ]
+   ],
+   "candidate_component_count": 1
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "surviving_keys": [
+    [
+     "p",
+     "U14626.9#0"
+    ]
+   ],
+   "candidate_component_count": 1
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "surviving_keys": [
+    [
+     "p",
+     "C14643.1#0"
+    ]
+   ],
+   "candidate_component_count": 1
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "surviving_keys": [
+    [
+     "p",
+     "U14623.14#0"
+    ],
+    [
+     "p",
+     "U14626.8#0"
+    ],
+    [
+     "t",
+     "23ecbf23-7994-4c9e-b4a2-0127b4b362a7"
+    ],
+    [
+     "t",
+     "27819693-bc76-4e2b-be94-574e05309886"
+    ],
+    [
+     "t",
+     "32729b72-15e1-41fc-8b2a-24b2f103938a"
+    ],
+    [
+     "t",
+     "362868a5-4dbf-4211-a61c-e2779662e40b"
+    ],
+    [
+     "t",
+     "422fa8d3-4617-4997-9b48-305c38d7bf63"
+    ],
+    [
+     "t",
+     "437d4bb5-029c-45c8-a98e-cf808fdc0f95"
+    ],
+    [
+     "t",
+     "4986f480-45cb-4e54-9b27-b4ef55cfaacc"
+    ],
+    [
+     "t",
+     "55e390cf-c8db-4b28-9a85-2f1daa926268"
+    ],
+    [
+     "t",
+     "68e52272-bc8f-4e55-8c9b-4fa967a72d6f"
+    ],
+    [
+     "t",
+     "69c3acc0-ae78-4442-8bdd-a187dfa94716"
+    ],
+    [
+     "t",
+     "709ebe6f-c296-449f-9b29-949bc7d8def6"
+    ],
+    [
+     "t",
+     "82f2d685-01fc-4d77-bc23-1a531f0cd721"
+    ],
+    [
+     "t",
+     "853296de-8d44-4d8d-9516-6c5c81d5442f"
+    ],
+    [
+     "t",
+     "90ec7974-388a-4292-82a3-a0416ba97507"
+    ],
+    [
+     "t",
+     "999d4561-e976-40c8-aba9-dfe09fa1443d"
+    ],
+    [
+     "t",
+     "9d8832ca-1c0c-4871-b1b9-4ae59c2d4227"
+    ],
+    [
+     "t",
+     "9db8c226-45c0-42da-b416-75e4dc05bebe"
+    ],
+    [
+     "t",
+     "a04d32f3-2d41-4500-b0da-7d790ec7c781"
+    ],
+    [
+     "t",
+     "a381d6cc-3619-4b0b-9a04-14aa638faddf"
+    ],
+    [
+     "t",
+     "a462e5c5-a6d5-4c8d-82d6-3eea4df8656e"
+    ],
+    [
+     "t",
+     "ab3cfadc-4c6b-4608-84e6-ae9a9e769359"
+    ],
+    [
+     "t",
+     "af1f74cd-327f-4ad2-b634-644b50f8e653"
+    ],
+    [
+     "t",
+     "b42bbd05-0f63-4b7c-81ae-67d2db538971"
+    ],
+    [
+     "t",
+     "b8331b88-dab5-47b0-8e3f-a96da59629be"
+    ],
+    [
+     "t",
+     "bacd6d04-64a0-4383-a148-8d5f8af0a484"
+    ],
+    [
+     "t",
+     "be9551af-cf89-4f11-b86a-f999d9b0df19"
+    ],
+    [
+     "t",
+     "bfab4e9f-28d2-418a-8bb2-1b5b77d6bad4"
+    ],
+    [
+     "t",
+     "bffe48b3-1474-48a0-a590-040e3dc18ece"
+    ],
+    [
+     "t",
+     "c26d60b6-ea5b-484b-9c09-56131352bccd"
+    ],
+    [
+     "t",
+     "c45033f0-6e4f-4f6b-ab0b-242ed4c2e848"
+    ],
+    [
+     "t",
+     "cec94ed6-d7cc-4792-8cdf-7c69172dfac4"
+    ],
+    [
+     "t",
+     "e210184f-96d1-4634-90e0-29d81ed96d6f"
+    ],
+    [
+     "t",
+     "f7f82b89-a1ea-4e88-ac9f-78ff41c7a564"
+    ],
+    [
+     "v",
+     "44f26940-ca76-4f5a-9612-681fb01cdf97"
+    ]
+   ],
+   "candidate_component_count": 1
+  },
+  {
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "surviving_keys": [
+    [
+     "p",
+     "C14654.1#0"
+    ],
+    [
+     "p",
+     "R14645.2#0"
+    ],
+    [
+     "p",
+     "R14646.1#0"
+    ],
+    [
+     "p",
+     "U14636.5#0"
+    ],
+    [
+     "t",
+     "019dc47b-b41f-4dd2-8163-2911f6da6d3a"
+    ],
+    [
+     "t",
+     "01a1fb81-2e95-4e41-b319-b3b258c551c2"
+    ],
+    [
+     "t",
+     "036f4f5d-d8f0-4b5f-bd20-72e5cdeecb36"
+    ],
+    [
+     "t",
+     "03beda1b-43bc-4090-afcc-67a75e5ccf83"
+    ],
+    [
+     "t",
+     "0ae16cef-8f74-4eca-883b-d58cda938848"
+    ],
+    [
+     "t",
+     "0b40a0c1-a02a-429b-867d-637676f15871"
+    ],
+    [
+     "t",
+     "0d2eb616-d9ca-4ba1-95ad-62b062984898"
+    ],
+    [
+     "t",
+     "12773c67-cbbe-4bea-bb6f-137950d3741b"
+    ],
+    [
+     "t",
+     "15425079-8799-4bed-b64f-f73541b1e048"
+    ],
+    [
+     "t",
+     "1659744d-c7ac-447c-a568-b05c5e9f5700"
+    ],
+    [
+     "t",
+     "16baa09d-97a8-4498-9a5a-2272032215f3"
+    ],
+    [
+     "t",
+     "18b71f28-1150-44c1-99c5-1c1ad52b6091"
+    ],
+    [
+     "t",
+     "1a38e62e-9a30-4b99-ba0f-4e98ec73ee75"
+    ],
+    [
+     "t",
+     "1c0e4528-3ee0-46bf-ace1-4e5cd4183b99"
+    ],
+    [
+     "t",
+     "1cd78aa2-d9d4-4614-b4a8-26386bc69764"
+    ],
+    [
+     "t",
+     "1def0d9f-2a44-4d39-a96d-02667dd9a0e4"
+    ],
+    [
+     "t",
+     "21a82523-c06e-47b8-8645-39c8747a6747"
+    ],
+    [
+     "t",
+     "22324f91-a70c-49f9-9f96-6cf3652bf2a8"
+    ],
+    [
+     "t",
+     "2237cd1b-8123-41f7-bb19-1b627f5bc040"
+    ],
+    [
+     "t",
+     "224d8c6e-6d02-485c-bb31-0b858596bf8a"
+    ],
+    [
+     "t",
+     "23e96d0a-0a90-4889-bfd5-70b1cfaf2002"
+    ],
+    [
+     "t",
+     "273b438f-e002-4111-b80b-516f1f96a547"
+    ],
+    [
+     "t",
+     "2ee3c204-2a56-4f0c-b0ea-e5baa7a09af6"
+    ],
+    [
+     "t",
+     "2fad6e3a-dfb5-4d02-8293-35130ab16dca"
+    ],
+    [
+     "t",
+     "2febd23c-9f5d-4f0b-b5d7-bf6e78d0ed5c"
+    ],
+    [
+     "t",
+     "30fd5143-3d25-46bc-83a7-948476cc4ab8"
+    ],
+    [
+     "t",
+     "319ae0b9-41c6-4361-9926-b9ee53da06d8"
+    ],
+    [
+     "t",
+     "3242c855-6fdf-48fb-9b29-a074771717ee"
+    ],
+    [
+     "t",
+     "3297bfee-5f79-4d59-9215-4d83c6336b0d"
+    ],
+    [
+     "t",
+     "33481b89-4b69-4fab-9a5b-0b30f7ae34a0"
+    ],
+    [
+     "t",
+     "35accfe5-5714-49a4-a1ea-efbf5deb1c5a"
+    ],
+    [
+     "t",
+     "35d34134-e805-4627-bd95-9dab1edebaf4"
+    ],
+    [
+     "t",
+     "35f55286-d70e-41fb-9b04-3c1d4336c7e3"
+    ],
+    [
+     "t",
+     "37a0c745-293e-4ea7-92d2-968b5473e826"
+    ],
+    [
+     "t",
+     "37f428ef-578e-4abb-89fd-c2dc6563dc36"
+    ],
+    [
+     "t",
+     "397011d8-035b-4865-b43a-4fdac6f5d580"
+    ],
+    [
+     "t",
+     "3b92adf2-0c12-4f19-9dfd-ba408c2c244f"
+    ],
+    [
+     "t",
+     "3c347fde-da49-452a-abaa-de2f720906a6"
+    ],
+    [
+     "t",
+     "3e06cb4e-a5fd-4a2f-bf7b-01f0e142cdb2"
+    ],
+    [
+     "t",
+     "3e5cef21-c594-47d6-815d-246158556e18"
+    ],
+    [
+     "t",
+     "3fcd0203-3900-4c2a-8992-14559f237faa"
+    ],
+    [
+     "t",
+     "4127b38d-033a-4383-8f61-f6b20b5301c9"
+    ],
+    [
+     "t",
+     "435ae156-a052-4381-870a-136b60c5d28f"
+    ],
+    [
+     "t",
+     "44cb494b-d00a-4dce-bff4-41164bb69458"
+    ],
+    [
+     "t",
+     "4544974d-7a4c-464a-9baf-9e7f58c0e8fa"
+    ],
+    [
+     "t",
+     "48009faa-fa18-4e1d-a77e-955d48d82759"
+    ],
+    [
+     "t",
+     "48a1191c-6b8b-43af-8853-7b1b21cd17a7"
+    ],
+    [
+     "t",
+     "4a930ee7-0158-482a-b0fc-bbdd83b4acbf"
+    ],
+    [
+     "t",
+     "4b00009c-076d-47fe-93e8-b991ee0d9a74"
+    ],
+    [
+     "t",
+     "4b7e809a-5421-46db-9e41-91a649732f0d"
+    ],
+    [
+     "t",
+     "4b9b4564-e069-43c5-9132-907b755a6fcb"
+    ],
+    [
+     "t",
+     "4d4a3266-9bbe-4387-8c69-95d3046405c1"
+    ],
+    [
+     "t",
+     "4d6ec166-0854-448c-82bb-e6a2ddd0107e"
+    ],
+    [
+     "t",
+     "508836af-f2fd-4116-a5c8-eb6b5b5c79c4"
+    ],
+    [
+     "t",
+     "51c9e6ec-f07e-43cf-9ff8-493d22dee273"
+    ],
+    [
+     "t",
+     "5751fb9e-2e92-4575-8563-41b01c546ae5"
+    ],
+    [
+     "t",
+     "58984d34-82b0-42d3-9cbf-fc9a9747b2f9"
+    ],
+    [
+     "t",
+     "5a4ce9b6-beab-4114-908d-02ff95498c73"
+    ],
+    [
+     "t",
+     "5e1db286-aba7-42ff-b77c-b07b9757f976"
+    ],
+    [
+     "t",
+     "5ee54e53-7d80-4df8-9f2f-3d3ac5657086"
+    ],
+    [
+     "t",
+     "5f42b3f2-6aac-47b1-ae93-00ae2bd64a06"
+    ],
+    [
+     "t",
+     "5fc0beee-f884-43e1-b087-3bc695ea8ae4"
+    ],
+    [
+     "t",
+     "60af6aeb-9137-48b4-b884-6f804e6d9f7e"
+    ],
+    [
+     "t",
+     "6133a915-2695-453e-bf2d-381e256b7c0c"
+    ],
+    [
+     "t",
+     "61ddbbec-f380-4886-9544-4a2320e26bc2"
+    ],
+    [
+     "t",
+     "623cf090-b77c-42bf-8a55-53eddc518c01"
+    ],
+    [
+     "t",
+     "62f8c24e-a88e-4780-a319-717db4c7b51d"
+    ],
+    [
+     "t",
+     "67d58ff2-6d20-4ff4-b982-30aa34334fe2"
+    ],
+    [
+     "t",
+     "67e60577-f1e5-4f17-a27a-7fbfdf894cef"
+    ],
+    [
+     "t",
+     "691225ad-61b6-4cc4-a1d4-5a98158c1de6"
+    ],
+    [
+     "t",
+     "694af677-9cc4-40e6-afeb-efae4c88d7ad"
+    ],
+    [
+     "t",
+     "69b04d85-bfbc-42f1-b06a-56f7441e1d29"
+    ],
+    [
+     "t",
+     "6a2622a6-4214-422b-8cf2-8c13f968a90c"
+    ],
+    [
+     "t",
+     "6a7a6862-5b3a-4764-bead-1acf9ac7b861"
+    ],
+    [
+     "t",
+     "6bfb08d2-eab1-48f8-87e8-557aa8cf0b85"
+    ],
+    [
+     "t",
+     "6e18de0a-15ec-4d8c-9b41-a61c68c69b5d"
+    ],
+    [
+     "t",
+     "6e5c0870-dcae-4740-8786-1902cb2a2e91"
+    ],
+    [
+     "t",
+     "6fa5d8e3-6e77-45bd-98c5-33ca33d43698"
+    ],
+    [
+     "t",
+     "7174ef61-78de-4ff5-8d9c-589ff3b7925b"
+    ],
+    [
+     "t",
+     "7215d6b8-7cd0-477d-97f4-090c49c0e08a"
+    ],
+    [
+     "t",
+     "760d51ca-6aa5-42e5-b163-e14fed1f49d0"
+    ],
+    [
+     "t",
+     "767dc72b-1c76-4a54-8704-3e163aea6819"
+    ],
+    [
+     "t",
+     "78b6f5f5-c8b9-4b3d-bd77-7be2a93251ed"
+    ],
+    [
+     "t",
+     "7907fd76-0a88-43f3-9e13-b037fd093032"
+    ],
+    [
+     "t",
+     "7910f689-417c-401a-8615-92712f2aeb18"
+    ],
+    [
+     "t",
+     "7a9945be-ea15-4f6b-9ea6-ebac8ca210fb"
+    ],
+    [
+     "t",
+     "7acf1d8e-f00c-4a67-a653-ec518e4f6b6d"
+    ],
+    [
+     "t",
+     "7dbafb84-cadf-4295-b1bf-a3f072eb222f"
+    ],
+    [
+     "t",
+     "80f4f61b-84aa-4f52-823f-5039257b3f0e"
+    ],
+    [
+     "t",
+     "815395cb-f615-4e75-a8dd-056edc4a75e4"
+    ],
+    [
+     "t",
+     "81a6116b-6a73-4eb2-b820-8f5a2bbd84de"
+    ],
+    [
+     "t",
+     "859a8234-fbd7-4206-b8f9-6bd9b2534157"
+    ],
+    [
+     "t",
+     "8617bf34-e62f-437d-9f65-c703e9249f58"
+    ],
+    [
+     "t",
+     "8910b1fc-cc84-4eed-b05c-907585531621"
+    ],
+    [
+     "t",
+     "8921e946-cb84-4060-882f-6817aa5dc8f7"
+    ],
+    [
+     "t",
+     "8bf8f3ff-3dae-4757-8e22-c59307e41657"
+    ],
+    [
+     "t",
+     "8c1ce563-c104-402d-8456-e76fcdfd30f2"
+    ],
+    [
+     "t",
+     "8c891148-e5ac-4ae4-a58d-ca8ceceddb80"
+    ],
+    [
+     "t",
+     "90c68083-f7ed-48f4-8c2e-d74a6ffd55d2"
+    ],
+    [
+     "t",
+     "92ffa7e8-1a6f-481f-a992-cfed8aa8f954"
+    ],
+    [
+     "t",
+     "941449f9-a2e0-44a0-ba4c-2c2e6bbafdd5"
+    ],
+    [
+     "t",
+     "942990f5-50c0-4927-9135-98e98e9fea69"
+    ],
+    [
+     "t",
+     "94c4556b-10c5-4013-a98e-7d105511b7c0"
+    ],
+    [
+     "t",
+     "95deb7b6-cb28-4aa8-8506-db840726d00e"
+    ],
+    [
+     "t",
+     "96665b3f-3df4-4928-a294-fd046587f585"
+    ],
+    [
+     "t",
+     "96a0231e-aa71-448a-b068-bf3d3bdaef35"
+    ],
+    [
+     "t",
+     "97043fc4-0b2d-48f0-b7d0-d26f6c92f556"
+    ],
+    [
+     "t",
+     "9973a462-fd89-447f-b161-b8122e0db6f8"
+    ],
+    [
+     "t",
+     "9a0f2958-4455-4c33-aa8b-29b61618519d"
+    ],
+    [
+     "t",
+     "9a4d4322-13f8-42ff-b8f0-d92c3d927aa9"
+    ],
+    [
+     "t",
+     "9e40db27-4bd6-4a33-a235-c38b8e1b72c4"
+    ],
+    [
+     "t",
+     "9eb5b970-3d58-42ee-8b26-683394b4dbb3"
+    ],
+    [
+     "t",
+     "a1bb9992-2153-4df3-aa87-d03e8c5e5142"
+    ],
+    [
+     "t",
+     "a63c5bc7-67d1-4728-85d0-d8546e2cff4e"
+    ],
+    [
+     "t",
+     "a711fb9f-ff8e-4d3a-bd4a-e69d1ed63707"
+    ],
+    [
+     "t",
+     "a811accc-68ba-4e1a-8862-683ff67e3797"
+    ],
+    [
+     "t",
+     "a8769257-99fb-46bc-94ee-7aedb0b5dc23"
+    ],
+    [
+     "t",
+     "a88fd5c9-8ac3-4644-82ab-a69567aa8336"
+    ],
+    [
+     "t",
+     "a92ac260-9a53-41c7-b701-fe943b680a9c"
+    ],
+    [
+     "t",
+     "a9bb0bf0-79c9-4516-b584-b2945cd8bc95"
+    ],
+    [
+     "t",
+     "aa5c9a15-e30b-40da-b8e1-03193fc4de28"
+    ],
+    [
+     "t",
+     "ad559d9a-00f5-4408-9262-0307da655acc"
+    ],
+    [
+     "t",
+     "aea342e9-0d2e-4a16-b9f3-d6b87f3719a9"
+    ],
+    [
+     "t",
+     "b04d59ec-cd35-4f71-b297-821d2bf0eb73"
+    ],
+    [
+     "t",
+     "b21df413-40ad-4c6f-871b-babe47c6b25f"
+    ],
+    [
+     "t",
+     "b37dd59f-bb83-480b-a547-09464ec01c70"
+    ],
+    [
+     "t",
+     "b388f1d4-d9c4-4ecd-90f0-4526ad515b64"
+    ],
+    [
+     "t",
+     "b3cc9942-9eee-4235-8d3a-8188522df05c"
+    ],
+    [
+     "t",
+     "b4925b63-916c-4f9b-9e7b-4f9e21a147ed"
+    ],
+    [
+     "t",
+     "b650a168-2a24-449b-8cc8-58a6c00317fd"
+    ],
+    [
+     "t",
+     "b7537136-b7ed-4cab-b8ec-227f04aece78"
+    ],
+    [
+     "t",
+     "b9e7b94f-6eb6-4c1e-ba50-8ebefcd97d1d"
+    ],
+    [
+     "t",
+     "bd931e4c-27e9-4999-8307-68c9a9b6d276"
+    ],
+    [
+     "t",
+     "c07e3c39-eddb-4859-b14c-cef59582c6e0"
+    ],
+    [
+     "t",
+     "c0bdf516-d534-4523-8adb-2af7be36b4c8"
+    ],
+    [
+     "t",
+     "c110c987-815f-4ad6-9c5d-ec51e1939beb"
+    ],
+    [
+     "t",
+     "c13ba34c-3216-4650-8640-b2cf6a5f647f"
+    ],
+    [
+     "t",
+     "c3763fb3-d98c-462d-a9d1-eb5e97f61df2"
+    ],
+    [
+     "t",
+     "c621c2bd-28fd-42ef-a080-e5cec210fb6a"
+    ],
+    [
+     "t",
+     "c982471f-da5c-48a0-a109-4e98d2db6dd5"
+    ],
+    [
+     "t",
+     "ca2e9a6b-beda-4778-bb0a-d7df2510e9c8"
+    ],
+    [
+     "t",
+     "cbd61317-2900-450b-a230-4fb3a23d529d"
+    ],
+    [
+     "t",
+     "d1354c5c-2a67-458c-b6d6-c58c636d9732"
+    ],
+    [
+     "t",
+     "d294380f-d1c1-4726-98f3-70b50f3c9164"
+    ],
+    [
+     "t",
+     "d2d3a114-efe3-45c7-aaa4-cea3e62e196a"
+    ],
+    [
+     "t",
+     "d385182a-c059-4cd8-ad4d-bf894b21d3e7"
+    ],
+    [
+     "t",
+     "d3a2be64-c3f8-46c3-a436-ad8e2de1d68e"
+    ],
+    [
+     "t",
+     "d45646c5-b065-4221-b9c7-b00832ea3131"
+    ],
+    [
+     "t",
+     "d60df2b5-ba4f-467f-96ce-d5a8db6b57aa"
+    ],
+    [
+     "t",
+     "d759f7bf-8991-40ae-843b-06b10fc62345"
+    ],
+    [
+     "t",
+     "d75bc067-bb15-4844-ad2a-96493010ab8f"
+    ],
+    [
+     "t",
+     "d9b31842-8fb1-419d-9695-cec053a94751"
+    ],
+    [
+     "t",
+     "da6b2bcd-3ba8-45bb-a5c5-4243887a8d76"
+    ],
+    [
+     "t",
+     "dc87c16d-ebf5-486f-a4a2-cffd3413c832"
+    ],
+    [
+     "t",
+     "e06ed330-378c-4187-9792-91c735c2bdc9"
+    ],
+    [
+     "t",
+     "e126544e-2b68-40e8-a2bd-cf97d7da75da"
+    ],
+    [
+     "t",
+     "e372e8d5-e554-4982-b638-005697b0a784"
+    ],
+    [
+     "t",
+     "e44c816a-d082-4d26-b51f-f577e42cc356"
+    ],
+    [
+     "t",
+     "ea44f9fe-00d6-434d-a61b-668ea8951d9a"
+    ],
+    [
+     "t",
+     "eabd30c5-8f58-4bf2-ad87-9e11086874ea"
+    ],
+    [
+     "t",
+     "ed9cd7a5-ee1a-4997-8b24-338f154ceba0"
+    ],
+    [
+     "t",
+     "f076cede-3169-4552-8078-610066d543bc"
+    ],
+    [
+     "t",
+     "f3c22309-0469-4d7e-99ad-7355c3036e4c"
+    ],
+    [
+     "t",
+     "f8fdf775-219b-4c09-8c8d-91fefd9a6400"
+    ],
+    [
+     "t",
+     "f919f546-3bfa-412c-a7d2-94abeffab6ae"
+    ],
+    [
+     "t",
+     "fa0dbcdd-1a01-4285-9155-bfccff156123"
+    ],
+    [
+     "t",
+     "fa0ea17d-1379-450d-a1bc-d657401f9962"
+    ],
+    [
+     "t",
+     "ff62d517-0d2b-454a-b1e3-682757a8813f"
+    ],
+    [
+     "v",
+     "0818daa3-89ca-46cd-845d-fb8215e56047"
+    ],
+    [
+     "v",
+     "0b9063d6-cc22-497d-a0a4-5de6472dde48"
+    ],
+    [
+     "v",
+     "0c6bbab6-32b5-4275-aee3-c6b949f8ba97"
+    ],
+    [
+     "v",
+     "2bee1c99-aee7-48c1-9e60-31e3f94267be"
+    ],
+    [
+     "v",
+     "3ac33702-966b-48d1-b356-f580890e6086"
+    ],
+    [
+     "v",
+     "5c473354-4581-4413-aa49-db32d8225158"
+    ],
+    [
+     "v",
+     "7eae5918-5b5d-47de-af37-420ff1aecd2b"
+    ],
+    [
+     "v",
+     "7eebd5ff-81d8-42ff-aae8-84d5d29cfa58"
+    ],
+    [
+     "v",
+     "b0873e19-8293-4c81-afb5-a437d9ec2c57"
+    ],
+    [
+     "v",
+     "c317ec04-0b5d-4c91-91dc-dde0cb7cd81e"
+    ],
+    [
+     "v",
+     "c7179378-d878-4fb2-a2d5-8784161d8731"
+    ]
+   ],
+   "candidate_component_count": 1
+  }
+ ],
+ "removed_to_retained_contact_boundary": [
+  {
+   "removed_uuid": "ec401659-c4a7-4553-9a16-b82651f5fbf9",
+   "retained_key": [
+    "p",
+    "U14626.8#0"
+   ],
+   "layer": "F.Cu"
+  },
+  {
+   "removed_uuid": "f8a3cbc3-7c6e-4390-9770-0e563c03fba3",
+   "retained_key": [
+    "t",
+    "32729b72-15e1-41fc-8b2a-24b2f103938a"
+   ],
+   "layer": "In3.Cu"
+  },
+  {
+   "removed_uuid": "16ac4bda-32bd-47a3-8cc4-404758a78d41",
+   "retained_key": [
+    "t",
+    "6a7a6862-5b3a-4764-bead-1acf9ac7b861"
+   ],
+   "layer": "F.Cu"
+  },
+  {
+   "removed_uuid": "6b5d7465-3e16-4492-82be-cd9ae2fb2ad5",
+   "retained_key": [
+    "t",
+    "036f4f5d-d8f0-4b5f-bd20-72e5cdeecb36"
+   ],
+   "layer": "F.Cu"
+  },
+  {
+   "removed_uuid": "6b5d7465-3e16-4492-82be-cd9ae2fb2ad5",
+   "retained_key": [
+    "t",
+    "b388f1d4-d9c4-4ecd-90f0-4526ad515b64"
+   ],
+   "layer": "F.Cu"
+  }
+ ],
+ "pad_relationship_losses": [],
+ "surviving_contact_losses": [],
+ "clearance_errors": [],
+ "changed_item_clearance": [
+  {
+   "uuid": "0f8b7a4c-92e0-5174-90fa-64ead24a28f1",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "track": 0.1500000571950645,
+    "pad": 0.026016875243452642,
+    "via": 0.14102783496806584,
+    "hole": 0.19086884055203457
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "2e8fcb3f-d9ea-5e53-b8e7-37ee19046392",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "In3.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "hole": 0.2750352280058004,
+    "via": 0.2251134356380872,
+    "track": 0.12740272044488057
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "3668d132-3c8c-50ba-8feb-ed2ac9ee7fcf",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.02682904071758574,
+    "hole": 0.07674271371660701
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "45fbe577-2a04-5945-9c82-72aa8e55e4da",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "hole": 0.20056790052312912,
+    "track": 0.3000005194066716,
+    "via": 0.15074539374692916,
+    "pad": 0.6106896700859589
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "577ae7fc-bea0-5f73-9ff4-d265f65041df",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "In3.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.03607332010296774,
+    "hole": 0.0859774436653788,
+    "track": 0.6425128240603782
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "7ae4769b-0d4b-5917-a9b5-7bd3c8dec96d",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "In3.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "hole": 0.07674271371659708,
+    "via": 0.02682904071758574
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "81228895-089d-5178-b2b2-238ef1142e8d",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.03034839881439491,
+    "hole": 0.08028845374710963
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "85c9e9fa-8501-5e8b-b7c6-41abc60300bb",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "pad": 0.0749999999999943,
+    "via": 0.3604055891082415,
+    "hole": 0.4102877290745709,
+    "track": 0.1500424124710362
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+   "net": "/motherboard_analog_output/AO1_COM",
+   "kind": "via",
+   "layers_checked": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu",
+    "B.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "track": 0.3732291572141455,
+    "via": 0.22328247539407,
+    "hole": 0.27323536122395686
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "a97a5e8d-15fa-5606-bf7b-9e5627c23c7c",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.025251971403007695,
+    "hole": 0.07522667427453755,
+    "track": 0.3019592143207618
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "b611969b-9879-575a-a001-ed511d20b4b2",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "In3.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "hole": 0.07499999999998863,
+    "via": 0.025000000000011374,
+    "track": 0.5723091279992688
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "b91a83b9-6bbd-5e23-80fc-de67907e7ce3",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "track": 0.2500000105002357,
+    "via": 0.1369515564141798,
+    "hole": 0.1867742319978944,
+    "pad": 0.43871065956621125
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+   "net": "/motherboard_analog_output/AO1_COM",
+   "kind": "via",
+   "layers_checked": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu",
+    "B.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.2679617983543108,
+    "track": 0.025000000000011374,
+    "hole": 0.3179039906793165
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "c67c9b3a-beef-5467-b3ac-0c2f1fcc2619",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.03033008588996411,
+    "hole": 0.08033008588996132
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "kind": "via",
+   "layers_checked": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu",
+    "B.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.2104084126512902,
+    "hole": 0.26028802303462717,
+    "track": 0.1363953959611708,
+    "pad": 0.4980000000000132,
+    "fill": 0.12499482320267938
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "d239969c-0e9e-5b28-9e14-61e30b59b73e",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "pad": 0.20735896117004296,
+    "via": 0.029511633329367737,
+    "hole": 0.07933634740786749
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "da16ac1d-640e-5454-a300-69a8f8f12c45",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "kind": "segment",
+   "layers_checked": [
+    "B.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "track": 0.6413637072235787,
+    "via": 0.3604055891082415,
+    "hole": 0.4102877290745709
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "fbedf4e0-b593-57b3-bfd2-b69b7e052b96",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "kind": "segment",
+   "layers_checked": [
+    "F.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "via": 0.025000000000011374,
+    "hole": 0.07499999999998863
+   },
+   "via_extra_errors": []
+  },
+  {
+   "uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "kind": "via",
+   "layers_checked": [
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu",
+    "B.Cu"
+   ],
+   "nearest_margin_after_required_mm": {
+    "hole": 0.26028802303462717,
+    "track": 0.15194999260675549,
+    "via": 0.2104084126512902,
+    "fill": 0.12499482320267494
+   },
+   "via_extra_errors": []
+  }
+ ],
+ "ordinary_SMD_drill_aperture": [
+  {
+   "uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "at_mm": [
+    373.9,
+    129.0
+   ],
+   "nearest_SMD_pad": "U14626.9#0",
+   "nearest_SMD_pad_uuid": "9e8539ce-5524-48bc-861a-3943b2d53017",
+   "guarded_drill_aperture_mm": 0.7430000000000132,
+   "required_mm": 0.275,
+   "net_or_process_exemptions": 0
+  },
+  {
+   "uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "at_mm": [
+    373.4,
+    128.3
+   ],
+   "nearest_SMD_pad": "U14626.8#0",
+   "nearest_SMD_pad_uuid": "4ed87132-3984-435a-be0a-94fc15646e83",
+   "guarded_drill_aperture_mm": 1.2476863087944787,
+   "required_mm": 0.275,
+   "net_or_process_exemptions": 0
+  },
+  {
+   "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+   "at_mm": [
+    373.1,
+    129.45
+   ],
+   "nearest_SMD_pad": "U14626.10#0",
+   "nearest_SMD_pad_uuid": "d45bf0cc-8195-4ec9-9327-6c5c6db7dd5b",
+   "guarded_drill_aperture_mm": 1.5429999999999677,
+   "required_mm": 0.275,
+   "net_or_process_exemptions": 0
+  },
+  {
+   "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+   "at_mm": [
+    373.05,
+    127.5
+   ],
+   "nearest_SMD_pad": "U14626.6#0",
+   "nearest_SMD_pad_uuid": "9e930fee-0c61-4e83-afa1-6c4c050a9696",
+   "guarded_drill_aperture_mm": 1.592999999999979,
+   "required_mm": 0.275,
+   "net_or_process_exemptions": 0
+  }
+ ],
+ "ordinary_pitch": [
+  {
+   "uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "nearest_via_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "distance_mm": 0.8602325267042534,
+   "required_mm": 0.81
+  },
+  {
+   "uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "nearest_via_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "distance_mm": 0.8602325267042534,
+   "required_mm": 0.81
+  },
+  {
+   "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+   "nearest_via_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "distance_mm": 0.9178779875342458,
+   "required_mm": 0.81
+  },
+  {
+   "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+   "nearest_via_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "distance_mm": 0.8732124598286458,
+   "required_mm": 0.81
+  }
+ ],
+ "prospective_fill_contact_errors": [],
+ "prospective_fill_contact_ledger": [
+  {
+   "zone_uuid": "ee9a5ded-7194-46a2-980a-ba8199bdc70d",
+   "net": "/motherboard_analog_output/AO1_COM",
+   "layer": "In1.Cu",
+   "old_fill_index": 16820,
+   "exact_original_fill_wkb_sha256": "2b9353ec83f81ceda67307da04625faf814d932962b8cf366a4fcd4b80f145b1",
+   "exact_serialized_local_zone_clearance_mm": 0.25,
+   "original_area_mm2": 1105.9338785128716,
+   "candidate_area_mm2": 1104.7744720188089,
+   "cut_items": [
+    {
+     "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+     "net": "/motherboard_analog_output/AO1_COM",
+     "required_zone_domain_clearance_mm": 0.0
+    },
+    {
+     "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+     "net": "/motherboard_analog_output/AO1_COM",
+     "required_zone_domain_clearance_mm": 0.0
+    },
+    {
+     "uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+     "net": "/motherboard_analog_output/AO1_VREF",
+     "required_zone_domain_clearance_mm": 0.25
+    },
+    {
+     "uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+     "net": "/motherboard_analog_output/AO1_DAC_SDI",
+     "required_zone_domain_clearance_mm": 0.25
+    }
+   ],
+   "candidate_component_count": 1,
+   "old_existing_physical_contacts": [
+    {
+     "key": [
+      "v",
+      "77f46bb5-3d8e-4759-aaae-a82180941214"
+     ],
+     "uuid": "77f46bb5-3d8e-4759-aaae-a82180941214",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+     ],
+     "uuid": "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "6def9be5-9d21-4b16-aadb-fea343b907f8"
+     ],
+     "uuid": "6def9be5-9d21-4b16-aadb-fea343b907f8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+     ],
+     "uuid": "e778535b-bfe5-44f7-a8ba-20ee8b450481",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+     ],
+     "uuid": "d011d3f0-4fd6-4485-85c3-edbf8160412c",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+     ],
+     "uuid": "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+     ],
+     "uuid": "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+     ],
+     "uuid": "47b899e2-6b7d-486e-9f56-ae87a4c651c6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "40682fb5-280f-441a-8499-4cdf21e31bec"
+     ],
+     "uuid": "40682fb5-280f-441a-8499-4cdf21e31bec",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+     ],
+     "uuid": "3cd3559e-17ab-4f8a-b1b6-d99b518318c7",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+     ],
+     "uuid": "db3a034d-d729-4ea3-adde-bd63b0243dc9",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "8751444e-ca04-43a9-b712-fd9786c4327e"
+     ],
+     "uuid": "8751444e-ca04-43a9-b712-fd9786c4327e",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "p",
+      "U14619.7#0"
+     ],
+     "uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+     "kind": "pad",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "t",
+      "2d14cb0b-2c58-464b-9b4d-9a0dadee3106"
+     ],
+     "uuid": "2d14cb0b-2c58-464b-9b4d-9a0dadee3106",
+     "kind": "track",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+     ],
+     "uuid": "9bd0c850-a4de-4fd4-b5d2-c57760361d3f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+     ],
+     "uuid": "2e243304-8de5-44b1-bee4-d95e5ae3017b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "24496872-8609-4596-9c18-ef951113069d"
+     ],
+     "uuid": "24496872-8609-4596-9c18-ef951113069d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+     ],
+     "uuid": "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "df662867-e03a-458b-b5a9-4bd34c1ed984"
+     ],
+     "uuid": "df662867-e03a-458b-b5a9-4bd34c1ed984",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+     ],
+     "uuid": "2434d3a9-3a5a-41bb-982a-3462780eb0c8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+     ],
+     "uuid": "08cd57d0-8be8-4b61-b772-74aa9de9e619",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+     ],
+     "uuid": "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "166e13ec-7d92-47c0-89cd-2b029e665caf"
+     ],
+     "uuid": "166e13ec-7d92-47c0-89cd-2b029e665caf",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+     ],
+     "uuid": "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+     ],
+     "uuid": "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "1421c27e-e018-4761-bc4b-5601a6cbf108"
+     ],
+     "uuid": "1421c27e-e018-4761-bc4b-5601a6cbf108",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+     ],
+     "uuid": "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "48e22cd4-5ce9-462b-943f-599919a7e773"
+     ],
+     "uuid": "48e22cd4-5ce9-462b-943f-599919a7e773",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+     ],
+     "uuid": "f3fcd54c-c8af-457e-874b-cf1e8972739b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+     ],
+     "uuid": "16730302-3df9-4d98-85c9-eae7aa0df7e8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "fa1b10e7-f057-44ed-99c1-242da946da82"
+     ],
+     "uuid": "fa1b10e7-f057-44ed-99c1-242da946da82",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "04efec1f-c4c9-4735-ad96-55378a970df1"
+     ],
+     "uuid": "04efec1f-c4c9-4735-ad96-55378a970df1",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+     ],
+     "uuid": "82d558d1-1a18-4aec-8a66-53fc24db5d16",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2f8c234d-469e-472e-af5e-4939e3747584"
+     ],
+     "uuid": "2f8c234d-469e-472e-af5e-4939e3747584",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+     ],
+     "uuid": "0b828102-0f0c-4eed-b46a-71b5225ee9e8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "f82f119d-bde2-4a66-a406-cd7198a9c271"
+     ],
+     "uuid": "f82f119d-bde2-4a66-a406-cd7198a9c271",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+     ],
+     "uuid": "71801e5b-9c6a-4cfc-8571-e56bd7ae5418",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+     ],
+     "uuid": "d42b6146-af18-4fc3-8192-3c93703d3d5b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+     ],
+     "uuid": "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+     ],
+     "uuid": "76253687-0e22-4acf-a2f1-ea16c9f7d9b6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+     ],
+     "uuid": "155fb596-b8c7-4274-ab6b-d4be4cad994f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "a7e88e2a-55a3-418e-865a-483b574d72fd"
+     ],
+     "uuid": "a7e88e2a-55a3-418e-865a-483b574d72fd",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d12e1928-058b-49a1-943e-2664ea693fc3"
+     ],
+     "uuid": "d12e1928-058b-49a1-943e-2664ea693fc3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+     ],
+     "uuid": "aceb5f90-621a-4fb1-b215-f9883e9562ca",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e889a469-4bea-444a-b133-43e968f2d56d"
+     ],
+     "uuid": "e889a469-4bea-444a-b133-43e968f2d56d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "zone_uuid": "8ac28655-c690-44e5-9cc8-c482ed288f6f",
+   "net": "/motherboard_analog_output/AO1_COM",
+   "layer": "In4.Cu",
+   "old_fill_index": 16537,
+   "exact_original_fill_wkb_sha256": "2b9353ec83f81ceda67307da04625faf814d932962b8cf366a4fcd4b80f145b1",
+   "exact_serialized_local_zone_clearance_mm": 0.25,
+   "original_area_mm2": 1105.9338785128716,
+   "candidate_area_mm2": 1104.7744720188089,
+   "cut_items": [
+    {
+     "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+     "net": "/motherboard_analog_output/AO1_COM",
+     "required_zone_domain_clearance_mm": 0.0
+    },
+    {
+     "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+     "net": "/motherboard_analog_output/AO1_COM",
+     "required_zone_domain_clearance_mm": 0.0
+    },
+    {
+     "uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+     "net": "/motherboard_analog_output/AO1_VREF",
+     "required_zone_domain_clearance_mm": 0.25
+    },
+    {
+     "uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+     "net": "/motherboard_analog_output/AO1_DAC_SDI",
+     "required_zone_domain_clearance_mm": 0.25
+    }
+   ],
+   "candidate_component_count": 1,
+   "old_existing_physical_contacts": [
+    {
+     "key": [
+      "v",
+      "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+     ],
+     "uuid": "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "6def9be5-9d21-4b16-aadb-fea343b907f8"
+     ],
+     "uuid": "6def9be5-9d21-4b16-aadb-fea343b907f8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+     ],
+     "uuid": "e778535b-bfe5-44f7-a8ba-20ee8b450481",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "77f46bb5-3d8e-4759-aaae-a82180941214"
+     ],
+     "uuid": "77f46bb5-3d8e-4759-aaae-a82180941214",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+     ],
+     "uuid": "3cd3559e-17ab-4f8a-b1b6-d99b518318c7",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+     ],
+     "uuid": "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+     ],
+     "uuid": "d011d3f0-4fd6-4485-85c3-edbf8160412c",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+     ],
+     "uuid": "db3a034d-d729-4ea3-adde-bd63b0243dc9",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+     ],
+     "uuid": "47b899e2-6b7d-486e-9f56-ae87a4c651c6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+     ],
+     "uuid": "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "40682fb5-280f-441a-8499-4cdf21e31bec"
+     ],
+     "uuid": "40682fb5-280f-441a-8499-4cdf21e31bec",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "8751444e-ca04-43a9-b712-fd9786c4327e"
+     ],
+     "uuid": "8751444e-ca04-43a9-b712-fd9786c4327e",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "p",
+      "U14619.7#0"
+     ],
+     "uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+     "kind": "pad",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+     ],
+     "uuid": "9bd0c850-a4de-4fd4-b5d2-c57760361d3f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "df662867-e03a-458b-b5a9-4bd34c1ed984"
+     ],
+     "uuid": "df662867-e03a-458b-b5a9-4bd34c1ed984",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+     ],
+     "uuid": "2434d3a9-3a5a-41bb-982a-3462780eb0c8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+     ],
+     "uuid": "08cd57d0-8be8-4b61-b772-74aa9de9e619",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+     ],
+     "uuid": "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "166e13ec-7d92-47c0-89cd-2b029e665caf"
+     ],
+     "uuid": "166e13ec-7d92-47c0-89cd-2b029e665caf",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+     ],
+     "uuid": "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+     ],
+     "uuid": "2e243304-8de5-44b1-bee4-d95e5ae3017b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "24496872-8609-4596-9c18-ef951113069d"
+     ],
+     "uuid": "24496872-8609-4596-9c18-ef951113069d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+     ],
+     "uuid": "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+     ],
+     "uuid": "f3fcd54c-c8af-457e-874b-cf1e8972739b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+     ],
+     "uuid": "16730302-3df9-4d98-85c9-eae7aa0df7e8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+     ],
+     "uuid": "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "1421c27e-e018-4761-bc4b-5601a6cbf108"
+     ],
+     "uuid": "1421c27e-e018-4761-bc4b-5601a6cbf108",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+     ],
+     "uuid": "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "48e22cd4-5ce9-462b-943f-599919a7e773"
+     ],
+     "uuid": "48e22cd4-5ce9-462b-943f-599919a7e773",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "f82f119d-bde2-4a66-a406-cd7198a9c271"
+     ],
+     "uuid": "f82f119d-bde2-4a66-a406-cd7198a9c271",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "04efec1f-c4c9-4735-ad96-55378a970df1"
+     ],
+     "uuid": "04efec1f-c4c9-4735-ad96-55378a970df1",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+     ],
+     "uuid": "82d558d1-1a18-4aec-8a66-53fc24db5d16",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "2f8c234d-469e-472e-af5e-4939e3747584"
+     ],
+     "uuid": "2f8c234d-469e-472e-af5e-4939e3747584",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+     ],
+     "uuid": "0b828102-0f0c-4eed-b46a-71b5225ee9e8",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "fa1b10e7-f057-44ed-99c1-242da946da82"
+     ],
+     "uuid": "fa1b10e7-f057-44ed-99c1-242da946da82",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+     ],
+     "uuid": "71801e5b-9c6a-4cfc-8571-e56bd7ae5418",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+     ],
+     "uuid": "d42b6146-af18-4fc3-8192-3c93703d3d5b",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+     ],
+     "uuid": "76253687-0e22-4acf-a2f1-ea16c9f7d9b6",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+     ],
+     "uuid": "155fb596-b8c7-4274-ab6b-d4be4cad994f",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "a7e88e2a-55a3-418e-865a-483b574d72fd"
+     ],
+     "uuid": "a7e88e2a-55a3-418e-865a-483b574d72fd",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+     ],
+     "uuid": "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "d12e1928-058b-49a1-943e-2664ea693fc3"
+     ],
+     "uuid": "d12e1928-058b-49a1-943e-2664ea693fc3",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+     ],
+     "uuid": "aceb5f90-621a-4fb1-b215-f9883e9562ca",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    },
+    {
+     "key": [
+      "v",
+      "e889a469-4bea-444a-b133-43e968f2d56d"
+     ],
+     "uuid": "e889a469-4bea-444a-b133-43e968f2d56d",
+     "kind": "via",
+     "candidate_piece_indices": [
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "separate_constructor_ledger_match": true,
+ "full_new_signal_reference": [
+  {
+   "uuid": "85c9e9fa-8501-5e8b-b7c6-41abc60300bb",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "F.Cu",
+   "own_transition_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ]
+  },
+  {
+   "uuid": "da16ac1d-640e-5454-a300-69a8f8f12c45",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "B.Cu",
+   "own_transition_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ]
+  },
+  {
+   "uuid": "0f8b7a4c-92e0-5174-90fa-64ead24a28f1",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.12207989919135705,
+   "uncovered_bounds_mm": [
+    374.0250000428963,
+    128.3000000428963,
+    374.690840825822,
+    128.54147688781705
+   ]
+  },
+  {
+   "uuid": "b91a83b9-6bbd-5e23-80fc-de67907e7ce3",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.05804773863848276,
+   "uncovered_bounds_mm": [
+    373.90376720889213,
+    128.25000001050023,
+    374.22499998949974,
+    128.49999998949977
+   ]
+  },
+  {
+   "uuid": "45fbe577-2a04-5945-9c82-72aa8e55e4da",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.01682243253767697,
+   "uncovered_bounds_mm": [
+    373.9035765409252,
+    128.24931353625703,
+    374.02499948059335,
+    128.44999948059333
+   ]
+  },
+  {
+   "uuid": "577ae7fc-bea0-5f73-9ff4-d265f65041df",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 6.355446266089985e-07,
+   "uncovered_bounds_mm": [
+    372.9840273745311,
+    128.62028790101604,
+    373.13399735719406,
+    128.75261740141576
+   ]
+  },
+  {
+   "uuid": "7ae4769b-0d4b-5917-a9b5-7bd3c8dec96d",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "b611969b-9879-575a-a001-ed511d20b4b2",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "2e8fcb3f-d9ea-5e53-b8e7-37ee19046392",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "a97a5e8d-15fa-5606-bf7b-9e5627c23c7c",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "fbedf4e0-b593-57b3-bfd2-b69b7e052b96",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "81228895-089d-5178-b2b2-238ef1142e8d",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "c67c9b3a-beef-5467-b3ac-0c2f1fcc2619",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "3668d132-3c8c-50ba-8feb-ed2ac9ee7fcf",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  },
+  {
+   "uuid": "d239969c-0e9e-5b28-9e14-61e30b59b73e",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "own_transition_uuid": null,
+   "own_void_radius_mm": 0.0,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.0,
+   "uncovered_bounds_mm": []
+  }
+ ],
+ "reference_errors": [
+  {
+   "uuid": "85c9e9fa-8501-5e8b-b7c6-41abc60300bb",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "F.Cu",
+   "own_transition_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ]
+  },
+  {
+   "uuid": "da16ac1d-640e-5454-a300-69a8f8f12c45",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "B.Cu",
+   "own_transition_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ]
+  },
+  {
+   "uuid": "0f8b7a4c-92e0-5174-90fa-64ead24a28f1",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.12207989919135705,
+   "uncovered_bounds_mm": [
+    374.0250000428963,
+    128.3000000428963,
+    374.690840825822,
+    128.54147688781705
+   ]
+  },
+  {
+   "uuid": "b91a83b9-6bbd-5e23-80fc-de67907e7ce3",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.05804773863848276,
+   "uncovered_bounds_mm": [
+    373.90376720889213,
+    128.25000001050023,
+    374.22499998949974,
+    128.49999998949977
+   ]
+  },
+  {
+   "uuid": "45fbe577-2a04-5945-9c82-72aa8e55e4da",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 0.01682243253767697,
+   "uncovered_bounds_mm": [
+    373.9035765409252,
+    128.24931353625703,
+    374.02499948059335,
+    128.44999948059333
+   ]
+  },
+  {
+   "uuid": "577ae7fc-bea0-5f73-9ff4-d265f65041df",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "own_transition_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "own_void_radius_mm": 0.525,
+   "exact_native_local_zone_clearance_mm": 0.25,
+   "full_body_uncovered_mm2": 6.355446266089985e-07,
+   "uncovered_bounds_mm": [
+    372.9840273745311,
+    128.62028790101604,
+    373.13399735719406,
+    128.75261740141576
+   ]
+  }
+ ],
+ "exact_reference_gap_classification": [
+  {
+   "uuid": "85c9e9fa-8501-5e8b-b7c6-41abc60300bb",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "F.Cu",
+   "reference_plane": "In1.Cu",
+   "uncovered_full_body_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\85c9e9fa-8501-5e8b-b7c6-41abc60300bb-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "22caf5cd0c82c52e22cbea947d2f30e081aa8ea898512f9b83f0a357c0d3f5ed",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.02968302219530162,
+   "outside_withdrawn_barrel_region_mm2": 0.0,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In1.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  },
+  {
+   "uuid": "da16ac1d-640e-5454-a300-69a8f8f12c45",
+   "net": "/motherboard_analog_output/AO1_VREF",
+   "layer": "B.Cu",
+   "reference_plane": "In4.Cu",
+   "uncovered_full_body_mm2": 0.029683022195301622,
+   "uncovered_bounds_mm": [
+    374.4153786880848,
+    128.9,
+    374.64132480203455,
+    129.1
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\da16ac1d-640e-5454-a300-69a8f8f12c45-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "22caf5cd0c82c52e22cbea947d2f30e081aa8ea898512f9b83f0a357c0d3f5ed",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.02968302219530162,
+   "outside_withdrawn_barrel_region_mm2": 0.0,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In4.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  },
+  {
+   "uuid": "0f8b7a4c-92e0-5174-90fa-64ead24a28f1",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "reference_plane": "In1.Cu",
+   "uncovered_full_body_mm2": 0.12207989919135705,
+   "uncovered_bounds_mm": [
+    374.0250000428963,
+    128.3000000428963,
+    374.690840825822,
+    128.54147688781705
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\0f8b7a4c-92e0-5174-90fa-64ead24a28f1-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "1ee7487696a14687759733a68424128886c2795cac5a2d3aabe44c7702cdcdc9",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.12207989919135706,
+   "outside_withdrawn_barrel_region_mm2": 0.0,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In1.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  },
+  {
+   "uuid": "b91a83b9-6bbd-5e23-80fc-de67907e7ce3",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "reference_plane": "In1.Cu",
+   "uncovered_full_body_mm2": 0.05804773863848276,
+   "uncovered_bounds_mm": [
+    373.90376720889213,
+    128.25000001050023,
+    374.22499998949974,
+    128.49999998949977
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\b91a83b9-6bbd-5e23-80fc-de67907e7ce3-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "0aea65b280db5c78b383e0f6f782abd657515bdcebb4834c3026393aa6d2f830",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.05804773863848275,
+   "outside_withdrawn_barrel_region_mm2": 0.0,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In1.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  },
+  {
+   "uuid": "45fbe577-2a04-5945-9c82-72aa8e55e4da",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "F.Cu",
+   "reference_plane": "In1.Cu",
+   "uncovered_full_body_mm2": 0.01682243253767697,
+   "uncovered_bounds_mm": [
+    373.9035765409252,
+    128.24931353625703,
+    374.02499948059335,
+    128.44999948059333
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\45fbe577-2a04-5945-9c82-72aa8e55e4da-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "a3b7526ff2ba17094b4bc9cc4dbfd7de196303d8d991e4aa10140f032c0439dc",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.016822432537676964,
+   "outside_withdrawn_barrel_region_mm2": 0.0,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In1.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  },
+  {
+   "uuid": "577ae7fc-bea0-5f73-9ff4-d265f65041df",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "reference_plane": "In4.Cu",
+   "uncovered_full_body_mm2": 6.355446266089985e-07,
+   "uncovered_bounds_mm": [
+    372.9840273745311,
+    128.62028790101604,
+    373.13399735719406,
+    128.75261740141576
+   ],
+   "exact_gap_WKB_path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18-independent-reference-gaps-mon-r4\\577ae7fc-bea0-5f73-9ff4-d265f65041df-reference-gap.wkb",
+   "exact_gap_WKB_sha256": "81523450b17f48453ff3feeff7c98d044b9831f4bc56c6705a7848a09abeece1",
+   "within_withdrawn_barrel_clearance_region_mm2": 0.0,
+   "outside_withdrawn_barrel_region_mm2": 6.355446266089958e-07,
+   "actual_new_neighbor_transition_or_return_drill_overlap_mm2": 0.0,
+   "retained_existing_foreign_copper_or_physical_hole_clearance_overlap_mm2": 0.0,
+   "withdrawn_native_barrel_geometry": [
+    {
+     "withdrawn_uuid": "2b635368-5867-4b98-b422-f0fc9cd7464c",
+     "exact_source_position_mm": [
+      374.15,
+      128.65
+     ],
+     "exact_source_diameter_mm": 0.6,
+     "exact_actual_flash_layer": "In4.Cu",
+     "clearance_region_nomination_radius_mm": 0.5750000000000001
+    }
+   ],
+   "stale_fill_healing_credit": false,
+   "fresh_native_refill_export_required": true
+  }
+ ],
+ "unchanged_same_domain_track_reference": [
+  {
+   "uuid": "0f9ff150-9510-4c0e-814f-5cf184b24aff",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "24439a92280691ad9dccc79d935badca56bec181cada538ff11c965f44187826",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "2128bf4b-ab03-453d-8658-5e392e89ddaa",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "ce6ed12a7977f5426b28d6c6f364ec098c1a5d6cbbf77576070b4acdd028b138",
+   "original_uncovered_mm2": 0.6555912391790039,
+   "previously_source_rooted_reference_lost_mm2": 1.3587469271233745e-15
+  },
+  {
+   "uuid": "74c9049f-239c-4c29-90ee-2b66dcd0b1a3",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "6890058992db7eb70a7697a91598679a33b70d9dcfffeb74b4ca7ff79eb14181",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "a1e5ca5c-47cd-4e04-8a26-c33270c38881",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "8a6a672c84f0030a142c7b92948b81f12d3231f99aa6f1a932d3c60dc8550fca",
+   "original_uncovered_mm2": 0.10010662400697261,
+   "previously_source_rooted_reference_lost_mm2": 8.577009546588622e-16
+  },
+  {
+   "uuid": "c46f38ab-78ed-461b-9c6d-c2bc6a563462",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "9f05b3696e1b28e7c9773c38371cc1ea950f36dbffed3909ad14e583a6c17299",
+   "original_uncovered_mm2": 0.34263305592220317,
+   "previously_source_rooted_reference_lost_mm2": 3.87714878708559e-17
+  },
+  {
+   "uuid": "ed9abe4a-5b15-4e93-87bc-986aa291531f",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "48746226378ee1c6bb9f20804f00cbb63a026650e9954d51604c6c73a226a346",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "f1ac7fe2-aa88-4c7b-a8c6-93d0501848c6",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "ce6ed12a7977f5426b28d6c6f364ec098c1a5d6cbbf77576070b4acdd028b138",
+   "original_uncovered_mm2": 0.6555912391790039,
+   "previously_source_rooted_reference_lost_mm2": 1.3587469271233745e-15
+  },
+  {
+   "uuid": "7cab9bee-f6ba-4d72-9cad-d3af2cc70f74",
+   "net": "/motherboard_analog_output/AO1_OUT",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "1aea2c84deca8ef8d5552fd76d0e257848ddd27b52b98aacabba91d992cff68c",
+   "original_uncovered_mm2": 0.1255798128593521,
+   "previously_source_rooted_reference_lost_mm2": 1.0119953656545367e-16
+  },
+  {
+   "uuid": "1b66bba1-d0df-425a-86e9-9457363d0f7c",
+   "net": "/motherboard_analog_output/AO1_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "65b13ab219a050329506095a3d9de4ee1b8a2e6077c5991e96dd66ec7673d0f4",
+   "original_uncovered_mm2": 0.1988259246838716,
+   "previously_source_rooted_reference_lost_mm2": 5.702227201371501e-16
+  },
+  {
+   "uuid": "3c9c479e-fc08-4b93-8996-b9b03b73afbc",
+   "net": "/motherboard_analog_output/AO1_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "001cc024457ecad6490f95a72e2198eb02fe8558c869522ebb26cb5017f18b00",
+   "original_uncovered_mm2": 1.1116988222186157,
+   "previously_source_rooted_reference_lost_mm2": 5.0165053179473e-16
+  },
+  {
+   "uuid": "6dff839a-7651-4e83-be05-562169884392",
+   "net": "/motherboard_analog_output/AO1_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "1310defeb76d0112da97fb37921372748cd404be53d3cae4ca49d24f33a0675e",
+   "original_uncovered_mm2": 3.0666670052397285,
+   "previously_source_rooted_reference_lost_mm2": 2.333622215440784e-16
+  },
+  {
+   "uuid": "eb6a0ca9-5338-4db3-9650-1313ee29eb92",
+   "net": "/motherboard_analog_output/AO1_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "91b17867d0e99193d13ba86d9c25ba10851b92bc050a967e6566c6e124e7392f",
+   "original_uncovered_mm2": 11.466325268422173,
+   "previously_source_rooted_reference_lost_mm2": 3.2894693913210205e-16
+  },
+  {
+   "uuid": "3fd4460e-46ed-4e77-8c21-a3e542f6bd4b",
+   "net": "/motherboard_analog_output/AO1_LED_SINK",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "9451bd28f8f12e398df4e56c5e5a40094a91f19e545bb856516345cf57ee2fa2",
+   "original_uncovered_mm2": 0.1252831889102128,
+   "previously_source_rooted_reference_lost_mm2": 7.400415358621475e-16
+  },
+  {
+   "uuid": "dd8d0706-aa24-4367-826a-4ad0c5f2c02b",
+   "net": "/motherboard_analog_output/AO1_LED_SINK",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "eebab8cb8eef4cbfe6927de0e96c1273720c6c27dcd0f3b3a5c568ee9baf012e",
+   "original_uncovered_mm2": 0.12380595994669547,
+   "previously_source_rooted_reference_lost_mm2": 7.403798723911459e-16
+  },
+  {
+   "uuid": "2337d548-9639-4f8e-9acc-536a425ed47d",
+   "net": "/motherboard_analog_output/AO1_AMP_OUT",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "1ecff00ef1013073075e19733f75f61c311587b2352edb3cf0481c7434a47227",
+   "original_uncovered_mm2": 0.002841416199411949,
+   "previously_source_rooted_reference_lost_mm2": 7.786689952143823e-16
+  },
+  {
+   "uuid": "9f43e21e-a293-4638-ac62-f21c19fa807a",
+   "net": "/motherboard_analog_output/AO1_OPA_IN",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "5c59598a9e9ad9aff02e796ebe35def810b3e8a8df531fbaad71547708e0f4de",
+   "original_uncovered_mm2": 0.25115953849079775,
+   "previously_source_rooted_reference_lost_mm2": 1.0120795033887522e-16
+  },
+  {
+   "uuid": "fd1f8a26-f1c9-4fba-a4e2-e70d50cbfb5f",
+   "net": "/motherboard_analog_output/AO1_OPA_IN",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "f403ce260485939bc74c1981a7084d4c2eaf07a1440cd7980f2c01b5a7c40878",
+   "original_uncovered_mm2": 0.12483374283736595,
+   "previously_source_rooted_reference_lost_mm2": 5.681012871899485e-16
+  },
+  {
+   "uuid": "019dc47b-b41f-4dd2-8163-2911f6da6d3a",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "b218952145c7d493f353e1b043d1b1703d50ae1680d14a6ee4035b658e55313b",
+   "original_uncovered_mm2": 0.11621844006931997,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "036f4f5d-d8f0-4b5f-bd20-72e5cdeecb36",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "b941d046fc27b7b9165cc45a5a8aaa689d169dbf86dd26f1eecbc3d2ec0a07c8",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "4b9b4564-e069-43c5-9132-907b755a6fcb",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "e29f6d1271025c81e1b14f7fcbbdbd6820932f0bb71cdc1d88a30f7c704e1b26",
+   "original_uncovered_mm2": 0.6079714443839804,
+   "previously_source_rooted_reference_lost_mm2": 1.0939336453248144e-15
+  },
+  {
+   "uuid": "6a7a6862-5b3a-4764-bead-1acf9ac7b861",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "b4c8115b1abfd2701bf584b4fc6d6f01af5f06421f835c8304d8a87074417ec1",
+   "original_uncovered_mm2": 0.0473384191878649,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "b388f1d4-d9c4-4ecd-90f0-4526ad515b64",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "d280fa052c4927b35ae90b94ac0787e120f30b37abf17df960555bd5882dc74a",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "c982471f-da5c-48a0-a109-4e98d2db6dd5",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "9e8e29f57a5d7a15ac045e160f91ee467650fc782d108a89534f8df042f5d38b",
+   "original_uncovered_mm2": 0.12558813763882667,
+   "previously_source_rooted_reference_lost_mm2": 1.3176252098014383e-16
+  },
+  {
+   "uuid": "092db44b-77f3-461e-adba-34f8529230f9",
+   "net": "/motherboard_analog_output/AO1_SDA",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "24b9a74cbdf6d9750f2ecb11bbf989d46ba6ccf9b05b694364e6b7401a10a548",
+   "original_uncovered_mm2": 0.0008804730599794334,
+   "previously_source_rooted_reference_lost_mm2": 5.298945356139164e-16
+  },
+  {
+   "uuid": "c28a6f27-4269-4be1-b437-b814a8c9efd9",
+   "net": "/motherboard_analog_output/AO1_SDA",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "ba5cca457895f6f4e317f1c4b4912a9c5c58cf78b57e20085d8270aad1796890",
+   "original_uncovered_mm2": 0.12557982062871992,
+   "previously_source_rooted_reference_lost_mm2": 1.0120795033887522e-16
+  },
+  {
+   "uuid": "f060768b-d208-44f2-8d81-aef443d275d2",
+   "net": "/motherboard_analog_output/AO1_CLAMP_LED_K",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "f78a602d5321adff3803babfbaf2c26c326a5837e202a97fa5066183c6d84b1d",
+   "original_uncovered_mm2": 0.0949970234064872,
+   "previously_source_rooted_reference_lost_mm2": 2.3186190743268397e-16
+  },
+  {
+   "uuid": "bcbaeb23-c856-440f-af0f-11a5481a9150",
+   "net": "/motherboard_analog_output/AO1_MON_TERMINAL",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "a8d7cf75c782e398a79cc962da9b180b605ee05f785037b9fb27e9935dade7db",
+   "original_uncovered_mm2": 0.12558814234170873,
+   "previously_source_rooted_reference_lost_mm2": 1.0122054328239855e-16
+  },
+  {
+   "uuid": "0dde8b9a-082c-4f4c-9e77-e66224634119",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "3636b5130623b480699eeb758ce9c84aac4e9f1ab2ab505ed7b1de18ea0477a1",
+   "original_uncovered_mm2": 0.061368154120712656,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "39e1ad14-814c-465b-8300-c52e56aa6431",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "F.Cu",
+   "exact_body_WKB_sha256": "cd792fb542d84403ad7f62a1ec10af15de92c91fd9a4273cc01b8633ccfc6e98",
+   "original_uncovered_mm2": 0.12174311636090772,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "20a8d164-7eb0-48eb-8b1f-3a17658facee",
+   "net": "/motherboard_analog_output/AO1_SERIES_LED_K",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "f870734794292b350747fcf1a8010f56432338b5aac2f986b80c326ced53c7ea",
+   "original_uncovered_mm2": 0.8510091551089741,
+   "previously_source_rooted_reference_lost_mm2": 1.8608271536558296e-17
+  },
+  {
+   "uuid": "306a8871-b703-4d0e-8b9d-996cd7086f63",
+   "net": "/motherboard_analog_output/AO1_SERIES_LED_K",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "5cc7d08e190f9842166d46acd3c8b4ab7753dc1bb673e9beff66c68fe73d28a0",
+   "original_uncovered_mm2": 0.8342272577472941,
+   "previously_source_rooted_reference_lost_mm2": 5.551852751533478e-16
+  },
+  {
+   "uuid": "bb7ad1b1-ae5a-43a8-bb81-b77aa2d63148",
+   "net": "/motherboard_analog_output/AO1_SERIES_LED_K",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "0696bb351761b0c617d9dca2415efb245f27e25368aa65b98ce35b212899a116",
+   "original_uncovered_mm2": 0.46653167428285425,
+   "previously_source_rooted_reference_lost_mm2": 1.0121027280152184e-16
+  },
+  {
+   "uuid": "cc79837d-c7e5-4f04-9229-165c788d9d19",
+   "net": "/motherboard_analog_output/AO1_SERIES_LED_K",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "8ea8742b6f743a52695896950f31f746a60ca8542c8e4fbb69711d87a69000ce",
+   "original_uncovered_mm2": 0.029824878076452368,
+   "previously_source_rooted_reference_lost_mm2": 2.0105445086571194e-15
+  },
+  {
+   "uuid": "03061043-059f-4733-833e-68a14cdafc73",
+   "net": "/motherboard_analog_output/AO1_OUTPUT_PROTECTED",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "eada39cf4d251dbe3de2ef2b71a3cbe9d35cde65d24d43701cbda06574821977",
+   "original_uncovered_mm2": 0.12557981388395867,
+   "previously_source_rooted_reference_lost_mm2": 1.0119991076411056e-16
+  },
+  {
+   "uuid": "b8c99931-2819-4056-8df3-2b97742c9888",
+   "net": "/motherboard_analog_output/AO1_OUTPUT_PROTECTED",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "86fd7fbfacb97d4538196f5664867f8c8ea8e703ff4ba16607ae01c456c823f4",
+   "original_uncovered_mm2": 0.5389542208826004,
+   "previously_source_rooted_reference_lost_mm2": 3.916560982952657e-17
+  },
+  {
+   "uuid": "dc5c762a-173b-485c-89b1-37f1aace70e5",
+   "net": "/motherboard_analog_output/AO1_SDA",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "4f03097d546b8cbb0d7c3a8952e5cbab077d57cea929a2918e44e6fe1462d4c8",
+   "original_uncovered_mm2": 0.111269433920966,
+   "previously_source_rooted_reference_lost_mm2": 3.876846063707957e-16
+  },
+  {
+   "uuid": "3b0be424-ed04-4f71-8697-4e0b656c022f",
+   "net": "/motherboard_analog_output/AO1_MON_5V",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "1f4159e65b5c28796637f11d1bb2be7c11588948b32a8ccbd6cff84d754e21ad",
+   "original_uncovered_mm2": 0.0031414208805543,
+   "previously_source_rooted_reference_lost_mm2": 3.3590649378708633e-16
+  },
+  {
+   "uuid": "443b232d-5700-4af0-b35d-79fce9582fdf",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "f0dfd00f155c3223e077a7f7f5af41a54373c1f7d0095d2a0e40a6300bfa0e67",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "4551de63-5113-4e03-8eb8-f5c8f279349e",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "5eafa10c92fb724ddf07a8a19dd5c0868c39ad121dd5fe41fa3f4283c2c2a334",
+   "original_uncovered_mm2": 0.12609749109340815,
+   "previously_source_rooted_reference_lost_mm2": 3.4339447905764197e-16
+  },
+  {
+   "uuid": "ac41743c-529d-410b-afe9-3eaef78c0029",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "3ff3795b24388c31b7266f9851ee897c2f6d6567daced08be3146b2fcf3d1a90",
+   "original_uncovered_mm2": 0.0,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "c3e922b9-be38-4252-a22c-54ca9190bc72",
+   "net": "/motherboard_analog_output/AO1_DAC_SCLK",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "3e4238fd0b07e8bb9ad4599d93a81429e3fa6d6aac8cd04dbbfb0e79d0f55346",
+   "original_uncovered_mm2": 0.878352732657473,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "32729b72-15e1-41fc-8b2a-24b2f103938a",
+   "net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "layer": "In3.Cu",
+   "exact_body_WKB_sha256": "b2191bc565413b9b56f576ad9e8199e513a71c375f42d1006abf06e41eaebb77",
+   "original_uncovered_mm2": 1.1684757389066622,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "4186af43-1639-4fd9-ac39-839c12fd21f9",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "257a5f0ff9d54e5f3b5ac3282690c85c729945534c60bb10e132c07a95cde28d",
+   "original_uncovered_mm2": 0.12557981425901055,
+   "previously_source_rooted_reference_lost_mm2": 1.752822785643642e-16
+  },
+  {
+   "uuid": "8979bbf0-fc9a-45ac-ac44-40f95b46395d",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "1560bf5fa6e76b88f29b4048a72f9d8f4e0e0d1ac03963d238120d85fda84b3c",
+   "original_uncovered_mm2": 0.11139257992970311,
+   "previously_source_rooted_reference_lost_mm2": 2.786213912130254e-16
+  },
+  {
+   "uuid": "c0c42d4b-8da5-4a07-a83e-0680b74560df",
+   "net": "/motherboard_analog_output/AO1_5V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "48d499189e3e76dcc31353d73001491d3bb42b6743cc4c5c0424bede1dc824a9",
+   "original_uncovered_mm2": 2.530776009812334,
+   "previously_source_rooted_reference_lost_mm2": 3.247708511828147e-16
+  },
+  {
+   "uuid": "4ebc2633-2e43-43fd-9886-58d19012776c",
+   "net": "/motherboard_analog_output/AO1_OUT",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "7d4b336a180823106660ae219ac47082b7e6cd8cfae0afee329a0c5cd6b9cd63",
+   "original_uncovered_mm2": 0.12557981960399497,
+   "previously_source_rooted_reference_lost_mm2": 1.0120757612325467e-16
+  },
+  {
+   "uuid": "3cc8a511-e734-4f8c-9059-581a477f8191",
+   "net": "/motherboard_analog_output/AO1_LED_SINK",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "3ea11f7b123cdd923864fc00c63c2c5185565258e5722993d8d23fe22af44fa0",
+   "original_uncovered_mm2": 0.1255798142589917,
+   "previously_source_rooted_reference_lost_mm2": 5.529643786569495e-16
+  },
+  {
+   "uuid": "a3a26925-7100-48cd-b9de-160ea56ea466",
+   "net": "/motherboard_analog_output/AO1_LED_SINK",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "3fffbcc1dbf21eeb02c83f0a41785f778a4f31a534c8031a0cc45cdca9e1bce8",
+   "original_uncovered_mm2": 0.2685417748005358,
+   "previously_source_rooted_reference_lost_mm2": 2.0239344054873154e-16
+  },
+  {
+   "uuid": "4f0cf8a7-be2f-4e23-a423-d99ed0670629",
+   "net": "/motherboard_analog_output/AO1_OPA_IN",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "42d10b47bd26b6e12ee6f1167b7bda3a575812192ce4a5179ca7e9fda271b963",
+   "original_uncovered_mm2": 0.42410531421088327,
+   "previously_source_rooted_reference_lost_mm2": 1.8151935945356232e-16
+  },
+  {
+   "uuid": "6d6c237e-29dd-43e7-b1d2-c9e10120dd60",
+   "net": "/motherboard_analog_output/AO1_OPA_IN",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "15994e5dee10432cdad6e58f28d498b01dc6803878b1c2f245161e0972b750d4",
+   "original_uncovered_mm2": 0.12705404793302205,
+   "previously_source_rooted_reference_lost_mm2": 7.504201716484306e-16
+  },
+  {
+   "uuid": "835e7565-7c38-4cb0-bd8f-cdac91596323",
+   "net": "/motherboard_analog_output/AO1_OPA_IN",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "5b6d03ed6481335b3b9017f3a19a5283a262f2242250d546ae9cdac9ad5ab09a",
+   "original_uncovered_mm2": 1.4216133225874181,
+   "previously_source_rooted_reference_lost_mm2": 1.0124082256629222e-16
+  },
+  {
+   "uuid": "8551633f-438e-4481-b8f9-4d1871115e9a",
+   "net": "/motherboard_analog_output/AO1_UV_SENSE",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "50117c6747e2ac149267d5414f0706a8133bd21d1ba9d79c69105b452a9bc5e9",
+   "original_uncovered_mm2": 0.23600592633550016,
+   "previously_source_rooted_reference_lost_mm2": 2.0241465214393542e-16
+  },
+  {
+   "uuid": "5fc0beee-f884-43e1-b087-3bc695ea8ae4",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "ea2de2a270b20514489b1e622ac73ecc1ee263254f573e4bd1a481eea113d478",
+   "original_uncovered_mm2": 0.018381225510470733,
+   "previously_source_rooted_reference_lost_mm2": 6.394884530067313e-15
+  },
+  {
+   "uuid": "6fa5d8e3-6e77-45bd-98c5-33ca33d43698",
+   "net": "/motherboard_analog_output/AO1_MON_12V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "e9d3613d6974bb69fa63d13fa1716d3699e00b2998e9803aa537dfdc4872ec2b",
+   "original_uncovered_mm2": 0.12557971786207675,
+   "previously_source_rooted_reference_lost_mm2": 0.0
+  },
+  {
+   "uuid": "9459bfe9-c0a2-4c7b-b2c3-5e5ddbbbe3e9",
+   "net": "/motherboard_analog_output/AO1_MON_TERMINAL",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "63ad27beaeacc0c09765552e4b3ec33dde6e37ac3b5d8e70d9c2315cda2174eb",
+   "original_uncovered_mm2": 0.12559254077169213,
+   "previously_source_rooted_reference_lost_mm2": 1.7528190436570733e-16
+  },
+  {
+   "uuid": "e6d1117d-e1d4-47a1-bedc-bd69153b1039",
+   "net": "/motherboard_analog_output/AO1_MON_5V",
+   "layer": "B.Cu",
+   "exact_body_WKB_sha256": "d69a67b44b447339b43213e8d4fe4020e520209135310593f80b3031b8640345",
+   "original_uncovered_mm2": 0.13176747788503532,
+   "previously_source_rooted_reference_lost_mm2": 1.2466997498771558e-16
+  }
+ ],
+ "unchanged_reference_losses": [],
+ "paired_returns": [
+  {
+   "signal_uuid": "d0f11d7f-bfce-5400-8455-c5864e23647e",
+   "signal_net": "/motherboard_analog_output/AO1_VREF",
+   "choices": [
+    {
+     "uuid": "c35ca6b4-426d-5180-9a66-cc78537275f6",
+     "at_mm": [
+      373.1,
+      129.45
+     ],
+     "distance_mm": 0.9178779875342458,
+     "actual_source_or_conservative_new_flash_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "In3.Cu",
+      "In4.Cu"
+     ],
+     "source_rooted_finite_annular_interior_mm2": {
+      "F.Cu": 0.10013486532313079,
+      "B.Cu": 0.10013486532313079
+     },
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "signal_uuid": "fe8dc979-0011-5113-ba87-df0280cf75e6",
+   "signal_net": "/motherboard_analog_output/AO1_DAC_SDI",
+   "choices": [
+    {
+     "uuid": "93277214-d3c5-59cf-a00a-ca6d0e19e77f",
+     "at_mm": [
+      373.05,
+      127.5
+     ],
+     "distance_mm": 0.8732124598286458,
+     "actual_source_or_conservative_new_flash_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "In3.Cu",
+      "In4.Cu"
+     ],
+     "source_rooted_finite_annular_interior_mm2": {
+      "F.Cu": 0.10013486532313255,
+      "B.Cu": 0.10013486532313255
+     },
+     "pass": true
+    }
+   ],
+   "pass": true
+  }
+ ],
+ "paired_return_errors": [],
+ "functional_source_root_witness": {
+  "In1.Cu": {
+   "source_pad_id": "U14619.7#0",
+   "source_pad_uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+   "source_net": "/motherboard_analog_output/AO1_COM",
+   "source_pad_exact_at_mm": [
+    342.438,
+    122.55
+   ],
+   "source_pad_actual_layers": [
+    "B.Cu",
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu"
+   ],
+   "all_drills_subtracted_first": true,
+   "all_fill_pieces_have_distinct_graph_keys": true,
+   "source_rooted_fill_mm2": 1101.1842733712301,
+   "rooted_physical_keys": [
+    [
+     "p",
+     "U14619.7#0"
+    ],
+    [
+     "t",
+     "2d14cb0b-2c58-464b-9b4d-9a0dadee3106"
+    ],
+    [
+     "v",
+     "04efec1f-c4c9-4735-ad96-55378a970df1"
+    ],
+    [
+     "v",
+     "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+    ],
+    [
+     "v",
+     "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+    ],
+    [
+     "v",
+     "1421c27e-e018-4761-bc4b-5601a6cbf108"
+    ],
+    [
+     "v",
+     "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+    ],
+    [
+     "v",
+     "166e13ec-7d92-47c0-89cd-2b029e665caf"
+    ],
+    [
+     "v",
+     "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+    ],
+    [
+     "v",
+     "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+    ],
+    [
+     "v",
+     "24496872-8609-4596-9c18-ef951113069d"
+    ],
+    [
+     "v",
+     "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+    ],
+    [
+     "v",
+     "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+    ],
+    [
+     "v",
+     "2f8c234d-469e-472e-af5e-4939e3747584"
+    ],
+    [
+     "v",
+     "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+    ],
+    [
+     "v",
+     "40682fb5-280f-441a-8499-4cdf21e31bec"
+    ],
+    [
+     "v",
+     "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+    ],
+    [
+     "v",
+     "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+    ],
+    [
+     "v",
+     "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+    ],
+    [
+     "v",
+     "48e22cd4-5ce9-462b-943f-599919a7e773"
+    ],
+    [
+     "v",
+     "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+    ],
+    [
+     "v",
+     "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+    ],
+    [
+     "v",
+     "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+    ],
+    [
+     "v",
+     "6def9be5-9d21-4b16-aadb-fea343b907f8"
+    ],
+    [
+     "v",
+     "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+    ],
+    [
+     "v",
+     "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+    ],
+    [
+     "v",
+     "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+    ],
+    [
+     "v",
+     "77f46bb5-3d8e-4759-aaae-a82180941214"
+    ],
+    [
+     "v",
+     "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+    ],
+    [
+     "v",
+     "8751444e-ca04-43a9-b712-fd9786c4327e"
+    ],
+    [
+     "v",
+     "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+    ],
+    [
+     "v",
+     "a7e88e2a-55a3-418e-865a-483b574d72fd"
+    ],
+    [
+     "v",
+     "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+    ],
+    [
+     "v",
+     "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+    ],
+    [
+     "v",
+     "d12e1928-058b-49a1-943e-2664ea693fc3"
+    ],
+    [
+     "v",
+     "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+    ],
+    [
+     "v",
+     "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+    ],
+    [
+     "v",
+     "df662867-e03a-458b-b5a9-4bd34c1ed984"
+    ],
+    [
+     "v",
+     "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+    ],
+    [
+     "v",
+     "e889a469-4bea-444a-b133-43e968f2d56d"
+    ],
+    [
+     "v",
+     "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+    ],
+    [
+     "v",
+     "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+    ],
+    [
+     "v",
+     "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+    ],
+    [
+     "v",
+     "f82f119d-bde2-4a66-a406-cd7198a9c271"
+    ],
+    [
+     "v",
+     "fa1b10e7-f057-44ed-99c1-242da946da82"
+    ],
+    [
+     "v",
+     "c35ca6b4-426d-5180-9a66-cc78537275f6"
+    ],
+    [
+     "v",
+     "93277214-d3c5-59cf-a00a-ca6d0e19e77f"
+    ]
+   ]
+  },
+  "In4.Cu": {
+   "source_pad_id": "U14619.7#0",
+   "source_pad_uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+   "source_net": "/motherboard_analog_output/AO1_COM",
+   "source_pad_exact_at_mm": [
+    342.438,
+    122.55
+   ],
+   "source_pad_actual_layers": [
+    "B.Cu",
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu"
+   ],
+   "all_drills_subtracted_first": true,
+   "all_fill_pieces_have_distinct_graph_keys": true,
+   "source_rooted_fill_mm2": 1101.1842733712301,
+   "rooted_physical_keys": [
+    [
+     "p",
+     "U14619.7#0"
+    ],
+    [
+     "v",
+     "04efec1f-c4c9-4735-ad96-55378a970df1"
+    ],
+    [
+     "v",
+     "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+    ],
+    [
+     "v",
+     "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+    ],
+    [
+     "v",
+     "1421c27e-e018-4761-bc4b-5601a6cbf108"
+    ],
+    [
+     "v",
+     "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+    ],
+    [
+     "v",
+     "166e13ec-7d92-47c0-89cd-2b029e665caf"
+    ],
+    [
+     "v",
+     "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+    ],
+    [
+     "v",
+     "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+    ],
+    [
+     "v",
+     "24496872-8609-4596-9c18-ef951113069d"
+    ],
+    [
+     "v",
+     "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+    ],
+    [
+     "v",
+     "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+    ],
+    [
+     "v",
+     "2f8c234d-469e-472e-af5e-4939e3747584"
+    ],
+    [
+     "v",
+     "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+    ],
+    [
+     "v",
+     "40682fb5-280f-441a-8499-4cdf21e31bec"
+    ],
+    [
+     "v",
+     "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+    ],
+    [
+     "v",
+     "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+    ],
+    [
+     "v",
+     "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+    ],
+    [
+     "v",
+     "48e22cd4-5ce9-462b-943f-599919a7e773"
+    ],
+    [
+     "v",
+     "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+    ],
+    [
+     "v",
+     "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+    ],
+    [
+     "v",
+     "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+    ],
+    [
+     "v",
+     "6def9be5-9d21-4b16-aadb-fea343b907f8"
+    ],
+    [
+     "v",
+     "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+    ],
+    [
+     "v",
+     "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+    ],
+    [
+     "v",
+     "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+    ],
+    [
+     "v",
+     "77f46bb5-3d8e-4759-aaae-a82180941214"
+    ],
+    [
+     "v",
+     "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+    ],
+    [
+     "v",
+     "8751444e-ca04-43a9-b712-fd9786c4327e"
+    ],
+    [
+     "v",
+     "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+    ],
+    [
+     "v",
+     "a7e88e2a-55a3-418e-865a-483b574d72fd"
+    ],
+    [
+     "v",
+     "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+    ],
+    [
+     "v",
+     "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+    ],
+    [
+     "v",
+     "d12e1928-058b-49a1-943e-2664ea693fc3"
+    ],
+    [
+     "v",
+     "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+    ],
+    [
+     "v",
+     "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+    ],
+    [
+     "v",
+     "df662867-e03a-458b-b5a9-4bd34c1ed984"
+    ],
+    [
+     "v",
+     "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+    ],
+    [
+     "v",
+     "e889a469-4bea-444a-b133-43e968f2d56d"
+    ],
+    [
+     "v",
+     "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+    ],
+    [
+     "v",
+     "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+    ],
+    [
+     "v",
+     "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+    ],
+    [
+     "v",
+     "f82f119d-bde2-4a66-a406-cd7198a9c271"
+    ],
+    [
+     "v",
+     "fa1b10e7-f057-44ed-99c1-242da946da82"
+    ],
+    [
+     "v",
+     "c35ca6b4-426d-5180-9a66-cc78537275f6"
+    ],
+    [
+     "v",
+     "93277214-d3c5-59cf-a00a-ca6d0e19e77f"
+    ]
+   ]
+  }
+ },
+ "original_source_root_witness": {
+  "In1.Cu": {
+   "source_pad_id": "U14619.7#0",
+   "source_pad_uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+   "source_net": "/motherboard_analog_output/AO1_COM",
+   "source_pad_exact_at_mm": [
+    342.438,
+    122.55
+   ],
+   "source_pad_actual_layers": [
+    "B.Cu",
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu"
+   ],
+   "all_drills_subtracted_first": true,
+   "all_fill_pieces_have_distinct_graph_keys": true,
+   "source_rooted_fill_mm2": 1102.3436798652924,
+   "rooted_physical_keys": [
+    [
+     "p",
+     "U14619.7#0"
+    ],
+    [
+     "t",
+     "2d14cb0b-2c58-464b-9b4d-9a0dadee3106"
+    ],
+    [
+     "v",
+     "04efec1f-c4c9-4735-ad96-55378a970df1"
+    ],
+    [
+     "v",
+     "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+    ],
+    [
+     "v",
+     "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+    ],
+    [
+     "v",
+     "1421c27e-e018-4761-bc4b-5601a6cbf108"
+    ],
+    [
+     "v",
+     "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+    ],
+    [
+     "v",
+     "166e13ec-7d92-47c0-89cd-2b029e665caf"
+    ],
+    [
+     "v",
+     "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+    ],
+    [
+     "v",
+     "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+    ],
+    [
+     "v",
+     "24496872-8609-4596-9c18-ef951113069d"
+    ],
+    [
+     "v",
+     "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+    ],
+    [
+     "v",
+     "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+    ],
+    [
+     "v",
+     "2f8c234d-469e-472e-af5e-4939e3747584"
+    ],
+    [
+     "v",
+     "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+    ],
+    [
+     "v",
+     "40682fb5-280f-441a-8499-4cdf21e31bec"
+    ],
+    [
+     "v",
+     "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+    ],
+    [
+     "v",
+     "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+    ],
+    [
+     "v",
+     "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+    ],
+    [
+     "v",
+     "48e22cd4-5ce9-462b-943f-599919a7e773"
+    ],
+    [
+     "v",
+     "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+    ],
+    [
+     "v",
+     "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+    ],
+    [
+     "v",
+     "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+    ],
+    [
+     "v",
+     "6def9be5-9d21-4b16-aadb-fea343b907f8"
+    ],
+    [
+     "v",
+     "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+    ],
+    [
+     "v",
+     "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+    ],
+    [
+     "v",
+     "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+    ],
+    [
+     "v",
+     "77f46bb5-3d8e-4759-aaae-a82180941214"
+    ],
+    [
+     "v",
+     "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+    ],
+    [
+     "v",
+     "8751444e-ca04-43a9-b712-fd9786c4327e"
+    ],
+    [
+     "v",
+     "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+    ],
+    [
+     "v",
+     "a7e88e2a-55a3-418e-865a-483b574d72fd"
+    ],
+    [
+     "v",
+     "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+    ],
+    [
+     "v",
+     "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+    ],
+    [
+     "v",
+     "d12e1928-058b-49a1-943e-2664ea693fc3"
+    ],
+    [
+     "v",
+     "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+    ],
+    [
+     "v",
+     "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+    ],
+    [
+     "v",
+     "df662867-e03a-458b-b5a9-4bd34c1ed984"
+    ],
+    [
+     "v",
+     "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+    ],
+    [
+     "v",
+     "e889a469-4bea-444a-b133-43e968f2d56d"
+    ],
+    [
+     "v",
+     "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+    ],
+    [
+     "v",
+     "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+    ],
+    [
+     "v",
+     "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+    ],
+    [
+     "v",
+     "f82f119d-bde2-4a66-a406-cd7198a9c271"
+    ],
+    [
+     "v",
+     "fa1b10e7-f057-44ed-99c1-242da946da82"
+    ]
+   ]
+  },
+  "In4.Cu": {
+   "source_pad_id": "U14619.7#0",
+   "source_pad_uuid": "ba8a438e-2bdd-4f29-9cf0-fe1f66d3471e",
+   "source_net": "/motherboard_analog_output/AO1_COM",
+   "source_pad_exact_at_mm": [
+    342.438,
+    122.55
+   ],
+   "source_pad_actual_layers": [
+    "B.Cu",
+    "F.Cu",
+    "In1.Cu",
+    "In2.Cu",
+    "In3.Cu",
+    "In4.Cu"
+   ],
+   "all_drills_subtracted_first": true,
+   "all_fill_pieces_have_distinct_graph_keys": true,
+   "source_rooted_fill_mm2": 1102.3436798652924,
+   "rooted_physical_keys": [
+    [
+     "p",
+     "U14619.7#0"
+    ],
+    [
+     "v",
+     "04efec1f-c4c9-4735-ad96-55378a970df1"
+    ],
+    [
+     "v",
+     "08cd57d0-8be8-4b61-b772-74aa9de9e619"
+    ],
+    [
+     "v",
+     "0b828102-0f0c-4eed-b46a-71b5225ee9e8"
+    ],
+    [
+     "v",
+     "1421c27e-e018-4761-bc4b-5601a6cbf108"
+    ],
+    [
+     "v",
+     "155fb596-b8c7-4274-ab6b-d4be4cad994f"
+    ],
+    [
+     "v",
+     "166e13ec-7d92-47c0-89cd-2b029e665caf"
+    ],
+    [
+     "v",
+     "16730302-3df9-4d98-85c9-eae7aa0df7e8"
+    ],
+    [
+     "v",
+     "2434d3a9-3a5a-41bb-982a-3462780eb0c8"
+    ],
+    [
+     "v",
+     "24496872-8609-4596-9c18-ef951113069d"
+    ],
+    [
+     "v",
+     "27dc3b88-d5fa-4e7c-a8ea-ef72d7081450"
+    ],
+    [
+     "v",
+     "2e243304-8de5-44b1-bee4-d95e5ae3017b"
+    ],
+    [
+     "v",
+     "2f8c234d-469e-472e-af5e-4939e3747584"
+    ],
+    [
+     "v",
+     "3cd3559e-17ab-4f8a-b1b6-d99b518318c7"
+    ],
+    [
+     "v",
+     "40682fb5-280f-441a-8499-4cdf21e31bec"
+    ],
+    [
+     "v",
+     "42cefb90-a7a3-4ea7-b76e-0fdca4d690c3"
+    ],
+    [
+     "v",
+     "44ee9783-e2b4-4c79-ac7f-bcff62e18bc3"
+    ],
+    [
+     "v",
+     "47b899e2-6b7d-486e-9f56-ae87a4c651c6"
+    ],
+    [
+     "v",
+     "48e22cd4-5ce9-462b-943f-599919a7e773"
+    ],
+    [
+     "v",
+     "5ce0fb2a-9f72-428d-ac71-4bd91f10fab4"
+    ],
+    [
+     "v",
+     "5cfbd6be-5bd8-48a7-abd3-84a6f21a7c3f"
+    ],
+    [
+     "v",
+     "62518ab7-02e5-4c8e-9cc8-8f45ce7f29a6"
+    ],
+    [
+     "v",
+     "6def9be5-9d21-4b16-aadb-fea343b907f8"
+    ],
+    [
+     "v",
+     "71801e5b-9c6a-4cfc-8571-e56bd7ae5418"
+    ],
+    [
+     "v",
+     "71c8a9a4-7c4e-4b29-ad00-0d0f1050fb4d"
+    ],
+    [
+     "v",
+     "76253687-0e22-4acf-a2f1-ea16c9f7d9b6"
+    ],
+    [
+     "v",
+     "77f46bb5-3d8e-4759-aaae-a82180941214"
+    ],
+    [
+     "v",
+     "82d558d1-1a18-4aec-8a66-53fc24db5d16"
+    ],
+    [
+     "v",
+     "8751444e-ca04-43a9-b712-fd9786c4327e"
+    ],
+    [
+     "v",
+     "9bd0c850-a4de-4fd4-b5d2-c57760361d3f"
+    ],
+    [
+     "v",
+     "a7e88e2a-55a3-418e-865a-483b574d72fd"
+    ],
+    [
+     "v",
+     "aceb5f90-621a-4fb1-b215-f9883e9562ca"
+    ],
+    [
+     "v",
+     "d011d3f0-4fd6-4485-85c3-edbf8160412c"
+    ],
+    [
+     "v",
+     "d12e1928-058b-49a1-943e-2664ea693fc3"
+    ],
+    [
+     "v",
+     "d42b6146-af18-4fc3-8192-3c93703d3d5b"
+    ],
+    [
+     "v",
+     "db3a034d-d729-4ea3-adde-bd63b0243dc9"
+    ],
+    [
+     "v",
+     "df662867-e03a-458b-b5a9-4bd34c1ed984"
+    ],
+    [
+     "v",
+     "e778535b-bfe5-44f7-a8ba-20ee8b450481"
+    ],
+    [
+     "v",
+     "e889a469-4bea-444a-b133-43e968f2d56d"
+    ],
+    [
+     "v",
+     "e8e8b634-7ab8-4175-9e7b-11fec4c04ba2"
+    ],
+    [
+     "v",
+     "ecdf9a07-5875-4c54-a1cc-e10afa4ddb80"
+    ],
+    [
+     "v",
+     "f3fcd54c-c8af-457e-874b-cf1e8972739b"
+    ],
+    [
+     "v",
+     "f82f119d-bde2-4a66-a406-cd7198a9c271"
+    ],
+    [
+     "v",
+     "fa1b10e7-f057-44ed-99c1-242da946da82"
+    ]
+   ]
+  }
+ },
+ "all_ordinary_new_native_annuli": "OPEN; host conservative all6",
+ "native_jobs": 0,
+ "gpu_jobs": 0,
+ "board_emitted": false,
+ "adopted": false,
+ "manufacturing_ready": false,
+ "open_gates": [
+  "Fresh root-composed latest parent exact new native raw net/pose/all6 annuli and current+r07+r06 all-net no-loss/DRC",
+  "Actual SI/edge/timing and VREF analog loop/noise/decoupling/PDN/manufacturing qualification"
+ ],
+ "read_files_sha256": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1-reference-coupled-r18.json": "dec4321581a1d9e3cdab41f556804e45469ff3a82850f772a5e22a98362e206f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\staged\\r07-four-path-fag-repaired.kicad_pcb": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+  "Z:\\pcb-runs\\claude-finish\\integrate\\revs\\r06-stitch-plane-pads-2.kicad_pcb": "0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53",
+  "Z:\\pcb-runs\\impedance\\controlled-nets.json": "cb316bbb5fb0b448f99d28b093f88a93814ff94143015a3471599b595ae697f0",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\ao1-vref-sdi-components-r3\\receipt.json": "cec31d7091cd7ecbdc9ae03e61aa531643eacfe963d15f3a2d708c6cda400022",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\sbc-native-contract-r1\\sbc-owned-native-contract.kicad_pcb": "eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\native-198b-geometry\\geometry.json": "ad4d776a8703702d9bd682c1427d7883b729e8c6dcfbaad87c9e07c7b981d5d1",
+  "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\w\\geom.json": "890544e995ee122702538db4e114710ddf0769fbe9d1a2bfee749f03acde49fa",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\native-198b-geometry\\actual-via-flashes.json": "80e3358e53bdcfc7bff1b091a6d67502b7b4be63a917e3ab33d1cb2070a5321d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\alternate-r07\\reserved-r07.json": "0e53fc17a43869c5fa12ec0752f98e60001a6ed4792fb03fc021d8ed99cca457",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\alternate-r07\\reserve\\board.kicad_dru": "2f062db3e781ac21760cbcc03ca586ecc627e1b2f58a538e2de5421034a2ca94",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\measure\\r07-four-fag-shared\\partitions.json": "a0c2510bcff3b36d6ad9e0c2f717bc2dfb36e1e92b28851d37e4f510835a6ad7",
+  "Z:\\pcb-runs\\claude-finish\\integrate\\measure\\r06-stitch-plane-pads-2\\partitions.json": "d431c16a5318cfcd438f73a9280d624d72ca233b0bf01aae636f827d21ea2bdf",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\audit_ao1_reference_coupled_mon_r4.py": "0891faddab9f30b3ac66e5644a63bf26b198a8de1345ce20da3f174b069a3955",
+  "Z:\\pcb-runs\\claude-finish\\tools\\integrate\\pcbtext.py": "7bfe4530e7d5a4b2aeb06560cbf9fbe68373e4a5230dcf5dd4e816dd63ad3ef7",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\compose_additions.py": "6226cb54310b84407c9dd0e733eaeaac3fe3b638560b5a61b04cdb2517c8d63e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\reconcile_dfm.py": "70a19969cb1ac179315ddec7d471ee6beda2df77f963a779f3d6ce0d0fb50f72",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\prepare_sbc_plan.py": "8389f5cd633c25787a1e5f84273cd14d42e823bf9d5103566933da296191aefe",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\prepare_sbc_hubs.py": "a34d4d1448d312855584a11ca9cb486e1f15c8bd6fc32565ae8b6e7836ff676f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\prepare_sbc_c05_proposal.py": "d918cd6c630a527864209b0424d0dfb680b00baed63f861e889fe36143258212",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\screen_c06.py": "64fdf41dad22aff5f84be55588d4b7e6a565e56bb5bacc767d00626cc211b10e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\screen_dive_c06.py": "57116d5a0e7d0ab69b252c45bc9276efcda88aeba30e65c92daa4b9775c4375a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\alternate-r07\\screen_r07.py": "a3641c0a2df87316d2607b92cc3a444781c5312bfb21a838df55894063b815bf",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\build_graph.py": "c58aa255a09f3393fbe6bcbc63a6730ca981bd2c2e9f612631cf6a0881ffa2de",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\inspect_owned.py": "b5c24719f340756ce9b58c50849e83cc34a4c90ab27445e67f885f909902b27f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\plan_repair.py": "b6fa56a424c6f7a2191c731c23b691268b4209595c62f09c59687b6fa20a4309",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\whole_group_r3.py": "ec623bb573f762eaaec985593141473f37a71167773db0d18aa6d7c2e59f9e9a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\construct.py": "5486815b9120d20588b0434ed42e3a90cc970f39fc9250aa7164485366d70fa6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\two-zero-via\\compose_two.py": "0ea17871a74457c3eaa8b54692878cbfc6609095457c25b407bc229ab9a29765",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\four-path\\compose_four.py": "248dd20f4c3f9356826243acc7772eacec61a5ef863908b7ef72bb6f7adaa763",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\four-fag\\validate_combined.py": "778e36d4777baa2a48f50d3ac0c8ade4a7fa1166b9b67d71b6e58f798b1fb016",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\four-fag\\next-closure\\screen_closure_r1.py": "23cd491df8df1609a5111eed75fd60c75c42d7c31b4f6dcc7a6df5dbbc8792f6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\coupled_screen.py": "f85cd6520057d5b2b0308a70388f994be00b5279a48d3bebd556d35ca0b3df5a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\net_identity_exact.py": "b7bdc2aca4218d4169d7a1264e58c052bcae73d022191697256fe464f32a7487",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\audit_aux_exact_raw.py": "3d5a7d6aa9247ae28782a40c3deb2e8f68b2475a250b895e2be7d07d11851ed6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\native_flash_model.py": "9feff426c3f6166468736232df13ceb28858e9a4708fa27568c589c96c3350ff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1_independent_fill_r1.py": "173d31c656d205569e8a20056fdf8d09edc2b66be8875ff12867b1e3f764a309",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\audit_ao1_positive_operation_r4.py": "55b040b492e739b695ab7d162ecab05b5a7414a85dc632fdbd85012fe010ca6a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\ao1_reference_gap_diagnostic_r2.py": "9034844b805e5ee2e89b659db1c12bcb4e28d1670d55718dc7764ad4f68c8844"
+ },
+ "elapsed_seconds": 136.62749910001003
+}

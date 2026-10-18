@@ -1,0 +1,13 @@
+"""Pin helper-reservation provenance against actual native project constraints."""
+import sys,json,time
+from pathlib import Path
+from shapely.geometry import Point
+from shapely.ops import unary_union
+P=Path(__file__).resolve().parent;H=P.parent
+for d in ('field-power','sbc-power','coupled-recovery'):sys.path.insert(0,str(H/d))
+import R157_native_selected_actual_conversion_r673 as N
+K=N.K;L=N.L;A=K.A;sha=N.sha
+OUT=P/'CM79-CDONE-frozen-planner-reserve-versus-actual-native-provenance-r426'
+def main():
+ started=time.monotonic();assert not OUT.exists();OUT.mkdir();r,ex=A.reservations();name='RESERVE_KEEPOUT_ESC_J15002_F';rule=next(x for x in r['keepouts']if x['name']==name);shape=unary_union(L.poly(rule['outline']));directory=A.G.C06/'alternate-r07';sourceJSON=directory/'reserved-r07.json';sourceDRU=directory/'reserve/board.kicad_dru';nativePCB=N.R157/'copy/board.kicad_pcb';nativeDRU=N.R157/'copy/board.kicad_dru';actualPCB=nativePCB.read_text(encoding='utf-8');actualDRU=nativeDRU.read_text(encoding='utf-8');lines=[line for line in sourceDRU.read_text(encoding='utf-8').splitlines()if name in line];result={'status':'EXACT_RESERVATION_PROVENANCE_NOT_NATIVE_ACCEPTANCE_OR_WAIVER','reservation_name':name,'planner_definition':rule,'planner_source_JSON_path':str(sourceJSON),'planner_source_JSON_SHA256':sha(sourceJSON),'planner_source_DRU_path':str(sourceDRU),'planner_source_DRU_SHA256':sha(sourceDRU),'exact_planner_source_rule_lines':lines,'CDONE_in_parsed_exempt_net_set':'/fpga_core/FPGA_CDONE'in ex.get(name,set()),'exact_exempt_net_set':sorted(ex.get(name,set())),'actual_native_PCB_path':str(nativePCB),'actual_native_PCB_SHA256':sha(nativePCB),'actual_native_DRU_path':str(nativeDRU),'actual_native_DRU_SHA256':sha(nativeDRU),'reservation_name_present_in_actual_native_PCB':name in actualPCB,'reservation_name_present_in_actual_native_DRU':name in actualDRU,'old_original_CDONE_barrel_centre_inside_helper_reserved_area':shape.covers(Point(117.45,200.05)),'proposed0250_minus0025_centre_inside_helper_reserved_area':shape.covers(Point(117.7,200.025)),'current_raw_planner_failure_retained':True,'source_native_current_rules_not_edited':True,'R425_source_mask_candidate_failures_and_owned_terminal_rawhits_preserved':True,'R425_ground_to_owned_SIGNAL_stub_axis_expansion_needs_correcting_mm':[.175005,.275005],'no_R425_nominations_or_adoption':True,'elapsed_seconds':time.monotonic()-started};(OUT/'receipt.json').write_text(json.dumps(result,indent=1,allow_nan=False)+'\n',encoding='utf-8');print('R426_COMPLETE',sha(OUT/'receipt.json'),result['reservation_name_present_in_actual_native_PCB'],result['reservation_name_present_in_actual_native_DRU'],flush=True)
+if __name__=='__main__':main()

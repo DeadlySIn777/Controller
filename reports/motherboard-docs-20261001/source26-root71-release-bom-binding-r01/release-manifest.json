@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "product_revision": "engineering-r0",
+  "board_revision": "full-controller-not-frozen",
+  "manufacturer": "PCBWay",
+  "manufacturing_order_placed": false,
+  "artifacts": [
+    {
+      "id": "full_schematic",
+      "status": "partial-1585-source-required-circuits-incomplete",
+      "note": "The reconciled electrical source has **1585 physical footprints: 1557 purchased fitted parts, 26 bare PCB test pads and two DNP footprints**, across eighteen source blocks. It contains all twelve motor interfaces, four ABZ receiving paths, 24 DI, 16 smart DO, power-health, actual I/O controllers, protected power entry, probe/pendant supplies, purchased-module compute/ESP sockets and process control with its fourth actual acquisition controller. Native integrated ERC is **zero errors, 72 warnings, no ignored checks** (70 isolated-pin labels and two ground-name warnings). Independent native fitted pin/MPN/footprint and exact original-pin/topology checks pass. The 23 root integration, 26 FPGA allocation, 33 ACC, 35 process and 10 ESP focused tests pass; these do not prove firmware execution or physical behavior."
+    },
+    {
+      "id": "pcb_layout",
+      "status": "partial-880-routing-full-controller-incomplete",
+      "note": "Published native CAD **20260930-21** contains the separate frozen **880-footprint / 878 fitted** snapshot. It preserves the original 327 footprints, **2,088 track/via items and five filled zones**. Independent uncapped connectivity finds **1,600 missing joins**. Native DRC reports **zero regular violations, no ignored checks and 499 capped unconnected items**; routing fails. The **460 \u00d7 340 mm, six-layer, 1.6 mm** outline remains provisional; existing planes cover the retained core rather than the whole motherboard."
+    },
+    {
+      "id": "fabrication_zip",
+      "status": "blocked-by-incomplete-schematic-routing-and-physical-contract",
+      "note": "No placeholder Gerbers/drills/ZIP generated."
+    },
+    {
+      "id": "fabrication_spec",
+      "status": "blocked-by-incomplete-design-final-stackup-not-qualified",
+      "note": "Six layers/1.6mm are MC layout assumptions, not a final manufacturing stackup."
+    },
+    {
+      "id": "bom",
+      "status": "partial-current-designator-bom-full-cost-incomplete",
+      "note": "Only the frozen **980-part subset** has a partial cost calculation: 60 priced MPNs, 34 unpriced and 185 unpriced fitted pieces. Known-priced consumed component value per board at **1/10/100 is US$379.67/$314.26/$280.60**, excluding unpriced parts, later required circuits, PCB/assembly/test and purchased modules/screens. This is not the complete current BOM cost. Every complete manufacturing/controller/package total remains null."
+    },
+    {
+      "id": "placement",
+      "status": "partial-880-source-placement-not-production-CPL",
+      "note": "The additional source parts are being populated onto the existing PCB without discarding its routed copper. Storage and compute raw peripherals, analog/comms, status indicators, actual field terminals, complete power/return routing and mechanical/thermal reconciliation remain engineering work. Logic-rail startup load and monitor-window corrections are under review. The 20 ms inhibit requirement, partial-power behavior, target firmware, vendor FPGA package fit/timing and physical/EMC/thermal qualification remain unproved. Gerbers, drills, final assembly CPL/drawings and a final stackup have not been released; manufacturing_ready remains false. Original six-joint/two-encoder runtime results remain historical baseline evidence; twelve fitted interfaces are not twelve proven coordinated axes."
+    },
+    {
+      "id": "assembly_drawing",
+      "status": "blocked-by-incomplete-board-and-mechanical-contract",
+      "note": "Native review/3D renders are not a final PCBWay assembly drawing."
+    },
+    {
+      "id": "erc",
+      "status": "partial-1585-erc-zero-errors-72-warnings",
+      "note": "No ignored checks; full circuitry and isolated labels remain unresolved."
+    },
+    {
+      "id": "drc",
+      "status": "partial-880-drc-fails-connectivity",
+      "note": "Zero regular violations;1600 uncapped missing joins;499 capped reported items."
+    },
+    {
+      "id": "electrical_review",
+      "status": "partial-native-review-full-electrical-gates-unfinished",
+      "note": "The additional source parts are being populated onto the existing PCB without discarding its routed copper. Storage and compute raw peripherals, analog/comms, status indicators, actual field terminals, complete power/return routing and mechanical/thermal reconciliation remain engineering work. Logic-rail startup load and monitor-window corrections are under review. The 20 ms inhibit requirement, partial-power behavior, target firmware, vendor FPGA package fit/timing and physical/EMC/thermal qualification remain unproved. Gerbers, drills, final assembly CPL/drawings and a final stackup have not been released; manufacturing_ready remains false. Original six-joint/two-encoder runtime results remain historical baseline evidence; twelve fitted interfaces are not twelve proven coordinated axes."
+    },
+    {
+      "id": "fpga_build",
+      "status": "family-mapping-and-functional-simulation-pass-device-fit-and-timing-unproved"
+    },
+    {
+      "id": "software_validation",
+      "status": "engineering-tests-in-progress"
+    },
+    {
+      "id": "bringup_procedure",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_bundle",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_test_scope",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "link_prototype_measurement",
+      "status": "requires-engineering-host-and-fpga-evaluation-board-physical-measurement"
+    },
+    {
+      "id": "pcbway_quote",
+      "status": "not-requested-design-incomplete",
+      "requires": [
+        "assembly_drawing",
+        "bom",
+        "drc",
+        "erc",
+        "fabrication_spec",
+        "fabrication_zip",
+        "full_schematic",
+        "pcb_layout",
+        "placement",
+        "programming_bundle",
+        "programming_test_scope"
+      ],
+      "quantities": [
+        1,
+        10,
+        100,
+        1000
+      ],
+      "quantities_basis": "docs/BUILD_PLAN.md cost gate study quantities; the quantity actually ordered is a user decision",
+      "submission": null
+    },
+    {
+      "id": "hardware_test",
+      "status": "requires-physical-prototype"
+    },
+    {
+      "id": "loaded_realtime_test",
+      "status": "requires-selected-host-and-motion-link"
+    },
+    {
+      "id": "factory_test",
+      "status": "requires-fixture-and-accepted-board"
+    },
+    {
+      "id": "system_integration_test",
+      "status": "ui-display-motion-integration-pending"
+    },
+    {
+      "id": "final_cost",
+      "status": "incomplete-quotes"
+    },
+    {
+      "id": "compliance_review",
+      "status": "requires-final-product-and-intended-markets"
+    }
+  ],
+  "manufacturing_ready": false,
+  "partial_candidate": {
+    "scope": "880-source PCB; newer1585 electrical source; required circuits unfinished",
+    "source_revision": "motherboard-IS2-1585-source",
+    "published_native_revision": "20260930-21",
+    "electrical_source_footprints": 1585,
+    "native_pcb_footprints": 880,
+    "purchased_fitted_source_parts": 1557,
+    "bare_test_pad_footprints": 26,
+    "source_erc_errors": 0,
+    "source_erc_warnings": 72,
+    "drc_regular_violations": 0,
+    "drc_pass": false,
+    "drc_reported_unconnected_items": 499,
+    "uncapped_physical_missing_joins": 1600,
+    "proposed_outline_mm": [
+      460,
+      340
+    ],
+    "proposed_copper_layers": 6,
+    "proposed_thickness_mm": 1.6,
+    "final_stackup_qualified": false,
+    "evidence": [
+      {
+        "path": "hardware/board_review/revisions/20260930-21/motherboard-populated-candidate.kicad_pcb",
+        "sha256": "5186e1b6578869505f19b17fee5e531ac132d14dec05eef8df1e09d5b785f5bb"
+      },
+      {
+        "path": "hardware/board_review/revisions/20260930-21/publication-connectivity/review.json",
+        "sha256": "e77af851697773bee42e95d135e64710a1d23ad66cd5e4d19ced830be29fd180"
+      }
+    ],
+    "fabrication_outputs": []
+  }
+}

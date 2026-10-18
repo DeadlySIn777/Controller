@@ -1,0 +1,86 @@
+{
+  "revision": "r0.2 planning",
+  "date": "2026-10-06",
+  "status": "Superseded planning alternatives: see external-supply-selector-decision.json for resolved user direction",
+  "implemented": false,
+  "manufacturing_ready": false,
+  "prior_release_preserved": "hardware/octopus_external_adapter/r0_1 and frozen review archive remain unchanged",
+  "user_objective": "One carefully engineered adapter supporting both3.3 V and5 V controller signals, with independent regulated power and potential12/24 V use.",
+  "accepted_targets": {
+    "controller_logic": "3.3 V or5 V automatically; no12/24 V on host STEP/DIR/EN",
+    "host_socket": "Removable StepStick-compatible socket with confirmed pinout, orientation and mechanical clearance",
+    "complete_assembly": true,
+    "keyed_output_harness": true,
+    "alarm_motor_encoder_wiring": "Separate from command interface"
+  },
+  "pending_user_decision": {
+    "resolved": true,
+    "decision_file": "external-supply-selector-decision.json",
+    "decision": "User requested screw-terminal external supply with 5V / EXT selector"
+  },
+  "power_architecture": {
+    "recommended_input": "Dedicated keyed nominal12/24 V connector, protected against reverse polarity and rated transients; omitted VM socket contact retained",
+    "buck_candidate": {
+      "mpn": "TPSM365R6V5RDNR",
+      "nominal_output": "5 V",
+      "datasheet_current_A": 0.6,
+      "system_rating_not_qualified": true,
+      "minimum_input_for_specified_fixed_5V_accuracy": 5.5
+    },
+    "external_5V_option": "Separate protected regulated5 V power input and reverse-current-blocking source selection after buck. A reference-only source is insufficient.",
+    "source_mux_candidate": "TPS2116DRLR, regulated low-voltage side only; never direct12/24 V",
+    "host_VIO": "Reference/sense only; never tied directly to adapter local5 V rail",
+    "local_logic": "3.3 V LDO e.g.TLV75533PDBVR from regulated5 V",
+    "supply_budget_provisional_mA": {
+      "per_adapter": 60,
+      "four_adapters": 240
+    },
+    "driver_control_selection": "Independent from adapter supply selection.12 V input cannot produce24 V control without a separate24 V source or additional conversion."
+  },
+  "output_alternatives": {
+    "five_volt_only": {
+      "candidate": "SN74LVC3G06DCUR at3.3 V, outputs with5 V common",
+      "evidence": "VIH2.0 V and VIL0.8 V at VCC3.0–3.6 V; sink VOL≤0.4 V at16 mA VCC3 V.",
+      "qualification": "Actual host logic margins and loaded driver/cable testing remain required."
+    },
+    "five_twelve_twenty_four": {
+      "candidate": "SN74LVC3G17DCUR at3.3 V plus3x NX6008NBKW60 V MOSFET outputs and gate pulldowns",
+      "evidence": "NX6008NBKW RDS(on) max2.9Ω at VGS2.5 V at25°C; temperature/voltage/transient qualifications remain open.",
+      "scope": "Common-anode optocoupled STEP/DIR/ENA inputs; driver-specific input current, resistor/selector and timing requirements apply.",
+      "not_covered": [
+        "RS-422/differential-only inputs",
+        "Common-cathode-only interface without additional output topology",
+        "Analog±10 V control",
+        "Fieldbus-only drives",
+        "Boards with soldered drivers and no compatible socket"
+      ]
+    }
+  },
+  "required_reviews": [
+    "Input threshold margin for each named host",
+    "Host-off backfeed and enabled/disabled bias",
+    "Driver enable polarity and startup/power sequencing",
+    "Actual pulse timing, loaded edges and no spurious steps",
+    "Reverse polarity, overvoltage, TVS/clamp coordination and source overlap",
+    "Regulator layout, effective capacitance, thermal and EMI",
+    "Output per-channel and simultaneous current",
+    "Mechanical fit: current15.24x20.32 mm size not yet proven for additional connectors/power parts",
+    "Factory DFM, harness procurement and prototype measurements"
+  ],
+  "not_claimed": [
+    "All-driver compatibility",
+    "Universal BTT/SKR compatibility",
+    "Safety/STO function",
+    "Physical validation",
+    "Finished revised schematic or PCB"
+  ],
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/sn74lvc3g06.pdf",
+    "https://www.ti.com/lit/ds/symlink/sn74lvc3g17.pdf",
+    "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+    "https://www.ti.com/lit/ds/symlink/tlv755p.pdf",
+    "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+    "https://www.ti.com/lit/ds/symlink/tps2116.pdf",
+    "https://www.omc-stepperonline.com/download/CL57T-V41_user_manual.pdf"
+  ]
+}

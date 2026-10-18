@@ -1,0 +1,26 @@
+{
+  "scope": "Prior mocked SPI run before persistence header regression; all previous manifest hashes verified before copying",
+  "files_sha256": {
+    "cnc1/src/spidev_transport.h": "7002af2a6c5495e1f8b7291298fea80cfd04c499b23a1918c700f28a6a222129",
+    "cnc1/src/spidev_transport.c": "ae97f700c45c52ec2d8c91764eb423e0dccf80599741887fbe8a79eefc1438d3",
+    "cnc1/tests/test_spidev.c": "c7965a746fa4051596c29e48912b5a04af4c96219129a47184b553d21f7e6357",
+    "cnc1/tests/test_spidev_cpp.cpp": "108d16b62a2b12c3401de317f7989c5c228ea73ab941cfd596af2fad8e83843a",
+    "cnc1/tools/test_spidev.sh": "ec2c6afd0fa6ae5dbc9fbc62d509e27e85b4e3fedfde785eef8dfb234f56775d",
+    "reports/SPI_TRANSPORT_IMPLEMENTATION.md": "9941af7ab43a39d5e8b4674dd245fc44d5af127ac7deae0c6e0db9d20d677d5b",
+    "cnc1/evidence/spidev/tests.log": "f3fb774375545c6fb831569244529c35caaa6c9f6b1c28274b2c7f351f979fe8",
+    "cnc1/evidence/spidev/build-packages.tsv": "9beca216ca1cd6870d397a57dfa2746b5b44981eb7759f9301da9d42d17a4cf7",
+    "cnc1/evidence/spidev/initial-sanitizer-environment.log": "34b19403c7f6ece51d2ae420da7911139dbe637d9bc5976935535facb743abaa",
+    "cnc1/build/spidev/test_spidev": "4a9debb4003da58014943703e2850b71a8401536c5da7bd6e0d6a25b1b01452e",
+    "cnc1/build/spidev/test_spidev_cpp": "3bf7f8fc9224a3a00c6b82cc0ebe11b8598fce7aaa41eeadafa175508ff7625c",
+    "cnc1/build/spidev/test_spidev_sanitized": "afd7a3b04707b4da469bf398a56d124f2cda4e294c67faa1c981271a145290dc",
+    "cnc1/evidence/spidev/build-cnc1.h": "e88c22d447d22ecb00901f424f6ade263181413e91d5fe9417a6d2bdbb5b2304",
+    "cnc1/evidence/spidev/manifest.json": "97cbbb5130845c67b80c50b46b51ebd4a02df06fc80a914b1bad80063969e60c"
+  },
+  "compiled_header_origin": {
+    "path": "cnc1/evidence/spidev/build-cnc1.h",
+    "sha256": "e88c22d447d22ecb00901f424f6ade263181413e91d5fe9417a6d2bdbb5b2304",
+    "current_common_header_matches": false,
+    "current_common_header_sha256": "601b8a46765ec904f0e9a4096830d5c92b605ffc0fccc58cc4ccc3ff19369b2b",
+    "note": "cnc1/src/cnc1.h changed after this run: struct cnc1_driver gained persistence_required, persistence_pending, persistence_generation and persistence_hash[8], and cnc1_persistence_commit() was declared. CNC1_FRAME and the spidev transport interface are unchanged, but the 892-assertion result was compiled against build-cnc1.h, not the current header; re-run cnc1/tools/test_spidev.sh on a Linux host to refresh."
+  }
+}

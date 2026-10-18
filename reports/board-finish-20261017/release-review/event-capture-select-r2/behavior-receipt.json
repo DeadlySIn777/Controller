@@ -1,0 +1,104 @@
+{
+  "status": "CAPTURE_ONLY_SELECTOR_EXHAUSTION_AND_STRICT_BOUNDARY_DIFFERENTIAL_PASS",
+  "executions": [
+    {
+      "name": "selector-compile",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "iverilog",
+        "-g2012",
+        "-s",
+        "event_selector_tb",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/selector.vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/original_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/candidate_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/efinity-memory-inference-r1/registered-bypass/cnc3_event_bank.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/selector_tb.sv"
+      ],
+      "exit": 0,
+      "log_SHA256": "c997ad06e877ef61c88e7eb765e928acc91fa4d421d48b69af1d4b919e377287"
+    },
+    {
+      "name": "selector-execute",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/selector.vvp"
+      ],
+      "exit": 0,
+      "log_SHA256": "79dcf91906639d970e4d8aaf82d93e3cc04e28481dfabe72c0131589e8cb33ce"
+    },
+    {
+      "name": "boundary-compile",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "iverilog",
+        "-g2012",
+        "-s",
+        "event_dispatch_diff_tb",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/boundary.vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/original_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/candidate_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/efinity-memory-inference-r1/registered-bypass/cnc3_event_bank.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/boundary_tb.sv"
+      ],
+      "exit": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "boundary-execute",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/event-capture-select-r2/boundary.vvp"
+      ],
+      "exit": 0,
+      "log_SHA256": "7e3d31ab9ce998c883960791942d288693ed7aca7f0de027fc6eaf6ceb47cb7a"
+    }
+  ],
+  "selector_patterns_per_profile": 65536,
+  "payload_profiles": 3,
+  "known_invalid_selectors": "12..15 and20..255 return0",
+  "unknown_selectors": "all65280X/Z-containing8-bit patterns perprofile return0",
+  "boundary_cases": 55296,
+  "boundary_comparison": "full original strict1280bitwrite bus/address/enable, output, pointer/count/ACK/sequence comparison unchanged; same seeded-state and30000externalstress scope as r1",
+  "canonical_sources_unchanged": true,
+  "candidate_SHA256": "4a42ebe2f669d1854da0d19477a375279201da171b9fa82ebea43b15e0fb1da9",
+  "input_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\qualify_event_capture_r2.py": "57e2fbdc47b47190f0c4e912f20f3c677ce698c6b5f3b1e648986a135dd023ec",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\original_diff.v": "dee554aee848a3fbdfb7a61d81b1cc91b06021aafdf41e4d1ba943d12fdba561",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\candidate_diff.v": "5989b6a2c2f16f953c61d16477c9cf423fc363a267075ef3337b11db2958e29f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-memory-inference-r1\\registered-bypass\\cnc3_event_bank.v": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\selector_tb.sv": "c1b2713a2ebdbcead5b128022ca42a2a0603e80f6e4349475c43cc3b0a06d9a5",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\boundary_tb.sv": "043d817085c7fa71b7fe404ba73292a6c1b7f70f5e4842742972e89c1045a16e"
+  },
+  "adopted": false,
+  "formal_equivalence": "NOT_RUN",
+  "physical_wrapper_fit_timing": "OPEN"
+}

@@ -1,0 +1,380 @@
+{
+  "id": "MB-MOTOR-FEED-POR-001",
+  "exact_existing_pin_net_delta": [
+    {
+      "bank": "A",
+      "latch_reference": "U11032",
+      "pin": "6",
+      "old_net": "MOTOR_FEED_CLEAR_N_A",
+      "new_net": "MOTOR_FEED_CLEAR_FAST_N_A",
+      "source_reference": "R11074",
+      "old_mpn": "CRCW06031K00FKEA",
+      "new_mpn": "CRCW060312K1FKEA",
+      "all_other_existing_pin_nets_preserved": true
+    },
+    {
+      "bank": "B",
+      "latch_reference": "U11034",
+      "pin": "6",
+      "old_net": "MOTOR_FEED_CLEAR_N_B",
+      "new_net": "MOTOR_FEED_CLEAR_FAST_N_B",
+      "source_reference": "R11078",
+      "old_mpn": "CRCW06031K00FKEA",
+      "new_mpn": "CRCW060312K1FKEA",
+      "all_other_existing_pin_nets_preserved": true
+    }
+  ],
+  "exact_added_references": [
+    "C11089",
+    "C11090",
+    "C11091",
+    "C11092",
+    "R11082",
+    "R11083",
+    "U11035",
+    "U11036",
+    "U11037",
+    "U11038"
+  ],
+  "exact_added_components": {
+    "U11035": {
+      "kind": "FEED_POR",
+      "mpn": "TPS3808G50DBVR",
+      "value": "TPS3808G50DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "MOTOR_FEED_CLEAR_N_A",
+        "2": "LOGIC_GND",
+        "3": "MOTION_5V_RAW",
+        "4": null,
+        "5": "MOTION_5V_RAW",
+        "6": "MOTION_5V_RAW"
+      },
+      "role": "independent receiving-RAW4.65V supervisor; CT intentionally open12..28ms release, activeLOW reset sink on original contact/RC node",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11035",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "U11036": {
+      "kind": "FEED_SCHMITT",
+      "mpn": "SN74LVC1G17DBVR",
+      "value": "SN74LVC1G17DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "MOTOR_FEED_CLEAR_N_A",
+        "3": "LOGIC_GND",
+        "4": "MOTOR_FEED_CLEAR_FAST_N_A",
+        "5": "MOTION_5V_RAW"
+      },
+      "role": "genuine unlimited-slew noninverting Schmitt; RC/supervisor LOW to fast DFF CLR without shared A/B nodes",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11036",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "C11089": {
+      "kind": "FEED_CAP",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND"
+      },
+      "role": "exact local RAW bypass for U11035",
+      "owner": "U11035",
+      "initial_tolerance": 0.1,
+      "rated_voltage_v": 100,
+      "source_block": "motherboard_power_entry",
+      "source_reference": "C11089",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "C11090": {
+      "kind": "FEED_CAP",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND"
+      },
+      "role": "exact local RAW bypass for U11036",
+      "owner": "U11036",
+      "initial_tolerance": 0.1,
+      "rated_voltage_v": 100,
+      "source_block": "motherboard_power_entry",
+      "source_reference": "C11090",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "R11082": {
+      "kind": "FEED_PD",
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTOR_FEED_CLEAR_FAST_N_A",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 100000,
+      "initial_tolerance": 0.01,
+      "tcr_ppm": 100,
+      "rated_power_w": 0.1,
+      "working_voltage_v": 75,
+      "role": "actual DFF CLR LOW default if conditioner is missing/high-Z",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "R11082",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "U11037": {
+      "kind": "FEED_POR",
+      "mpn": "TPS3808G50DBVR",
+      "value": "TPS3808G50DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "MOTOR_FEED_CLEAR_N_B",
+        "2": "LOGIC_GND",
+        "3": "MOTION_5V_RAW",
+        "4": null,
+        "5": "MOTION_5V_RAW",
+        "6": "MOTION_5V_RAW"
+      },
+      "role": "independent receiving-RAW4.65V supervisor; CT intentionally open12..28ms release, activeLOW reset sink on original contact/RC node",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11037",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "U11038": {
+      "kind": "FEED_SCHMITT",
+      "mpn": "SN74LVC1G17DBVR",
+      "value": "SN74LVC1G17DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "MOTOR_FEED_CLEAR_N_B",
+        "3": "LOGIC_GND",
+        "4": "MOTOR_FEED_CLEAR_FAST_N_B",
+        "5": "MOTION_5V_RAW"
+      },
+      "role": "genuine unlimited-slew noninverting Schmitt; RC/supervisor LOW to fast DFF CLR without shared A/B nodes",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11038",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "C11091": {
+      "kind": "FEED_CAP",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND"
+      },
+      "role": "exact local RAW bypass for U11037",
+      "owner": "U11037",
+      "initial_tolerance": 0.1,
+      "rated_voltage_v": 100,
+      "source_block": "motherboard_power_entry",
+      "source_reference": "C11091",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "C11092": {
+      "kind": "FEED_CAP",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND"
+      },
+      "role": "exact local RAW bypass for U11038",
+      "owner": "U11038",
+      "initial_tolerance": 0.1,
+      "rated_voltage_v": 100,
+      "source_block": "motherboard_power_entry",
+      "source_reference": "C11092",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    },
+    "R11083": {
+      "kind": "FEED_PD",
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTOR_FEED_CLEAR_FAST_N_B",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 100000,
+      "initial_tolerance": 0.01,
+      "tcr_ppm": 100,
+      "rated_power_w": 0.1,
+      "working_voltage_v": 75,
+      "role": "actual DFF CLR LOW default if conditioner is missing/high-Z",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "R11083",
+      "selection_required": false,
+      "status": "source_candidate_not_physical_qualified"
+    }
+  },
+  "power_domains_unchanged": true,
+  "independent_final_TX_gate_watchdog_and_rearm_paths_unchanged": true,
+  "original_sources_unchanged": true,
+  "physical_qualification": false,
+  "source26_existing_health_correction": {
+    "id": "MB-HEALTH-001",
+    "exact_three_part_ledger": [
+      {
+        "reference": "R2106",
+        "block": "mc_local_power",
+        "old_mpn": "CRCW060347K0FKEA",
+        "new_mpn": "CRCW06032K20FKEA",
+        "old_value": "47k 1%",
+        "new_value": "2.2k 1%",
+        "pin_net_map_unchanged": {
+          "1": "CORE_5V",
+          "2": "MC_RAILS_OK_5V"
+        },
+        "manufacturer_land_unchanged": "Resistor_SMD:R_0603_1608Metric"
+      },
+      {
+        "reference": "U11019",
+        "block": "motherboard_power_entry",
+        "old_mpn": "74LVC2G04GW,125",
+        "new_mpn": "74LVC2G14GW,125",
+        "old_value": "74LVC2G04GW,125",
+        "new_value": "74LVC2G14GW,125",
+        "pin_net_map_unchanged": {
+          "1": "MC_RAILS_OK_5V",
+          "2": "LOGIC_GND",
+          "3": "MC_RAILS_OK_5V",
+          "4": "CORE_HEALTH_B_N",
+          "5": "CORE_5V",
+          "6": "CORE_HEALTH_A_N"
+        },
+        "manufacturer_land_unchanged": "Package_TO_SOT_SMD:SOT-363_SC-70-6"
+      },
+      {
+        "reference": "U11025",
+        "block": "motherboard_power_entry",
+        "old_mpn": "74LVC2G04GW,125",
+        "new_mpn": "74LVC2G14GW,125",
+        "old_value": "74LVC2G04GW,125",
+        "new_value": "74LVC2G14GW,125",
+        "pin_net_map_unchanged": {
+          "1": "MOTOR_FIELD_HEALTH_A_RAW",
+          "2": "FIELD_GND",
+          "3": "MOTOR_FIELD_HEALTH_B_RAW",
+          "4": "FIELD_HEALTH_B_N",
+          "5": "FIELD_5V",
+          "6": "FIELD_HEALTH_A_N"
+        },
+        "manufacturer_land_unchanged": "Package_TO_SOT_SMD:SOT-363_SC-70-6"
+      }
+    ],
+    "physical_qualification": false,
+    "pin_nets_and_population_unchanged": true
+  },
+  "exact_existing_native_changes": [
+    {
+      "ref": "U11032",
+      "pin": "6",
+      "old": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_A",
+      "new": "/motherboard_power_entry/MOTOR_FEED_CLEAR_FAST_N_A"
+    },
+    {
+      "ref": "U11034",
+      "pin": "6",
+      "old": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_B",
+      "new": "/motherboard_power_entry/MOTOR_FEED_CLEAR_FAST_N_B"
+    }
+  ],
+  "all_other_existing_pin_nets_unchanged": true,
+  "new_connected_native_pin_count": 34,
+  "native_erc_errors": [],
+  "native_erc_warnings": 70,
+  "static_conditional_screen": {
+    "healthy_old_CLR_node_screen_v": 4.325107043586256,
+    "highest_schmitt_VTplus_discrete_screen_v": 3.33,
+    "off_node_screen_v": 0.8199999999999998,
+    "lowest_steady_schmitt_VTminus_discrete_screen_v": 1.51,
+    "source_min_ohm": 11797.5,
+    "TPS3808_mandatory_min_pullup_ohm": 10000,
+    "reset_sink_at_raw1V65_a": 0.00013986013986013986,
+    "reset_sink_at_raw5V25_a": 0.0004450095359186268,
+    "reset_VOL1V65_max_v": 0.3,
+    "schmitt_VTminus1V65_min_v": 0.35,
+    "startup_low_endpoint_margin_v": 0.05,
+    "fast_CLR_load_screen_a": 6.141025641025641e-05,
+    "fast_CLR_light_load_test_a": 0.0001,
+    "fast_output_LOW_max_v": 0.1,
+    "fast_output_HIGH_min_offset_v": -0.1,
+    "reset_nominal_threshold_v": 4.65,
+    "reset_threshold_corner_v": [
+      4.591875000000001,
+      4.708125
+    ],
+    "reset_release_delay_ms": [
+      12,
+      28
+    ],
+    "conditional_contact_RC_withdrawal_s": 0.00039515271821257564,
+    "conditioner_propagation_max_s_at_5V_85C": 4.4e-09,
+    "minimum_input_slew_requirement_ns_per_v": 5,
+    "all_existing_direct_final_inhibit_paths_unchanged": true,
+    "complete_partial_ramp_loaded_edge_and_thermal_qualification": false,
+    "contact25C_bound_not_promoted_to_full_temperature": true
+  },
+  "meaningful_source_negative_controls": [
+    {
+      "ref": "U11032",
+      "field": "pins",
+      "rejected": true
+    },
+    {
+      "ref": "R11074",
+      "field": "mpn",
+      "rejected": true
+    },
+    {
+      "ref": "U11034",
+      "field": "footprint",
+      "rejected": true
+    },
+    {
+      "ref": "U11034",
+      "field": "mpn",
+      "rejected": true
+    }
+  ],
+  "meaningful_electrical_negative_controls": [
+    {
+      "test": "original1k reset pullup violates mandatory10k",
+      "rejected": true
+    },
+    {
+      "test": "injected excessive off leakage prevents safe SchmittLOW",
+      "rejected": true
+    }
+  ],
+  "actual_fitted_parts": 2698,
+  "candidate_only": true,
+  "manufacturing_ready": false
+}

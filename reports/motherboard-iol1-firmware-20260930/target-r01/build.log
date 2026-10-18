@@ -1,0 +1,14 @@
+inputs/firmware/motherboard_iol1_readonly/iol1.c:50:45: error: argument 2 of type 'const uint8_t *' {aka 'const unsigned char *'} declared as a pointer [-Werror=array-parameter=]
+   50 | int iol1_accept(iol1_node *n,const uint8_t *f,iol1_transport t,uint32_t now){
+      |                              ~~~~~~~~~~~~~~~^
+In file included from inputs/firmware/motherboard_iol1_readonly/iol1.c:1:
+inputs/firmware/motherboard_iol1_readonly/iol1.h:20:44: note: previously declared as an array 'const uint8_t[40]' {aka 'const unsigned char[40]'}
+   20 | int iol1_accept(iol1_node *n,const uint8_t frame[IOL1_BYTES],iol1_transport t,uint32_t now_us);
+      |                              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+inputs/firmware/motherboard_iol1_readonly/iol1.c:73:45: error: argument 2 of type 'uint8_t *' {aka 'unsigned char *'} declared as a pointer [-Werror=array-parameter=]
+   73 | void iol1_reply(const iol1_node *n,uint8_t *f){
+      |                                    ~~~~~~~~~^
+inputs/firmware/motherboard_iol1_readonly/iol1.h:22:44: note: previously declared as an array 'uint8_t[40]' {aka 'unsigned char[40]'}
+   22 | void iol1_reply(const iol1_node *n,uint8_t frame[IOL1_BYTES]);
+      |                                    ~~~~~~~~^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors

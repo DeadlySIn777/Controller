@@ -1,0 +1,699 @@
+1
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+User's Guide
+SNVU671–February 2020
+LMR36506RREVM User’s Guide
+The Texas Instruments LMR36506RREVM evaluation module help designers evaluate the operation and
+performance of the LMR36506 wide-input buck converters. The LMR36506 is an easy-to-use synchronous
+step-down DC/DC converter capable of driving up to 0.6 A of load current from an input voltage of up to
+65 V. The LMR36506RREVM features an output voltage of 3.3 V or 5 V and a switching frequency of 1
+MHz. See the LMR36506 3-V–65-V, 0.6-A Ultra-Small Synchronous Buck Converter with 4 µA IQ data
+sheet for additional features, detailed descriptions, and available options.
+Table 1. Device and Package Configurations
+EVM
+U1
+FREQUENCY
+SPREAD SPECTRUM
+CURRENT
+PIN 1 TRIM
+LMR36506RREVM
+LMR36506RRPE
+1000 kHz
+Disabled
+0.6 A
+RT with PFM
+Figure 1. LMR36506RREVM Board
+
+www.ti.com
+2
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+Contents
+1
+Setup ..........................................................................................................................
+3
+2
+Operation .....................................................................................................................
+5
+3
+Schematic.....................................................................................................................
+6
+4
+Board Layout .................................................................................................................
+7
+5
+Bill of Materials...............................................................................................................
+9
+List of Figures
+1
+LMR36506RREVM Board ..................................................................................................
+1
+2
+EVM Board Connections....................................................................................................
+3
+3
+Jumper Locations............................................................................................................
+4
+4
+LMR36506RREVM Schematic............................................................................................. 6
+5
+Top View of EVM ............................................................................................................
+7
+6
+EVM Top Copper Layer.....................................................................................................
+7
+7
+EVM Mid Layer One.........................................................................................................
+7
+8
+EVM Mid Layer Two.........................................................................................................
+8
+9
+EVM Bottom Copper Layer................................................................................................. 8
+List of Tables
+1
+Device and Package Configurations ...................................................................................... 1
+2
+Bill Of Materials ..............................................................................................................
+9
+Trademarks
+All trademarks are the property of their respective owners.
+
+Load
+(+)
+(-)
+DMM
+(-)
+(+)
+DMM
+(-)
+(+)
+Input 
+Supply
+(+)
+(-)
+www.ti.com
+Setup
+3
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+1
+Setup
+This section describes the test points and connectors on the EVM and how to properly connect, set up,
+and use the LMR36506RREVM.
+1.1
+Test Points
+The test points on the top of the board can be used for connecting to the input and output of the EVM.
+See Figure 2 for typical test setup. The functions of the test points connections are:
+•
+VIN_EMI — Input supply to EVM including an EMI filter. Connect to a suitable input supply. Connect at
+this point for conducted EMI test.
+•
+GND — Ground connection for the input supply as well as test points for ground connection
+•
+VIN — Input supply to the IC. Can be connected to DMM to measure input voltage after EMI filter
+•
+VOUT — Output voltage test point of EVM. Can be connected to a desired load
+•
+EN — This test point is connected to the EN pin. By default, there is a pullup resistor R2 (RENT) to
+VIN to enable the IC.
+•
+PGOOD — This test point is connected to the PGOOD pin from the IC. It is an open-drain output of the
+PGOOD pin. Can be tied to external supply through a pullup resistor or left open
+•
+SYNC — In a MODE/SYNC trim part, this test point is connected to the SYNC pin of the IC. Can be
+connected to an external clock to synchronize the IC. Make sure R4 (RMODE) is installed and R5 (RT)
+is not installed. In a RT trim part, this test point is connected to the RT pin of the IC when the R4
+(RMODE) is installed.
+•
+VCC — This test point is connected to the VCC pin.
+•
+SW — This test point is connected to the switch node.
+Figure 2. EVM Board Connections
+
+MODE/RT SELECTION 
+JUMPER
+ENABLE OFF 
+JUMPER
+PGOOD SELECTION 
+JUMPER
+VOUT SELECTION 
+JUMPER
+Setup
+www.ti.com
+4
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+1.2
+Jumpers
+See Figure 3 for jumper locations.
+•
+JEN - This jumper allows the ENABLE input to be connected to GND in order to disable the IC. By
+default, this jumper is left open since there is a pullup resistor R2 (RENT) to VIN to enable the IC.
+•
+JPGOOD - Use this jumper to select how the PGOOD pin can be connected. A jumper can be used to
+connect pin 2 and 3. In this configuration, the PGOOD pin will be pulled up to VOUT through R9
+(RPGOOD) with a value of 100 kΩ. By default, this jumper is left open.
+•
+JMODE/RT - Use this jumper to select the mode of operation in a MODE/SYNC trim part.
+Connecting a jumper between pin 1 and 2 cause the IC to operate in PFM (Pulse Frequency
+Modulation) mode for a higher efficiency at light load. A jumper between pin 2 and pin 3 causes the IC
+to operate in FPWM mode (Forced Pulse Width Modulation) mode. By default, the jumper is connected
+between pin 1 and 2.
+In an RT trim part, connecting this jumper from pin 1 and 2 sets the switching frequency to 2.2 MHz
+and connecting this jumper from pin 2 and 3 sets the switching frequency to 1 MHz. See the
+LMR36506 3-V–65-V, 0.6-A Ultra-Small Synchronous Buck Converter with 4 µA IQ data sheet for more
+information on switching frequency configuration.
+•
+JVOUT This jumper can be used to select the output voltage on the EVM. Leaving the jumper open
+sets the EVM output voltage to 3.3 V whereas adding a jumper sets the output voltage on the EVM to
+be 5 V.
+Figure 3. Jumper Locations
+
+www.ti.com
+Operation
+5
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+2
+Operation
+2.1
+Quick Start
+1. Connect the voltage supply between the VIN_EMI and GND test points.
+2. Connect the load between the VOUT and GND test points.
+3. Set the supply voltage at an appropriate level between 5.5 V to 65 V. Set the current limit of the supply
+to an appropriate level.
+4. Turn on the power supply. With the default configuration, the EVM powers up and provides VOUT = 3.3
+V.
+5. Monitor the output voltage. The maximum load current must be 0.6 A with the LMR36506 device.
+
+0.1uF
+C2
+CIN2
+1uF
+C4
+CVCC
+FB
+PGOOD
+EN
+TP3
+GND
+49.9
+R6
+RINJ
+TP8
+GND
+1uF
+C6
+Cd
+4.99
+R8
+Rd
+0.1uF
+C7
+Cfilt
+DNP
+TP6
+VIN_EMI
+TP7
+GND
+22uF
+C8
+CBulk
+1
+2
+3
+J2
+JMODE/RT
+1
+2
+3
+J1
+JPGOOD
+100k
+R9
+RPGOOD
+PGOOD
+EN
+VCC
+RT
+GND
+GND
+VOUT
+GND
+SW
+BOOT
+GND
+VCC
+RT
+GND
+GND
+GND
+VIN
+TP4
+VOUT
+VOUT
+TP1
+VOUT
+TP5
+VIN
+L2
+1
+2
+J3
+JEN
+100k
+R1
+RENB
+DNP
+100k
+R2
+RENT
+TP10
+SYNC
+TP11
+EN
+TP9
+PGOOD
+TP2
+GND
+VIN = 5.5V - 65V
+2.2uF
+C1
+CIN1
+2.2uF
+C9
+CIN3
+0.1uF
+C11
+Cfilt1
+0.1uF
+C12
+Cfilt2
+VINEMI
+100k
+R3
+RFBT
+GND
+22uF
+C5
+COUT1
+22uF
+C10
+COUT2
+DNP
+10pF
+C13
+CFF
+DNP
+0
+R4
+RMODE
+VOUT = 3.3V
+B
+A
+VIN
+VINEMI
+GND
+VOUT
+VOS
+AGND
+TP13
+VCC
+TP12
+SW
+TP14
+GND
+43.2k
+R7
+RFBB1
+59.0k
+R10
+RFBB2
+1
+2
+J4
+JVOUT
+RT
+1
+PGOOD
+2
+EN/UVLO
+3
+VIN
+4
+SW
+5
+BOOT
+6
+VCC
+7
+FB
+8
+GND
+9
+LMR36506RRPET
+U1
+39.2k
+R5
+RT
+DNP
+15uH
+L1
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+A
+B
+C
+D
+E
+F
+H
+J
+K
+L
+M
+N
+TOP
+BOT
+EC1
+305-024-521-201
+0.1uF
+C3
+CB
+SH-J1
+SNT-100-BK-G
+Assembly Note
+ZZ5
+Place SH-J1 on J2 (JMODE/RT) in pin 2 and 3
+NT1
+Net-Tie
+VOS
+Schematic
+www.ti.com
+6
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+3
+Schematic
+Figure 4. LMR36506RREVM Schematic
+
+www.ti.com
+Board Layout
+7
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+4
+Board Layout
+Figure 5. Top View of EVM
+Figure 6. EVM Top Copper Layer
+Figure 7. EVM Mid Layer One
+
+Board Layout
+www.ti.com
+8
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+Figure 8. EVM Mid Layer Two
+Figure 9. EVM Bottom Copper Layer
+
+www.ti.com
+Bill of Materials
+9
+SNVU671–February 2020
+Submit Documentation Feedback
+Copyright © 2020, Texas Instruments Incorporated
+LMR36506RREVM User’s Guide
+5
+Bill of Materials
+Table 2. Bill Of Materials
+DESIGNATOR
+COMMENT
+DESCRIPTION
+MANUFACTURER
+PART NUMBER
+QUANTITY
+C1, C9
+CIN1, CIN3
+CAP, CERM, 2.2 µF, 100 V, ±10%, X7S, AEC-Q200
+Grade 1, 1206
+TDK
+CGA5L3X7S2A225K160AB
+2
+C2
+CIN2
+CAP, CERM, 0.1 µF, 100 V, ±10%, X7R, 0603
+MuRata
+GRM188R72A104KA35D
+1
+C3
+CB
+CAP, CERM, 0.1 µF, 16 V, ±10%, X7R, 0402
+MuRata
+GCM155R71C104KA55D
+1
+C4
+CVCC
+CAP, CERM, 1 µF, 16 V, ±10%, X7R, 0603
+Wurth Elektronik
+885012206052
+1
+C5
+COUT1
+CAP, CERM, 22 µF, 10 V, ±10%, X7R, AEC-Q200
+Grade 1, 1206
+MuRata
+GCM31CR71A226KE02
+1
+C6
+Cd
+CAP, CERM, 1 µF, 100 V, ±10%, X7R, 1206
+TDK
+C3216X7R2A105K160AA
+1
+C7
+Cfilt
+CAP, CERM, 0.1 µF, 100 V, ±10%, X7R, AEC-Q200
+Grade 1, 0805
+TDK
+CGA4J2X7R2A104K125AA
+0
+C8
+CBulk
+CAP, AL, 22 µF, 100 V, ±20%, 1.3 Ω, AEC-Q200
+Grade 2, SMD
+Panasonic
+EEE-FK2A220P
+1
+C10
+COUT2
+CAP, CERM, 22 µF, 10 V, ±10%, X7R, AEC-Q200
+Grade 1, 1206
+MuRata
+GCM31CR71A226KE02
+0
+C11, C12
+Cfilt1, Cfilt2
+CAP, CERM, 0.1 µF, 100 V, ±10%, X7R, AEC-Q200
+Grade 1, 0805
+TDK
+CGA4J2X7R2A104K125AA
+2
+C13
+CFF
+CAP, CERM, 10 pF, 50 V, ±5%, C0G/NP0, AEC-
+Q200 Grade 1, 0402
+TDK
+CGA2B2C0G1H100D050BA
+0
+FID1, FID2,
+FID3, FID4,
+FID5, FID6
+Fiducial
+Fiducial mark. There is nothing to buy or mount.
+N/A
+N/A
+0
+J1, J2
+JPGOOD,
+JMODE/RT
+Header, 100 mil, 3x1, Gold, TH
+Samtec
+HTSW-103-07-G-S
+2
+J3, J4
+JEN, JVOUT
+Header, 100 mil, 2x1, Gold, TH
+Samtec
+HTSW-102-07-G-S
+2
+L1
+MSS6132-153MLB
+Inductor, Shielded Drum Core, Ferrite, 15 µH, 1.56 A,
+0.14 Ω, SMD
+Coilcraft
+MSS6132-153MLB
+1
+L2
+FBMH3225HM601N
+T
+Ferrite Bead, 600 Ω at 100 MHz, 3 A, 1210
+Taiyo Yuden
+FBMH3225HM601NT
+1
+LBL1
+THT-14-423-10
+Thermal Transfer Printable Labels, 0.650" W x 0.200"
+H - 10 000 per roll
+Brady
+THT-14-423-10
+1
+R1
+RENB
+RES, 100 k, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW0402100KFKED
+0
+R2, R3
+RENT, RFBT
+RES, 100 k, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW0402100KFKED
+2
+R4
+RMODE
+RES, 0, 5%, 0.1 W, AEC-Q200 Grade 0, 0603
+Vishay-Dale
+CRCW06030000Z0EA
+1
+R5
+RT
+RES, 39.2 k, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW040239K2FKED
+0
+R6
+RINJ
+RES, 49.9, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW040249R9FKED
+1
+R7
+RFBB1
+RES, 43.2 k, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW040243K2FKED
+1
+R8
+Rd
+RES, 4.99, 1%, 0.1 W, AEC-Q200 Grade 0, 0603
+Vishay-Dale
+CRCW06034R99FKEA
+1
+R9
+RPGOOD
+RES, 100 k, 1%, 0.1 W, AEC-Q200 Grade 0, 0603
+Vishay-Dale
+CRCW0603100KFKEA
+1
+R10
+RFBB2
+RES, 59.0 k, 1%, 0.063 W, AEC-Q200 Grade 0, 0402
+Vishay-Dale
+CRCW040259K0FKED
+1
+SH-J1
+SNT-100-BK-G
+Shunt, 100mil, Gold plated, Black
+Samtec
+SNT-100-BK-G
+1
+TP1, TP5
+VOUT, VIN
+Test Point, Miniature, SMT
+Keystone
+5015
+2
+TP2, TP14
+GND
+Test Point, Miniature, Black, TH
+Keystone
+5001
+2
+TP3, TP4, TP6,
+TP7, TP8
+GND, VOUT,
+VIN_EMI, GND,
+GND
+Terminal, Turret, TH, Double
+Keystone
+1502-2
+5
+TP9, TP10,
+TP11
+PGOOD, SYNC, EN
+Test Point, Miniature, White, TH
+Keystone
+5002
+3
+TP12, TP13
+SW, VCC
+Test Point, Miniature, Red, TH
+Keystone
+5000
+2
+U1
+LMR36506RRPET
+LMR36506 Wide Input 65-V Synchronous, DC-DC
+Buck Converter, RPE0009A (VQFN-9)
+Texas Instruments
+LMR36506RRPET
+1
+
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATA SHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you 
+will fully indemnify TI and its representatives against, any claims, damages, costs, losses, and liabilities arising out of your use of these 
+resources.
+TI’s products are provided subject to TI’s Terms of Sale or other applicable terms available either on ti.com or provided in conjunction with 
+such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable warranties or warranty disclaimers for 
+TI products.
+TI objects to and rejects any additional or different terms you may have proposed. IMPORTANT NOTICE
+Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+Copyright © 2022, Texas Instruments Incorporated

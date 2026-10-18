@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "PASS_WITHIN_READ_ONLY_EXPERIMENT_REVIEW",
+  "candidate_adopted": false,
+  "physical_authority": false,
+  "vendor_fpga_pass": false,
+  "binding": {
+    "path": "reports/deeper-runtime-20261004/rtl/serialized-candidate-r03/receipt.json",
+    "sha256": "12ca4707b8a08c86e677ce50b5d49f61ead3758c228f58c4c9cde14059bf60a4"
+  },
+  "source_and_artifact_hashes_rechecked": 33,
+  "artifacts": {
+    "reports/deeper-runtime-20261004/rtl/serialized-candidate-r03/receipt.json": "12ca4707b8a08c86e677ce50b5d49f61ead3758c228f58c4c9cde14059bf60a4",
+    "reports/deeper-runtime-20261004/rtl/serialized-candidate-r03/DESIGN.md": "98db6310839d1ca4ddf693172c32f3a6864b052daf79d771ece81006a7f59a0d",
+    "reports/deeper-runtime-20261004/rtl/serialized-candidate-r02/pressure-r01/historical-execute.log": "036aca43e236d07a285566f7fa767cc4791adb3c3e6fdb4ec888faec3f1b9ed4"
+  },
+  "reviewed": [
+    "r01 phantom acceptance defect corrected: count/pointer/sequence advance only after successful staging",
+    "flat fixed-part concurrent writes retain distinct records; drain uses prior staging data on a same-slot read/write",
+    "clear suppresses RAM publication and resets logical validity; read/write forwarding plus stored-only prefetched head gates stale RAM",
+    "only delivered exact head ACK can pop; occupancy includes stored and staged accepted records",
+    "legal bound requires complete96B serial frames, >=768 core sampling opportunities per arm, <=6 one-shot captures per arm, <=1 fault per core, one-per-core drain and total256 capacity; bounded backlog drains before next legal arm"
+  ],
+  "findings_open": [],
+  "reviewer_reran_candidate_hdl": false,
+  "execution_evidence_attributed_to_hardware_agent": {
+    "wire_assertions": 1190,
+    "event_storage_assertions": 11,
+    "provider_assertions": 7,
+    "default_deny_core_cycles": 10000,
+    "differential_cycles": 160000,
+    "differential_caveat": "All-cycle status compared. Head record comparison skipped for12cycles after arm/clear; actual wire suite separately verifies complete delivered events.",
+    "pressure_invariants": 64,
+    "current_candidate_event_ack_mutation_detected": 1,
+    "prior_r02_independent_identity_output_and_event_mutations_detected": 3
+  },
+  "decision": "Do not adopt: generic logic resource use increases1264 LUT4 to35757 despite RAM64->8; vendor fit/timing and combined host NML remain unproven",
+  "limits": [
+    "Not a formal cadence proof for arbitrary faster arm_commit callers",
+    "No physical/vendor qualification promotion; frozen banked runtime remains unchanged"
+  ]
+}

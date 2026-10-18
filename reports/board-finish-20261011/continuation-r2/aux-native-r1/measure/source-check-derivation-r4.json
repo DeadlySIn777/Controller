@@ -1,0 +1,61 @@
+{
+ "schema": "aux-native-layer-width-retry-r3",
+ "original_runner_sha256": "765d705c9f9b2ccddb0d8ad5fb453141deb576ce8aa346ee9999acbedd539f7e",
+ "native_helper_sha256": "11769c6cc44d6b91e9ba7bb2c9017535c640ee2d884713e5548f2a08ca1a523d",
+ "native_helper_derivation_sha256": "9a5194cb492d7f23fc530d1c3fd6af00c63278088bc7d33ec652eeec27f123e7",
+ "source_check_changes": [
+  [
+   "fresh.net",
+   "fresh-r4.net"
+  ],
+  [
+   "native_entry.py",
+   "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\native_entry_width_r3.py"
+  ],
+  [
+   "fresh.net",
+   "fresh-r4.net"
+  ],
+  [
+   "native-parity.json",
+   "native-parity-r4.json"
+  ],
+  [
+   "fresh.net",
+   "fresh-r4.net"
+  ],
+  [
+   "source-export.log",
+   "source-export-r4.log"
+  ],
+  [
+   "native-parity.json",
+   "native-parity-r4.json"
+  ],
+  [
+   "native-parity.log",
+   "native-parity-r4.log"
+  ],
+  [
+   "native-parity.json",
+   "native-parity-r4.json"
+  ],
+  [
+   "fresh.net",
+   "fresh-r4.net"
+  ],
+  [
+   "fresh.net",
+   "fresh-r4.net"
+  ],
+  [
+   "native-parity.json",
+   "native-parity-r4.json"
+  ]
+ ],
+ "derived_source_check": "def run_source_checks(args, inputs, inputs_sha256, env):\n    out = args.out\n    context = inputs['source_parity_precheck']\n    wrapper = ROOT / 'tools/heavyt.sh'\n    verify_inputs(out, inputs, inputs_sha256, ReadSet())\n    verify_source(args, context)\n    verify_helpers(inputs['imported_helpers'])\n    parser = load_parser(PARSER)\n    command = ['C:/Program Files/Git/usr/bin/sh.exe', wrapper.as_posix(), 'kicad', str(NATIVE_BINARIES['kicad_cli']), 'sch', 'export', 'netlist', '--format', 'kicadsexpr', '--output', (out / 'fresh-r4.net').as_posix(), (out / 'source/motherboard.kicad_sch').as_posix()]\n    start = time.time()\n    with (out / 'source-export-r4.log').open('w', encoding='utf-8') as log:\n        run = subprocess.run(command, env=env, cwd=out / 'source', stdout=log, stderr=subprocess.STDOUT, check=False)\n    require(run.returncode == 0 and (out / 'fresh-r4.net').stat().st_mtime >= start - 1, 'Fresh hierarchy export failed/stale')\n    old = parser['read_netlist'](out / 'source/sch.net')\n    fresh = parser['read_netlist'](out / 'fresh-r4.net')\n    require(canonical(old) == canonical(fresh), 'Fresh hierarchy semantics differ')\n    export = {'verdict': 'PASS', 'command': command, 'native_exit_code': run.returncode, 'fresh_sha256': digest((out / 'fresh-r4.net').read_bytes()), 'saved_sha256': NETLIST_SHA, 'components': len(fresh['components']), 'nets': len(fresh['nets']), 'nodes': len(fresh['node_net']), 'semantic_components_nets_nodes_exact': True, 'cli_DRC_schematic_parity': 'NOT_RUN_BY_EXPORT', 'ERC': 'NOT_RUN'}\n    verify_inputs(out, inputs, inputs_sha256, ReadSet())\n    verify_source(args, context)\n    verify_helpers(inputs['imported_helpers'])\n    command = ['C:/Program Files/Git/usr/bin/sh.exe', wrapper.as_posix(), 'kicad', str(NATIVE_BINARIES['native_python']), str(STAGE / 'C:\\\\Users\\\\Gluis\\\\OneDrive\\\\Documents\\\\ChatGPT\\\\Controller\\\\reports\\\\board-finish-20261011\\\\continuation-r2\\\\native_entry_width_r3.py'), str(PARSER), str(out / 'native-via-spec.json'), (out / 'parity-copy/board.kicad_pcb').as_posix(), '--netlist', (out / 'source/sch.net').as_posix(), '--no-connectivity', '--examples', '40', (out / 'native-parity-r4.json').as_posix()]\n    start = time.time()\n    with (out / 'native-parity-r4.log').open('w', encoding='utf-8') as log:\n        run = subprocess.run(command, env=env, stdout=log, stderr=subprocess.STDOUT, check=False)\n    require(run.returncode == 0 and (out / 'native-parity-r4.json').stat().st_mtime >= start - 1, 'Native API parity failed/stale')\n    report = json.loads((out / 'native-parity-r4.json').read_bytes())\n    api = gate_report(report, {'board_sha256': inputs['after_sha256'], 'netlist_sha256': NETLIST_SHA}, context['host_parity'])\n    require(report['project_settings_binding']['explicit_board_set_project'] is True, 'Native project binding absent')\n    require(report['added_via_annuli']['verdict'] == 'PASS' and len(report['added_via_annuli']['rows']) == len(json.loads((out / 'native-via-spec.json').read_bytes())['added_vias']), 'Native added via annulus gate failed')\n    api.update(command=command, native_exit_code=run.returncode, added_via_annuli=report['added_via_annuli'])\n    verify_inputs(out, inputs, inputs_sha256, ReadSet())\n    verify_source(args, context)\n    verify_helpers(inputs['imported_helpers'])\n    outputs = {str((out / name).resolve()): digest((out / name).read_bytes()) for name in ('fresh-r4.net', 'native-parity-r4.json', 'host-parity.json', 'source-identity.json', 'host-board-table.json', 'native-via-spec.json')}\n    return {'verdict': 'PASS', 'candidate_sha256': inputs['after_sha256'], 'original_hierarchy': True, 'fresh_export': export, 'native_api': api, 'observed_output_hashes': outputs, 'adopted': False, 'limits': ['Explicit source/API parity; CLI DRC parity execution is separately labelled', 'C11061 original16V correction OPEN', 'No ERC/electrical/timing/thermal/SI/physical qualification']}",
+ "original_assertion_stop_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\aux-native-r1\\measure\\native-assert-stop-r2.json",
+ "all_layer_annuli_identity_and_source_gates_retained": true,
+ "native_refill_repeated": false,
+ "adopted": false
+}

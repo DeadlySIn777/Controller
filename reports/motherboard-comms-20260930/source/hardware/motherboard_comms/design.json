@@ -1,0 +1,1626 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-comms-r0.2",
+  "status": "actual_source_candidate",
+  "components": {
+    "U14801": {
+      "kind": "SWITCH",
+      "mpn": "TPS22918DBVR",
+      "value": "TPS22918DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "COMPUTE_3V3_GOOD",
+        "4": "CAN_CTRL_CT",
+        "5": "CAN_CTRL_QOD",
+        "6": "CAN_CTRL_3V3"
+      },
+      "role": "actual computed-module health power cycles controller and oscillator; no fictitious MCP reset pin"
+    },
+    "R14801": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "COMPUTE_3V3_GOOD",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "missing module/supervisor enable request defaults LOW"
+    },
+    "C14801": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "actual switched-domain input bypass"
+    },
+    "C14802": {
+      "kind": "C",
+      "mpn": "GRM1885C1H102JA01D",
+      "value": "1nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_CT",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-09,
+      "voltage_rating_v": 50,
+      "role": "real load-switch slew control"
+    },
+    "R14802": {
+      "kind": "R",
+      "mpn": "CRCW0603100RFKEA",
+      "value": "100R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "CAN_CTRL_QOD"
+      },
+      "resistance_ohm": 100,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "real output discharge via QOD while power off"
+    },
+    "C14803": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "controller-domain bulk/discharge storage"
+    },
+    "U14802": {
+      "kind": "SUP",
+      "mpn": "TPS3839K33DBZR",
+      "value": "TPS3839K33DBZR",
+      "footprint": "CNC_MB_Comms:TPS3839_DBZ3_TI",
+      "physical": true,
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "CAN_CTRL_READY",
+        "3": "CAN_CTRL_3V3"
+      },
+      "role": "actual push-pull delayed rail qualification, 2.857..2.974V trip and120..350ms release; not RESET pin on CAN controller"
+    },
+    "C14804": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "supervisor bypass"
+    },
+    "R14803": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_READY",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "below0.6V supervisor output undefined held LOW by real bias"
+    },
+    "U14803": {
+      "kind": "AND",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_READY",
+        "2": "COMPUTE_3V3_GOOD",
+        "3": "LOGIC_GND",
+        "4": "CAN_CTRL_LINK_READY",
+        "5": "IO_3V3"
+      },
+      "role": "real module-health loss inhibits SPI/TX and forces standby without waiting for controller stored-charge discharge"
+    },
+    "C14805": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual missing-module qualification bypass"
+    },
+    "U14804": {
+      "kind": "INV",
+      "mpn": "SN74LVC1G14DBVR",
+      "value": "SN74LVC1G14DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "CAN_CTRL_LINK_READY",
+        "3": "LOGIC_GND",
+        "4": "CAN_CTRL_OE_N",
+        "5": "IO_3V3"
+      },
+      "role": "actual controller readiness, enables Ioff buffers only after real local rail delayed good"
+    },
+    "C14806": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "controller qualification inverter bypass"
+    },
+    "U14805": {
+      "kind": "BUF4",
+      "mpn": "74LVC125APW,118",
+      "value": "74LVC125APW,118",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_OE_N",
+        "2": "CAN_SPI_SCLK_HOST",
+        "3": "CAN_CTRL_SCLK_RAW",
+        "4": "CAN_CTRL_OE_N",
+        "5": "CAN_SPI_MOSI_HOST",
+        "6": "CAN_CTRL_MOSI_RAW",
+        "7": "LOGIC_GND",
+        "8": "CAN_CTRL_CS_RAW",
+        "9": "CAN_SPI_CS_N_HOST",
+        "10": "CAN_CTRL_OE_N",
+        "11": "CAN_INT_N_HOST",
+        "12": "CAN_CTRL_INT_RAW",
+        "13": "CAN_CTRL_OE_N",
+        "14": "CAN_CTRL_3V3"
+      },
+      "role": "actual Nexperia Ioff protection into power-cycled controller: three forward SPI paths and one reverse INT path; Ioff output faces always-on host pull-up"
+    },
+    "C14807": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "Ioff SPI buffer bypass"
+    },
+    "R14804": {
+      "kind": "R",
+      "mpn": "CRCW060322R0FKEA",
+      "value": "22R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_SCLK_RAW",
+        "2": "CAN_CTRL_SCLK"
+      },
+      "resistance_ohm": 22,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "controller-side actual source series damping"
+    },
+    "R14805": {
+      "kind": "R",
+      "mpn": "CRCW060322R0FKEA",
+      "value": "22R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_MOSI_RAW",
+        "2": "CAN_CTRL_MOSI"
+      },
+      "resistance_ohm": 22,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "controller-side actual source series damping"
+    },
+    "R14806": {
+      "kind": "R",
+      "mpn": "CRCW060322R0FKEA",
+      "value": "22R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_CS_RAW",
+        "2": "CAN_CTRL_CS_N"
+      },
+      "resistance_ohm": 22,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "controller-side actual source series damping"
+    },
+    "R14807": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_SCLK",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller reset/unprogrammed default"
+    },
+    "R14808": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_MOSI",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller reset/unprogrammed default"
+    },
+    "R14809": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_CS_N",
+        "2": "CAN_CTRL_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller reset/unprogrammed default"
+    },
+    "R14810": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_INT_RAW",
+        "2": "CAN_CTRL_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller reset/unprogrammed default"
+    },
+    "R14811": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_XSTBY",
+        "2": "CAN_CTRL_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller reset/unprogrammed default"
+    },
+    "U14806": {
+      "kind": "CANCTL",
+      "mpn": "MCP2518FDT-E/SL",
+      "value": "MCP2518FDT-E/SL",
+      "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_TX",
+        "2": "CAN_CTRL_RX",
+        "3": null,
+        "4": "CAN_CTRL_INT_RAW",
+        "5": null,
+        "6": "CAN_CTRL_OSC",
+        "7": "LOGIC_GND",
+        "8": null,
+        "9": "CAN_CTRL_XSTBY",
+        "10": "CAN_CTRL_SCLK",
+        "11": "CAN_CTRL_MOSI",
+        "12": "CAN_SPI_MISO_HOST",
+        "13": "CAN_CTRL_CS_N",
+        "14": "CAN_CTRL_3V3"
+      },
+      "role": "real CAN FD SPI controller with externally clocked OSC1; OSC2/CLKO/GPIO1 NC, real reset-push-pull IRQ (configurable open-drain) and GPIO0 transceiver standby"
+    },
+    "C14808": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "controller VDD local bypass"
+    },
+    "U14807": {
+      "kind": "OSC",
+      "mpn": "ASV-40.000MHZ-LC-T",
+      "value": "ASV-40.000MHZ-LC-T",
+      "footprint": "Oscillator:Oscillator_SMD_Abracon_ASV-4Pin_7.0x5.1mm",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND",
+        "3": "CAN_CTRL_CLOCK_RAW",
+        "4": "CAN_CTRL_3V3"
+      },
+      "role": "actual40MHz3.3V oscillator, OE HIGH only on controller rail, -40..85C/50ppm/4ms startup max"
+    },
+    "C14809": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "clock local bypass"
+    },
+    "R14812": {
+      "kind": "R",
+      "mpn": "CRCW060322R0FKEA",
+      "value": "22R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_CLOCK_RAW",
+        "2": "CAN_CTRL_OSC"
+      },
+      "resistance_ohm": 22,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual40MHz source damping"
+    },
+    "U14808": {
+      "kind": "BUFFER",
+      "mpn": "SN74LVC1G125DBVR",
+      "value": "SN74LVC1G125DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_OE_N",
+        "2": "CAN_CTRL_TX",
+        "3": "LOGIC_GND",
+        "4": "CAN_TXD",
+        "5": "IO_3V3"
+      },
+      "role": "TX buffer powered IO3 keeps transceiver recessive while controller supply missing"
+    },
+    "C14810": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "TX Ioff buffer bypass"
+    },
+    "R14813": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_TXD",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual recessive HIGH when controller/clock missing"
+    },
+    "R14814": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_TX",
+        "2": "CAN_CTRL_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual controller-rail TX bias cannot backpower off controller"
+    },
+    "U14809": {
+      "kind": "BUFFER",
+      "mpn": "SN74LVC1G125DBVR",
+      "value": "SN74LVC1G125DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_OE_N",
+        "2": "CAN_RXD",
+        "3": "LOGIC_GND",
+        "4": "CAN_CTRL_RX",
+        "5": "CAN_CTRL_3V3"
+      },
+      "role": "Ioff receiver into power-cycled controller; input tolerant5.5V while supply OFF"
+    },
+    "C14811": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "RX Ioff buffer bypass"
+    },
+    "R14815": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_RX",
+        "2": "CAN_CTRL_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "receiver recessive when buffer disabled"
+    },
+    "U14810": {
+      "kind": "OR",
+      "mpn": "SN74LVC1G32DBVR",
+      "value": "SN74LVC1G32DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CTRL_XSTBY",
+        "2": "CAN_CTRL_OE_N",
+        "3": "LOGIC_GND",
+        "4": "CAN_STANDBY",
+        "5": "IO_3V3"
+      },
+      "role": "real standby HIGH until controller rail ready and GPIO0/XSTBY deliberately configured LOW"
+    },
+    "C14812": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "standby gate bypass"
+    },
+    "R14816": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_STANDBY",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual HIGH standby bias for start/unpowered outputs"
+    },
+    "U14811": {
+      "kind": "AND",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "RS485_DE_HOST",
+        "2": "COMPUTE_3V3_GOOD",
+        "3": "LOGIC_GND",
+        "4": "RS485_DE_QUALIFIED",
+        "5": "IO_3V3"
+      },
+      "role": "real UART driver enable AND actual compute rail, no automatic transmitter enable"
+    },
+    "C14813": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "RS485 driver qualification bypass"
+    },
+    "R14817": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_DE_HOST",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "UART DE absent/unprogrammed LOW"
+    },
+    "R14818": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_DE_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual transceiver DE off default"
+    },
+    "R14819": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_UART_TX_HOST",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "UART idle HIGH, no transmission without qualified DE"
+    },
+    "U14812": {
+      "kind": "RSISO",
+      "mpn": "ISOW1432DFMR",
+      "value": "ISOW1432DFMR",
+      "footprint": "CNC_MB_Comms:ISOW_DFM20_TI",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "RS485_UART_TX_HOST",
+        "3": "RS485_DE_QUALIFIED",
+        "4": "RS485_UART_RX_HOST",
+        "5": "LOGIC_GND",
+        "6": "LOGIC_GND",
+        "7": "RS485_FIELD_GOOD_HOST",
+        "8": "RS485_CONVERTER_GOOD_N",
+        "9": "CORE_5V",
+        "10": "LOGIC_GND",
+        "11": "RS485_ISO_RETURN_RAW",
+        "12": "RS485_ISO_3V3_RAW",
+        "13": "RS485_ISO_RETURN_RAW",
+        "14": "RS485_POWER_GOOD_FIELD",
+        "15": "RS485_COM",
+        "16": "RS485_FIELD_3V3",
+        "17": "RS485_B",
+        "18": "RS485_A",
+        "19": "RS485_A",
+        "20": "RS485_B"
+      },
+      "role": "real12Mbps isolated halfduplex RS485 with integrated3.3V secondary; terminal B is D+ and A is D-, distinct from vendor receiver pin letters"
+    },
+    "U14813": {
+      "kind": "CANISO",
+      "mpn": "ISOW1044DFMR",
+      "value": "ISOW1044DFMR",
+      "footprint": "CNC_MB_Comms:ISOW_DFM20_TI",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "CAN_TXD",
+        "4": "CAN_STANDBY",
+        "5": "CAN_RXD",
+        "6": "LOGIC_GND",
+        "7": null,
+        "8": "CAN_CONVERTER_GOOD_N",
+        "9": "CORE_5V",
+        "10": "LOGIC_GND",
+        "11": "CAN_ISO_RETURN_RAW",
+        "12": "CAN_ISO_5V_RAW",
+        "13": "CAN_ISO_5V_RAW",
+        "14": null,
+        "15": "CAN_GND",
+        "16": "CAN_GND",
+        "17": "CAN_GND",
+        "18": "CAN_L",
+        "19": "CAN_H",
+        "20": "CAN_FIELD_5V"
+      },
+      "role": "actual5Mbps physical CAN FD transceiver with isolated5V power; VSIN13 joins raw VISOOUT12, allGISOIN15/16/17 join same actual isolated CAN_GND"
+    },
+    "U14814": {
+      "kind": "BEAD",
+      "mpn": "BLM15EX331SN1D",
+      "value": "BLM15EX331SN1D",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_3V3_RAW",
+        "2": "RS485_FIELD_3V3"
+      },
+      "role": "actual330ohm100MHz field supply ferrite"
+    },
+    "U14815": {
+      "kind": "BEAD",
+      "mpn": "BLM15EX331SN1D",
+      "value": "BLM15EX331SN1D",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_RETURN_RAW",
+        "2": "RS485_COM"
+      },
+      "role": "actualfieldreturn ferrite; no LOGIC_GND DC bond"
+    },
+    "C14814": {
+      "kind": "C",
+      "mpn": "GRM155R71H103KA88D",
+      "value": "10nF50V",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-08,
+      "voltage_rating_v": 50,
+      "role": "ISOW prescribed0402 HF bypass <1mm from pins"
+    },
+    "C14815": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "ISOW local1uF bypass"
+    },
+    "C14816": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "firstbulk of44uF nominal; combinedeffective>=10uF acrossbias must bequalified"
+    },
+    "C14817": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "secondbulk of44uF nominal; 2..4mm from HF capacitor"
+    },
+    "C14818": {
+      "kind": "C",
+      "mpn": "GRM155R71H103KA88D",
+      "value": "10nF50V",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_3V3_RAW",
+        "2": "RS485_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 1e-08,
+      "voltage_rating_v": 50,
+      "role": "ISOW prescribed0402 HF bypass <1mm from pins"
+    },
+    "C14819": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_3V3_RAW",
+        "2": "RS485_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "ISOW local1uF bypass"
+    },
+    "C14820": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_3V3_RAW",
+        "2": "RS485_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "firstbulk of44uF nominal; combinedeffective>=10uF acrossbias must bequalified"
+    },
+    "C14821": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_ISO_3V3_RAW",
+        "2": "RS485_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "secondbulk of44uF nominal; 2..4mm from HF capacitor"
+    },
+    "C14822": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "ISOW logic VIO bypass"
+    },
+    "C14823": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_3V3",
+        "2": "RS485_COM"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual transceiver field supply bypass after bead"
+    },
+    "R14820": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_CONVERTER_GOOD_N",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "EN/FLT strictly used as fault output with>=5kohm pull-up, not driven enable"
+    },
+    "U14816": {
+      "kind": "WINDOW",
+      "mpn": "TPS3700DDCR",
+      "value": "TPS3700DDCR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "RS485_POWER_GOOD_FIELD",
+        "2": "RS485_COM",
+        "3": "RS485_FIELD_UV",
+        "4": "RS485_FIELD_OV",
+        "5": "RS485_FIELD_3V3",
+        "6": "RS485_POWER_GOOD_FIELD"
+      },
+      "role": "actual fieldrail window observed after supply/return beads; open-drain outputs wireAND"
+    },
+    "R14821": {
+      "kind": "R",
+      "mpn": "TNPW060368K1BEEA",
+      "value": "68100R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_3V3",
+        "2": "RS485_FIELD_UV"
+      },
+      "resistance_ohm": 68100,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14822": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_UV",
+        "2": "RS485_COM"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14823": {
+      "kind": "R",
+      "mpn": "TNPW060378K7BEEA",
+      "value": "78700R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_3V3",
+        "2": "RS485_FIELD_OV"
+      },
+      "resistance_ohm": 78700,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14824": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_OV",
+        "2": "RS485_COM"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14825": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_POWER_GOOD_FIELD",
+        "2": "RS485_FIELD_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual monitoredfield PG pullup, never constant healthy"
+    },
+    "C14824": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_3V3",
+        "2": "RS485_COM"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "fieldrail monitor bypass"
+    },
+    "U14817": {
+      "kind": "BEAD",
+      "mpn": "BLM15EX331SN1D",
+      "value": "BLM15EX331SN1D",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_5V_RAW",
+        "2": "CAN_FIELD_5V"
+      },
+      "role": "actual330ohm100MHz field supply ferrite"
+    },
+    "U14818": {
+      "kind": "BEAD",
+      "mpn": "BLM15EX331SN1D",
+      "value": "BLM15EX331SN1D",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_RETURN_RAW",
+        "2": "CAN_GND"
+      },
+      "role": "actualfieldreturn ferrite; no LOGIC_GND DC bond"
+    },
+    "C14825": {
+      "kind": "C",
+      "mpn": "GRM155R71H103KA88D",
+      "value": "10nF50V",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-08,
+      "voltage_rating_v": 50,
+      "role": "ISOW prescribed0402 HF bypass <1mm from pins"
+    },
+    "C14826": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "ISOW local1uF bypass"
+    },
+    "C14827": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "firstbulk of44uF nominal; combinedeffective>=10uF acrossbias must bequalified"
+    },
+    "C14828": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "secondbulk of44uF nominal; 2..4mm from HF capacitor"
+    },
+    "C14829": {
+      "kind": "C",
+      "mpn": "GRM155R71H103KA88D",
+      "value": "10nF50V",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_5V_RAW",
+        "2": "CAN_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 1e-08,
+      "voltage_rating_v": 50,
+      "role": "ISOW prescribed0402 HF bypass <1mm from pins"
+    },
+    "C14830": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_5V_RAW",
+        "2": "CAN_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "ISOW local1uF bypass"
+    },
+    "C14831": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_5V_RAW",
+        "2": "CAN_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "firstbulk of44uF nominal; combinedeffective>=10uF acrossbias must bequalified"
+    },
+    "C14832": {
+      "kind": "C",
+      "mpn": "GCM31CR71A226KE02L",
+      "value": "22000nF10V",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_ISO_5V_RAW",
+        "2": "CAN_ISO_RETURN_RAW"
+      },
+      "capacitance_f": 2.2000000000000003e-05,
+      "voltage_rating_v": 10,
+      "role": "secondbulk of44uF nominal; 2..4mm from HF capacitor"
+    },
+    "C14833": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "ISOW logic VIO bypass"
+    },
+    "C14834": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_5V",
+        "2": "CAN_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual transceiver field supply bypass after bead"
+    },
+    "R14826": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_CONVERTER_GOOD_N",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "EN/FLT strictly used as fault output with>=5kohm pull-up, not driven enable"
+    },
+    "U14819": {
+      "kind": "WINDOW",
+      "mpn": "TPS3700DDCR",
+      "value": "TPS3700DDCR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "CAN_POWER_GOOD_FIELD",
+        "2": "CAN_GND",
+        "3": "CAN_FIELD_UV",
+        "4": "CAN_FIELD_OV",
+        "5": "CAN_FIELD_5V",
+        "6": "CAN_POWER_GOOD_FIELD"
+      },
+      "role": "actual fieldrail window observed after supply/return beads; open-drain outputs wireAND"
+    },
+    "R14827": {
+      "kind": "R",
+      "mpn": "TNPW0603107KBEEA",
+      "value": "107000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_5V",
+        "2": "CAN_FIELD_UV"
+      },
+      "resistance_ohm": 107000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14828": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_UV",
+        "2": "CAN_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14829": {
+      "kind": "R",
+      "mpn": "TNPW0603123KBEEA",
+      "value": "123000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_5V",
+        "2": "CAN_FIELD_OV"
+      },
+      "resistance_ohm": 123000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14830": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_OV",
+        "2": "CAN_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm fieldrail monitor divider"
+    },
+    "R14831": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_POWER_GOOD_FIELD",
+        "2": "CAN_FIELD_5V"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual monitoredfield PG pullup, never constant healthy"
+    },
+    "C14835": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_5V",
+        "2": "CAN_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "fieldrail monitor bypass"
+    },
+    "U14820": {
+      "kind": "ISO2",
+      "mpn": "ISO7720FDWR",
+      "value": "ISO7720FDWR",
+      "footprint": "CNC_MB_Comms:ISO7720_DW16_TI_HV",
+      "physical": true,
+      "pins": {
+        "1": "CAN_GND",
+        "2": null,
+        "3": "CAN_FIELD_5V",
+        "4": "CAN_POWER_GOOD_FIELD",
+        "5": "CAN_GND",
+        "6": null,
+        "7": "CAN_GND",
+        "8": null,
+        "9": "LOGIC_GND",
+        "10": null,
+        "11": null,
+        "12": null,
+        "13": "CAN_FIELD_GOOD_HOST",
+        "14": "IO_3V3",
+        "15": null,
+        "16": "LOGIC_GND"
+      },
+      "role": "actual F-defaultLOW extraisolatedCANrail observation; unusedinputLOW/outputNC"
+    },
+    "C14836": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_5V",
+        "2": "CAN_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual health isolation source bypass"
+    },
+    "C14837": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "health isolation receive bypass"
+    },
+    "U14821": {
+      "kind": "AND",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "RS485_FIELD_GOOD_HOST",
+        "2": "RS485_CONVERTER_GOOD_N",
+        "3": "LOGIC_GND",
+        "4": "RS485_POWER_GOOD_HOST",
+        "5": "IO_3V3"
+      },
+      "role": "real fieldrail return AND integrated converter fault, distinct from software status/commands"
+    },
+    "C14838": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual health AND bypass"
+    },
+    "U14822": {
+      "kind": "AND",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "CAN_FIELD_GOOD_HOST",
+        "2": "CAN_CONVERTER_GOOD_N",
+        "3": "LOGIC_GND",
+        "4": "CAN_POWER_GOOD_HOST",
+        "5": "IO_3V3"
+      },
+      "role": "real fieldrail return AND integrated converter fault, distinct from software status/commands"
+    },
+    "C14839": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "actual health AND bypass"
+    },
+    "U14823": {
+      "kind": "TVS3",
+      "mpn": "PESD2CANFD24V-T",
+      "value": "PESD2CANFD24V-T",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "physical": true,
+      "pins": {
+        "1": "CAN_H",
+        "2": "CAN_L",
+        "3": "CAN_GND"
+      },
+      "role": "actual24V stand-off6pFtyp CAN-FD ESD network;42Vmax at1A belowtransceiver58Vabs, boardpulse/ESDqualification required"
+    },
+    "R14832": {
+      "kind": "R",
+      "mpn": "CRCW2512120RFKEG",
+      "value": "120R1%",
+      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "physical": true,
+      "pins": {
+        "1": "RS485_A",
+        "2": "RS485_TERM"
+      },
+      "resistance_ohm": 120,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 1,
+      "role": "actualoptional120ohm1W termination; external link TERMtoRS485_B only when busendpoint"
+    },
+    "R14833": {
+      "kind": "R",
+      "mpn": "CRCW2512120RFKEG",
+      "value": "120R1%",
+      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "physical": true,
+      "pins": {
+        "1": "CAN_L",
+        "2": "CAN_TERM"
+      },
+      "resistance_ohm": 120,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 1,
+      "role": "actualoptional120ohm1W termination; external link TERMtoCAN_H only when busendpoint"
+    }
+  },
+  "boundaries": {
+    "J14801": {
+      "kind": "Boundary4",
+      "mpn": "",
+      "value": "PARENT: actual parent powers and module-own supervisedrail, not constanthealthy",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "CORE_5V",
+        "3": "LOGIC_GND",
+        "4": "COMPUTE_3V3_GOOD"
+      },
+      "role": "actual parent powers and module-own supervisedrail, not constanthealthy"
+    },
+    "J14802": {
+      "kind": "Boundary8",
+      "mpn": "",
+      "value": "PARENT: exact qualified compute UART/SPI1; GPIO14contact55 ESP UART retained",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "RS485_UART_TX_HOST",
+        "2": "RS485_UART_RX_HOST",
+        "3": "RS485_DE_HOST",
+        "4": "CAN_SPI_SCLK_HOST",
+        "5": "CAN_SPI_MOSI_HOST",
+        "6": "CAN_SPI_MISO_HOST",
+        "7": "CAN_SPI_CS_N_HOST",
+        "8": "CAN_INT_N_HOST"
+      },
+      "role": "exact qualified compute UART/SPI1; GPIO14contact55 ESP UART retained"
+    },
+    "J14803": {
+      "kind": "Boundary2",
+      "mpn": "",
+      "value": "PARENT: actual ACC PD0/PD1 observations, no ACC data bus",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "RS485_POWER_GOOD_HOST",
+        "2": "CAN_POWER_GOOD_HOST"
+      },
+      "role": "actual ACC PD0/PD1 observations, no ACC data bus"
+    },
+    "J14804": {
+      "kind": "Boundary8",
+      "mpn": "",
+      "value": "PARENT: actual parent field terminals; parent owns CHASSIS/HF coupling without DC return ties",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "RS485_B",
+        "2": "RS485_A",
+        "3": "RS485_COM",
+        "4": "RS485_TERM",
+        "5": "CAN_H",
+        "6": "CAN_L",
+        "7": "CAN_GND",
+        "8": "CAN_TERM"
+      },
+      "role": "actual parent field terminals; parent owns CHASSIS/HF coupling without DC return ties"
+    }
+  },
+  "blocks": {
+    "load_switch": "U14801",
+    "controller_supervisor": "U14802",
+    "link_ready_gate": "U14803",
+    "ready_inverter": "U14804",
+    "spi_buffer": "U14805",
+    "controller": "U14806",
+    "clock": "U14807",
+    "can_tx_buffer": "U14808",
+    "can_rx_buffer": "U14809",
+    "standby_gate": "U14810",
+    "rs_de_gate": "U14811",
+    "rs_transceiver": "U14812",
+    "can_transceiver": "U14813",
+    "RS485_power_bead": "U14814",
+    "RS485_return_bead": "U14815",
+    "RS485_window": "U14816",
+    "CAN_power_bead": "U14817",
+    "CAN_return_bead": "U14818",
+    "CAN_window": "U14819",
+    "can_health_isolator": "U14820",
+    "RS485_health_gate": "U14821",
+    "CAN_health_gate": "U14822",
+    "can_tvs": "U14823",
+    "rs_termination": "R14832",
+    "can_termination": "R14833"
+  },
+  "fitted_component_count": 95,
+  "fitted_pad_count": 304,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "firmware_implemented": false,
+  "target_image_compiled": false,
+  "limits": {
+    "RS485_target_bps": 1000000,
+    "RS485_part_max_bps": 12000000,
+    "RS485_common_mode_v": [
+      -7,
+      12
+    ],
+    "RS485_abs_bus_v": [
+      -12,
+      15
+    ],
+    "CAN_target_data_bps": 2000000,
+    "CAN_part_max_bps": 5000000,
+    "CAN_abs_bus_v": [
+      -58,
+      58
+    ],
+    "CAN_common_mode_v": [
+      -12,
+      12
+    ],
+    "controller_SPI_hz_candidate": 10000000,
+    "controller_SPI_part_max_hz": 20000000,
+    "controller_external_clock_hz": 40000000,
+    "RS485_intrinsic_device_IEC_contact_v": 8000,
+    "RS485_external_TVS_fitted": false,
+    "RS485_board_surge_claim": false
+  },
+  "power_budget": {
+    "IO_3V3_bypass_nominal_uf": 2.0000000000000004,
+    "CAN_CTRL_bypass_nominal_uf": 22.5,
+    "MCP2518FD_max_at40MHz_SYSCLK_20MHzSPI_a": 0.02,
+    "ASV_max_at40MHz_a": 0.025,
+    "RS485_CORE5_max_12Mbps54ohm_REdisabled_a": 0.13,
+    "CAN_CORE5_max_dominant60ohm_a": 0.211,
+    "CAN_ISO_extra_available_a": 0.02,
+    "RS485_IO3_max_12Mbps_loopback_a": 0.0072,
+    "CAN_IO3_max_5Mbps_a": 0.0062,
+    "no_total_dynamic_budget_claim": true
+  },
+  "defaults": {
+    "missing_compute_powers_off_CAN_controller": true,
+    "CAN_controller_has_no_reset_pin": true,
+    "CAN_standby_until_real_ready_and_XSTBY_LOW": true,
+    "RS485_DE_LOW_when_missing_compute": true,
+    "separate_isolated_COMs": true,
+    "native_health_not_synthetic": true,
+    "automatic_motion_rearm": false
+  },
+  "open_gates": [
+    "Compute carrier pinmux/device-tree/SocketCAN and UART driver images remain target uncompiled; CM4/CM5 RTS-only mapping must retain GPIO14 ESP UART; BTT mappings not implicitly qualified.",
+    "MCP2518FD actual power-off discharge and POR below datasheet voltage, firstclock/CS ordering, FIFO generation/reset/reconnect and XSTBY driver setup require target compile and measured startup/failure tests. SPI RESET does not erase message RAM.",
+    "ISOW intrinsic contact ESD is device evidence, not board EMC/surge qualification. External SM712 was rejected because its19Vpositiveclamp exceedsRS48515Vabs. No arbitrary24Vbusmiswire/surge rating is claimed.",
+    "CAN TVS manufacturer type/package verified; packing order suffix/stock and production procurement require outside supplier confirmation.42Vclamp at1A is not allsurge/boardfault qualification.",
+    "ISOW layout requires10nF within1mm and bulk2..4mm/effective>=10uF, rawreturn/power routing exclusions4mm and allGISOIN tied locally. Creepage/return ferrite/cable/commonmode/thermal/EMC require nativeboard andphysicalvalidation.",
+    "2MbpsCAN loaded loop/samplepoint budget,10MHzSPI route/buffer roundtrip and1MbpsRS485 hostRTSturnaround require target/board latency proof. Standby/driver disable are communications defaults and do not replace independent20msmotioninhibit.",
+    "TPS3839 supervisor120..350ms validrelease and20us typfaultdelay are not a hardware20mswatchdog. Native source/ERC does not establish manufacture readiness."
+  ]
+}

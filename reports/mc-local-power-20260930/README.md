@@ -1,0 +1,15 @@
+# MC local power implementation evidence
+
+30 September 2026. [Immutable copied-input review](review.json) passes: **28 host/source/mutation tests, fresh native KiCad 10.0.4 XML, fresh native ERC with zero violations, and fresh native schematic PDF**. Forty copied inputs were inventoried. Covered working sources stayed unchanged; copied regression inputs stayed unchanged; regenerated electrical net maps match current source. Four normal KiCad default ignored checks are reported explicitly; no new waivers were added.
+
+The new [local power circuit](../../hardware/mc_local_power/README.md) contains **48 physical parts** and one explicitly nonphysical review boundary. Two card-local converters replace reliance on a central rail distribution in this candidate. The independent three-window chain enables core first, then I/O, then buffered FPGA reset. Neither raw regulator PG nor the raw 5 V reset node authorizes machine operation.
+
+The circuit closes initial/temperature **plus 400 ppm independent precision-resistor drift** against actual T20 core limits 1.15–1.25 V. Its UV top resistor sum is 1.331kΩ; OV is 1.47002kΩ; both bottoms are 1kΩ. The historical tight 1.17–1.23 V study and failed aging sensitivity remain separate earlier evidence. This new candidate records the component, threshold and slot-current changes as [IS-2 proposal MC-P1](../../hardware/mc_local_power/IS2_LOCAL_POWER_PROPOSAL.md); frozen IS-1 is untouched.
+
+The complete capacitor screen reads the current FPGA inventory: nominal 8.60 µF core and 35.51 µF I/O. Including local output capacitors and declared additional support budgets, worst initial/temperature totals are **45.617 µF core and 89.90465 µF I/O**. I/O changes to 2.5 MHz/1 µH to retain this decoupling within its 100 µF effective limit. The core remains 1 MHz/2.2 µH inside its 50 µF limit. Minimum effective capacitance versus DC bias and actual transient stability remain unproved.
+
+Conservative arithmetic gives **0.46735 A steady MC feed** and **0.69205 A concurrent downstream startup**, using declared FPGA reservations, 85% efficiency and converter/supervisor allowances. Therefore MC-P1 proposes **0.50 A steady and at least 0.80 A downstream-startup allowance**. It preserves the 0.45 A frozen budget and 17.35 mA excess visibly. Input charging of another **25.6795 µF** is separate and must be included when the actual slot limiter is selected and measured. These are reservations and ramp models, not measured currents or guaranteed instantaneous inrush.
+
+The native circuit PDF was visually inspected after correcting the boundary labels and moving hidden power-flag stubs inside the page. Source circuit files and existing machine configurations were preserved.
+
+Evidence is **source inspection, host tests, circuit ERC and bounded arithmetic**. No circuit simulation, PCB DRC, FPGA routed timing, physical startup/fault measurement, cost qualification, fabrication output or supplier submission is claimed. Full permission integration, slot limiter coordination, programming reset authority, arbitrary partial power, load/thermal validation and owner acceptance remain required engineering gates.

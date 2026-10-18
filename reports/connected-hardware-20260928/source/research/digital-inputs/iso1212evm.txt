@@ -1,0 +1,1030 @@
+1
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+User's Guide
+SLLU254A–May 2017–Revised January 2018
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+This user’s guide describes the evaluation module (EVM) for the ISO1212 isolated digital-input receiver.
+This EVM allows designers to evaluate device performance for fast development and analysis of isolated
+systems. The EVM supports evaluation of four dual channel ISO1212 SOIC package devices, that helps
+user to evaluate 8 channels with four channel configured for fast data rate and the other channels
+configured for slow data rate.
+CAUTION
+This evaluation module is made available for evaluation of isolator parameter
+performance only and is not intended for isolation voltage testing. To prevent
+damage to the EVM, any voltage applied as a supply or digital input/output
+must be maintained within the recommended operating range.
+Contents
+1
+Overview......................................................................................................................
+2
+2
+Pin Configuration of the ISO1212 ......................................................................................... 2
+3
+ISO1212EVM Board Block Diagram and Image......................................................................... 3
+4
+EVM Setup and Operation..................................................................................................
+5
+4.1
+EVM Jumper Settings .............................................................................................. 5
+4.2
+Typical Waveforms ................................................................................................. 6
+5
+Bill of Materials...............................................................................................................
+6
+6
+EVM Schematics and Layout .............................................................................................. 7
+List of Figures
+1
+ISO1212 Isolated Digital-Input Receiver Pin Configuration............................................................ 2
+2
+ISO1212EVM Configuration................................................................................................
+3
+3
+ISO1212EVM Board Photograph.......................................................................................... 4
+4
+Basic EVM Operation .......................................................................................................
+5
+5
+Example Measurement on ISO1212EVM ................................................................................ 6
+6
+Input Current vs Input Voltage ............................................................................................. 6
+7
+ISO1212EVM Schematic ...................................................................................................
+7
+8
+ISO1212EVM PCB Layout—Top Layer................................................................................... 8
+9
+ISO1212EVM PCB Layout—Bottom Layer............................................................................... 9
+List of Tables
+1
+Jumper Descriptions.........................................................................................................
+5
+2
+BOM ...........................................................................................................................
+6
+
+GND1
+EN
+VCC1
+OUT1
+OUT2
+NC
+NC
+GND1
+SENSE1
+IN1
+FGND1
+SUB1
+FGND2
+IN2
+SENSE2
+SUB2
+Basic Isolation
+ILIM
+1
+16
+15
+14
+13
+3
+2
+4
+5
+6
+7
+8
+9
+10
+11
+12
+ILIM
+Functional Isolation
+Overview
+www.ti.com
+2
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+Trademarks
+All trademarks are the property of their respective owners.
+1
+Overview
+The ISO1212 device is dual-channel, integrated, isolated digital-input receiver with IEC 61131-2 Type
+1/2/3 characteristics. The device receives up to a 60-V digital input signal and provides an isolated digital
+output. No field-side power supply is required. An external resistor, RSENSE, on the input signal path
+precisely sets the limit for the current drawn from the field input. This resistor helps minimize power
+dissipated in the system. The current limit can be set for Type 1/2/3 operation. The voltage transition
+thresholds are compliant to Type 1/2/3 and can be further adjusted upwards using an external resistor,
+RTHR.
+The ISO1212EVM is the evaluation module to test and evaluate the operation of an isolated dual-channel
+industrial input device, ISO1212. The EVM uses four ISO1212 devices to implement an 8 channel isolated
+industrial input solution with the first four channels working as fast signal input channels (up to 4 Mbps)
+and the last four channels as slow signal input channels (<1 Kbps). The first two devices (U1 and U2) of
+the ISO1212EVM use traditional approach of protecting the industrial input channel using TVS diode for
+EMC (such as surge, ESD, and others). Because the other two devices (U3 and U4) of the ISO1212EVM
+are configured to accept only slow signal inputs, EMC protection can be achieved by using only a
+capacitor (in place of TVS) between the input and FGND. Up to a 330-µs glitch can be filtered without
+TVS for the default values of the resistor (1 kΩ) and capacitor (0.33 µF).. Based on the input signal data
+rate, the value of this capacitor can be modified to achieve required EMC protection. If fast signal
+evaluation is required on the U3 and U4 channels of the device, remove the prepopulated capacitors
+(C13, C14, C15, and C16). For information on different levels of EMC protection available without using an
+additional TVS diode, refer to the ISO121x data sheet, ISO121x Isolated Digital-Input Receivers With IEC
+61131-2 Type 1/2/3 Characteristics.
+2
+Pin Configuration of the ISO1212
+Figure 1 shows the ISO1212 pin configuration in an 16-pin QSOP package.
+Figure 1. ISO1212 Isolated Digital-Input Receiver Pin Configuration
+
+OUT2
+GND
+VCC
+U1
+INP1
+FGND
+INP2
+OUT1
+OUT4
+U2
+INP3
+INP4
+OUT3
+OUT6
+U3
+INP5
+INP6
+OUT5
+OUT8
+U4
+INP7
+INP8
+OUT7
+EN
+Configured for fast signal operation(1)
+Configured for slow signal operation(1)
+www.ti.com
+ISO1212EVM Board Block Diagram and Image
+3
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+3
+ISO1212EVM Board Block Diagram and Image
+Figure 2 shows the board configuration of the EVM.
+(1)
+For more information on fast and slow signal operation, see Section 1.
+Figure 2. ISO1212EVM Configuration
+
+ISO1212EVM Board Block Diagram and Image
+www.ti.com
+4
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+Figure 3 shows the photograph of the EVM.
+Figure 3. ISO1212EVM Board Photograph
+
+ 
+GND
+VCC1
+OUTx
+INx
+Signal 
+Generator
+Scope
+FGND
+FGND
+www.ti.com
+EVM Setup and Operation
+5
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+4
+EVM Setup and Operation
+This section describes the setup and operation of the EVM for parameter performance evaluation.
+Figure 4 shows the configuration for operating the ISO1212EVM. In this setup, the 24 V, 10-kHz signal
+from the function generator is connected between channel 1 input (J4, pin 9) and FGND (J4, pin 1) of the
+EVM. A 5-V power supply is connected at J1 to power the logic side. A jumper was placed shorting pin 1
+and pin 2 of J3 to enable the output. The input side and output side signals were monitored using an
+oscilloscope.
+NOTE:
+To avail reverse polarity protection from the field input, do not populate the R3, R6, R9, R12,
+R15, and R18 resistors, thereby leaving pin 12 (SUB2) and pin 13 (SUB1) of the device
+floating.
+Figure 4. Basic EVM Operation
+4.1
+EVM Jumper Settings
+Table 1 lists the jumper settings of the ISO1212EVM.
+Table 1. Jumper Descriptions
+Jumper
+Configuration
+Description
+J3
+Pin 1-Pin 2
+Enables output
+Pin 2-Pin 3
+Disables output
+
+Input Voltage (V)
+Input Current (mA)
+0
+10
+20
+30
+40
+50
+60
+70
+0
+0.5
+1
+1.5
+2
+2.5
+3
+iso1
+40qC
+25qC
+85qC
+105qC
+115qC
+125qC
+D002
+D002
+EVM Setup and Operation
+www.ti.com
+6
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+4.2
+Typical Waveforms
+Figure 5 shows the typical input and output waveforms of the EVM for a 10-kHz input. The input is shown
+as Channel 1, and the output is shown as Channel 2. Figure 6 shows the input current versus input
+voltage characteristics. The input current is limited by the RSENSE resistor. A value of 562 Ω for RSENSE is
+recommended for Type I and Type III operation and results in a current limit of 2.25 mA (typical).
+Figure 5. Example Measurement on ISO1212EVM
+Figure 6. Input Current vs Input Voltage
+5
+Bill of Materials
+Table 2 lists the bill of materials (BOM) for this EVM.
+Table 2. BOM
+Item
+Designator
+Description
+Part Number
+Manufacturer
+Quantity
+1
+C1, C5, C7, C9
+CAP, CERM, 1 µF, 50 V, +/- 10%,
+X5R, 0603
+GRM188R61H105KAALD
+MuRata
+4
+2
+C2, C6, C8,
+C10
+CAP, CERM, 0.1 µF, 25 V, +/- 5%,
+X7R, 0603
+06033C104JAT2A
+AVX
+4
+3
+C13, C14, C15,
+C16
+CAP, CERM, 0.33 µF, 50 V, +/- 10%,
+X5R, 0805
+C2012X5R1H334K125AA
+TDK
+4
+4
+D1, D2, D3, D4
+Diode, TVS, Uni, 36 V, 58.1 Vc, SOD-
+123FL
+SMF36A
+Littelfuse
+4
+5
+H1, H2, H3, H4
+Bumpon, Cylindrical, 0.312 X 0.200,
+Black
+SJ61A1
+3M
+4
+6
+J1
+Header, 100mil, 2x1, Gold, TH
+HTSW-102-07-G-S
+Samtec
+1
+7
+J2
+Header, 100mil, 8x2, Gold, TH
+TSW-108-07-G-D
+Samtec
+1
+8
+J3
+Header, 100mil, 3x1, Gold, TH
+HTSW-103-07-G-S
+Samtec
+1
+9
+J4
+Terminal Block, 3.5mm, 9x1, R/A, TH
+ED555/9DS
+On-Shore
+Technology
+1
+10
+R1, R4, R7,
+R10, R13, R16,
+R19, R22
+RES, 1.00 k, 1%, 0.25 W, AEC-Q200
+Grade 1, 1.4x3.6mm
+SMM02040C1001FB300
+Vishay Draloric
+8
+11
+R2, R5, R8,
+R11, R14, R17,
+R20, R23
+RES, 562, 1%, 0.1 W, 0603
+CRCW0603562RFKEA
+Vishay-Dale
+8
+12
+SH-J1
+Shunt, 100mil, Gold plated, Black
+SNT-100-BK-G
+Samtec
+1
+13
+U1, U2, U3, U4
+ISO1212DBQR, DBQ00016A (SSOP-
+16)
+ISO1212DBQR
+Texas Instruments
+4
+
+GND1
+VCC1
+0.1µF
+C10
+1µF
+C9
+GND1
+VCC1
+0.1µF
+C8
+1µF
+C7
+VCC1
+2
+GND1
+1
+EN
+3
+OUT1
+4
+NC
+6
+OUT2
+5
+NC
+7
+GND1
+8
+FGND2
+9
+IN2
+10
+SENSE2
+11
+PBKG2
+12
+PBKG1
+13
+FGND
+14
+IN1
+15
+SENSE1
+16
+U2
+ISO1212DBQR
+VCC1
+2
+GND1
+1
+EN
+3
+OUT1
+4
+NC
+6
+OUT2
+5
+NC
+7
+GND1
+8
+FGND2
+9
+IN2
+10
+SENSE2
+11
+PBKG2
+12
+PBKG1
+13
+FGND
+14
+IN1
+15
+SENSE1
+16
+U3
+ISO1212DBQR
+VCC1
+2
+GND1
+1
+EN
+3
+OUT1
+4
+NC
+6
+OUT2
+5
+NC
+7
+GND1
+8
+FGND2
+9
+IN2
+10
+SENSE2
+11
+PBKG2
+12
+PBKG1
+13
+FGND
+14
+IN1
+15
+SENSE1
+16
+U4
+ISO1212DBQR
+VCC1
+2
+GND1
+1
+EN
+3
+OUT1
+4
+NC
+6
+OUT2
+5
+NC
+7
+GND1
+8
+FGND2
+9
+IN2
+10
+SENSE2
+11
+PBKG2
+12
+PBKG1
+13
+FGND
+14
+IN1
+15
+SENSE1
+16
+U1
+ISO1212DBQR
+VCC1
+VCC1
+VCC1
+VCC1
+GND1
+GND1
+GND1
+GND1
+EN
+EN
+EN
+EN
+VCC1
+GND1
+EN
+GND1
+VCC1
+0.1µF
+C2
+1µF
+C1
+GND1
+VCC1
+0.1µF
+C6
+1µF
+C5
+562
+R14
+1.00k
+R13
+1
+2
+3
+J3
+0.33µF
+C13
+DNI
+D5
+562
+R2
+1.00k
+R1
+DNI
+C3
+36V
+D1
+SMF36A
+562
+R8
+1.00k
+R7
+DNI
+C11
+36V
+D3
+SMF36A
+562
+R20
+1.00k
+R19
+0.33µF
+C15
+DNI
+D7
+FGND
+FGND
+FGND
+FGND
+FGND
+FGND
+562
+R5
+1.00k
+R4
+DNI
+C4
+36V
+D2
+SMF36A
+562
+R17
+1.00k
+R16
+0.33µF
+C14
+DNI
+D6
+562
+R11
+1.00k
+R10
+DNI
+C12
+36V
+D4
+SMF36A
+562
+R23
+1.00k
+R22
+0.33µF
+C16
+DNI
+D8
+FGND
+FGND
+DNI
+R15
+DNI
+R18
+DNI
+R21
+DNI
+R24
+DNI
+R3
+DNI
+R6
+DNI
+R9
+DNI
+R12
+FGND
+GND1
+J1
+VCC1
+GND1
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+J2
+5
+4
+1
+2
+3
+6
+7
+8
+9
+J4
+VCC max 5V
+Imax 0.1A
+Vin Max 60V
+Imax 15mA
+Configured for fast signal operation
+Configured for slow signal operation
+Copyright © 2017, Texas Instruments Incorporated
+www.ti.com
+EVM Schematics and Layout
+7
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+6
+EVM Schematics and Layout
+Figure 7 shows the ISO1212EVM schematic. Figure 8 and Figure 9 show the PCB layout of the EVM.
+Figure 7. ISO1212EVM Schematic
+
+EVM Schematics and Layout
+www.ti.com
+8
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+Figure 8. ISO1212EVM PCB Layout—Top Layer
+
+......
+www.ti.com
+EVM Schematics and Layout
+9
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+ISO1212 Isolated Digital-Input Receiver Evaluation Module
+Figure 9. ISO1212EVM PCB Layout—Bottom Layer
+
+Revision History
+www.ti.com
+10
+SLLU254A–May 2017–Revised January 2018
+Submit Documentation Feedback
+Copyright © 2017–2018, Texas Instruments Incorporated
+Revision History
+Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Original (May 2017) to A Revision ........................................................................................................... Page
+•
+Changed the maximum values for fast and slow signal operation in the Overview section. Updated the ISO1212EVM
+Configuration and ISO1212EVM EVM Schematic to show the configurations for fast and slow signal operation ........... 2
+
+STANDARD TERMS FOR EVALUATION MODULES
+1.
+Delivery: TI delivers TI evaluation boards, kits, or modules, including any accompanying demonstration software, components, and/or
+documentation which may be provided together or separately (collectively, an “EVM” or “EVMs”) to the User (“User”) in accordance
+with the terms set forth herein. User's acceptance of the EVM is expressly subject to the following terms.
+1.1
+EVMs are intended solely for product or software developers for use in a research and development setting to facilitate feasibility
+evaluation, experimentation, or scientific analysis of TI semiconductors products. EVMs have no direct function and are not
+finished products. EVMs shall not be directly or indirectly assembled as a part or subassembly in any finished product. For
+clarification, any software or software tools provided with the EVM (“Software”) shall not be subject to the terms and conditions
+set forth herein but rather shall be subject to the applicable terms that accompany such Software
+1.2
+EVMs are not intended for consumer or household use. EVMs may not be sold, sublicensed, leased, rented, loaned, assigned,
+or otherwise distributed for commercial purposes by Users, in whole or in part, or used in any finished product or production
+system.
+2
+Limited Warranty and Related Remedies/Disclaimers:
+2.1
+These terms do not apply to Software. The warranty, if any, for Software is covered in the applicable Software License
+Agreement.
+2.2
+TI warrants that the TI EVM will conform to TI's published specifications for ninety (90) days after the date TI delivers such EVM
+to User. Notwithstanding the foregoing, TI shall not be liable for a nonconforming EVM if (a) the nonconformity was caused by
+neglect, misuse or mistreatment by an entity other than TI, including improper installation or testing, or for any EVMs that have
+been altered or modified in any way by an entity other than TI, (b) the nonconformity resulted from User's design, specifications
+or instructions for such EVMs or improper system design, or (c) User has not paid on time. Testing and other quality control
+techniques
+are
+used
+to
+the
+extent
+TI
+deems
+necessary.
+TI
+does
+not
+test
+all
+parameters
+of
+each
+EVM.
+User's claims against TI under this Section 2 are void if User fails to notify TI of any apparent defects in the EVMs within ten (10)
+business days after delivery, or of any hidden defects with ten (10) business days after the defect has been detected.
+2.3
+TI's sole liability shall be at its option to repair or replace EVMs that fail to conform to the warranty set forth above, or credit
+User's account for such EVM. TI's liability under this warranty shall be limited to EVMs that are returned during the warranty
+period to the address designated by TI and that are determined by TI not to conform to such warranty. If TI elects to repair or
+replace such EVM, TI shall have a reasonable time to repair such EVM or provide replacements. Repaired EVMs shall be
+warranted for the remainder of the original warranty period. Replaced EVMs shall be warranted for a new full ninety (90) day
+warranty period.
+3
+Regulatory Notices:
+3.1
+United States
+3.1.1
+Notice applicable to EVMs not FCC-Approved:
+FCC NOTICE: This kit is designed to allow product developers to evaluate electronic components, circuitry, or software
+associated with the kit to determine whether to incorporate such items in a finished product and software developers to write
+software applications for use with the end product. This kit is not a finished product and when assembled may not be resold or
+otherwise marketed unless all required FCC equipment authorizations are first obtained. Operation is subject to the condition
+that this product not cause harmful interference to licensed radio stations and that this product accept harmful interference.
+Unless the assembled kit is designed to operate under part 15, part 18 or part 95 of this chapter, the operator of the kit must
+operate under the authority of an FCC license holder or must secure an experimental authorization under part 5 of this chapter.
+3.1.2
+For EVMs annotated as FCC – FEDERAL COMMUNICATIONS COMMISSION Part 15 Compliant:
+CAUTION
+This device complies with part 15 of the FCC Rules. Operation is subject to the following two conditions: (1) This device may not
+cause harmful interference, and (2) this device must accept any interference received, including interference that may cause
+undesired operation.
+Changes or modifications not expressly approved by the party responsible for compliance could void the user's authority to
+operate the equipment.
+FCC Interference Statement for Class A EVM devices
+NOTE: This equipment has been tested and found to comply with the limits for a Class A digital device, pursuant to part 15 of
+the FCC Rules. These limits are designed to provide reasonable protection against harmful interference when the equipment is
+operated in a commercial environment. This equipment generates, uses, and can radiate radio frequency energy and, if not
+installed and used in accordance with the instruction manual, may cause harmful interference to radio communications.
+Operation of this equipment in a residential area is likely to cause harmful interference in which case the user will be required to
+correct the interference at his own expense.
+
+FCC Interference Statement for Class B EVM devices
+NOTE: This equipment has been tested and found to comply with the limits for a Class B digital device, pursuant to part 15 of
+the FCC Rules. These limits are designed to provide reasonable protection against harmful interference in a residential
+installation. This equipment generates, uses and can radiate radio frequency energy and, if not installed and used in accordance
+with the instructions, may cause harmful interference to radio communications. However, there is no guarantee that interference
+will not occur in a particular installation. If this equipment does cause harmful interference to radio or television reception, which
+can be determined by turning the equipment off and on, the user is encouraged to try to correct the interference by one or more
+of the following measures:
+• Reorient or relocate the receiving antenna.
+• Increase the separation between the equipment and receiver.
+• Connect the equipment into an outlet on a circuit different from that to which the receiver is connected.
+• Consult the dealer or an experienced radio/TV technician for help.
+3.2 Canada
+3.2.1
+For EVMs issued with an Industry Canada Certificate of Conformance to RSS-210 or RSS-247
+Concerning EVMs Including Radio Transmitters:
+This device complies with Industry Canada license-exempt RSSs. Operation is subject to the following two conditions:
+(1) this device may not cause interference, and (2) this device must accept any interference, including interference that may
+cause undesired operation of the device.
+Concernant les EVMs avec appareils radio:
+Le présent appareil est conforme aux CNR d'Industrie Canada applicables aux appareils radio exempts de licence. L'exploitation
+est autorisée aux deux conditions suivantes: (1) l'appareil ne doit pas produire de brouillage, et (2) l'utilisateur de l'appareil doit
+accepter tout brouillage radioélectrique subi, même si le brouillage est susceptible d'en compromettre le fonctionnement.
+Concerning EVMs Including Detachable Antennas:
+Under Industry Canada regulations, this radio transmitter may only operate using an antenna of a type and maximum (or lesser)
+gain approved for the transmitter by Industry Canada. To reduce potential radio interference to other users, the antenna type
+and its gain should be so chosen that the equivalent isotropically radiated power (e.i.r.p.) is not more than that necessary for
+successful communication. This radio transmitter has been approved by Industry Canada to operate with the antenna types
+listed in the user guide with the maximum permissible gain and required antenna impedance for each antenna type indicated.
+Antenna types not included in this list, having a gain greater than the maximum gain indicated for that type, are strictly prohibited
+for use with this device.
+Concernant les EVMs avec antennes détachables
+Conformément à la réglementation d'Industrie Canada, le présent émetteur radio peut fonctionner avec une antenne d'un type et
+d'un gain maximal (ou inférieur) approuvé pour l'émetteur par Industrie Canada. Dans le but de réduire les risques de brouillage
+radioélectrique à l'intention des autres utilisateurs, il faut choisir le type d'antenne et son gain de sorte que la puissance isotrope
+rayonnée équivalente (p.i.r.e.) ne dépasse pas l'intensité nécessaire à l'établissement d'une communication satisfaisante. Le
+présent émetteur radio a été approuvé par Industrie Canada pour fonctionner avec les types d'antenne énumérés dans le
+manuel d’usage et ayant un gain admissible maximal et l'impédance requise pour chaque type d'antenne. Les types d'antenne
+non inclus dans cette liste, ou dont le gain est supérieur au gain maximal indiqué, sont strictement interdits pour l'exploitation de
+l'émetteur
+3.3 Japan
+3.3.1
+Notice for EVMs delivered in Japan: Please see http://www.tij.co.jp/lsds/ti_ja/general/eStore/notice_01.page 日本国内に
+輸入される評価用キット、ボードについては、次のところをご覧ください。
+http://www.tij.co.jp/lsds/ti_ja/general/eStore/notice_01.page
+3.3.2
+Notice for Users of EVMs Considered “Radio Frequency Products” in Japan: EVMs entering Japan may not be certified
+by TI as conforming to Technical Regulations of Radio Law of Japan.
+If User uses EVMs in Japan, not certified to Technical Regulations of Radio Law of Japan, User is required to follow the
+instructions set forth by Radio Law of Japan, which includes, but is not limited to, the instructions below with respect to EVMs
+(which for the avoidance of doubt are stated strictly for convenience and should be verified by User):
+1.
+Use EVMs in a shielded room or any other test facility as defined in the notification #173 issued by Ministry of Internal
+Affairs and Communications on March 28, 2006, based on Sub-section 1.1 of Article 6 of the Ministry’s Rule for
+Enforcement of Radio Law of Japan,
+2.
+Use EVMs only after User obtains the license of Test Radio Station as provided in Radio Law of Japan with respect to
+EVMs, or
+3.
+Use of EVMs only after User obtains the Technical Regulations Conformity Certification as provided in Radio Law of Japan
+with respect to EVMs. Also, do not transfer EVMs, unless User gives the same notice above to the transferee. Please note
+that if User does not follow the instructions above, User will be subject to penalties of Radio Law of Japan.
+
+【無線電波を送信する製品の開発キットをお使いになる際の注意事項】開発キットの中には技術基準適合証明を受けて
+いないものがあります。技術適合証明を受けていないもののご使用に際しては、電波法遵守のため、以下のいずれかの
+措置を取っていただく必要がありますのでご注意ください。
+1.
+電波法施行規則第6条第1項第1号に基づく平成18年3月28日総務省告示第173号で定められた電波暗室等の試験設備でご使用
+いただく。
+2.
+実験局の免許を取得後ご使用いただく。
+3.
+技術基準適合証明を取得後ご使用いただく。
+なお、本製品は、上記の「ご使用にあたっての注意」を譲渡先、移転先に通知しない限り、譲渡、移転できないものとします。
+上記を遵守頂けない場合は、電波法の罰則が適用される可能性があることをご留意ください。日本テキサス・イ
+ンスツルメンツ株式会社
+東京都新宿区西新宿６丁目２４番１号
+西新宿三井ビル
+3.3.3
+Notice for EVMs for Power Line Communication: Please see http://www.tij.co.jp/lsds/ti_ja/general/eStore/notice_02.page
+電力線搬送波通信についての開発キットをお使いになる際の注意事項については、次のところをご覧ください。http:/
+/www.tij.co.jp/lsds/ti_ja/general/eStore/notice_02.page
+3.4 European Union
+3.4.1
+For EVMs subject to EU Directive 2014/30/EU (Electromagnetic Compatibility Directive):
+This is a class A product intended for use in environments other than domestic environments that are connected to a
+low-voltage power-supply network that supplies buildings used for domestic purposes. In a domestic environment this
+product may cause radio interference in which case the user may be required to take adequate measures.
+4
+EVM Use Restrictions and Warnings:
+4.1 EVMS ARE NOT FOR USE IN FUNCTIONAL SAFETY AND/OR SAFETY CRITICAL EVALUATIONS, INCLUDING BUT NOT
+LIMITED TO EVALUATIONS OF LIFE SUPPORT APPLICATIONS.
+4.2 User must read and apply the user guide and other available documentation provided by TI regarding the EVM prior to handling
+or using the EVM, including without limitation any warning or restriction notices. The notices contain important safety information
+related to, for example, temperatures and voltages.
+4.3 Safety-Related Warnings and Restrictions:
+4.3.1
+User shall operate the EVM within TI’s recommended specifications and environmental considerations stated in the user
+guide, other available documentation provided by TI, and any other applicable requirements and employ reasonable and
+customary safeguards. Exceeding the specified performance ratings and specifications (including but not limited to input
+and output voltage, current, power, and environmental ranges) for the EVM may cause personal injury or death, or
+property damage. If there are questions concerning performance ratings and specifications, User should contact a TI
+field representative prior to connecting interface electronics including input power and intended loads. Any loads applied
+outside of the specified output range may also result in unintended and/or inaccurate operation and/or possible
+permanent damage to the EVM and/or interface electronics. Please consult the EVM user guide prior to connecting any
+load to the EVM output. If there is uncertainty as to the load specification, please contact a TI field representative.
+During normal operation, even with the inputs and outputs kept within the specified allowable ranges, some circuit
+components may have elevated case temperatures. These components include but are not limited to linear regulators,
+switching transistors, pass transistors, current sense resistors, and heat sinks, which can be identified using the
+information in the associated documentation. When working with the EVM, please be aware that the EVM may become
+very warm.
+4.3.2
+EVMs are intended solely for use by technically qualified, professional electronics experts who are familiar with the
+dangers and application risks associated with handling electrical mechanical components, systems, and subsystems.
+User assumes all responsibility and liability for proper and safe handling and use of the EVM by User or its employees,
+affiliates, contractors or designees. User assumes all responsibility and liability to ensure that any interfaces (electronic
+and/or mechanical) between the EVM and any human body are designed with suitable isolation and means to safely
+limit accessible leakage currents to minimize the risk of electrical shock hazard. User assumes all responsibility and
+liability for any improper or unsafe handling or use of the EVM by User or its employees, affiliates, contractors or
+designees.
+4.4 User assumes all responsibility and liability to determine whether the EVM is subject to any applicable international, federal,
+state, or local laws and regulations related to User’s handling and use of the EVM and, if applicable, User assumes all
+responsibility and liability for compliance in all respects with such laws and regulations. User assumes all responsibility and
+liability for proper disposal and recycling of the EVM consistent with all applicable international, federal, state, and local
+requirements.
+5.
+Accuracy of Information: To the extent TI provides information on the availability and function of EVMs, TI attempts to be as accurate
+as possible. However, TI does not warrant the accuracy of EVM descriptions, EVM availability or other information on its websites as
+accurate, complete, reliable, current, or error-free.
+
+6.
+Disclaimers:
+6.1 EXCEPT AS SET FORTH ABOVE, EVMS AND ANY MATERIALS PROVIDED WITH THE EVM (INCLUDING, BUT NOT
+LIMITED TO, REFERENCE DESIGNS AND THE DESIGN OF THE EVM ITSELF) ARE PROVIDED "AS IS" AND "WITH ALL
+FAULTS." TI DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, REGARDING SUCH ITEMS, INCLUDING BUT
+NOT LIMITED TO ANY EPIDEMIC FAILURE WARRANTY OR IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS
+FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADE
+SECRETS OR OTHER INTELLECTUAL PROPERTY RIGHTS.
+6.2 EXCEPT FOR THE LIMITED RIGHT TO USE THE EVM SET FORTH HEREIN, NOTHING IN THESE TERMS SHALL BE
+CONSTRUED AS GRANTING OR CONFERRING ANY RIGHTS BY LICENSE, PATENT, OR ANY OTHER INDUSTRIAL OR
+INTELLECTUAL PROPERTY RIGHT OF TI, ITS SUPPLIERS/LICENSORS OR ANY OTHER THIRD PARTY, TO USE THE
+EVM IN ANY FINISHED END-USER OR READY-TO-USE FINAL PRODUCT, OR FOR ANY INVENTION, DISCOVERY OR
+IMPROVEMENT, REGARDLESS OF WHEN MADE, CONCEIVED OR ACQUIRED.
+7.
+USER'S INDEMNITY OBLIGATIONS AND REPRESENTATIONS. USER WILL DEFEND, INDEMNIFY AND HOLD TI, ITS
+LICENSORS AND THEIR REPRESENTATIVES HARMLESS FROM AND AGAINST ANY AND ALL CLAIMS, DAMAGES, LOSSES,
+EXPENSES, COSTS AND LIABILITIES (COLLECTIVELY, "CLAIMS") ARISING OUT OF OR IN CONNECTION WITH ANY
+HANDLING OR USE OF THE EVM THAT IS NOT IN ACCORDANCE WITH THESE TERMS. THIS OBLIGATION SHALL APPLY
+WHETHER CLAIMS ARISE UNDER STATUTE, REGULATION, OR THE LAW OF TORT, CONTRACT OR ANY OTHER LEGAL
+THEORY, AND EVEN IF THE EVM FAILS TO PERFORM AS DESCRIBED OR EXPECTED.
+8.
+Limitations on Damages and Liability:
+8.1 General Limitations. IN NO EVENT SHALL TI BE LIABLE FOR ANY SPECIAL, COLLATERAL, INDIRECT, PUNITIVE,
+INCIDENTAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES IN CONNECTION WITH OR ARISING OUT OF THESE
+TERMS OR THE USE OF THE EVMS , REGARDLESS OF WHETHER TI HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH
+DAMAGES.
+EXCLUDED
+DAMAGES
+INCLUDE,
+BUT
+ARE
+NOT
+LIMITED
+TO,
+COST
+OF
+REMOVAL
+OR
+REINSTALLATION, ANCILLARY COSTS TO THE PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, RETESTING,
+OUTSIDE COMPUTER TIME, LABOR COSTS, LOSS OF GOODWILL, LOSS OF PROFITS, LOSS OF SAVINGS, LOSS OF
+USE, LOSS OF DATA, OR BUSINESS INTERRUPTION. NO CLAIM, SUIT OR ACTION SHALL BE BROUGHT AGAINST TI
+MORE THAN TWELVE (12) MONTHS AFTER THE EVENT THAT GAVE RISE TO THE CAUSE OF ACTION HAS
+OCCURRED.
+8.2 Specific Limitations. IN NO EVENT SHALL TI'S AGGREGATE LIABILITY FROM ANY USE OF AN EVM PROVIDED
+HEREUNDER, INCLUDING FROM ANY WARRANTY, INDEMITY OR OTHER OBLIGATION ARISING OUT OF OR IN
+CONNECTION WITH THESE TERMS, , EXCEED THE TOTAL AMOUNT PAID TO TI BY USER FOR THE PARTICULAR
+EVM(S) AT ISSUE DURING THE PRIOR TWELVE (12) MONTHS WITH RESPECT TO WHICH LOSSES OR DAMAGES ARE
+CLAIMED. THE EXISTENCE OF MORE THAN ONE CLAIM SHALL NOT ENLARGE OR EXTEND THIS LIMIT.
+9.
+Return Policy. Except as otherwise provided, TI does not offer any refunds, returns, or exchanges. Furthermore, no return of EVM(s)
+will be accepted if the package has been opened and no return of the EVM(s) will be accepted if they are damaged or otherwise not in
+a resalable condition. If User feels it has been incorrectly charged for the EVM(s) it ordered or that delivery violates the applicable
+order, User should contact TI. All refunds will be made in full within thirty (30) working days from the return of the components(s),
+excluding any postage or packaging costs.
+10.
+Governing Law: These terms and conditions shall be governed by and interpreted in accordance with the laws of the State of Texas,
+without reference to conflict-of-laws principles. User agrees that non-exclusive jurisdiction for any dispute arising out of or relating to
+these terms and conditions lies within courts located in the State of Texas and consents to venue in Dallas County, Texas.
+Notwithstanding the foregoing, any judgment may be enforced in any United States or foreign court, and TI may seek injunctive relief
+in any United States or foreign court.
+Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+Copyright © 2018, Texas Instruments Incorporated
+
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

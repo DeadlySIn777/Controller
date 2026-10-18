@@ -1,0 +1,321 @@
+"""Generate spec/safety.json (IS-1 section 04) from the stated inputs and allocations.
+
+usage: python tools/interface_spec/gen_04_json.py [root]   (root defaults to the repository)
+The companion markdown docs/interface-spec/04-safety-power-timing.md is maintained by hand and
+checked against this file by tools/interface_spec_validate.py.
+"""
+import json, os, sys
+def wd(c): return 3.23*c+0.381
+C=3.3
+# capacitor (C0G +/-5 %) and TI timing factors [DDR]; then the CWD leakage allowance [REQ]: 375 nA nominal charge current [DDR],
+# +/-10 nA leakage (guard ring and cleanliness requirement on Codex) shifts the timeout by 375/(375 -/+ 10)
+I_CWD=375.0; LEAK=10.0
+wmin_c=0.905*wd(C*0.95); wmax_c=1.095*wd(C*1.05)
+wmin_cap=round(wmin_c,2); wnom=round(wd(C),2); wmax_cap=round(wmax_c,2)
+wmin=round(wmin_c*I_CWD/(I_CWD+LEAK),2); wmax=round(wmax_c*I_CWD/(I_CWD-LEAK),2)
+down={"wdo_node_to_schmitt":0.001,"arm_latch_and_final_gate":0.001,"card_receiver_filter":0.005,"am26c31_disable":0.001,"tps22918_off_led_below_0p1ma":0.30,"form_a_open":0.20,"form_b_close":4.00}
+down_total=round(sum(v for k,v in down.items() if not k.startswith("form_"))+max(down["form_a_open"],down["form_b_close"]),2)
+OUT_DRIVER_MS=1.00
+FRAME_MS=round((176*8/5e6+0.48e-6)*1e3,3)      # longest host frame (CS_FB) at the 5 MHz budget rate, with guards
+SVS_ALLOC_MS=0.05                              # TPS386000: datasheet gives a 4 us minimum detectable SENSE pulse and no maximum assertion delay
+OUT_SHORT_MS=1.00                              # driver limits autonomously; card-forced off <= 0.40 ms [AR]; allocation
+out_short_path_ms=round((100+100+40.4+100+40.4+20)/1000,3)
+led_min=round((4.85-1.80-1.30-0.55)/(220*1.01)*1000,2)
+led_max=round((5.15-1.50-1.00)/(220*0.99)*1000,2)
+led=led_max/1000
+def i24(p5): return round(p5*5/0.85/18,3)
+core5=4.50
+m8=round(0.80+8*led+0.80+0.10+0.10,3)
+m12=round(0.80+0.40+12*led+0.80+0.10+0.10,3)
+encx=1.60
+# ACC AI group: RECOM REC3.5-2424SRW/R8/A (18-36 V in, 24 V 145 mA, 84 % [DS: DigiKey listing]) feeds the 100 mA sensor supply and 20 mA of AI-side electronics
+AI_EFF=0.84; ai_group=round((0.100+0.020)*24/AI_EFF/18,3)
+c8=round(i24(core5)+i24(m8)+0.06+ai_group,3); c12=round(i24(core5)+i24(m12)+0.06+ai_group,3); c12x=round(c12+i24(encx),3)
+aux24_ch=0.00247+0.016
+fa_loads={"do0_7":4.0,"aux24_bank_a":round(8*aux24_ch,3),"aux24_bank_b":round(4*aux24_ch,3),"field5v_input":round((0.05+12*0.016)*5/0.7/18,3),"probe_supplies":0.20,"control":0.06}
+fb_loads={"do8_15":4.0,"di_sensor_groups":0.60,"safety_branch":0.15,"arm_lamp":0.05,"control":0.02}
+fa=round(4.0+8*aux24_ch+4*aux24_ch+(0.05+12*0.016)*5/0.7/18+0.20+0.06,3)
+fb=round(sum(fb_loads.values()),3)
+# AUX_5V chain for the DM542T V4 NC-5V wiring [REQ allocations, AR]
+aux5={"setpoint_v":5.00,"regulation_pct":1.5,"limiter_drop_max_v":0.05,"aux5_ok_trip_falling_min_v":4.80,"distribution_drop_max_v":0.05,
+      "ron_max_ohm":2.5,"ena_current_max_a":0.016,"cable_loop_resistance_max_ohm":1.25,"ena_disable_min_v":4.5}
+aux5["monitor_node_min_v"]=round(aux5["setpoint_v"]*(1-aux5["regulation_pct"]/100)-aux5["limiter_drop_max_v"],3)
+aux5["terminal_min_v_while_ok"]=round(aux5["aux5_ok_trip_falling_min_v"]-aux5["distribution_drop_max_v"],3)
+aux5["ena_min_v"]=round(aux5["terminal_min_v_while_ok"]-aux5["ron_max_ohm"]*aux5["ena_current_max_a"]-aux5["cable_loop_resistance_max_ohm"]*aux5["ena_current_max_a"],3)
+aux5["ena_margin_v"]=round(aux5["ena_min_v"]-aux5["ena_disable_min_v"],3)
+assert aux5["ena_min_v"]>=aux5["ena_disable_min_v"] and aux5["monitor_node_min_v"]>aux5["aux5_ok_trip_falling_min_v"]
+E="evidence"
+d={
+ "spec_revision":"IS-1",
+ "section":"04-safety-power-timing",
+ "companion_document":"docs/interface-spec/04-safety-power-timing.md",
+ "status":"specification only; nothing implemented, simulated, synthesized, drawn, measured or ready for manufacture; not a certified safety function",
+ "historical_baseline_note":"six-joint/two-encoder endpoint results remain historical baseline evidence, not eight- or twelve-channel evidence",
+ "evidence_labels":{"DS":"datasheet or product page opened for this section","DDR":"earlier recorded datasheet desk review","AR":"arithmetic","SI":"source inspection","REQ":"requirement or allocation set by IS-1","RES":"engineering reservation","ME":"required future physical measurement; none exist"},
+ "supersedes":[
+  {"record":"docs/MOTION_EXPANSION_8_TO_12.md rev3 s5.4/U11","old":"no enable polarity; DM542T V4 wired with ENA unconnected","new":"form A and form B switch per channel; DM542T V4 supported via form B"},
+  {"record":"docs/MOTION_EXPANSION_8_TO_12.md rev3 s7.2","old":"10-contact motor plug","new":"14-position motor plug signal set, 13 used"},
+  {"record":"docs/MOTION_EXPANSION_8_TO_12.md rev3 s8 filtering","old":"Ioff OE uses unfiltered presence/PGOOD; glitch blanks outputs and latches nothing","new":"filter before every gate; OPI latch captures every gate transition while armed"},
+  {"record":"docs/MOTION_EXPANSION_8_TO_12.md rev3 s8.1/U15","old":"watchdog part/timing open","new":"TPS3851G18SDRBT, CL10C332JB8NNNC 3.3 nF, progress pulse per accepted ARM/UPDATE, SET1 on motion request"},
+  {"record":"docs/MOTION_EXPANSION_8_TO_12.md rev3 s14.3","old":"permission latch placement open","new":"motion card"}],
+ "timing_classes":[
+  {"id":"servo_period","value_ms":1.0,"kind":"deadline","safety_limit":False},
+  {"id":"cycle_completion_target","value_us":700,"kind":"engineering margin target","safety_limit":False,
+   "start":"nominal servo period boundary T(k) (scheduling latency counts)","end":"FPGA commit (CS release) of the last accepted host-to-FPGA exchange of the cycle",
+   "included":["thread wake-up latency","LinuxCNC computation","driver encode/decode","spidev/ioctl overhead","wire time of every exchange","CS guards","inter-byte and DMA gaps"],
+   "measured_separately":{"input_data_age":"FPGA snapshot (CS assertion of status read) to use by the servo thread","output_update_latency":"command computation to FPGA commit, and commit to first physical output change"}},
+  {"id":"fpga_command_watchdog","value_ms":5.0,E:"SI","kind":"safety-relevant timeout"},
+  {"id":"external_watchdog","min_ms":wmin,"nom_ms":wnom,"max_ms":wmax,"capacitor_and_ic_only_ms":[wmin_cap,wmax_cap],E:"DDR,AR","kind":"safety-relevant timeout independent of FPGA clock","note":"min/max include the +/-10 nA CWD leakage allowance"},
+  {"id":"fault_to_inhibit","max_ms":20.0,E:"REQ","kind":"user requirement, not relaxed"}],
+ "telemetry_independence":"all protection in sections 4-7 acts in hardware or FPGA without host transfer; telemetry reports what protection already did",
+ "enable_interface":{
+  "parts":{
+   "form_a":{"mpn":"TLP3640A(TPL,E)","maker":"Toshiba","package":"SO4","voff_v":60,"ion_a":1.0,"ron_max_ohm":0.3,"ift_max_ma":3,"ioff_max_ua":1,"vf_v_at_10ma":[1.50,1.65,1.80],"ton_max_ms":0.5,"toff_max_ms":0.2,"isolation_vrms":3750,"topr_c":[-40,110],"dvdt_limit_kv_per_us":0.1,E:"DS"},
+   "form_b":{"mpn":"TLP4176A(TP,F)","maker":"Toshiba","package":"2.54SOP4","voff_v":60,"ion_a":0.5,"ron_max_ohm":2.5,"ifc_max_ma":3,"return_min_ma":0.1,"ioff_max_ua":1,"vf_v_at_10ma":[1.0,1.15,1.3],"recommended_vdd_max_v":48,"recommended_if_ma":[5,25],"ton_max_ms":1,"toff_max_ms":3,"isolation_vrms":1500,"topr_c":[-40,105],E:"DS"},
+   "led_driver":{"mpn":"SN74LVC07APWR","maker":"TI","type":"hex open-drain non-inverting buffer, 5.5 V tolerant, Ioff",E:"DS","quantity":"2 on bank-A card, 1 on MX4"},
+   "led_supply_switch":{"mpn":"TPS22918DBVR","maker":"TI","type":"load switch with configurable quick output discharge",E:"DS","quantity":"1 per bank"}},
+  "rejected_alternatives":[{"mpn":"TLP4176G","reason":"350 V part, RON <= 25 ohm"},{"mpn":"TLP4590A","reason":"DIP6, larger"},{"mpn":"AQY212GS","reason":"turn-on 5.0 ms max vs 0.5 ms"}],
+  "led_string":{"topology":"TLP3640A LED in series with TLP4176A LED, 220 ohm 1 %, sunk by SN74LVC07A; input EN_N_i active low with 10 k pull-up to IO_3V3","supply_v":[4.85,5.15],"if_min_ma":led_min,"if_max_ma":led_max,E:"AR","ambient_c":[0,55],"cold_margin":"ME"},
+  "published_loop_rating":{"voltage":"DC or AC 0-30 V","current_max_ma":50,E:"REQ"},
+  "tvs":"bidirectional, stand-off >= 30 V, clamp < 60 V at rated pulse; part selected and verified by Codex",
+  "logical_enable":"EN_i = armed AND mask[i] AND installed[i] AND (bank B healthy if i>=8) AND no fault AND not self-test; driven out as EN_N_i = NOT EN_i; hardware TX_PERMIT on top",
+  "states":[
+   {"condition":"armed, in mask, TX_PERMIT high","led":"on","en_no":"closed","en_nc":"open"},
+   {"condition":"disarmed or not in mask","led":"off","en_no":"open","en_nc":"closed"},
+   {"condition":"latched fault, watchdog, inhibit","led":"off","en_no":"open","en_nc":"closed"},
+   {"condition":"FPGA unconfigured, reset or clock stalled","led":"off","en_no":"open","en_nc":"closed"},
+   {"condition":"controller LOGIC power lost, FIELD present","led":"off","en_no":"open","en_nc":"closed","note":"disable-on-current drive stays disabled because AUX_5V is FIELD-derived"},
+   {"condition":"motion card removed","led":"off","en_no":"open","en_nc":"closed"},
+   {"condition":"motor-interface card or MX4 removed","led":"absent","en_no":"open","en_nc":"open","note":"exception E2"},
+   {"condition":"self-test","led":"off","en_no":"open","en_nc":"closed"}],
+  "wiring_modes":[
+   {"id":"NO-sourced","wiring":"AUX_24V->EN+; EN- ->EN_NO; EN_COM->AUX_RTN"},
+   {"id":"NO-drive","wiring":"drive enable supply through EN_NO/EN_COM floating"},
+   {"id":"NC-5V","wiring":"DM542T S2=5V; AUX_5V->ENA+; ENA- ->EN_NC; EN_COM->AUX_RTN","reference_drive":"DM542T V4"},
+   {"id":"NC-drive","wiring":"drive or user supply powered whenever the drive is, through EN_NC/EN_COM"}],
+  "dm542t_v4_facts":{"ena_default":"unconnected = enabled","disable":"4.5-24 V","enable":"0-0.5 V","logic_current_ma":[7,10,16],"ena_lead_ms":200,"step_high_low_min_us":2.5,"dir_setup_min_us":5,"pulse_max_khz":200,"supply_v":[18,50],"alm":"30 V/100 mA, low impedance normal, high impedance on protection fault",E:"DS",
+   "profile":{"enable_settle_ms_min":200,"timing_ticks_min":{"step_high":125,"step_low":125,"dir_setup":250},"rate_cap_hz":200000,"alarm_on_no_current":1,"wiring_mode":"NC-5V"}},
+  "exceptions":[
+   {"id":"E1","case":"disable-on-current drive loses ENA loop source while powered","consequence":"drive enabled, STEP/DIR high-Z","mitigation":"AUX5_OK monitored, ARM refused; declared independent stop path required and confirmed at commissioning; not electrically verifiable"},
+   {"id":"E2","case":"motor-interface card or MX4 removed with drive and loop source powered","consequence":"drive enabled","mitigation":"power-off service removes drive power first; not a supported state"},
+   {"id":"E3","case":"open ENA conductor on disable-on-current drive","consequence":"drive enabled whenever powered; not detectable","mitigation":"commissioning check disarmed => drive disabled on every channel, repeated after harness/card change"},
+   {"id":"E4","case":"welded photorelay","consequence":"form A short: enabled while disarmed; form B short: cannot enable","mitigation":"commissioning check; per-channel readback deferred (U5), cost open"},
+   {"id":"E5","case":"enable needs > 30 V or > 50 mA, or non-isolated incompatible input","consequence":"unsupported by built-in switches","mitigation":"external relay module from EN_NO, unsupported until qualified"}],
+  "global_interlock_not_counted_as_enable":True},
+ "motor_plug_signal_set":{"positions":14,"used":13,"groups":{"motion_logic":["STEP+","STEP-","DIR+","DIR-","SIG_0V"],"separation":["SHIELD","unpopulated"],"enable_floating":["EN_NO","EN_COM","EN_NC"],"aux_field":["AUX_5V","AUX_24V","AUX_RTN"],"alarm_field":["ALARM_IN"]},
+   "owner_of_contact_numbers":"Codex connector map","creepage_working_voltage_v":60},
+ "alarm_input":{"front_end":"ISO1212 sinking channel, 2.47 mA max with 562 ohm RSENSE","wiring":"AUX_24V->ALM+; ALM- ->ALARM_IN; sourcing-type drive 0 V to AUX_RTN","polarity_field":"alarm_on_no_current per channel","filter":"10 us sampler, 4 samples, accepted 30-40 us","supply_monitor":"AUX24_OK per bank"},
+ "interruption_rule":{
+  "rules":["any event that interrupts an active motion-output path latches a fault and invalidates position of every channel on that path","a pulse rejected by the qualification filter never reaches a physical output gate","recovery needs SYNC, ARM and re-established position; nothing automatic"],
+  "gate_terms":["TX_PERMIT","TX_PERMIT_B","bank-B Ioff OE","AM26C31 G","TPS22918 EN","card presence","card PGOOD","tamper","FPGA fault gating","OUT_PERMIT","OUT_PERMIT_k at each output card"],
+  "opi_latch":{"mpn":"SN74LVC2G74DCUR","domains":["TX (motion card: TX_PERMIT final gate)","A (bank-A card: qualified TX_PERMIT_A)","B (MX4: qualified TX_PERMIT_B)","BOE (motion card: qualified bank-B Ioff-buffer OE net)","OUT (motion card: OUT_PERMIT final gate)"],"d":1,"clk":"FPGA OPI_REARM_x during ARM (TX, A, B, BOE) or IO_ENABLE (OUT, strobe OPI_REARM_O) with the gate high","clr_n":"the gate net itself (qualified where it is filtered)","q":"OPI_OK_x to FPGA","min_clear_pulse_ns":3.5,"min_qualified_pulse_ns_required":100},
+  "buffer_oe_rule":"any OE of a buffer that carries STEP, DIR or EN_N is either tied active (bank-A buffers: always enabled; power-off isolation by Ioff and receiver pull-downs) or is a qualified net that also clears an OPI latch on the card that holds the buffer (bank-B Ioff buffer on the motion card: OPI_BOE). An OE pulse too short to reach TX_PERMIT_B at the MX4 still clears OPI_BOE",
+  "idle_pulls":"10 kohm pull-downs on the STEP and DIR inputs of every AM26C31 on the MIA and the MX4 (idle low, as the FPGA idles STEP low); EN_N inputs keep their 10 kohm pull-ups (LED dark). A floating input therefore rests at the idle level and cannot generate a counted edge",
+  "output_card_latch":"each DO and ACC card: OUT_EN latch (SN74LVC2G74DCUR half) with CLR_N = qualified OUT_PERMIT_k, D = 1, CLK = MCU strobe after a new epoch and IO_ENABLE; output enable = OUT_PERMIT_k AND OUT_EN.Q AND CARD_EN; any accepted OUT_PERMIT_k drop keeps the card's outputs off (SW_STATE written 0) until re-armed; ACC second half for PROC_PERMIT (PEN latch)",
+  "filters":{"presence_pgood_tamper":{"reject_below_us":5,"accept_at_or_above_us":30},"tx_permit_at_card":{"reject_below_us":0.5,"accept_at_or_above_us":2},"out_permit_at_card":{"reject_below_us":0.5,"accept_at_or_above_us":2},E:"REQ"},
+  "fpga_reaction":"OPI_OK_TX/A/B/BOE low while armed => OUTPUT_PATH_INTERRUPTED, disarm all, clear pos_continuity of the domain (TX and BOE: all channels / channels 8-11); OPI_OK_OUT low while I/O enabled => OUTPUT_PERMIT_LOST, I/O disabled",
+  "proof_test":{"on":"every commanded DISARM","expect":"OPI_OK falls within 10 us of request drop","else":"PERMISSION_PATH_STUCK, next ARM refused"},
+  "commanded_stop":"finish current pulse high/low and DIR hold, then drop request; continuity kept",
+  "pos_continuity":{"set_by":"CLEAR_CONTINUITY while disarmed after host-reported re-reference","cleared_by":["OPI on domain while armed","fault disarm while armed","STEP_TIMING","FPGA reset/reconfiguration","installed-mask change"]},
+  "host_position_valid":"homed AND continuity of every channel of the joint AND (no enable drop since homing OR declared and verified self-holding axis)",
+  "linuxcnc":{"unhome_pin":"halui.joint.J.unhome (J from the profile channel-to-joint map)","ini":"VOLATILE_HOME = 1 on every joint",E:"SI"}},
+ "watchdogs":{
+  "common":{"mpn":"TPS3851G18SDRBT","cap_mpn":"CL10C332JB8NNNC","cap":"3.3 nF C0G +/-5 % 0603 50 V","tWD_ms":{"min":wmin,"nom":wnom,"max":wmax},"formula":"tWD = 3.23*C[nF] + 0.381 ms; factors 0.905/1.095; cap +/-5 %",E:"DDR,DS,AR",
+   "leakage_allowance":{"charge_current_na":I_CWD,"leakage_na":LEAK,"requirement":"CWD node guard ring to the GND reference, no-clean residue removed, conformal coating kept off the CWD node; Codex states the leakage budget at 55 C and 85 % RH",E:"DDR,REQ"},
+   "wdo_reset":"wired-AND on one 10 k pull-up node then Schmitt: WD_x_OK = WDO AND RESET","latching":"WD_M_OK is a term of latch_clear_n (arm_latch_M) and WD_O_OK of latch_clear_O_n (arm_latch_O); each arm latch holds the fault until a new deliberate request, so a WDO pulse never re-enables permission by itself","mr":"open or factory pad","wdi_buffer":"SN74LVC1G34 with 100 k pull-down (Codex existing arrangement)",
+   "trip_flag":"sticky SN74LVC2G74 set when WD_x_OK falls while SET1 high, cleared by FPGA after host stores event"},
+  "motion":{"id":"WD_M","wdi":"progress_m: 1 us pulse per accepted ARM or UPDATE","set1":"FPGA_MOTION_REQUEST with 100 k pull-down","gates":"TX_PERMIT"},
+  "output":{"id":"WD_O","wdi":"progress_o: 1 us pulse per accepted full-I/O exchange","set1":"FPGA_OUTPUT_REQUEST with 100 k pull-down","gates":"OUT_PERMIT"},
+  "gateware_change":{"old":"progress_wdi toggles per accepted UPDATE (falling edge every second UPDATE)","new":"one 50-tick (1 us) high pulse per accepted ARM or UPDATE, idle low","reason":"largest legal falling-edge spacing < 5 ms, so tWD(min) > 5 ms suffices; downstream budget 7.33 ms vs 2.13 ms with 4.7 nF; form B close up to 3 ms"},
+  "superseded_parts":["TPS3431SDRBR + 120 pF (about 57.7-71.9 ms)","TPS3851 + 4.7 nF (2.13 ms downstream budget, insufficient for form B)"],
+  "user_record_note":"PROJECT_MEMORY records TPS3851G18SDRBT with 4.7 nF CL10C472JB8NNNC (13.40/15.56/17.87 ms) as the verified candidate for the retained 20 ms requirement. IS-1 keeps the part and the 20 ms requirement and changes only the timing capacitor to 3.3 nF CL10C332JB8NNNC, because with the normally-closed enable switch (tOFF up to 3 ms, 4 ms allocated) 17.87 + 4.31 = 22.18 ms would exceed 20 ms, while 12.67 + 4.31 = 16.98 ms meets it (17.33 ms with the CWD leakage allowance); the change is possible because progress pulses now come once per accepted command",
+  "arming":"SYNC -> ARM -> request rises (SET1 high) -> 150 us setup -> first UPDATE within 1-2.5 ms",
+  "self_test":{"when":["every power-up before first ARM","after motion-card replacement"],"state":"SELFTEST (FPGA state; the two tests run one after the other, never together)",
+   "method":"raise the request with progress suppressed; time the fall of WD_x_OK",
+   "conditions":{"WD_M":["EN_N_i forced high (LED strings dark)","all rates zero, STEP/DIR idle","PEN, PWM and AO requests zero","PERMIT_OUT_REQ low, so PERMIT_OUT stays open although TX_PERMIT is high"],
+                 "WD_O":["PWM pins driven low","AO commanded zero","OUT_REQ zero in every IOL1 frame, so every card keeps CARD_EN and its OUT_EN latch low","PERMIT_OUT_REQ low"]},
+   "pass_window_ms":[round(wmin-0.2,2),round(wmax+0.15+0.2,2)],"window_basis":"tWD(min) - 0.2 ms to tWD(max) + 0.15 ms SET1 set-up + 0.2 ms, with the leakage allowance","fail":"WATCHDOG_SELFTEST_FAILED, ARM refused"},
+  "downstream_budget_ms":round(20-wmax,2),
+  "clock_stall_budget":{"wd_max_ms":wmax,"wd_max_basis":{"capacitor_nf":C,"cap_tolerance":0.05,"ti_factor_max":1.095,"formula":"tWD = 3.23*C[nF] + 0.381 ms","charge_current_na":I_CWD,"leakage_na":LEAK},"stages_ms":down,"combination":"serial stages summed; form A open and form B close act in parallel, the slower counts","downstream_total_ms":down_total,"motion_total_ms":round(wmax+down_total,2),"margin_ms":round(20-wmax-down_total,2),"output_driver_ms":OUT_DRIVER_MS,"output_path_total_ms":round(wmax+OUT_DRIVER_MS,2),"output_path_driver":"TPS274C65ASRHAR DO_EN (section 02 section 11.2); DO_EN-to-output-off time within the 1.00 ms allocation is an ME item",E:"REQ allocations; ME required"}},
+ "permission":{
+  "terms":{"RAILS_OK":"TPS386000 resets -> FPGA_LOCAL_RESET_N and sequencer reset","CONFIG_VALID":"CDONE in hardware; config_valid inside FPGA gates the request","EXTERNAL_PERMIT":"DIC XS1.2 safety-chain input, ISO1212 -> EXT_PERMIT_3V3 hard-wired to the motion card, fixed assignment","HW_WATCHDOG_OK":"WD_M_OK / WD_O_OK","FPGA_ARM_LATCH":"SN74LVC2G74 arm latch","MODULE_OK":"qualified presence, latched identity class, card PGOOD, NOT tamper","PROCESS_PERMIT_EXT":"DIC XS1.3 dedicated process interlock input, hard-wired to the motion card, fixed assignment"},
+  "equations":["DIC_OK = filtered(DIC_PRESENT_A AND DIC_PRESENT_B AND DIC_PGOOD)","base_ok = RAILS_OK AND CDONE AND DIC_OK AND EXT_PERMIT_3V3 AND NOT TAMPER_ANY","raw_inhibit_n = base_ok AND WD_M_OK","latch_clear_n = raw_inhibit_n AND FPGA_ENDPOINT_READY","TX_PERMIT = arm_latch_M.Q AND FPGA_MOTION_REQUEST AND raw_inhibit_n","out_base_ok = RAILS_OK AND CDONE AND DIC_OK AND EXT_PERMIT_3V3 AND NOT TAMPER_ANY","latch_clear_O_n = out_base_ok AND WD_O_OK AND FPGA_ENDPOINT_READY","OUT_PERMIT = arm_latch_O.Q AND FPGA_OUTPUT_REQUEST AND out_base_ok AND WD_O_OK","PROC_PERMIT = OUT_PERMIT AND TX_PERMIT AND PROCESS_PERMIT_EXT_3V3","PERMIT_OUT_DRIVE = TX_PERMIT AND PERMIT_OUT_REQ","TX_PERMIT_A = filtered(TX_PERMIT) AND PRESENT_A_OK AND PGOOD_A","TX_PERMIT_B = Ioff copy of TX_PERMIT with OE = filtered(PRESENT_A_B AND PRESENT_B_B AND EXP_PGOOD AND NOT TAMPER); the qualified OE net also clears OPI_BOE","OUT_PERMIT_k = filtered(OUT_PERMIT) AND card k presence/PGOOD; card output enable = OUT_PERMIT_k AND OUT_EN_latch.Q AND CARD_EN"],
+  "arm_latches":[{"id":"arm_latch_M","clock":"rising FPGA_MOTION_REQUEST","clear_equation":"latch_clear_n","clear_terms":["base_ok","WD_M_OK","FPGA_ENDPOINT_READY"],"watchdog":"WD_M_OK","base":"base_ok","gates":"TX_PERMIT"},
+                 {"id":"arm_latch_O","clock":"rising FPGA_OUTPUT_REQUEST","clear_equation":"latch_clear_O_n","clear_terms":["out_base_ok","WD_O_OK","FPGA_ENDPOINT_READY"],"watchdog":"WD_O_OK","base":"out_base_ok","gates":"OUT_PERMIT"}],
+  "request_rules":{"FPGA_MOTION_REQUEST":"high only when armed with a valid CONFIGURE, the required mask equal to the armed mask and no fault, or in the SELFTEST state of the WD_M test (EN_N_i forced high, rates zero, process requests zero, PERMIT_OUT_REQ low)","FPGA_OUTPUT_REQUEST":"high when the host has an I/O session, config valid and no output-domain fault, or in the SELFTEST state of the WD_O test (PWM pins low, AO commanded zero, OUT_REQ zero so card enables stay low)","PERMIT_OUT_REQ":"high only while armed and not in SELFTEST; 10 kohm pull-down"},
+  "rules":["TX_PERMIT never feeds the endpoint inhibit input","FPGA_OUTPUT_REQUEST independent of motion arming","OUT_PERMIT hardwired to every output card, never inside the serial link","serial card watchdog advances only on fully validated transactions; timeout >= 3 link periods and <= 2 ms (IOL1, section 01 section 4.7: 1.0 ms accept timer and IWDG <= 2 ms)","a WDO pulse clears its arm latch; permission returns only through a new deliberate request edge (never when the WDO pulse ends)","the two watchdog self-tests never run together; no TX_PERMIT or OUT_PERMIT receiver can close a field contact or energize an output during SELFTEST"],
+  "placement":{"motion_card":["WD_M","WD_O","both arm latches","OPI_TX, OPI_BOE and OPI_OUT","final gates","PERMIT_OUT_REQ gate","DIC_OK qualification filter","MC slot status register"],"power_module":["tamper latches (cleared only by logic POR)"],"output_cards":["OUT_EN latch per DO/ACC card; PEN latch on the ACC"]},
+  "fanout":[{"net":"TX_PERMIT","receivers":["bank-A card receiver -> 4 AM26C31 G, TPS22918 EN, OPI_A","Ioff buffer on the motion card -> TX_PERMIT_B -> MX4 2 AM26C31 G, TPS22918 EN, OPI_B (the buffer's qualified OE also clears OPI_BOE on the motion card)","PROC_PERMIT gate","PERMIT_OUT photorelay driver on the motion card, gated by PERMIT_OUT_REQ (-> DIC, XS1.10-11)"]},{"net":"OUT_PERMIT","receivers":["each DO card driver gate through its OUT_EN latch","PWM buffer OE through the ACC OUT_EN latch","AO zero clamp through the ACC OUT_EN latch","PROC_PERMIT gate","OPI_OUT on the motion card"]},{"net":"PROC_PERMIT","receivers":["2 process-enable switches through the ACC PEN latch"]}],
+  "selftest_containment":[
+   {"receiver":"4 AM26C31 G (bank A), 2 AM26C31 G (bank B)","field_contact":False,"energizes_output":False,"held_off_during_selftest_by":"STEP/DIR idle, rates zero"},
+   {"receiver":"TPS22918 LED supplies","field_contact":True,"energizes_output":False,"held_off_during_selftest_by":"EN_N_i forced high: LED strings dark, NO open, NC closed"},
+   {"receiver":"PERMIT_OUT photorelay (XS1.10-11)","field_contact":True,"energizes_output":False,"held_off_during_selftest_by":"PERMIT_OUT_REQ low (PERMIT_OUT_DRIVE = TX_PERMIT AND PERMIT_OUT_REQ)"},
+   {"receiver":"process-enable switches XPC0/XPC1","field_contact":True,"energizes_output":False,"held_off_during_selftest_by":"PEN requests zero; the two self-tests never overlap, so PROC_PERMIT stays low"},
+   {"receiver":"DO card drivers","field_contact":False,"energizes_output":True,"held_off_during_selftest_by":"OUT_REQ zero: CARD_EN and OUT_EN latch low"},
+   {"receiver":"PWM buffers","field_contact":False,"energizes_output":True,"held_off_during_selftest_by":"PWM pins driven low"},
+   {"receiver":"AO zero clamp","field_contact":False,"energizes_output":True,"held_off_during_selftest_by":"AO commanded zero; ACC OUT_EN latch low keeps the clamp"}],
+  "defaults":[
+   {"net":"TX_PERMIT","driver":"motion-card final gate","default":"10 kohm pull-down at the motion-card output, on the base and at every receiver"},
+   {"net":"OUT_PERMIT","driver":"motion-card final gate","default":"10 kohm pull-down at the motion-card output, on the base and at every receiver"},
+   {"net":"PROC_PERMIT","driver":"motion-card final gate","default":"10 kohm pull-down at the motion-card output and at the ACC receiver"},
+   {"net":"EXT_PERMIT_3V3","driver":"DIC ISO1212 (XS1.2)","default":"10 kohm pull-down at the motion-card receiver: DIC absent, unseated or unpowered reads 'not permitted'; also removed by DIC_OK in base_ok"},
+   {"net":"PROCESS_PERMIT_EXT_3V3","driver":"DIC ISO1212 (XS1.3)","default":"10 kohm pull-down at the motion-card receiver: DIC absent, unseated or unpowered reads 'not permitted'"},
+   {"net":"DIC_OK","driver":"DIC presence contacts and DIC power-good","default":"presence lines pulled up to 'absent' and PGOOD pulled low on the motion card: an absent or unpowered DIC is not OK"},
+   {"net":"PERMIT_OUT_REQ","driver":"FPGA","default":"10 kohm pull-down: unconfigured FPGA leaves PERMIT_OUT open"},
+   {"net":"FPGA_MOTION_REQUEST","driver":"FPGA","default":"100 kohm pull-down (SET1)"},
+   {"net":"FPGA_OUTPUT_REQUEST","driver":"FPGA","default":"100 kohm pull-down (SET1)"},
+   {"net":"bank-B Ioff OE (qualified)","driver":"motion-card qualification filter","default":"pull to the disabled level; clears OPI_BOE"},
+   {"net":"OUT_PERMIT_k at each card","driver":"motion card via the base","default":"10 kohm pull-down at the card receiver; OUT_EN latch cleared"}],
+  "defaults_note":"receivers are Schmitt inputs; Codex re-runs the permission validator for the IS-1 fan-out"},
+ "safety_interface":{
+  "reset_arm":"XS1.5: a press is accepted when released after reset_arm_press_min_ms and before reset_arm_press_max_ms while EXT_PERMIT is high; the release sets reset_arm_ready (safety word bit 30) for reset_arm_window_ms; ARM consumes it. With reset_arm_required = 1 (default) ARM without it is refused (ARM_REFUSED); 0 is allowed only when the profile declares a safety relay with its own manual reset feeding EXT_PERMIT (validator V-EL-12). A press longer than reset_arm_press_max_ms is 'stuck': event, ARM refused while it persists",
+  "contactor_fb":"XS1.7 per contactor_fb_mode (1 NO auxiliary, 2 NC mirror): must read de-energized at ARM, energized within contactor_close_ms after TX_PERMIT rises, de-energized within contactor_open_ms after it falls; any mismatch latches CONTACTOR_FEEDBACK (fault bit 25), disarms all and refuses ARM until SYNC with the input agreeing",
+  "sto_fb":"XS1.8 per sto_fb_mode (1 follows PERMIT_OUT: STO active exactly while PERMIT_OUT is open; 2 status only: STO active while armed is a fault) with sto_response_ms; mismatch latches STO_FEEDBACK (fault bit 26), disarms all, refuses ARM",
+  "chain_status":"XS1.4 diagnostic only; disagreement with EXT_PERMIT longer than chain_mismatch_ms raises a SAFETY_INTERFACE event, no fault",
+  "machine_enable_nets":{"iocontrol.0.emc-enable-in":"cnc1.safety.ext-permit AND NOT cnc1.fault AND cnc1.din-valid (the din-valid term is included whenever any DI is mapped to a machine function)","halui.machine.on":"requested by the operator from the UI or from the reset/arm button (the qualified release, cnc1.safety.reset-arm-ready rising); machine on raises motion.motion-enabled -> cnc1.enable, and the driver then sends ARM, which the FPGA accepts only inside the reset/arm window"}},
+ "fault_timing":{
+  "definitions":{"t_detect":"t0 to first recorded detection","t_inhibit":"t0 to last of: TX_PERMIT low at all card gates; STEP/DIR high-Z (|VOD|<0.2 V); EN_NO open (<=1 uA at 24 V); EN_NC closed (loop current in 1 k test load); DO off (<1 mA into declared test load); PWM low; process open; AO <=0.1 V; last STEP edge","t_stop":"machine behaviour; machine-specific"},
+  "scenarios":[
+   {"id":"startup","bound":"no output activity before deliberate ARM after self-test","detect_ms":0.0,"t_inhibit_max_ms":0.0,"note":"outputs are held inhibited from power-on (CDONE low, RESET low, SET1 low, pull-downs); the bound is zero by construction"},
+   {"id":"host_failure","path":"FPGA 5 ms watchdog","detect_ms":5.0,"t_inhibit_max_ms":round(5+down_total,2)},
+   {"id":"bad_frame","path":"immediate disarm at CS release of the rejected frame","detect_ms":FRAME_MS,"detect_basis":"longest host frame (CS_FB 176 B) at 5 MHz plus guards [AR]","t_inhibit_max_ms":round(FRAME_MS+down_total,2)},
+   {"id":"link_open_or_cs_stuck","path":"FPGA 5 ms watchdog","detect_ms":5.0,"t_inhibit_max_ms":round(5+down_total,2)},
+   {"id":"fpga_reset","path":"base_ok false","detect_ms":0.0,"t_inhibit_max_ms":down_total},
+   {"id":"fpga_clock_stall","path":"WD_M / WD_O","detect_ms":wmax,"t_inhibit_max_ms":round(wmax+down_total,2),"outputs_ms":round(wmax+OUT_DRIVER_MS,2)},
+   {"id":"logic_power_disturbance","path":"TPS386000 reset","detect_ms":SVS_ALLOC_MS,"detect_basis":"allocation [REQ]: the TPS386000 datasheet (SBVS105F table 6.6) gives a 4 us minimum detectable SENSE pulse width and no maximum assertion delay, so 50 us is allocated and must be measured [ME]","t_inhibit_max_ms":round(SVS_ALLOC_MS+down_total,2)},
+   {"id":"field_power_loss","path":"F_PGOOD/AUX monitors","detect_ms":0.04,"t_inhibit_max_ms":round(0.04+down_total,2)},
+   {"id":"module_change_under_power","path":"qualified term, OE drop, tamper, OPI","detect_ms":0.03,"t_inhibit_max_ms":round(0.03+down_total,2),"recovery":"power cycle"},
+   {"id":"drive_alarm","path":"30-40 us filter, FPGA disarm","detect_ms":0.04,"t_inhibit_max_ms":round(0.04+down_total,2)},
+   {"id":"external_permit_open","path":"hardware base_ok","detect_ms":1.0,"t_inhibit_max_ms":round(1.0+down_total,2)},
+   {"id":"dic_absent_or_unpowered","path":"EXT_PERMIT_3V3 pull-down and DIC_OK in base_ok","detect_ms":0.03,"t_inhibit_max_ms":round(0.03+down_total,2)},
+   {"id":"output_short","path":"driver current limit acts autonomously; card forces the output off after the next fault poll, response and command frame","detect_ms":out_short_path_ms,"detect_basis":"100 us fault poll + 100 us + 40.4 us response + 100 us + 40.4 us command + 20 us apply [AR on REQ]","t_inhibit_max_ms":OUT_SHORT_MS,"basis":"allocation [REQ] covering the card path; the driver's own current-limit response is datasheet-class and measured on the built card [ME]"},
+   {"id":"output_permit_glitch","path":"card OUT_EN latch and OPI_OUT","detect_ms":0.002,"t_inhibit_max_ms":round(0.002+OUT_DRIVER_MS,2),"note":"outputs stay off until a new epoch and IO_ENABLE"}],
+  E:"REQ allocations; every value needs ME"},
+ "safety_status_fields":[
+  {"field":"tx_permit/out_permit/proc_permit","source":"gate-net readback","response":"mismatch => PERMISSION_PATH_STUCK","hal":["cnc1.safety.tx-permit","cnc1.safety.out-permit","cnc1.safety.proc-permit"],"service":"safety.permit.{tx,out,proc}"},
+  {"field":"wd_m_ok/wd_o_ok/wd_m_tripped/wd_o_tripped","source":"WD nodes and sticky flops","response":"hardware-latched; record","hal":["cnc1.safety.wd-motion-ok","cnc1.safety.wd-output-ok","cnc1.safety.wd-motion-tripped","cnc1.safety.wd-output-tripped"],"service":"safety.watchdog.{motion,output}"},
+  {"field":"opi_ok[TX,A,B,BOE,OUT]","source":"OPI latches","response":"TX/A/B/BOE low while armed => OUTPUT_PATH_INTERRUPTED; OUT low while I/O enabled => OUTPUT_PERMIT_LOST","hal":["cnc1.safety.opi-ok-tx","cnc1.safety.opi-ok-a","cnc1.safety.opi-ok-b","cnc1.safety.opi-ok-boe","cnc1.safety.opi-ok-out"],"service":"safety.opi.{tx,a,b,boe,out}"},
+  {"field":"reset_arm/reset_arm_ready/contactor_fb/sto_fb/chain_status","source":"XS1.4-XS1.8 ISO1212 inputs; FPGA reset/arm qualifier","response":"section safety_interface: CONTACTOR_FEEDBACK, STO_FEEDBACK, ARM_REFUSED, SAFETY_INTERFACE events","hal":["cnc1.safety.reset-arm","cnc1.safety.reset-arm-ready","cnc1.safety.contactor-fb","cnc1.safety.sto-fb","cnc1.safety.chain-status"],"service":"safety.interface.*"},
+  {"field":"pos_continuity[0..11]","source":"FPGA sticky per channel","response":"clear => position invalid; halui.joint.J.unhome for every joint J the channel maps to (joint index from the profile, not the channel number)","hal":["cnc1.N.position-continuity"],"service":"motion.channel[N].continuity"},
+  {"field":"ext_permit/process_permit_ext","source":"ISO1212","response":"low => hardware inhibit","hal":["cnc1.safety.ext-permit","cnc1.safety.process-permit"],"service":"safety.input.{ext,process}"},
+  {"field":"aux24_ok[A,B]/aux5_ok[A,B]","source":"bank supply monitors","response":"ARM refused; fault if armed","hal":["cnc1.safety.aux24-ok-a","cnc1.safety.aux24-ok-b","cnc1.safety.aux5-ok-a","cnc1.safety.aux5-ok-b"],"service":"power.aux.{24,5}.{a,b}"},
+  {"field":"f_pgood[A,B]/motion5v_pgood/exp_pgood","source":"entry and rail power-good","response":"fault, disarm","hal":["cnc1.power.field-a-ok","cnc1.power.field-b-ok","cnc1.power.motion5v-ok","cnc1.power.exp5v-ok"],"service":"power.rail.*"},
+  {"field":"selftest_state","source":"FPGA","response":"fail => ARM refused","hal":["cnc1.safety.selftest-ok"],"service":"safety.selftest"},
+  {"field":"fault_word additions","bits":["OUTPUT_PATH_INTERRUPTED","PERMISSION_PATH_STUCK","WATCHDOG_SELFTEST_FAILED","AUX_SUPPLY_FAULT","CONTACTOR_FEEDBACK","STO_FEEDBACK","ARM_REFUSED"],"hal":["cnc1.fault","cnc1.fault-word"],"service":"safety.fault"}],
+ "output_fault_states":[
+  {"function":"brake release (gravity axis)","state":"de-energized, brake engages","requirement":"spring-applied brake; drop on inhibit measured at commissioning and recorded; drive brake sequencing or counterbalance recommended"},
+  {"function":"workholding clamp/vise/vacuum","state":"de-energized","requirement":"validator refuses energize-to-clamp; spring clamp, bistable valve or check-valve vacuum"},
+  {"function":"spindle run/direction","state":"de-energized; AO clamped 0 V","requirement":"VFD stop behaviour is machine-specific"},
+  {"function":"process enable (torch/laser)","state":"open","requirement":"process interlock chain; never a general output"},
+  {"function":"PWM (laser power, fan speed, spindle PWM input)","state":"low (buffer disabled, pull-down); ACC OUT_EN latch keeps it low","requirement":"the connected device must be off at a low input; IS-1 has no inverted PWM, so the validator refuses a device whose off state needs a high level or a running duty (V-EL-10)"},
+  {"function":"coolant/air/mist","state":"de-energized","requirement":"none"},
+  {"function":"lubrication","state":"de-energized","requirement":"after-run belongs to ESP accessory owner with qualified hardware path"},
+  {"function":"extraction/fans/cooling","state":"de-energized","requirement":"after-run cooling not on a gated output"},
+  {"function":"lights/indicators","state":"de-energized","requirement":"machine lighting recommended outside controller outputs"},
+  {"function":"toolchanger/drawbar","state":"de-energized","requirement":"drawbar energize-to-release only"}],
+ "host_loss_output_state":"same as permission loss; no hold-last-value state in IS-1",
+ "power_requirements":{
+  "assumptions":{"core_input_min_v":18,"converter_efficiency":0.85,"field_5v_efficiency_assumed":0.70,E:"RES"},
+  "rails":{
+   "CORE_5V":{"loads_a":{"compute":3.00,"io3v3_input":0.52,"esp3v3_input":0.60,"core1v2_input":0.28,"misc":0.10},"total_a":core5,"requirement":"keep 6 A converter; TX and encoders moved off"},
+   "MOTION_5V":{"loads_a":{"tx_bank_a":0.80,"tx_bank_b_via_exp5v":0.40,"enable_leds_per_channel":led,"encoders_4_ports":0.80,"mpg":0.10,"frequency_sensor":0.10},"total_8_motor_a":m8,"total_12_motor_a":m12,"fault_limit_sum_a":2.78,"requirement":"converter >= 3.0 A continuous"},
+   "EXP_5V":{"load_a":0.45,"requirement":"switch limit min >= 0.60 A; real power-good"},
+   "ENCODER_EXPANSION":{"ports":8,"normal_a":encx,"fault_max_a":2.27,"source":"module converter from CORE_24V via expansion power switch; simultaneous with MX4"}},
+  "core_24v_input_a":{"core5v":i24(core5),"motion5v_8":i24(m8),"motion5v_12":i24(m12),"analog":0.06,"ai_group":ai_group,"ai_group_basis":"REC3.5-2424SRW/R8/A: (0.100 A sensor supply + 0.020 A AI electronics) x 24 V / 0.84 / 18 V","encoder_expansion":i24(encx),"total_8_motor":c8,"total_12_motor":c12,"total_12_motor_plus_encoder_expansion":c12x,E:"AR"},
+  "core_entry_requirement":{"ilim_min_a_at_18v":round(1.2*c12x,2),"class":"4 A-class entry, fuse and connector","note":"ledger 2 A over capacity at 8 motors; the full reserved configuration exceeds Codex r0.2 3 A, so the 4 A-class entry is required"},
+  "field":{"problem":"16 x 0.5 A = 8.0 A (192 W) vs 6 A single entry","decision":"two field entries, each own fuse, reverse protection and eFuse; bank limits published and enforced",
+   "FIELD_A":{"loads":"DO0-7 4.0 A; AUX_24V A 0.148 A, B 0.074 A; FIELD_5V input 0.096 A; probe supplies 0.20 A; control 0.06 A","loads_a":fa_loads,"continuous_a":fa,"ilim_min_a":round(fa-0.5+1.0,2)},
+   "FIELD_B":{"loads":"DO8-15 4.0 A; DI sensor groups 0.60 A; safety-interface branch 0.15 A; reset/arm lamp 0.05 A; control 0.02 A","loads_a":fb_loads,"continuous_a":fb,"ilim_min_a":round(fb-0.5+1.0,2)},
+   "limits":{"per_output_continuous_a":0.5,"per_output_current_limit_max_a":1.0,"per_bank_continuous_a":2.0,"single_short_must_not_trip_entry":True},
+   "software_enforcement":"validator refuses declared loads above bank/entry limits; measured currents vs declared loads, sustained excess = bank fault",
+   "entry_protection":"fuse by E-34 method (7.5 A), 10 A-class wiring/connector; TVS clamp coordinated with the TPS274C65ASRHAR (VS 40 V continuous, 60 V transient < 1 ms in ON state, datasheet); the SMCJ30CA 48.4 V clamp is inside the transient rating only for surges clamped in < 1 ms and the OFF-state transient is not specified: Codex confirms clamp duration or lowers the clamp (the earlier TPS4H160 48 V defect no longer applies to the selected driver)",
+   "restart":"clearing a field trip never restarts outputs",
+   "coupling":"FIELD_A trip removes AUX supplies => motion disarms fail-closed; FIELD_B trip affects DO8-15 and sensor supply only"},
+  "aux_supplies":{
+   "enable_led":{"bank_a_ma":round(8*led_max,1),"bank_b_ma":round(4*led_max,1)},
+   "AUX_24V":{"bank_a_a":0.148,"bank_b_a":0.074,"limit":"min >= 1.1 x load; max <= 0.30 A (A) / 0.20 A (B); sustained short","monitor":"AUX24_OK_x"},
+   "AUX_5V":{"bank_a_a":0.128,"bank_b_a":0.064,"domain":"FIELD, independent of LOGIC","source":"FIELD_5V resized to >= 0.30 A or separate converter","monitor":"AUX5_OK_x","chain":aux5,
+    "rule":"XMn.11 >= terminal_min_v_while_ok whenever AUX5_OK is high; worst-case DM542T ENA voltage while disarmed = terminal minimum - RON x 16 mA - declared cable loop drop >= 4.5 V",
+    "commissioning":"measure ENA+ to ENA- on every NC-5V channel while disarmed: pass >= 4.60 V [ME]; the declared cable loop resistance (<= 1.25 ohm, about 8 m of 0.25 mm2 pair) is entered in the drive profile",E:"REQ,AR"}},
+  "terminal_supply_loads":[
+   {"terminal":"XS1.6","net":"ARM_LAMP","a":0.05,"entry":"FIELD_B","budget_key":"arm_lamp"},
+   {"terminal":"XS1.1","net":"SAFE_24V","a":0.15,"entry":"FIELD_B","budget_key":"safety_branch"},
+   {"terminal":"XDI0.9","net":"SENS24_G0","a":0.20,"entry":"FIELD_B","budget_key":"di_sensor_groups"},
+   {"terminal":"XPR.2","net":"PRB0_24V","a":0.10,"entry":"FIELD_A","budget_key":"probe_supplies"},
+   {"terminal":"XPR.5","net":"PRB1_24V","a":0.10,"entry":"FIELD_A","budget_key":"probe_supplies"},
+   {"terminal":"XAI.10","net":"AI_SENS_24V","a":0.10,"entry":"CORE_24V","budget_key":"ai_group"},
+   {"terminal":"XAI.9","net":"AI_REF_10V","a":0.01,"entry":"CORE_24V","budget_key":"ai_group","note":"inside the 20 mA AI-electronics share of ai_group"}],
+  "thermal":{"rated_internal_ambient_c":[0,55],"junction_margin_c":15,"load_case":"16 outputs at 0.5 A, 12 channels at 195312.5 steps/s, encoder ports at reserved current",E:"REQ"},
+  "connectors":{"power_contact_rating":">= 2x continuous current at rated ambient","motion_card_connector_carries":["TX_PERMIT","OUT_PERMIT","PROC_PERMIT","EXT_PERMIT_3V3","PROCESS_PERMIT_EXT_3V3","qualified module terms"]}},
+ "diagnostic_evidence_chain":{
+  "fact":{"required_fields":["fact_id","physical_source","transport_field","sample_timestamp (FPGA ticks + boot_id; wall clock if set)","value","unit","validity (valid|stale|unavailable|out_of_range)","data_age_at_display","measurement_range","accuracy_class","verified_load_range"],"producer":"drivers and diagnostics service only","display":"unavailable or stale shown as such, never as zero"},
+  "diagnosis":{"required_fields":["diagnosis_id","text","supporting_fact_ids (>=1)","contradicting_fact_ids","author (rule:<id> | ai:<model/version>)","next_test"],"validation":"rejected if a cited fact_id does not exist or the text contains a number not present in a cited fact","ai_may_produce_facts":False},
+  "history_ring":{"triggers":["latched fault","watchdog trip","OPI event","supply fault","card watchdog expiry","module change"],"window_s":{"pre":2,"post":2},
+   "contents":["commanded rates and emitted counts","enable and alarm states","permission nets","supply monitors","per-output state and current with validity","module presence/identity/PGOOD","communication error counters","temperatures","fault word"],
+   "layer1":"FPGA block-RAM event ring, 256 events, 50 MHz timestamps",
+   "layer2":{"mpn":"FM24V02A-G","maker":"Infineon","type":"256 Kbit I2C F-RAM SOIC-8, 1e14 endurance, 2.0-3.6 V, -40 to 85 C",E:"DS","location":"machine cartridge, separate from write-protected configuration memory"},
+   "record_bytes":64,"record_rate":"20 Hz rolling summaries plus every event","capacity_records":512,"snapshot_records":90,"snapshots_kept_in_fram":4,"host_mirror_snapshots_min":1000,"torn_record":"detected by CRC, discarded","offline":True}},
+ "containment_matrix":[
+  {"fault":"DO output short to 0 V","contained_to":"output","detection":"driver flag and current","must_not":"entry trip; other outputs drop"},
+  {"fault":"DO output short to +24 V","contained_to":"output","detection":"readback mismatch","must_not":"damage outside output card"},
+  {"fault":"bank load > 2.0 A","contained_to":"bank","detection":"measured vs declared","must_not":"other entry affected"},
+  {"fault":"FIELD_A overload beyond entry limit","contained_to":"FIELD_A","detection":"F_PGOOD_A; motion disarms fail-closed","must_not":"FIELD_B or logic affected"},
+  {"fault":"AUX_24V short at one plug","contained_to":"bank alarm/enable supply","detection":"AUX24_OK","must_not":"other bank; entry trip"},
+  {"fault":"AUX_5V short at one plug","contained_to":"bank AUX_5V","detection":"AUX5_OK; ARM refused (E1)","must_not":"other bank"},
+  {"fault":"24 V on STEP+/DIR+","contained_to":"motor-interface card","detection":"channel fault on test","must_not":"motion card or FPGA damage"},
+  {"fault":"60 V transient on enable contacts","contained_to":"motor-interface card","detection":"commissioning check","must_not":"logic-side damage"},
+  {"fault":"encoder supply short","contained_to":"port","detection":"port power-good","must_not":"other ports; MOTION_5V collapse"},
+  {"fault":"encoder line open/short","contained_to":"port","detection":"not detected electrically in IS-1 (the AM26LV32E fail-safe holds the output high); found as following error where the loop closes on the encoder, as step/encoder disagreement in the preview, and by the commissioning count check","must_not":"other ports"},
+  {"fault":"watchdog self-test (WD_M, then WD_O)","contained_to":"none: no field effect","detection":"self-test result bits","must_not":"PERMIT_OUT closing, any enable, STEP edge, process contact, DO, PWM or AO change"},
+  {"fault":"OUT_PERMIT glitch accepted by an output card","contained_to":"that card's outputs off until a new epoch and IO_ENABLE","detection":"OPI_OUT, OUTPUT_PERMIT_LOST, card OUT_EN latch flag","must_not":"outputs turning back on without a new IO_ENABLE"},
+  {"fault":"DIC removed, unseated or unpowered","contained_to":"whole machine inhibited (EXT_PERMIT not permitted)","detection":"DIC_OK, slot status register, SLOT_FAULT","must_not":"any permission while EXT_PERMIT has no driver"},
+  {"fault":"EXP_5V short on MX4","contained_to":"MX4; whole machine inhibited (U8)","detection":"EXP_PGOOD, tamper","must_not":"base damage"},
+  {"fault":"motion card removed under power","contained_to":"whole machine inhibited","detection":"tamper; power cycle","must_not":"any output activity"},
+  {"fault":"motion-card clock stopped","contained_to":"whole machine inhibited","detection":"WD_M, WD_O, sticky flags","must_not":"t_inhibit > 20 ms"},
+  {"fault":"serial I/O link corrupted","contained_to":"that card's outputs off","detection":"card rejects, FPGA counters","must_not":"output change on an invalid frame"},
+  {"fault":"serial I/O card clock stopped","contained_to":"that card","detection":"FPGA readback timeout","must_not":"other cards"},
+  {"fault":"cartridge I2C short","contained_to":"configuration writes","detection":"bus timeout","must_not":"motion or I/O effect"},
+  {"fault":"ESP crash/power loss","contained_to":"diagnostics service","detection":"heartbeat","must_not":"output or motion effect"},
+  {"fault":"compute power loss","contained_to":"host","detection":"FPGA watchdog","must_not":"t_inhibit > %.2f ms"%round(5+down_total,2)}],
+ "acceptance_72h":{
+  "prerequisites":"built motion card, bank-A card, MX4, encoder expansion, DO/DI/analog cards, fixed base, target compute, IS-1 gateware/driver/service; none exists",
+  "load":["12 motor channels continuous (cap into passive receivers, 8 DM542T V4 with unloaded motors, reversals), gantry pairs across banks","4 base + 8 expansion encoders from generators with index","24 DI patterned at max rate, 2 probes, 2 frequency inputs","16 DO resistive and inductive loads up to 2.0 A per bank, 2 PWM, 2 AO looped to AI, process switches","RS-485 and CAN max traffic, ESP UART max rate with Wi-Fi/BLE","touchscreen 3D preview animating, network throughput with file transfer, configuration export/import cycles"],
+  "instruments":["independent pulse counters on 12 STEP outputs","logic analyser >= 200 MS/s on SPI, thread GPIO, progress pulses, permits, WDO, CDONE","current probes on core and both field entries","thermocouples","supply-dip generator"],
+  "servo_cycles":72*3600*1000,
+  "pass":["zero unexplained resets, faults or disarms","zero 1 ms deadline overruns","zero pulse-count discrepancies","zero encoder count discrepancies","zero unexplained communication errors","temperatures within section 10.4","700 us reported as distribution (max, 99.9999th percentile); exceedance is an engineering finding"],
+  "fault_injection":{"scenarios":"all of fault_timing.scenarios and containment_matrix","repetitions_min":10,"repetitions_min_wd_opi_tamper":100,"record":["t_detect","t_inhibit","t_stop"],"each_must_show":["expected containment","expected fact records and no invented facts","no automatic restart","recovery via SYNC, ARM, re-reference"],"also":"interrupt updates by power removal at every stage; remove connectivity to show offline recovery"},
+  "glitch_tests":{"presence_pgood_tamper_pulses_us":[0.001,1,4,5,29,31,45],"tx_permit_pulses_us":[0.2,0.5,2,5],"out_permit_pulses_us_at_each_output_card":[0.2,0.5,2,5],"bank_b_oe_pulses_us":[0.1,0.3,1,2],"pass":"rejected pulses cause no gate transition; accepted pulses always set OPI and fault; an OE pulse too short to reach TX_PERMIT_B still clears OPI_BOE and leaves STEP/DIR at their pulled idle level; an accepted OUT_PERMIT_k pulse keeps that card's outputs off until re-armed","selftest":"PERMIT_OUT stays open (contact current < 1 uA at 24 V) through both self-tests at every power-up, 100 repetitions"}},
+ "blockers":[
+  {"item":"all ME figures","blocked_by":"fabricated and assembled prototype boards (PCBWay order not placed; schematics/layout incomplete) and bench instruments"},
+  {"item":"700 us distribution, data age, update latency, 72 h test","blocked_by":"CM5102016 purchase (reference compute module), prototype boards, DM542T V4 drives and motors"},
+  {"item":"FPGA fit of added safety logic","blocked_by":"Efinix Efinity place-and-route (user-installed vendor tool)"}],
+ "integration":{"integrated":"2026-09-29","changes":["EXTERNAL_PERMIT and PROCESS_PERMIT_EXT sourced from the DIC XS1 interface","MX4 Ioff buffer on the motion card (section 02 D02-5)","PERMIT_OUT receiver added to the TX_PERMIT fan-out (R03-1)","status-field placement taken from section 01 (safety word CNF3 164-167 / CNS3 30-33, fault word bits 9-24)","output driver TPS274C65ASRHAR; overvoltage note updated","watchdog capacitor change from the recorded 4.7 nF candidate stated explicitly","repair round 29 Sep 2026: latch_clear_O_n and OPI_OUT/OPI_BOE, card OUT_EN latches, STEP/DIR idle pull-downs, EXT/PROCESS permit pull-downs and DIC_OK, PERMIT_OUT_REQ held low in SELFTEST, CWD leakage allowance (tWD 9.26/13.02 ms), numeric t_inhibit on every scenario, AUX_5V chain, AI-group and arm-lamp loads, PWM row, safety-interface rules"]},
+ "status_field_placement":{"safety_word":"CNF3 bytes 164-167 and CNS3 bytes 30-33, bits 0-27 (section 01 section 3.10)","fault_word":"CNF3/CNS3 bytes 20-23; bits 9-12 added here, 13-24 added by section 01","pos_continuity":"CNF3 bytes 34-35 and CNS3 bytes 34-35"},
+ "handoff_codex":["3.2 enable circuit and the AUX_5V chain (regulation, limiter drop, AUX5_OK trip, distribution drop)","4.2 STEP/DIR idle pull-downs at every AM26C31 input; OPI_BOE; card OUT_EN latches","6.2 DIC_OK, EXT/PROCESS permit pull-downs, PERMIT_OUT_REQ gate, latch_clear_O_n","5.2 CWD guard ring and leakage budget","10 AI-group converter REC3.5-2424SRW/R8/A on the ACC; arm lamp on FIELD_B","3.5 motor plug signal set","4.2 filters and OPI latches","5.2 two TPS3851 with CL10C332JB8NNNC, wired-AND WDO/RESET, SET1 on request, sticky trip flags","6.2-6.3 gates, fanout, pull-downs, validator re-run","10 MOTION_5V, EXP_5V, 4 A-class core entry, two field entries, AUX supplies, bank limits, thermal and connector ratings","12.2 FM24V02A-G on cartridge","TVS and AUX limiter part selection"],
+ "handoff_claude":["progress pulse per accepted ARM/UPDATE and per accepted I/O exchange","SELFTEST state with PERMIT_OUT_REQ low and OUT_REQ zero; tests never overlap","safety-interface qualifier: reset/arm window, contactor and STO feedback checks, ARM_REFUSED","card firmware: OUT_EN latch handling, bootloader IWDG refresh from SRAM","clean commanded stop at pulse boundaries","OPI inputs, rearm strobes, proof test","pos_continuity and CLEAR_CONTINUITY","self-test sequencer","new fault bits","section 8 status fields","driver: halui.joint.J.unhome through the channel-to-joint map, VOLATILE_HOME = 1","validator rules for wiring modes, exceptions and output fault states","fact/diagnosis record types and history ring"],
+ "unpriced_cost_items":[
+  {"item":"TLP3640A(TPL,E)","qty":"1 per channel","card":"motor-interface card / MX4"},
+  {"item":"TLP4176A(TP,F)","qty":"1 per channel","card":"motor-interface card / MX4"},
+  {"item":"bidirectional TVS","qty":"2 per channel","card":"motor-interface card / MX4"},
+  {"item":"220 ohm 1 % resistor","qty":"1 per channel","card":"motor-interface card / MX4"},
+  {"item":"SN74LVC07APWR","qty":"2 bank A, 1 MX4","card":"motor-interface card / MX4"},
+  {"item":"TPS22918DBVR","qty":"1 per bank","card":"motor-interface card / MX4"},
+  {"item":"TPS3851G18SDRBT + CL10C332JB8NNNC","qty":"2 (one added)","card":"motion card"},
+  {"item":"SN74LVC2G74DCUR","qty":"3 (OPI and trip flags)","card":"motion card, bank-A card, MX4"},
+  {"item":"qualification RC/Schmitt filters","qty":"per gate term","card":"each card"},
+  {"item":"AUX_24V/AUX_5V limiters and monitors","qty":"per bank","card":"power module"},
+  {"item":"second field entry (fuse, holder, eFuse, FETs, TVS, connector)","qty":"1","card":"power module"},
+  {"item":"4 A-class core entry change","qty":"1","card":"power module"},
+  {"item":"MOTION_5V converter","qty":"1","card":"power module"},
+  {"item":"FM24V02A-G","qty":"1","card":"cartridge"},
+  {"item":"SN74LVC2G74DCUR (OPI_BOE/OPI_OUT on the MC; OUT_EN latch on each DO card; OUT_EN and PEN latches on the ACC)","qty":"1 MC, 1 per DO card, 1 ACC","card":"motion card, DOA, DOB, ACC"},
+  {"item":"MC slot status register (40-bit input-only shift register chain)","qty":"1","card":"motion card"},
+  {"item":"REC3.5-2424SRW/R8/A AI-group converter","qty":"1","card":"ACC (observation CAD 61.39 at qty 100, DigiKey Canada, 29 Sep 2026)"}],
+ "unpriced_note":"no recorded prices; unknown, not zero; costing section prices each with replacement-card cost",
+ "sources":["https://toshiba.semicon-storage.com/eu/semiconductor/product/isolators-solid-state-relays/photorelay-mosfet-output/detail.TLP3640A.html","https://toshiba.semicon-storage.com/eu/semiconductor/product/isolators-solid-state-relays/photorelay-mosfet-output/detail.TLP4176A.html","https://industry.panasonic.com/global/en/products/control/relay/photomos/number/aqy212gs","https://omc-stepperonline.com/download/DM542T_V4.0.pdf","https://www.ti.com/product/SN74LVC07A","https://www.ti.com/product/TPS22918","https://product.samsungsem.com/mlcc/CL10C332JB8NNN.do","https://www.infineon.com/part/FM24V02A-G"]
+}
+ROOT=sys.argv[1] if len(sys.argv)>1 else os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+out=os.path.join(ROOT,'spec','safety.json')
+with open(out,'w',encoding='utf-8',newline='\n') as f:
+    json.dump(d,f,indent=1,ensure_ascii=False); f.write('\n')
+print(wmin,wnom,wmax,down_total,led_min,led_max,m8,m12,c8,c12,c12x,fa,fb,round(1.2*c12x,2))

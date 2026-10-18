@@ -1,0 +1,27 @@
+// Verilated -*- C++ -*-
+// DESCRIPTION: Verilator output: Precompiled header
+//
+// Internal details; most user sources do not need this header,
+// unless using verilator public meta comments.
+// Suggest use Vcnc3_motion_spi.h instead.
+
+#ifndef VERILATED_VCNC3_MOTION_SPI__PCH_H_
+#define VERILATED_VCNC3_MOTION_SPI__PCH_H_  // guard
+
+// GCC and Clang only will precompile headers (PCH) for the first header.
+// So, make sure this is the one and only PCH.
+// If multiple module's includes are needed, use individual includes.
+#ifdef VL_PCH_INCLUDED
+# error "Including multiple precompiled header files"
+#endif
+#define VL_PCH_INCLUDED
+
+
+#include "verilated.h"
+
+#include "Vcnc3_motion_spi__Syms.h"
+#include "Vcnc3_motion_spi.h"
+
+// Additional include files added using '--compiler-include'
+
+#endif  // guard

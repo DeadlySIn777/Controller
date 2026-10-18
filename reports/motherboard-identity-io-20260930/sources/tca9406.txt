@@ -1,0 +1,2949 @@
+Product
+Folder
+Order
+Now
+Technical
+Documents
+Tools &
+Software
+Support &
+Community
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+TCA9406 2-Bit Bidirectional 1-MHz, I2C Bus and SMBus Voltage-Level Translator With
+8-kV HBM ESD
+1
+1
+Features
+1•
+2-Bit Bidirectional Translator for SDA and SCL
+Lines in I2C Applications
+•
+Provides Bidirectional Voltage Translation With No
+Direction Pin
+•
+High-Impedance Output SCL_A, SDA_A, SCL_B,
+SDA_B Pins When OE = Low or VCC = 0 V
+•
+Internal 10-kΩ Pullup Resistor on All SDA and
+SCL Pins
+•
+1.65 V to 3.6 V on A port and 2.3 V to 5.5 V on B
+port (VCCA ≤VCCB)
+•
+VCC Isolation Feature: If Either VCC Input Is at
+GND, Both Ports Are in the High-Impedance State
+•
+No Power-Supply Sequencing Required: Either
+VCCA or VCCB Can Be Ramped First
+•
+Low Ioff of 2 µA When Either VCCA or VCCB = 0 V
+•
+OE Input Can Be Tied Directly to VCCA Or
+Controlled By GPIO
+•
+Latch-Up Performance Exceeds 100 mA Per
+JESD 78, Class II
+•
+ESD Protection Exceeds JESD 22
+–
+A Port
+–
+2500-V Human-Body Model (A114-B)
+–
+250-V Machine Model (A115-A)
+–
+1500-V Charged-Device Model (C101)
+–
+B Port
+–
+8-kV Human-Body Model (A114-B)
+–
+250-V Machine Model (A115-A)
+–
+1500-V Charged-Device Model (C101)
+2
+Applications
+•
+I2C/SMBus
+•
+UART
+•
+GPIO
+3
+Description
+The TCA9406 is a 2-bit bidirectional I2C and SMBus
+voltage-level translator with an output enable (OE)
+input. It is operational from 1.65 V to 3.6 V on the A-
+side, referenced toVCCA, and from 2.3 V to 5.5 V on
+the B-side, referenced to VCCB. This allows the device
+to interface between lower and higher logic signal
+levels at any of the typical 1.8-V, 2.5-V, 3.3-V, and
+5-V supply rails.
+The OE input pin is referenced to VCCA, can be tied
+directly to VCCA, but it is also 5.5-V tolerant. The OE
+pin can also be controlled and set to a logic low to
+place all the SCL and SDA pins in a high-impedance
+state,
+which
+significantly
+reduces
+the
+quiescent
+current consumption.
+Under normal I2C and SMBus operation or other
+open-drain configurations, the TCA9406 can support
+up to 2 Mbps; therefore, it is compatible with standard
+I2C speeds where the frequency of SCL is 100 kHz
+(Standard-mode), 400 kHz (Fast-mode), or 1 MHz
+(Fast-mode Plus). The device can also be used as a
+general purpose level translator, and when the A- and
+B-side ports are both driven with push-pull devices
+the TCA9406 can support up to 24 Mbps.
+The TCA9406 features internal 10-kΩ pullup resistors
+on SCL_A, SDA_A, SCL_B, and SDA_B. Additional
+external pullup resistors can be added to the bus to
+reduce the total pullup resistance and speed up rising
+edges.
+Device Information(1)
+PART NUMBER
+PACKAGE
+BODY SIZE (NOM)
+TCA9406
+SM8 (8)
+2.95 mm × 2.80 mm
+US8 (8)
+2.30 mm × 2.00 mm
+DSBGA (8)
+1.90 mm × 0.90 mm
+(1) For all available packages, see the orderable addendum at
+the end of the datasheet.
+Typical Application Block Diagram for TCA9406
+2
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Table of Contents
+1
+Features.................................................................. 1
+2
+Applications ........................................................... 1
+3
+Description ............................................................. 1
+4
+Revision History..................................................... 2
+5
+Pin Configuration and Functions......................... 5
+6
+Specifications......................................................... 6
+6.1
+Absolute Maximum Ratings ..................................... 6
+6.2
+ESD Ratings ............................................................ 6
+6.3
+Recommended Operating Conditions ...................... 7
+6.4
+Thermal Information.................................................. 7
+6.5
+Electrical Characteristics .......................................... 8
+6.6
+Timing Requirements (VCCA = 1.8 V ± 0.15 V)......... 9
+6.7
+Timing Requirements (VCCA = 2.5 V ± 0.2 V)........... 9
+6.8
+Timing Requirements (VCCA = 3.3 V ± 0.3 V)........... 9
+6.9
+Switching Characteristics (VCCA = 1.8 V ± 0.15 V). 10
+6.10
+Switching Characteristics (VCCA = 2.5 V ± 0.2 V). 12
+6.11
+Switching Characteristics (VCCA = 3.3 V ± 0.3 V). 14
+6.12
+Typical Characteristics.......................................... 15
+7
+Parameter Measurement Information ................ 16
+7.1
+Voltage Waveforms................................................. 17
+8
+Detailed Description ............................................ 18
+8.1
+Overview ................................................................. 18
+8.2
+Functional Block Diagram ....................................... 18
+8.3
+Feature Description................................................. 18
+8.4
+Device Functional Modes........................................ 20
+9
+Application and Implementation ........................ 21
+9.1
+Application Information............................................ 21
+9.2
+Typical Application ................................................. 21
+10
+Power Supply Recommendations ..................... 23
+11
+Layout................................................................... 23
+11.1
+Layout Guidelines ................................................. 23
+11.2
+Layout Example .................................................... 23
+12
+Device and Documentation Support ................. 24
+12.1
+Receiving Notification of Documentation Updates 24
+12.2
+Community Resources.......................................... 24
+12.3
+Trademarks........................................................... 24
+12.4
+Electrostatic Discharge Caution............................ 24
+12.5
+Glossary................................................................ 24
+13
+Mechanical, Packaging, and Orderable
+Information ........................................................... 24
+4
+Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision F (October 2018) to Revision G
+Page
+•
+Changed section title From: Pullup or Pulldown Resistors on I/O Lines To: Pullup Resistors on I/O Lines........................ 20
+•
+Deleted text "An external pull down..." and Equation 1 from the Detailed Design Procedure section................................. 21
+•
+Changed pin 1 From: To controller To: To system in Figure 13 ......................................................................................... 23
+•
+Changed pin 5 From: To system To: To controller in Figure 13 ......................................................................................... 23
+Changes from Revision E (August 2018) to Revision F
+Page
+•
+Changed the Functional Block Diagram............................................................................................................................... 18
+•
+Changed the Enable and Disable section ............................................................................................................................ 19
+Changes from Revision D (July 2018) to Revision E
+Page
+•
+Changed the new DSBGA pinout drawing From: Bottom View to: Top View ....................................................................... 5
+Changes from Revision C (December 2014) to Revision D
+Page
+•
+Changed the updated pinout drawings .................................................................................................................................. 5
+•
+Changed tdis no external load MAX values From: 50 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 10
+•
+Changed tdis no external load MAX values From: 40 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 10
+•
+Changed tdis no external load MAX values From: 35 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 11
+•
+Changed tdis no external load MAX values From: 50 To: 200 ns in Switching Characteristics (VCCA = 2.5 V ± 0.2 V)........ 12
+•
+Changed tdis no external load MAX values From: 40 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 12
+•
+Changed tdis no external load MAX values From: 35 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 13
+•
+Changed tdis no external load MAX values From: 40 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 14
+3
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+•
+Changed tdis no external load MAX values From: 35 To: 200 ns in Switching Characteristics (VCCA = 1.8 V ± 0.15 V)...... 14
+•
+Changed the Parameter Measurement Information section................................................................................................. 16
+4
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Changes from Revision B (June 2013) to Revision C
+Page
+•
+Added Pin Configuration and Functions section, ESD Ratings table, Feature Description section, Device Functional
+Modes, Application and Implementation section, Power Supply Recommendations section, Layout section, Device
+and Documentation Support section, and Mechanical, Packaging, and Orderable Information section .............................. 1
+Changes from Revision A (Febuary 2013) to Revision B
+Page
+•
+Removed ordering information table, information now located in POA ................................................................................. 1
+1  
+2  
+A  
+B  
+C  
+D  
+Not to scale
+SDA_B
+SCL_B
+GND
+VCCB
+VCCA
+OE
+SDA_A
+SCL_A
+1
+SDA_B
+8
+ SCL_B
+2
+GND
+7
+ VCCB
+3
+VCCA
+6
+ OE
+4
+SDA_A
+5
+ SCL_A
+Not to scale
+5
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+5
+Pin Configuration and Functions
+8-PIN SM8 OR US8
+(TOP VIEW)
+8-PIN DSBGA
+(TOP VIEW)
+Pin Functions
+PIN
+TYPE
+DESCRIPTION
+NAME
+DCT,
+DCU
+YZP
+SDA_B
+1
+A1
+I/O
+Input/output B. Referenced to VCCB.
+GND
+2
+B1
+GND
+Ground
+VCCA
+3
+C1
+Power
+A-port supply voltage. 1.65 V ≤VCCA ≤3.6 V and VCCA ≤VCCB
+SDA_A
+4
+D1
+I/O
+Input/output A. Referenced to VCCA.
+SCL_A
+5
+D2
+I/O
+Input/output A. Referenced to VCCA.
+OE
+6
+C2
+Input
+Output enable (active High). Pull OE low to place all outputs in 3-state mode. Referenced to
+VCCA.
+VCCB
+7
+B2
+Power
+B-port supply voltage. 2.3 V ≤VCCB ≤5.5 V
+SCL_B
+8
+A2
+I/O
+Input/output B. Referenced to VCCB.
+6
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+(1)
+Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+only, and functional operation of the device at these or any other conditions beyond those indicated under Recommended Operating
+Conditions is not implied. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2)
+The input and output negative-voltage ratings may be exceeded if the input and output current ratings are observed.
+(3)
+The value of VCCA and VCCB are provided in the recommended operating conditions table.
+6
+Specifications
+6.1
+Absolute Maximum Ratings(1)
+over recommended operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCCA
+Supply voltage range
+–0.5
+4.6
+V
+VCCB
+Supply voltage range
+–0.5
+6.5
+V
+VI
+Input voltage range(2)
+A port
+–0.5
+4.6
+V
+B port
+–0.5
+6.5
+VO
+Voltage range applied to any output
+in the high-impedance or power-off state(2)
+A port
+–0.5
+4.6
+V
+B port
+–0.5
+6.5
+VO
+Voltage range applied to any output in the high or low state(2)(3)
+A port
+–0.5
+VCCA + 0.5
+V
+B port
+–0.5
+VCCB + 0.5
+IIK
+Input clamp current
+VI < 0
+–50
+mA
+IOK
+Output clamp current
+VO < 0
+–50
+mA
+IO
+Continuous output current
+±50
+mA
+Continuous current through VCCA, VCCB, or GND
+±100
+mA
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+6.2
+ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic
+discharge
+Human-body model (HBM), per ANSI/ESDA/JEDEC JS-
+001(1)
+A-Port
+±2500
+V
+B-Port
+±8000
+V
+Charged-device model (CDM), per JEDEC specification JESD22-C101(2)
+±1500
+V
+Machine model (MM), A115-A
+±250
+V
+7
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+(1)
+VCCA must be less than or equal to VCCB (except during power-on transient time), and VCCA must not exceed 3.6 V.
+(2)
+The maximum VIL value is provided to ensure that a valid VOL is maintained. The VOL value is VIL plus the voltage drop across the pass-
+gate transistor.
+6.3
+Recommended Operating Conditions
+VCCI is the supply voltage associated with the input port. VCCO is the supply voltage associated with the output port.
+VCCA
+VCCB
+MIN
+MAX
+UNIT
+VCCA
+Supply voltage(1)
+1.65
+3.6
+V
+VCCB
+Supply voltage
+2.3
+5.5
+V
+VIH
+High-level
+input voltage
+A-port I/Os
+1.65 V to 1.95 V
+2.3 V to 5.5 V
+VCCI – 0.2
+VCCI
+V
+2.3 V to 3.6 V
+VCCI – 0.4
+VCCI
+B-port I/Os
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+VCCI – 0.4
+VCCI
+OE input
+VCCA × 0.65
+5.5
+VIL
+(2)
+Low-level
+input voltage
+A-port I/Os
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+0
+0.15
+V
+B-port I/Os
+0
+0.15
+OE input
+0
+VCCA × 0.35
+Δt/Δv
+Input transition
+rise or fall rate
+A-port I/Os, push-
+pull driving
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+10
+ns/V
+B-port I/Os, push-
+pull driving
+10
+Control input
+10
+TA
+Operating free-air temperature
+–40
+85
+°C
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+report.
+6.4
+Thermal Information
+THERMAL METRIC(1)
+TCA9406
+UNIT
+DCT
+DCU
+YZP
+8 PINS
+8 PINS
+8 PINS
+RθJA
+Junction-to-ambient thermal resistance
+182.6
+199.1
+105.8
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+113.3
+72.4
+1.6
+°C/W
+RθJB
+Junction-to-board thermal resistance
+94.9
+77.8
+10.8
+°C/W
+ψJT
+Junction-to-top characterization parameter
+39.4
+6.2
+3.1
+°C/W
+ψJB
+Junction-to-board characterization parameter
+93.9
+77.4
+10.8
+°C/W
+8
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+(1)
+VCCI is the VCC associated with the input port.
+(2)
+VCCO is the VCC associated with the output port.
+(3)
+VCCA must be less than or equal to VCCB, and VCCA must not exceed 3.6 V.
+6.5
+Electrical Characteristics(1)(2)(3)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+TEST
+CONDITIONS
+VCCA
+VCCB
+TA = 25°C
+–40°C to 85°C
+UNIT
+TYP
+MIN
+MAX
+VOHA
+IOH = –20 μA,
+VIB ≥VCCB – 0.4 V
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+VCCA × 0.67
+V
+VOLA
+IOL = 1 mA,
+VIB ≤0.15 V
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+0.4
+V
+VOHB
+IOH = –20 μA,
+VIA ≥VCCA – 0.2 V
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+VCCB × 0.67
+V
+VOLB
+IOL = 1 mA,
+VIA ≤0.15 V
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+0.4
+V
+II
+OE
+VI = VCCI or GND
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+±1
+±2
+μA
+Ioff
+A port
+0 V
+0 V to 5.5 V
+±1
+±2
+μA
+B port
+0 to 3.6 V
+0 V
+±1
+±2
+μA
+IOZ
+A or B port
+OE less than VIL
+1.65 V to 3.6 V
+2.3 V to 5.5 V
+±1
+±2
+μA
+ICCA
+VI = VO = open,
+IO = 0
+1.65 V to VCCB
+2.3 V to 5.5 V
+2.4
+μA
+3.6 V
+0 V
+2.2
+0 V
+5.5 V
+–1
+ICCB
+VI = VO = open,
+IO = 0
+1.65 V to VCCB
+2.3 V to 5.5 V
+12
+μA
+3.6 V
+0 V
+–1
+0 V
+5.5 V
+1
+ICCA + ICCB
+VI = VO = open,
+IO = 0
+1.65 V to VCCB
+2.3 V to 5.5 V
+14.4
+μA
+CI
+OE
+3.3 V
+3.3 V
+2.5
+3.5
+pF
+Cio
+A or B port
+3.3 V
+3.3 V
+10
+pF
+A port
+5
+6
+B port
+6
+7.5
+9
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+6.6
+Timing Requirements (VCCA = 1.8 V ± 0.15 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCCB = 2.5 V ± 0.2 V
+Data rate
+Push-pull driving
+21
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+47
+ns
+Open-drain driving
+500
+VCC = 3.3 V ± 0.3 V
+Data rate
+Push-pull driving
+22
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+45
+ns
+Open-drain driving
+500
+VCC = 5 V ± 0.5 V
+Data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+41
+ns
+Open-drain driving
+500
+6.7
+Timing Requirements (VCCA = 2.5 V ± 0.2 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCCB = 2.5 V ± 0.2 V
+Data rate
+Push-pull driving
+20
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+50
+ns
+Open-drain driving
+500
+VCC = 3.3 V ± 0.3 V
+Data rate
+Push-pull driving
+22
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+45
+ns
+Open-drain driving
+500
+VCC = 5 V ± 0.5 V
+Data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+41
+ns
+Open-drain driving
+500
+6.8
+Timing Requirements (VCCA = 3.3 V ± 0.3 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCC = 3.3 V ± 0.3 V
+Data rate
+Push-pull driving
+23
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+43
+ns
+Open-drain driving
+500
+VCC = 5 V ± 0.5 V
+Data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+tw
+Pulse duration
+Push-pull driving
+Data inputs
+41
+ns
+Open-drain driving
+500
+10
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+6.9
+Switching Characteristics (VCCA = 1.8 V ± 0.15 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+FROM
+(INPUT)
+TO
+(OUTPUT)
+TEST CONDITIONS
+MIN
+MAX
+UNIT
+VCCB = 2.5 V ± 0.2 V
+tPHL
+A
+B
+Push-pull driving
+5.3
+ns
+Open-drain driving
+2.3
+8.8
+tPLH
+Push-pull driving
+6.8
+Open-drain driving
+50
+tPHL
+B
+A
+Push-pull driving
+4.4
+ns
+Open-drain driving
+1.9
+5.3
+tPLH
+Push-pull driving
+5.3
+Open-drain driving
+5.3
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+9.5
+ns
+Open-drain driving
+38
+165
+trB
+B-port rise time
+Push-pull driving
+10.8
+ns
+Open-drain driving
+34
+145
+tfA
+A-port fall time
+Push-pull driving
+5.9
+ns
+Open-drain driving
+6.9
+tfB
+B-port fall time
+Push-pull driving
+13.8
+Open-drain driving
+13.8
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+21
+Mbps
+Open-drain driving
+2
+VCCB = 3.3 V ± 0.3 V
+tPHL
+A
+B
+Push-pull driving
+5.4
+ns
+Open-drain driving
+2.4
+9.6
+tPLH
+Push-pull driving
+7.1
+Open-drain driving
+40
+tPHL
+B
+A
+Push-pull driving
+4.5
+ns
+Open-drain driving
+1.1
+4.4
+tPLH
+Push-pull driving
+4.5
+Open-drain driving
+4.5
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+9.3
+ns
+Open-drain driving
+30
+132
+trB
+B-port rise time
+Push-pull driving
+9.1
+ns
+Open-drain driving
+23
+106
+tfA
+A-port fall time
+Push-pull driving
+6
+ns
+Open-drain driving
+6.4
+tfB
+B-port fall time
+Push-pull driving
+16.2
+ns
+Open-drain driving
+16.2
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+22
+Mbps
+Open-drain driving
+2
+11
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Switching Characteristics (VCCA = 1.8 V ± 0.15 V) (continued)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+FROM
+(INPUT)
+TO
+(OUTPUT)
+TEST CONDITIONS
+MIN
+MAX
+UNIT
+VCCB = 5 V ± 0.5 V
+tPHL
+A
+B
+Push-pull driving
+6.8
+ns
+Open-drain driving
+2.6
+10
+tPLH
+Push-pull driving
+7.5
+Open-drain driving
+33
+tPHL
+B
+A
+Push-pull driving
+4.7
+ns
+Open-drain driving
+1.2
+4
+tPLH
+Push-pull driving
+0.5
+Open-drain driving
+0.5
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+7.6
+ns
+Open-drain driving
+22
+95
+trB
+B-port rise time
+Push-pull driving
+7.6
+ns
+Open-drain driving
+10
+58
+tfA
+A-port fall time
+Push-pull driving
+13.3
+ns
+Open-drain driving
+6.1
+tfB
+B-port fall time
+Push-pull driving
+16.2
+ns
+Open-drain driving
+16.2
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+12
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+6.10
+Switching Characteristics (VCCA = 2.5 V ± 0.2 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+FROM
+(INPUT)
+TO
+(OUTPUT)
+TEST CONDITIONS
+MIN
+MAX
+UNIT
+VCCB = 2.5 V ± 0.2 V
+tPHL
+A
+B
+Push-pull driving
+3.2
+ns
+Open-drain driving
+1.7
+6.3
+tPLH
+Push-pull driving
+3.5
+Open-drain driving
+3.5
+tPHL
+B
+A
+Push-pull driving
+3
+ns
+Open-drain driving
+1.8
+4.7
+tPLH
+Push-pull driving
+2.5
+Open-drain driving
+2.5
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+7.4
+ns
+Open-drain driving
+34
+149
+trB
+B-port rise time
+Push-pull driving
+8.3
+ns
+Open-drain driving
+35
+151
+tfA
+A-port fall time
+Push-pull driving
+5.7
+ns
+Open-drain driving
+6.9
+tfB
+B-port fall time
+Push-pull driving
+7.8
+Open-drain driving
+8.8
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+20
+Mbps
+Open-drain driving
+2
+VCCB = 3.3 V ± 0.3 V
+tPHL
+A
+B
+Push-pull driving
+3.7
+ns
+Open-drain driving
+2
+6
+tPLH
+Push-pull driving
+4.1
+Open-drain driving
+4.1
+tPHL
+B
+A
+Push-pull driving
+3.6
+ns
+Open-drain driving
+2.6
+4.2
+tPLH
+Push-pull driving
+1.6
+Open-drain driving
+1.6
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+6.6
+ns
+Open-drain driving
+28
+121
+trB
+B-port rise time
+Push-pull driving
+7.2
+ns
+Open-drain driving
+24
+112
+tfA
+A-port fall time
+Push-pull driving
+5.5
+ns
+Open-drain driving
+6.2
+tfB
+B-port fall time
+Push-pull driving
+6.7
+ns
+Open-drain driving
+9.4
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+22
+Mbps
+Open-drain driving
+2
+13
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Switching Characteristics (VCCA = 2.5 V ± 0.2 V) (continued)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+FROM
+(INPUT)
+TO
+(OUTPUT)
+TEST CONDITIONS
+MIN
+MAX
+UNIT
+VCCB = 5 V ± 0.5 V
+tPHL
+A
+B
+Push-pull driving
+3.8
+ns
+Open-drain driving
+2.1
+5.8
+tPLH
+Push-pull driving
+4.4
+Open-drain driving
+4.4
+tPHL
+B
+A
+Push-pull driving
+4.3
+ns
+Open-drain driving
+1.2
+4
+tPLH
+Push-pull driving
+1
+Open-drain driving
+1
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+5.6
+ns
+Open-drain driving
+24
+89
+trB
+B-port rise time
+Push-pull driving
+6.1
+ns
+Open-drain driving
+12
+64
+tfA
+A-port fall time
+Push-pull driving
+5.3
+ns
+Open-drain driving
+5.8
+tfB
+B-port fall time
+Push-pull driving
+6.6
+ns
+Open-drain driving
+10.4
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+14
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+6.11
+Switching Characteristics (VCCA = 3.3 V ± 0.3 V)
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+FROM
+(INPUT)
+TO
+(OUTPUT)
+TEST CONDITIONS
+MIN
+MAX
+UNIT
+VCCB = 3.3 V ± 0.3 V
+tPHL
+A
+B
+Push-pull driving
+2.4
+ns
+Open-drain driving
+1.3
+4.2
+tPLH
+Push-pull driving
+4.2
+Open-drain driving
+4.2
+tPHL
+B
+A
+Push-pull driving
+2.5
+ns
+Open-drain driving
+1
+124
+tPLH
+Push-pull driving
+2.5
+Open-drain driving
+2.5
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+5.6
+ns
+Open-drain driving
+25
+116
+trB
+B-port rise time
+Push-pull driving
+6.4
+ns
+Open-drain driving
+26
+116
+tfA
+A-port fall time
+Push-pull driving
+5.4
+ns
+Open-drain driving
+6.1
+tfB
+B-port fall time
+Push-pull driving
+7.4
+ns
+Open-drain driving
+7.6
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+23
+Mbps
+Open-drain driving
+2
+VCCB = 5 V ± 0.5 V
+tPHL
+A
+B
+Push-pull driving
+3.1
+ns
+Open-drain driving
+1.4
+4.6
+tPLH
+Push-pull driving
+4.4
+Open-drain driving
+4.4
+tPHL
+B
+A
+Push-pull driving
+3.3
+ns
+Open-drain driving
+1
+97
+tPLH
+Push-pull driving
+2.6
+Open-drain driving
+2.6
+ten
+OE
+A or B
+200
+ns
+tdis
+OE
+A or B
+with external load
+200
+ns
+no external load
+200
+ns
+trA
+A-port rise time
+Push-pull driving
+4.8
+ns
+Open-drain driving
+19
+85
+trB
+B-port rise time
+Push-pull driving
+7.4
+ns
+Open-drain driving
+14
+72
+tfA
+A-port fall time
+Push-pull driving
+5
+ns
+Open-drain driving
+5.7
+tfB
+B-port fall time
+Push-pull driving
+7.6
+ns
+Open-drain driving
+8.3
+tSK(O)
+Channel-to-channel skew
+0.7
+ns
+Max data rate
+Push-pull driving
+24
+Mbps
+Open-drain driving
+2
+Low-Level Current (mA)
+Low-Level Output Voltage (mV)
+0
+2
+4
+6
+8
+10
+12
+14
+16
+0
+100
+200
+300
+400
+500
+600
+700
+D002
+VCCB = 3.3 V
+Low-Level Current (mA)
+Low-Level Output Voltage (mV)
+0
+2
+4
+6
+8
+10
+12
+14
+16
+0
+100
+200
+300
+400
+500
+600
+700
+D003
+VCCB = 3.3 V
+VCCB = 5 V
+Low-Level Current (mA)
+Low-Level Output Voltage (mV)
+0
+2
+4
+6
+8
+10
+12
+14
+16
+0
+100
+200
+300
+400
+500
+600
+700
+D001
+VCCB = 2.7 V
+VCCB = 3.3 V
+VCCB = 5 V
+15
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+6.12
+Typical Characteristics
+VCCA = 1.8 V
+VIL(A) = 150 mV
+Figure 1. Low-Level Output Voltage (VOL(Bx)) vs Low-Level
+Current (IOL(Bx))
+VCCA = 2.7 V
+VIL(A) = 150 mV
+Figure 2. Low-Level Output Voltage (VOL(Bx)) vs Low-Level
+Current (IOL(Bx))
+VCCA = 3.3 V
+VIL(A) = 150 mV
+Figure 3. Low-Level Output Voltage (VOL(Bx)) vs Low-Level Current (IOL(Bx))
+From Output
+ Under Test
+S1
+2 × VCCO
+50 k
+50 k
+15 pF
+Open
+1 M
+15 pF
+VCCO
+VCCI
+DUT
+IN
+OUT
+1 M
+15 pF
+VCCO
+VCCI
+DUT
+IN
+OUT
+16
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+7
+Parameter Measurement Information
+Figure 4. Data Rate, Pulse Duration, Propagation Delay, Output Rise-Time and Fall-Time Measurement
+Using a Push-Pull Driver
+Figure 5. Data Rate, Pulse Duration, Propagation Delay, Output Rise-Time and Fall-Time Measurement
+Using an Open-Drain Driver
+TEST
+S1
+tPZL / tPLZ
+2 × VCCO
+tPHZ / tPZH
+Open
+Figure 6. Load Circuit for Enable-Time and Disable-Time Measurement
+1. tPLZ and tPHZ are the same as tdis.
+2. tPZL and tPZH are the same as ten.
+3. VCCI is the VCC associated with the input port.
+4. VCCO is the VCC associated with the output port.
+Output
+Waveform 1
+S1 at 2 × V
+(see Note 2)
+CCO
+VOH
+VOL
+OE input
+Output
+Waveform 2
+S1 at GND
+(see Note 2)
+tPZL
+tPZH
+tPLZ
+tPHZ
+V
+ / 2
+CCA
+V
+ / 2
+CCA
+0 V
+VOH × 0.1
+V
+ / 2
+CCO
+VOH × 0.9
+V
+ / 2
+CCO
+0 V
+VCCA
+VOH
+tPLH
+tPHL
+VCCI
+0 V
+V
+ / 2
+CCO
+VOH
+VOL
+Input
+Output
+V
+ / 2
+CCI
+V
+ / 2
+CCI
+0.9 × VCCO
+V
+ / 2
+CCO
+tr
+0.1 × VCCO
+tf
+VCCI
+0 V
+V
+/ 2
+CCI 
+V
+/ 2
+CCI 
+tw
+Input
+17
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Parameter Measurement Information (continued)
+7.1
+Voltage Waveforms
+Figure 7. Pulse Duration
+Figure 8. Propagation Delay Times
+A.
+CL includes probe and jig capacitance.
+B.
+Waveform 1 in Figure 9 is for an output with internal such that the output is high, except when OE is high (see
+Figure 6). Waveform 2 in Figure 9 is for an output with conditions such that the output is low, except when OE is
+high.
+C.
+All input pulses are supplied by generators having the following characteristics: PRR≤10 MHz, ZO = 50 Ω, dv/dt
+≥1 V/ns.
+D.
+The outputs are measured one at a time, with one transition per measurement.
+E.
+tPLZ and tPHZ are the same as tdis.
+F.
+tPZL and tPZH are the same as ten.
+G. tPLH and tPHL are the same as tpd.
+H.
+VCCI is the VCC associated with the input port.
+I.
+VCCO is the VCC associated with the output port.
+Figure 9. Enable and Disable Times
+B
+Gate Bias
+One
+shot
+T2
+T1
+VCCA
+VCCB
+A
+Gate Bias
+N2
+One-
+shot
+R1
+10k
+R2
+10k
+One
+shot
+One-
+shot
+One Shot 
+Accelerator
+Gate Bias
+    10 k
+One Shot 
+Accelerator
+                        10 k
+SCL_A
+SCL_B
+One Shot 
+Accelerator
+Gate Bias
+    10 k
+One Shot 
+Accelerator
+                        10 k
+SDA_A
+SDA_B
+OE
+VCCB
+VCCA
+18
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+8
+Detailed Description
+8.1
+Overview
+The TCA9406 device is a directionless voltage-level translator specifically designed for translating logic voltage
+levels. The A port is able to accept I/O voltages ranging from 1.65 V to 3.6 V, while the B port can accept I/O
+voltages from 2.3 V to 5.5 V. The device is a pass-gate architecture with edge-rate accelerators (one-shots) to
+improve the overall data rate. 10-kΩ pullup resistors, commonly used in open-drain applications, have been
+conveniently integrated so that an external resistor is not needed. When TCA9406 is disabled the internal pull up
+resistors are also disabled. While this device is designed for open-drain applications which makes it ideal for I2C
+and SMBus applications, the device can also translate push-pull CMOS logic outputs.
+8.2
+Functional Block Diagram
+8.3
+Feature Description
+8.3.1
+Architecture
+The TCA9406 architecture (see Figure 5) is an auto-direction-sensing based translator that does not require a
+direction-control signal to control the direction of data flow from A to B or from B to A.
+Figure 10. Architecture of a TCA9406 Cell
+19
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Feature Description (continued)
+These two bidirectional channels independently determine the direction of data flow without a direction-control
+signal. Each I/O pin is automatically reconfigured as either an input or an output, which is how this auto-direction
+feature is realized.
+The TCA9406 is part of TI's "Switch" type voltage translator family and employs two key circuits to enable this
+voltage translation:
+1) An N-channel pass-gate transistor topology that ties the A-port to the B-port
+and
+2) Output one-shot (O.S.) edge-rate accelerator circuitry to detect and accelerate rising edges on the A or B
+ports
+For bidirectional voltage translation, pullup resistors are included on the device for dc current sourcing capability.
+The VGATE gate bias of the N-channel pass transistor is set at approximately one threshold voltage (VT) above
+the VCC level of the low-voltage side. Data can flow in either direction without guidance from a control signal.
+The O.S. rising-edge rate accelerator circuitry speeds up the output slew rate by monitoring the input edge for
+transitions, helping maintain the data rate through the device. During a low-to-high signal rising edge, the O.S.
+circuits turn on the PMOS transistors (T1, T2) to increase the current drive capability of the driver for
+approximately 30 ns or 95% of the input edge, whichever occurs first. This edge-rate acceleration provides high
+ac drive by bypassing the internal 10-kΩ pullup resistors during the low-to-high transition to speed up the signal.
+The output resistance of the driver is decreased to approximately 50 Ω to 70 Ω during this acceleration phase. To
+minimize dynamic ICC and the possibility of signal contention, the user should wait for the O.S. circuit to turn off
+before applying a signal in the opposite direction. The worst-case duration is equal to the minimum pulse-width
+number provided in the Timing Requirements section of this data sheet.
+8.3.2
+Input Driver Requirements
+The continuous dc-current "sinking" capability is determined by the external system-level open-drain (or push-
+pull) drivers that are interfaced to the TCA9406 I/O pins. Since the high bandwidth of these bidirectional I/O
+circuits is used to facilitate this fast change from an input to an output and an output to an input, they have a
+modest dc-current "sourcing" capability of hundreds of micro-Amps, as determined by the internal 10-kΩpullup
+resistors.
+The fall time (tfA, tfB) of a signal depends on the edge-rate and output impedance of the external device driving
+TCA9406 data I/Os, as well as the capacitive loading on the data lines.
+Similarly, the tPHL and max data rates also depend on the output impedance of the external driver. The values for
+tfA, tfB, tPHL, and maximum data rates in the data sheet assume that the output impedance of the external driver is
+less than 50 Ω.
+8.3.3
+Output Load Considerations
+TI recommends careful PCB layout practices with short PCB trace lengths to avoid excessive capacitive loading
+and to ensure that proper O.S. triggering takes place. PCB signal trace-lengths should be kept short enough
+such that the round trip delay of any reflection is less than the one-shot duration. This improves signal integrity
+by ensuring that any reflection sees a low impedance at the driver. The O.S. circuits have been designed to stay
+on for approximately 30 ns. The maximum capacitance of the lumped load that can be driven also depends
+directly on the one-shot duration. With very heavy capacitive loads, the one-shot can time-out before the signal is
+driven fully to the positive rail. The O.S. duration has been set to best optimize trade-offs between dynamic ICC,
+load driving capability, and maximum bit-rate considerations. Both PCB trace length and connectors add to the
+capacitance that the TCA9406 output sees, so it is recommended that this lumped-load capacitance be
+considered to avoid O.S. re-triggering, bus contention, output signal oscillations, or other adverse system-level
+affects.
+8.3.4
+Enable and Disable
+The TCA9406 has an OE input that is used to disable the device by setting OE low, which places all I/Os in the
+Hi-Z state. When TCA9406 is disabled, the internal pull up resistors are also disabled meaning if no external pull
+up resistors are present then the SDA/SCL lines will be left floating. The disable time (tdis) indicates the delay
+between the time when OE goes low and when the outputs are disabled (Hi-Z). The enable time (ten) indicates
+the amount of time the user must allow for the one-shot circuitry to become operational after OE is taken high.
+20
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+Feature Description (continued)
+8.3.5
+Pullup Resistors on I/O Lines
+Each A-port I/O has an internal 10-kΩ pullup resistor to VCCA, and each B-port I/O has an internal 10-kΩ pullup
+resistor to VCCB. If a smaller value of pullup resistor is required, an external resistor must be added from the I/O
+to VCCA or VCCB (in parallel with the internal 10-kΩ resistors). Adding lower value pullup resistors will effect VOL
+levels, however. The internal pullups of the TCA9406 are disabled when the OE pin is low.
+8.4
+Device Functional Modes
+The TCA9406 device has two functional modes, enabled and disabled. To disable the device set the OE input
+low, which places all I/Os in a high impedance state. Setting the OE input high will enable the device.
+ 
+Master
+I2C
+Bus
+I2C
+Bus
+Devices
+0.1 PF
+3.3 V
+VCCA
+VCCB
+OE
+Optional Resistors
+Master
+I2C
+Bus
+I2C
+Bus
+Devices
+1.8 V
+VCCA
+VCCB
+SCL_A        SCL_B
+OE
+Optional Resistors
+SDA_A       SDA_B
+21
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+9
+Application and Implementation
+NOTE
+Information in the following applications sections is not part of the TI component
+specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+responsible for determining suitability of components for their purposes. Customers should
+validate and test their design implementation to confirm system functionality.
+9.1
+Application Information
+The TCA9406 can be used to bridge the digital-switching compatibility gap between two voltage nodes to
+successfully interface logic threshold levels found in electronic systems. It should be used in a point-to-point
+topology for interfacing devices or systems operating at different interface voltages with one another. Its primary
+target application use is for interfacing with open-drain drivers on the data I/Os such as I2C or SMBus, where the
+data is bidirectional and no control signal is available.
+9.2
+Typical Application
+Design Notes: OE can be tied directly to 1.8 V (VCCA) to always be in ENABLE mode.
+Figure 11. Typical Application Circuit
+9.2.1
+Design Requirements
+For this design example, use the parameters listed in Table 1. And make sure the VCCA ≤VCCB.
+Table 1. Design Parameters
+DESIGN PARAMETER
+EXAMPLE VALUE
+Input voltage range
+1.65 to 3.6 V
+Output voltage range
+2.3 to 5.5 V
+9.2.2
+Detailed Design Procedure
+To begin the design process, determine the following:
+•
+Input voltage range
+–
+Use the supply voltage of the device that is driving the TCA9406 device to determine the input voltage
+range. For a valid logic high the value must exceed the VIH of the input port. For a valid logic low the value
+must be less than the VIL of the input port.
+•
+Output voltage range
+–
+Use the supply voltage of the device that the TCA9406 device is driving to determine the output voltage
+range
+–
+The TCA9406 device has 10-kΩ internal pullup resistors. External pullup resistors can be added to reduce
+the total RC of a signal trace if necessary.
+22
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+9.2.3
+Application Curve
+Figure 12. Level-Translation of a 2.5-MHz Signal
+8
+7
+5
+1
+2
+3
+4
+Legend
+Via to power plane
+Via to GND plane (inner layer)
+6
+0.1 F
+0.1 F
+To controller
+To system
+TCA9406
+Bypass capacitor
+Bypass capacitor
+Keep OE low until VCCA 
+and VCCB are powered up
+To controller
+To system
+SCL_B
+VCCB
+OE
+SCL_A
+SDA_B
+GND
+VCCA
+SDA_A
+23
+TCA9406
+www.ti.com
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+10
+Power Supply Recommendations
+During operation, ensure that VCCA ≤VCCBat all times. The sequencing of each power supply will not damage the
+device during the power up operation, so either power supply can be ramped up first. The output-enable (OE)
+input circuit is designed so that it is supplied by VCCA and when the (OE) input is low, all outputs are placed in the
+high-impedance state. To ensure the high-impedance state of the outputs during power up or power down, the
+OE input pin must be tied to GND through a pulldown resistor and must not be enabled until VCCA and VCCB are
+fully ramped and stable. The minimum value of the pulldown resistor to ground is determined by the current-
+sourcing capability of the driver.
+11
+Layout
+11.1
+Layout Guidelines
+To
+ensure
+reliability
+of
+the
+device,
+the
+following
+common
+printed-circuit
+board
+layout
+guidelines
+are
+recommended:
+•
+Bypass capacitors should be used on power supplies and should be placed as close as possible to the VCCA,
+VCCB pin, and GND pin.
+•
+Short trace lengths should be used to avoid excessive loading.
+•
+PCB signal trace-lengths must be kept short enough so that the round-trip delay of any reflection is less than
+the one-shot duration, approximately 30 ns, ensuring that any reflection encounters low impedance at the
+source driver.
+11.2
+Layout Example
+Figure 13. TCA9406 Layout Example
+24
+TCA9406
+SCPS221G –OCTOBER 2010–REVISED NOVEMBER 2018
+www.ti.com
+Product Folder Links: TCA9406
+Submit Documentation Feedback
+Copyright © 2010–2018, Texas Instruments Incorporated
+12
+Device and Documentation Support
+12.1
+Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper
+right corner, click on Alert me to register and receive a weekly digest of any product information that has
+changed. For change details, review the revision history included in any revised document.
+12.2
+Community Resources
+The following links connect to TI community resources. Linked contents are provided "AS IS" by the respective
+contributors. They do not constitute TI specifications and do not necessarily reflect TI's views; see TI's Terms of
+Use.
+TI E2E™Online Community TI's Engineer-to-Engineer (E2E) Community. Created to foster collaboration
+among engineers. At e2e.ti.com, you can ask questions, share knowledge, explore ideas and help
+solve problems with fellow engineers.
+Design Support TI's Design Support Quickly find helpful E2E forums along with design support tools and
+contact information for technical support.
+12.3
+Trademarks
+E2E is a trademark of Texas Instruments.
+All other trademarks are the property of their respective owners.
+12.4
+Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled with
+appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may be more
+susceptible to damage because very small parametric changes could cause the device not to meet its published specifications.
+12.5
+Glossary
+SLYZ022 — TI Glossary.
+This glossary lists and explains terms, acronyms, and definitions.
+13
+Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+PACKAGE OPTION ADDENDUM
+www.ti.com
+10-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+TCA9406DCTR
+Active
+Production
+SSOP (DCT) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+NF9
+(R, Z)
+TCA9406DCTR.B
+Active
+Production
+SSOP (DCT) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+NF9
+(R, Z)
+TCA9406DCUR
+Active
+Production
+VSSOP (DCU) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU | SN
+Level-1-260C-UNLIM
+-40 to 85
+(F9, NF9R)
+NZ
+TCA9406DCUR.B
+Active
+Production
+VSSOP (DCU) | 8
+3000 | LARGE T&R
+Yes
+SN
+Level-1-260C-UNLIM
+-40 to 85
+(F9, NF9R)
+NZ
+TCA9406DCURG4.B
+Active
+Production
+VSSOP (DCU) | 8
+3000 | LARGE T&R
+-
+Call TI
+Call TI
+-40 to 85
+TCA9406YZPR
+Active
+Production
+DSBGA (YZP) | 8
+3000 | LARGE T&R
+Yes
+SNAGCU
+Level-1-260C-UNLIM
+-40 to 85
+7W
+TCA9406YZPR.B
+Active
+Production
+DSBGA (YZP) | 8
+3000 | LARGE T&R
+Yes
+SNAGCU
+Level-1-260C-UNLIM
+-40 to 85
+7W
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com
+10-Nov-2025
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+20-May-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TCA9406DCTR
+SSOP
+DCT
+8
+3000
+180.0
+13.0
+3.35
+4.5
+1.55
+4.0
+12.0
+Q3
+TCA9406DCTR
+SSOP
+DCT
+8
+3000
+177.8
+12.4
+3.45
+4.4
+1.45
+4.0
+12.0
+Q3
+TCA9406DCUR
+VSSOP
+DCU
+8
+3000
+180.0
+9.0
+2.25
+3.4
+1.0
+4.0
+8.0
+Q3
+TCA9406DCUR
+VSSOP
+DCU
+8
+3000
+180.0
+8.4
+2.25
+3.35
+1.05
+4.0
+8.0
+Q3
+TCA9406YZPR
+DSBGA
+YZP
+8
+3000
+180.0
+8.4
+1.11
+2.1
+0.56
+4.0
+8.0
+Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+20-May-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+TCA9406DCTR
+SSOP
+DCT
+8
+3000
+182.0
+182.0
+20.0
+TCA9406DCTR
+SSOP
+DCT
+8
+3000
+183.0
+183.0
+20.0
+TCA9406DCUR
+VSSOP
+DCU
+8
+3000
+182.0
+182.0
+20.0
+TCA9406DCUR
+VSSOP
+DCU
+8
+3000
+202.0
+201.0
+28.0
+TCA9406YZPR
+DSBGA
+YZP
+8
+3000
+182.0
+182.0
+20.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+4.25
+3.95 TYP
+1.3
+1.0
+6X 0.65
+8X 0.30
+0.15
+2X
+1.95
+(0.15) TYP
+0 - 8
+0.2
+0.0
+0.25
+GAGE PLANE
+0.6
+0.2
+A
+3.1
+2.9
+NOTE 3
+B
+3.1
+2.9
+NOTE 4
+4220784/D   10/2025
+SSOP - 1.3 mm max height
+DCT0008A
+SMALL OUTLINE PACKAGE
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+1
+8
+0.13
+C A B
+5
+4
+PIN 1 ID
+AREA
+SEATING PLANE
+0.1 C
+ SEE DETAIL A
+DETAIL A
+TYPICAL
+SCALE  3.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+(3.8)
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+8X (1.1)
+8X (0.4)
+6X (0.65)
+(R0.05)
+TYP
+4220784/D   10/2025
+SSOP - 1.3 mm max height
+DCT0008A
+SMALL OUTLINE PACKAGE
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:15X
+1
+4
+5
+8
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+METAL
+SOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+SOLDER MASK DETAILS
+EXPOSED METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+EXPOSED METAL
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(3.8)
+6X (0.65)
+8X (0.4)
+8X (1.1)
+4220784/D   10/2025
+SSOP - 1.3 mm max height
+DCT0008A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SYMM
+SYMM
+1
+4
+5
+8
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE:15X
+www.ti.com
+PACKAGE OUTLINE
+C
+6X 0.5
+2X
+1.5
+8X 0.25
+0.17
+3.2
+3.0 TYP
+SEATING
+PLANE
+0.1
+0.0
+0.12
+GAGE PLANE
+0 -6
+0.9
+0.6
+B
+2.4
+2.2
+NOTE 3
+A
+2.1
+1.9
+NOTE 3
+0.35
+0.20
+(0.13) TYP
+VSSOP - 0.9 mm max height
+DCU0008A
+SMALL OUTLINE PACKAGE
+4225266/A   09/2014
+1
+4
+5
+8
+0.08
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. Reference JEDEC registration MO-187 variation CA.
+ 
+A  30
+DETAIL A
+TYPICAL
+SCALE  6.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+8X (0.85)
+8X (0.3)
+6X (0.5)
+(3.1)
+(R0.05) TYP
+VSSOP - 0.9 mm max height
+DCU0008A
+SMALL OUTLINE PACKAGE
+4225266/A   09/2014
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 25X
+SYMM
+SYMM
+1
+4
+5
+8
+SEE SOLDER MASK
+DETAILS
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (0.85)
+8X (0.3)
+6X (0.5)
+(3.1)
+(R0.05) TYP
+VSSOP - 0.9 mm max height
+DCU0008A
+SMALL OUTLINE PACKAGE
+4225266/A   09/2014
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 25X
+SYMM
+SYMM
+1
+4
+5
+8
+www.ti.com
+PACKAGE OUTLINE
+C
+0.5 MAX
+0.19
+0.15
+1.5
+TYP
+0.5 TYP
+8X 
+0.25
+0.21
+0.5
+TYP
+B
+E
+A
+D
+4223082/A   07/2016
+DSBGA - 0.5 mm max height
+YZP0008
+DIE SIZE BALL GRID ARRAY
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+BALL A1
+CORNER
+SEATING PLANE
+BALL TYP
+0.05 C
+B
+1
+2
+0.015
+C A B
+SYMM
+SYMM 
+C
+A
+D
+SCALE  8.000
+D: Max = 
+E: Max = 
+1.918 mm, Min = 
+0.918 mm, Min = 
+1.858 mm
+0.858 mm
+www.ti.com
+EXAMPLE BOARD LAYOUT
+8X (
+0.23)
+(0.5) TYP
+(0.5) TYP
+(
+0.23)
+METAL
+0.05 MAX
+(
+0.23)
+SOLDER MASK
+OPENING
+0.05 MIN
+4223082/A   07/2016
+DSBGA - 0.5 mm max height
+YZP0008
+DIE SIZE BALL GRID ARRAY
+NOTES: (continued)
+ 
+3. Final dimensions may vary due to manufacturing tolerance considerations and also routing constraints.
+    For more information, see Texas Instruments literature number SNVA009 (www.ti.com/lit/snva009).
+ 
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+SCALE:40X
+1
+2
+A
+B
+C
+D
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+NOT TO SCALE
+SOLDER MASK
+OPENING
+SOLDER MASK
+DEFINED
+METAL UNDER
+SOLDER MASK
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(0.5)
+TYP
+(0.5) TYP
+8X (
+0.25)
+(R0.05) TYP
+METAL
+TYP
+4223082/A   07/2016
+DSBGA - 0.5 mm max height
+YZP0008
+DIE SIZE BALL GRID ARRAY
+NOTES: (continued)
+ 
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release.
+SYMM
+SYMM
+SOLDER PASTE EXAMPLE
+BASED ON 0.1 mm THICK STENCIL
+SCALE:40X
+1
+2
+A
+B
+C
+D
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

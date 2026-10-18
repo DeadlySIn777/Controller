@@ -1,0 +1,37 @@
+{
+  "status": "FAIL",
+  "stage": "mutation-fixture generation",
+  "reason": "final OPI mutation anchor was absent after legitimate inserted fault-priority comment; six actual prior control logs preserved",
+  "controls_completed": [
+    {
+      "control": "ignore-reset-release",
+      "log_sha256": "fafcde8d3d7f77a022820e5e2de8d8ab686eb627e431483fb7955bdc3a061407",
+      "log_tail": "FATAL: state.sv:79: missing reset release blocks ARM tick1250841 fault00000000\n       Time: 62931801000  Scope: tb.check\n"
+    },
+    {
+      "control": "immediate-DISARM",
+      "log_sha256": "c80a0a6a2b4b39e66ff4b6788b06ee0daba335ee2f3b682127d971a3ce3b1815",
+      "log_tail": "FATAL: state.sv:79: request retained while actual pulse drains tick1225579 fault00000000\n       Time: 24511661000  Scope: tb.check\n"
+    },
+    {
+      "control": "instant-selftest-flag",
+      "log_sha256": "3f2f5e30339ea4932095057d7591b25dd1f99e97f410458bf7e5da478c5c4753",
+      "log_tail": "FATAL: state.sv:79: no instant SELFTEST flag tick500015 fault00000000\n       Time: 10000380000  Scope: tb.check\n"
+    },
+    {
+      "control": "late-at-one-period",
+      "log_sha256": "146ea2889edfcb2fa6e127f900cc7d78933a0bc6df08b23f1f6b8f32a6e337f7",
+      "log_tail": "FATAL: state.sv:79: below1.5 period is not late tick1075532 fault00000000\n       Time: 21510721000  Scope: tb.check\n"
+    },
+    {
+      "control": "retain-fault-continuity",
+      "log_sha256": "6e70abde6ba773f9f20cbf0edf07e8d4e2a88945f8a9334d1d02f18a9a473cc2",
+      "log_tail": "FATAL: state.sv:79: fault clears all armed continuity at ZERO rate tick1227093 fault00000004\n       Time: 24541940000  Scope: tb.check\n"
+    },
+    {
+      "control": "unmeasured-selftest-ARM",
+      "log_sha256": "64a47090579fe2510e8392db815d00d6441caeffd7d00b60cdaeeee16d5d4270",
+      "log_tail": "FATAL: state.sv:79: ARM refuses untested watchdogs tick11 fault00000000\n       Time: 301000  Scope: tb.check\n"
+    }
+  ]
+}

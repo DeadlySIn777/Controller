@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-motors-r0.2",
+  "scope": "source connectivity/default-state screen; no hardware operation",
+  "errors": [],
+  "passed": true,
+  "physical_components": 226,
+  "device_counts": {
+    "R": 96,
+    "AM26C31": 6,
+    "C": 42,
+    "LVC07A": 2,
+    "TLP3640A": 12,
+    "TLP4176A": 12,
+    "TVS": 36,
+    "TPS22918": 2,
+    "ISO1212": 6,
+    "LTC6994": 2,
+    "LVC2G08": 1,
+    "LVC1G74": 2,
+    "LVC14A": 2,
+    "LVC00A": 3,
+    "AHCT1G17": 2
+  },
+  "calculations": {
+    "led_current_screen_min_a": 0.005360328732597775,
+    "led_current_screen_max_a": 0.01216712580348944,
+    "bank_a_worst_led_and_bleed_a": 0.11310070400979493,
+    "switch_drop_screen_v": 0.008934955616773798,
+    "photorelay_limits_are_25c_only": true,
+    "bleed_worst_steady_power_w": 0.08118304254667892,
+    "passive_bleed_tau_s": 3.6663000000000005e-05,
+    "ideal_isolated_rail_discharge_to_100ua_s": 0.00020039115433939626,
+    "bleed_screen_excludes_switch_delay_leakage_and_board_capacitance": true,
+    "powered_logic_gate_to_sink_highz_max_ns_conditional": 7.9,
+    "relay_withdrawal_no_open_25c_max_s": 0.0002,
+    "relay_withdrawal_nc_close_25c_max_s": 0.001,
+    "relay_assertion_nc_open_25c_max_s": 0.003,
+    "permission_qualifier_nominal_s": 1.208e-06,
+    "permission_qualifier_min_s": 1.1183736479999999e-06,
+    "permission_qualifier_max_s": 1.2995736479999997e-06,
+    "qualifier_input_ttl_high_margin_v": 0.3799999999999999,
+    "qualifier_input_ttl_low_margin_v": 0.3,
+    "level_restored_high_margin_v": 0.7950000000000004,
+    "level_restored_low_margin_v": 1.3549999999999998,
+    "enable_truth_table": [
+      {
+        "en_n": 0,
+        "gate": 0,
+        "schmitt_en_active": 1,
+        "sink_input": 1,
+        "led_on": false
+      },
+      {
+        "en_n": 0,
+        "gate": 1,
+        "schmitt_en_active": 1,
+        "sink_input": 0,
+        "led_on": true
+      },
+      {
+        "en_n": 1,
+        "gate": 0,
+        "schmitt_en_active": 0,
+        "sink_input": 1,
+        "led_on": false
+      },
+      {
+        "en_n": 1,
+        "gate": 1,
+        "schmitt_en_active": 0,
+        "sink_input": 1,
+        "led_on": false
+      }
+    ],
+    "powered_high_output_leakage_guarantee_closed": true,
+    "powered_high_dark_margin_ratio_25c": 10.0,
+    "qualified_filter_datasheet_bounds_closed_conditionally": true,
+    "fault_to_inhibit_20ms_proven": false,
+    "qualified_filter_proven": false,
+    "native_xml": {
+      "source_components_checked": 242,
+      "source_pin_assignments_checked": 1028,
+      "native_nc_checked": 30,
+      "physical_components": 226
+    },
+    "native_erc": {
+      "violations": 12,
+      "errors": 0,
+      "justified_floating_substrate_warnings": 12,
+      "ignored_checks": []
+    }
+  },
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "remaining_gates": [
+    "Parent must provide and independently supervise MOTOR_IO_3V3, both MOTOR_5V rails and bank AUX_5V/AUX_24V supplies; no power supply is fabricated by flags.",
+    "MOTOR_POWER_OK_*_QUALIFIED must include actual rail/field health, early brownout withdrawal, startup held disabled and deliberate rearm; never tie HIGH.",
+    "Digital qualifier bounds are conditional on specified voltages, temperature, RSET tolerance/TCR, source/trace load and startup completion; no physical pulse/noise test has occurred.",
+    "Source LED current screen uses 25C diode Vf limits at10mA and maximum logic VOL; cold/hot/ageing trigger/current/return and full-temperature relay timing remain physical qualification.",
+    "Direct per-channel gate removes TPS/QOD timing from powered-logic withdrawal, but powered-low ramps/missing receiving rails require actual parent monitor/power sequencing. TPS22918 turn-off and QOD are typical-only and never counted as a guaranteed watchdog bound.",
+    "Both photorelay lands follow manufacturer reference patterns; final assembly/stencil and isolation review remain open.",
+    "ISO1212 uses TI DBQ0016A example lands;12 separate SUB nets require actual floating2x2mm PCB islands, no ground or inter-island bridge, with isolation/stencil review.",
+    "All12 motor connector exact MPN/mate/orientation, isolation clearance, high-current rails, shielding and transient return layout remain parent engineering.",
+    "TVS rated-pulse clamp below60V at25C is only component screening; temperature, surge source/energy, overshoot, dV/dt and containment remain unqualified.",
+    "Unpowered/brownout ISO1212 output is invalid; FPGA/software must mask until independent receiving-rail qualification and freshness.",
+    "No receiver fail-safe claim for tri-stated STEP/DIR; drive profiles and independent STO/drive-power stop path remain required.",
+    "Native ERC/netlist checks do not establish pin allocation, routing, DRC, FPGA fit, target operation or manufacture readiness."
+  ]
+}

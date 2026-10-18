@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-28T08:18:18.149061+00:00",
+  "scope": "Actual Yosys Efinix-family mapping; no vendor place/route, package fit, static timing or bitstream",
+  "environment": "WSL GarciaMechBuilder; isolated Debian 13 rootfs; Yosys/yosys-abc 0.52-2",
+  "tool_version": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+  "summary": {
+    "top": "cnc_endpoint",
+    "configuration": "six-step/two-ABZ CNC1 ABI2",
+    "parameters": {
+      "CORE_HZ": 50000000,
+      "DIR_HOLD_CYCLES": 100,
+      "DIR_SETUP_CYCLES": 100,
+      "ENABLE_DISCOVERY": 1,
+      "MAX_RATE": 16777216,
+      "PULSE_CYCLES": 100,
+      "SPACE_CYCLES": 100,
+      "WATCHDOG_CYCLES": 250000
+    },
+    "mapped_cells": {
+      "EFX_ADD": 2132,
+      "EFX_FF": 3215,
+      "EFX_GBUFCE": 1,
+      "EFX_LUT4": 4072
+    },
+    "mapped_cell_total": 9420,
+    "top_ports": {
+      "clk": {
+        "direction": "input",
+        "bits": 1
+      },
+      "reset_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "inhibit_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_cs_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_sclk": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_mosi": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_miso": {
+        "direction": "output",
+        "bits": 1
+      },
+      "spi_miso_oe": {
+        "direction": "output",
+        "bits": 1
+      },
+      "enc_a": {
+        "direction": "input",
+        "bits": 2
+      },
+      "enc_b": {
+        "direction": "input",
+        "bits": 2
+      },
+      "enc_z": {
+        "direction": "input",
+        "bits": 2
+      },
+      "step_out": {
+        "direction": "output",
+        "bits": 6
+      },
+      "dir_out": {
+        "direction": "output",
+        "bits": 6
+      },
+      "motion_enable": {
+        "direction": "output",
+        "bits": 1
+      },
+      "endpoint_ready": {
+        "direction": "output",
+        "bits": 1
+      },
+      "link_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "watchdog_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "inhibit_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "timing_fault": {
+        "direction": "output",
+        "bits": 1
+      }
+    },
+    "top_port_bits": 32,
+    "latches": 0,
+    "structural_check_problems": 0,
+    "reference_device": "T20 / T20F256C4 candidate; package not fitted",
+    "reference_equivalent_logic_elements": 19728,
+    "primitive_counts_are_occupied_LE_or_fit_percentage": false,
+    "scope_metadata_removed": 9
+  },
+  "files_sha256": {
+    "gateware/synthesis/run.sh": "6f80d26a52fd979f90fc0eae66497a7c856965b946f538665c2b548cca71213c",
+    "gateware/synthesis/synth.ys": "d933254e58747aeae722da352e8804e4c72f0a24db2a81468a0e840b35c892a8",
+    "gateware/synthesis/record_results.py": "70648dfabb588d83d4aa5e4710420fbf214fca1fcff0c38b66ce008bd2de840a",
+    "gateware/synthesis/input/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "gateware/synthesis/input/cnc_endpoint.v": "476d78b32d7ad89e512a3c4abd8b906ce922a329fda15a2cc18633bf11768066",
+    "gateware/synthesis/input/cnc_spi_frame.v": "064e95d703a8bdd70b3a2451c254a015632f2620867e5cd52fd84199404e69e5",
+    "gateware/synthesis/input/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "gateware/rtl/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "gateware/rtl/cnc_endpoint.v": "476d78b32d7ad89e512a3c4abd8b906ce922a329fda15a2cc18633bf11768066",
+    "gateware/rtl/cnc_spi_frame.v": "064e95d703a8bdd70b3a2451c254a015632f2620867e5cd52fd84199404e69e5",
+    "gateware/rtl/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "gateware/synthesis/results/backend-help.txt": "3732d7e294ac5484d24131fa0538ec8b59c5676871cf2b1995f2a6455dbb7180",
+    "gateware/synthesis/results/cnc_endpoint_efinix.edif": "b4b7aafaba13d857182a6b1253ba4b426ccf865af3b5689b3eb3fb399b3b9893",
+    "gateware/synthesis/results/cnc_endpoint_efinix.json": "04f6a79b9b769918cea7dd23a2c6979a46faeaf79cc321f0787b0bfb23219e3b",
+    "gateware/synthesis/results/exit-status.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "gateware/synthesis/results/mapped-stat.json": "95c59b2528e031f009f6b935a5df257644a2d228a02bd83672595f949e0b28eb",
+    "gateware/synthesis/results/packages.tsv": "080dfeeb2fa7410c61f44fffd2552d6503f15c6de09001dffb1389f75f684bce",
+    "gateware/synthesis/results/structural-stat.json": "44f0d445adc1e55074a6b914b37669bf7091f6a5e8a66f62124b686200bf8843",
+    "gateware/synthesis/results/synthesis.log": "13b284a281e8268ada8161e04bee66b2a1f8aa636930da49d041f9b596a4107b",
+    "gateware/synthesis/results/tool-files.sha256": "88491f113a7497236602932f2355e5c2885bc466e7cff47b5ac06c72b47e69be",
+    "gateware/synthesis/results/verilator-version.txt": "c1477a918362bb8f0bfe4c74962f5187f75900e29c3363f3119c80698e548e1b",
+    "gateware/synthesis/results/verilator.log": "ec0ce5c11ad1b84f6e70d0d719141d15d441acc53f6589e91334bc8dee9fa613",
+    "gateware/synthesis/results/yosys-version.txt": "239d92e36e753a9dff4e79d97878ed5d55304b675d411895ec57508bc134e28e"
+  },
+  "not_proven": [
+    "T20F256C4 package pin/bank fit",
+    "vendor mapper interoperability",
+    "routed utilization",
+    "50 MHz timing closure",
+    "CDC/metastability or asynchronous pulse capture",
+    "bitstream/configuration boot",
+    "complete field I/O",
+    "eight-step/four-encoder scope",
+    "physical electrical or motion behavior"
+  ]
+}

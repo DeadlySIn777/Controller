@@ -1,0 +1,210 @@
+"""Recheck actual combined geometry before adopting ROOT83 as routing WIP."""
+import json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools'))
+import pcbnew
+from hardware_populate_motherboard_pcb import sha,write
+from hardware_route_critical_digital_wip_r03 import source_clusters,clusters_preserved
+from hardware_validate_motherboard_return_planes_r02 import physical_reference_contact
+from hardware_collect_native_reference_fills import collect_native_reference_fills
+from hardware_check_return_corridors import covered,circle
+from hardware_route_selected_additive import corridor_polygon
+from hardware_validate_return_bridge_sources import review
+P=ROOT/'reports/motherboard-pcb-integration-20261001/source26-reference-closure-and-spurs-r83'
+board=P/'motherboard-bounded-merged-candidate.kicad_pcb'
+old=ROOT/'reports/motherboard-critical-routing-20261001/actual-AO1-SDO-root81-composed-r01/motherboard-bounded-merged-candidate.kicad_pcb'
+R=ROOT/'reports/motherboard-return-zoning-20261001'
+mp=ROOT/'reports/motherboard-domains-20261001/source26-r83-r01/domain-map.json'
+aux=ROOT/'reports/motherboard-power-entry-20261001/aux24-field-cell-r68/receipt.json'
+ao=R/'source26-r61-AO1-DAC-return-r04/receipt.json'
+status=R/'source26-r62-field-status-ground-delivery-r02/receipt.json'
+transfer=R/'source26-r62-C17014-field-return-reroute-r01/receipt.json'
+bridges=R/'source26-r61-orphan-bridge-retirement-r01/all-retained-new-bridge-source-witnesses.json'
+paths=[board,old,mp,aux,ao,status,transfer,bridges,P/'combined-bypass-proof.json',P/'independent-connectivity/review.json',P/'drc.json',Path(__file__)]
+frozen={str(p):sha(p)for p in paths};read=lambda p:json.loads(p.read_text())
+assert not(P/'adoption.json').exists()
+critical_proof=P/'combined-critical-proof/review.json'
+assert read(critical_proof)['passed']and read(critical_proof)['board_sha256']==sha(board)
+assert read(critical_proof)['map_sha256']==sha(mp)
+frozen[str(critical_proof)]=sha(critical_proof)
+
+slivers=ROOT/'reports/motherboard-return-zoning-20261001/source26-r74-four-literal-DFM-slivers-r02'
+assert read(slivers/'closure-freeze-r03.json')['passed']
+resources=read(P/'literal-reference-resources.json')
+assert resources['board_sha256']==sha(board)
+assert len(resources['unanchored_components'])==0 and resources['passed']
+# Fresh full native validator has no synthetic-piece exemption mechanism.
+assert not resources.get('derived_nonphysical_computation_artifacts',[])
+assert resources['filled_component_count']==len(resources['filled_components'])==187
+assert resources['exact_source_pad_inventory_checked']==9515
+strict4=ROOT/'reports/motherboard-owned-bypass-routing-20261001/source26-r76-strict-same-side-r01'
+assert read(strict4/'independent-native-cut-proof.json')['passed']
+assert read(P/'combined-bypass-proof.json')['retained_local_loops_checked']==101
+for ep in [slivers/'bounded-scope.json',slivers/'closure-freeze-r03.json',P/'literal-reference-resources.json',strict4/'receipt.json',strict4/'bounded-scope.json',strict4/'independent-native-cut-proof.json',strict4/'combined101-bypass-manifest.json',P/'receipt.json']:
+ frozen[str(ep)]=sha(ep)
+
+rule_proof=P/'retained-FPGA38-rule-proof.json';rule=read(rule_proof)
+assert rule['passed']and rule['board_sha256']==sha(board)
+assert rule['exact_literal_signal_nets']==38 and rule['maximum_aggregate_per_net_mm']==1.
+assert rule['factory_exact_2oz_process_confirmation_outstanding']
+for item in(rule_proof,ROOT/'reports/motherboard-pcb-integration-20261001/source26-FPGA38-rule-r76/proposal.json',board.with_suffix('.kicad_pro'),board.with_suffix('.kicad_dru')):
+ frozen[str(item)]=sha(item)
+
+ordinary_proof=P/'combined-ordinary-proof/review.json'
+assert read(ordinary_proof)['passed']and read(ordinary_proof)['board_sha256']==sha(board)
+assert read(ordinary_proof)['map_sha256']==sha(mp)
+frozen[str(ordinary_proof)]=sha(ordinary_proof)
+
+for p in (P/'combined-bypass-proof.json',P/'independent-connectivity/review.json'):
+ assert read(p)['board_sha256']==sha(board)
+assert read(P/'combined-bypass-proof.json')['passed']
+assert read(P/'independent-connectivity/review.json')['source_net_checks_pass']
+native=read(P/'drc.json');assert not native['ignored_checks'] and all(v['severity']=='warning'for v in native['violations'])
+b=pcbnew.LoadBoard(str(board));b.BuildConnectivity();before=pcbnew.LoadBoard(str(old));prior=clusters_preserved(source_clusters(before),b)
+co=b.GetConnectivity();ps={(p.GetParentFootprint().GetReference(),p.GetNumber()):p for p in b.GetPads()if p.GetNumber()};cu={t.m_Uuid.AsString():t for t in b.GetTracks()}
+from hardware_route_logic_return import identity
+literal_donor=pcbnew.LoadBoard(str(strict4/'owned-bypass-loop-candidate.kicad_pcb'))
+donor_Cu={t.m_Uuid.AsString():identity(t)for t in literal_donor.GetTracks()}
+new9=read(strict4/'bounded-scope.json')['reviewed_copper_delta_UUIDs'];assert len(new9)==9
+assert all(identity(cu[u])==donor_Cu[u]for u in new9)
+
+
+adc_proof=P/'retained-C19042-proof.json'
+adc=read(adc_proof)
+assert adc['passed'] and adc['board_sha256']==sha(board)
+assert any(Path(k).resolve()==mp.resolve() and v==sha(mp)for k,v in adc['input_sha256'].items())
+frozen[str(adc_proof)]=sha(adc_proof)
+
+ao1_proof=P/'combined-AO1-verification/review.json'
+assert read(ao1_proof)['passed'] and read(ao1_proof)['board_sha256']==sha(board)
+assert read(ao1_proof)['map_sha256']==sha(mp)
+retirement=ROOT/'reports/motherboard-critical-routing-20261001/actual-AO1-SDO-root74-corridor-r03/literal-zone-retirement-proof-r02.json'
+retirement_proof=read(retirement);assert retirement_proof['passed']
+assert len(retirement_proof['actual_native_negatives'])==4 and all(r['rejected']for r in retirement_proof['actual_native_negatives'])
+merger=read(old.parent/'receipt.json');frozen[str(old.parent/'receipt.json')]=sha(old.parent/'receipt.json');retired=merger['exact_literal_same_net_AO1_retirement'];assert len(retired)==1
+assert retired[0]['proof_sha256']==sha(retirement)
+composition=retired[0]['exact_disjoint_LOGIC_composition']
+assert composition['passed'] and composition['actual_changed_area_intersection_mm2']==0 and composition['all_concurrent_cuts_and_additions_retained']
+assert composition['unrelated_target_polygon_area_changed_mm2']==0
+assert merger['generic_shared_merger_unchanged']
+assert sha(ROOT/'tools/hardware_merge_bounded_pcb_delta.py')==merger['generic_shared_merger_sha256']
+for item in(ao1_proof,retirement,ROOT/'reports/motherboard-critical-routing-20261001/merge_AO1_SDO_literal_retirement.py',ROOT/'reports/motherboard-critical-routing-20261001/actual-AO1-SDO-root74-corridor-r03/bounded-retirement-composition-scope.json'):
+ frozen[str(item)]=sha(item)
+
+adjacent_proof=P/'combined-C14804-proof.json';adjacent=read(adjacent_proof)
+assert adjacent['passed'] and adjacent['board_sha256']==sha(board) and adjacent['map_sha256']==sha(mp)
+assert adjacent['negative_actual_supply_copper_cut_rejected']
+frozen[str(adjacent_proof)]=sha(adjacent_proof)
+stub=R/'source26-r81-two-redundant-ground-spurs-r01'
+assert read(stub/'receipt.json')['passed'] and read(stub/'old101-native-bypass-proof.json')['passed']
+assert not set(read(stub/'receipt.json')['removed_exact_obsolete_Cu'])&set(cu)
+for row in read(stub/'receipt.json')['retained_actual_ground_routes']:
+ pad=ps[row['ref'],row['pin']];via=cu[row['actual_retained_via']]
+ assert pad.m_Uuid.AsString()in{x.m_Uuid.AsString()for x in co.GetConnectedItems(via)}
+ for layer in row['actual_flashed_native_reference_contacts']:assert physical_reference_contact(via,b.GetLayerID(layer),co)
+for item in(stub/'receipt.json',stub/'old101-native-bypass-proof.json',stub/'bounded-scope.json'):
+ frozen[str(item)]=sha(item)
+assert not native['violations'] and not native['ignored_checks']
+
+checks=[]
+for row in read(aux)['actual_local_endpoint_checks']:
+ p,q=ps[row['from_ref'],row['from_pin']],ps[row['to_ref'],row['to_pin']]
+ assert p.GetNetname()==q.GetNetname()and q.m_Uuid.AsString()in{t.m_Uuid.AsString()for t in co.GetConnectedItems(p)}
+ checks.append(row)
+mapping=read(mp);groups=read(bridges)['groups'];groups=[dict(net=g['net'],new_copper_UUIDs=g['new_copper_UUIDs'])for g in groups]
+groups.append(dict(net='/motherboard_status/FIELD_B_0V',new_copper_UUIDs=read(status)['new_copper_UUIDs']))
+# Obtain each exact current conductor net rather than infer a sheet alias.
+groups[-1]['net']=cu[groups[-1]['new_copper_UUIDs'][0]].GetNetname()
+t=read(transfer);groups.append(dict(net='/motherboard_motors/FIELD_GND',new_copper_UUIDs=t['new_copper_UUIDs']+[t['changed_exact_ground_UUID']]))
+groups.append(dict(net='/motherboard_analog_output/AO1_COM',new_copper_UUIDs=read(ao)['new_copper_UUIDs']))
+seen={};unique_groups=[]
+for group in groups:
+ ids=[]
+ for uid in group['new_copper_UUIDs']:
+  if uid in seen:assert seen[uid]==group['net']
+  else:seen[uid]=group['net'];ids.append(uid)
+ if ids:unique_groups.append(dict(net=group['net'],new_copper_UUIDs=ids))
+groups=unique_groups
+extra=R/'source26-r69-four-source-ground-pieces-r01'
+extra_scope=read(extra/'bounded-scope.json')
+groups.append(dict(net='/LOGIC_GND',new_copper_UUIDs=extra_scope['reviewed_copper_delta_UUIDs']))
+local=ROOT/'reports/motherboard-local-ground-ties-20261001/source26-r69-r01'
+local_rows=[g for g in read(local/'receipt.json')['groups']if g['retained']]
+for row in local_rows:
+ p,q=ps[row['reference'],row['input_pin']],ps[row['reference'],row['target_ground_pin']]
+ assert q.m_Uuid.AsString()in{t.m_Uuid.AsString()for t in co.GetConnectedItems(p)}
+for row in read(extra/'actual-receiving-ground-contacts.json')['rows']:
+ v=cu[row['via_uuid']]
+ for name in row['actual_flashed_native_connected_layers']:assert physical_reference_contact(v,b.GetLayerID(name),co)
+for ep in (extra/'bounded-scope.json',extra/'actual-receiving-ground-contacts.json',local/'receipt.json',local/'independent-native-cut-proof.json'):
+ frozen[str(ep)]=sha(ep)
+bias=ROOT/'reports/motherboard-local-ground-ties-20261001/source26-r71-digital-bias-r02'
+bias_receipt=read(bias/'receipt.json');bias_rows=[g for g in bias_receipt['actual_return_groups']if g['retained']]
+for row in bias_rows:
+ p=ps[row['reference'],row['pin']];v=cu[row['via_uuid']]
+ assert p.m_Uuid.AsString()in{i.m_Uuid.AsString()for i in co.GetConnectedItems(v)}
+ assert physical_reference_contact(v,b.GetLayerID(row['adjacent_layer']),co)
+groups.append(dict(net='/LOGIC_GND',new_copper_UUIDs=[uid for row in bias_rows for uid in row['new_UUIDs']]))
+for ep in(bias/'receipt.json',bias/'independent-native-cut-proof.json'):frozen[str(ep)]=sha(ep)
+local_new=ROOT/'reports/motherboard-local-ground-ties-20261001/source26-r73-plus3-CMOS-stitches-r01'
+new_ground_rows=[g for g in read(local_new/'receipt.json')['actual_return_groups']if g['retained']]
+for row in new_ground_rows:
+ p=ps[row['reference'],row['pin']];v=cu[row['via_uuid']]
+ assert p.m_Uuid.AsString()in{i.m_Uuid.AsString()for i in co.GetConnectedItems(v)}
+ assert physical_reference_contact(v,b.GetLayerID(row['adjacent_layer']),co)
+groups.append(dict(net='/LOGIC_GND',new_copper_UUIDs=[u for row in new_ground_rows for u in row['new_UUIDs']]))
+for ep in(local_new/'receipt.json',local_new/'independent-native-cut-proof.json'):
+ frozen[str(ep)]=sha(ep)
+assert read(local_new/'independent-native-cut-proof.json')['passed']
+typed_retry=ROOT/'reports/motherboard-owned-bypass-routing-20261001/source26-r73-typed-retry-r01'
+assert read(typed_retry/'independent-native-cut-proof.json')['passed']
+for ep in(typed_retry/'receipt.json',typed_retry/'independent-native-cut-proof.json',typed_retry/'combined97-bypass-manifest.json'):
+ frozen[str(ep)]=sha(ep)
+
+contacts=R/'source26-r74-two-actual-ground-contacts-r01'
+assert read(contacts/'closure-freeze-r02.json')['passed']
+contact_scope=read(contacts/'bounded-scope.json')
+assert len(contact_scope['reviewed_copper_delta_UUIDs'])==2
+donor_contacts=pcbnew.LoadBoard(str(contacts/'motherboard-two-Source-ground-contacts-candidate.kicad_pcb'))
+donor_contact_Cu={t.m_Uuid.AsString():identity(t)for t in donor_contacts.GetTracks()}
+for uid in contact_scope['reviewed_copper_delta_UUIDs']:
+ assert identity(cu[uid])==donor_contact_Cu[uid]
+ groups.append(dict(net=cu[uid].GetNetname(),new_copper_UUIDs=[uid]))
+for row in read(contacts/'actual-receiving-ground-contacts.json')['rows']:
+ for name in row['actual_flashed_native_connected_layers']:
+  assert physical_reference_contact(cu[row['via_uuid']],b.GetLayerID(name),co)
+for ep in [contacts/'bounded-scope.json',contacts/'actual-receiving-ground-contacts.json',contacts/'closure-freeze-r02.json']:
+ frozen[str(ep)]=sha(ep)
+
+out9=R/'source26-r74-OUT9-external-ground-transfer-review-r02'
+assert read(out9/'closure-freeze-r03.json')['passed']
+out9ids=read(out9/'bounded-scope.json')['reviewed_copper_delta_UUIDs'];assert len(out9ids)==5
+out9donor=pcbnew.LoadBoard(str(R/'source26-r74-OUT9-external-ground-transfer-r01/motherboard-OUT9-external-ground-transfer-candidate.kicad_pcb'))
+out9cu={t.m_Uuid.AsString():t for t in out9donor.GetTracks()}
+assert all(identity(cu[u])==identity(out9cu[u])for u in out9ids)
+newvia=[cu[u]for u in out9ids if cu[u].Type()==pcbnew.PCB_VIA_T];assert len(newvia)==1
+for layer in(pcbnew.In3_Cu,pcbnew.In4_Cu):assert physical_reference_contact(newvia[0],layer,co)
+groups.append(dict(net='/motherboard_do/FIELD_B_0V',new_copper_UUIDs=out9ids))
+for item in(out9/'closure-freeze-r03.json',out9/'bounded-scope.json',out9/'receipt.json'):
+ frozen[str(item)]=sha(item)
+for folder in('source26-OUT9-ground-intermediate-r83a','source26-OUT9-C14804-intermediate-r83b'):
+ evidence=P.parent/folder/'receipt.json';frozen[str(evidence)]=sha(evidence)
+witnesses=review(b,groups,mapping['pads'])
+annuli=[]
+for row in t['actual_ground_transfer_annuli']:
+ v=cu[row['via_uuid']]
+ for layer in(pcbnew.In1_Cu,pcbnew.In3_Cu):
+  assert physical_reference_contact(v,layer,co)
+  annuli.append(dict(uuid=v.m_Uuid.AsString(),layer=b.GetLayerName(layer),actual_flashed_native_contact=True))
+fills=collect_native_reference_fills(b,{'/LOGIC_GND','/motherboard_analog_output/AO1_COM'},[pcbnew.In1_Cu])
+assert covered(corridor_polygon(tuple(ps['C17014','1'].GetPosition()),tuple(ps['U17014','14'].GetPosition()),pcbnew.FromMM(.5)),fills['/LOGIC_GND',pcbnew.In1_Cu])
+g=ps['U14626','5'];ldac=ps['U14626','4'];v=cu[read(ao)['new_copper_UUIDs'][1]];peers={i.m_Uuid.AsString()for i in co.GetConnectedItems(v)}
+assert {g.m_Uuid.AsString(),ldac.m_Uuid.AsString()}<=peers
+assert physical_reference_contact(v,pcbnew.In1_Cu,co)and covered(circle(tuple(v.GetPosition()),pcbnew.FromMM(.26)),fills['/motherboard_analog_output/AO1_COM',pcbnew.In1_Cu])
+assert all(sha(Path(p))==h for p,h in frozen.items())
+result=dict(passed=True,input_sha256=frozen,board_sha256=sha(board),prior_SOURCE_clusters=prior,actual_AUX24_endpoints=checks,actual_SOURCE_bridge_witnesses=witnesses,actual_C17014_transfer_annuli=annuli,C17014_actual_reference_margin_mm=.4,actual_AO1_GND5_LDAC4_and_In1_annulus_passed=True,actual_grounded_input_endpoint_checks=len(local_rows),four_actual_receiving_ground_contacts_passed=True,actual_digital_bias_return_contacts_checked=len(bias_rows),actual_added_CMOS_ground_contacts_checked=len(new_ground_rows),combined_ordinary_nine_pair_reference_proof=str(ordinary_proof),combined_critical_two_pair_reference_proof=str(critical_proof),bounded_FPGA38_rule_proof=str(rule_proof),factory_exact_2oz_process_confirmation_outstanding=True,four_unused_literal_slivers_physically_removed=True,remaining_real_reference_resources=0,four_new_actual_HF_branches_checked=4,two_actual_inner_ground_contacts_checked=True,exact_ADC_C19042_actual_loop_and_SOURCE_reference_proof=str(adc_proof),actual_AO1_SDO_complete_pair_with_exact4Cu_reference_proof=str(ao1_proof),literal_same_net_zone_retirement_proof=str(retirement),concurrent_LOGIC_native_polygon_composition=composition,all187_reference_resources_actually_SOURCE_anchored=True,separate_C14804_adjacent_only_proof=str(adjacent_proof),two_obsolete_ground_stubs_retired_without_SOURCE_disconnect=True,full_power_or_reference_qualification=False,manufacturing_ready=False)
+write(P/'combined-final-circuit-proof.json',result)
+inv=read(P/'independent-connectivity/review.json');hf=read(P/'combined-bypass-proof.json')
+write(P/'adoption.json',dict(passed=True,adopted=True,scope='Routing WIP; actual combined AUX24, DAC reference, SOURCE-backed return bridges 101 bypass loops and nine ordinary plus two critical local and one complete AO1 SDO SOURCE-pair routes rechecked. Remaining incomplete feeds/returns/nets are not qualified.',board_sha256=sha(board),exact_source_design_sha256=sha(ROOT/'hardware/motherboard/design.json'),exact_source_netlist_sha256=sha(ROOT/'hardware/motherboard/netlist.xml'),evidence_sha256={**frozen,str(P/'combined-final-circuit-proof.json'):sha(P/'combined-final-circuit-proof.json')},physical_footprints=len(b.GetFootprints()),track_via_count=len(b.GetTracks()),zone_count=len(b.Zones()),missing_joins=inv['independent_physical_cluster_missing_joins'],native_errors=0,native_warnings=len(native['violations']),ignored_checks=[],orphan_copper_count=len(inv['orphan_copper_items']),actual_AO1_SDO_complete_pair_proof=str(ao1_proof),literal_same_net_AO1_retirement_proof=str(retirement),exact_concurrent_LOGIC_polygon_composition=composition,retained_bypass_loops=hf['retained_local_loops_checked'],additional_adjacent_only_C14804_bypass_proof=str(adjacent_proof),all187_reference_resources_actually_SOURCE_anchored=True,receiving_return_endpoints=len(hf['actual_receiving_return_anchor_reviews']),bounded_FPGA38_rule_proof=str(rule_proof),factory_exact_2oz_process_confirmation_outstanding=True,global_power_or_reference_qualification=False,manufacturing_ready=False))
+write(P/'baseline-disposition.json',dict(board_sha256=sha(board),routing_incomplete=True,manufacturing_ready=False,known_unresolved_native_warnings=native['violations'],ignored_checks=[]))
+print(dict(adopted=True,missing_joins=inv['independent_physical_cluster_missing_joins'],actual_AUX_endpoints=len(checks),actual_bridge_groups=len(groups)))

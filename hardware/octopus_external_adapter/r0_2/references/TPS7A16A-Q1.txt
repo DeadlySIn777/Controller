@@ -1,0 +1,1223 @@
+TPS7A16A-Q1
+OUT
+GND
+CIN
+IN
+EN
+VIN
+VOUT
+VEN
+RPG
+DELAY
+CDELAY
+PG
+COUT
+VPG
+mC1
+IO1
+IO2
+IO3
+mC2
+EN
+VCC
+12 V
+60 V
+t
+VIN
+Product
+Folder
+Order
+Now
+T echnical
+Documents
+Tools &
+Software
+Support &
+Community
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+TPS7A16A-Q1
+60-V,5-µAIQ, 100-mA,low-dropoutvoltageregulatorwithenableandpower-good
+1
+1 Features
+1• Qualified for automotive applications
+• AEC-Q100 qualified with the following results:
+– Device temperature grade 1: –40°C to 125°C
+ambient operating temperature range
+– Device HBM ESD classification level 2
+– Device CDM ESD classification level C3B
+• Wide input voltage range: 3 V to 60 V
+• Ultralow quiescent current: 5 µA
+• Quiescent current at shutdown: 1 µA
+• Output current: 100 mA
+• Low dropout voltage: 60 mV at 20 mA
+• Accuracy: 2%
+• Available in:
+– Fixed output voltage: 3.3 V, 5 V
+– Adjustable version from approximately 1.2 to
+18.5 V
+• Power-good with programable delay
+• Current-limit and thermal shutdown protections
+• Stable with ceramic output capacitors:
+≥ 2.2 µF
+• Package: High-thermal-performance HVSSOP-8
+PowerPAD™
+2 Applications
+• Emergency call (eCall)
+• Battery management systems (BMS)
+• On-board (OBC) and wireless chargers
+• DC/DC converters
+3 Description
+The TPS7A16A-Q1 ultralow-power, low-dropout
+(LDO) voltage regulator offers the benefits of ultralow
+quiescent current, high input voltage, and
+miniaturized, high-thermal-performance packaging.
+The TPS7A16A-Q1 is designed for continuous or
+sporadic (power backup) battery-powered
+applications where ultralow quiescent current is
+critical to extending system battery life.
+The TPS7A16A-Q1 offers an enable pin (EN)
+compatible with standard complementary metal oxide
+semiconductor (CMOS) logic and an integrated open-
+drain, active-high, power-good output (PG) with a
+user-programmable delay. These pins are intended
+for use in microcontroller-based, battery-powered
+applications where power-rail sequencing is required.
+In addition, the TPS7A16A-Q1 is ideal for generating
+a low-voltage supply from multicell solutions ranging
+from high-cell-count power-tool packs to automotive
+applications; not only can this device supply a well-
+regulated voltage rail, but the TPS7A16A-Q1 can also
+withstand and maintain regulation during voltage
+transients. These features translate to simpler and
+more cost-effective, electrical surge-protection
+circuitry.
+Device Information(1)
+PART NUMBER PACKAGE BODY SIZE (NOM)
+TPS7A16A-Q1 HVSSOP (8) 3.00 mm × 3.00 mm
+(1) For all available packages, see the orderable addendum at
+the end of the datasheet.
+Typical Application Schematic
+2
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+Table of Contents
+1 Features .................................................................. 1
+2 Applications ........................................................... 1
+3 Description ............................................................. 1
+4 Revision History..................................................... 2
+5 Pin Configuration and Functions ......................... 3
+6 Specifications......................................................... 4
+6.1 Absolute Maximum Ratings ...................................... 4
+6.2 ESD Ratings.............................................................. 4
+6.3 Recommended Operating Conditions....................... 4
+6.4 Thermal Information .................................................. 4
+6.5 Electrical Characteristics........................................... 5
+6.6 Typical Characteristics .............................................. 6
+7 Detailed Description .............................................. 9
+7.1 Overview ................................................................... 9
+7.2 Functional Block Diagram ......................................... 9
+7.3 Feature Description .................................................. 9
+7.4 Device Functional Modes........................................ 10
+8 Application and Implementation ........................ 10
+8.1 Application Information............................................ 10
+8.2 Typical Applications ................................................ 11
+9 Power Supply Recommendations ...................... 15
+10 Layout................................................................... 15
+10.1 Layout Guidelines ................................................. 15
+10.2 Layout Examples................................................... 16
+11 Device and Documentation Support ................. 18
+11.1 Receiving Notification of Documentation Updates 18
+11.2 Community Resources.......................................... 18
+11.3 Trademarks ........................................................... 18
+11.4 Electrostatic Discharge Caution ............................ 18
+11.5 Glossary ................................................................ 18
+12 Mechanical, Packaging, and Orderable
+Information ........................................................... 18
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Original (February 2019) to Revision A Page
+• Changed status from Advance Information to Production Data ............................................................................................ 1
+1OUT 8  IN
+2FB/DNC 7  DELAY
+3PG 6  NC
+4GND 5  EN
+Not to scale
+Thermal pad
+3
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+5 Pin Configuration and Functions
+DGN Package
+8-Pin HVSSOP With Exposed Thermal Pad
+Top View
+NC – No internal connection
+Pin Functions
+PIN
+I/O DESCRIPTION
+NAME NO.
+DELAY 7 O Delay pin. Connect a capacitor to GND to adjust the PG delay time; leave open if the reset function is not
+needed.
+EN 5 I
+Enable pin. This pin turns the regulator on or off.
+If VEN ≥ VEN_HI, the regulator is enabled.
+If VEN ≤ VEN_LO, the regulator is disabled.
+If not used, the EN pin can be connected to IN. Make sure that VEN ≤ VIN at all times.
+FB/DNC 2 I
+For the adjustable version, the feedback pin is the input to the control-loop error amplifier. This pin is used to
+set the output voltage of the device when the regulator output voltage is set by external resistors.
+For the fixed-voltage versions, do not connect to this pin. Do not route this pin to any electrical net, not even
+to GND or IN.
+GND 4 — Ground pin
+IN 8 I
+Regulator input supply pin. A capacitor > 0.1 µF must be tied from this pin to ground to assure stability. TI
+recommends connecting a 10-µF ceramic capacitor from IN to GND (as close to the device as possible) to
+reduce circuit sensitivity to printed-circuit-board (PCB) layout, especially when long input tracer or high source
+impedances are encountered.
+NC 6 --- This pin can be left open or tied to any voltage between GND and IN.
+OUT 1 O
+Regulator output pin. A capacitor > 2.2 µF must be tied from this pin to ground to assure stability. TI
+recommends connecting a 10-µF ceramic capacitor from OUT to GND (as close to the device as possible) to
+maximize ac performance.
+PG 3 O Power-good pin. Open-collector output; leave open or connect to GND if the power-good function is not
+needed.
+Thermal
+pad Pad --- Solder to the printed circuit board (PCB) to enhance thermal performance. Although the thermal pad can be left
+floating, TI highly recommends connecting the thermal pad to the GND plane.
+4
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under Recommended
+Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2) Permanent damage does not occur to the part operating within this range, though electrical performance is not guaranteed outside the
+operating ambient temperature range.
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating ambient temperature range (unless otherwise noted) (1)
+MIN MAX UNIT
+Voltage
+IN pin to GND pin –0.3 62
+V
+OUT pin to GND pin –0.3 20
+OUT pin to IN pin –62 0.3
+FB pin to GND pin –0.3 3
+FB pin to IN pin –62 0.3
+EN pin to IN pin –62 0.3
+EN pin to GND pin –0.3 62
+PG pin to GND pin –0.3 5.5
+DELAY pin to GND pin –0.3 5.5
+Current Peak output Internally limited
+Temperature
+Operating virtual junction, TJ, absolute maximum (2) –40 150
+°C
+Storage, TSTG –65 150
+(1) JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2) JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+6.2 ESD Ratings
+VALUE UNIT
+V(ESD) Electrostatic discharge
+Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001 (1) ±2000
+VCharged-device model (CDM), per JEDEC
+specification JESD22-C101 (2)
+Corner pins (OUT, GND, IN,
+and EN) ±750
+Other pins ±500
+6.3 Recommended Operating Conditions
+over operating ambient temperature range (unless otherwise noted)
+MIN NOM MAX UNIT
+VIN Input voltage 3 60 V
+VOUT Output voltage 1.2 18.5 V
+EN
+EN pin voltage 0 VIN V
+EN pin slew-rate, voltage ramp-up 1.5 V/µs
+DELAY Delay pin voltage 0 5 V
+PG Power-good pin voltage 0 5 V
+(1) For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+report.
+6.4 Thermal Information
+THERMAL METRIC (1)
+TPS7A16A-Q1
+UNITDGN (HVSSOP)
+8 PINS
+RθJA Junction-to-ambient thermal resistance 52.5 °C/W
+RθJC(top) Junction-to-case(top) thermal resistance 72.2 °C/W
+RθJB Junction-to-board thermal resistance 24.1 °C/W
+ψJT Junction-to-top characterization parameter 2.3 °C/W
+ψJB Junction-to-board characterization parameter 24.0 °C/W
+RθJC(bot) Junction-to-case(bottom) thermal resistance 10.1 °C/W
+5
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+(1) Maximum input voltage is limited to 24 V because of the package power dissipation limitations at full load (P ≈ (VIN – VOUT) × IOUT =
+(24 V – VREF) × 50 mA ≈ 1.14 W). The device is capable of sourcing a maximum current of 50 mA at higher input voltages as long as
+the power dissipated is within the thermal limits of the package plus any external heatsinking.
+(2) For fixed output voltages only.
+(3) For adjustable output only, where VOUT = 1.2 V
+(4) IFB > 0 µA flows out of the device.
+6.5 Electrical Characteristics
+at TA= –40°C to +125°C, VIN = VOUT(NOM) + 500 mV or VIN = 3 V (whichever is greater), VEN = VIN, IOUT = 10 µA, CIN = 2.2 μF,
+COUT = 2.2 μF, and FB tied to OUT (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+VIN Input voltage range 3 60 V
+VREF Internal reference TA = 25°C, VFB = VREF, VIN = 3 V, IOUT = 10 μA 1.169 1.193 1.217 V
+VUVLO Undervoltage lockout threshold 2 V
+VOUT Output voltage range VIN ≥ VOUT(NOM) + 0.5 V VREF 18.5 V
+Overall VOUT accuracy VOUT(NOM) + 0.5 V ≤ VIN ≤ 60 V (1),
+10 µA ≤ IOUT ≤ 100 mA –2% 2%
+ΔVO(ΔVI) Line regulation 3 V ≤ VIN ≤ 60 V ±1 %VOUT
+ΔVO(ΔIO) Load regulation 10 µA ≤ IOUT ≤ 100 mA ±1 %VOUT
+VDO Dropout voltage
+VIN = 0.95xVOUT(NOM), IOUT = 20 mA 60
+mV
+VIN = 0.95xVOUT(NOM), IOUT = 100 mA 265 500
+ILIM Current limit
+VOUT = 90% VOUT(NOM), VIN = VOUT(NOM) + 1 V (2) 101 225 400
+mA
+VOUT = 90% VOUT(NOM), VIN = 3 V (3) 101 225 400
+IGND Ground current
+3 V ≤ VIN ≤ 60 V, IOUT = 10 µA 5 15
+μA
+IOUT = 100 mA, VOUT = 1.2 V 60
+ISHDN Shutdown supply current VEN = 0.4 V, VIN = 12 V 0.59 5.0 μA
+I FB Feedback current (4) –1 0.0 1 µA
+IEN Enable current 3 V ≤ VIN ≤ 12 V, VIN = VEN –1 0.01 1 μA
+VEN_HI Enable high-level voltage 1.2 V
+VEN_LO Enable low-level voltage 0.3 V
+VIT PG trip threshold
+OUT pin floating, VFB increasing, VIN ≥ VIN_MIN 85 95
+%VOUT
+OUT pin floating, VFB decreasing, VIN ≥ VIN_MIN 83 93
+VHYS PG trip hysteresis 2.3 %VOUT
+VPG, LO PG output low voltage OUT pin floating, VFB = 80% VREF, IPG = 100 µA 0.4 V
+IPG, LKG PG leakage current VPG = VOUT(NOM) –1 1 μA
+IDELAY DELAY pin current 1 2 μA
+PSRR Power-supply rejection ratio VIN = 3 V, VOUT(NOM) = VREF, COUT = 10 μF,
+f = 100 Hz 50 dB
+TSD Thermal shutdown temperature
+Shutdown, temperature increasing 175
+°C
+Reset, temperature decreasing 155
+1.094
+1.144
+1.194
+1.244
+1.294
+0 10 20 30 40 50 60
+Input Voltage (V)
+VFB (V)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+−10
+−7.5
+−5
+−2.5
+0
+2.5
+5
+7.5
+10
+0 10 20 30 40 50 60
+Input Voltage (V)
+VOUT(NOM) (%)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+0
+Output Current (mA)
+V
+DROP
+(mV)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+20 40 60 80 100
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+0 10 20 30 40 50 60 70 80 90 100
+Output Current (mA)
+IGND (µA)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+0
+10
+20
+30
+40
+50
+0 10 20 30 40 50 60
+Input Voltage (V)
+IQ (µA)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+IOUT = 0mA
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+0 10 20 30 40 50 60
+Input Voltage (V)
+ISHDN
+(µA)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+VEN = 0.4 V
+6
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+6.6 Typical Characteristics
+at TA = –40°C to 125°C, VIN = VOUT(NOM) + 0.5 V or VIN = 3 V (whichever is greater), VEN = VIN, IOUT = 10 µA, CIN = 1 µF, COUT
+= 2.2 µF, and FB tied to OUT (unless otherwise noted)
+Figure 1. Quiescent Current vs Input Voltage Figure 2. Shutdown Current vs Input Voltage
+Figure 3. Quiescent Current vs Output Current Figure 4. Dropout Voltage vs Output Current
+Figure 5. Feedback Voltage vs Input Voltage Figure 6. Line Regulation
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+10 100 1k 10k 100k
+Frequency (Hz)
+PSRR (dB)
+VIN = 3V
+VOUT = ~1.2V
+COUT = 10µF
+0.001
+0.01
+0.1
+1
+10
+10 100 1k 10k 100k 1M 10M
+Frequency (Hz)
+Noise (µV/ Hz)
+VIN = 3V
+VOUT = 1.2V
+COUT = 2.2µF
+85
+87
+89
+91
+93
+95
+−40 −25 −10 5 20 35 50 65 80 95 110 125
+PG Falling
+PG Rising
+Temperature (°C)
+VOUTNOM (%)
+0
+0.5
+1
+1.5
+2
+2.5
+−40 −25 −10 5 20 35 50 65 80 95 110 125
+ON−TO−OFF
+OFF−TO−ON
+Temperature (°C)
+VEN (V)
+−10
+−7.5
+−5
+−2.5
+0
+2.5
+5
+7.5
+10
+0 10 20 30 40 50 60 70 80 90 100
+Output Current (mA)
+VOUT(NOM) (%)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+0
+50
+100
+150
+200
+250
+300
+0 2 4 6 8 10 12
+Input Voltage (V)
+ICL (mA)
+− 40°C
++ 25°C
++ 85°C
++ 105°C
++ 125°C
+7
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+Typical Characteristics (continued)
+at TA = –40°C to 125°C, VIN = VOUT(NOM) + 0.5 V or VIN = 3 V (whichever is greater), VEN = VIN, IOUT = 10 µA, CIN = 1 µF, COUT
+= 2.2 µF, and FB tied to OUT (unless otherwise noted)
+Figure 7. Load Regulation Figure 8. Current Limit vs Input Voltage
+Figure 9. Power-Good Threshold Voltage vs Temperature Figure 10. Enable Threshold Voltage vs Temperature
+Figure 11. Power-Supply Rejection Ratio vs Frequency Figure 12. Output Spectral Noise Density
+V = 1 V 6.5 V
+I = 1 mA
+/c174IN
+OUT
+C = 10 F
+C = 0 nF
+OUT
+FF
+/c109
+Time (5 ms/div)
+V (2 V/div)IN
+V (2 V/div)PG
+V (1 V/div)OUT
+8
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+Typical Characteristics (continued)
+at TA = –40°C to 125°C, VIN = VOUT(NOM) + 0.5 V or VIN = 3 V (whichever is greater), VEN = VIN, IOUT = 10 µA, CIN = 1 µF, COUT
+= 2.2 µF, and FB tied to OUT (unless otherwise noted)
+Figure 13. Power-Good Delay
+UVLO
+Thermal
+Shutdown
+Current
+Limit
+Enable Error
+Amp
+IN
+EN
+OUT
+FB
+Pass
+Device
+Power
+Good
+Control
+DELAY
+PG
+9
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+7 Detailed Description
+7.1 Overview
+The TPS7A16A-Q1 is an ultra-low-power, low-dropout (LDO) voltage regulator that offers the benefits of ultra-low
+quiescent current, high input voltage, and miniaturized, high thermal-performance packaging. The TPS7A16A-Q1
+also offers an enable pin (EN) and an integrated open-drain, active-high, power-good output (PG) with a user-
+programmable delay.
+7.2 Functional Block Diagram
+7.3 Feature Description
+7.3.1 Enable (EN)
+The enable pin is a high-voltage-tolerant pin. A high input on EN actives the device and turns on the regulator.
+For self-bias applications, connect this input to the IN pin. Ensure that VEN ≤ VIN at all times.
+When the enable signal is comprised of pulse-width modulation (PWM) pulses, the slew rate of the rising and
+falling edges must be less than 1.5 V/µs. Adding a 0.1-µF capacitor from the EN pin to GND is recommended.
+7.3.2 Regulated Output (VOUT)
+The OUT pin is the regulated output based on the required voltage. The output has current limitation. During
+initial power up, the regulator has a soft-start incorporated to control the initial current through the pass element.
+In the event that the regulator drops out of regulation, the output tracks the input minus a drop based on the load
+current. When the input voltage drops below the undervoltage lockout (UVLO) threshold, the regulator shuts
+down until the input voltage recovers above the minimum start-up level.
+7.3.3 PG Delay Timer (DELAY)
+The power-good delay time (tDELAY) is defined as the time period from when VOUT exceeds the PG trip threshold
+voltage (VIT) to when the PG output is high. This power-good delay time is set by an external capacitor (CDELAY)
+connected from the DELAY pin to GND; this capacitor is charged from 0 V to approximately 1.8 V by the DELAY
+pin current (IDELAY) when VOUT exceeds the PG trip threshold (VIT).
+10
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+7.4 Device Functional Modes
+7.4.1 Power-Good
+The power-good (PG) pin is an open-drain output and can be connected to any 5.5-V or lower rail through an
+external pullup resistor. When no CDELAY is used, the PG output is high-impedance when VOUT is greater than the
+PG trip threshold (VIT). If VOUT drops below VIT, the open-drain output turns on and pulls the PG output low. If
+output voltage monitoring is not needed, the PG pin can be left floating or connected to GND.
+To ensure proper operation of the power-good feature, maintain VIN ≥ 3 V (VIN_MIN).
+7.4.1.1 Power-Good Delay and Delay Capacitor
+The power-good delay time (tDELAY) is defined as the time period from when VOUT exceeds the PG trip threshold
+voltage (VIT) to when the PG output is high. This power-good delay time is set by an external capacitor (CDELAY)
+connected from the DELAY pin to GND; this capacitor is charged from 0 V to ap 1.8 V by the DELAY pin current
+(IDELAY) once VOUT exceeds the PG trip threshold (VIT).
+When CDELAY is used, the PG output is high-impedance when VOUT exceeds VIT, and VDELAY exceeds VREF.
+The power-good delay time can be calculated using: tDELAY = (CDELAY × VREF)/IDELAY. For example, when CDELAY
+= 10 nF, the PG delay time is approximately 12 ms; that is, (10 nF × 1.193 V) / 1 µA = 11.93 ms.
+8 Application and Implementation
+NOTE
+Information in the following applications sections is not part of the TI component
+specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+responsible for determining suitability of components for their purposes. Customers should
+validate and test their design implementation to confirm system functionality.
+8.1 Application Information
+The TPS7A16A-Q1 offers the benefit of ultra-low quiescent current, high input voltage, and miniaturized, high-
+thermal-performance packaging.
+The TPS7A16A-Q1 is designed for continuous or sporadic (power backup) battery-operated applications where
+ultra-low quiescent current is critical to extending system battery life.
+VOUT
+VREF
+/c451R =□R1 2
+IN
+EN
+DELAY
+GND
+C
+0.1 F/c109
+IN
+C
+0.1 F/c109
+DELAY
+VIN
+PG
+OUT
+FB
+R
+1.07 M/c87
+2
+R
+3.4 M/c87
+1
+R
+1 M/c87
+PG
+C
+2.2 F/c109
+OUT
+V
+5 V
+OUT
+TPS7A16A-Q1
+OUT
+GND
+CIN
+IN
+EN
+VIN VOUT
+VEN
+DELAY PG
+COUT
+FB
+VPG
+RPG
+CFF R1
+R2
+CDELAY
+VOUT
+VREF
+/c451R = R1 2Where:
+11
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+8.2 Typical Applications
+8.2.1 TPS7A16A-Q1 Circuit as an Adjustable Regulator
+Figure 14. The TPS7A16A-Q1 Circuit as an Adjustable Regulator Schematic
+8.2.1.1 Design Requirements
+Table 1 lists the design parameters for this application.
+Table 1. Design Parameters
+DESIGN PARAMETER EXAMPLE VALUE
+Input voltage range 5.5 V to 40 V
+Output voltage 5 V
+Output current rating 100 mA
+Output capacitor range 2.2 µF to 100 µF
+Delay capacitor range 100 pF to 100 nF
+8.2.1.2 Detailed Design Procedure
+8.2.1.2.1 Adjustable Voltage Operation
+The TPS7A16A-Q1 has an output voltage range from 1.194 V to 20 V. As shown in Figure 15, the nominal
+output of the device is set by two external resistors.
+Figure 15. Adjustable Operation
+Equation 1 can calculate R1 and R2 for any output voltage range:
+(1)
+8.2.1.2.1.1 Resistor Selection
+Use resistors in the order of MΩ to keep the overall quiescent current of the system as low as possible (by
+making the current used by the resistor divider negligible compared to the quiescent current of the device).
+If greater voltage accuracy is required, take into account the voltage offset contributions as a result of feedback
+current and use 0.1% tolerance resistors.
+12
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+Table 2 shows the resistor combination to achieve an output for a few of the most common rails using
+commercially available 0.1% tolerance resistors to maximize nominal voltage accuracy, while adhering to the
+formula shown in Equation 1.
+Table 2. Selected Resistor Combinations
+VOUT R1 R2 VOUT/(R1 + R2) « IQ NOMINAL ACCURACY
+1.194 V 0 Ω ∞ 0 µA ±2%
+1.8 V 1.18 MΩ 2.32 MΩ 514 nA ±(2% + 0.14%)
+2..5 V 1.5 MΩ 1.37 MΩ 871 nA ±(2% + 0.16%)
+3.3 V 2 MΩ 1.13 MΩ 1056 nA ±(2% + 0.35%)
+5 V 3.4 MΩ 1.07 MΩ 1115 nA ±(2% + 0.39%)
+10 V 7.87 MΩ 1.07 MΩ 1115 nA ±(2% + 0.42%)
+12 V 14.3 MΩ 1.58 MΩ 755 nA ±(2% + 0.18%)
+15 V 42.2 MΩ 3.65 MΩ 327 nA ±(2% + 0.19%)
+18 V 16.2 MΩ 1.15 MΩ 1038 nA ±(2% + 0.26%)
+Close attention must be paid to board contamination when using high-value resistors; board contaminants can
+significantly impact voltage accuracy. If board cleaning measures cannot be ensured, consider using a fixed-
+voltage version of the TPS7A16A-Q1 or using resistors in the order of hundreds or tens of kΩ.
+8.2.1.2.2 Capacitor Recommendations
+Use low equivalent-series-resistance (ESR) capacitors for the input, output, and feed-forward capacitors.
+Ceramic capacitors with X7R and X5R dielectrics are preferred. These dielectrics offer more stable
+characteristics. Ceramic X7R capacitors offer improved overtemperature performance, but ceramic X5R
+capacitors are the most cost-effective and are available in higher values.
+However, high-ESR capacitors can degrade PSRR.
+8.2.1.2.3 Input and Output Capacitor Requirements
+The TPS7A16A-Q1 ultra-low-power, high-voltage linear regulator achieves stability with a minimum input
+capacitance of 0.1 µF and output capacitance of 2.2 µF; however, TI recommends using a 10-µF ceramic
+capacitor to maximize ac performance.
+8.2.1.2.4 Feed-Forward Capacitor (Only for Adjustable Version)
+Although a feed-forward capacitor (CFF) from OUT to FB is not needed to achieve stability, TI recommends using
+a 0.01-µF feed-forward capacitor to maximize ac performance.
+8.2.1.2.5 Transient Response
+As with any regulator, increasing the size of the output capacitor reduces over- and undershoot magnitude but
+increases the duration of the transient response.
+13
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+8.2.1.3 Application Curves
+Figure 16. Channel 1 is VOUT, Channel 2 is PG, Channel 4
+is IOUT, VIN is 12 V and Ready Before EN
+Figure 17. Channel1 is VOUT, Channel 2 is PG, Channel 3 is
+EN, Channel4 is IOUT, VIN is 12 V Connected to EN
+TPS7A16A-Q1
+OUT
+GND
+CIN
+IN
+EN
+VIN
+VOUT
+VEN
+RPG
+DELAY
+CDELAY
+PG
+COUT
+VPG
+mC1
+IO1
+IO2
+IO3
+mC2
+EN
+VCC
+12 V
+60 V
+t
+VIN
+14
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+8.2.2 Automotive Applications
+The TPS7A16A-Q1 maximum input voltage of 60 V makes the device ideal for use in automotive applications
+where high-voltage transients are present.
+Events such as load-dump overvoltage (where the battery is disconnected while the alternator is providing
+current to a load) can cause voltage spikes from 25 V to 60 V. In order to prevent any damage to sensitive
+circuitry, local transient voltage suppressors can be used to cap voltage spikes to lower, more manageable
+voltages.
+The TPS7A16A-Q1 can be used to simplify and lower costs in such cases. The very high voltage range allows
+this regulator not only to withstand the voltages coming out of these local transient voltage suppressors, but even
+replace them, thus lowering system cost and complexity. Figure 18 shows a circuit diagram of an example
+automotive application.
+Figure 18. Low-Power Microcontroller Rail Sequencing in Automotive Applications Subjected to Load-
+Dump Transients
+8.2.2.1 Design Requirements
+Table 3 lists the design parameters for this application.
+Table 3. Design Parameters
+DESIGN PARAMETER EXAMPLE VALUE
+Input voltage range 5.5 V to 60 V
+Output voltage 5 V
+Output current rating 100 mA
+Output capacitor range 2.2 µF to 100 µF
+Delay capacitor range 100 pF to 100 nF
+8.2.2.2 Detailed Design Procedure
+See the Capacitor Recommendations and Input and Output Capacitor Requirements sections.
+8.2.2.2.1 Device Recommendations
+The output is fixed, so choose the TPS7A16A-Q1.
+8.2.2.3 Application Curves
+See Figure 16 and Figure 17.
+P =□(V V )□I/c45D IN OUT OUT
+15
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+9 Power Supply Recommendations
+Design of the device is for operation from an input voltage supply with a range between 3 V and 60 V. This input
+supply must be well regulated. The TPS7A16A-Q1 ultra-low-power, high-voltage linear regulator achieves
+stability with a minimum input capacitance of 0.1 µF and output capacitance of 2.2 µF; however, TI recommends
+using a 10-µF ceramic capacitor to maximize AC performance.
+10 Layout
+10.1 Layout Guidelines
+To improve ac performance such as PSRR, output noise, and transient response, the board is recommended to
+be designed with separate ground planes for IN and OUT, with each ground plane connected only at the GND
+pin of the device. This grounding scheme is commonly referred to as star grounding. In addition, directly connect
+the ground connection for the output capacitor to the GND pin of the device.
+Equivalent series inductance (ESL) and ESR must be minimized in order to maximize performance and ensure
+stability. Every capacitor must be placed as close as possible to the device and on the same side of the PCB as
+the regulator itself.
+Do not place any of the capacitors on the opposite side of the PCB from where the regulator is installed. The use
+of vias and long traces is strongly discouraged because they can impact system performance negatively and
+even cause instability.
+If possible, and to ensure the maximum performance denoted in this document, use the same layout pattern
+used for the TPS7A16A-Q1 evaluation board, available at www.ti.com.
+Layout is a critical part of good power-supply design. There are several signal paths that conduct fast-changing
+currents or voltages that can interact with stray inductance or parasitic capacitance to generate noise or degrade
+the power-supply performance. To help eliminate these problems, bypass the IN pin to ground with a low-ESR
+ceramic bypass capacitor with X5R or X7R dielectric.
+Acceptable performance can be obtained with alternative PCB layouts; however, the layout and the schematic
+have been shown to produce good results and are meant as a guideline.
+Figure 19 illustrates the schematic for the suggested layout. Figure 20 and Figure 21 depict the top and bottom
+printed circuit board (PCB) layers for the suggested layout, respectively.
+10.1.1 Additional Layout Considerations
+The high impedance of the FB pin makes the regulator sensitive to parasitic capacitances that can couple
+undesirable signals from nearby components (especially from logic and digital devices, such as microcontrollers
+and microprocessors); these capacitively-coupled signals can produce undesirable output voltage transients. In
+these cases, use a fixed-voltage version of the TPS7A16A-Q1, or isolate the FB node by flooding the local PCB
+area with ground-plane copper to minimize any undesirable signal coupling.
+10.1.2 Power Dissipation
+The ability to remove heat from the die is different for each package type, presenting different considerations in
+the PCB layout. The PCB area around the device that is free of other components moves the heat from the
+device to the ambient air. Using heavier copper increases the effectiveness of removing heat from the device.
+The addition of plated through-holes to heat dissipating layers also improves the heatsink effectiveness.
+Power dissipation depends on input voltage and load conditions. As Equation 2 shows, power dissipation (PD) is
+equal to the product of the output current times the voltage drop across the output pass element:
+(2)
+TPS7A16A-Q1
+16
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+Layout Guidelines (continued)
+10.1.3 Thermal Considerations
+Thermal protection disables the output when the junction temperature rises to approximately 170°C, allowing the
+device to cool. When the junction temperature cools to approximately 150°C, the output circuitry is enabled.
+Depending on power dissipation, thermal resistance, and ambient temperature, the thermal protection circuit may
+cycle on and off. This cycling limits the dissipation of the regulator, protecting the regulator from damage as a
+result of overheating.
+Any tendency to activate the thermal protection circuit indicates excessive power dissipation or an inadequate
+heat-spreading area. For reliable operation, limit junction temperature to a maximum of 125°C at the worst-case
+ambient temperature for a given application. To estimate the margin of safety in a complete design (including the
+copper heat-spreading area), increase the ambient temperature until the thermal protection is triggered; use
+worst-case loads and signal conditions. For good reliability, trigger thermal protection at least 45°C above the
+maximum expected ambient condition of the particular application. This configuration produces a worst-case
+junction temperature of 125°C at the highest expected ambient temperature and worst-case load.
+The internal protection circuitry of the TPS7A16A-Q1 is designed to protect against overload conditions. This
+circuitry is not intended to replace proper heatsinking. Continuously running the TPS7A16A-Q1 into thermal
+shutdown degrades device reliability.
+10.2 Layout Examples
+Figure 19. Schematic for Suggested Layout
+1300 mil
+2200 mil
+1300 mil
+2200 mil
+TPS7A16A
+17
+TPS7A16A-Q1
+www.ti.com SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation FeedbackCopyright © 2019, Texas Instruments Incorporated
+Layout Examples (continued)
+Figure 20. Suggested Layout: Top Layer
+Figure 21. Suggested Layout: Bottom Layer
+18
+TPS7A16A-Q1
+SBVS342A – FEBRUARY 2019 – REVISED MARCH 2019 www.ti.com
+Product Folder Links: TPS7A16A-Q1
+Submit Documentation Feedback Copyright © 2019, Texas Instruments Incorporated
+11 Device and Documentation Support
+11.1 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper
+right corner, click on Alert me to register and receive a weekly digest of any product information that has
+changed. For change details, review the revision history included in any revised document.
+11.2 Community Resources
+The following links connect to TI community resources. Linked contents are provided "AS IS" by the respective
+contributors. They do not constitute TI specifications and do not necessarily reflect TI's views; see TI's Terms of
+Use.
+TI E2E™ Online Community TI's Engineer-to-Engineer (E2E) Community. Created to foster collaboration
+among engineers. At e2e.ti.com, you can ask questions, share knowledge, explore ideas and help
+solve problems with fellow engineers.
+Design Support TI's Design Support Quickly find helpful E2E forums along with design support tools and
+contact information for technical support.
+11.3 Trademarks
+PowerPAD, E2E are trademarks of Texas Instruments.
+All other trademarks are the property of their respective owners.
+11.4 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled with
+appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may be more
+susceptible to damage because very small parametric changes could cause the device not to meet its published specifications.
+11.5 Glossary
+SLYZ022 — TI Glossary.
+This glossary lists and explains terms, acronyms, and definitions.
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS7A1601AQDGNRQ1 Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NT1
+TPS7A1601AQDGNRQ1.A Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NT1
+TPS7A1633AQDGNRQ1 Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NU1
+TPS7A1633AQDGNRQ1.A Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NU1
+TPS7A1650AQDGNRQ1 Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NV1
+TPS7A1650AQDGNRQ1.A Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1NV1
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+ 
+ OTHER QUALIFIED VERSIONS OF TPS7A16A-Q1 :
+• Catalog : TPS7A16A
+ NOTE: Qualified Version Definitions:
+• Catalog - TI's standard catalog product
+Addendum-Page 2
+TAPE AND REEL INFORMATION
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS7A1601AQDGNRQ1 HVSSOP DGN 8 2500 330.0 12.4 5.3 3.3 1.3 8.0 12.0 Q1
+TPS7A1633AQDGNRQ1 HVSSOP DGN 8 2500 330.0 12.4 5.3 3.3 1.3 8.0 12.0 Q1
+TPS7A1650AQDGNRQ1 HVSSOP DGN 8 2500 330.0 12.4 5.3 3.3 1.3 8.0 12.0 Q1
+PACKAGE MATERIALS INFORMATION
+www.ti.com 5-Jan-2021
+Pack Materials-Page 1
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS7A1601AQDGNRQ1 HVSSOP DGN 8 2500 367.0 367.0 38.0
+TPS7A1633AQDGNRQ1 HVSSOP DGN 8 2500 367.0 367.0 38.0
+TPS7A1650AQDGNRQ1 HVSSOP DGN 8 2500 367.0 367.0 38.0
+PACKAGE MATERIALS INFORMATION
+www.ti.com 5-Jan-2021
+Pack Materials-Page 2
+www.ti.com
+GENERIC PACKAGE VIEW
+This image is a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+PowerPAD    HVSSOP - 1.1 mm max heightDGN 8
+SMALL OUTLINE PACKAGE3 x 3, 0.65 mm pitch
+4225482/B
+TM
+www.ti.com
+PACKAGE OUTLINE
+C
+6X 0.65
+2X
+1.95
+8X 0.37
+0.26
+5.05
+4.75 TYP
+SEATING
+PLANE
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+1.1 MAX
+0.23
+0.13
+1.60
+1.34
+1.92
+1.66
+B 3.1
+2.9
+NOTE 4
+A
+3.1
+2.9
+NOTE 3
+0.7
+0.4
+HVSSOP - 1.1 mm max heightDGN0008C
+SMALL OUTLINE PACKAGE
+4218838/A   11/2017
+1
+4
+5
+8
+0.1 C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-187.
+ 
+A  20
+DETAIL A
+TYPICAL
+SCALE  4.000
+EXPOSED THERMAL PAD
+1
+4
+5
+8
+9
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+(2)
+NOTE 9
+(3)
+NOTE 9
+(1.1)
+(0.55)
+( 0.2) TYP
+VIA
+(1.6)
+(1.92)
+HVSSOP - 1.1 mm max heightDGN0008C
+SMALL OUTLINE PACKAGE
+4218838/A   11/2017
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+8. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+    on this view. It is recommended that vias under paste be filled, plugged or tented.
+9. Size of metal pad may vary due to creepage requirement.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 15X
+SYMM
+SYMM
+1
+4 5
+8
+SOLDER MASK
+DEFINED PAD
+METAL COVERED
+BY SOLDER MASK
+SEE DETAILS
+9
+15.000
+METALSOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METALEXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+(1.6)
+BASED ON
+0.125 THICK
+STENCIL
+(1.92)
+BASED ON
+0.125 THICK
+STENCIL
+HVSSOP - 1.1 mm max heightDGN0008C
+SMALL OUTLINE PACKAGE
+4218838/A   11/2017
+1.35 X 1.620.175
+1.46 X 1.750.15
+1.60 X 1.92 (SHOWN)0.125
+1.79 X 2.150.1
+SOLDER STENCIL
+OPENING
+STENCIL
+THICKNESS
+NOTES: (continued)
+ 
+10. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+      design recommendations.   
+11. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+EXPOSED PAD 9:
+100% PRINTED SOLDER COVERAGE BY AREA
+SCALE: 15X
+SYMM
+SYMM
+1
+4 5
+8
+METAL COVERED
+BY SOLDER MASK
+SEE TABLE FOR
+DIFFERENT OPENINGS
+FOR OTHER STENCIL
+THICKNESSES
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2025, Texas Instruments Incorporated
+Last updated 10/2025

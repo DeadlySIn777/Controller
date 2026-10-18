@@ -1,0 +1,202 @@
+{
+ "verdict": "DIC-CS_CURRENT_CONTACT_DIVE_BOUNDED_INCOMPLETE",
+ "R62_receipt_sha256": "a8234fa46de66b43eeefcf2bfbdb3d8563bf862a2ce60c46212b17e77ea314be",
+ "current_model_sha256": "98471471f69adba2f9ff908c37cf6789bfc1749ae1a4c240aa835e3738451527",
+ "source_parent_sha256": "eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a",
+ "raw_net": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+ "policy": {
+  "group": "SE_CHAIN",
+  "pair_partner": null,
+  "rule": "R2+R4",
+  "chain_members": [
+   "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+   "/motherboard_io_control/DIC_IOL1_CS_MCU"
+  ],
+  "chain_series_resistors": [
+   {
+    "from": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+    "to": "/motherboard_io_control/DIC_IOL1_CS_MCU",
+    "resistor": "R13013",
+    "ohm": 22.0
+   },
+   {
+    "from": "/motherboard_io_control/DIC_IOL1_CS_MCU",
+    "to": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+    "resistor": "R13013",
+    "ohm": 22.0
+   }
+  ],
+  "chain_driver": "U13003.3 74LVC125APW,118 on DIC_IOL1_CS_BUFFER",
+  "t_r_ns": 1.0,
+  "t_r_basis": "74LVC125APW,118: no output rise-time specification in the project's sources (LVC datasheets point to input transition only) -> 1.0 ns assumed (inference, conservative)",
+  "t_r_citation": [
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.txt",
+    "line": 1536,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-completion-20260930/mc-motor-integrated-loading/inputs/research/mc-motor-buffers/sn74lvc244a.pdf",
+    "pdf_page": 14,
+    "text": "For rise time and fall time specification, see (\u0394t/\u0394V) in the Recommended Operating Conditions table."
+   }
+  ],
+  "l_crit_mm": 14.1,
+  "l_crit_basis": "0.1 * t_r / t_pd (ISOW1432 Eq. 3); t_pd(In3 stripline, Cohn) = 7.090 ps/mm, t_pd(outer microstrip, H&J) = 5.896 ps/mm; L_crit uses the slower 7.090 ps/mm",
+  "l_crit_citation": [
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3930,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "9.2.2.2 Stub Length"
+   },
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3934,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "or round-trip delay, of a stub must be less than one-tenth of the rise time of the driver as a general guideline."
+   },
+   {
+    "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.txt",
+    "line": 3936,
+    "pdf": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-comms-20260930/sources/isow1432.pdf",
+    "pdf_page": 39,
+    "text": "L STUB \u22640.1 \u00d7 tr \u00d7 v \u00d7 c"
+   }
+  ],
+  "chain_l_est_mm": 39.11,
+  "edge_sensitive_evidence": [],
+  "edge_evidence_tiers": [],
+  "edge_evidence_strongest": null,
+  "settle_ns": 1.7,
+  "level_sampled_max_clock_MHz": 300.5,
+  "skew": {
+   "intra_pair_mm": null,
+   "source": "single-ended net: no length-match requirement found in the driver/receiver datasheets; bus timing budgets were not analysed here (inference)"
+  },
+  "interface": "single-ended level/static",
+  "class": "NONE",
+  "target_ohm": null,
+  "tolerance_pct": null,
+  "source_citations": [],
+  "rationale": "no controlled impedance required: level-sampled/static signal (no clock or counted-edge receiver); reflections settle in 1.7 ns (6 one-way delays over chain L_est 39 mm), adequate for synchronous sampling up to 301 MHz bus clock; bus clock check: IOL1 card link at 8.333 MHz vs settle limit 300.5 MHz -> PASS (margin x36.06)",
+  "bus_clock_check": {
+   "bus": "IOL1 card link",
+   "bus_clock_or_bit_rate_MHz": 8.333,
+   "basis": "IS-1 4.1: SCLK = core/6 = 8.333 MHz",
+   "source": [
+    {
+     "file": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/motherboard-is2-contract-20260930/inputs/docs/interface-spec/01-protocol-and-schedule.md",
+     "line": 706,
+     "pdf": null,
+     "pdf_page": null,
+     "text": "Point-to-point from the motion card, one FPGA SPI master per card slot, four wires per port: SCLK, CMD (FPGA \u2192 card), RSP (card \u2192 FPGA), CS_N. 3.3 V LVCMOS with an Ioff buffer and series termination at each card connector (power-off service"
+    }
+   ],
+   "settle_limit_MHz": 300.5,
+   "margin_x": 36.06,
+   "pass": true
+  },
+  "net": "/motherboard_io_control/DIC_IOL1_CS_BUFFER",
+  "mst_mm": 7.91,
+  "routed_mm": 20.9,
+  "missing_joins": 0,
+  "routed_by_layer_mm": {
+   "F.Cu": 4.7,
+   "B.Cu": 16.2
+  },
+  "l_est_mm": 20.9,
+  "l_est_basis": "routed length (net fully joined)",
+  "daisy_chain_mm": 7.91,
+  "end_parts": [
+   {
+    "ref": "R13013",
+    "pin": "1",
+    "part": "CRCW060322R0FKEA",
+    "pintype": "passive",
+    "pinfunction": ""
+   },
+   {
+    "ref": "U13003",
+    "pin": "3",
+    "part": "74LVC125APW,118",
+    "pintype": "output",
+    "pinfunction": "1Y_3"
+   }
+  ],
+  "reference_samples_on_mst": {
+   "samples": 8,
+   "in1_logic_gnd": 8,
+   "in4_logic_gnd": 8,
+   "in2_nets": {
+    "<none>": 1,
+    "/IO_3V3": 7
+   },
+   "in3_nets": {
+    "<none>": 8
+   }
+  },
+  "candidate_sources": [
+   "classify_ci:IOL1_SPI_lanes_and_IO_MCU_resets",
+   "damping_partner_of:/motherboard_io_control/DIC_IOL1_CS_MCU:R13013"
+  ]
+ },
+ "original_r06_relationship": [
+  "R13013.1#0",
+  "U13003.3#0"
+ ],
+ "exact_current_pad_UUIDs": [
+  "73d7d605-feb4-47ae-b36a-40896fba4ee9",
+  "c9bab2fa-e6cb-45f7-b879-a934865b0e12"
+ ],
+ "eligibility": [
+  {
+   "transport_component": 4,
+   "side": 0,
+   "direct_actual_In3_attach_mm2": 0.0,
+   "F_components": [
+    {
+     "attachment_mm2": 0.40983990996919023,
+     "via_region_mm2": 0.016749766457431717,
+     "paired_options": 4
+    }
+   ],
+   "options_count": 4
+  },
+  {
+   "transport_component": 7,
+   "side": 1,
+   "direct_actual_In3_attach_mm2": 0.0,
+   "F_components": [
+    {
+     "attachment_mm2": 0.5729639108257211,
+     "via_region_mm2": 0.030036145645020718,
+     "paired_options": 0
+    }
+   ],
+   "options_count": 0
+  }
+ ],
+ "nominees_count": 0,
+ "attempts": [],
+ "selected": null,
+ "oldCu_deletes": 0,
+ "max_layer_segments": 3,
+ "new_signal_vias_at_most": 2,
+ "new_paired_return_native_flash_current_full_contacts_source_groups_all_reference_SI_DRC": "ODIC-CS",
+ "saved_model": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\DIC-CS-existing-In3-or-B-dive-r96-model.pkl",
+ "saved_model_sha256": "5f586f78393f800024e82334907507e10d5ee43fc9675e79f41e1d9fdf919ab9",
+ "native_jobs": 0,
+ "board_written": false,
+ "adopted": false,
+ "read_files_sha256": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\construct_DIC_CS_continuous_F_In3_F_r96.py": "6e1399aebcb46f234db4714a11eb6183c9915276d51e3eed2972d15a7e3908ff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\di15-safe-root-r22-DI6-bind-r62.json": "a8234fa46de66b43eeefcf2bfbdb3d8563bf862a2ce60c46212b17e77ea314be",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\di15-current-safe-root-r22-DI6-r62.pkl": "98471471f69adba2f9ff908c37cf6789bfc1749ae1a4c240aa835e3738451527",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\sbc-native-contract-r1\\sbc-owned-native-contract.kicad_pcb": "eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a",
+  "Z:\\pcb-runs\\impedance\\controlled-nets.json": "cb316bbb5fb0b448f99d28b093f88a93814ff94143015a3471599b595ae697f0",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\coupled-recovery\\conflict-graph.json": "5a418cf66f7af96ddf1c9b9fc1b26ecfed057e143d52178fa3c95e2eb14b4c92",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\alternate-r07\\reserved-r07.json": "0e53fc17a43869c5fa12ec0752f98e60001a6ed4792fb03fc021d8ed99cca457",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\alternate-r07\\reserve\\board.kicad_dru": "2f062db3e781ac21760cbcc03ca586ecc627e1b2f58a538e2de5421034a2ca94"
+ },
+ "elapsed_seconds": 36.378500399994664
+}

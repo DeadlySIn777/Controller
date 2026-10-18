@@ -1,0 +1,57 @@
+{
+  "status": "ISOLATED_CMD_ALIGNMENT_ACTUAL_SPI_DIFFERENTIAL_AND_FULL_SIM2_REGRESSION_PASS_NATIVE_RESOURCE_UNEXECUTED",
+  "canonical_source": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\v3\\runtime\\cnc3_spi_transport_stateful.v",
+  "canonical_SHA256": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+  "candidate": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\cnc3_spi_transport_stateful.v",
+  "candidate_SHA256": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+  "canonical_sources_and_tests_unchanged": true,
+  "adopted": false,
+  "exact_scope": "Only CMD RX bit placement, CMD received-CRC/rate-word taps and completed-frame assignment; full1408RX/full1408completed-frame/full1392TXsnapshot/48header buffers retained",
+  "inductive_source_argument": [
+    "After reset both RX buffers are zero.",
+    "During FB the RX shift update is identical.",
+    "During CMD candidate RX equals {original_RX[767:0],640zero} before and after every sample. This normalization is preserved through pauses, timing/CRC errors, overrun, CS overlap, transaction end and reset.",
+    "CMD CRC16 trailer655:640 and rate-prefix670:640 equal original15:0 and30:0 respectively. FB CRC32C/header taps are unchanged.",
+    "Every completion guard therefore sees the same values, and direct candidate frame commit equals the original conditional alignment. All completed frame/snapshot/valid/rejection/rate/MISO behavior follows without changing protocol state or buffer depth."
+  ],
+  "actual_SPI_differential": {
+    "cycles": 1098329,
+    "transactions": 80,
+    "valid_CMD": 16,
+    "valid_FB": 16,
+    "rejected_headers": 40,
+    "streamed_rate_words": 417,
+    "binary_fuzz_cycles": 180000,
+    "four_state_wire_fuzz_cycles": 3000,
+    "comparison": "all public outputs and held fields, full protocol/CRC/timing/TX snapshot state; explicit normalized RX; checks before/after clock and asynchronous reset pulses"
+  },
+  "full_frozen_SIM2_suite": {
+    "runtime_SPI_checks": 1190,
+    "events_checks": 9,
+    "event_storage_checks": 11,
+    "provider_checks": 7,
+    "default_deny_cycles": 10000,
+    "overlays": [
+      "registered RAM bypass",
+      "literal counter capture selectors",
+      "CMD transport alignment"
+    ]
+  },
+  "formal_equivalence": "NOT_RUN",
+  "native_resource_mapping": "NOT_RUN_FOR_TRANSPORT_CANDIDATE",
+  "physical_wrapper_I4_fit_place_route_timing": "OPEN",
+  "bitstream_or_hardware_programming": false,
+  "manufacturing_ready": false,
+  "input_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\finalize_transport_alignment_r1.py": "8eecbe14014ec25c50c08c4f37dd396042570f80b892c9a6eaf327ea4ca8de31",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\v3\\runtime\\cnc3_spi_transport_stateful.v": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\cnc3_spi_transport_stateful.v": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\candidate.patch": "14a0c32af57752330beba9bd9fc2a6b3a53331f312263c251d98af7bfd766281",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\preparation-receipt.json": "9ba7dd907b8843a49724a4168dc06373c40f456dd99713c4e2d1f6517892db98",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\behavior-receipt.json": "8da0bab4d5138bca9707448e45fba02caaebba4b028e0ca12520e3cd50354da4",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\full-runtime\\receipt.json": "7a02b1a85409f4aeb3131cb48941ae0e5a2c770091e755543ef6d2c5739ac89f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\runtime-runner-derivation.json": "514059fb7d42e7fbf3e2cd4a1034defa08ff974ff996d69ec0fefe6ec39ba138",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport_alignment_diff_tb.sv": "490324280f18f906446f31a881779ea53f6e3c5275fcb2533930afd1498f82fc",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\reviewable-two-file-overlay-packet.json": "0496cef0cdbf0fcdffbc864079f1f8b134e43c5ecfc0b0ac6906e65981d0cf00"
+  }
+}

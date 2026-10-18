@@ -1,0 +1,331 @@
+{
+  "revision": "motherboard-power-entry-r0.2",
+  "source_frozen": true,
+  "fitted_pcb_components": 220,
+  "additional_fitted_nonpcb_accessories": [
+    {
+      "AssemblyReference": "F11001-FUSE",
+      "MPN": "0997005.WXN",
+      "Description": "Fitted Littelfuse MINI997 58V blade fuse",
+      "PCB_Footprint": "none; installs in F11001",
+      "Status": "Exact fitted accessory; fault coordination not qualified"
+    },
+    {
+      "AssemblyReference": "F11002-FUSE",
+      "MPN": "099707.5WXN",
+      "Description": "Fitted Littelfuse MINI997 58V blade fuse",
+      "PCB_Footprint": "none; installs in F11002",
+      "Status": "Exact fitted accessory; fault coordination not qualified"
+    },
+    {
+      "AssemblyReference": "F11003-FUSE",
+      "MPN": "099707.5WXN",
+      "Description": "Fitted Littelfuse MINI997 58V blade fuse",
+      "PCB_Footprint": "none; installs in F11003",
+      "Status": "Exact fitted accessory; fault coordination not qualified"
+    }
+  ],
+  "native_erc": {
+    "errors": 0,
+    "warnings": 0,
+    "ignored": 0
+  },
+  "independent_connectivity_passed": true,
+  "native_pins": 738,
+  "native_nc_pins": 42,
+  "native_footprint_load": {
+    "passed": true,
+    "fitted_components_loaded": 220,
+    "numbered_copper_pads_loaded": 707
+  },
+  "tests": {
+    "entry": 25,
+    "motors": 24,
+    "receiving_health": 21,
+    "total": 70,
+    "failures": 0,
+    "logs": [
+      "entry-tests.log",
+      "motors-tests.log",
+      "receiving-health-tests.log"
+    ]
+  },
+  "boundary_power": [
+    "CORE_24V_INPUT",
+    "FIELD_A_24V_INPUT",
+    "FIELD_B_24V_INPUT",
+    "LOGIC_GND",
+    "FIELD_GND",
+    "FIELD_B_0V",
+    "IO_3V3"
+  ],
+  "boundary_inputs": [
+    "MC_RAILS_OK_5V",
+    "MOTOR_FIELD_HEALTH_A_RAW",
+    "MOTOR_FIELD_HEALTH_B_RAW",
+    "OPI_REARM_A",
+    "OPI_REARM_B",
+    "MOTOR_TX_GATE_SOURCE_A",
+    "MOTOR_TX_GATE_SOURCE_B"
+  ],
+  "boundary_outputs": [
+    "CORE_24V_PROTECTED",
+    "FIELD_A_24V_PROTECTED",
+    "FIELD_B_24V_PROTECTED",
+    "CORE_5V",
+    "MOTION_5V_RAW",
+    "MOTOR_5V_A",
+    "MOTOR_5V_B",
+    "SBC_5V",
+    "FIELD_5V",
+    "AUX_5V_A",
+    "AUX_5V_B",
+    "AUX_24V_A",
+    "AUX_24V_B",
+    "DOA_FIELD_3V3",
+    "DOB_FIELD_3V3",
+    "MOTOR_FEED_PG_A",
+    "MOTOR_FEED_PG_B",
+    "C_FAULT_N",
+    "FA_FAULT_N",
+    "FB_FAULT_N",
+    "FB_PGOOD",
+    "MOTOR_TX_GATE_A",
+    "MOTOR_TX_GATE_B"
+  ],
+  "parent_interposition_rules": {
+    "exactly_two_output_pin_changes_permitted": {
+      "A": {
+        "old_driver": [
+          "U6042",
+          "7"
+        ],
+        "old_driver_mpn": "SN74LVC2G08DCUR",
+        "new_driver_net": "MOTOR_TX_GATE_SOURCE_A",
+        "final_consumers_must_remain_exact": [
+          [
+            "R6095",
+            "1"
+          ],
+          [
+            "U6001",
+            "4"
+          ],
+          [
+            "U6002",
+            "4"
+          ],
+          [
+            "U6003",
+            "4"
+          ],
+          [
+            "U6004",
+            "4"
+          ],
+          [
+            "U6033",
+            "3"
+          ],
+          [
+            "U6043",
+            "6"
+          ],
+          [
+            "U6048",
+            "10"
+          ],
+          [
+            "U6048",
+            "13"
+          ],
+          [
+            "U6048",
+            "2"
+          ],
+          [
+            "U6048",
+            "5"
+          ],
+          [
+            "U6049",
+            "10"
+          ],
+          [
+            "U6049",
+            "13"
+          ],
+          [
+            "U6049",
+            "2"
+          ],
+          [
+            "U6049",
+            "5"
+          ]
+        ],
+        "frozen_motor_source_sha256": "36c934e747106aa6431e7c90ba4948622370eab3a270349641db9f12a2eb5bec"
+      },
+      "B": {
+        "old_driver": [
+          "U6042",
+          "3"
+        ],
+        "old_driver_mpn": "SN74LVC2G08DCUR",
+        "new_driver_net": "MOTOR_TX_GATE_SOURCE_B",
+        "final_consumers_must_remain_exact": [
+          [
+            "R6096",
+            "1"
+          ],
+          [
+            "U6005",
+            "4"
+          ],
+          [
+            "U6006",
+            "4"
+          ],
+          [
+            "U6034",
+            "3"
+          ],
+          [
+            "U6044",
+            "6"
+          ],
+          [
+            "U6050",
+            "10"
+          ],
+          [
+            "U6050",
+            "13"
+          ],
+          [
+            "U6050",
+            "2"
+          ],
+          [
+            "U6050",
+            "5"
+          ]
+        ],
+        "frozen_motor_source_sha256": "36c934e747106aa6431e7c90ba4948622370eab3a270349641db9f12a2eb5bec"
+      }
+    },
+    "no_wildcard_net_rename": true,
+    "final_gate_inputs_and_source_gate_outputs_must_not_be_directly_joined": true,
+    "raw_field_health_promotions": {
+      "A": [
+        "U9003",
+        "12"
+      ],
+      "B": [
+        "U9004",
+        "12"
+      ]
+    },
+    "IO3_to_motorIO3_mapping": "Explicit whole-board power map only; no ground-domain aliases inferred."
+  },
+  "conditional_screen": {
+    "evidence": "Conditional source arithmetic; source rails valid4.8..5.25V, internal ambient0..55C; optical parameters only25C testconditions, no temperature/time interpolation",
+    "series_led_current_a": [
+      0.005347153668970054,
+      0.018996960486322188
+    ],
+    "led_current_bounds_use_monotonic_diode_inference": true,
+    "ordinary_resistor_corner_including_initial_and_0_to55c_tcr": 0.013000000000000001,
+    "led_trigger_max_a_at25c": 0.003,
+    "led_return_min_a_at25c": 0.0001,
+    "powered_ioz_a_max_at_vcc5p5": 2e-06,
+    "vcc0_ioff_a_max": 2e-06,
+    "powered_leakage_at_every_4p8_to5p25v_guaranteed_by_testpoint": false,
+    "nexperia_driver_vcc_recommended_v": [
+      1.65,
+      5.5
+    ],
+    "below1p65_partial_led_driver_state": "unspecified; opto turnoff through every arbitrary source-supply ramp is not guaranteed",
+    "gate_off_v_with_two_contact_leaks": 0.002026,
+    "clear_off_v_with_two_contact_leaks": 0.20259999999999997,
+    "final_gate_high_min_v_at_2p4v_source_testpoint": 2.3985419198055893,
+    "am26c31_vih_v": 2,
+    "logic_receiving_vih_v": 2,
+    "contacts_toff_max_s_at25c_if5ma_rl200_vdd20": 0.0002,
+    "contacts_ton_max_s_at25c_if5ma_rl200_vdd20": 0.0005,
+    "opening_at_actual5p36_to18p94ma_or_alltemperatures_guaranteed": false,
+    "clear_decay_s_to_vil": 0.0001414345144224404,
+    "contact_plus_clear_rc_conditional_withdrawal_s": 0.0003414345144224404,
+    "direct_gate_path_opens_before_rail_removal_is_required": true,
+    "default_low_iso_partial_region_independently_inhibited_at_valid_health_source_rails": true,
+    "whole20ms_watchdog_physical_or_allcondition_proof": false,
+    "field_ldo_per_bank_reservation_a": 0.02,
+    "field_ldo_estimated_w_at30v_3p234v_20ma": 0.53532,
+    "field_ldo_estimated_tj_at55c_66p2kperw": 90.438184,
+    "field_ldo_100ma_at30v_continuous_allowed": false,
+    "aux24_overload_testpoints_a": {
+      "A": [
+        0.237,
+        0.257
+      ],
+      "B": [
+        0.145,
+        0.159
+      ]
+    },
+    "aux24_hardshort_max_guaranteed_at_fittedR": false
+  },
+  "engineering_gates": [
+    "Series pre-isolation health contacts independently clear each MOTION5-powered feed latch AND physically open the final TX/LED/enable authority path. ISO7720F1.7\u20132.25V receiver outputs cannot defeat these contacts when raw field/corehealth is LOW and their LED drivers have valid power. Arbitrary CORE/FIELD/MOTION ramps, healthy-at-powerup CLR/CLK sequencing and partial VCC LED-driver behavior remain electrical qualification gates.",
+    "AUX24 exact overload testpoint ranges fit normal/cap budgets. Resistor tolerance uses an inverse-law engineering model; the published shortcircuit max at7.5k does not guarantee hardshort bounds at26.7k/44.2k. Vendor confirmation or a source-backed hardshort bound remains required.",
+    "18\u201330V fullfieldinput requirement remains narrower than9xxx19\u201329V guaranteedstaticarming screen.",
+    "Field5 fixedregulation/tolerance+AUX5 limiter/distribution losses must meet4.86919887V worstUVarmingthreshold; circuitfitted, lossqualification open.",
+    "Motorfeed switch/distribution loss must stayunder20.3624mV. TPS22990 RON guarantees are atlistedbiasvoltage; thermal/noise/transient/IRdrop need reconciliation.",
+    "Separatefield3.3LDO normal/dynamicICC/thermal/railcurrent budget must be completed; .1A rating isnotloadestimate.",
+    "All fittedpassiveMPNs and three fittedfuseaccessoryMPNs are selected. Outputnegativeclamp/surgecoordination, fusefault/thermalcoordination, connector matingorientation andstencilprocess remain engineering/procurement gates.",
+    "Nexperia74LVC2G04 raw-health inputs retain a10ns/V recommendedrise/fall constraint despite advertisedSchmittaction. ExactLTC RST loading/slew at the fitted10k pullups andadded100k biases must be reconciled; no arbitraryslowramp guarantee is claimed.",
+    "Reviewed buck compensation/MLCC effectivecap/stability andhostinrush must be rerun atwholeboardloads.",
+    "Displaypower andoptionalAI loads remain qualifiedpermodule; no fixedCM5 or21inch assumption.",
+    "Two-step bank bootstrap: freshOPI rearm powers healthybankfeed, waitreceiving5Vqualification, then freshOPI rearm setsOPIstatus. Circuitfitted, softwaresequence notimplemented here."
+  ],
+  "not_physical_only_gates": true,
+  "bad_downloads_archived_as_errors_never_as_datasheets": [
+    "reports\\motherboard-power-entry-20260930\\sources\\74lvc2g04.access-error.html",
+    "reports\\motherboard-power-entry-20260930\\sources\\74lvc2g07.access-error.html",
+    "reports\\motherboard-power-entry-20260930\\sources\\keystone3568.access-error.html",
+    "reports\\motherboard-power-entry-20260930\\sources\\pmv16un.access-error.html",
+    "reports\\motherboard-power-entry-20260930\\sources\\sot363-2-land.access-error.html"
+  ],
+  "hashes": {
+    "hardware/motherboard_power_entry/bom.csv": "36876b4f606427df8b36cbadea8a17075c397b752d66d8e21f70d59202a907d4",
+    "hardware/motherboard_power_entry/CNC.kicad_sym": "2ed13c4d9d93a6d289a04720e4c03878f4ce54271859e3b4e3d73a25b3e5778c",
+    "hardware/motherboard_power_entry/design.json": "e54c6af24bf042c1f8deae6b8e4cb663b0776da8e7f1500e97289f3c2a927f74",
+    "hardware/motherboard_power_entry/erc.json": "68c9136f5eba19c3c8b4b23bf4c10efe045d00967315d44f26b01f015ecbecc4",
+    "hardware/motherboard_power_entry/fitted-accessories-bom.csv": "1d59919ee1ba57278e10effb948ee39929c4b9476eae8a7fb6c450726cb4e64c",
+    "hardware/motherboard_power_entry/footprint-review.json": "7db64e80eeaf3cd5621aacd046e77ca27bf938fcf12cf9e019df8b7e6c60a707",
+    "hardware/motherboard_power_entry/fp-lib-table": "976acb036843f7ebfac712d2277ce3221b56af8877da568c6a550686e09de9e5",
+    "hardware/motherboard_power_entry/motherboard_power_entry.kicad_prl": "1c7122427b2a47e25afe9480ff8858ca60057bd825c6bb8814de33505a58a2ff",
+    "hardware/motherboard_power_entry/motherboard_power_entry.kicad_pro": "db030e3d6c2b21440612f3018c1e5f26d69298c7a706a88f494d887c6dc210d8",
+    "hardware/motherboard_power_entry/motherboard_power_entry.kicad_sch": "5480c62c5b6c6412a3bb6b24f9abeb4cf285f9890872185e5eda30ad35eca229",
+    "hardware/motherboard_power_entry/motherboard_power_entry.pdf": "c0866f47c98f9747307ba906b162d109bd72e555282c9d12191b04b429322756",
+    "hardware/motherboard_power_entry/netlist.xml": "06b231f16610ef20cc9a9613ebe5a59bdfa9fd863ef6eb59d741d65157d41826",
+    "hardware/motherboard_power_entry/pin-map.json": "d329e057dda9e3cc98b1eb90548bd28f3247966cacb0a2c52767a0e90ffd5735",
+    "hardware/motherboard_power_entry/README.md": "ca1dc6da724455fa765ce3cb0c9705fff24e8428df47003da79565cd21b3d727",
+    "hardware/motherboard_power_entry/sym-lib-table": "505412e06278e271b1ab2f7dae58c0396c2aafd3e89559cf8bf8ccc47c31a967",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/KRL3216_LongSide_Susumu.kicad_mod": "0b9d5b622396f63e1e3ab1040d3192a82493e964a134620f53c15ba019668c02",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/LM70660_RRX29_TI.kicad_mod": "7cca7c236ccc253bb2c68eb5b51c2e549434fb329918d00035cf648dcf9d5d89",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/LMR36506_RPE9_TI.kicad_mod": "d1ace00f6ab159b1675072ade8178c6741992207babf121b2b96fa9201f50369",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/LPS6235_Coilcraft.kicad_mod": "cf751777fe8b7b47e8b90872e61ce35bc13b5d3057440fab462b4a259d8b73c7",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/OSCON_C10L_Panasonic.kicad_mod": "0558ea59d4ed8dcc18f9ecb1ccf32b4c6296b05bcb20f3d0645dd724fc085c15",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/TLP3640A_SO4_11-3C1.kicad_mod": "19f3f33721c3f25572fbb00804555c11b4ab71be8b7303806cd156e7cefd3b18",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/TPS22990_DML10_TI.kicad_mod": "d6c11cd19eedc85ae1003cf016a5edf768d20304d0faae798f53788a10b2cce6",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/TPS2660_PWP16_TI.kicad_mod": "d2aba1eae3fe447da8d3421a59013d8969bd47476dec2871b05916edd6ed83ce",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/TPS2662_DRC10_TI.kicad_mod": "05a98dcde6b3c2398f3b5be91f2e71db88f6d7cc3616632ae1df1238afe3cd83",
+    "hardware/motherboard_power_entry/CNC_MB_Entry.pretty/TPS7A16_DGN8_TI.kicad_mod": "621bb16a6ccf6c2abcf34cd2c470a88c89dfbedf57af5b2f55f712aeee6a406b",
+    "tools/hardware_build_motherboard_power_entry.py": "47ae517990198777db1ff45ed8a070db19e3f29134852f28dd03399e8f90d1ea",
+    "tools/hardware_validate_motherboard_power_entry.py": "7cd25958b9336260d90b63bf5170f1c0a9e8be8912b203ed261296dc22866150",
+    "tests/test_motherboard_power_entry.py": "74e55ebbbda0e5cb074d52fa1bcf67bd0f8b5ce0bffa9294e7023b9c8597d0a7"
+  },
+  "whole_board_drc_or_fabrication_generated": false,
+  "manufacturing_ready": false
+}

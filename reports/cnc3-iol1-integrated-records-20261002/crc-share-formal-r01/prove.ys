@@ -1,0 +1,5 @@
+read_verilog -formal -sv old.v new.v miter.v
+prep -top crc_miter -flatten
+async2sync
+opt
+sat -seq 3 -tempinduct -prove-asserts -set-def-inputs -set-init-zero -maxsteps 8 -verify

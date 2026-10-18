@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-motors-r0.1",
+  "scope": "source connectivity/default-state screen; no hardware operation",
+  "errors": [],
+  "passed": true,
+  "physical_components": 210,
+  "device_counts": {
+    "R": 94,
+    "AM26C31": 6,
+    "C": 36,
+    "LVC07A": 2,
+    "TLP3640A": 12,
+    "TLP4176A": 12,
+    "TVS": 36,
+    "TPS22918": 2,
+    "ISO1212": 6,
+    "LVC2G17": 1,
+    "LVC2G08": 1,
+    "LVC2G74": 2
+  },
+  "calculations": {
+    "led_current_screen_min_a": 0.005364083784411497,
+    "led_current_screen_max_a": 0.01216712580348944,
+    "bank_a_worst_led_and_bleed_a": 0.10253902662993573,
+    "switch_drop_screen_v": 0.008100583103764923,
+    "photorelay_limits_are_25c_only": true,
+    "passive_bleed_tau_s": 0.0001111,
+    "fault_to_inhibit_20ms_proven": false,
+    "qualified_filter_proven": false,
+    "powered_high_output_leakage_guarantee_closed": false,
+    "native_xml": {
+      "source_components_checked": 226,
+      "source_pin_assignments_checked": 926,
+      "native_nc_checked": 40,
+      "physical_components": 210
+    },
+    "native_erc": {
+      "violations": 0,
+      "ignored_checks": []
+    }
+  },
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "remaining_gates": [
+    "Parent must provide and independently supervise MOTOR_IO_3V3, both MOTOR_5V rails and bank AUX_5V/AUX_24V supplies; no power supply is fabricated by flags.",
+    "MOTOR_POWER_OK_*_QUALIFIED must combine actual local rail health and field/AUX health with qualified startup/timing, not a software constant.",
+    "820R/1.5nF Schmitt RC is a candidate; threshold-envelope guarantee across 3.2-3.4V, input-drive corners, repeated glitches and 100ns output pulse must be closed before claiming IS-1 qualification.",
+    "Source LED current screen uses 25C diode Vf limits at 10mA; cold/hot/ageing trigger/current/leak and QOD complete fault-to-inhibit timing remain physical gates.",
+    "TLP4176A candidate lands are package-envelope-derived; manufacturer assembly/stencil review remains open.",
+    "All 12 motor connector exact MPN/mate/orientation, isolation clearance, high current rails, shielding and transient return layout remain parent engineering.",
+    "TVS rated-pulse clamp below 60V at 25C is only component screening; temperature, surge source/energy, overshoot, dV/dt and board containment remain unqualified.",
+    "Unpowered/brownout ISO1212 output is invalid; FPGA/software must mask until independent receiving-rail qualification and freshness.",
+    "No receiver fail-safe claim for tri-stated STEP/DIR; drive profiles and independent STO/drive-power stop path remain required.",
+    "Native ERC/netlist checks do not establish pin allocation, routing, DRC, FPGA fit, target operation or manufacture readiness."
+  ]
+}

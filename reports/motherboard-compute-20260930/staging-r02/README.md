@@ -1,0 +1,13 @@
+# Protected SD source r02 — isolated additive candidate
+
+This source implements 37 additional physical footprints alongside the unchanged 52-part compute socket/host source: 89 total footprints, 85 purchased parts and four bare test pads. Native ERC has zero errors and zero warnings, independent native manufacturer-pin/domain/land checks pass, and 23 destructive mutation tests pass. The main source remains the integrated r01 until this reviewed candidate is adopted.
+
+The purchased Molex 503398-1892 slot has six real signal paths through an independently default-disabled, module-powered TS3A27518E mux. An actual TPS3808G30 observes the switched card rail; the bus enables only while the module requests SD power and that rail is above the reviewed threshold. Card-side pullups use the switched card rail. The six unused alternate mux paths have actual 49.9-ohm terminations. Two passive TI ESD arrays protect all six card lines. Mechanical detect and switch fault have actual nets/test pads but no invented host diagnostic endpoint.
+
+TPS2553DBVR with a 76.8 kohm 1% resistor bounds the TI current-limit equations to 303.389–391.934 mA. The card branch includes its discharge resistor and pullups within that limit. A 0.410 A module-AUX reservation covers the full carrier region before future hub loads; this is additional upstream module 5 V draw. Using the explicitly assumed 85% conversion screen and worst 3.465 V/4.95 V values gives another 0.3377 A at SBC5. The existing 3 A allocation cannot cover 2.5 A compute + 0.5 A USB + this AUX reservation simultaneously. This is an engineering power/profile task, not an assertion that the switch makes the full controller safe.
+
+The Molex signal/lever/detect/shell lands agree with the manufacturer A3 drawing and official Raspberry Pi native CAD. The archived official STEP reference points to an absent file and was removed. The complete manufacturer no-pattern polygon and final card access/mechanics remain placement work; the footprint currently includes only a confirmed bounded internal keepout subset. No physical model was invented. The two ESD footprint ground pads and geometry use TI current Rev O page 29 directly.
+
+No SD card or boot image is qualified yet. Startup current, capacitance, 3.3 V signaling at a maximum proposed 50 MHz, ramp leakage, reset dwell, data integrity and temperature need exact-profile tests. Neither auto-restart nor automatic module identity is granted by this source. USB, HDMI, Ethernet and optional NVMe are still visible unfinished interfaces. No board DRC/routing, fabrication release or physical measurements are implied by the source checks.
+
+Read receipt-r02.json for immutable source hashes, exact pin reviews and remaining engineering tasks.

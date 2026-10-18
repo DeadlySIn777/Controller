@@ -1,0 +1,204 @@
+{
+  "scope": "Numerical initialization exploration only; ideal protection/reference/power and approximate ADC load",
+  "inputs": {
+    "reports\\pre-hardware-characterization-20261001\\INA149-active-model-discovery-r01\\SBOMC47\\ina149.lib": "7adccaf61abbb093980aa6fe6604bea72068541cf4112141e22aaaa79a463c8b",
+    "reports\\pre-hardware-characterization-20261001\\AI-active-model-discovery-r01\\SBOMA34\\OPAx197.LIB": "fc5b020e63346e511bd808bf41c856b0150b000bcf8a41fe00eeececb1f422a5",
+    "reports\\pre-hardware-characterization-20261001\\explore_INA149_initialization_r01.py": "e2e0bc5976e96895cbda2b473cd3b0ad2ac8d132e15d687b8aeb6de74f88434c"
+  },
+  "inputs_unchanged": true,
+  "cases": [
+    {
+      "name": "actual_ground_descending",
+      "passed": false,
+      "offset_V": 0,
+      "initial_V": 10,
+      "final_V": 0,
+      "measured": {
+        "initial_out": 0.0,
+        "final_out": 0.0
+      },
+      "expected": {
+        "initial_out": 6.249706263805601,
+        "final_out": 1.2499412527611202
+      },
+      "errors": [
+        "doAnalyses: TRAN:  Timestep too small; time = 3.95323e-06, timestep = 6.25e-21: trouble with node \"xina.xu1.34\"",
+        "tran simulation(s) aborted"
+      ],
+      "returncode": 0,
+      "elapsed_s": 2.4584631000179797,
+      "deck_sha256": "d389c7af83de411121913fa650b486d10651c35fa5fe64279a1dfe1b31651863",
+      "log_sha256": "3263626bc4a7da64fcb4b718a2373ac5f09b0e75d843cd4fc3cc1bf9c5896910"
+    },
+    {
+      "name": "actual_ground_low_nodeset",
+      "passed": false,
+      "offset_V": 0,
+      "initial_V": 0,
+      "final_V": 10,
+      "measured": {},
+      "expected": {
+        "initial_out": 1.2499412527611202,
+        "final_out": 6.249706263805601
+      },
+      "errors": [
+        " meas tran initial_out avg output from=8u to=9u failed!",
+        " meas tran final_out avg output from=40u to=44u failed!",
+        "Error: Transient op failed, timestep too small",
+        "Error: The operating point could not be simulated successfully.",
+        "Error: Finding the operating point for transient simulation failed ",
+        "doAnalyses: TRAN:  Timestep too small; initial timepoint: trouble with node \"xina.xu1.34\"",
+        "tran simulation(s) aborted",
+        "Error: RHS \"v(shift)-v(agnd)\" invalid",
+        "Error: RHS \"v(buf)-v(agnd)\" invalid",
+        "Error: RHS \"v(adc)-v(agnd)\" invalid",
+        "Error: no such vector v(d)",
+        "Error: measure  initial_out  avg(TRIG) : no such vector as 'output'",
+        "Error: measure  final_out  avg(TRIG) : no such vector as 'output'"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.3353473999304697,
+      "deck_sha256": "2176d526fb86546991805f746e42e2e6a3d7c4159acb4c606a5fa112d38d7d29",
+      "log_sha256": "16c7b10633ea2b9429e0cb9f5921bb2e9a6f10c2f28999f6f82e6f735f682fcd"
+    },
+    {
+      "name": "actual_ground_descending_nodeset",
+      "passed": true,
+      "offset_V": 0,
+      "initial_V": 10,
+      "final_V": 0,
+      "measured": {
+        "initial_out": 6.25024,
+        "final_out": 1.25061
+      },
+      "expected": {
+        "initial_out": 6.249706263805601,
+        "final_out": 1.2499412527611202
+      },
+      "errors": [],
+      "returncode": 0,
+      "elapsed_s": 13.819029800011776,
+      "deck_sha256": "f138512243677b29ef7559b9d358bdf0054e64d73d4dca5f0df5b6230f79b4fd",
+      "log_sha256": "9e53a37e4d8b5303c83b9033a7e1b91e42418b8222710d05ea32a9b5361da1a5"
+    },
+    {
+      "name": "centered_reference",
+      "passed": false,
+      "offset_V": -7.5,
+      "initial_V": 0,
+      "final_V": 10,
+      "measured": {},
+      "expected": {
+        "initial_out": 1.2499412527611202,
+        "final_out": 6.249706263805601
+      },
+      "errors": [
+        " meas tran initial_out avg output from=8u to=9u failed!",
+        " meas tran final_out avg output from=40u to=44u failed!",
+        "Error: Transient op failed, timestep too small",
+        "Error: The operating point could not be simulated successfully.",
+        "Error: Finding the operating point for transient simulation failed ",
+        "doAnalyses: TRAN:  Timestep too small; initial timepoint: trouble with node \"xina.xu1.32\"",
+        "tran simulation(s) aborted",
+        "Error: RHS \"v(shift)-v(agnd)\" invalid",
+        "Error: RHS \"v(buf)-v(agnd)\" invalid",
+        "Error: RHS \"v(adc)-v(agnd)\" invalid",
+        "Error: no such vector v(d)",
+        "Error: measure  initial_out  avg(TRIG) : no such vector as 'output'",
+        "Error: measure  final_out  avg(TRIG) : no such vector as 'output'"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.5035217000404373,
+      "deck_sha256": "41a10d049fe1d7fcdccffe30377b1fe4c9ec2d2d5fee5b747adf30a0ef523741",
+      "log_sha256": "6dea72448c3daea8e4fb7d2653005dbe839ecfb34355aab487a1dbb813dcb49b"
+    },
+    {
+      "name": "centered_reference_descending",
+      "passed": false,
+      "offset_V": -7.5,
+      "initial_V": 10,
+      "final_V": 0,
+      "measured": {},
+      "expected": {
+        "initial_out": 6.249706263805601,
+        "final_out": 1.2499412527611202
+      },
+      "errors": [
+        " meas tran initial_out avg output from=8u to=9u failed!",
+        " meas tran final_out avg output from=40u to=44u failed!",
+        "Error: Transient op failed, timestep too small",
+        "Error: The operating point could not be simulated successfully.",
+        "Error: Finding the operating point for transient simulation failed ",
+        "doAnalyses: TRAN:  Timestep too small; initial timepoint: trouble with node \"xina.xu1.32\"",
+        "tran simulation(s) aborted",
+        "Error: RHS \"v(shift)-v(agnd)\" invalid",
+        "Error: RHS \"v(buf)-v(agnd)\" invalid",
+        "Error: RHS \"v(adc)-v(agnd)\" invalid",
+        "Error: no such vector v(d)",
+        "Error: measure  initial_out  avg(TRIG) : no such vector as 'output'",
+        "Error: measure  final_out  avg(TRIG) : no such vector as 'output'"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.6187134999781847,
+      "deck_sha256": "fc1c58d84af342378c2f18186c89ed24ca93f56fcf968269f115da5bb00b2886",
+      "log_sha256": "37ddfdf2089827bd932c8f2de9a7469a9a710453b50b9da0686c9220c64dcd4f"
+    },
+    {
+      "name": "offset_reference",
+      "passed": false,
+      "offset_V": -6.5,
+      "initial_V": 0,
+      "final_V": 10,
+      "measured": {
+        "initial_out": 0.0,
+        "final_out": 0.0
+      },
+      "expected": {
+        "initial_out": 1.2499412527611202,
+        "final_out": 6.249706263805601
+      },
+      "errors": [
+        "doAnalyses: TRAN:  Timestep too small; time = 5.58514e-11, timestep = 6.25e-21: trouble with node \"xina.xu1.34\"",
+        "tran simulation(s) aborted"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.4572921000653878,
+      "deck_sha256": "759b9eed92b38191675beafba508f6894c1fa04aed04acd87967479185ec2832",
+      "log_sha256": "9decec23cf42ee1c1db6a14f10bd652fa004bdd6146b6491b91d2aab199266c9"
+    },
+    {
+      "name": "offset_reference_descending",
+      "passed": false,
+      "offset_V": -6.5,
+      "initial_V": 10,
+      "final_V": 0,
+      "measured": {},
+      "expected": {
+        "initial_out": 6.249706263805601,
+        "final_out": 1.2499412527611202
+      },
+      "errors": [
+        " meas tran initial_out avg output from=8u to=9u failed!",
+        " meas tran final_out avg output from=40u to=44u failed!",
+        "Error: Transient op failed, timestep too small",
+        "Error: The operating point could not be simulated successfully.",
+        "Error: Finding the operating point for transient simulation failed ",
+        "doAnalyses: TRAN:  Timestep too small; initial timepoint: trouble with node \"e.xina.xu1.evcvs6#branch\"",
+        "tran simulation(s) aborted",
+        "Error: RHS \"v(shift)-v(agnd)\" invalid",
+        "Error: RHS \"v(buf)-v(agnd)\" invalid",
+        "Error: RHS \"v(adc)-v(agnd)\" invalid",
+        "Error: no such vector v(d)",
+        "Error: measure  initial_out  avg(TRIG) : no such vector as 'output'",
+        "Error: measure  final_out  avg(TRIG) : no such vector as 'output'"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.4617666999110952,
+      "deck_sha256": "ae65c653f446ffefaea609db42343a23430d751195c92a499ac7827cdd723ead",
+      "log_sha256": "747837c4f11d7451345bd25d62a51831489a629753b6e91bff30d405a75c880c"
+    }
+  ],
+  "whole_analog_chain_passed": false,
+  "physical_qualified": false,
+  "manufacturing_ready": false
+}

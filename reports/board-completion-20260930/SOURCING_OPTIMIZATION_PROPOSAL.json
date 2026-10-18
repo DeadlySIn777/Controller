@@ -1,0 +1,2362 @@
+{
+  "proposal_revision": "SOURCING-OPT-r0.1",
+  "date": "2026-09-30",
+  "read_only_hardware_audit": true,
+  "applied_to_source": false,
+  "fabrication_ready": false,
+  "physical_qualification": false,
+  "packaging_only_candidate": "MC-PACK-001: LTC2962HUD#TRPBF -> LTC2962HUD#PBF at U2003/U2004/U2005",
+  "packaging_substitution_electrical_change": false,
+  "dividers": [
+    [
+      "CORE_5V",
+      [
+        [
+          "R21",
+          "87900"
+        ]
+      ],
+      [
+        [
+          "R29",
+          "92100"
+        ]
+      ],
+      [
+        "R27",
+        "R35"
+      ],
+      "10000",
+      [
+        "4.85",
+        "5.15"
+      ],
+      [
+        "4.95",
+        "5.05"
+      ]
+    ],
+    [
+      "CORE_1V2",
+      [
+        [
+          "R41",
+          "1070"
+        ],
+        [
+          "R42",
+          "261"
+        ]
+      ],
+      [
+        [
+          "R49",
+          "1150"
+        ],
+        [
+          "R50",
+          "316"
+        ],
+        [
+          "R51",
+          "4.02"
+        ]
+      ],
+      [
+        "R47",
+        "R55"
+      ],
+      "1000",
+      [
+        "1.15",
+        "1.25"
+      ],
+      [
+        "1.185",
+        "1.215"
+      ]
+    ],
+    [
+      "IO_3V3",
+      [
+        [
+          "R61",
+          "54500"
+        ]
+      ],
+      [
+        [
+          "R69",
+          "57500"
+        ]
+      ],
+      [
+        "R67",
+        "R75"
+      ],
+      "10000",
+      [
+        "3.2",
+        "3.4"
+      ],
+      [
+        "3.25875",
+        "3.34125"
+      ]
+    ]
+  ],
+  "class_models": {
+    "PLT": {
+      "initial": "0.0001",
+      "tcr_per_k": "0.000005",
+      "delta_k": "100"
+    },
+    "TNPW": {
+      "initial": "0.001",
+      "tcr_per_k": "0.00001",
+      "delta_k": "105"
+    },
+    "TNPU": {
+      "initial": "0.0005",
+      "tcr_per_k": "0.00001",
+      "delta_k": "105"
+    },
+    "RNCF": {
+      "initial": "0.0001",
+      "tcr_per_k": "0.000005",
+      "delta_k": "100"
+    }
+  },
+  "monitor_threshold_v": [
+    "0.4975",
+    "0.5025"
+  ],
+  "monitor_bias_a": [
+    "-1.5E-8",
+    "1.5E-8"
+  ],
+  "threshold_formula": "Vthr*(1+sum(Rtop)/Rbottom)+Imon*sum(Rtop)",
+  "uncertainty_model": "symmetric conservative envelope of multiplicative initial/TCR/drift terms; individual resistor corners independently enumerated; no RSS or correlated tracking credit",
+  "margin_order": [
+    "UV_min - rail_min",
+    "regulation_min - UV_max",
+    "OV_min - regulation_max",
+    "rail_max - OV_max"
+  ],
+  "temperature_scope_c": [
+    -40,
+    125
+  ],
+  "additional_drift_sensitivity_not_lifetime_guarantee": true,
+  "startup_configuration_max_vcc_v": "2.2",
+  "startup_configuration_us_typical_only": "500",
+  "reset_release_delay_ms": [
+    160,
+    240
+  ],
+  "three_stage_release_delay_ms": [
+    480,
+    720
+  ],
+  "dynamic_20ms_fault_bound_proven": false,
+  "manufacturer_no_intentional_comparator_hysteresis": true,
+  "input_consistency": {
+    "independently_checked_divider_parts": [
+      "R21",
+      "R29",
+      "R27",
+      "R35",
+      "R41",
+      "R42",
+      "R49",
+      "R50",
+      "R51",
+      "R47",
+      "R55",
+      "R61",
+      "R69",
+      "R67",
+      "R75"
+    ],
+    "precision_count": 14,
+    "ordinary_series_parts": [
+      "R51"
+    ],
+    "nominal_values_unchanged": true,
+    "read_generated_validator_results": false
+  },
+  "corner_checks": [
+    {
+      "name": "original_fresh",
+      "class_overrides": {},
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8639623710777239250550207348081",
+            "4.9260982855252403071500553907372"
+          ],
+          "ov_bounds_v": [
+            "5.0725987983647141467300046607031",
+            "5.1374647565059685129524471158921"
+          ],
+          "margins_v": [
+            "0.0139623710777239250550207348081",
+            "0.0239017144747596928499446092628",
+            "0.0225987983647141467300046607031",
+            "0.0125352434940314870475528841079"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9260982855252403071500553907372",
+            "5.0725987983647141467300046607031"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1588583503204538096414371556347",
+            "1.1721506187879901355309128242402"
+          ],
+          "ov_bounds_v": [
+            "1.2278967898290050885530887191141",
+            "1.2421335574215828077072897592200"
+          ],
+          "margins_v": [
+            "0.0088583503204538096414371556347",
+            "0.0128493812120098644690871757598",
+            "0.0128967898290050885530887191141",
+            "0.0078664425784171922927102407800"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1721506187879901355309128242402",
+            "1.2278967898290050885530887191141"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2048060207478493050682438003076",
+            "3.2452315877261160038643688145072"
+          ],
+          "ov_bounds_v": [
+            "3.3538320402385566062646608902328",
+            "3.3962076384266361508660771896177"
+          ],
+          "margins_v": [
+            "0.0048060207478493050682438003076",
+            "0.0135184122738839961356311854928",
+            "0.0125820402385566062646608902328",
+            "0.0037923615733638491339228103823"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2452315877261160038643688145072",
+            "3.3538320402385566062646608902328"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "original_400ppm_sensitivity",
+      "class_overrides": {},
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8604679747318505113984613502680",
+            "4.9296401788298491197114079792818"
+          ],
+          "ov_bounds_v": [
+            "5.0689374342753519010215960222947",
+            "5.1411758870333231390832841284626"
+          ],
+          "margins_v": [
+            "0.0104679747318505113984613502680",
+            "0.0203598211701508802885920207182",
+            "0.0189374342753519010215960222947",
+            "0.0088241129666768609167158715374"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9296401788298491197114079792818",
+            "5.0689374342753519010215960222947"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1583291496733647791295053534934",
+            "1.1726868676886589938808741775226"
+          ],
+          "ov_bounds_v": [
+            "1.2273131305672196035275976800421",
+            "1.2427250227839257068528316403025"
+          ],
+          "margins_v": [
+            "0.0083291496733647791295053534934",
+            "0.0123131323113410061191258224774",
+            "0.0123131305672196035275976800421",
+            "0.0072749772160742931471683596975"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1726868676886589938808741775226",
+            "1.2273131305672196035275976800421"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2026394155049585082049618155814",
+            "3.2474276421641271561350595548448"
+          ],
+          "ov_bounds_v": [
+            "3.3515461723217452150786294384574",
+            "3.3985245765951800271149710899739"
+          ],
+          "margins_v": [
+            "0.0026394155049585082049618155814",
+            "0.0113223578358728438649404451552",
+            "0.0102961723217452150786294384574",
+            "0.0014754234048199728850289100261"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2474276421641271561350595548448",
+            "3.3515461723217452150786294384574"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_0p1pct_10ppm_fresh",
+      "class_overrides": {
+        "R41": "TNPW",
+        "R75": "TNPW",
+        "R47": "TNPW",
+        "R69": "TNPW",
+        "R67": "TNPW",
+        "R35": "TNPW",
+        "R50": "TNPW",
+        "R27": "TNPW",
+        "R42": "TNPW",
+        "R29": "TNPW",
+        "R61": "TNPW",
+        "R55": "TNPW",
+        "R49": "TNPW",
+        "R21": "TNPW"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8513073360837492722015011111460",
+            "4.9389523165509379551466535437509"
+          ],
+          "ov_bounds_v": [
+            "5.0593390859307543568800711301086",
+            "5.1509329733144640007850601977187"
+          ],
+          "margins_v": [
+            "0.0013073360837492722015011111460",
+            "0.0110476834490620448533464562491",
+            "0.0093390859307543568800711301086",
+            "-0.0009329733144640007850601977187"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9389523165509379551466535437509",
+            "5.0593390859307543568800711301086"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1569418379960421016837540362839",
+            "1.1740967420576835279636172772165"
+          ],
+          "ov_bounds_v": [
+            "1.2257830543779134659112177967380",
+            "1.2442800690572479530887075937101"
+          ],
+          "margins_v": [
+            "0.0069418379960421016837540362839",
+            "0.0109032579423164720363827227835",
+            "0.0107830543779134659112177967380",
+            "0.0057199309427520469112924062899"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1740967420576835279636172772165",
+            "1.2257830543779134659112177967380"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1969596111099469321385871508243",
+            "3.2532013794314689255459911050560"
+          ],
+          "ov_bounds_v": [
+            "3.3455537181435219926232800215119",
+            "3.4046161342625589581448530007472"
+          ],
+          "margins_v": [
+            "-0.0030403888900530678614128491757",
+            "0.0055486205685310744540088949440",
+            "0.0043037181435219926232800215119",
+            "-0.0046161342625589581448530007472"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2532013794314689255459911050560",
+            "3.3455537181435219926232800215119"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_0p1pct_10ppm_400ppm_sensitivity",
+      "class_overrides": {
+        "R41": "TNPW",
+        "R75": "TNPW",
+        "R47": "TNPW",
+        "R69": "TNPW",
+        "R67": "TNPW",
+        "R35": "TNPW",
+        "R50": "TNPW",
+        "R27": "TNPW",
+        "R42": "TNPW",
+        "R29": "TNPW",
+        "R61": "TNPW",
+        "R55": "TNPW",
+        "R49": "TNPW",
+        "R21": "TNPW"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8478180012580862672026200631207",
+            "4.9425096707983388932104157738719"
+          ],
+          "ov_bounds_v": [
+            "5.0556830252089845871372162436112",
+            "5.1546603035327305126812206231353"
+          ],
+          "margins_v": [
+            "-0.0021819987419137327973799368793",
+            "0.0074903292016611067895842261281",
+            "0.0056830252089845871372162436112",
+            "-0.0046603035327305126812206231353"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9425096707983388932104157738719",
+            "5.0556830252089845871372162436112"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1564134036705342104736845624589",
+            "1.1746353319820332144800982246898"
+          ],
+          "ov_bounds_v": [
+            "1.2252002402977668591818650507177",
+            "1.2448741164937678852041285875096"
+          ],
+          "margins_v": [
+            "0.0064134036705342104736845624589",
+            "0.0103646680179667855199017753102",
+            "0.0102002402977668591818650507177",
+            "0.0051258835062321147958714124904"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1746353319820332144800982246898",
+            "1.2252002402977668591818650507177"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1947961441247520086751171039827",
+            "3.2554070200057960145616343535383"
+          ],
+          "ov_bounds_v": [
+            "3.3432711612325365229141143757616",
+            "3.4069431862446471713264949601551"
+          ],
+          "margins_v": [
+            "-0.0052038558752479913248828960173",
+            "0.0033429799942039854383656464617",
+            "0.0020211612325365229141143757616",
+            "-0.0069431862446471713264949601551"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2554070200057960145616343535383",
+            "3.3432711612325365229141143757616"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_0p05pct_10ppm_fresh",
+      "class_overrides": {
+        "R41": "TNPU",
+        "R75": "TNPU",
+        "R47": "TNPU",
+        "R69": "TNPU",
+        "R67": "TNPU",
+        "R35": "TNPU",
+        "R50": "TNPU",
+        "R27": "TNPU",
+        "R42": "TNPU",
+        "R29": "TNPU",
+        "R61": "TNPU",
+        "R55": "TNPU",
+        "R49": "TNPU",
+        "R21": "TNPU"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8556685692608642705884084080531",
+            "4.9345140756166279999680880196767"
+          ],
+          "ov_bounds_v": [
+            "5.0639087056760591504117453285742",
+            "5.1462826662604259248812389830743"
+          ],
+          "margins_v": [
+            "0.0056685692608642705884084080531",
+            "0.0154859243833720000319119803233",
+            "0.0139087056760591504117453285742",
+            "0.0037173337395740751187610169257"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9345140756166279999680880196767",
+            "5.0639087056760591504117453285742"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1576023148906401012972891457473",
+            "1.1734247843627130846652474578145"
+          ],
+          "ov_bounds_v": [
+            "1.2265114991726497223909335477609",
+            "1.2435389212412699099253432428316"
+          ],
+          "margins_v": [
+            "0.0076023148906401012972891457473",
+            "0.0115752156372869153347525421855",
+            "0.0115114991726497223909335477609",
+            "0.0064610787587300900746567571684"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1734247843627130846652474578145",
+            "1.2265114991726497223909335477609"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1996636749114573691361576591456",
+            "3.2504495690683302161349351202774"
+          ],
+          "ov_bounds_v": [
+            "3.3484066294937394261528268880893",
+            "3.4017128480996144482157572369899"
+          ],
+          "margins_v": [
+            "-0.0003363250885426308638423408544",
+            "0.0083004309316697838650648797226",
+            "0.0071566294937394261528268880893",
+            "-0.0017128480996144482157572369899"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2504495690683302161349351202774",
+            "3.3484066294937394261528268880893"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_0p05pct_10ppm_400ppm_sensitivity",
+      "class_overrides": {
+        "R41": "TNPU",
+        "R75": "TNPU",
+        "R47": "TNPU",
+        "R69": "TNPU",
+        "R67": "TNPU",
+        "R35": "TNPU",
+        "R50": "TNPU",
+        "R27": "TNPU",
+        "R42": "TNPU",
+        "R29": "TNPU",
+        "R61": "TNPU",
+        "R55": "TNPU",
+        "R49": "TNPU",
+        "R21": "TNPU"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8521774901116004991427513075301",
+            "4.9380660881209285167541299295097"
+          ],
+          "ov_bounds_v": [
+            "5.0602508172841684410813128034531",
+            "5.1500043994987203230154194141964"
+          ],
+          "margins_v": [
+            "0.0021774901116004991427513075301",
+            "0.0119339118790714832458700704903",
+            "0.0102508172841684410813128034531",
+            "-0.0000043994987203230154194141964"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9380660881209285167541299295097",
+            "5.0602508172841684410813128034531"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1570736164720156333410127406510",
+            "1.1739625654652369748018483431374"
+          ],
+          "ov_bounds_v": [
+            "1.2259283938222863110336800757306",
+            "1.2441320765732086984796669256454"
+          ],
+          "margins_v": [
+            "0.0070736164720156333410127406510",
+            "0.0110374345347630251981516568626",
+            "0.0109283938222863110336800757306",
+            "0.0058679234267913015203330743546"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1739625654652369748018483431374",
+            "1.2259283938222863110336800757306"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1974991264059411513456194113810",
+            "3.2526518976403936764857802179554"
+          ],
+          "ov_bounds_v": [
+            "3.3461229315292039670160204798974",
+            "3.4040364057673878238152727070171"
+          ],
+          "margins_v": [
+            "-0.0025008735940588486543805886190",
+            "0.0060981023596063235142197820446",
+            "0.0048729315292039670160204798974",
+            "-0.0040364057673878238152727070171"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2526518976403936764857802179554",
+            "3.3461229315292039670160204798974"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_bottom_0p1pct_10ppm_fresh",
+      "class_overrides": {
+        "R75": "TNPW",
+        "R47": "TNPW",
+        "R67": "TNPW",
+        "R35": "TNPW",
+        "R27": "TNPW",
+        "R55": "TNPW"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8576376944098515444609833002021",
+            "4.9325282004230067374976946466049"
+          ],
+          "ov_bounds_v": [
+            "5.0659719187161243145034876217136",
+            "5.1442019028322971618149906365453"
+          ],
+          "margins_v": [
+            "0.0076376944098515444609833002021",
+            "0.0174717995769932625023053533951",
+            "0.0159719187161243145034876217136",
+            "0.0057980971677028381850093634547"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9325282004230067374976946466049",
+            "5.0659719187161243145034876217136"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1579006546839420760156505998372",
+            "1.1731242498151718327769546728818"
+          ],
+          "ov_bounds_v": [
+            "1.2268391214436244819672361003963",
+            "1.2432089393596355224774022759381"
+          ],
+          "margins_v": [
+            "0.0079006546839420760156505998372",
+            "0.0118757501848281672230453271182",
+            "0.0118391214436244819672361003963",
+            "0.0067910606403644775225977240619"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1731242498151718327769546728818",
+            "1.2268391214436244819672361003963"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2008845773075871350753536958022",
+            "3.2492182812634114584030074885093"
+          ],
+          "ov_bounds_v": [
+            "3.3496947375263533993914282111675",
+            "3.4004137829843331900582189098951"
+          ],
+          "margins_v": [
+            "0.0008845773075871350753536958022",
+            "0.0095317187365885415969925114907",
+            "0.0084447375263533993914282111675",
+            "-0.0004137829843331900582189098951"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2492182812634114584030074885093",
+            "3.3496947375263533993914282111675"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_bottom_0p1pct_10ppm_400ppm_sensitivity",
+      "class_overrides": {
+        "R75": "TNPW",
+        "R47": "TNPW",
+        "R67": "TNPW",
+        "R35": "TNPW",
+        "R27": "TNPW",
+        "R55": "TNPW"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8541483588189311394621022521769",
+            "4.9360804035146726670894528615653"
+          ],
+          "ov_bounds_v": [
+            "5.0623158571925319447606327352162",
+            "5.1479238357645205078377543634830"
+          ],
+          "margins_v": [
+            "0.0041483588189311394621022521769",
+            "0.0139195964853273329105471384347",
+            "0.0123158571925319447606327352162",
+            "0.0020761642354794921622456365170"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9360804035146726670894528615653",
+            "5.0623158571925319447606327352162"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1573722203468464988055811260122",
+            "1.1736620598451436516237840453633"
+          ],
+          "ov_bounds_v": [
+            "1.2262563073507148792378833543760",
+            "1.2438021277990420406155811893934"
+          ],
+          "margins_v": [
+            "0.0073722203468464988055811260122",
+            "0.0113379401548563483762159546367",
+            "0.0112563073507148792378833543760",
+            "0.0061978722009579593844188106066"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1736620598451436516237840453633",
+            "1.2262563073507148792378833543760"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1987211098479152116118836489606",
+            "3.2514207280039779335196266320285"
+          ],
+          "ov_bounds_v": [
+            "3.3474121801147729296822625654172",
+            "3.4027374653252978197684134191127"
+          ],
+          "margins_v": [
+            "-0.0012788901520847883881163510394",
+            "0.0073292719960220664803733679715",
+            "0.0061621801147729296822625654172",
+            "-0.0027374653252978197684134191127"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2514207280039779335196266320285",
+            "3.3474121801147729296822625654172"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_bottom_0p05pct_10ppm_fresh",
+      "class_overrides": {
+        "R75": "TNPU",
+        "R47": "TNPU",
+        "R67": "TNPU",
+        "R35": "TNPU",
+        "R27": "TNPU",
+        "R55": "TNPU"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8598173322925321674217334167939",
+            "4.9303080785417208558694219354464"
+          ],
+          "ov_bounds_v": [
+            "5.0682557031187965030664578803952",
+            "5.1418757000420078592215444852631"
+          ],
+          "margins_v": [
+            "0.0098173322925321674217334167939",
+            "0.0196919214582791441305780645536",
+            "0.0182557031187965030664578803952",
+            "0.0081242999579921407784555147369"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9303080785417208558694219354464",
+            "5.0682557031187965030664578803952"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1582306999651534422455434786977",
+            "1.1727880743630681344325597947758"
+          ],
+          "ov_bounds_v": [
+            "1.2272036197731279777103481624155",
+            "1.2428376313393318956194678754276"
+          ],
+          "margins_v": [
+            "0.0082306999651534422455434786977",
+            "0.0122119256369318655674402052242",
+            "0.0122036197731279777103481624155",
+            "0.0071623686606681043805321245724"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1727880743630681344325597947758",
+            "1.2272036197731279777103481624155"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2022360023884300696755912538711",
+            "3.2478417551822956387358759440481"
+          ],
+          "ov_bounds_v": [
+            "3.3511205529786188808503944421576",
+            "3.3989614848253577839873920510600"
+          ],
+          "margins_v": [
+            "0.0022360023884300696755912538711",
+            "0.0109082448177043612641240559519",
+            "0.0098705529786188808503944421576",
+            "0.0010385151746422160126079489400"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2478417551822956387358759440481",
+            "3.3511205529786188808503944421576"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "all_bottom_0p05pct_10ppm_400ppm_sensitivity",
+      "class_overrides": {
+        "R75": "TNPU",
+        "R47": "TNPU",
+        "R67": "TNPU",
+        "R35": "TNPU",
+        "R27": "TNPU",
+        "R55": "TNPU"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8563262526419878809760763162709",
+            "4.9338567201735583733138258253860"
+          ],
+          "ov_bounds_v": [
+            "5.0645978142016733087360253552736",
+            "5.1455939013422608211854762061214"
+          ],
+          "margins_v": [
+            "0.0063262526419878809760763162709",
+            "0.0161432798264416266861741746140",
+            "0.0145978142016733087360253552736",
+            "0.0044060986577391788145237938786"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9338567201735583733138258253860",
+            "5.0645978142016733087360253552736"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1577020015389384809392670736014",
+            "1.1733253451094186089599206113298"
+          ],
+          "ov_bounds_v": [
+            "1.2266205144144041882530946903852",
+            "1.2434302245509474480482123389963"
+          ],
+          "margins_v": [
+            "0.0077020015389384809392670736014",
+            "0.0116746548905813910400793886702",
+            "0.0116205144144041882530946903852",
+            "0.0065697754490525519517876610037"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1733253451094186089599206113298",
+            "1.2266205144144041882530946903852"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2000714535721085268850530061065",
+            "3.2500419937367341450011775595397"
+          ],
+          "ov_bounds_v": [
+            "3.3488368546861695467135880339656",
+            "3.4012828374286644649094992600648"
+          ],
+          "margins_v": [
+            "0.0000714535721085268850530061065",
+            "0.0087080062632658549988224404603",
+            "0.0075868546861695467135880339656",
+            "-0.0012828374286644649094992600648"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2500419937367341450011775595397",
+            "3.3488368546861695467135880339656"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "core_1k_0p1pct_10ppm_fresh",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8639623710777239250550207348081",
+            "4.9260982855252403071500553907372"
+          ],
+          "ov_bounds_v": [
+            "5.0725987983647141467300046607031",
+            "5.1374647565059685129524471158921"
+          ],
+          "margins_v": [
+            "0.0139623710777239250550207348081",
+            "0.0239017144747596928499446092628",
+            "0.0225987983647141467300046607031",
+            "0.0125352434940314870475528841079"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9260982855252403071500553907372",
+            "5.0725987983647141467300046607031"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1579006546839420760156505998372",
+            "1.1731242498151718327769546728818"
+          ],
+          "ov_bounds_v": [
+            "1.2268391214436244819672361003963",
+            "1.2432089393596355224774022759381"
+          ],
+          "margins_v": [
+            "0.0079006546839420760156505998372",
+            "0.0118757501848281672230453271182",
+            "0.0118391214436244819672361003963",
+            "0.0067910606403644775225977240619"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1731242498151718327769546728818",
+            "1.2268391214436244819672361003963"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2048060207478493050682438003076",
+            "3.2452315877261160038643688145072"
+          ],
+          "ov_bounds_v": [
+            "3.3538320402385566062646608902328",
+            "3.3962076384266361508660771896177"
+          ],
+          "margins_v": [
+            "0.0048060207478493050682438003076",
+            "0.0135184122738839961356311854928",
+            "0.0125820402385566062646608902328",
+            "0.0037923615733638491339228103823"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2452315877261160038643688145072",
+            "3.3538320402385566062646608902328"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "core_1k_0p1pct_10ppm_400ppm_sensitivity",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8604679747318505113984613502680",
+            "4.9296401788298491197114079792818"
+          ],
+          "ov_bounds_v": [
+            "5.0689374342753519010215960222947",
+            "5.1411758870333231390832841284626"
+          ],
+          "margins_v": [
+            "0.0104679747318505113984613502680",
+            "0.0203598211701508802885920207182",
+            "0.0189374342753519010215960222947",
+            "0.0088241129666768609167158715374"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9296401788298491197114079792818",
+            "5.0689374342753519010215960222947"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1573722203468464988055811260122",
+            "1.1736620598451436516237840453633"
+          ],
+          "ov_bounds_v": [
+            "1.2262563073507148792378833543760",
+            "1.2438021277990420406155811893934"
+          ],
+          "margins_v": [
+            "0.0073722203468464988055811260122",
+            "0.0113379401548563483762159546367",
+            "0.0112563073507148792378833543760",
+            "0.0061978722009579593844188106066"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1736620598451436516237840453633",
+            "1.2262563073507148792378833543760"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2026394155049585082049618155814",
+            "3.2474276421641271561350595548448"
+          ],
+          "ov_bounds_v": [
+            "3.3515461723217452150786294384574",
+            "3.3985245765951800271149710899739"
+          ],
+          "margins_v": [
+            "0.0026394155049585082049618155814",
+            "0.0113223578358728438649404451552",
+            "0.0102961723217452150786294384574",
+            "0.0014754234048199728850289100261"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2474276421641271561350595548448",
+            "3.3515461723217452150786294384574"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "conditional_pilot_1k_TNPW_10k_RNCF_fresh",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW",
+        "R75": "RNCF",
+        "R27": "RNCF",
+        "R67": "RNCF",
+        "R35": "RNCF"
+      },
+      "additional_drift_fraction": "0",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8639623710777239250550207348081",
+            "4.9260982855252403071500553907372"
+          ],
+          "ov_bounds_v": [
+            "5.0725987983647141467300046607031",
+            "5.1374647565059685129524471158921"
+          ],
+          "margins_v": [
+            "0.0139623710777239250550207348081",
+            "0.0239017144747596928499446092628",
+            "0.0225987983647141467300046607031",
+            "0.0125352434940314870475528841079"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9260982855252403071500553907372",
+            "5.0725987983647141467300046607031"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1579006546839420760156505998372",
+            "1.1731242498151718327769546728818"
+          ],
+          "ov_bounds_v": [
+            "1.2268391214436244819672361003963",
+            "1.2432089393596355224774022759381"
+          ],
+          "margins_v": [
+            "0.0079006546839420760156505998372",
+            "0.0118757501848281672230453271182",
+            "0.0118391214436244819672361003963",
+            "0.0067910606403644775225977240619"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1731242498151718327769546728818",
+            "1.2268391214436244819672361003963"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2048060207478493050682438003076",
+            "3.2452315877261160038643688145072"
+          ],
+          "ov_bounds_v": [
+            "3.3538320402385566062646608902328",
+            "3.3962076384266361508660771896177"
+          ],
+          "margins_v": [
+            "0.0048060207478493050682438003076",
+            "0.0135184122738839961356311854928",
+            "0.0125820402385566062646608902328",
+            "0.0037923615733638491339228103823"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2452315877261160038643688145072",
+            "3.3538320402385566062646608902328"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "conditional_pilot_1k_TNPW_10k_RNCF_400ppm_sensitivity",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW",
+        "R75": "RNCF",
+        "R27": "RNCF",
+        "R67": "RNCF",
+        "R35": "RNCF"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": false,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8604679747318505113984613502680",
+            "4.9296401788298491197114079792818"
+          ],
+          "ov_bounds_v": [
+            "5.0689374342753519010215960222947",
+            "5.1411758870333231390832841284626"
+          ],
+          "margins_v": [
+            "0.0104679747318505113984613502680",
+            "0.0203598211701508802885920207182",
+            "0.0189374342753519010215960222947",
+            "0.0088241129666768609167158715374"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9296401788298491197114079792818",
+            "5.0689374342753519010215960222947"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1573722203468464988055811260122",
+            "1.1736620598451436516237840453633"
+          ],
+          "ov_bounds_v": [
+            "1.2262563073507148792378833543760",
+            "1.2438021277990420406155811893934"
+          ],
+          "margins_v": [
+            "0.0073722203468464988055811260122",
+            "0.0113379401548563483762159546367",
+            "0.0112563073507148792378833543760",
+            "0.0061978722009579593844188106066"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1736620598451436516237840453633",
+            "1.2262563073507148792378833543760"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2026394155049585082049618155814",
+            "3.2474276421641271561350595548448"
+          ],
+          "ov_bounds_v": [
+            "3.3515461723217452150786294384574",
+            "3.3985245765951800271149710899739"
+          ],
+          "margins_v": [
+            "0.0026394155049585082049618155814",
+            "0.0113223578358728438649404451552",
+            "0.0102961723217452150786294384574",
+            "0.0014754234048199728850289100261"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2474276421641271561350595548448",
+            "3.3515461723217452150786294384574"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "conditional_pilot_combined_test_allowances",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW",
+        "R75": "RNCF",
+        "R27": "RNCF",
+        "R67": "RNCF",
+        "R35": "RNCF"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": true,
+      "all_rails_pass_four_static_margins": false,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8561069606090883827114966757181",
+            "4.9340804211807609071074045058689"
+          ],
+          "ov_bounds_v": [
+            "5.0643680440511608651618753564691",
+            "5.1458282911347904385050279293572"
+          ],
+          "margins_v": [
+            "0.0061069606090883827114966757181",
+            "0.0159195788192390928925954941311",
+            "0.0143680440511608651618753564691",
+            "0.0041717088652095614949720706428"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9340804211807609071074045058689",
+            "5.0643680440511608651618753564691"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1568974061692763731587345613445",
+            "1.1741480436657178798656094844504"
+          ],
+          "ov_bounds_v": [
+            "1.2257319273024960104194617912960",
+            "1.2443388995592793606086813375897"
+          ],
+          "margins_v": [
+            "0.0068974061692763731587345613445",
+            "0.0108519563342821201343905155496",
+            "0.0107319273024960104194617912960",
+            "0.0056611004407206393913186624103"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1741480436657178798656094844504",
+            "1.2257319273024960104194617912960"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.1999354875221310222727709764122",
+            "3.2501806934510974907548753762213"
+          ],
+          "ov_bounds_v": [
+            "3.3486934042664685097373271769487",
+            "3.4014291719896900131817492501417"
+          ],
+          "margins_v": [
+            "-0.0000645124778689777272290235878",
+            "0.0085693065489025092451246237787",
+            "0.0074434042664685097373271769487",
+            "-0.0014291719896900131817492501417"
+          ],
+          "pass_four_static_margins": false,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2501806934510974907548753762213",
+            "3.3486934042664685097373271769487"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    },
+    {
+      "name": "core_1k_combined_test_allowances",
+      "class_overrides": {
+        "R55": "TNPW",
+        "R47": "TNPW"
+      },
+      "additional_drift_fraction": "0.0004",
+      "combined_endurance_and_solder_test_sensitivity": true,
+      "all_rails_pass_four_static_margins": true,
+      "rails": [
+        {
+          "rail": "CORE_5V",
+          "allowed_v": [
+            "4.85",
+            "5.15"
+          ],
+          "regulation_only_v": [
+            "4.95",
+            "5.05"
+          ],
+          "uv_bounds_v": [
+            "4.8604679747318505113984613502680",
+            "4.9296401788298491197114079792818"
+          ],
+          "ov_bounds_v": [
+            "5.0689374342753519010215960222947",
+            "5.1411758870333231390832841284626"
+          ],
+          "margins_v": [
+            "0.0104679747318505113984613502680",
+            "0.0203598211701508802885920207182",
+            "0.0189374342753519010215960222947",
+            "0.0088241129666768609167158715374"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "4.9296401788298491197114079792818",
+            "5.0689374342753519010215960222947"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.004395",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.004605"
+        },
+        {
+          "rail": "CORE_1V2",
+          "allowed_v": [
+            "1.15",
+            "1.25"
+          ],
+          "regulation_only_v": [
+            "1.185",
+            "1.215"
+          ],
+          "uv_bounds_v": [
+            "1.1568974061692763731587345613445",
+            "1.1741480436657178798656094844504"
+          ],
+          "ov_bounds_v": [
+            "1.2257319273024960104194617912960",
+            "1.2443388995592793606086813375897"
+          ],
+          "margins_v": [
+            "0.0068974061692763731587345613445",
+            "0.0108519563342821201343905155496",
+            "0.0107319273024960104194617912960",
+            "0.0056611004407206393913186624103"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 96,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "1.1741480436657178798656094844504",
+            "1.2257319273024960104194617912960"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.00006655",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.000073501"
+        },
+        {
+          "rail": "IO_3V3",
+          "allowed_v": [
+            "3.2",
+            "3.4"
+          ],
+          "regulation_only_v": [
+            "3.25875",
+            "3.34125"
+          ],
+          "uv_bounds_v": [
+            "3.2026394155049585082049618155814",
+            "3.2474276421641271561350595548448"
+          ],
+          "ov_bounds_v": [
+            "3.3515461723217452150786294384574",
+            "3.3985245765951800271149710899739"
+          ],
+          "margins_v": [
+            "0.0026394155049585082049618155814",
+            "0.0113223578358728438649404451552",
+            "0.0102961723217452150786294384574",
+            "0.0014754234048199728850289100261"
+          ],
+          "pass_four_static_margins": true,
+          "corners_evaluated": 32,
+          "guaranteed_common_startup_acceptance_interval_v": [
+            "3.2474276421641271561350595548448",
+            "3.3515461723217452150786294384574"
+          ],
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_uv_v": "0.002725",
+          "maximum_nominal_10Mohm_sense_probe_threshold_shift_ov_v": "0.002875"
+        }
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "mpn": "LTC2962HUD#PBF",
+      "supplier": "DigiKey",
+      "observed_date": "2026-09-30",
+      "currency": "USD",
+      "per_board_quantity": 3,
+      "packaging": "Tube",
+      "minimum": 1,
+      "multiple": 1,
+      "observed_stock_pieces": 71,
+      "url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC2962HUD-PBF/9555593",
+      "tiers": [
+        {
+          "minimum": 1,
+          "unit_usd": "9.56"
+        },
+        {
+          "minimum": 10,
+          "unit_usd": "7.436"
+        },
+        {
+          "minimum": 25,
+          "unit_usd": "6.90640"
+        },
+        {
+          "minimum": 121,
+          "unit_usd": "6.26033"
+        },
+        {
+          "minimum": 363,
+          "unit_usd": "5.95245"
+        },
+        {
+          "minimum": 605,
+          "unit_usd": "5.83864"
+        },
+        {
+          "minimum": 1089,
+          "unit_usd": "5.72638"
+        }
+      ],
+      "no_quote_contact_or_order": true
+    },
+    {
+      "mpn": "TNPW06031K00BYEA",
+      "supplier": "DigiKey",
+      "observed_date": "2026-09-30",
+      "currency": "USD",
+      "per_board_quantity": 2,
+      "packaging": "Cut Tape",
+      "minimum": 1,
+      "multiple": 1,
+      "observed_stock_pieces": 1026,
+      "url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW06031K00BYEA/18891209",
+      "tiers": [
+        {
+          "minimum": 1,
+          "unit_usd": "0.60"
+        },
+        {
+          "minimum": 10,
+          "unit_usd": "0.497"
+        },
+        {
+          "minimum": 50,
+          "unit_usd": "0.435"
+        },
+        {
+          "minimum": 100,
+          "unit_usd": "0.4115"
+        },
+        {
+          "minimum": 500,
+          "unit_usd": "0.36414"
+        }
+      ],
+      "no_quote_contact_or_order": true
+    },
+    {
+      "mpn": "TNPW060310K0BYEA",
+      "supplier": "DigiKey",
+      "observed_date": "2026-09-30",
+      "currency": "USD",
+      "per_board_quantity": 4,
+      "packaging": "Cut Tape",
+      "minimum": 1,
+      "multiple": 1,
+      "observed_stock_pieces": 4407,
+      "url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW060310K0BYEA/7660534",
+      "tiers": [
+        {
+          "minimum": 1,
+          "unit_usd": "0.56"
+        },
+        {
+          "minimum": 10,
+          "unit_usd": "0.468"
+        },
+        {
+          "minimum": 50,
+          "unit_usd": "0.4104"
+        },
+        {
+          "minimum": 100,
+          "unit_usd": "0.3882"
+        },
+        {
+          "minimum": 500,
+          "unit_usd": "0.34354"
+        }
+      ],
+      "no_quote_contact_or_order": true
+    },
+    {
+      "mpn": "RNCF0603TKY10K0",
+      "supplier": "DigiKey",
+      "observed_date": "2026-09-30",
+      "currency": "USD",
+      "per_board_quantity": 4,
+      "packaging": "Cut Tape",
+      "minimum": 1,
+      "multiple": 1,
+      "observed_stock_pieces": 71206,
+      "url": "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RNCF0603TKY10K0/2269698",
+      "tiers": [
+        {
+          "minimum": 1,
+          "unit_usd": "1.61"
+        },
+        {
+          "minimum": 10,
+          "unit_usd": "1.334"
+        },
+        {
+          "minimum": 50,
+          "unit_usd": "1.1716"
+        },
+        {
+          "minimum": 100,
+          "unit_usd": "1.1105"
+        },
+        {
+          "minimum": 500,
+          "unit_usd": "0.99044"
+        }
+      ],
+      "no_quote_contact_or_order": true
+    }
+  ],
+  "costs": [
+    {
+      "build_boards": 1,
+      "original_known_purchase_cash_usd": "25256.08",
+      "packaging_only_known_price_reference_usd": "11294.31000",
+      "packaging_only_known_purchase_cash_if_unchanged_other_offers_usd": "11294.31000",
+      "packaging_and_core_1k_only_known_price_reference_usd": "5665.51000",
+      "conditional_precision_preserving_pilot_basket_known_price_reference_usd": "101.95000",
+      "conditional_pilot_basket_stock_supported_three_changed_lines_usd": "101.95000",
+      "remaining_unpriced_mpn_count": 10,
+      "new_lines": [
+        {
+          "mpn": "LTC2962HUD#PBF",
+          "required_pieces": 3,
+          "buy_pieces": 3,
+          "tier_minimum": 1,
+          "published_unit_usd": "9.56",
+          "published_price_reference_usd": "28.68",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "28.68",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC2962HUD-PBF/9555593"
+        },
+        {
+          "mpn": "TNPW06031K00BYEA",
+          "required_pieces": 2,
+          "buy_pieces": 2,
+          "tier_minimum": 1,
+          "published_unit_usd": "0.60",
+          "published_price_reference_usd": "1.20",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "1.20",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW06031K00BYEA/18891209"
+        },
+        {
+          "mpn": "RNCF0603TKY10K0",
+          "required_pieces": 4,
+          "buy_pieces": 4,
+          "tier_minimum": 1,
+          "published_unit_usd": "1.61",
+          "published_price_reference_usd": "6.44",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "6.44",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RNCF0603TKY10K0/2269698"
+        }
+      ],
+      "complete_board_manufactured_cost_usd": null,
+      "complete_controller_cost_usd": null,
+      "other_offer_availability_still_unqualified": true
+    },
+    {
+      "build_boards": 10,
+      "original_known_purchase_cash_usd": "25686.16",
+      "packaging_only_known_price_reference_usd": "11902.90000",
+      "packaging_only_known_purchase_cash_if_unchanged_other_offers_usd": "11902.90000",
+      "packaging_and_core_1k_only_known_price_reference_usd": "6282.84000",
+      "conditional_precision_preserving_pilot_basket_known_price_reference_usd": "766.20000",
+      "conditional_pilot_basket_stock_supported_three_changed_lines_usd": "766.20000",
+      "remaining_unpriced_mpn_count": 10,
+      "new_lines": [
+        {
+          "mpn": "LTC2962HUD#PBF",
+          "required_pieces": 30,
+          "buy_pieces": 30,
+          "tier_minimum": 25,
+          "published_unit_usd": "6.90640",
+          "published_price_reference_usd": "207.19",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "207.19",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC2962HUD-PBF/9555593"
+        },
+        {
+          "mpn": "TNPW06031K00BYEA",
+          "required_pieces": 20,
+          "buy_pieces": 20,
+          "tier_minimum": 10,
+          "published_unit_usd": "0.497",
+          "published_price_reference_usd": "9.94",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "9.94",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW06031K00BYEA/18891209"
+        },
+        {
+          "mpn": "RNCF0603TKY10K0",
+          "required_pieces": 40,
+          "buy_pieces": 40,
+          "tier_minimum": 10,
+          "published_unit_usd": "1.334",
+          "published_price_reference_usd": "53.36",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "53.36",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RNCF0603TKY10K0/2269698"
+        }
+      ],
+      "complete_board_manufactured_cost_usd": null,
+      "complete_controller_cost_usd": null,
+      "other_offer_availability_still_unqualified": true
+    },
+    {
+      "build_boards": 100,
+      "original_known_purchase_cash_usd": "29124.03",
+      "packaging_only_known_price_reference_usd": "17011.68000",
+      "packaging_only_known_purchase_cash_if_unchanged_other_offers_usd": null,
+      "packaging_and_core_1k_only_known_price_reference_usd": "11463.98000",
+      "conditional_precision_preserving_pilot_basket_known_price_reference_usd": "6338.18000",
+      "conditional_pilot_basket_stock_supported_three_changed_lines_usd": null,
+      "remaining_unpriced_mpn_count": 10,
+      "new_lines": [
+        {
+          "mpn": "LTC2962HUD#PBF",
+          "required_pieces": 300,
+          "buy_pieces": 300,
+          "tier_minimum": 121,
+          "published_unit_usd": "6.26033",
+          "published_price_reference_usd": "1878.10",
+          "observed_stock_covers_quantity": false,
+          "currently_stock_supported_pilot_cash_usd": null,
+          "stock_shortfall_pieces": 229,
+          "source_url": "https://www.digikey.com/en/products/detail/analog-devices-inc/LTC2962HUD-PBF/9555593"
+        },
+        {
+          "mpn": "TNPW06031K00BYEA",
+          "required_pieces": 200,
+          "buy_pieces": 200,
+          "tier_minimum": 100,
+          "published_unit_usd": "0.4115",
+          "published_price_reference_usd": "82.30",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "82.30",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/vishay-dale/TNPW06031K00BYEA/18891209"
+        },
+        {
+          "mpn": "RNCF0603TKY10K0",
+          "required_pieces": 400,
+          "buy_pieces": 400,
+          "tier_minimum": 100,
+          "published_unit_usd": "1.1105",
+          "published_price_reference_usd": "444.20",
+          "observed_stock_covers_quantity": true,
+          "currently_stock_supported_pilot_cash_usd": "444.20",
+          "stock_shortfall_pieces": 0,
+          "source_url": "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RNCF0603TKY10K0/2269698"
+        }
+      ],
+      "complete_board_manufactured_cost_usd": null,
+      "complete_controller_cost_usd": null,
+      "other_offer_availability_still_unqualified": true
+    }
+  ],
+  "checks": [
+    "Original fresh passes independently enumerated corners",
+    "Original 400ppm sensitivity passes",
+    "Blanket 0.1pct negative control fails",
+    "Blanket 0.05pct negative control fails",
+    "Core1k-only fresh/400ppm pass",
+    "Conditional same-precision pilot fresh/400ppm pass",
+    "Wider stated stress allowances correctly prevent pilot lifetime qualification",
+    "Core1k-only combined test allowances still pass static arithmetic",
+    "Known-only conditional pilot basket computes 101.95USD",
+    "LTC100-board stock shortfall cannot become available cash figure"
+  ],
+  "total_numeric_corners": 2560,
+  "resistor_substitution_current_status": "NOT APPLIED; parent explicitly deferred every resistor change; RNCF test drift exceeds original400ppm assumption",
+  "non_E96_values_ohm": [
+    54500,
+    57500,
+    87900,
+    92100
+  ],
+  "four_non_E96_values_in_stock_exact_nominal_lower_cost_offers": null
+}

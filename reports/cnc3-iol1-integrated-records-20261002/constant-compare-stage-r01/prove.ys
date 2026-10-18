@@ -1,0 +1,7 @@
+read_verilog cnc3_command_validate_reference.v cnc3_command_validate_logic.v comparison-miter.v
+hierarchy -check -top comparison_miter
+proc
+flatten
+opt
+check -assert
+sat -verify -prove mismatch 0 -set-def-inputs -show mismatch,reference_result,logic_result

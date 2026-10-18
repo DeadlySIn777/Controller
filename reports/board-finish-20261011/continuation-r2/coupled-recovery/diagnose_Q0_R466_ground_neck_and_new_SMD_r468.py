@@ -1,0 +1,24 @@
+"""Read-only exact fresh ground-source and new-placement aperture diagnosis."""
+from pathlib import Path
+import sys,pickle,json,hashlib,time
+H=Path(__file__).resolve().parent;P=H.parent
+for d in(P/'field-power',P/'sbc-power',H):sys.path.insert(0,str(d))
+import audit_DIC_C1022_actual_R214_full77_and_signals_r220 as K
+from shapely.geometry import Point,LineString,box
+from shapely.ops import unary_union
+from shapely.strtree import STRtree
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=1,allow_nan=False)+'\n')
+out=H/'Q0-R466-ground-neck-and-new-SMD-r468';assert not out.exists();out.mkdir();start=time.monotonic();rp=H/'Q0-exact-R464-current-filled-only-r466/receipt.json';assert sha(rp)=='992fa6a0a0ed542abce804eadd0f43a30144b3dc6667626688d3fdc56c1798d1';r=json.loads(rp.read_bytes());mp=Path(r['model_file']);assert sha(mp)==r['model_sha256'];g,h,b,q,current=pickle.loads(mp.read_bytes());GND='/motherboard_motors/FIELD_GND'
+holes=[(v['uuid'],Point(v['x'],v['y']).buffer(v['drill']/2,quad_segs=128),{'kind':'via','at':[v['x'],v['y']],'drill_mm':v['drill'],'raw_net':v['net']})for v in h['vias']]+[(p['uuid'],sh,{'kind':'pad','ref':p['ref'],'pin':p['num'],'raw_net':p['net']})for p in h['pads']for sh in K.L.poly(p.get('hole')or[])];ht=STRtree([sh for uid,sh,meta in holes]);padrows=[]
+for p in h['pads']:
+ if p['ref']!='R10016':continue
+ sh=unary_union(K.L.poly(p['layers']['F.Cu']));ii=ht.query(sh.buffer(2),predicate='intersects');near=sorted((sh.distance(holes[int(j)][1]),holes[int(j)][0],holes[int(j)][2])for j in ii);assert near;dist,uid,meta=near[0];padrows.append({'pad_UUID':p['uuid'],'pin':p['num'],'physical_bounds_mm':sh.bounds,'nearest_original_drill_UUID':uid,'nearest_original_drill':meta,'physical_drill_to_new_SMD_edge_mm':dist,'guarded_aperture_mm':dist-.005,'required_mm':.275,'PASS':dist-.005>=.275,'all_near_holes':near[:8]})
+put(out/'new-SMD-every-original-drill-aperture-ledger.json',padrows);print('Q0_R468_NEW_SMD_HOLES',[(r['pin'],r['physical_drill_to_new_SMD_edge_mm'],r['PASS'])for r in padrows],flush=True)
+ctx=K.hole_context(current);fgroups=K.physical(current,GND,ctx)[1];sourceRoot=K.root(fgroups,'J11003','2');gf=P/'field-power/REG-U25-DIC-SBC273-corrected-current-independent-full-audit-r368/actual-drilled-current-groups.pkl';assert sha(gf)=='ee233fd9010cf3c29d0c4b47503fd93bf754dddf9dd297f9f7c58117c7589742';oldgroups=pickle.loads(gf.read_bytes());oldRoot=K.root(oldgroups[GND],'J11003','2');lost=K.keys(oldRoot)-K.keys(sourceRoot);island=next(xs for xs in fgroups if any(row['kind']=='via'and row['uuid']=='719fe9ff-b429-4287-95cf-44faacbf8fda'for row in xs));resultroot={'actual_J11003_2_source_keys_lost':sorted(lost),'target_island_source_rooted':not K.keys(island).isdisjoint(K.keys(sourceRoot)),'target_island_keys':sorted(K.keys(island)),'old_source_pad_count':len({r['uuid']for r in oldRoot if r['kind']=='pad'}),'new_source_pad_count':len({r['uuid']for r in sourceRoot if r['kind']=='pad'})};put(out/'fresh-ground-source-neck-obligations.json',resultroot)
+viaindex={v['uuid']:v for v in h['vias']};bylayer=[]
+for layer in K.LAYERS:
+ rootshape=unary_union([r['shape']for r in sourceRoot if r['layer']==layer]);islandshape=unary_union([r['shape']for r in island if r['layer']==layer]);fillroot=unary_union([r['shape']for r in sourceRoot if r['kind']=='fill'and r['layer']==layer]);fillisland=unary_union([r['shape']for r in island if r['kind']=='fill'and r['layer']==layer]);bylayer.append({'layer':layer,'root_to_island_Cu_distance_mm':rootshape.distance(islandshape),'root_to_island_filled_Cu_distance_mm':fillroot.distance(fillisland)if not fillroot.is_empty and not fillisland.is_empty else None,'target_layer_Cu_bounds':islandshape.bounds,'target_fill_bounds':fillisland.bounds})
+ for name,sh in [('source-ground-allCu',rootshape),('source-ground-filledCu',fillroot),('unrooted-three-via-allCu',islandshape),('unrooted-three-via-filledCu',fillisland)]:
+  local=sh.intersection(box(226,161,239,173));(out/(layer+'-'+name+'.wkb')).write_bytes(local.wkb)
+put(out/'actual-layer-source-island-distance-ledger.json',bylayer);cp=out/'ground-source-checkpoint.pkl';cp.write_bytes(pickle.dumps({'groups':fgroups,'root':sourceRoot,'island':island},protocol=5));result={'verdict':'NEW_SMD_APERTURE_AND_ACTUAL_GROUND_NECK_DIAGNOSIS_ONLY','current_model_sha256':sha(mp),'current_receipt_sha256':sha(rp),'new_SMD_drill_failures':sum(not x['PASS']for x in padrows),'actual_21_source_keys_loss_count':len(lost),'source_checkpoint_file':str(cp),'source_checkpoint_sha256':sha(cp),'all_raw_failures_preserved':True,'native_jobs':0,'model_or_board_written':False,'adopted':False,'elapsed_seconds':time.monotonic()-start};put(out/'receipt.json',result);print(json.dumps({'receipt_sha256':sha(out/'receipt.json'),**result}),flush=True)

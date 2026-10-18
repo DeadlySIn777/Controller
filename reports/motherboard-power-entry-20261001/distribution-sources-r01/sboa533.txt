@@ -1,0 +1,1419 @@
+Application Note
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+Paul Stanfel, Mitch Morse
+Current and Position Sensing
+ABSTRACT
+Current sense resistors are used to accurately and precisely measure current flowing through a load. To properly 
+make this measurement, the resistor (also known as a shunt resistor) needs to be placed in series with the 
+load. However, for very large currents, using shunt resistors for measuring current has some drawbacks. Since 
+power dissipation varies proportionally to the square of the current, shunt resistors in series with loads that draw 
+large currents can quickly become inefficient because the shunt resistors dissipate power rather than allowing 
+the power to reach the load, requiring more robust resistors to handle the power. This application note details the 
+advantages and disadvantages of using a section of printed circuit board (PCB) copper trace as a shunt resistor 
+in place of a more conventional surface-mount technology (SMT) shunt resistor. In practice, although much less 
+expensive than an SMT resistor, a copper trace is highly susceptible to temperature fluctuations that must be 
+accounted for to make accurate current measurements. PCB manufacturing tolerances can also lack the tight 
+control and documentation found with SMT resistor tolerances.
+Table of Contents
+1 Introduction.............................................................................................................................................................................3
+2 Experimental Procedure........................................................................................................................................................ 4
+3 Results.....................................................................................................................................................................................8
+3.1 Room Temperature............................................................................................................................................................ 8
+3.2 Temperature Chamber Testing.........................................................................................................................................14
+4 Hardware Revision B............................................................................................................................................................16
+5 Summary............................................................................................................................................................................... 20
+6 References............................................................................................................................................................................ 20
+7 Revision History................................................................................................................................................................... 21
+List of Figures
+Figure 2-1. First Board of Revision A...........................................................................................................................................4
+Figure 2-2. Second Board of Revision A..................................................................................................................................... 5
+Figure 3-1. Expected vs Actual INA190 Output for Eight Trace Configurations.......................................................................... 8
+Figure 3-2. Cross-Sectional View of the 100-mil, Bottom Tap Off Trace....................................................................................10
+Figure 3-3. IPC Standard Specifying Minimum but not Maximum PCB Copper Trace Thickness.............................................11
+Figure 3-4. Resistance vs Current Plots for Six Trace Configurations.......................................................................................12
+Figure 3-5. Temperature vs Current Plots for Three Trace Configurations................................................................................13
+Figure 3-6. 100-mil Bottom Tap Off Resistance vs Current Plots Across Four Temperatures...................................................14
+Figure 3-7. Maximum Resistance vs Temperature for Three Trace Configurations.................................................................. 14
+Figure 4-1. Revision B Board.....................................................................................................................................................16
+List of Tables
+Table 3-1. Average Percent Error - Room Temperature.............................................................................................................. 9
+Table 3-2. Trace Thicknesses Determined by SEM Analysis.................................................................................................... 10
+Table 3-3. Average Percent Error – Room Temperature, Adjusted............................................................................................11
+Table 3-4. Average Percent Error - Temperature Controlled......................................................................................................15
+Table 4-1. Percent Errors for the 100-mil Reduced Thickness Trace........................................................................................ 17
+Table 4-2. Possible Calibration Procedures to Account for PCB Thickness Error.....................................................................18
+Table 4-3. 100-mil Calibration Results.......................................................................................................................................18
+www.ti.com
+Table of Contents
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+1
+Copyright © 2026 Texas Instruments Incorporated
+Table 4-4. 100-mil Calibration Results for 200-mil Trace...........................................................................................................18
+Table 4-5. 100-mil Extended Ground Plane Calibration Results................................................................................................19
+Table 4-6. 8-mil Calibration Results...........................................................................................................................................19
+Table 4-7. INA181 Calibration Results.......................................................................................................................................19
+Table 4-8. Average Percent Error: 8-mil Traces on Board 1......................................................................................................20
+Trademarks
+All trademarks are the property of their respective owners.
+Trademarks
+www.ti.com
+2
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+1 Introduction
+Current sense resistors are essential components in modern power systems, enabling precise monitoring of 
+current flow. Traditionally, discrete shunt resistors are employed for this purpose, strategically placed in series 
+with the load. However, in applications demanding high-current measurement, conventional shunt resistors 
+exhibit limitations. As power dissipation scales proportionally with the square of the current, shunt resistors 
+can become inefficient at higher currents, dissipating significant power otherwisest delivered to the load and 
+necessitating larger, more robust resistor designs.
+This application report details a novel approach to current sensing: utilizing a section of printed circuit board 
+(PCB) copper trace as a shunt resistor. This technique offers potential benefits including reduced component 
+count, lower parasitic inductance, and improved thermal management. However, challenges exist, including 
+controlling trace thickness, accounting for the temperature coefficient of resistance, and minimizing current-
+induced resistance variations. Initial results demonstrated limitations related to trace thickness control and 
+stability. Subsequent hardware revisions, notably Revision B, were designed to mitigate these issues and 
+demonstrate the practicality of this approach. This report outlines the advantages and disadvantages of PCB 
+trace current sensing, provides design considerations, and presents experimental findings from both initial and 
+revised hardware implementations.
+www.ti.com
+Introduction
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+3
+Copyright © 2026 Texas Instruments Incorporated
+2 Experimental Procedure
+The procedure used to determine the viability and performance of using a copper trace as a shunt resistor 
+involved testing several different copper trace widths, lengths, and geometries. The experimental setups are 
+shown in Figure 2-1 and Figure 2-2. These two boards are collectively referred to as Revision A.
+Figure 2-1. First Board of Revision A
+Experimental Procedure
+www.ti.com
+4
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Figure 2-2. Second Board of Revision A
+In total, four trace widths were tested: 8mil, 100mil, 200mil, and 1750mil. Each of these traces was tested at 
+one, two, and three inch lengths with current flowing through them. In addition, each trace was tapped from the 
+bottom of the trace (lower edge of the trace on the red layer) and from the center through vias to another layer 
+(blue layer). Tap off points in this document refer to locations on the copper traces across which the voltage is 
+measured using a differential amplifier. If the temperature and dimensions are known, the resistance between 
+www.ti.com
+Experimental Procedure
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+5
+Copyright © 2026 Texas Instruments Incorporated
+the two points can be calculated. Tap off points were chosen in the bottom and in the middle of the traces to 
+investigate the impact of sense line location on the voltage measurement. The amount of current flowing through 
+a conductor varies inversely with the resistance of the wire, meaning that voltage measurements in the center 
+theoretically vary from measurements at alternate locations. Currents must travel through more copper, causing 
+more resistance to reach the bottom of the trace as opposed to the center. Testing multiple lengths by using 
+different tap points on the trace demonstrates the linearity of the trace. If the trace resistance behaves linearly, 
+the three-inch tap off points produces a resistance three times that of the one-inch tap off points. Also visible 
+in Figure 2-1 is what is referred to as the square shape geometry (the trace second from the top). This is an 
+8-mil trace that is intended to examine the effects of changing the path of current on the overall resistance 
+measurement.
+The copper trace shunt tap off points are connected to an INA190 instrumentation amplifier through copper 
+trace sense lines. The INA190 series of devices are voltage-output current-shunt monitors (also called current-
+sense amplifiers) that are commonly used for overcurrent protection, precision current measurement for system 
+optimization, or in closed-loop feedback circuits. This series of devices can sense drops across shunts at 
+common-mode voltages from –0.1V to +40V, independent of the supply voltage. Five fixed gains are available: 
+25V/V, 50V/V, 100V/V, 200V/V, or 500V/V. The INA190 was selected due to low input bias current, which 
+increases voltage measurement accuracy. For each trace, the INA190 output was recorded at each point (one, 
+two, and three inches stemming from the bottom and from the center of the trace) at several known currents and, 
+using the current and the gain value of the amplifier, converted to a resistance measurement. The maximum 
+current level pulled through each trace was determined using a current width calculator from the manufacturer. 
+Four separate currents (1A, 5A, 10A, and 50A) were used to calculate the minimum trace widths to stay within 
+a 20°C trace temperature rise. These widths were rounded up to obtain a trace width that safely handles the 
+given current, and these currents were defined as the maximum testing current for a particular trace. The 8-mil 
+trace takes 1A, the 100-mil trace takes 5A, the 200-mil trace takes 10A, and the 1750-mil trace takes 50A. 
+INA190 gain settings were chosen to prevent saturation of a copper trace resistor when a maximum current 
+flows through the resistor, assuming a supply voltage of approximately 5V. The 100-mil, 200-mil, and 1750-mil 
+traces all used the INA190 A3 with a gain of 100V/V, while the 8-mil trace used the INA190 A2 with a gain of 
+50V/V.
+Calculating the resistance from a given INA190 output demonstrates how the copper trace resistance changed 
+with increasing current levels. Additionally, these tests were repeated in a temperature-controlled environment 
+at four different ambient temperature levels: 0°C, 25°C, 55°C, and 85°C. The 25°C setting in this case, while 
+conventionally taken to be room temperature, differs from what is referred to here as room temperature in 
+that 25°C was the temperature controlled value, and room temperature refers to measurements taken out of 
+the temperature-controlled environment. Testing at four different temperature levels gives an idea of how the 
+resistance changes with temperature. For these tests only the three-inch test points were used, but once again 
+both the center and bottom tap offs were tested.
+Current step measurements were obtained by adjusting an electronic load in series with the trace to pull the 
+desired current level. To achieve precise results, the voltage across a precision resistor in series with both the 
+traces and the electronic load was measured using a multimeter to accurately determine how much current was 
+moving through the trace. Each trace was tested initially at 0A as specified by the electronic load, although 
+the actual current value flowing through the trace as measured by the resistor and multimeter combination 
+varied across a small range of positive and negative current values. The common mode voltage was set to 
+approximately 5V.
+Although not visible in Figure 2-1 and Figure 2-2, a piece of thermally conductive tape was used to attach 
+the TMP235 temperature sensor to the middle of each trace. The TMP23x devices are a family of precision 
+CMOS integrated-circuit linear analog temperature sensors with an output voltage proportional to temperature. 
+This sensor was covered in thermally resistive tape to further increase contact with the trace and insulate 
+from the surrounding environment. This sensor obtains data about the temperature of the trace to determine 
+how temperature affects trace resistance and performance. Temperature data obtained at the 0A current step 
+was used as a baseline temperature measurement and is intended to account for any variables causing 
+discrepancies between the trace temperature and the ambient temperature, especially in the more controlled 
+environment.
+Experimental Procedure
+www.ti.com
+6
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Results are grouped according to the environmental temperature control during data collection. The process 
+to obtain data is relatively straightforward. For room temperature measurements, the procedure involved 
+incrementally stepping from 0A to the maximum current level for each trace following a roughly logarithmic 
+scale. Upon moving to the next current step, INA190 outputs were recorded for the one-, two-, and three-inch 
+locations. Then, using the TMP235EVM evaluation software, temperature output from the TMP235 sensor was 
+monitored until the temperature ceased increasing. At this point, 50 temperature samples were recorded at a 
+2Hz sampling rate and averaged to determine the trace temperature. During the course of testing, a potentially 
+non-trivial temperature rise occurred between the last tap off tested and the recording of temperature, meaning 
+there is a possibility that INA190 outputs changed during the temperature stabilization process. For this reason, 
+the procedure was modified slightly for the temperature-controlled tests. Since these tests took place in a 
+temperature chamber, the TMP235 was first used to make sure that the trace had equalized with the ambient 
+chamber temperature before any testing began. Then, a reduced number of current steps were used to again 
+sweep from 0A to the maximum. However, in this case, no values were recorded until both the INA190 output 
+and the TMP235 output had stabilized. Results from the two testing setups are detailed in Section 3.
+www.ti.com
+Experimental Procedure
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+7
+Copyright © 2026 Texas Instruments Incorporated
+3 Results
+3.1 Room Temperature
+Precise current measurement at each step allows calculation of the INA190 output for each trace using a 
+current trace resistance calculator. The calculator can obtain the theoretically practical resistance for each trace 
+of given width and length. Temperature data obtained at the 0A current step was interpreted as the ambient 
+temperature and was factored into this theoretically practical resistance value. Traces are assumed to be 1oz 
+copper thickness. Analyzing the deviation from this expected value can give insight into the feasibility of using 
+copper as a shunt resistor. Figure 3-1 shows the plots of these discrepancies for all measured traces at room 
+temperature (uncontrolled temperature environment) for the three-inch measurement. These plots were almost 
+identical for the one- and two-inch locations and are omitted here. Table 3-1 shows the average error for each 
+trace. These errors excluded the percent error value for 0A, as this current level was so small that some traces 
+had percent errors near 20000%, due in part to the offset error of the INA190. Board 1 and Board 2 in Table 3-1 
+refer to different iterations of the same revision, as each revision consisted of three boards, each with the same 
+layout.
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output,
+3", 8 mil
+Expected
+Actual
+0
+2
+4
+6
+8
+10
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 8 mil square shape
+Expected
+Actual
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+1
+2
+3
+4
+5
+6
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 100 mil bottom tap off
+Expected
+Actual
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+1
+2
+3
+4
+5
+6
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 100 mil center tap off
+Expected
+Actual
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+2
+4
+6
+8
+10
+12
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 200 mil bottom tap off
+Expected
+Actual
+0
+1
+2
+3
+4
+5
+6
+7
+8
+0
+2
+4
+6
+8
+10
+12
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 200 mil center tap off
+Expected
+Actual
+Results
+www.ti.com
+8
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+0
+1
+2
+3
+4
+5
+0
+10
+20
+30
+40
+50
+60
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 1750 mil bottom tap off
+Expected
+Actual
+0
+1
+2
+3
+4
+5
+0
+10
+20
+30
+40
+50
+60
+INA190 Output (V)
+Current (A)
+Expected vs. Actual INA190 Output, 
+3", 1750 mil center tap off
+Expected
+Actual
+Figure 3-1. Expected vs Actual INA190 Output for Eight Trace Configurations
+Table 3-1. Average Percent Error - Room Temperature
+Trace
+Average Percent Error
+Average
+1”
+2”
+3”
+8mil
+–51.95%
+–53.64%
+–53.20%
+–52.93%
+8mil square(1)
+–
+–
+–58.01%
+–58.01%
+100mil bottom tap off, board 1
+–43.08%
+–44.20%
+–48.73%
+–45.34%
+100mil bottom tap off, board 2
+–54.77%
+–55.05%
+–54.52%
+–54.78%
+100mil center tap off
+–38.53%
+–39.25%
+–39.15%
+–38.98%
+200mil bottom tap off
+–31.10%
+–32.09%
+–32.36%
+–31.85%
+200mil center tap off
+–35.01%
+–35.27%
+–35.36%
+–35.21%
+1750mil bottom tap off
+1.48%
+–1.25%
+–3.44%
+–1.07%
+1750mil center tap off
+0.90%
+–1.49%
+0.58%
+0.00%
+(1)
+The square shape trace had only one tap off point at three inches.
+The only trace width without significant error was the 1750-mil trace. At low current levels (less than 1A), the 
+1750mil had positive error, but from there to 50A, errors became negative. All other traces had very large 
+errors that were; however, remarkably consistent. Also, discrepancies between measurements made on board 
+1 and board 2 were noted, as shown with the two instances of the 100mil bottom tap off data points. Finally, 
+measurements made at the center of the trace were different from those made at the bottom. However, this 
+effect is not predictable. Some were better approximations, but some were worse. The 100-mil trace showed 
+the largest difference, with 6.36% difference in error. The 1750-mil trace was also a better approximation at the 
+center tap off.
+To determine the cause of the large error, one of the boards was cut in half and analyzed by a scanning electron 
+microscope (SEM). SEM analysis of the trace cross section showed that trace thickness was much larger than 
+the assumed 1oz/ft2 copper that was ordered. One of the trace cross sections is shown in Figure 3-2, and the 
+actual trace thicknesses are displayed in Table 3-2.
+www.ti.com
+Results
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+9
+Copyright © 2026 Texas Instruments Incorporated
+Figure 3-2. Cross-Sectional View of the 100-mil, Bottom Tap Off Trace
+Table 3-2. Trace Thicknesses Determined by SEM Analysis
+PC Board
+Thickness (µm)
+Thickness (oz/ft2)
+Width (mm)
+Width (mil)
+100 mil bottom
+63.5
+1.82
+2.50
+98.4
+100 mil center
+62.4
+1.79
+2.28
+89.8
+1750 mil
+41.7
+1.20
+44.58
+1755.1
+200 mil center
+62.1
+1.78
+4.78
+188.2
+200 mil bottom
+61.2
+1.76
+4.33
+170.5
+As shown in Table 3-2, some traces were almost twice as thick as was expected compared to the practical 1 oz 
+(34.8µm). A thicker trace decreases the resistance, explaining why some of the trace percent errors were in the 
+–40% to –50% range.
+Contacting the PCB manufacturer revealed the reason that the smaller copper traces were so much thicker than 
+expected. Due to the process of plating copper on the outer layer of a PCB, patterns with less surrounding 
+copper are thicker in general. Since the 100- and 200-mil traces are relatively isolated from other copper 
+patterns, the thickness is large. The 1750-mil trace, however, is large enough to reduce the impact of this effect 
+and is much closer to what is expected. This is borne out by examining standards released by the Association 
+Connecting Electronics Industries (IPC). IPC standards mandate a minimum copper trace thickness, but do not 
+specify the maximum. Essentially, this means that any trace used as a current shunt is always less than the 
+expected resistance, with a more prominent effect occurring for smaller trace widths. The relevant IPC standard 
+is shown in Figure 3-3. (Table reproduced with permission from IPC).
+Results
+www.ti.com
+10
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Figure 3-3. IPC Standard Specifying Minimum but not Maximum PCB Copper Trace Thickness
+Trace width variance on the same board creates difficulty in determining whether or not the square-shaped trace 
+affects the trace resistance, although this comparison was reexamined in the second revision as detailed in 
+Section 4.
+Using the data from Table 3-2, the estimates of trace resistance were modified to attempt to better match the 
+experimental results. Instead of 1-oz copper, the thickness was set as the entry in Table 3-2. Also, since previous 
+resistance measurements assumed 25°C ambient temperature, the new temperature was set to be whatever 
+temperature the TMP235 read at the 0A current step. Table 3-3 shows the adjusted results.
+Table 3-3. Average Percent Error – Room Temperature, Adjusted
+Trace
+Average Percent Error
+Average
+1”
+2”
+3”
+100mil bottom tap off
+–10.11%
+22.22%
+0.61%
+4.24%
+100mil center tap off
+–13.09%
+18.92%
+6.69%
+4.17%
+200mil bottom tap off
+3.14%
+1.70%
+1.18%
+2.01%
+200mil center tap off
+9.38%
+8.68%
+8.61%
+8.89%
+1750mil bottom tap off
+21.87%
+18.80%
+16.10%
+18.92%
+1750mil center tap off
+21.17%
+18.51%
+20.92%
+20.20%
+After the adjustment process, the traces decreased significantly in error with the exception of the 1750-mil trace 
+which experienced a substantial increase in error. The differences between center and bottom tap off points as 
+noted in Table 3-1 are also much less pronounced and, in the case of the 1750-mil trace, are even reversed.
+Because copper traces experience heating as current passes through, the extrapolated resistance of the copper 
+traces were recorded with respect to the current passing through the traces. Potential for error exists in the fact 
+that, throughout the measurement process, there is a possibility that the trace continues to heat up, as noted 
+in Section 2. The impact of additional trace heating during the temperature equalization process likely resulted 
+in a difference of around 0.5mΩ at the very maximum, based on observations made in the later tests. Plots of 
+www.ti.com
+Results
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+11
+Copyright © 2026 Texas Instruments Incorporated
+how trace resistance changes with current are shown in Figure 3-4. Temperature data is unavailable for the 8-mil 
+traces.
+0.000
+0.002
+0.004
+0.006
+0.008
+0.010
+0
+1
+2
+3
+4
+5
+6
+Resistance (Ω)
+Current (A)
+Resistance vs. Current, 
+100 mil bottom tap off
+100mil, 1"
+100mil, 2"
+100mil, 3"
+0.000
+0.002
+0.004
+0.006
+0.008
+0.010
+0
+1
+2
+3
+4
+5
+6
+Resistance (Ω)
+Current (A)
+Resistance vs. Current,
+100 mil center tap off
+100mil, 1"
+100mil, 2"
+100mil, 3"
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0
+2
+4
+6
+8
+10
+12
+Resistance (Ω)
+Current (A)
+Resistance vs. Current,
+200 mil bottom tap off
+200mil, 1"
+200mil, 2"
+200mil, 3"
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0
+2
+4
+6
+8
+10
+12
+Resistance (Ω)
+Current (A)
+Resistance vs. Current,
+200 mil center tap off
+200mil, 1"
+200mil, 2"
+200mil, 3"
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010
+0
+10
+20
+30
+40
+50
+60
+Resistance (Ω)
+Current (A)
+Resistance vs. Current,
+1750 mil bottom tap off
+1750mil, 1"
+1750mil, 2"
+1750mil, 3"
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010
+0
+10
+20
+30
+40
+50
+60
+Resistance (Ω)
+Current (A)
+Resistance vs. Current,
+1750 mil center tap off
+1750mil, 1"
+1750mil, 2"
+1750mil, 3"
+Figure 3-4. Resistance vs Current Plots for Six Trace Configurations
+These plots demonstrate that for low current values, the trace resistance exhibits nonlinear behavior, but after 
+a certain point the resistance changes more or less linearly with current. This is most likely due to the INA190 
+offset error which has a larger impact when the output is smaller. The point at which a trace begins to behave 
+linearly is dependent on the size of the trace, as the 100-mil trace entered this region around 0.1A, the 200-mil 
+trace around 0.2A, and the 1750-mil trace around 2.5A. This is important information to keep in mind, as this 
+behavior demonstrates that simply running current through the trace affects the resistance. Any application of a 
+copper trace must take into account the fact the time needed for the trace resistance to stabilize in this manner.
+Finally, the temperature sensor attached to the board gave indication of how the trace temperature changed as 
+the current increased. A strong upward trend was expected and for the most part obtained. Full contact with 
+the sensor was unable to be fully verified for smaller traces, and the temperature results can be skewed by 
+the surrounding PCB. However, temperature data was not recorded until the trace temperature as recorded by 
+Results
+www.ti.com
+12
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+the sensor had ceased increasing, so these values theoretically represent a stable reading after all change has 
+taken place. Plots of the trace temperature are shown in Figure 3-5.
+0
+5
+10
+15
+20
+25
+30
+0
+1
+2
+3
+4
+5
+6
+Temperature (ᵒC)
+Current (A)
+Temperature vs. Current, 100 mil
+Bottom
+Center
+0
+5
+10
+15
+20
+25
+30
+35
+40
+0
+2
+4
+6
+8
+10
+12
+Temperature (ᵒC)
+Current (A)
+Temperature vs. Current, 200 mil
+Bottom
+Center
+0
+5
+10
+15
+20
+25
+30
+35
+40
+45
+0
+10
+20
+30
+40
+50
+60
+Temperature (ᵒC)
+Current (A)
+Temperature vs. Current, 1750 mil
+Bottom
+Center
+Note
+The 1750-mil curves are virtually indistinguishable.
+Figure 3-5. Temperature vs Current Plots for Three Trace Configurations
+Maximum current values were chosen to cause approximately 20°C of temperature rise from the ambient. This 
+was not the case for many of the plots in Figure 3-5. Similar trace widths did, however, experience similar 
+temperature rises. This lack of expected temperature rise is likely the result of the manufacturing tolerances 
+discussed previously and otherwise is not significant, as the temperature rise calculations involved several 
+assumptions and rounding errors.
+www.ti.com
+Results
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+13
+Copyright © 2026 Texas Instruments Incorporated
+3.2 Temperature Chamber Testing
+To determine the effects of temperature variation on a copper trace shunt resistor, the traces were placed in a 
+temperature chamber to control the ambient temperature. Fewer data points were taken in the chamber due to 
+the added time needed for the board to reach the chamber temperature between trace measurements. Also, 
+only the three inch separation is considered. Similar to room temperature measurements, resistance changes 
+can be plotted against current. Similar trends were observed relative to room temperature, and the plots are 
+shown in Figure 3-6. The 100-mil, bottom tap off plots are used to demonstrate the changes across temperature, 
+as every trace width performed similarly.
+0.000
+0.002
+0.004
+0.006
+0.008
+0.010
+0.012
+0.014
+0.016
+0.018
+0
+1
+2
+3
+4
+5
+6
+Resistance (Ω)
+Current (A)
+Resistance vs. Current, 100 mil 
+bottom tap off
+0C
+25C
+55C
+85C
+Figure 3-6. 100-mil Bottom Tap Off Resistance vs Current Plots Across Four Temperatures
+The plots in Figure 3-6 show that as ambient temperature increases, the resistance also increases, which is 
+consistent both with what is expected and previous results. Figure 3-7 demonstrates how much the resistance 
+changes with temperature by plotting the maximum recorded resistance for each trace with respect to the 
+ambient temperature. The 0A measured resistance is not included.
+0.000
+0.002
+0.004
+0.006
+0.008
+0.010
+0.012
+0
+20
+40
+60
+80
+100
+Maximum Resistance (Ω)
+Ambient Temperature (ᵒC)
+Maximum Resistance vs. 
+Temperature, 100 mil
+Bottom
+Center
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+0
+20
+40
+60
+80
+100
+Maximum Resistance (Ω)
+Ambient Temperature (ᵒC)
+Maximum Resistance vs. 
+Temperature, 200 mil
+Bottom
+Center
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010
+0.0012
+0
+20
+40
+60
+80
+100
+Maximum Resistance (Ω)
+Ambient Temperautre (ᵒC)
+Maximum Resistance vs. 
+Temperature, 1750 mil
+Bottom
+Center
+Figure 3-7. Maximum Resistance vs Temperature for Three Trace Configurations
+Results
+www.ti.com
+14
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+The plots in Figure 3-7 indicate that as ambient temperature increases, so does the measured resistance. This is 
+an important factor to keep in mind, as the operating temperature of an application using a copper trace current 
+shunt must be taken into account for proper calibration. As in the case of the room temperature environment, 
+the average percent errors, this time across a range of temperatures, were calculated and are displayed in Table 
+3-4.
+Table 3-4. Average Percent Error - Temperature Controlled
+Trace
+Average Percent Error
+Average
+0°C
+25°C
+55°C
+85°C
+100-mil bottom tap off
+–49.51%
+–44.19%
+–37.75%
+–31.31%
+–40.69%
+100-mil center tap off
+–45.34%
+–39.47%
+–32.25%
+–25.63%
+–35.67%
+200-mil bottom tap off
+–39.70%
+–33.17%
+–25.74%
+–20.07%
+–29.67%
+200-mil center tap off
+–42.29%
+–35.89%
+–28.71%
+–21.30%
+–32.05%
+1750-mil bottom tap off
+–13.72%
+–4.75%
+6.39%
+16.92%
+1.21%
+1750-mil center tap off
+–10.72%
+–1.29%
+10.24%
+21.46%
+4.93%
+The values in Table 3-4 demonstrate potential design considerations. All traces except the 1750-mil trace 
+experienced a decrease in errors as temperature increased. The lowest error of the 1750-mil trace occurred at 
+25℃. This is because resistance increases with temperature. Because all of the traces, with the exception of the 
+1750-mil trace, started at significantly lower resistances than expected due to the PCB manufacturing process, 
+as the temperature and resistance rise, the traces approach the optimal value. In applications experiencing 
+temperatures significantly above 25°C, a smaller trace can be acceptable depending on the temperature rise.
+www.ti.com
+Results
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+15
+Copyright © 2026 Texas Instruments Incorporated
+4 Hardware Revision B
+The results given in Section 3 initially imply that copper trace shunt resistors are not feasible for practical use, 
+given the inability to control the true thickness of the trace and tendency of copper to change resistance in 
+response to current flow. However, Figure 4-1 displays a second design revision with an alternative experimental 
+setup that offers how to avoid the issues discussed previously. This design is referred to as Revision B.
+Figure 4-1. Revision B Board
+The trace at the top (see Figure 4-1) attempts to add a large amount of surrounding copper (an extended 
+ground plane) to the 100-mil trace to decrease the impact of the PCB manufacturing error. The second trace is a 
+Hardware Revision B
+www.ti.com
+16
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+normal 100-mil trace that is measured by both the INA190, as in the first revision, and the INA181. The INA181 
+current-sense amplifier is designed for cost-optimized applications. This device is part of a family of bidirectional, 
+current-sense amplifiers (also called current-shunt monitors) that sense voltage drops across current-sense 
+resistors at common-mode voltages from –0.2V to +26V, independent of the supply voltage. The INAx181 family 
+integrates a matched resistor gain network in four fixed-gain device options: 20V/V, 50V/V, 100V/V, or 200V/V. 
+This matched gain resistor network minimizes gain error and reduces the temperature drift. The reason for 
+comparing the INA181 to the INA190 is to analyze the possibility of using a copper trace shunt in conjunction 
+with the lower cost INA181 to develop a less expensive, though less accurate, current-sense alternative. For 
+this trace, no attempt is made to regulate the thickness of the trace. Instead, a two-point calibration is used to 
+try to accurately predict the output of the device regardless of the actual thickness of the trace. This kind of 
+calibration is also tested with other trace widths. Finally, the last three traces in Figure 4-1 are repeated 8-mil 
+traces, intended primarily to look at the variability in trace width within a single board.
+Table 4-1 shows the percent error results for the 100-mil trace with an extended ground plane. The 100-mil trace 
+errors from Table 3-1 are reprinted for comparison, as well as the 100-mil trace with no ground plane shown in 
+Figure 4-1. As before, “board 1” and “board 2” refer to different boards in the same revision.
+Table 4-1. Percent Errors for the 100-mil Reduced Thickness Trace
+Trace
+Average Percent Error
+Average
+1”
+2”
+3”
+100-mil extended ground plane, 
+board 1
+–16.71%
+–20.29%
+–23.22%
+–20.07%
+100-mil extended ground plane, 
+board 2
+–18.25%
+–21.43%
+–24.64%
+–21.44%
+100-mil, board 1
+–38.87%
+–
+–
+–38.87%
+100-mil bottom tap off
+–42.96%
+–44.08%
+–48.38%
+–45.14%
+100-mil center tap off
+–38.53%
+–39.25%
+–39.15%
+–38.98%
+The error is significantly reduced even when compared to a trace that is on the same board, but is still large. 
+However, based on the results of testing multiple boards, the error appears at least consistent. This means that 
+this technique is feasible, but different boards from different manufacturers can have different errors. In addition, 
+the larger ground plane takes up a significant amount of space and essentially removes the advantages of using 
+a smaller 100-mil trace as opposed to the 1750-mil trace, as the latter option is more accurate and occupies 
+approximately the same area. The results of this experiment indicate that the more continuous the copper plane, 
+the closer trace thickness is to the expected value and that obtaining a resistance of the correct value requires a 
+very large trace.
+The board was also used to determine the effectiveness of a simple, space-saving calibration process. The 
+curves shown in Figure 3-1 indicate that the discrepancy between expected and actual outputs can simply 
+be treated as a gain error. Calibrating the trace with a low and a high current theoretically allows for any 
+outputs along the Actual curve to be predicted. This procedure is complicated by several factors. First, as 
+shown in Figure 3-4, resistance changes as current moves through the trace. This means that the calibration 
+curve can be skewed depending on when measurements are taken. In some cases, outputs settling times 
+were recorded in excess of 5 minutes. Also, if there is significant variability of trace thickness between boards, 
+manufacturers must calibrate every board individually, and batch calibration processes introduce inaccuracies. 
+Finally, calibrating in this way does not allow for changes caused by temperature variation away from the 
+calibration temperature.
+To determine the feasibility of a two-point calibration method, the first step was to use a realistic procedure. 
+Table 4-2 displays 4 possible setups, distinguished by how many data points were collected, whether or not the 
+calibration output measurements were allowed to stabilize, and whether or not the test output was allowed to 
+stabilize. Each setup was used to predict the output of the INA190 output with 2.5A running through the trace. 
+The percent error between this prediction using the calibration and the actual output is also given. These were 
+obtained with the plain 100-mil trace in Figure 4-1.
+www.ti.com
+Hardware Revision B
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+17
+Copyright © 2026 Texas Instruments Incorporated
+Table 4-2. Possible Calibration Procedures to Account for PCB Thickness Error
+Setup
+Number of Data Points
+Calibration Outputs Stable?
+Test Output Stable?
+Percent Error
+Maximum Data Points
+4
+Yes
+No
+–1.85%
+Reduced Data Points
+2
+Yes
+No
+–1.24%
+Reduced Temperature 
+Effects
+2
+No
+No
+–0.58%
+Maximum Temperature 
+Effects
+2
+No
+Yes
+–2.25%
+The first setup took four calibration data points, three of which were in the low current range. This was the 
+most unrealistic, as waiting for four different calibration points to stabilize before recording them is infeasible 
+in a practical application. In a real application, current typically flows through the trace long enough to reach 
+the equilibrium temperature of the trace. Recording test output before temperature stabilization provides an 
+inaccurate simulation of actual operational conditions. For this reason, the second and third setups are also not 
+realistic. The fourth option represents the most feasible plan to implement: the minimum number of data points, 
+with the shortest amount of time spent on waiting for the calibration process, and a test current that has been 
+flowing for a long time. Unfortunately, this procedure has the largest error but is the only one that can realistically 
+be implemented in large quantities.
+To test the calibration process, the data points recorded were used to calculate the slope and intercept of 
+the calibration curve. The current can be predicted using these numbers to backwards-calculate an output 
+from the INA190. Because the actual current is known, calculating percent error reveals the effectiveness of 
+the calibration. The first trace that was calibrated was the 100-mil trace used to obtain Table 4-2 data. The 
+calibration currents used were 0.1A and either 5A or 10A. Four test currents were used: 0.01A, 2.5A, 5.5A, 
+and 7A. For each, the INA190 output was allowed to stabilize before recording. To thoroughly examine the 
+capabilities of this technique, the 100-mil trace from revision B was used to predict INA190 outputs from the 
+200-mil trace of revision A. Table 4-3 and Table 4-4 show the results. The calibration data was taken from board 
+1, revision B.
+Table 4-3. 100-mil Calibration Results
+Board
+Maximum 
+Calibration Point
+Percent Errors
+0.01A
+2.5A
+5.5A
+7A
+Board 1, Rev. B
+5A
+–36.31%
+–1.16%
+2.11%
+4.03%
+Board 2, Rev. B
+5A
+–12.72%
+–1.58%
+1.46%
+3.53%
+Board 1, Rev. A
+5A
+–98.76%
+–1.87%
+1.98%
+4.55%
+Board 1, Rev. B
+10A
+–20.52%
+–4.57%
+–1.49%
+0.35%
+Board 2, Rev. B
+10A
+15.20%
+–4.97%
+–2.12%
+–0.14%
+Board 1, Rev. A
+10A
+–81.22%
+–5.25%
+–1.62%
+0.85%
+Table 4-4. 100-mil Calibration Results for 200-mil Trace
+Board
+Maximum 
+Calibration Point
+Percent Errors
+0.02A
+5A
+10A
+20A
+Board 1, Rev. A
+5A
+–79.87%
+18.01%
+24.96%
+49.92%
+Board 1, Rev. A
+10A
+–55.87%
+13.92%
+20.54%
+44.57%
+Testing two different calibration points demonstrates how the calibration can be adjusted based on anticipated 
+current. A 100-mil trace can handle 5A while staying within a relatively arbitrary limit of 20°C of temperature rise. 
+Calibrating to a higher current allows for more accurate predictions of larger currents, but the extrapolation of 
+lower currents suffers. Also, accuracy of the calibrated prediction severely suffers when used for a trace of a 
+different width and revision. This makes sense as more factors are introduced that can cause deviation from the 
+calibration conditions.
+Hardware Revision B
+www.ti.com
+18
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+This calibration procedure was also used for the trace with the extended ground plane, as well as the 8-mil trace. 
+Table 4-5 and Table 4-6 show these results. The two calibration points used for the 8-mil trace were 0.02A and 
+1A.
+Table 4-5. 100-mil Extended Ground Plane Calibration Results
+* These currents caused saturation for some outputs and are left blank when this is the case.
+Board
+Maximum 
+Calibration Point
+Length
+Percent Errors
+0.01A
+2.5A
+5.5A*
+9.5A*
+Board 1
+5A
+1in
+800.08%
+3.00%
+4.57%
+10.73%
+2in
+65.48%
+–0.64%
+2.29%
+–
+3in
+–28.81%
+11.92%
+–
+–
+Board 2
+5A
+1in
+796.22%
+2.47%
+3.63%
+10.24%
+2in
+81.88%
+–1.63%
+0.75%
+–
+3in
+–29.23%
+10.39%
+–
+–
+Table 4-6. 8-mil Calibration Results
+* The first two boards used a current of 1.5A, while the last three used 1.2A to avoid output saturation.
+Board
+Percent Errors
+0.005A
+0.5A
+0.95A
+1.5A, 1.2A*
+Rev. B, Board 1, 1”
+12.99%
+–0.72%
+0.89%
+3.51%
+Rev. B, Board 2, 1”
+4.06%
+–2.03%
+–0.45%
+2.00%
+Rev. B, Board 2, 3”
+9.91%
+1.59%
+2.71%
+3.58%
+Rev. B, Board 1, square
+–1.85%
+–14.46%
+–12.97%
+–11.69%
+Rev. A, Board 1, square
+–9.70%
+–8.71%
+–7.10%
+–5.83%
+Finally, the INA181 was used for calibration. The procedure was identical to the method used for the INA190, 
+only with a different device. Only the 100-mil trace was examined using this calibration technique. Table 4-7 
+shows the results.
+Table 4-7. INA181 Calibration Results
+Board
+Max. Cal. Point
+Percent Errors
+0.01A
+2.5A
+5.5A
+7A
+Board 1, Rev. B
+5A
+–99.90%
+–0.12%
+2.24%
+4.47%
+Board 1, Rev. B
+10A
+–99.90%
+–2.93%
+–0.71%
+1.44%
+Board 2, Rev. B
+5A
+–52.27%
+–0.89%
+1.61%
+3.66%
+Board 2, Rev. B
+10A
+–27.50%
+–3.68%
+–1.32%
+0.66%
+The data in the previous tables demonstrate several limitations of the two-point calibration process. Calibration 
+points taken from one board typically were able to predict outputs from boards of the same revision. However, 
+for boards of different revisions, the accuracy was significantly decreased due to PCB manufacturing variability 
+over time. The INA181 also seemed to perform equal to or even better than the INA190. This suggests that 
+the INA181 can be used in place of the INA190 with similar results, at least when calibration is being used to 
+account for discrepancies.
+www.ti.com
+Hardware Revision B
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+19
+Copyright © 2026 Texas Instruments Incorporated
+Finally, revision B provided the opportunity to reexamine the effects of trace shape on resistance. Table 4-8 
+shows the results from these experiments, similar in format to Table 3-1.
+Table 4-8. Average Percent Error: 8-mil Traces on Board 1
+Trace
+Average Percent Error
+Average
+1”
+2”
+3”
+8mil
+–51.95%
+–53.64%
+–53.20%
+–52.93%
+8mil square left
+–
+–
+–58.01%
+–58.01%
+8mil square right
+–
+–
+–51.80%
+–51.80%
+While there are differences, determining whether these variations stem from trace shape or result from thickness 
+disparities provides challenging. The fact that the same shaped trace has a different average (right versus left) 
+implies that this discrepancy is due to the same previously-discussed tolerances, or at least that any difference 
+in resistance added by trace shape is not enough to overcome thickness variation.
+All results showed a much larger percent error for very low current values, but this is to be expected due to the 
+offset error of the INA190 and INA181. These concerns typically arise even for conventional SMT resistors.
+5 Summary
+There are several advantages to using copper traces in place of a normal shunt resistor. One advantage is the 
+reduced cost of implementation. Another is that copper traces can handle large currents, depending on the size 
+of the trace. This must be balanced against the fact that copper trace thickness is highly susceptible to variations 
+in the PCB manufacturing process, and that temperature variation due to ambient conditions and current running 
+through the trace can affect the resistance measurements.
+Copper trace shunt resistors are not designed for any application that requires a high degree of accuracy. The 
+only way to make sure that the trace resistance is reasonably close to what is expected is to use a very large 
+continuous trace with no gaps. This is also the only trace that can be used to handle large currents.
+Alternatively, for applications where cost is more important to optimize than accuracy, a two-point calibration 
+method can be used to account for manufacturing errors. However, the approximation afforded by the calibration 
+becomes significantly worse as more boards are made, as PCB manufacturers are unable to completely control 
+how much copper is plated on the board. The calibration prediction also gets worse for larger currents, as these 
+currents heat the trace more and cause more deviation from the expected values.
+Some factors proved to not be as important to implementing a copper trace shunt. No significant difference in 
+measurement was noticed between tap off points, either at the bottom or the center. Also, trace shape appeared 
+to not have much of an impact on the overall resistance of the trace, but this is difficult to prove conclusively.
+Copper traces, while an inexpensive alternative to SMT shunt resistors, must be used with caution to measure 
+current. An implementation using this method can not be assured to behave as expected, and requires adjusting 
+calibration constants to account for variability.
+6 References
+•
+IPC table from IPC-6012, reproduced with permission from IPC.
+Summary
+www.ti.com
+20
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+7 Revision History
+Changes from Revision * (January 2022) to Revision A (April 2026)
+Page
+•
+Updated Introduction section..............................................................................................................................3
+www.ti.com
+Revision History
+SBOA533A – JANUARY 2022 – REVISED APRIL 2026
+Submit Document Feedback
+Using a PCB Copper Trace as a Current Sense
+Shunt Resistor
+21
+Copyright © 2026 Texas Instruments Incorporated
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

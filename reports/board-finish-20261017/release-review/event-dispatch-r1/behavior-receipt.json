@@ -1,0 +1,79 @@
+{
+  "status": "ISOLATED_DISPATCH_BOUNDARY_AND_EXTERNAL_STRESS_OLD_NEW_DIFFERENTIAL_PASS",
+  "canonical_unchanged": true,
+  "candidate_SHA256": "7e7de0b8144d71f63b79b4b2e8123912507c2bfeb22cd0459716869970419171",
+  "canonical_SHA256": "ddb1cf8325d3cb89a441d6fa878d7ffe40e82835504289cbe76e0da9b0590c51",
+  "differential_engine": "installed WSL GarciaMechBuilder Icarus Verilog, taskset CPUs16,17; four-state case-inequality checks",
+  "direct_tool_compile_exit": 0,
+  "direct_tool_execute_exit": 0,
+  "direct_tool_exec_session": 74189,
+  "console_provenance": "differential-execute.log is verbatim stdout copied from the completed direct exec result; transcript retains compile warning and full command",
+  "compile_warning": "shared test stimulus literal exceeds288bits and is truncated equally for both DUTs; no RTL compile warning; retained in tool transcript",
+  "boundary_cases": 55296,
+  "cycles": 363328,
+  "producer_masks": 128,
+  "write_bank_alignments": 8,
+  "free_slots": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "next_sequence_starts": [
+    254,
+    255,
+    1
+  ],
+  "same_cycle_delivered_ACK": [
+    false,
+    true
+  ],
+  "all_seven_accepting_cases": 96,
+  "ACK_cases": 27648,
+  "exact_full_cases": 6144,
+  "multi_event_sequence_wrap_cases": 64,
+  "seeded_boundary_scope": "Each boundary case starts after reset from an explicitly initialized legal ring state and all256known memory words, then runs actual clocked prefetch, producer/ACK dispatch and commits. This enumerates transition boundaries; it does not prove every seeded state reachable by external stimulus.",
+  "external_only_scope": [
+    "260 fault enqueue attempts reach256capacity+sticky overflow",
+    "256snapshot/complete/exact ACK handshakes drain queue",
+    "clear and asynchronous reset with pending writes",
+    "30000deterministic stress cycles with requests, provider loss, captures, debounce/polarity changes, malformed ACKs, clear/reset, unknown inputs"
+  ],
+  "compared_after_every_clock": [
+    "event_head/status/probe_status/index_armed/overflow",
+    "rd/wr/count/next_sequence/snapshot_sequence/delivered_sequence/prefetched_rd",
+    "write_enable/write_address/full1280bitwrite_data"
+  ],
+  "explicit_XZ_scope": {
+    "receipt_SHA256": "d9539d3a9ecfca4bba11c22c962f386ef72b9f684918d8dd5911bb9eadfc4151",
+    "simultaneous_producers": 7,
+    "literal_Z_X_payload_preserved_in_write_bus_and_observable_head": true,
+    "delivered_ack_pops_once": true,
+    "unknown_if_controls": true
+  },
+  "logical_equivalence_argument": "Existing task admission/temp_count/temp_wr/temp_sequence updates and call ordering are retained. Accepted consecutive addresses number at most7, so modulo8bank destinations are distinct. Each fixed producer payload and slot is recorded once; exact one-hot case writes the same full payload/address at the same clock. Default bus zeroing and clear/reset assignments are unchanged. No forced synthesis assertion/parallel-case attribute is used.",
+  "capacity_depth_width_producer_limits_changed": false,
+  "canonical_source_adoption": false,
+  "formal_equivalence": "NOT_RUN",
+  "native_mapping": "SEPARATE_RECEIPT",
+  "full_existing_runtime_regression_with_dispatch": "OPEN",
+  "physical_wrapper_place_route_timing": "OPEN",
+  "manufacturing_ready": false,
+  "input_output_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\finalize_event_dispatch_behavior_r1.py": "21d2a028b5b7a57da89466564e58b92e514dcd82ff4b1b56bbf9c65a00c13be8",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\prepare_event_dispatch_r1.py": "3b35ec71e5b4227942a5f63ac238b6e60723f7d4cc200c06935ffea1d0635816",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event_dispatch_diff_tb.sv": "53181c39f6cd29e5f62b31fd4f9edd540ceb1332c831d303e1351d772922b457",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\cnc3_runtime_events.v": "7e7de0b8144d71f63b79b4b2e8123912507c2bfeb22cd0459716869970419171",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\original_diff.v": "dee554aee848a3fbdfb7a61d81b1cc91b06021aafdf41e4d1ba943d12fdba561",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\candidate_diff.v": "6f80e23e2529be5bf38add2baae974f64f4158ad8bb810d9e4a6c2a072d7b873",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\differential.vvp": "fd4967cb93af1e0bf0459c7196703f842d881328edb41fbf036f9434b777ec09",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\differential-execute.log": "0b98d88944283396ce81bdfe1f1cd7b655f13168b65c1569aaa57e5d6aa3f3e7",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-dispatch-r1\\explicit-xz-receipt.json": "d9539d3a9ecfca4bba11c22c962f386ef72b9f684918d8dd5911bb9eadfc4151",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-memory-inference-r1\\registered-bypass\\cnc3_event_bank.v": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841"
+  }
+}

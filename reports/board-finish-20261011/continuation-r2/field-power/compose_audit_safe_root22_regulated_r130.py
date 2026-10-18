@@ -1,0 +1,16 @@
+"""Fresh six-feed audit on ROOT's independently clean five-spine successor."""
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'compose_audit_reference_safe_regulated_r129.py').read_text()
+s=s.replace("O=H/'reference-safe-regulated-source-contact-audit-r129'","O=H/'safe-root22-regulated-source-contact-audit-r130'")
+s=s.replace("base=H/'regulated-indexed-reference-wall-repair-base-r123';br=json.loads((base/'receipt.json').read_text());assert sha(base/'model.pkl')==br['model_sha256'];g,h,b,z,prior=pickle.loads((base/'model.pkl').read_bytes());h=copy.deepcopy(h);b=copy.deepcopy(b);z=copy.deepcopy(z);rp=", "base=H.parent/'safe-logic-five-and-fag-margin-r22';br=json.loads((base/'receipt.json').read_text());assert sha(base/'receipt.json')=='988c0f5d7fad8966699640e8c0c74ab5a23df99ed9c29eb1f4509f2a0f6cdcbe';assert sha(base/'model.pkl')==br['model_sha256'];g,h,b,z,prior=pickle.loads((base/'model.pkl').read_bytes());h=copy.deepcopy(h);b=copy.deepcopy(b);z=copy.deepcopy(z);retained=H/'regulated-four-retained-hard-snapshot-r127';assert sha(retained/'proposed-zones.pkl')=='82ab625dbe9310aa1287321a1e96f814a3408dead04200a8c4340882edf1b589';keep=pickle.loads((retained/'proposed-zones.pkl').read_bytes());dd=pickle.loads((retained/'proposed-discrete.pkl').read_bytes());assert len(dd['vias'])==3 and len(dd['tracks'])==6;h['vias']+=dd['vias'];h['tracks']+=dd['tracks'];rp=")
+s=s.replace("z=[updates.get(q['uuid'],q) for q in z];newq,vg=P.normalize_owned_via_guards(h,newq)", "z=[updates.get(q['uuid'],q) for q in z];newq=keep+newq;newq,vg=P.normalize_owned_via_guards(h,newq)")
+s=s.replace("oldbp=H/'corrected-regulated-native-bound-search-base-r111';oldreg=pickle.loads((oldbp/'source-groups.pkl').read_bytes());oldgrounds=pickle.loads((H/'regulated-reference-contact-diagnostic-r119/old-ground-groups.pkl').read_bytes())", "oldbp=base;rootgroups=pickle.loads((base/'groups.pkl').read_bytes());oldreg=rootgroups;oldgrounds=rootgroups")
+s=s.replace("R111_old_contact_losses","R22_old_contact_losses").replace("R111_prior_source_keys_lost","R22_prior_source_keys_lost")
+s=s.replace("'R123_model_sha256':sha(base/'model.pkl')","'ROOT_R22_model_sha256':sha(base/'model.pkl'),'ROOT_R22_receipt_sha256':sha(base/'receipt.json')")
+s=s.replace("'ROOT_7_LG_known_reference_failure':'Explicit pending correction: two ROOT spines1bd97ebc/87644989; no reference acceptance granted'", "'ROOT_R22_only_safe5_LG_and_FAG_margin_correction':True,'failed_stale_ROOT7_scope_owned_stop_sha256':sha(H/'reference-safe-regulated-source-contact-audit-r129/owned-termination-r1.json')")
+s=s.replace("'new_two_zones_sha256'","'six_corrected_REG_zones_sha256'").replace("new-two-zones.pkl","six-corrected-REG-zones.pkl")
+s=s.replace("'source_old_contact_reference_current_native_gates'","'source_old_contact_reference_current_native_gates'")
+s=s.replace("'new_zone_UUIDs':[q['uuid'] for q in newq]","'new_zone_UUIDs':[q['uuid'] for q in newq],'six_current_shapes_replace_failed_R114_2_and_retain_exact_other4':True,'ROOT_R22_receipt_sha256':sha(base/'receipt.json')")
+s=s.replace("R129 full guarded projection","R130 full guarded projection").replace("R129 analytic","R130 analytic").replace("R129 frozen","R130 frozen")
+exec(compile(s,str(p/'compose_audit_reference_safe_regulated_r129.py'),'exec'))

@@ -1,0 +1,92 @@
+PCB finishing attempt, 11 October 2026
+
+These are isolated ROOT106 candidates. The adopted Source26/ROOT104/CAD30 record and external IS-1 archive remain separate.
+Manufacturing readiness: FALSE. Native checks do not prove electrical capacity, SI, FPGA fit/timing or physical behavior.
+
+r06 plus In3 bridges: NATIVE_PASS
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\revisions\c01-r06-in3-bridges.kicad_pcb
+  SHA256: a51a8065bb97fc7440473e457c23d5e0a4b00357fd158a3f27108fb6d851e992
+  Missing pad joins: 1363; ordinary DRC errors: 0; unresolved warnings: 169
+  Completed/lost vs r06: 4/0
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+r06 plus placement and silk corrections: NATIVE_PASS
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\revisions\c02a-r06-dfm.kicad_pcb
+  SHA256: 785b1ec5f679aabfab11b319ef50006769fafc099849cd59ca76893ba33743cd
+  Missing pad joins: 1367; ordinary DRC errors: 0; unresolved warnings: 171
+  Completed/lost vs r06: 0/0
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+recovered r07 routing: NATIVE_DRC_AND_CONNECTIVITY_AVAILABLE_REVIEW_REQUIRED
+  Z:\pcb-runs\claude-finish\agent-work\codex-recovery-20261011\candidate.kicad_pcb
+  SHA256: 53838149db4378929875b9862681b790a3a7ed975ee5530c4af975abbeb7df64
+  Missing pad joins: 1351; ordinary DRC errors: 0; unresolved warnings: 181
+  Completed/lost vs r06: pending/pending
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+r06 plus selected FIELD_GND return branch: NATIVE_DRC_AND_CONNECTIVITY_AVAILABLE_REVIEW_REQUIRED
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\power-audit\fag-r06\candidate\board.kicad_pcb
+  SHA256: a10803bbfa3aa5b7e1a859ca4c5a7b6481969c97dc038a66cef21f92e5f61789
+  Missing pad joins: 1364; ordinary DRC errors: 0; unresolved warnings: 169
+  Completed/lost vs r06: pending/pending
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+combined recovery, In3, return and placement candidate: NATIVE_REJECTED
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\recovery-composite\c03-recovery-in3-fag-dfm.kicad_pcb
+  SHA256: 8f1e03225429422199edc52c3c1ceb476818948c7a5f920e7d71b7cc8d7640c9
+  Missing pad joins: 1344; ordinary DRC errors: 14; unresolved warnings: 183
+  Completed/lost vs r06: 23/0
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+combined candidate plus four indicator groups: NATIVE_REJECTED
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\recovery-composite\e1\c04-four-net-e1-dfm.kicad_pcb
+  SHA256: abed2445e14ce438464a5e2f8d073eb71dc329a66fc5b882a97b6b5be6b12af7
+  Missing pad joins: 1340; ordinary DRC errors: 471; unresolved warnings: 194
+  Completed/lost vs r06: 27/0
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: not established
+  Adoption: NOT_ADOPTED
+
+recovery, In3 and DFM with conflicting whole groups withdrawn: NATIVE_PASS
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\recovery-composite\c05\c05-fag-e1-rollback-dfm.kicad_pcb
+  SHA256: 95874c4275f10851f03c2f7953fdf4cf4e7e8a0c39bbe399f8aaec642bd7c77d
+  Missing pad joins: 1347; ordinary DRC errors: 0; unresolved warnings: 183
+  Completed/lost vs r06: 20/0
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: PASS
+  Adoption: WITHHELD_FAILED_LIVE_CONTINUITY
+  Direct live completed/lost: 21/13; FAIL
+
+live r07 plus two zero-via signal repairs: NATIVE_REJECTED
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\recovery-composite\c06\two-zero-via\r07-two-zero-via.kicad_pcb
+  SHA256: f1a3a8d1310ad2bdfe728c0c9214edb148dcc00d8266b235224e4b92721a21d5
+  Missing pad joins: 1353; ordinary DRC errors: 0; unresolved warnings: 179
+  Completed/lost vs r06: 29/15
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: PASS
+  Adoption: WITHHELD_FAILED_R06_CONTINUITY
+  Direct live completed/lost: 2/0; PASS
+
+live r07 plus four signals and repaired partial FIELD_A return: NATIVE_REJECTED
+  C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261011\power-audit\fag-r07-repair\staged\r07-four-path-fag-repaired.kicad_pcb
+  SHA256: 198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab
+  Missing pad joins: 1348; ordinary DRC errors: 0; unresolved warnings: 180
+  Completed/lost vs r06: 33/14
+  CLI parity: NOT_EXECUTED; explicit source/native netlist comparison required
+  Separate native API parity: PASS
+  Adoption: WITHHELD_FAILED_R06_CONTINUITY
+  Direct live completed/lost: 7/0; PASS
+
+Routing tool repairs installed with backups; live board/ledger were unchanged during installation.
+A combined candidate must be reconstructed, frozen, refilled and checked again before being selected.
+Updated UTC: 2026-10-11T16:14:34.490581+00:00

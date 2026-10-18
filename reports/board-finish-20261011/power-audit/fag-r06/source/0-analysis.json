@@ -1,0 +1,4029 @@
+{
+ "tool": "tools/field_pdn_design.py",
+ "version": "1.0 (2026-10-11)",
+ "input": {
+  "geom": "Z:/pcb-runs/claude-finish/agent-work/field-pdn/testA3/w/geom.json",
+  "board_sha256": "0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53",
+  "refilled": true,
+  "partitions": "Z:/pcb-runs/claude-finish/integrate/measure/r06-stitch-plane-pads-2/partitions.json",
+  "partitions_sha256": "0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53"
+ },
+ "nets": {
+  "FAG": {
+   "net": "/motherboard_motors{slash}FIELD_GND",
+   "role": "return",
+   "domain": "DOM_FIELD_A",
+   "design_a": 4.58,
+   "limit_a": 5.08,
+   "source": {
+    "name": "J11003.2 FIELD_A 0 V input terminal (+ J11004.2 shutdown-contact 0 V)",
+    "pads": [
+     "J11003.2",
+     "J11004.2"
+    ],
+    "islands": [
+     38
+    ]
+   },
+   "clusters": [
+    {
+     "name": "JD09 A9-A12 DO-A load returns (DO00-DO07)",
+     "amps": 4.0,
+     "basis": "8 channels x 0.5 A, assumed to return through the board terminal (worst case)",
+     "cite": [
+      "DO",
+      "NET"
+     ],
+     "pads": [
+      "JD09.A9",
+      "JD09.A10",
+      "JD09.A11",
+      "JD09.A12"
+     ],
+     "islands": [
+      44
+     ]
+    },
+    {
+     "name": "JD01 A13/B13 motors 1-2 field I/O 0 V",
+     "amps": 0.096,
+     "basis": "(AUX24 A 0.257 A + AUX5 A 0.128 A) / 4 connectors",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD01.A13",
+      "JD01.B13"
+     ],
+     "islands": [
+      39
+     ]
+    },
+    {
+     "name": "JD02 A13/B13 motors 3-4 field I/O 0 V",
+     "amps": 0.096,
+     "basis": "(AUX24 A + AUX5 A) / 4",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD02.A13",
+      "JD02.B13"
+     ],
+     "islands": [
+      25
+     ]
+    },
+    {
+     "name": "JD03 A13/B13 motors 5-6 field I/O 0 V",
+     "amps": 0.096,
+     "basis": "(AUX24 A + AUX5 A) / 4",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD03.A13",
+      "JD03.B13"
+     ],
+     "islands": [
+      40
+     ]
+    },
+    {
+     "name": "JD04 A13/B13 motors 7-8 field I/O 0 V",
+     "amps": 0.096,
+     "basis": "(AUX24 A + AUX5 A) / 4",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD04.A13",
+      "JD04.B13"
+     ],
+     "islands": [
+      41
+     ]
+    },
+    {
+     "name": "JD05 A13/B13 motors 9-10 field I/O 0 V",
+     "amps": 0.112,
+     "basis": "(AUX24 B 0.159 A + AUX5 B 0.064 A) / 2",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD05.A13",
+      "JD05.B13"
+     ],
+     "islands": [
+      42
+     ]
+    },
+    {
+     "name": "JD06 A13/B13 motors 11-12 field I/O 0 V",
+     "amps": 0.112,
+     "basis": "(AUX24 B + AUX5 B) / 2",
+     "cite": [
+      "PE_README",
+      "RM"
+     ],
+     "pads": [
+      "JD06.A13",
+      "JD06.B13"
+     ],
+     "islands": [
+      43
+     ]
+    },
+    {
+     "name": "JD14 B3/B6 probe supply returns",
+     "amps": 0.3,
+     "basis": "2 x MAX17612 0.15 A",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "JD14.B3",
+      "JD14.B6"
+     ],
+     "islands": [
+      30
+     ]
+    },
+    {
+     "name": "U11009 FIELD_5V buck GND (input return)",
+     "amps": 0.3,
+     "basis": "buck input current returned at its GND",
+     "cite": [
+      "RM",
+      "LC"
+     ],
+     "pads": [
+      "U11009.9"
+     ],
+     "islands": [
+      9
+     ]
+    },
+    {
+     "name": "U10004 DO-A quad 0 GND (quiescent)",
+     "amps": 0.02,
+     "basis": "quiescent only (high-side switch: load current does not flow in GND)",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10004.21",
+      "U10004.28",
+      "U10004.29",
+      "U10004.41",
+      "U10004.5"
+     ],
+     "islands": [
+      1,
+      64
+     ]
+    },
+    {
+     "name": "U10009 DO-A quad 1 GND (quiescent)",
+     "amps": 0.02,
+     "basis": "quiescent only",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10009.21",
+      "U10009.28",
+      "U10009.29",
+      "U10009.41",
+      "U10009.5"
+     ],
+     "islands": [
+      65,
+      66,
+      67,
+      68,
+      69
+     ]
+    },
+    {
+     "name": "U11017 DOA LDO GND",
+     "amps": 0.02,
+     "basis": "20 mA reservation",
+     "cite": [
+      "PE_README"
+     ],
+     "pads": [
+      "U11017.4",
+      "U11017.9"
+     ],
+     "islands": [
+      71,
+      72
+     ]
+    }
+   ],
+   "clusters_sum_a": 5.268,
+   "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current",
+   "islands": [
+    {
+     "island": 0,
+     "pads": 1,
+     "pad_examples": [
+      "C10004.2"
+     ],
+     "centroid": [
+      213.15,
+      147.69
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 1,
+     "pads": 25,
+     "pad_examples": [
+      "C10005.2",
+      "C10006.2",
+      "C10007.2",
+      "C10008.2",
+      "C10009.2",
+      "C10010.2"
+     ],
+     "centroid": [
+      238.03,
+      161.11
+     ],
+     "amps": 0.01,
+     "clusters": [
+      "U10004 DO-A quad 0 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1318.3,
+     "track_landing_mm2": 28.2,
+     "legal_via_area_mm2": 65.01,
+     "in3_components": {
+      "1260": {
+       "via_cells": 5405,
+       "area_mm2": 397.2
+      },
+      "1454": {
+       "via_cells": 785,
+       "area_mm2": 232.3
+      },
+      "1144": {
+       "via_cells": 1,
+       "area_mm2": 92.9
+      },
+      "1150": {
+       "via_cells": 90,
+       "area_mm2": 17.2
+      }
+     }
+    },
+    {
+     "island": 2,
+     "pads": 1,
+     "pad_examples": [
+      "C10011.2"
+     ],
+     "centroid": [
+      220.55,
+      209.31
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "F.Cu"
+     ],
+     "fill_area_mm2": 16.1,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 3.68,
+     "in3_components": {
+      "1217": {
+       "via_cells": 121,
+       "area_mm2": 6162.0
+      },
+      "1600": {
+       "via_cells": 247,
+       "area_mm2": 102.6
+      }
+     }
+    },
+    {
+     "island": 3,
+     "pads": 1,
+     "pad_examples": [
+      "C10012.2"
+     ],
+     "centroid": [
+      148.91,
+      178.9
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 4,
+     "pads": 1,
+     "pad_examples": [
+      "C10014.2"
+     ],
+     "centroid": [
+      265.71,
+      166.7
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 5,
+     "pads": 1,
+     "pad_examples": [
+      "C10015.2"
+     ],
+     "centroid": [
+      263.41,
+      172.25
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 6,
+     "pads": 1,
+     "pad_examples": [
+      "C10016.2"
+     ],
+     "centroid": [
+      264.16,
+      170.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 7,
+     "pads": 1,
+     "pad_examples": [
+      "C10017.2"
+     ],
+     "centroid": [
+      267.56,
+      166.35
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 8,
+     "pads": 1,
+     "pad_examples": [
+      "C10018.2"
+     ],
+     "centroid": [
+      273.46,
+      177.12
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 9,
+     "pads": 32,
+     "pad_examples": [
+      "C10019.2",
+      "C11005.2",
+      "C11006.2",
+      "C11007.2",
+      "C11008.2",
+      "C11047.2"
+     ],
+     "centroid": [
+      305.15,
+      150.68
+     ],
+     "amps": 0.3,
+     "clusters": [
+      "U11009 FIELD_5V buck GND (input return)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 2150.5,
+     "track_landing_mm2": 86.42,
+     "legal_via_area_mm2": 68.06,
+     "in3_components": {
+      "1098": {
+       "via_cells": 4865,
+       "area_mm2": 212.2
+      },
+      "1280": {
+       "via_cells": 1463,
+       "area_mm2": 92.6
+      },
+      "1012": {
+       "via_cells": 34,
+       "area_mm2": 90.4
+      },
+      "1085": {
+       "via_cells": 56,
+       "area_mm2": 34.8
+      }
+     }
+    },
+    {
+     "island": 10,
+     "pads": 1,
+     "pad_examples": [
+      "C10020.2"
+     ],
+     "centroid": [
+      254.2,
+      141.03
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 11,
+     "pads": 4,
+     "pad_examples": [
+      "C10022.2",
+      "C22001.2",
+      "U22001.2",
+      "U22001.4"
+     ],
+     "centroid": [
+      286.95,
+      183.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 507.5,
+     "track_landing_mm2": 4.64,
+     "legal_via_area_mm2": 29.28,
+     "in3_components": {
+      "1536": {
+       "via_cells": 719,
+       "area_mm2": 710.9
+      },
+      "1454": {
+       "via_cells": 627,
+       "area_mm2": 232.3
+      },
+      "1602": {
+       "via_cells": 1251,
+       "area_mm2": 58.5
+      },
+      "1627": {
+       "via_cells": 120,
+       "area_mm2": 45.7
+      }
+     }
+    },
+    {
+     "island": 12,
+     "pads": 5,
+     "pad_examples": [
+      "C11050.2",
+      "C9007.2",
+      "R11039.2",
+      "U9007.1",
+      "U9007.7"
+     ],
+     "centroid": [
+      313.44,
+      117.09
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 414.6,
+     "track_landing_mm2": 5.24,
+     "legal_via_area_mm2": 18.66,
+     "in3_components": {
+      "811": {
+       "via_cells": 1866,
+       "area_mm2": 574.6
+      }
+     }
+    },
+    {
+     "island": 13,
+     "pads": 15,
+     "pad_examples": [
+      "C11066.2",
+      "C11067.2",
+      "C11072.2",
+      "C11073.2",
+      "C6028.2",
+      "C6029.2"
+     ],
+     "centroid": [
+      222.79,
+      44.18
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1319.7,
+     "track_landing_mm2": 19.17,
+     "legal_via_area_mm2": 110.58,
+     "in3_components": {
+      "90": {
+       "via_cells": 8509,
+       "area_mm2": 384.8
+      },
+      "115": {
+       "via_cells": 2549,
+       "area_mm2": 371.7
+      }
+     }
+    },
+    {
+     "island": 14,
+     "pads": 7,
+     "pad_examples": [
+      "C11069.2",
+      "C11070.2",
+      "C14044.2",
+      "C14045.2",
+      "C14048.2",
+      "U14026.11"
+     ],
+     "centroid": [
+      318.5,
+      57.14
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 497.0,
+     "track_landing_mm2": 7.6,
+     "legal_via_area_mm2": 33.55,
+     "in3_components": {
+      "204": {
+       "via_cells": 2218,
+       "area_mm2": 264.3
+      },
+      "297": {
+       "via_cells": 936,
+       "area_mm2": 33.1
+      },
+      "153": {
+       "via_cells": 201,
+       "area_mm2": 9.1
+      }
+     }
+    },
+    {
+     "island": 15,
+     "pads": 1,
+     "pad_examples": [
+      "C11074.2"
+     ],
+     "centroid": [
+      223.96,
+      186.26
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 16,
+     "pads": 1,
+     "pad_examples": [
+      "C11075.2"
+     ],
+     "centroid": [
+      224.21,
+      194.61
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 17,
+     "pads": 1,
+     "pad_examples": [
+      "C14046.2"
+     ],
+     "centroid": [
+      159.07,
+      199.62
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 18,
+     "pads": 1,
+     "pad_examples": [
+      "C14047.2"
+     ],
+     "centroid": [
+      319.02,
+      67.78
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 19,
+     "pads": 1,
+     "pad_examples": [
+      "C14049.2"
+     ],
+     "centroid": [
+      160.62,
+      202.93
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 20,
+     "pads": 1,
+     "pad_examples": [
+      "C14050.2"
+     ],
+     "centroid": [
+      161.07,
+      199.38
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 21,
+     "pads": 1,
+     "pad_examples": [
+      "C14051.2"
+     ],
+     "centroid": [
+      160.32,
+      197.62
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 22,
+     "pads": 1,
+     "pad_examples": [
+      "C14052.2"
+     ],
+     "centroid": [
+      163.62,
+      196.03
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 23,
+     "pads": 1,
+     "pad_examples": [
+      "C14053.2"
+     ],
+     "centroid": [
+      157.32,
+      202.32
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 24,
+     "pads": 7,
+     "pad_examples": [
+      "C19503.1",
+      "C6013.2",
+      "C6014.2",
+      "D6025.2",
+      "D6026.2",
+      "U6035.14"
+     ],
+     "centroid": [
+      383.54,
+      174.11
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1280.3,
+     "track_landing_mm2": 9.63,
+     "legal_via_area_mm2": 85.63,
+     "in3_components": {
+      "1217": {
+       "via_cells": 666,
+       "area_mm2": 6162.0
+      },
+      "1424": {
+       "via_cells": 5545,
+       "area_mm2": 195.8
+      },
+      "1272": {
+       "via_cells": 840,
+       "area_mm2": 52.5
+      },
+      "1423": {
+       "via_cells": 6,
+       "area_mm2": 47.6
+      }
+     }
+    },
+    {
+     "island": 25,
+     "pads": 8,
+     "pad_examples": [
+      "C6016.2",
+      "C6017.2",
+      "D6027.2",
+      "D6028.2",
+      "JD02.A13",
+      "JD02.B13"
+     ],
+     "centroid": [
+      366.46,
+      28.8
+     ],
+     "amps": 0.096,
+     "clusters": [
+      "JD02 A13/B13 motors 3-4 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1797.9,
+     "track_landing_mm2": 9.71,
+     "legal_via_area_mm2": 226.88,
+     "in3_components": {
+      "8": {
+       "via_cells": 22480,
+       "area_mm2": 2681.4
+      },
+      "168": {
+       "via_cells": 208,
+       "area_mm2": 176.2
+      }
+     }
+    },
+    {
+     "island": 26,
+     "pads": 10,
+     "pad_examples": [
+      "C6019.2",
+      "C6020.2",
+      "D6029.2",
+      "D6030.2",
+      "R11050.2",
+      "R11052.2"
+     ],
+     "centroid": [
+      283.63,
+      121.55
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 843.8,
+     "track_landing_mm2": 14.05,
+     "legal_via_area_mm2": 30.28,
+     "in3_components": {
+      "936": {
+       "via_cells": 1627,
+       "area_mm2": 101.2
+      },
+      "860": {
+       "via_cells": 998,
+       "area_mm2": 48.7
+      },
+      "866": {
+       "via_cells": 283,
+       "area_mm2": 42.7
+      },
+      "1063": {
+       "via_cells": 100,
+       "area_mm2": 19.4
+      }
+     }
+    },
+    {
+     "island": 27,
+     "pads": 13,
+     "pad_examples": [
+      "C6022.2",
+      "C6023.2",
+      "C9004.2",
+      "D6031.2",
+      "D6032.2",
+      "R9032.2"
+     ],
+     "centroid": [
+      266.98,
+      36.18
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1292.6,
+     "track_landing_mm2": 15.85,
+     "legal_via_area_mm2": 76.78,
+     "in3_components": {
+      "186": {
+       "via_cells": 731,
+       "area_mm2": 221.2
+      },
+      "98": {
+       "via_cells": 4668,
+       "area_mm2": 145.9
+      },
+      "127": {
+       "via_cells": 1536,
+       "area_mm2": 67.8
+      },
+      "97": {
+       "via_cells": 560,
+       "area_mm2": 67.4
+      }
+     }
+    },
+    {
+     "island": 28,
+     "pads": 6,
+     "pad_examples": [
+      "C6025.2",
+      "C6026.2",
+      "D6033.2",
+      "D6034.2",
+      "U6039.14",
+      "U6039.9"
+     ],
+     "centroid": [
+      179.21,
+      63.39
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 912.0,
+     "track_landing_mm2": 9.7,
+     "legal_via_area_mm2": 74.31,
+     "in3_components": {
+      "260": {
+       "via_cells": 6308,
+       "area_mm2": 364.1
+      },
+      "285": {
+       "via_cells": 1047,
+       "area_mm2": 86.5
+      },
+      "390": {
+       "via_cells": 75,
+       "area_mm2": 21.8
+      },
+      "326": {
+       "via_cells": 1,
+       "area_mm2": 1.3
+      }
+     }
+    },
+    {
+     "island": 29,
+     "pads": 1,
+     "pad_examples": [
+      "C9003.2"
+     ],
+     "centroid": [
+      352.04,
+      64.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 30,
+     "pads": 4,
+     "pad_examples": [
+      "D14013.2",
+      "D14014.2",
+      "JD14.B3",
+      "JD14.B6"
+     ],
+     "centroid": [
+      23.32,
+      45.45
+     ],
+     "amps": 0.3,
+     "clusters": [
+      "JD14 B3/B6 probe supply returns"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1485.8,
+     "track_landing_mm2": 11.87,
+     "legal_via_area_mm2": 201.86,
+     "in3_components": {
+      "1": {
+       "via_cells": 17767,
+       "area_mm2": 4828.6
+      },
+      "176": {
+       "via_cells": 2419,
+       "area_mm2": 200.2
+      }
+     }
+    },
+    {
+     "island": 31,
+     "pads": 4,
+     "pad_examples": [
+      "D17037.1",
+      "D17038.1",
+      "D17043.1",
+      "D17044.1"
+     ],
+     "centroid": [
+      66.07,
+      230.13
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 365.5,
+     "track_landing_mm2": 4.07,
+     "legal_via_area_mm2": 33.7,
+     "in3_components": {
+      "1381": {
+       "via_cells": 3370,
+       "area_mm2": 3575.8
+      }
+     }
+    },
+    {
+     "island": 32,
+     "pads": 2,
+     "pad_examples": [
+      "D17039.1",
+      "D17040.1"
+     ],
+     "centroid": [
+      91.47,
+      197.44
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 390.8,
+     "track_landing_mm2": 2.24,
+     "legal_via_area_mm2": 49.08,
+     "in3_components": {
+      "1381": {
+       "via_cells": 45,
+       "area_mm2": 3575.8
+      },
+      "1040": {
+       "via_cells": 4824,
+       "area_mm2": 1911.9
+      },
+      "1599": {
+       "via_cells": 39,
+       "area_mm2": 74.3
+      }
+     }
+    },
+    {
+     "island": 33,
+     "pads": 4,
+     "pad_examples": [
+      "D17041.1",
+      "D17042.1",
+      "U14031.14",
+      "U14031.9"
+     ],
+     "centroid": [
+      185.02,
+      34.43
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 303.9,
+     "track_landing_mm2": 4.58,
+     "legal_via_area_mm2": 17.68,
+     "in3_components": {
+      "89": {
+       "via_cells": 1719,
+       "area_mm2": 102.7
+      },
+      "161": {
+       "via_cells": 49,
+       "area_mm2": 54.4
+      }
+     }
+    },
+    {
+     "island": 34,
+     "pads": 2,
+     "pad_examples": [
+      "D17045.1",
+      "D17046.1"
+     ],
+     "centroid": [
+      48.09,
+      187.47
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 122.6,
+     "track_landing_mm2": 1.85,
+     "legal_via_area_mm2": 21.74,
+     "in3_components": {
+      "1290": {
+       "via_cells": 2174,
+       "area_mm2": 492.6
+      }
+     }
+    },
+    {
+     "island": 35,
+     "pads": 2,
+     "pad_examples": [
+      "D17049.1",
+      "D17050.1"
+     ],
+     "centroid": [
+      36.04,
+      158.38
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 299.8,
+     "track_landing_mm2": 1.86,
+     "legal_via_area_mm2": 30.14,
+     "in3_components": {
+      "1290": {
+       "via_cells": 4,
+       "area_mm2": 492.6
+      },
+      "1136": {
+       "via_cells": 2628,
+       "area_mm2": 321.3
+      },
+      "1077": {
+       "via_cells": 382,
+       "area_mm2": 162.6
+      }
+     }
+    },
+    {
+     "island": 36,
+     "pads": 1,
+     "pad_examples": [
+      "D17051.1"
+     ],
+     "centroid": [
+      147.32,
+      58.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 37,
+     "pads": 1,
+     "pad_examples": [
+      "D17052.1"
+     ],
+     "centroid": [
+      140.56,
+      56.55
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 38,
+     "pads": 2,
+     "pad_examples": [
+      "J11003.2",
+      "J11004.2"
+     ],
+     "centroid": [
+      294.69,
+      224.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": true,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 976.5,
+     "track_landing_mm2": 93.79,
+     "legal_via_area_mm2": 388.4,
+     "in3_components": {
+      "1217": {
+       "via_cells": 38840,
+       "area_mm2": 6162.0
+      }
+     }
+    },
+    {
+     "island": 39,
+     "pads": 2,
+     "pad_examples": [
+      "JD01.A13",
+      "JD01.B13"
+     ],
+     "centroid": [
+      435.15,
+      151.62
+     ],
+     "amps": 0.096,
+     "clusters": [
+      "JD01 A13/B13 motors 1-2 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 830.6,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 116.62,
+     "in3_components": {
+      "1217": {
+       "via_cells": 11649,
+       "area_mm2": 6162.0
+      },
+      "1395": {
+       "via_cells": 10,
+       "area_mm2": 14.5
+      },
+      "1418": {
+       "via_cells": 3,
+       "area_mm2": 6.4
+      }
+     }
+    },
+    {
+     "island": 40,
+     "pads": 2,
+     "pad_examples": [
+      "JD03.A13",
+      "JD03.B13"
+     ],
+     "centroid": [
+      303.37,
+      14.85
+     ],
+     "amps": 0.096,
+     "clusters": [
+      "JD03 A13/B13 motors 5-6 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 916.1,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 128.6,
+     "in3_components": {
+      "12": {
+       "via_cells": 11491,
+       "area_mm2": 416.1
+      },
+      "5": {
+       "via_cells": 684,
+       "area_mm2": 197.0
+      },
+      "99": {
+       "via_cells": 10,
+       "area_mm2": 64.5
+      },
+      "6": {
+       "via_cells": 668,
+       "area_mm2": 56.5
+      }
+     }
+    },
+    {
+     "island": 41,
+     "pads": 2,
+     "pad_examples": [
+      "JD04.A13",
+      "JD04.B13"
+     ],
+     "centroid": [
+      245.54,
+      14.85
+     ],
+     "amps": 0.096,
+     "clusters": [
+      "JD04 A13/B13 motors 7-8 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 978.3,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 96.18,
+     "in3_components": {
+      "2": {
+       "via_cells": 1170,
+       "area_mm2": 1420.4
+      },
+      "33": {
+       "via_cells": 5329,
+       "area_mm2": 176.8
+      },
+      "10": {
+       "via_cells": 833,
+       "area_mm2": 74.6
+      },
+      "9": {
+       "via_cells": 2155,
+       "area_mm2": 47.2
+      }
+     }
+    },
+    {
+     "island": 42,
+     "pads": 2,
+     "pad_examples": [
+      "JD05.A13",
+      "JD05.B13"
+     ],
+     "centroid": [
+      158.61,
+      14.85
+     ],
+     "amps": 0.112,
+     "clusters": [
+      "JD05 A13/B13 motors 9-10 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 913.7,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 90.95,
+     "in3_components": {
+      "2": {
+       "via_cells": 7556,
+       "area_mm2": 1420.4
+      },
+      "36": {
+       "via_cells": 1239,
+       "area_mm2": 235.8
+      },
+      "38": {
+       "via_cells": 299,
+       "area_mm2": 11.3
+      },
+      "60": {
+       "via_cells": 1,
+       "area_mm2": 0.1
+      }
+     }
+    },
+    {
+     "island": 43,
+     "pads": 2,
+     "pad_examples": [
+      "JD06.A13",
+      "JD06.B13"
+     ],
+     "centroid": [
+      100.78,
+      14.85
+     ],
+     "amps": 0.112,
+     "clusters": [
+      "JD06 A13/B13 motors 11-12 field I/O 0 V"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 955.5,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 163.35,
+     "in3_components": {
+      "1": {
+       "via_cells": 15498,
+       "area_mm2": 4828.6
+      },
+      "2": {
+       "via_cells": 837,
+       "area_mm2": 1420.4
+      }
+     }
+    },
+    {
+     "island": 44,
+     "pads": 4,
+     "pad_examples": [
+      "JD09.A10",
+      "JD09.A11",
+      "JD09.A12",
+      "JD09.A9"
+     ],
+     "centroid": [
+      8.5,
+      164.42
+     ],
+     "amps": 4.0,
+     "clusters": [
+      "JD09 A9-A12 DO-A load returns (DO00-DO07)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1277.3,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 201.59,
+     "in3_components": {
+      "1": {
+       "via_cells": 15,
+       "area_mm2": 4828.6
+      },
+      "1099": {
+       "via_cells": 15979,
+       "area_mm2": 274.4
+      },
+      "1077": {
+       "via_cells": 120,
+       "area_mm2": 162.6
+      },
+      "1368": {
+       "via_cells": 436,
+       "area_mm2": 106.1
+      }
+     }
+    },
+    {
+     "island": 45,
+     "pads": 1,
+     "pad_examples": [
+      "R10009.2"
+     ],
+     "centroid": [
+      218.82,
+      147.22
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 46,
+     "pads": 1,
+     "pad_examples": [
+      "R10010.2"
+     ],
+     "centroid": [
+      218.82,
+      143.22
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 47,
+     "pads": 1,
+     "pad_examples": [
+      "R10013.2"
+     ],
+     "centroid": [
+      222.32,
+      145.22
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 48,
+     "pads": 1,
+     "pad_examples": [
+      "R10018.2"
+     ],
+     "centroid": [
+      276.69,
+      176.75
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 49,
+     "pads": 1,
+     "pad_examples": [
+      "R10019.2"
+     ],
+     "centroid": [
+      268.69,
+      164.25
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 50,
+     "pads": 1,
+     "pad_examples": [
+      "R10020.2"
+     ],
+     "centroid": [
+      275.69,
+      178.75
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 51,
+     "pads": 5,
+     "pad_examples": [
+      "R11059.2",
+      "R14057.2",
+      "R14062.2",
+      "R19401.2",
+      "R9030.2"
+     ],
+     "centroid": [
+      347.39,
+      201.81
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 301.3,
+     "track_landing_mm2": 4.63,
+     "legal_via_area_mm2": 37.82,
+     "in3_components": {
+      "1217": {
+       "via_cells": 3782,
+       "area_mm2": 6162.0
+      }
+     }
+    },
+    {
+     "island": 52,
+     "pads": 1,
+     "pad_examples": [
+      "R14060.2"
+     ],
+     "centroid": [
+      364.49,
+      197.38
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 53,
+     "pads": 1,
+     "pad_examples": [
+      "R14063.2"
+     ],
+     "centroid": [
+      161.62,
+      192.68
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 54,
+     "pads": 1,
+     "pad_examples": [
+      "R14066.2"
+     ],
+     "centroid": [
+      163.62,
+      190.68
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 55,
+     "pads": 1,
+     "pad_examples": [
+      "R14068.2"
+     ],
+     "centroid": [
+      160.82,
+      202.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 56,
+     "pads": 1,
+     "pad_examples": [
+      "R19402.2"
+     ],
+     "centroid": [
+      160.18,
+      192.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 57,
+     "pads": 1,
+     "pad_examples": [
+      "R19403.2"
+     ],
+     "centroid": [
+      160.18,
+      194.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 58,
+     "pads": 1,
+     "pad_examples": [
+      "R19404.2"
+     ],
+     "centroid": [
+      160.18,
+      196.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 59,
+     "pads": 1,
+     "pad_examples": [
+      "R9022.2"
+     ],
+     "centroid": [
+      346.44,
+      70.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 60,
+     "pads": 1,
+     "pad_examples": [
+      "R9024.2"
+     ],
+     "centroid": [
+      350.44,
+      66.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 61,
+     "pads": 1,
+     "pad_examples": [
+      "R9026.2"
+     ],
+     "centroid": [
+      346.44,
+      59.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 62,
+     "pads": 1,
+     "pad_examples": [
+      "R9028.2"
+     ],
+     "centroid": [
+      349.94,
+      59.5
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 63,
+     "pads": 1,
+     "pad_examples": [
+      "U10003.9"
+     ],
+     "centroid": [
+      214.7,
+      142.99
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 64,
+     "pads": 1,
+     "pad_examples": [
+      "U10004.5"
+     ],
+     "centroid": [
+      229.96,
+      159.91
+     ],
+     "amps": 0.01,
+     "clusters": [
+      "U10004 DO-A quad 0 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 65,
+     "pads": 1,
+     "pad_examples": [
+      "U10009.21"
+     ],
+     "centroid": [
+      273.26,
+      169.0
+     ],
+     "amps": 0.004,
+     "clusters": [
+      "U10009 DO-A quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 66,
+     "pads": 1,
+     "pad_examples": [
+      "U10009.28"
+     ],
+     "centroid": [
+      273.26,
+      172.5
+     ],
+     "amps": 0.004,
+     "clusters": [
+      "U10009 DO-A quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 67,
+     "pads": 1,
+     "pad_examples": [
+      "U10009.29"
+     ],
+     "centroid": [
+      273.26,
+      173.0
+     ],
+     "amps": 0.004,
+     "clusters": [
+      "U10009 DO-A quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 68,
+     "pads": 1,
+     "pad_examples": [
+      "U10009.41"
+     ],
+     "centroid": [
+      270.36,
+      171.25
+     ],
+     "amps": 0.004,
+     "clusters": [
+      "U10009 DO-A quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 69,
+     "pads": 1,
+     "pad_examples": [
+      "U10009.5"
+     ],
+     "centroid": [
+      267.46,
+      171.5
+     ],
+     "amps": 0.004,
+     "clusters": [
+      "U10009 DO-A quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 70,
+     "pads": 1,
+     "pad_examples": [
+      "U11015.6"
+     ],
+     "centroid": [
+      318.29,
+      49.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 71,
+     "pads": 1,
+     "pad_examples": [
+      "U11017.4"
+     ],
+     "centroid": [
+      222.71,
+      194.61
+     ],
+     "amps": 0.01,
+     "clusters": [
+      "U11017 DOA LDO GND"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 72,
+     "pads": 1,
+     "pad_examples": [
+      "U11017.9"
+     ],
+     "centroid": [
+      221.74,
+      192.41
+     ],
+     "amps": 0.01,
+     "clusters": [
+      "U11017 DOA LDO GND"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 73,
+     "pads": 1,
+     "pad_examples": [
+      "U11025.2"
+     ],
+     "centroid": [
+      311.03,
+      154.56
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 74,
+     "pads": 1,
+     "pad_examples": [
+      "U14026.9"
+     ],
+     "centroid": [
+      318.52,
+      62.98
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 75,
+     "pads": 1,
+     "pad_examples": [
+      "U14027.11"
+     ],
+     "centroid": [
+      163.62,
+      200.85
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 76,
+     "pads": 1,
+     "pad_examples": [
+      "U14027.3"
+     ],
+     "centroid": [
+      163.62,
+      199.38
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 77,
+     "pads": 1,
+     "pad_examples": [
+      "U14027.9"
+     ],
+     "centroid": [
+      163.12,
+      202.32
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 78,
+     "pads": 1,
+     "pad_examples": [
+      "U9003.11"
+     ],
+     "centroid": [
+      345.86,
+      65.25
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 79,
+     "pads": 1,
+     "pad_examples": [
+      "U9003.17"
+     ],
+     "centroid": [
+      347.26,
+      65.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 80,
+     "pads": 1,
+     "pad_examples": [
+      "U9003.3"
+     ],
+     "centroid": [
+      348.66,
+      64.75
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 81,
+     "pads": 1,
+     "pad_examples": [
+      "U9003.7"
+     ],
+     "centroid": [
+      347.01,
+      63.6
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 82,
+     "pads": 1,
+     "pad_examples": [
+      "U9003.9"
+     ],
+     "centroid": [
+      345.86,
+      64.25
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 83,
+     "pads": 1,
+     "pad_examples": [
+      "U9004.17"
+     ],
+     "centroid": [
+      276.5,
+      33.24
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 84,
+     "pads": 1,
+     "pad_examples": [
+      "U9004.3"
+     ],
+     "centroid": [
+      276.25,
+      31.84
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 85,
+     "pads": 1,
+     "pad_examples": [
+      "U9004.7"
+     ],
+     "centroid": [
+      275.1,
+      33.49
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    }
+   ],
+   "forbidden_in3_territory_mm2": 10119.0,
+   "in3_free_fraction_for_width_mm": {
+    "0.3": 0.433,
+    "0.5": 0.401,
+    "1.0": 0.338,
+    "2.0": 0.227,
+    "3.0": 0.154,
+    "4.0": 0.103
+   },
+   "in3_components_at_0p3mm": {
+    "count": 1700,
+    "largest_mm2": [
+     6162.0,
+     4828.6,
+     3575.8,
+     2681.4,
+     1911.9
+    ]
+   }
+  },
+  "FA": {
+   "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED",
+   "role": "supply",
+   "domain": "DOM_FIELD_A",
+   "design_a": 4.58,
+   "limit_a": 5.08,
+   "source": {
+    "name": "U11004 OUT (TPS26630 FIELD_A eFuse exit)",
+    "pads": [
+     "U11004.17",
+     "U11004.18"
+    ],
+    "islands": [
+     1
+    ]
+   },
+   "clusters": [
+    {
+     "name": "DO-A quad 0 VS (DO00-DO03 -> JD09.A1-A4)",
+     "amps": 2.0,
+     "basis": "0.5 A x 4 channels, quad continuous limit 2.0 A",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10004.14",
+      "U10004.15",
+      "U10004.16",
+      "U10004.17",
+      "U10004.34",
+      "U10004.35",
+      "U10004.36",
+      "U10004.37"
+     ],
+     "islands": [
+      0
+     ]
+    },
+    {
+     "name": "DO-A quad 1 VS (DO04-DO07 -> JD09.A5-A8)",
+     "amps": 2.0,
+     "basis": "0.5 A x 4 channels, quad continuous limit 2.0 A",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10009.14",
+      "U10009.15",
+      "U10009.16",
+      "U10009.17",
+      "U10009.34",
+      "U10009.35",
+      "U10009.36",
+      "U10009.37"
+     ],
+     "islands": [
+      1
+     ]
+    },
+    {
+     "name": "FIELD_5V buck VIN (U11009, LMR36506; AUX_5V_A/B to motors 1-12)",
+     "amps": 0.3,
+     "basis": "buck input estimate for the 1.0 A FIELD_5V table current",
+     "cite": [
+      "RM",
+      "LC"
+     ],
+     "pads": [
+      "U11009.4"
+     ],
+     "islands": [
+      1
+     ]
+    },
+    {
+     "name": "AUX24 A eFuse IN (U11015, motors 1-8 AUX_24V_A -> JD01-JD04 A12/B12)",
+     "amps": 0.257,
+     "basis": "TPS26624 overload testpoint max",
+     "cite": [
+      "PE_README"
+     ],
+     "pads": [
+      "U11015.1"
+     ],
+     "islands": [
+      2
+     ]
+    },
+    {
+     "name": "AUX24 B eFuse IN (U11016, motors 9-12 AUX_24V_B -> JD05-JD06 A12/B12)",
+     "amps": 0.159,
+     "basis": "TPS26624 overload testpoint max",
+     "cite": [
+      "PE_README"
+     ],
+     "pads": [
+      "U11016.1"
+     ],
+     "islands": [
+      8
+     ]
+    },
+    {
+     "name": "probe 0 supply limiter IN (U14026 MAX17612, PRB0_24V -> JD14.B2)",
+     "amps": 0.15,
+     "basis": "MAX17612 rail-model current",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U14026.1"
+     ],
+     "islands": [
+      2
+     ]
+    },
+    {
+     "name": "probe 1 supply limiter IN (U14027 MAX17612, PRB1_24V -> JD14.B5)",
+     "amps": 0.15,
+     "basis": "MAX17612 rail-model current",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U14027.1"
+     ],
+     "islands": [
+      6
+     ]
+    },
+    {
+     "name": "DOA field LDO IN (U11017 TPS7A1633)",
+     "amps": 0.02,
+     "basis": "20 mA reservation",
+     "cite": [
+      "PE_README"
+     ],
+     "pads": [
+      "U11017.5",
+      "U11017.8"
+     ],
+     "islands": [
+      7
+     ]
+    }
+   ],
+   "clusters_sum_a": 5.036,
+   "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current",
+   "islands": [
+    {
+     "island": 0,
+     "pads": 10,
+     "pad_examples": [
+      "C10008.1",
+      "C10009.1",
+      "U10004.14",
+      "U10004.15",
+      "U10004.16",
+      "U10004.17"
+     ],
+     "centroid": [
+      233.05,
+      160.22
+     ],
+     "amps": 2.0,
+     "clusters": [
+      "DO-A quad 0 VS (DO00-DO03 -> JD09.A1-A4)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 22.7,
+     "legal_via_area_mm2": 0.05,
+     "in3_components": {
+      "1277": {
+       "via_cells": 5,
+       "area_mm2": 342.0
+      }
+     }
+    },
+    {
+     "island": 1,
+     "pads": 21,
+     "pad_examples": [
+      "C10017.1",
+      "C10018.1",
+      "C11008.1",
+      "C11047.1",
+      "C11048.1",
+      "C11049.1"
+     ],
+     "centroid": [
+      293.52,
+      156.03
+     ],
+     "amps": 2.3,
+     "clusters": [
+      "DO-A quad 1 VS (DO04-DO07 -> JD09.A5-A8)",
+      "FIELD_5V buck VIN (U11009, LMR36506; AUX_5V_A/B to motors 1-12)"
+     ],
+     "is_source": true,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu"
+     ],
+     "fill_area_mm2": 52.2,
+     "track_landing_mm2": 299.16,
+     "legal_via_area_mm2": 9.96,
+     "in3_components": {
+      "821": {
+       "via_cells": 793,
+       "area_mm2": 563.8
+      },
+      "1113": {
+       "via_cells": 88,
+       "area_mm2": 206.1
+      },
+      "1100": {
+       "via_cells": 4,
+       "area_mm2": 34.2
+      },
+      "1477": {
+       "via_cells": 9,
+       "area_mm2": 27.9
+      }
+     }
+    },
+    {
+     "island": 2,
+     "pads": 4,
+     "pad_examples": [
+      "C11069.1",
+      "R11057.1",
+      "U11015.1",
+      "U14026.1"
+     ],
+     "centroid": [
+      316.1,
+      48.17
+     ],
+     "amps": 0.407,
+     "clusters": [
+      "AUX24 A eFuse IN (U11015, motors 1-8 AUX_24V_A -> JD01-JD04 A12/B12)",
+      "probe 0 supply limiter IN (U14026 MAX17612, PRB0_24V -> JD14.B2)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 916.92,
+     "legal_via_area_mm2": 2.3,
+     "in3_components": {
+      "204": {
+       "via_cells": 77,
+       "area_mm2": 260.5
+      },
+      "98": {
+       "via_cells": 121,
+       "area_mm2": 128.6
+      },
+      "97": {
+       "via_cells": 19,
+       "area_mm2": 65.2
+      },
+      "87": {
+       "via_cells": 13,
+       "area_mm2": 0.9
+      }
+     }
+    },
+    {
+     "island": 3,
+     "pads": 1,
+     "pad_examples": [
+      "C11072.1"
+     ],
+     "centroid": [
+      212.65,
+      41.08
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 4,
+     "pads": 1,
+     "pad_examples": [
+      "C11074.1"
+     ],
+     "centroid": [
+      223.96,
+      189.21
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 5,
+     "pads": 2,
+     "pad_examples": [
+      "C14044.1",
+      "C14045.1"
+     ],
+     "centroid": [
+      318.89,
+      60.02
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 215.38,
+     "legal_via_area_mm2": 3.07,
+     "in3_components": {
+      "204": {
+       "via_cells": 301,
+       "area_mm2": 260.5
+      },
+      "330": {
+       "via_cells": 6,
+       "area_mm2": 1.9
+      }
+     }
+    },
+    {
+     "island": 6,
+     "pads": 5,
+     "pad_examples": [
+      "C14046.1",
+      "C14049.1",
+      "C14051.1",
+      "R14064.1",
+      "U14027.1"
+     ],
+     "centroid": [
+      161.07,
+      197.81
+     ],
+     "amps": 0.15,
+     "clusters": [
+      "probe 1 supply limiter IN (U14027 MAX17612, PRB1_24V -> JD14.B5)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 29.23,
+     "legal_via_area_mm2": 4.34,
+     "in3_components": {
+      "1364": {
+       "via_cells": 427,
+       "area_mm2": 352.8
+      },
+      "1639": {
+       "via_cells": 7,
+       "area_mm2": 204.1
+      }
+     }
+    },
+    {
+     "island": 7,
+     "pads": 3,
+     "pad_examples": [
+      "C14050.1",
+      "U11017.5",
+      "U11017.8"
+     ],
+     "centroid": [
+      202.03,
+      193.27
+     ],
+     "amps": 0.02,
+     "clusters": [
+      "DOA field LDO IN (U11017 TPS7A1633)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 289.12,
+     "legal_via_area_mm2": 1.87,
+     "in3_components": {
+      "1234": {
+       "via_cells": 174,
+       "area_mm2": 4810.7
+      },
+      "1639": {
+       "via_cells": 3,
+       "area_mm2": 204.1
+      },
+      "1543": {
+       "via_cells": 10,
+       "area_mm2": 164.2
+      }
+     }
+    },
+    {
+     "island": 8,
+     "pads": 2,
+     "pad_examples": [
+      "R11061.1",
+      "U11016.1"
+     ],
+     "centroid": [
+      213.9,
+      44.83
+     ],
+     "amps": 0.159,
+     "clusters": [
+      "AUX24 B eFuse IN (U11016, motors 9-12 AUX_24V_B -> JD05-JD06 A12/B12)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 5.87,
+     "legal_via_area_mm2": 1.23,
+     "in3_components": {
+      "90": {
+       "via_cells": 123,
+       "area_mm2": 339.7
+      }
+     }
+    },
+    {
+     "island": 9,
+     "pads": 1,
+     "pad_examples": [
+      "R14058.1"
+     ],
+     "centroid": [
+      351.49,
+      197.22
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    }
+   ],
+   "forbidden_in3_territory_mm2": 10119.0,
+   "in3_free_fraction_for_width_mm": {
+    "0.3": 0.424,
+    "0.5": 0.391,
+    "1.0": 0.325,
+    "2.0": 0.212,
+    "3.0": 0.139,
+    "4.0": 0.09
+   },
+   "in3_components_at_0p3mm": {
+    "count": 1753,
+    "largest_mm2": [
+     4810.7,
+     4777.2,
+     3552.9,
+     2644.0,
+     1851.6
+    ]
+   }
+  },
+  "FBG": {
+   "net": "/motherboard_do{slash}FIELD_B_0V",
+   "role": "return",
+   "domain": "DOM_FIELD_B",
+   "design_a": 4.82,
+   "limit_a": 5.32,
+   "source": {
+    "name": "J11005.2 FIELD_B 0 V input terminal (+ J11006.2 shutdown-contact 0 V)",
+    "pads": [
+     "J11005.2",
+     "J11006.2"
+    ],
+    "islands": [
+     6
+    ]
+   },
+   "clusters": [
+    {
+     "name": "JD09 B9-B12 DO-B load returns (DO08-DO15)",
+     "amps": 4.0,
+     "basis": "8 x 0.5 A, assumed to return through the board terminal (worst case)",
+     "cite": [
+      "DO",
+      "NET"
+     ],
+     "pads": [
+      "JD09.B9",
+      "JD09.B10",
+      "JD09.B11",
+      "JD09.B12"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "JD08 A9 SAFE_24V + ARM_LAMP returns",
+     "amps": 1.8,
+     "basis": "2 x TPS1H000 0.9 A",
+     "cite": [
+      "RM",
+      "NET"
+     ],
+     "pads": [
+      "JD08.A9"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "JD08 B11/B12 DI group 2 sensor returns",
+     "amps": 0.15,
+     "basis": "MAX17612 SENS24_G2",
+     "cite": [
+      "RM",
+      "NET"
+     ],
+     "pads": [
+      "JD08.B11",
+      "JD08.B12"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "JD07 A11/A12/B11/B12 DI groups 0-1 sensor returns",
+     "amps": 0.3,
+     "basis": "2 x MAX17612 SENS24_G0/G1",
+     "cite": [
+      "RM",
+      "NET"
+     ],
+     "pads": [
+      "JD07.A11",
+      "JD07.A12",
+      "JD07.B11",
+      "JD07.B12"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "U19028 FIELD_B 5 V buck GND (input return)",
+     "amps": 0.3,
+     "basis": "buck input current returned at its GND",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19028.9"
+     ],
+     "islands": [
+      6
+     ]
+    },
+    {
+     "name": "U10017 DO-B quad 0 GND (quiescent)",
+     "amps": 0.02,
+     "basis": "quiescent only",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10017.21",
+      "U10017.28",
+      "U10017.29",
+      "U10017.41",
+      "U10017.5"
+     ],
+     "islands": [
+      1
+     ]
+    },
+    {
+     "name": "U10022 DO-B quad 1 GND (quiescent)",
+     "amps": 0.02,
+     "basis": "quiescent only",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10022.21",
+      "U10022.28",
+      "U10022.29",
+      "U10022.41",
+      "U10022.5"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "U11018 DOB LDO GND",
+     "amps": 0.02,
+     "basis": "20 mA reservation",
+     "cite": [
+      "PE_README"
+     ],
+     "pads": [
+      "U11018.4",
+      "U11018.9"
+     ],
+     "islands": [
+      3
+     ]
+    }
+   ],
+   "clusters_sum_a": 6.61,
+   "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current",
+   "islands": [
+    {
+     "island": 0,
+     "pads": 6,
+     "pad_examples": [
+      "C10026.2",
+      "R10029.2",
+      "R10030.2",
+      "R10031.2",
+      "R10033.2",
+      "U10016.9"
+     ],
+     "centroid": [
+      221.45,
+      89.47
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 134.5,
+     "track_landing_mm2": 5.96,
+     "legal_via_area_mm2": 2.5,
+     "in3_components": {
+      "545": {
+       "via_cells": 198,
+       "area_mm2": 108.3
+      },
+      "491": {
+       "via_cells": 52,
+       "area_mm2": 62.0
+      }
+     }
+    },
+    {
+     "island": 1,
+     "pads": 15,
+     "pad_examples": [
+      "C10027.2",
+      "C10028.2",
+      "C10029.2",
+      "C10030.2",
+      "C10031.2",
+      "C10034.2"
+     ],
+     "centroid": [
+      143.45,
+      103.35
+     ],
+     "amps": 0.02,
+     "clusters": [
+      "U10017 DO-B quad 0 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 763.3,
+     "track_landing_mm2": 22.48,
+     "legal_via_area_mm2": 26.98,
+     "in3_components": {
+      "775": {
+       "via_cells": 668,
+       "area_mm2": 368.4
+      },
+      "817": {
+       "via_cells": 1006,
+       "area_mm2": 108.4
+      },
+      "995": {
+       "via_cells": 729,
+       "area_mm2": 28.4
+      },
+      "964": {
+       "via_cells": 288,
+       "area_mm2": 14.1
+      }
+     }
+    },
+    {
+     "island": 2,
+     "pads": 1,
+     "pad_examples": [
+      "C10032.2"
+     ],
+     "centroid": [
+      120.81,
+      72.24
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 3,
+     "pads": 5,
+     "pad_examples": [
+      "C10033.2",
+      "C11077.2",
+      "R11065.2",
+      "U11018.4",
+      "U11018.9"
+     ],
+     "centroid": [
+      127.11,
+      137.23
+     ],
+     "amps": 0.02,
+     "clusters": [
+      "U11018 DOB LDO GND"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 306.7,
+     "track_landing_mm2": 6.53,
+     "legal_via_area_mm2": 29.92,
+     "in3_components": {
+      "1085": {
+       "via_cells": 2992,
+       "area_mm2": 188.6
+      }
+     }
+    },
+    {
+     "island": 4,
+     "pads": 170,
+     "pad_examples": [
+      "C10035.2",
+      "C10037.2",
+      "C10038.2",
+      "C10039.2",
+      "C10040.2",
+      "C10041.2"
+     ],
+     "centroid": [
+      53.18,
+      133.29
+     ],
+     "amps": 6.27,
+     "clusters": [
+      "JD09 B9-B12 DO-B load returns (DO08-DO15)",
+      "JD08 A9 SAFE_24V + ARM_LAMP returns",
+      "JD08 B11/B12 DI group 2 sensor returns",
+      "JD07 A11/A12/B11/B12 DI groups 0-1 sensor returns",
+      "U10022 DO-B quad 1 GND (quiescent)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 14979.2,
+     "track_landing_mm2": 89.09,
+     "legal_via_area_mm2": 1491.59,
+     "in3_components": {
+      "1": {
+       "via_cells": 54716,
+       "area_mm2": 5113.8
+      },
+      "1502": {
+       "via_cells": 57451,
+       "area_mm2": 3723.5
+      },
+      "1303": {
+       "via_cells": 5477,
+       "area_mm2": 483.1
+      },
+      "1170": {
+       "via_cells": 8400,
+       "area_mm2": 431.0
+      }
+     }
+    },
+    {
+     "island": 5,
+     "pads": 1,
+     "pad_examples": [
+      "C10036.2"
+     ],
+     "centroid": [
+      69.91,
+      97.51
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 6,
+     "pads": 27,
+     "pad_examples": [
+      "C11009.2",
+      "C11010.2",
+      "C11011.2",
+      "C11012.2",
+      "C11091.2",
+      "C19044.2"
+     ],
+     "centroid": [
+      232.71,
+      193.84
+     ],
+     "amps": 0.3,
+     "clusters": [
+      "U19028 FIELD_B 5 V buck GND (input return)"
+     ],
+     "is_source": true,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 3389.4,
+     "track_landing_mm2": 28.35,
+     "legal_via_area_mm2": 281.72,
+     "in3_components": {
+      "1321": {
+       "via_cells": 18616,
+       "area_mm2": 4665.5
+      },
+      "1713": {
+       "via_cells": 1440,
+       "area_mm2": 218.2
+      },
+      "1376": {
+       "via_cells": 1936,
+       "area_mm2": 213.2
+      },
+      "1596": {
+       "via_cells": 3012,
+       "area_mm2": 190.8
+      }
+     }
+    },
+    {
+     "island": 7,
+     "pads": 5,
+     "pad_examples": [
+      "C19001.2",
+      "C19020.2",
+      "U19001.14",
+      "U19001.9",
+      "U19009.3"
+     ],
+     "centroid": [
+      59.4,
+      45.52
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 419.1,
+     "track_landing_mm2": 5.82,
+     "legal_via_area_mm2": 10.92,
+     "in3_components": {
+      "1": {
+       "via_cells": 1047,
+       "area_mm2": 5113.8
+      },
+      "180": {
+       "via_cells": 14,
+       "area_mm2": 202.3
+      },
+      "141": {
+       "via_cells": 31,
+       "area_mm2": 21.5
+      }
+     }
+    },
+    {
+     "island": 8,
+     "pads": 1,
+     "pad_examples": [
+      "C19012.2"
+     ],
+     "centroid": [
+      38.8,
+      187.53
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 9,
+     "pads": 1,
+     "pad_examples": [
+      "C19029.2"
+     ],
+     "centroid": [
+      101.9,
+      68.37
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 10,
+     "pads": 1,
+     "pad_examples": [
+      "C19504.1"
+     ],
+     "centroid": [
+      374.75,
+      173.0
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 244.8,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 7.75,
+     "in3_components": {
+      "1554": {
+       "via_cells": 82,
+       "area_mm2": 144.7
+      },
+      "1553": {
+       "via_cells": 110,
+       "area_mm2": 47.6
+      },
+      "1525": {
+       "via_cells": 542,
+       "area_mm2": 29.8
+      },
+      "1622": {
+       "via_cells": 41,
+       "area_mm2": 9.5
+      }
+     }
+    },
+    {
+     "island": 11,
+     "pads": 1,
+     "pad_examples": [
+      "D17053.1"
+     ],
+     "centroid": [
+      141.06,
+      39.05
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 64.3,
+     "track_landing_mm2": 1.25,
+     "legal_via_area_mm2": 0.6,
+     "in3_components": {
+      "174": {
+       "via_cells": 60,
+       "area_mm2": 288.6
+      }
+     }
+    },
+    {
+     "island": 12,
+     "pads": 1,
+     "pad_examples": [
+      "D17054.1"
+     ],
+     "centroid": [
+      132.53,
+      57.96
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 60.2,
+     "track_landing_mm2": 4.54,
+     "legal_via_area_mm2": 2.13,
+     "in3_components": {
+      "285": {
+       "via_cells": 213,
+       "area_mm2": 250.8
+      }
+     }
+    },
+    {
+     "island": 13,
+     "pads": 2,
+     "pad_examples": [
+      "D17055.1",
+      "D17056.1"
+     ],
+     "centroid": [
+      386.04,
+      209.72
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 1374.1,
+     "track_landing_mm2": 13.13,
+     "legal_via_area_mm2": 538.35,
+     "in3_components": {
+      "1321": {
+       "via_cells": 53763,
+       "area_mm2": 4665.5
+      },
+      "1730": {
+       "via_cells": 72,
+       "area_mm2": 23.8
+      }
+     }
+    },
+    {
+     "island": 14,
+     "pads": 2,
+     "pad_examples": [
+      "D17059.1",
+      "D17060.1"
+     ],
+     "centroid": [
+      175.83,
+      44.71
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 115.3,
+     "track_landing_mm2": 2.82,
+     "legal_via_area_mm2": 3.01,
+     "in3_components": {
+      "187": {
+       "via_cells": 55,
+       "area_mm2": 50.5
+      },
+      "117": {
+       "via_cells": 8,
+       "area_mm2": 45.8
+      },
+      "243": {
+       "via_cells": 238,
+       "area_mm2": 25.5
+      }
+     }
+    },
+    {
+     "island": 15,
+     "pads": 3,
+     "pad_examples": [
+      "D19004.2",
+      "U19002.14",
+      "U19002.9"
+     ],
+     "centroid": [
+      103.0,
+      104.79
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 93.1,
+     "track_landing_mm2": 4.96,
+     "legal_via_area_mm2": 0.81,
+     "in3_components": {
+      "679": {
+       "via_cells": 81,
+       "area_mm2": 130.2
+      }
+     }
+    },
+    {
+     "island": 16,
+     "pads": 2,
+     "pad_examples": [
+      "U19003.14",
+      "U19003.9"
+     ],
+     "centroid": [
+      172.5,
+      73.63
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu",
+      "In1.Cu",
+      "In4.Cu"
+     ],
+     "fill_area_mm2": 95.8,
+     "track_landing_mm2": 2.97,
+     "legal_via_area_mm2": 7.18,
+     "in3_components": {
+      "494": {
+       "via_cells": 537,
+       "area_mm2": 212.4
+      },
+      "454": {
+       "via_cells": 181,
+       "area_mm2": 10.5
+      }
+     }
+    },
+    {
+     "island": 17,
+     "pads": 5,
+     "pad_examples": [
+      "U19008.11",
+      "U19008.17",
+      "U19008.3",
+      "U19008.7",
+      "U19008.9"
+     ],
+     "centroid": [
+      60.83,
+      109.9
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 1.43,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 18,
+     "pads": 1,
+     "pad_examples": [
+      "U19019.8"
+     ],
+     "centroid": [
+      90.51,
+      71.17
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 19,
+     "pads": 1,
+     "pad_examples": [
+      "U19025.5"
+     ],
+     "centroid": [
+      96.58,
+      99.88
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    }
+   ],
+   "forbidden_in3_territory_mm2": 10119.0,
+   "in3_free_fraction_for_width_mm": {
+    "0.3": 0.429,
+    "0.5": 0.396,
+    "1.0": 0.331,
+    "2.0": 0.219,
+    "3.0": 0.145,
+    "4.0": 0.095
+   },
+   "in3_components_at_0p3mm": {
+    "count": 1823,
+    "largest_mm2": [
+     5113.8,
+     4665.5,
+     3723.5,
+     2568.7,
+     1870.7
+    ]
+   }
+  },
+  "FB": {
+   "net": "/motherboard_power_entry{slash}FIELD_B_24V_PROTECTED",
+   "role": "supply",
+   "domain": "DOM_FIELD_B",
+   "design_a": 4.82,
+   "limit_a": 5.32,
+   "source": {
+    "name": "U11006 OUT (TPS26630 FIELD_B eFuse exit)",
+    "pads": [
+     "U11006.17",
+     "U11006.18"
+    ],
+    "islands": [
+     1
+    ]
+   },
+   "clusters": [
+    {
+     "name": "DO-B quad 0 VS (DO08-DO11 -> JD09.B1-B4)",
+     "amps": 2.0,
+     "basis": "0.5 A x 4, quad limit 2.0 A",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10017.14",
+      "U10017.15",
+      "U10017.16",
+      "U10017.17",
+      "U10017.34",
+      "U10017.35",
+      "U10017.36",
+      "U10017.37"
+     ],
+     "islands": [
+      0
+     ]
+    },
+    {
+     "name": "DO-B quad 1 VS (DO12-DO15 -> JD09.B5-B8)",
+     "amps": 2.0,
+     "basis": "0.5 A x 4, quad limit 2.0 A",
+     "cite": [
+      "DO"
+     ],
+     "pads": [
+      "U10022.14",
+      "U10022.15",
+      "U10022.16",
+      "U10022.17",
+      "U10022.34",
+      "U10022.35",
+      "U10022.36",
+      "U10022.37"
+     ],
+     "islands": [
+      1
+     ]
+    },
+    {
+     "name": "SAFE_24V switch IN (U19007 TPS1H000 -> JD08.A1)",
+     "amps": 0.9,
+     "basis": "TPS1H000 Imax 0.9 A",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19007.8"
+     ],
+     "islands": [
+      1
+     ]
+    },
+    {
+     "name": "ARM_LAMP switch IN (U19018 TPS1H000 -> JD08.A6)",
+     "amps": 0.9,
+     "basis": "TPS1H000 Imax 0.9 A",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19018.8"
+     ],
+     "islands": [
+      0
+     ]
+    },
+    {
+     "name": "DI sensor supply G0 limiter IN (U19004 -> SENS24_G0 JD07.A9/A10)",
+     "amps": 0.15,
+     "basis": "MAX17612",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19004.1"
+     ],
+     "islands": [
+      0
+     ]
+    },
+    {
+     "name": "DI sensor supply G1 limiter IN (U19005 -> SENS24_G1 JD07.B9/B10)",
+     "amps": 0.15,
+     "basis": "MAX17612",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19005.1"
+     ],
+     "islands": [
+      4
+     ]
+    },
+    {
+     "name": "DI sensor supply G2 limiter IN (U19006 -> SENS24_G2 JD08.B9/B10)",
+     "amps": 0.15,
+     "basis": "MAX17612",
+     "cite": [
+      "RM"
+     ],
+     "pads": [
+      "U19006.1"
+     ],
+     "islands": [
+      3
+     ]
+    },
+    {
+     "name": "FIELD_B 5 V buck VIN (U19028 LMR36506)",
+     "amps": 0.3,
+     "basis": "LMR36506 input estimate",
+     "cite": [
+      "RM",
+      "LC"
+     ],
+     "pads": [
+      "U19028.4"
+     ],
+     "islands": [
+      1
+     ]
+    }
+   ],
+   "clusters_sum_a": 6.55,
+   "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current",
+   "islands": [
+    {
+     "island": 0,
+     "pads": 15,
+     "pad_examples": [
+      "C10030.1",
+      "C10031.1",
+      "C11076.1",
+      "C19028.1",
+      "R19021.1",
+      "U10017.14"
+     ],
+     "centroid": [
+      118.69,
+      114.99
+     ],
+     "amps": 3.05,
+     "clusters": [
+      "DO-B quad 0 VS (DO08-DO11 -> JD09.B1-B4)",
+      "ARM_LAMP switch IN (U19018 TPS1H000 -> JD08.A6)",
+      "DI sensor supply G0 limiter IN (U19004 -> SENS24_G0 JD07.A9/A10)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 144.59,
+     "legal_via_area_mm2": 1.82,
+     "in3_components": {
+      "1450": {
+       "via_cells": 108,
+       "area_mm2": 434.0
+      },
+      "845": {
+       "via_cells": 72,
+       "area_mm2": 349.2
+      },
+      "1331": {
+       "via_cells": 1,
+       "area_mm2": 38.4
+      },
+      "1069": {
+       "via_cells": 1,
+       "area_mm2": 23.4
+      }
+     }
+    },
+    {
+     "island": 1,
+     "pads": 24,
+     "pad_examples": [
+      "C10039.1",
+      "C10040.1",
+      "C11012.1",
+      "C19010.1",
+      "C19017.1",
+      "C19044.1"
+     ],
+     "centroid": [
+      145.72,
+      145.66
+     ],
+     "amps": 3.2,
+     "clusters": [
+      "DO-B quad 1 VS (DO12-DO15 -> JD09.B5-B8)",
+      "SAFE_24V switch IN (U19007 TPS1H000 -> JD08.A1)",
+      "FIELD_B 5 V buck VIN (U19028 LMR36506)"
+     ],
+     "is_source": true,
+     "inner_fill_layers": [
+      "B.Cu",
+      "F.Cu"
+     ],
+     "fill_area_mm2": 52.6,
+     "track_landing_mm2": 868.96,
+     "legal_via_area_mm2": 13.76,
+     "in3_components": {
+      "1450": {
+       "via_cells": 22,
+       "area_mm2": 434.0
+      },
+      "1758": {
+       "via_cells": 53,
+       "area_mm2": 196.5
+      },
+      "1627": {
+       "via_cells": 21,
+       "area_mm2": 180.0
+      },
+      "1751": {
+       "via_cells": 830,
+       "area_mm2": 178.6
+      }
+     }
+    },
+    {
+     "island": 2,
+     "pads": 1,
+     "pad_examples": [
+      "C19012.1"
+     ],
+     "centroid": [
+      37.25,
+      187.53
+     ],
+     "amps": 0.0,
+     "clusters": [],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 0,
+     "legal_via_area_mm2": 0.0,
+     "in3_components": {}
+    },
+    {
+     "island": 3,
+     "pads": 3,
+     "pad_examples": [
+      "C19014.1",
+      "R19034.1",
+      "U19006.1"
+     ],
+     "centroid": [
+      35.62,
+      126.5
+     ],
+     "amps": 0.15,
+     "clusters": [
+      "DI sensor supply G2 limiter IN (U19006 -> SENS24_G2 JD08.B9/B10)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 116.47,
+     "legal_via_area_mm2": 1.02,
+     "in3_components": {
+      "1027": {
+       "via_cells": 40,
+       "area_mm2": 78.0
+      },
+      "1224": {
+       "via_cells": 1,
+       "area_mm2": 77.1
+      },
+      "1149": {
+       "via_cells": 61,
+       "area_mm2": 43.4
+      }
+     }
+    },
+    {
+     "island": 4,
+     "pads": 2,
+     "pad_examples": [
+      "R19028.1",
+      "U19005.1"
+     ],
+     "centroid": [
+      34.73,
+      186.89
+     ],
+     "amps": 0.15,
+     "clusters": [
+      "DI sensor supply G1 limiter IN (U19005 -> SENS24_G1 JD07.B9/B10)"
+     ],
+     "is_source": false,
+     "inner_fill_layers": [],
+     "fill_area_mm2": 0,
+     "track_landing_mm2": 2.39,
+     "legal_via_area_mm2": 0.17,
+     "in3_components": {
+      "1532": {
+       "via_cells": 17,
+       "area_mm2": 3666.2
+      }
+     }
+    }
+   ],
+   "forbidden_in3_territory_mm2": 10119.0,
+   "in3_free_fraction_for_width_mm": {
+    "0.3": 0.424,
+    "0.5": 0.391,
+    "1.0": 0.325,
+    "2.0": 0.212,
+    "3.0": 0.138,
+    "4.0": 0.089
+   },
+   "in3_components_at_0p3mm": {
+    "count": 1865,
+    "largest_mm2": [
+     5053.8,
+     4621.2,
+     3666.2,
+     2568.7,
+     1870.7
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "scope": "two encoder branches only",
+  "manufacturing_ready": false,
+  "source_ledger_sha256": "f5abb8b171ee4c8e5713febb682e90ce71e86325e0dac16ecd108f723d68f63d",
+  "mpn": "TPS2553DBVR-1",
+  "package": "DBV_SOT23_6",
+  "pins": {
+    "1": "IN",
+    "2": "GND",
+    "3": "EN",
+    "4": "FAULT_N",
+    "5": "ILIM",
+    "6": "OUT"
+  },
+  "boundary": {
+    "JIN1": [
+      "CORE_5V",
+      "LOGIC_GND",
+      "IO_3V3"
+    ],
+    "JOUT1": [
+      "ENC0_5V_LIMITED",
+      "LOGIC_GND",
+      "ENC1_5V_LIMITED",
+      "LOGIC_GND"
+    ],
+    "JCTRL1": [
+      "ENC0_POWER_EN",
+      "ENC0_POWER_FAULT_N",
+      "LOGIC_GND",
+      "ENC1_POWER_EN",
+      "ENC1_POWER_FAULT_N",
+      "LOGIC_GND"
+    ]
+  },
+  "input_v": {
+    "min": 4.75,
+    "nominal": 5.0,
+    "max": 5.25
+  },
+  "logic_io_v": {
+    "min": 0,
+    "max": 3.6,
+    "ground": "LOGIC_GND",
+    "partial_power_qualified": false
+  },
+  "rilim": {
+    "ohms": 110000,
+    "tolerance": 0.01,
+    "tcr_ppm_per_k": 100,
+    "temperature_excursion_k": 150,
+    "minimum_kohms": 107.26650000000001,
+    "maximum_kohms": 112.76649999999998,
+    "mpn_reference": "CRCW0603110KFKEA"
+  },
+  "calculated_threshold_a": {
+    "min": 0.20744466378470652,
+    "nominal": 0.2425855145317264,
+    "max": 0.28360491997621234
+  },
+  "budget": {
+    "normal_encoder_load_a_each": 0.2,
+    "ledger_normal_load_a_both": 0.4,
+    "switch_quiescent_a_each_reservation": 0.00014,
+    "output_bleed_max_a_each": 5.3837871096754347e-05,
+    "normal_5v_a_both_with_switch_and_bleed": 0.4003876757421935,
+    "simultaneous_limited_fault_a_both": 0.5672098399524247,
+    "fault_a_both_with_switch_reservation": 0.5674898399524246,
+    "full_rail_fault_budget_qualified": false
+  },
+  "thermal": {
+    "ron_max_ohms_dbv": 0.135,
+    "normal_switch_loss_w_each": 0.005402907636338934,
+    "normal_switch_drop_v_each": 0.027007268112598064,
+    "near_short_dissipation_w_each": 1.488925829875115,
+    "initial_local_ambient_max_c": 70,
+    "qualified": false
+  },
+  "behavior": {
+    "enable_default": "10k_pulldown_off_if_upstream_high_z",
+    "fault_active_low": true,
+    "fault_is_power_good": false,
+    "fault_latch_cleared_by": [
+      "enable_toggle",
+      "input_power_cycle"
+    ],
+    "thermal_auto_retry_possible": true,
+    "reverse_current_before_turnoff_possible": true,
+    "external_fault_inhibit_implemented": false,
+    "active_output_discharge": false
+  },
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/tps2553-1.pdf",
+    "https://www.ti.com/product/TPS2553-1/part-details/TPS2553DBVR-1",
+    "https://www.vishay.com/docs/20035/dcrcwe3.pdf"
+  ]
+}

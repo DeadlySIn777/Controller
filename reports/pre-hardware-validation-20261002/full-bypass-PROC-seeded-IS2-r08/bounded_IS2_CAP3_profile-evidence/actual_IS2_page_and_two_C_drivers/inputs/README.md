@@ -1,0 +1,7 @@
+# Report-local IS2 inventory/page0 prototype
+
+The real frame lengths, CRC, transport, rate/timing limits and original external IS1 sources are retained. This derivative explicitly opts into IS-2: twelve integrated motor interfaces/class0, four base encoders, no invented card presence/MX4/EX8, and no index one-shot, MPG, events or telemetry feature claim. The constant-false full-profile completion gate keeps qualified installed counts zero and every authority output LOW. Static inventory support is not working machine readiness.
+
+A real accepted READ_PAGE0 queues a real CAP3 snapshot for the next acceptable complete CS_FB. This incomplete profile consumes only a full validated session-acceptable FB_READ or READ_PAGE0. That is deliberately narrower than the frozen IS1 wording "next completed CS_FB transaction"; corrupt/truncated/foreign/CMD and unsupported requests do not consume. A requested new page queues only after state acceptance, never from the raw rejected-header sideband.
+
+The copied IS2-only C driver parses this actual SPI response, retries qualification at most64 times and refuses before CONFIGURE/ARM. The unchanged original IS1 driver refuses IS2. The copied driver also rejects unavailable encoder-expansion/MPG configurations before a wire transaction. No HAL/commissioning/full output authority, factory identity/provider qualification, device fit or physical timing is claimed.

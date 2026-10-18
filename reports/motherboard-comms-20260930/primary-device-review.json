@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "primary_review_scope": "individual part pin/default/layout/current facts; not assembled qualification",
+  "sources": [
+    {
+      "name": "isow1044.pdf",
+      "sha256": "552b2c30bd7b2b1b533ef66b9aaab2279a3982046057314993e7ac6bab0bef38"
+    },
+    {
+      "name": "isow1432.pdf",
+      "sha256": "3e46deca77909a2aab205ffae1ea0df4630a888126ef6dd60caaa08d6e4fa4b4"
+    },
+    {
+      "name": "mcp2518fd.pdf",
+      "sha256": "0041b5bddb2a341794958f7a3195b931b349eb863f685935bb80aee377661ff5"
+    },
+    {
+      "name": "tps22918.pdf",
+      "sha256": "1b28eb58003d28b18bf919a15734056f296a499bebee2bd493a1e4358c4dfb1c"
+    },
+    {
+      "name": "tps3839.pdf",
+      "sha256": "a18940237afc63cf6d1a0bb5e1c8c0b2c3274e01c47fa5f27e470a005072621b"
+    }
+  ],
+  "browser_only_primary_reviews": [
+    {
+      "part": "ASV-40.000MHZ-LC-T",
+      "url": "https://abracon.com/Oscillators/ASV.pdf",
+      "facts": "L -40..85C; C +-50ppm; T1000pcsreel;3.3V+-10%;40MHz25mAmax;4msstartup;pin1OE2GND3OUT4VDD. Direct local PDF fetch403, no retainedPDF hash."
+    },
+    {
+      "part": "PESD2CANFD24V-T",
+      "url": "https://assets.nexperia.com/documents/data-sheet/PESD2CANFD24V-T.pdf",
+      "facts": "13pagesRev5Aug11,2020.1K1/2K2/3CC,SOT23;24Vstand-off42Vmaxclampat1A. Manufacturer type verified; packingorder exactsuffix unverified. LocalPDF403, failedHTML1927bytes is not a datasheet."
+    },
+    {
+      "rejected_part": "CDSOT23-SM712",
+      "url": "https://www.bourns.com/docs/product-datasheets/cdsot23-sm712.pdf",
+      "facts": "19Vmaxpositiveclampat1A exceeds ISOW1432+15V absolute bus rating. Not fitted; no claimofprotectioncoordination."
+    }
+  ],
+  "actual_derived_power_flags": {
+    "RS485_ISO_RETURN_RAW": "isolated GND2 return; physically separate fromLOGIC_GND",
+    "CAN_ISO_RETURN_RAW": "isolated GND2 return; physically separate fromLOGIC_GND",
+    "RS485_COM": "real prescribed return bead fromRS485_ISO_RETURN_RAW",
+    "RS485_FIELD_3V3": "actual ISOW1432VISOOUT through supplybead",
+    "CAN_GND": "real prescribed return bead fromCAN_ISO_RETURN_RAW",
+    "CAN_FIELD_5V": "actual ISOW1044VISOOUT through supplybead"
+  },
+  "ERC_warnings": "two GND2 pins use separate raw-return names; do not rename/short those domains to LOGIC_GND to clear heuristic. Zero ignoredchecks.",
+  "partial_power_scope": "actual module-health power-cycle, Ioffbuffers and HIGHstandby/LOWDE biases; controllerstoredcharge/startup/POR/discharge underallpowers remain physicalqualification. TPS22918 is not a bidirectional reverse-current blocker; do not claimitprovidesone.",
+  "CAN_controller_IRQ": "MCPINTOD resets0(pushpull), optionalopen-drainfirmware; modeledoutput not fictitiousopen-drain. GPIO0 resetsinput withrealcontroller-railHIGHbias, actualreadyANDmodule-good ORXSTBYforcesSTB.",
+  "linux_driver_scope": {
+    "primary_current_source": "https://raw.githubusercontent.com/torvalds/linux/master/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c",
+    "fact": "current master handles XSTBYEN/TRIS0/LAT0; this is notproof approvedPi6.12targetimagecontainsit. Actualdriverdevice-tree/provisiontargetstilluncompiled."
+  }
+}

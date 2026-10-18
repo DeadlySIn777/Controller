@@ -1,0 +1,114 @@
+{
+  "source_evidence_only": true,
+  "primary_current_conditions": "DC allHIGH/allLOW row maxima combined conservatively; mixed-state and switching/output-load current require source/physical qualification. Does not claim guaranteed global dynamic maximum.",
+  "new_field_B3V3_terms_a": {
+    "two_TLP_LED_noVF_upper": 0.03162790697674419,
+    "ISO7760F_ICC1_DC_allHIGH_max": 0.0114,
+    "ISO1540_ICC2_LOW_max": 0.0067,
+    "ISO7720F_ICC2_DC_allHIGH_max": 0.0021,
+    "ADS1115_operating_fulltemp_max_screen": 0.0003,
+    "TMUX1511_ICC_max": 7e-05,
+    "LTC2962_VCC_max": 0.00021,
+    "two_I2C_field_pullups_conservative": 0.0015384615384615385,
+    "six_fault_health_pullups_conservative": 0.00204,
+    "logic_leak_divider_misc_reservation": 0.001
+  },
+  "new_field_B3V3_conservative_allocation_screen_a": 0.05698636851520573,
+  "retained_DO_B_prior_allocation_a": 0.02,
+  "combined_field_B3V3_screen_a": 0.07698636851520572,
+  "proposed_total_B3V3_allocation_a": 0.085,
+  "TPS7A1633_output_rating_a": 0.1,
+  "old_30V_DGN_noheatsink_screen_limit_a": 0.03950541032237995,
+  "new_field_B_local_preregulator": "Exact16part U11009 converter clone; source5V4.9\u20135.1 screen reused, not new independent validation",
+  "LDO_5V_worst_loss_screen_w": 0.15868649999999998,
+  "LDO_5V_datasheet_66p2CperW_TJ_screen_c": 65.5050463,
+  "LDO_headroom_screen_v": 1.0340000000000003,
+  "new_IO3_terms_a": {
+    "three_ISO1212_ICC_max": 0.0057,
+    "ISO7760F_ICC2_DC_max": 0.0057,
+    "ISO1540_ICC1_LOW_max": 0.0071,
+    "ISO7720F_ICC1_DC_max": 0.0042,
+    "two_I2C_logic_pullups_conservative": 0.0015837104072398188,
+    "five_RX_pulldowns": 0.00175,
+    "five_DIC_fault_pullup_sink_conservative": 0.00175,
+    "BUF2_and_five_ODINV_ICC_max_unloaded": 6.000000000000001e-05,
+    "logic_input_leak_reservation": 0.0002
+  },
+  "new_IO3_conservative_DC_screen_a": 0.028043710407239818,
+  "IO3_new_capacitance_nominal_f": 1.2e-06,
+  "FIELD_B3V3_new_nominal_decoupling_f": 8e-07,
+  "CORE5_external_permit_LED_upper_a": 0.018892630003741112,
+  "DI_group_static_current_range_a": [
+    0.20704495711540466,
+    0.2310235025984781
+  ],
+  "DI_rated_continuous_a": 0.2,
+  "DI_static_cap_a": 0.3,
+  "sensor_current_conditions": "MAX17612\u00b15%20mA<programmed\u2264250mA fulltemp, .1%25ppmR over150K; transientovershoot/energy not bounded by steady state",
+  "monitor_corners": [
+    {
+      "rail": "SAFE_24V",
+      "kind": "UV",
+      "top_ref": "R19041",
+      "bottom_ref": "R19042",
+      "top_ohm": 287000,
+      "bottom_ohm": 10000,
+      "full_tolerance_screen_v": [
+        14.68604465478066,
+        15.01535878761785
+      ],
+      "resistor_error_fraction": 0.003,
+      "reference_source": "LTC2962H\u00b1.5%/-40..125C; sensebias\u00b115nA at.5V",
+      "longterm_condition": "TNPW500ppm/1000h general operation film<=125C; arbitrary lifetime not qualified"
+    },
+    {
+      "rail": "SAFE_24V",
+      "kind": "OV",
+      "top_ref": "R19043",
+      "bottom_ref": "R19044",
+      "top_ohm": 615000,
+      "bottom_ohm": 10000,
+      "full_tolerance_screen_v": [
+        30.901524260244276,
+        31.601483116323962
+      ],
+      "resistor_error_fraction": 0.003,
+      "reference_source": "LTC2962H\u00b1.5%/-40..125C; sensebias\u00b115nA at.5V",
+      "longterm_condition": "TNPW500ppm/1000h general operation film<=125C; arbitrary lifetime not qualified"
+    },
+    {
+      "rail": "DOB_FIELD_3V3",
+      "kind": "UV",
+      "top_ref": "R19045",
+      "bottom_ref": "R19046",
+      "top_ohm": 48700,
+      "bottom_ohm": 10000,
+      "full_tolerance_screen_v": [
+        2.9051032219087745,
+        2.9651349231950848
+      ],
+      "resistor_error_fraction": 0.003,
+      "reference_source": "LTC2962H\u00b1.5%/-40..125C; sensebias\u00b115nA at.5V",
+      "longterm_condition": "TNPW500ppm/1000h general operation film<=125C; arbitrary lifetime not qualified"
+    },
+    {
+      "rail": "DOB_FIELD_3V3",
+      "kind": "OV",
+      "top_ref": "R19047",
+      "bottom_ref": "R19048",
+      "top_ohm": 60400,
+      "bottom_ohm": 10000,
+      "full_tolerance_screen_v": [
+        3.483521244420739,
+        3.5567741141885647
+      ],
+      "resistor_error_fraction": 0.003,
+      "reference_source": "LTC2962H\u00b1.5%/-40..125C; sensebias\u00b115nA at.5V",
+      "longterm_condition": "TNPW500ppm/1000h general operation film<=125C; arbitrary lifetime not qualified"
+    }
+  ],
+  "firmware_voltage_ADC_implemented": false,
+  "ADC_loading": "100k postmux bleed changes ideal130k/10k gain; actual nominal factor\u224815.3, also ADC switched-input impedance, muxRon and sample settling must be calibrated.",
+  "external_indicator_semantics": "DI_SAFETY_SECONDARY_FAULT is actual ARM-lamp switch diagnostic; OFF/open lamp can legitimately be open-load. RawSAFE switch flag is testonly, never a permission substitute.",
+  "partial_power_and_20ms_qualification": "LTC RST guaranteed LOW down1V, ISO undefined1.7\u20132.25V, LVC undefinedbelow1.65V, Toshiba IFT and switching conditions must not become wholeboard proof. Dedicated EXT/PROCESS contact stage cannot independently prove all trajectory/ramp cases or full20ms deadline."
+}

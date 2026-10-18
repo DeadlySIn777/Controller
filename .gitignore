@@ -1,3 +1,36 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+research/vendor-src/
+node_modules/
+.build/
+controller_backend/.runtime/
+cnc1/build/
+.controller-config-demo/
+firmware/esp32_service/sdkconfig.old
+# Scratch output of external spreadsheet-generation tool runs (no manifest/provenance);
+# regenerate from research/*.json, never commit.
+outputs/
+
+# Ad-hoc logs are ignored. Recorded engineering evidence logs - hashed by a manifest or
+# cited by a report, including failed attempts and before-*/archive copies - are kept.
+# Negations cannot override a deeper .gitignore (controller_backend/.gitignore keeps its
+# raw LinuxCNC console capture ignored; cnc1/.gitignore ignores build/ trees).
+*.log
+!**/evidence/**/*.log
+!gateware/validation/**/*.log
+!gateware/synthesis/**/*.log
+!reports/**/*.log
+!research/**/*.log
+!**/before-audit-fixes-*/**/*.log
+
+# Public board-review scratch files
 *.lck
 *.kicad_prl
 *-backups/
+
+# Machine-local assistant permissions and temporary vendor/tool work
+.claude/
+tmp/
+.controller-setup-demo/

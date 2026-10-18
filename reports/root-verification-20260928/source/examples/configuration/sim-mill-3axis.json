@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "kind": "disconnected_simulation_configuration",
+  "board_identity": {
+    "id": "virtual-baseline-6j-2enc",
+    "revision": "virtual-r1",
+    "evidence": "built_in_virtual_fixture",
+    "simulation_only": true
+  },
+  "machine": {
+    "name": "Virtual three-axis mill",
+    "profile_id": "sim-mill-3axis",
+    "units": "mm",
+    "simulation_only": true
+  },
+  "devices": [
+    {
+      "identity": {
+        "instance_id": "x-drive",
+        "model": "virtual-step-drive",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "differential_5v",
+        "nominal_voltage_v": 5,
+        "maximum_current_a": 0.02,
+        "maximum_rate_hz": 200000
+      },
+      "available_functions": [
+        "step_dir"
+      ],
+      "required_connections": [
+        {
+          "role": "step_dir",
+          "resource": "SIM.M0",
+          "voltage_v": 5,
+          "current_a": 0.02,
+          "rate_hz": 100000,
+          "signal_type": "differential_5v"
+        }
+      ],
+      "calibration": [
+        {
+          "steps_per_unit": 200,
+          "unit": "mm",
+          "status": "unverified"
+        }
+      ],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "direction",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "scale",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    },
+    {
+      "identity": {
+        "instance_id": "x-home",
+        "model": "virtual-home-switch",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "contact_to_24v",
+        "nominal_voltage_v": 24,
+        "maximum_current_a": 0.005,
+        "maximum_rate_hz": 100
+      },
+      "available_functions": [
+        "home_input"
+      ],
+      "required_connections": [
+        {
+          "role": "home_input",
+          "resource": "SIM.DI0",
+          "voltage_v": 24,
+          "current_a": 0.005,
+          "rate_hz": 10,
+          "signal_type": "contact_to_24v"
+        }
+      ],
+      "calibration": [],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "polarity",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    },
+    {
+      "identity": {
+        "instance_id": "y-drive",
+        "model": "virtual-step-drive",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "differential_5v",
+        "nominal_voltage_v": 5,
+        "maximum_current_a": 0.02,
+        "maximum_rate_hz": 200000
+      },
+      "available_functions": [
+        "step_dir"
+      ],
+      "required_connections": [
+        {
+          "role": "step_dir",
+          "resource": "SIM.M1",
+          "voltage_v": 5,
+          "current_a": 0.02,
+          "rate_hz": 100000,
+          "signal_type": "differential_5v"
+        }
+      ],
+      "calibration": [
+        {
+          "steps_per_unit": 200,
+          "unit": "mm",
+          "status": "unverified"
+        }
+      ],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "direction",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "scale",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    },
+    {
+      "identity": {
+        "instance_id": "y-home",
+        "model": "virtual-home-switch",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "contact_to_24v",
+        "nominal_voltage_v": 24,
+        "maximum_current_a": 0.005,
+        "maximum_rate_hz": 100
+      },
+      "available_functions": [
+        "home_input"
+      ],
+      "required_connections": [
+        {
+          "role": "home_input",
+          "resource": "SIM.DI1",
+          "voltage_v": 24,
+          "current_a": 0.005,
+          "rate_hz": 10,
+          "signal_type": "contact_to_24v"
+        }
+      ],
+      "calibration": [],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "polarity",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    },
+    {
+      "identity": {
+        "instance_id": "z-drive",
+        "model": "virtual-step-drive",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "differential_5v",
+        "nominal_voltage_v": 5,
+        "maximum_current_a": 0.02,
+        "maximum_rate_hz": 200000
+      },
+      "available_functions": [
+        "step_dir"
+      ],
+      "required_connections": [
+        {
+          "role": "step_dir",
+          "resource": "SIM.M2",
+          "voltage_v": 5,
+          "current_a": 0.02,
+          "rate_hz": 100000,
+          "signal_type": "differential_5v"
+        }
+      ],
+      "calibration": [
+        {
+          "steps_per_unit": 200,
+          "unit": "mm",
+          "status": "unverified"
+        }
+      ],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "direction",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "scale",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    },
+    {
+      "identity": {
+        "instance_id": "z-home",
+        "model": "virtual-home-switch",
+        "hardware_revision": "virtual-r1",
+        "firmware_revision": "virtual-1.0",
+        "evidence": "selected_virtual_fixture",
+        "simulation_only": true
+      },
+      "electrical_capabilities": {
+        "signal_type": "contact_to_24v",
+        "nominal_voltage_v": 24,
+        "maximum_current_a": 0.005,
+        "maximum_rate_hz": 100
+      },
+      "available_functions": [
+        "home_input"
+      ],
+      "required_connections": [
+        {
+          "role": "home_input",
+          "resource": "SIM.DI2",
+          "voltage_v": 24,
+          "current_a": 0.005,
+          "rate_hz": 10,
+          "signal_type": "contact_to_24v"
+        }
+      ],
+      "calibration": [],
+      "compatible_profiles": [
+        "sim-mill-3axis",
+        "sim-lathe-2axis"
+      ],
+      "permitted_commands": [
+        "inspect",
+        "validate",
+        "wiring"
+      ],
+      "startup_behavior": "outputs_disabled",
+      "communication_loss_behavior": "latch_fault_no_restart",
+      "output_owner": "none_simulation_only",
+      "readiness": {
+        "requested": false,
+        "observed": "unverified"
+      },
+      "commissioning_checks": [
+        {
+          "id": "wiring",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        },
+        {
+          "id": "polarity",
+          "status": "pending",
+          "evidence": "simulation_fixture_only"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "board_sha256": "dc6406e069aa8346e0fb990bc0c609b5dc238a02915c451732d99bf9f88107c5",
+  "original_rule_review_sha256": "a93106d5cd918a6294aa73de9df374b0bec0ff7e54d6cbc2085851e01460e2ec",
+  "frozen_native_rule_proposal_sha256": "9d15b8b9f8c304d6df944df7fae2b3b517c5beab1f4bae442df86327d1199196",
+  "exact_literal_signal_nets": 38,
+  "maximum_aggregate_per_net_mm": 1.0,
+  "actual_aggregate_guard": {
+    "passed": true,
+    "narrow_segments": [],
+    "aggregate_length_mm_by_net": {},
+    "maximum_per_net_mm": 1.0
+  },
+  "exact_native_project_and_rule_files_unchanged": true,
+  "exact_F_rule_area_unchanged": true,
+  "guard_source_sha256": "dd3a642d39b707f05982ccd582af5e5045ffc4cdc298e85662fe6e151fd22f29",
+  "guard_function": "def aggregate_guard(board):\n totals={};records=[]\n for t in board.GetTracks():\n  if t.Type()!=pcbnew.PCB_TRACE_T or pcbnew.ToMM(t.GetWidth())>=.2-1e-6:continue\n  net=t.GetNetname();start,end=pcbnew.ToMM(t.GetStart()),pcbnew.ToMM(t.GetEnd())\n  if net not in names or t.GetLayer()!=pcbnew.F_Cu or abs(pcbnew.ToMM(t.GetWidth())-.15)>1e-6:raise ValueError('Narrow copper escaped literal F-only signal exception')\n  # Whole conductor, including its half-width, lies inside the declared area.\n  if any(not (92+.075<=x<=108-.075 and 36+.075<=y<=52-.075)for x,y in (start,end)):raise ValueError('Narrow neck leaves literal U1001 area')\n  length=math.dist(start,end);totals[net]=totals.get(net,0)+length;records.append(dict(uuid=t.m_Uuid.AsString(),net=net,length_mm=length))\n if any(v>1+1e-6 for v in totals.values()):raise ValueError('Aggregate narrow F neck exceeds 1mm per reviewed net')\n return dict(passed=True,narrow_segments=records,aggregate_length_mm_by_net=totals,maximum_per_net_mm=1.0)",
+  "factory_exact_2oz_process_confirmation_outstanding": true,
+  "manufacturing_ready": false,
+  "source_or_board_mutated": false
+}

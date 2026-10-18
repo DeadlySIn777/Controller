@@ -1,0 +1,7 @@
+(version 1)
+# TI RDN0011A manufacturer's solder-mask-defined land contains 0.100 mm
+# and 0.120 mm copper gaps. Applies only between this module's own pads;
+# traces, other footprints and unconnected-item checks retain normal rules.
+(rule "TI RDN0011A manufacturer copper land"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad' && A.memberOfFootprint('U20') && B.memberOfFootprint('U20')")
+  (constraint clearance (min 0.10mm)))

@@ -1,0 +1,131 @@
+"""Bounded all-layer ordinary FA landing triage; no board/native fill produced."""
+import os,sys
+sys.dont_write_bytecode=True
+for n in('OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS'):os.environ[n]='2'
+import psutil
+p=psutil.Process();p.cpu_affinity(list(range(16,28)));p.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+import json,pickle,hashlib,time,runpy,math,collections,gc
+from pathlib import Path
+from shapely.geometry import Point,LineString,Polygon,box
+from shapely import from_wkb
+from shapely.ops import unary_union
+from shapely.strtree import STRtree
+H=Path(__file__).resolve().parent;ROOT=H.parents[3];P=ROOT/'reports/board-finish-20261017/actual-full-audit-repaired-r1/r763';STAGE=ROOT/'reports/board-finish-20261017/combined-route-stage-r4';OUT=H/'FA-off-track-protected-reference-ordinary-pairs-r15'
+T=runpy.run_path(str(H/'triage_reference_current_causal_geometry_r1.py'));norm=T['norm']
+sha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest()
+CHAIN=ROOT/'reports/board-finish-20261017/power-review/field5-current-continuation/complete-existing-FA-via-to-via-F-chain-r14/receipt.json';RETIRE={r.get('UUID',r.get('uuid'))for r in json.loads(CHAIN.read_bytes())['exact_retirement_operations']};NET='/motherboard_power_entry/FA_SHDN_CONTACT';GROUND='/motherboard_motors/FIELD_GND'
+CENTERS=[(297.25,155.65),(297.65,155.35),(297.8,155.3),(298.0,155.0),(297.55,155.2)]
+POWER=ROOT/'reports/board-finish-20261017/power-review/field5-current-continuation/F-parallel-offset-FA-landing-refined-r10'
+def put(n,v):(OUT/n).write_text(json.dumps(v,indent=1,allow_nan=False)+'\n',encoding='utf-8')
+def main():
+ t=time.monotonic();assert not OUT.exists();OUT.mkdir();mf=P/'actual-combined-full-after-model.pkl';h=pickle.loads(mf.read_bytes());expected=json.loads((STAGE/'all-copper-expected.json').read_bytes());ex=expected['copper'];dom=h['domains_normalized'];domain=dom[NET]
+ # Bind current sparse ordinary primitives, preserve cached genuine native pads,
+ # fills and flash masks; new primitive all6 flash assumptions are conservative.
+ tracks=[r for r in h['tracks']if r['uuid']in ex and r['uuid']not in RETIRE];vias=[r for r in h['vias']if r['uuid']in ex];oldids={r['uuid']for r in tracks+vias}|RETIRE
+ for uid,row in ex.items():
+  if uid in oldids:continue
+  if row['kind']=='segment':tracks.append({'uuid':uid,'net':row['raw_net'],'layer':row['layer'],'w':row['width_IU']/1e6,'a':[v/1e6 for v in row['start_IU']],'b':[v/1e6 for v in row['end_IU']]})
+  elif row['kind']=='via':
+   ds=set(row['diameters_IU'].values());assert len(ds)==1;vias.append({'uuid':uid,'net':row['raw_net'],'x':row['at_IU'][0]/1e6,'y':row['at_IU'][1]/1e6,'d':next(iter(ds))/1e6,'drill':row['drill_IU']/1e6,'flashed':list(row['diameters_IU'])})
+  else:raise AssertionError(('Unhandled new primitive',uid,row['kind']))
+ h={**h,'tracks':tracks,'vias':vias};npth=json.loads(T['NPTH'].read_bytes());nocu={r['UUID']for r in npth if r['IsNPTHWithNoCopper']and not any(l['CanFlashLayer']or l['FlashLayer']for l in r['layer_observations'])};rec,trees=T['build'](h,nocu)
+ groundoptions=[n for n in('/LOGIC_GND','/motherboard_motors/FIELD_GND','/motherboard_do/FIELD_B_0V')if dom[n]==domain]
+ rules=json.loads(T['RULES'].read_bytes());rulepolys=[(r,Polygon([(x/1e6,y/1e6)for x,y in p['outer_IU']], [[(x/1e6,y/1e6)for x,y in ring]for ring in p['holes_IU']]))for r in rules for p in r['outlines']]
+ smd=[(p['uuid'],p['ref'],str(p['num']),sh)for p in h['pads']if p['smd']for ly,rs in p['layers'].items()if ly in('F.Cu','B.Cu')for sh in T['polys'](rs)];smdtree=STRtree([r[3]for r in smd])
+ holes=[(v['uuid'],'via',Point(v['x'],v['y']),v['drill']/2)for v in vias]+[(p['uuid'],'pad_hole',sh,0)for p in h['pads']for sh in T['polys'](p.get('hole')or[])];holetree=STRtree([r[2]for r in holes]);body=from_wkb((POWER/'candidate-nominal-track-body.wkb').read_bytes());powernet=norm(next(v['net']for v in vias if v['uuid'].startswith('0901cf4a')))
+ def required(other):return .175 if dom.get(norm(other))==domain else .625
+ def check(q,ownnet=NET):
+  point=Point(q);bad=[];fills=[];near=[]
+  for ly,rows in rec.items():
+   for index in trees[ly].query(box(q[0]-2,q[1]-2,q[0]+2,q[1]+2)):
+    r=rows[int(index)]
+    if norm(r['raw_net'])==ownnet:continue
+    gap=point.distance(r['shape'])-r['radius']-.25-(.005 if r['kind']=='pad'else 0);req=max(required(r['raw_net']),float(r['data'].get('clearance_mm',0))+.025)
+    row={'layer':ly,'kind':r['kind'],'UUID':r['UUID'],'raw_net':r['raw_net'],'gap_mm':gap,'guarded_requirement_mm':req}
+    if gap<req:(fills if r['kind']=='fill'else bad).append(row)
+    elif gap<req+.1:near.append(row)
+  s=smd[int(smdtree.nearest(point))];smdgap=point.distance(s[3])-.1-.005
+  if smdgap<.275:bad.append({'kind':'ordinary_new_drill_to_SMD','UUID':s[0],'ref':s[1],'pin':s[2],'gap_mm':smdgap,'requirement_mm':.275})
+  ds=[]
+  for index in holetree.query(point.buffer(.8)):
+   u,k,sh,r=holes[int(index)];gap=point.distance(sh)-r-.1-.005
+   if gap<.275:bad.append({'kind':'ordinary_new_drill_to_every_hole','UUID':u,'hole_kind':k,'gap_mm':gap,'requirement_mm':.275})
+  nearest=min((math.hypot(q[0]-v['x'],q[1]-v['y']),v['uuid'])for v in vias)
+  if nearest[0]<.815:bad.append({'kind':'ordinary_new_via_pitch','nearest_UUID':nearest[1],'center_distance_mm':nearest[0],'requirement_mm':.815})
+  for r,sh in rulepolys:
+   if r['GetDoNotAllowVias']and point.distance(sh)<.275:bad.append({'kind':'actual109_native_no_via_rule','UUID':r['UUID'],'name':r['name'],'all_rule_layers':r['layers'],'gap_mm':point.distance(sh)-.25,'required_guard_mm':.025})
+  pgap=point.distance(body)-.25;preq=required(powernet)
+  if pgap<preq:bad.append({'kind':'provisional_wide_FIELD5_F_power_body','raw_net':powernet,'gap_mm':pgap,'requirement_mm':preq})
+  return {'own_net':ownnet,'center_mm':list(q),'hard_discrete_drill_SMD_rule_and_provisional_power_errors':bad,'foreign_actual_fill_footprints_requiring_declared_coupled_cuts_not_accepted':fills,'near_guard_discrete':near,'nearest_SMD_drill_gap_mm':smdgap,'nearest_SMD':[s[0],s[1],s[2]],'nearest_via_center_distance_mm_UUID':list(nearest),'provisional_power_body_gap_mm':pgap}
+ # Bind real same-domain named-source ground; no isolated annulus/zone is added.
+ OLD=ROOT/'reports/board-finish-20261011/continuation-r2'
+ for dd in(OLD,OLD/'field-power',OLD/'sbc-power',OLD/'coupled-recovery'):sys.path.insert(0,str(dd))
+ import R157_native_selected_actual_conversion_r673 as N
+ K=N.K;gp=P/'actual-combined-full-after-all-net-groups.pkl';groups=pickle.loads(gp.read_bytes());root=K.root(groups[GROUND],'J11003','2');sourcefloors={ly:unary_union([r['shape']for r in root if r['kind']=='fill'and r['layer']==ly])for ly in K.LAYERS};del groups;gc.collect()
+ sourcefloorpins={ly:hashlib.sha256(sh.wkb).hexdigest()for ly,sh in sourcefloors.items()}
+ landingsfile=H/'FA-all-retained-In3-branch-anchors-r8/all-retained-branch-anchors.json';branches=json.loads(landingsfile.read_bytes());prior=H/'FA-existing-In3-full-source-component-route-r7/search-only-free-centerline-area.wkb';stubfree=from_wkb(prior.read_bytes());centers=[];excluded=collections.Counter();seen=set();bytrack={q['uuid']:q for q in tracks};retained_anchor_context={}
+ # Protect all retained FIELD_A routed bodies and pours that depend on FG/In1/In4,
+ # plus existing FG discrete copper/contact footprints. No own-track exemption.
+ protected=[]
+ for ly,records in rec.items():
+  for row in records:
+   net=norm(row['raw_net'])
+   if ly in('F.Cu','In2.Cu','In3.Cu','B.Cu')and dom.get(net)==domain and net!=GROUND:protected.append(row)
+   elif ly in('In1.Cu','In4.Cu')and net==GROUND and row['kind']in('via','pad'):protected.append(row)
+ ptree=STRtree([q['shape']for q in protected])
+ for branch in branches:
+  for j,row in enumerate(branch['all_source_supported_guarded_In3_anchor_points']):
+   anchor=tuple(row['point_mm']);tr=bytrack[row['existing_track_UUID']];dx=tr['b'][0]-tr['a'][0];dy=tr['b'][1]-tr['a'][1];ll=math.hypot(dx,dy)
+   if ll<1e-6:continue
+   for sign in(-1,1):
+    for offset in(.65,.8,1.,1.25):
+     q=(round(anchor[0]+sign*(-dy/ll)*offset,6),round(anchor[1]+sign*(dx/ll)*offset,6))
+     if q in seen:continue
+     seen.add(q);stub=LineString([anchor,q])
+     if not stubfree.contains(stub):excluded['retained_In3_stub_not_complete_actual_FG_In4_and_hard_Cu_supported']+=1;continue
+     if Point(q).distance(body)<.5251:excluded['would_withdraw_provisional_power_reference']+=1;continue
+     collision=False
+     for ii in ptree.query(Point(q).buffer(4)):
+      pr=protected[int(ii)]
+      if Point(q).distance(pr['shape'])-pr['radius']-(.005 if pr['kind']=='pad'else 0)<.5251:collision=True;break
+     if collision:excluded['would_withdraw_retained_old_routed_body_or_positive_pour_reference_or_GND_contact']+=1;continue
+     screen=check(q)
+     if screen['hard_discrete_drill_SMD_rule_and_provisional_power_errors']:excluded['ordinary_signal_via_all_layer_Cu_hole_SMD_pitch_or_rule']+=1;continue
+     label='off_track_In3_branch_'+str(branch['group'])+'_anchor_'+str(j)+'_'+str(sign)+'_'+str(offset);centers.append((label,q));retained_anchor_context[label]={'branch':branch['group'],'retained_track_UUID':row['existing_track_UUID'],'retained_track_anchor_mm':anchor,'new_signal_via_mm':q,'new_In3_stub_mm':[anchor,q],'new_ground_plane_withdrawal_guard_radius_mm':.5251,'all_old_FIELD_A_body_pour_and_GND_contact_footprints_guarded':True}
+ put('signal-via-off-track-anchor-context.json',retained_anchor_context);put('signal-via-rejected-anchor-geometry.json',dict(excluded));print('OFF_TRACK_PROBES',len(seen),'PROTECTED_SIGNAL_VIA_CLEAR',len(centers),'EXCLUDED',dict(excluded),flush=True)
+ output=[];viapoints=[Point(v['x'],v['y'])for v in vias];viatree=STRtree(viapoints)
+ for label,q in centers:
+  roi=Point(q).buffer(1.01);cuts=[];cutrows=[]
+  for ly,rows in rec.items():
+   for index in trees[ly].query(roi.buffer(2)):
+    r=rows[int(index)]
+    if norm(r['raw_net'])==GROUND or r['kind']=='fill':continue
+    req=max(required(r['raw_net']),float(r['data'].get('clearance_mm',0))+.025);radius=r['radius']+.25+req+(.005 if r['kind']=='pad'else 0)+.000002
+    sh=r['shape'].buffer(radius,quad_segs=128)
+    if sh.intersects(roi):cuts.append(sh);cutrows.append({'UUID':r['UUID'],'layer':ly,'kind':r['kind'],'raw_net':r['raw_net']})
+  for ii in smdtree.query(roi.buffer(.5)):
+   uid,ref,pin,shape=smd[int(ii)];cuts.append(shape.buffer(.380002,quad_segs=128))
+  for ii in holetree.query(roi.buffer(1)):
+   uid,kind,shape,radius=holes[int(ii)];cuts.append(shape.buffer(radius+.380002,quad_segs=128))
+  for ii in viatree.query(roi.buffer(.816)):
+   cuts.append(viapoints[int(ii)].buffer(.815002,quad_segs=128))
+  for r,sh in rulepolys:
+   if r['GetDoNotAllowVias']and sh.distance(roi)<.276:cuts.append(sh.buffer(.275002,quad_segs=128))
+  cuts.append(body.buffer(.425002,quad_segs=128))
+  outer=Point(q).buffer(.999998,quad_segs=512);inner=Point(q).buffer(.900002/math.cos(math.pi/(4*512)),quad_segs=512);free=outer.difference(inner).difference(unary_union(cuts));pieces=[]if free.is_empty else([free]if free.geom_type=='Polygon'else[p for p in free.geoms if p.geom_type=='Polygon'])
+  options=[]
+  for pi,piece in enumerate(sorted(pieces,key=lambda p:-p.area)):
+   probes=[piece.representative_point(),piece.centroid]
+   for probe in probes:
+    ret=(round(probe.x,6),round(probe.y,6));distance=math.dist(q,ret)
+    if not .9<=distance<1:continue
+    row=check(ret,GROUND);annulus=Point(ret).buffer(.249998,quad_segs=512).difference(Point(ret).buffer(.100002/math.cos(math.pi/(4*512)),quad_segs=512));contacts={ly:annulus.intersection(floor).area for ly,floor in sourcefloors.items()};row['named_J11003_2_source_actual_fill_annular_positive_contact_mm2']=contacts;row['FA_center_mm']=list(q);row['pair_distance_mm']=distance;row['guarded_feasible_piece_area_mm2']=piece.area;row['all_layer_discrete_hole_rule_free_component']=pi
+    if not row['hard_discrete_drill_SMD_rule_and_provisional_power_errors']and contacts['In1.Cu']>1e-6 and contacts['In4.Cu']>1e-6:options.append(row);break
+  options.sort(key=lambda row:(len(row['foreign_actual_fill_footprints_requiring_declared_coupled_cuts_not_accepted']),-row['guarded_feasible_piece_area_mm2']))
+  if options:(OUT/(label+'-search-only-ground-via-center-free-window.wkb')).write_bytes(free.wkb)
+  output.append({'label':label,'FA_center_mm':list(q),'FA_geometry_screen':check(q),'retained_anchor_context':retained_anchor_context[label],'qualified_geometry_and_two_actual_rooted_plane_contacts_return_options':len(options),'options':options,'full_window_guarded_free_area_mm2':free.area,'full_window_guarded_free_components':len(pieces),'hard_cut_inventory':cutrows})
+  if options:print('RETURN_WINDOW_CLEAR',label,q,len(options),flush=True)
+ put('all-concrete-ordinary-return-pair-options.json',output)
+ put('receipt.json',{'status':'CONCRETE_ORDINARY_FG_RETURN_PAIR_GEOMETRY_SOURCE_CONTACT_SCREEN_ONLY','FA_domain':domain,'new_ordinary_via_diameter_mm':.5,'new_ordinary_drill_mm':.2,'same_domain_ground_net':GROUND,'paired_return_window_mm':[.9,1.0],'upper_window_exclusive':True,'screen_radius_mm':.95,'full_annular_window_geometry_search':True,'all_actual_supported_In3_branch_anchor_centers':True,'retired_F_chain_tracks':38,'source_root':['J11003','2'],'actual_source_FG_keys':len(K.keys(root)),'source_floor_SHA256':sourcefloorpins,'centers':[{'label':r['label'],'FA_center_mm':r['FA_center_mm'],'return_options':r['qualified_geometry_and_two_actual_rooted_plane_contacts_return_options']}for r in output],'true_transition_scope_full_trace_reference_old_source_keys_partitions_all_oldrefs_all_bank_pours_current_IR_thermal_assembly_masks_native':'OPEN_REQUIRED','no_own_cap_or_zone_or_fabrication_change_added':True,'provisional_wide_power_FG_In1_deficit_mm2_held':3.726668,'foreign_fills_explicitly_held_for_exhaustive_coupled_aperture_and_reference_current_retention_proof':True,'native_jobs':0,'board_or_packet_written':False,'adopted':False,'input_SHA256':{str(f):sha(f)for f in(Path(__file__),landingsfile,CHAIN,prior,mf,STAGE/'all-copper-expected.json',T['NPTH'],T['RULES'],POWER/'receipt.json',POWER/'candidate-nominal-track-body.wkb',gp)},'elapsed_seconds':time.monotonic()-t})
+ print('RETURN_PAIR_COUNTS',[(r['label'],r['qualified_geometry_and_two_actual_rooted_plane_contacts_return_options'])for r in output],flush=True)
+if __name__=='__main__':main()

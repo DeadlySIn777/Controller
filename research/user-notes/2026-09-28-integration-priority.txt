@@ -1,0 +1,130 @@
+This is meaningful progress. You have several working pieces now; the next job is connecting them into one controller—not starting another architecture or adding another 100 features. 🔧
+
+I’m treating the test results as reported in your briefing, not as tests I independently reran or source code I inspected.
+
+I would keep the overall direction and make four decisions now.
+
+## 1. Keep the replaceable computer—but separate connector compatibility from software compatibility
+
+The CM4/CM5-style footprint remains a reasonable leading candidate. However, the product promise should be “supports these tested compute modules,” not “accepts anything with 200 pins.”
+
+Raspberry Pi explicitly documents that CM5 is mechanically compatible with CM4 while changing some pin functions and electrical behavior. Matching mounting holes and connectors are only the first check. :chatgpt-content-reference{index="0"}
+
+CB2 is worth investigating: BTT documents the same two-100-pin connector arrangement, but it uses a Rockchip RK3566 and publishes its own pin assignments and system configuration. Those must be checked against the actual carrier connections you intend to use. :chatgpt-content-reference{index="1"}
+
+For your carrier, I would evaluate only the functions the product needs:
+
+| Function | What must be demonstrated for each supported module |
+|---|---|
+| Power, reset, and recovery | Correct voltages, startup sequence, current capacity, and stopped-recovery behavior |
+| Display and touch | The chosen screen works through the fitted display and USB connections |
+| Ethernet and service USB | Reliable operation with the intended peripherals |
+| Dedicated FPGA connection | Correct pin routing, voltage levels, SPI support, and measured transaction timing |
+| Local software | Reproducible boot image, LinuxCNC, graphics, storage, and recovery |
+| Loaded operation | The complete unit meets its timing and thermal requirements with the screen running |
+
+That avoids paying to accommodate every camera, display, and high-speed peripheral that every possible module exposes.
+
+Also, one correction to the earlier connector table: PINE64 SOEdge uses a 204-pin SO-DIMM connector, not the 260-pin interface you grouped it with. “SO-DIMM-shaped” is not one interchangeable module standard. :chatgpt-content-reference{index="2"}
+
+The compute connector’s pin count also does not determine how many machine terminals you get. In your architecture, the FPGA and field-interface circuitry supply those resources; the computer communicates with them through the internal link. That remains consistent with the original local-Linux-plus-FPGA direction. :chatgpt-content-reference{index="3"}
+
+## 2. Build the CNC1 driver with a replaceable transport backend
+
+This is the biggest practical consequence of keeping CB2 and Raspberry Pi options open.
+
+LinuxCNC’s `hm2_spix` documentation describes dedicated Raspberry Pi hardware drivers and a generic `spidev` fallback. It explicitly requires other board/configuration combinations to be tested. Therefore, a Pi-specific fast SPI implementation is not automatically a fast Rockchip implementation. :chatgpt-content-reference{index="4"}
+
+I would structure your driver like this:
+
+```text
+LinuxCNC HAL interface
+        ↓
+Common CNC1 logic
+  packet validation
+  units and scaling
+  command/feedback handling
+  session and fault state
+        ↓
+Replaceable transport implementation
+  simulation
+  Raspberry Pi SPI
+  qualified Rockchip SPI
+        ↓
+FPGA
+```
+
+Those are proposed software boundaries, not existing components.
+
+The useful outcome is that changing the computer should not require rewriting threading feedback, channel scaling, fault interpretation, and the entire protocol. The transport-specific work stays underneath them.
+
+Keep the touchscreen service, CLI, and assistant outside that cyclic hardware path. LinuxCNC documents Python HAL components as non-real-time, while its component generator supports compiled real-time components. Your Python operator adapter is useful, but it is not a substitute for the missing cyclic driver. :chatgpt-content-reference{index="5"}
+
+I would use separate read and write functions in the servo cycle: obtain valid feedback before the relevant motion calculations, then publish the resulting commands. That is an established LinuxCNC driver pattern; HostMot2 exposes corresponding read/write functions normally used in the servo thread. It does not imply CNC1 must copy HostMot2’s protocol. :chatgpt-content-reference{index="6"}
+
+## 3. Prove the existing six-channel implementation end to end before expanding it
+
+Do not throw away the six-motor/two-encoder reference because the preferred production candidate is now eight/four.
+
+Use the smaller implementation to prove the missing connection. Keep eight/four as an explicit expanded configuration that must pass its own tests.
+
+My next acceptance milestone would be:
+
+| Test | Required result |
+|---|---|
+| Board discovery | The driver reads the actual protocol version, fitted channel counts, and supported functions |
+| Motion command | Actual LinuxCNC motion commands pass through CNC1 to the FPGA implementation |
+| Feedback return | FPGA counters return through CNC1 with verified scaling, direction, and wrap handling |
+| Coordinated update | All affected channels accept one coherent command update |
+| Invalid packet | Corrupted, stale, or wrong-session data cannot become a new motion command |
+| Missing update | Timeout produces the specified fault response |
+| Restart/reconnect | Neither side restores motion permission merely because communication returned |
+
+Run those first through the existing simulation infrastructure, then through the bounded physical link prototype in your plan. Simulation establishes functional behavior; the physical setup establishes timing and electrical behavior.
+
+For threading, I would add a deliberately varying simulated spindle speed and index signal to the functional tests. That exercises the feedback path you actually need, rather than merely demonstrating that an RPM number changes on-screen.
+
+I would also make capability reporting part of CNC1 now. The driver should discover “six step channels, two encoders, no frequency capture” rather than assume every board has the largest proposed configuration. That supports your economy board, expanded board, and later modules without disguising missing hardware.
+
+## 4. Finish one configuration system—not separate setup systems for each accessory
+
+Your common service/API is the right place to make this product easier than the hardware it competes with.
+
+I would give every supported device the same configuration structure:
+
+```text
+Identity and revision
+Electrical capabilities
+Available functions
+Required connections
+Calibration
+Compatible profiles
+Permitted commands
+Startup and communication-loss behavior
+Commissioning checks
+```
+
+Then a plasma interface, encoder expansion, or supported Modbus VFD all appear in the same device-management workflow.
+
+But I would preserve an important distinction:
+
+| Device type | What the controller can identify |
+|---|---|
+| Your identified expansion module | Module identity, revision, capabilities, and stored calibration |
+| Identified machine-specific harness | Which adapter wiring is fitted |
+| Ordinary USB-to-RS485 adapter | The adapter—not necessarily the VFD behind it |
+| Generic third-party Modbus device | Only what its documented protocol/profile can establish |
+
+This lets you support Amazon-sourced accessories without pretending every inexpensive module can announce its wiring, register map, and failure behavior.
+
+For the initial `cncctl` demonstration, I would prioritize selecting a profile, detecting resource conflicts, generating wiring, validating configuration, applying while disarmed, and restoring a backup. Those functions directly support your modular product; another polished dashboard alone does not.
+
+## What I would keep fixed—and what stays open
+
+Keep the local controller ownership, included touchscreen requirement, separate FPGA timing layer, bounded ESP32 service role, third-party accessory support, and your shop-manufacturable enclosure direction.
+
+Keep the exact compute module, fitted six/two versus eight/four hardware, display procurement, and complete manufacturing cost open until compared on equal terms.
+
+I would run two workstreams in parallel: complete the CNC1 motion/feedback connection, and finish the costed compute/carrier/display comparison. Neither requires waiting for all 200 features, and neither should be hidden behind more UI work.
+
+The next convincing claim is not “we have hundreds of tests.” It is: “Actual LinuxCNC commands our FPGA through our protocol, receives meaningful feedback, and responds correctly when that connection fails.” That is the milestone that turns the separate prototypes into the foundation of your controller.

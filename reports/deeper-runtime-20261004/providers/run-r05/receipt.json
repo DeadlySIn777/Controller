@@ -1,0 +1,580 @@
+{
+  "status": "FAIL",
+  "utc": "2026-10-04T09:47:58.109912+00:00",
+  "source_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\deeper-runtime-20261004\\providers\\run_tests.py": "6e753df66b6ff3975a6b0dca9be3ff32aae0d3bf953a7f234716a8be471bd364",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\deeper-runtime-20261004\\providers\\run_in_rootfs.sh": "c8b7d33cc44d30c9c1449a4ef25db5668ce8746c2224d690f9453cc78fbade58"
+  },
+  "executions": [
+    {
+      "stage": "create-rootfs-work",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "mkdir",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "copy-rootfs-inputs",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/inputs",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/inputs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "compiler-version",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/inputs/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-normal",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/inputs/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-sanitized"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "unshare",
+        "--mount",
+        "--pid",
+        "--fork",
+        "--",
+        "/bin/sh",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run_in_rootfs.sh",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-sanitized"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/providers-sanitized",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/providers-sanitized"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-crc-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-crc",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-crc"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-crc-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-crc/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-crc/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-crc-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-crc/provider-test"
+      ],
+      "exit_code": 1
+    },
+    {
+      "stage": "mutation-crc-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-crc/provider-test",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-crc/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-full-source-binding-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-full-source-binding",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-full-source-binding"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-full-source-binding-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-full-source-binding/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-full-source-binding/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-full-source-binding-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-full-source-binding/provider-test"
+      ],
+      "exit_code": 1
+    },
+    {
+      "stage": "mutation-full-source-binding-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-full-source-binding/provider-test",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-full-source-binding/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-freshness-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-freshness",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-freshness"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-freshness-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-freshness/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-freshness/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-freshness-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-freshness/provider-test"
+      ],
+      "exit_code": 1
+    },
+    {
+      "stage": "mutation-freshness-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-freshness/provider-test",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-freshness/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-ordered-sequence-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-ordered-sequence",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-ordered-sequence"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-ordered-sequence-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-ordered-sequence/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-ordered-sequence/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-ordered-sequence-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-ordered-sequence/provider-test"
+      ],
+      "exit_code": 1
+    },
+    {
+      "stage": "mutation-ordered-sequence-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-ordered-sequence/provider-test",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-ordered-sequence/provider-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-independent-motion-gate-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r05/mutation-independent-motion-gate",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-independent-motion-gate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "mutation-independent-motion-gate-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-independent-motion-gate/test_providers.cpp",
+        "-o",
+        "/work/provider-e049ff7e5644472d89fbef7c756d8d6b/mutation-independent-motion-gate/provider-test"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "scope": "Copied standalone C++ SIM provider/plant execution; not continuous HAL/RTL or physical qualification",
+  "physical_authority": false,
+  "production_profile_complete": false,
+  "device_connections": 0,
+  "paid_API_calls": 0,
+  "frozen_wire_protocol_modified": false,
+  "rootfs_work": "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-e049ff7e5644472d89fbef7c756d8d6b",
+  "normal": {
+    "status": "PASS",
+    "checks": 458,
+    "groups": 7,
+    "motors": 12,
+    "encoders": 4,
+    "DI": 24,
+    "DO": 16,
+    "physical_authority": false
+  },
+  "sanitized": {
+    "status": "PASS",
+    "checks": 458,
+    "groups": 7,
+    "motors": 12,
+    "encoders": 4,
+    "DI": 24,
+    "DO": 16,
+    "physical_authority": false
+  },
+  "mutation_controls": [
+    {
+      "case": "crc",
+      "status": "DETECTED",
+      "mutated_copy": "mutation-crc\\provider_ledger.hpp",
+      "mutated_sha256": "792efa6827e7496036c5e5f2917c66aa4f27180fad7bcb36b04920b1cb4500cf",
+      "failure": "FAIL after 18 checks: corrupt CRC accepted"
+    },
+    {
+      "case": "full-source-binding",
+      "status": "DETECTED",
+      "mutated_copy": "mutation-full-source-binding\\provider_ledger.hpp",
+      "mutated_sha256": "96610bd284c1e11b30df2d982f25865b566fae8126c76ad5d72ea7d939ba2193",
+      "failure": "FAIL after 53 checks: same-short-id foreign full source digest accepted"
+    },
+    {
+      "case": "freshness",
+      "status": "DETECTED",
+      "mutated_copy": "mutation-freshness\\provider_ledger.hpp",
+      "mutated_sha256": "274a09a6bcea34edfae0aee4cce81051709a379fe9af15381534de2ebfa7432a",
+      "failure": "FAIL after 166 checks: expired exact-boundary provider accepted"
+    },
+    {
+      "case": "ordered-sequence",
+      "status": "DETECTED",
+      "mutated_copy": "mutation-ordered-sequence\\provider_ledger.hpp",
+      "mutated_sha256": "de4fc67eeea9451c71439973e65a3a3f1d6fdea8f1fdbe32f3458d195c2e9fae",
+      "failure": "FAIL after 178 checks: replayed/skipped/conflicting sample accepted"
+    }
+  ],
+  "error": "mutation-independent-motion-gate-compile produced unexpected exit 1",
+  "artifact_sha256": {
+    "compiler-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compiler-version.stdout.log": "532ce90ca8dca2c4376343b503d7054ab7be4245a44efc5de9c45c722fbabee9",
+    "copy-rootfs-inputs.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "copy-rootfs-inputs.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-rootfs-work.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-rootfs-work.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputs\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "inputs\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "inputs\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "mutation-crc\\provider-test": "7bb18a4ebc67e88b4d4a69d0337370e9cbe51f48bd9c0d450392f436dac37d61",
+    "mutation-crc\\provider_ledger.hpp": "792efa6827e7496036c5e5f2917c66aa4f27180fad7bcb36b04920b1cb4500cf",
+    "mutation-crc\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "mutation-crc\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "mutation-crc-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-crc-run.stderr.log": "ffb9fe40e42b9bdfcbb7eab27789ad444bc72c1553e5c5eb7de3a4b4022a0027",
+    "mutation-crc-run.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness\\provider-test": "e5e62ba3d68146b1c1a168c68238aec89b341f610321781bd4005c2c21698614",
+    "mutation-freshness\\provider_ledger.hpp": "274a09a6bcea34edfae0aee4cce81051709a379fe9af15381534de2ebfa7432a",
+    "mutation-freshness\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "mutation-freshness\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "mutation-freshness-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-freshness-run.stderr.log": "fb05d4b117b8151f3f88bec77d68367e29bc13cfeb90d85b4ded583cbc3708ec",
+    "mutation-freshness-run.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding\\provider-test": "ba234e97b81aac348d8f8754623bb43039bcd4189146777691957928052fa623",
+    "mutation-full-source-binding\\provider_ledger.hpp": "96610bd284c1e11b30df2d982f25865b566fae8126c76ad5d72ea7d939ba2193",
+    "mutation-full-source-binding\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "mutation-full-source-binding\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "mutation-full-source-binding-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-full-source-binding-run.stderr.log": "bff092a6d2ce679875d3ca4a3be226143e0b97234d76081c7079b42877908855",
+    "mutation-full-source-binding-run.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-independent-motion-gate\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "mutation-independent-motion-gate\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "mutation-independent-motion-gate\\virtual_provider.hpp": "ea70c4c25c02556fb641ba43302f21a8d30068151b7c7926ba8099adff72d4f5",
+    "mutation-independent-motion-gate-compile.stderr.log": "ad791213afe48d2aa70abac74783b02287f5c790ba55181a9f83d49aff9691a5",
+    "mutation-independent-motion-gate-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-independent-motion-gate-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-independent-motion-gate-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence\\provider-test": "e88f3054360d3b2200208ac02a970d4c958bf2762c785c84f127a57f70c35be5",
+    "mutation-ordered-sequence\\provider_ledger.hpp": "de4fc67eeea9451c71439973e65a3a3f1d6fdea8f1fdbe32f3458d195c2e9fae",
+    "mutation-ordered-sequence\\test_providers.cpp": "e833f56358ed7b043b5fc73a703f1b5878fba0aeca3a0e8b3e411ef36b2dbf27",
+    "mutation-ordered-sequence\\virtual_provider.hpp": "ad6b3e1d9777890a9867fc60b456a711a584238fea760696a3c100b211f68f53",
+    "mutation-ordered-sequence-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mutation-ordered-sequence-run.stderr.log": "e5dd036b858b8bf80fbcf25ebe28a928e4c2c344e1b9a5b68b7c920cb4dfa44a",
+    "mutation-ordered-sequence-run.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stdout.log": "2e2732f463fd2e66fcecf5e41f9f9c7eb5d193e22cd549533814ffbda26ced7b",
+    "providers-normal": "beac449edf49616eb01b132e81973ba43ee1ffdc4e43f246c5c4af0452087244",
+    "providers-sanitized": "2efaf4be9a7b84f7c2c4733c767fe29192394c8eea23cfe40cfc4b94de195877",
+    "sanitizer-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-run.stdout.log": "2e2732f463fd2e66fcecf5e41f9f9c7eb5d193e22cd549533814ffbda26ced7b"
+  }
+}

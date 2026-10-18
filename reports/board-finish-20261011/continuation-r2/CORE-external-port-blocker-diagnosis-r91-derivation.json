@@ -1,0 +1,72 @@
+{
+ "base_script_sha256": "195fbe210ce9505efc52158577198f65675713d20f30ee2c14922913d674328c",
+ "derived_script_sha256": "0d714f617b57879b9eaabf851f34a5d257a994ae3cc9bd321f6223a411a56b3a",
+ "changes": [
+  {
+   "old": "\ndef main():",
+   "new": "\nclass AuditedObstacles(list):\n def __init__(self):super().__init__();self.rows=[];self.family=None;self.meta={}\n def label(self,family,**meta):self.family=family;self.meta=meta\n def append(self,shape):\n  assert self.family is not None\n  super().append(shape);self.rows.append({'family':self.family,**self.meta,'shape':shape})\n def extend(self,shapes):\n  for shape in shapes:self.append(shape)\n def audit(self,candidate,region,out,side):\n  from collections import defaultdict\n  grouped=defaultdict(list)\n  for row in self.rows:grouped[row['family']].append(row['shape'])\n  unions={key:unary_union(values)for key,values in grouped.items()}\n  stages=[];remaining=candidate\n  for family,shape in unions.items():\n   before=remaining;remaining=remaining.difference(shape)\n   other=unary_union([sh for key,sh in unions.items()if key!=family])\n   only=candidate.difference(shape);without=candidate.difference(other)\n   (out/(side+'-family-'+family+'.wkb')).write_bytes(shape.wkb)\n   stages.append({'family':family,'primitive_count':len(grouped[family]),'initial_candidate_intersection_mm2':candidate.intersection(shape).area,'candidate_area_after_this_family_alone_mm2':only.area,'remaining_after_ordered_family_mm2':remaining.area,'ordered_removed_area_mm2':before.difference(remaining).area,'candidate_area_without_this_family_mm2':without.area})\n  ranks=[]\n  for row in self.rows:\n   area=candidate.intersection(row['shape']).area\n   if area>0:ranks.append({k:v for k,v in row.items()if k!='shape'}|{'candidate_intersection_mm2':area})\n  ranks.sort(key=lambda x:-x['candidate_intersection_mm2'])\n  original=H/'CORE-ordinary-external-fill-port-nominations-r90'/(side+'-ordinary-site-region.wkb')\n  assert original.read_bytes()==region.wkb,('R90 geometry changed',side)\n  (out/(side+'-initial-candidate.wkb')).write_bytes(candidate.wkb)\n  report={'side':side,'initial_source_fill_contained_candidate_area_mm2':candidate.area,'exact_R90_final_region_WKB_unchanged':True,'final_legal_area_mm2':region.area,'families':stages,'largest_literal_blockers':ranks[:80],'attribution_only_no_predicate_or_geometry_changes':True}\n  put(out/(side+'-blocker-attribution.json'),report)\n  print('R91_BLOCKERS',side,candidate.area,[(x['family'],round(x['candidate_area_after_this_family_alone_mm2'],6),round(x['candidate_area_without_this_family_mm2'],6))for x in stages],flush=True)\n\ndef main():"
+  },
+  {
+   "old": "CORE-ordinary-external-fill-port-nominations-r90';assert",
+   "new": "CORE-ordinary-external-fill-port-blocker-diagnosis-r91';assert"
+  },
+  {
+   "old": "candidate=set_precision(window.intersection(actual.buffer(-.25-.000100)),1e-6);obs=[]",
+   "new": "candidate=set_precision(window.intersection(actual.buffer(-.25-.000100)),1e-6);obs=AuditedObstacles()"
+  },
+  {
+   "old": "    obs.append(sh)",
+   "new": "    obs.label(\"actual_foreign_discrete\",layer=l,raw_net=q[\"net\"],kind=q[\"kind\"],UUID=q[\"source\"].get(\"uuid\"));obs.append(sh)"
+  },
+  {
+   "old": "gap=.15 if h['domains_normalized'][C.norm(q['net'])]==h['domains_normalized'][raw]else .6;obs.append",
+   "new": "gap=.15 if h['domains_normalized'][C.norm(q['net'])]==h['domains_normalized'][raw]else .6;obs.label('held_owned_foreign_power_planes',raw_net=q['net'],layer=q['layer'],UUID=q['uuid']);obs.append"
+  },
+  {
+   "old": "for rings in native['fills'].values():",
+   "new": "for native_layer,rings in native['fills'].items():"
+  },
+  {
+   "old": "if search.intersects(sh):obs.append(N.bounded_buffer(sh,.25+",
+   "new": "if search.intersects(sh):obs.label('native_foreign_power_filled_Cu',raw_net=native['net'],layer=native_layer,UUID=native['uuid']);obs.append(N.bounded_buffer(sh,.25+"
+  },
+  {
+   "old": "if search.intersects(Point(v['x'],v['y'])):obs.append",
+   "new": "if search.intersects(Point(v['x'],v['y'])):obs.label('every_existing_drill',raw_net=v['net'],UUID=v['uuid']);obs.append"
+  },
+  {
+   "old": "if pad.get('smd'):obs.extend",
+   "new": "if pad.get('smd'):obs.label('source_SMD_hole_edge',raw_net=pad['net'],UUID=pad['uuid'],ref=pad['ref'],pin=pad['pin']);obs.extend"
+  },
+  {
+   "old": "   obs.extend(N.bounded_buffer(sh,.1+.275+.000100)for sh in C.poly(pad.get('hole')or[])",
+   "new": "   obs.label('source_plated_pad_hole_edge',raw_net=pad['net'],UUID=pad['uuid'],ref=pad['ref'],pin=pad['pin']);obs.extend(N.bounded_buffer(sh,.1+.275+.000100)for sh in C.poly(pad.get('hole')or[])"
+  },
+  {
+   "old": "if rule.get('no_vias')or rule.get('no_pads'):obs.extend",
+   "new": "if rule.get('no_vias')or rule.get('no_pads'):obs.label('native_via_pad_keepouts',UUID=rule.get('uuid'));obs.extend"
+  },
+  {
+   "old": "if shadows:obs.append",
+   "new": "if shadows:obs.label('actual_before_source_supported_old_reference_shadows');obs.append"
+  },
+  {
+   "old": "region=set_precision(candidate.difference(unary_union(obs)),1e-6);(out/(label+'-ordinary-site-region.wkb'))",
+   "new": "region=set_precision(candidate.difference(unary_union(obs)),1e-6);obs.audit(candidate,region,out,label);(out/(label+'-ordinary-site-region.wkb'))"
+  },
+  {
+   "old": "'verdict':'PROSPECTIVE_ORDINARY_CORE_EXTERNAL_FILL_PORTS_ONLY'",
+   "new": "'verdict':'EXACT_R90_ORDINARY_SITE_BLOCKER_ATTRIBUTION_ONLY'"
+  },
+  {
+   "old": "'selected_pair_layer_feed_all77_contacts_full_source_current_return_drop_thermal_stability_native_DRC':'OPEN'",
+   "new": "'selected_pair_layer_feed_all77_contacts_full_source_current_return_drop_thermal_stability_native_DRC':'OPEN','no_geometry_predicate_changed':True,'blocker_attributions_files':['main-blocker-attribution.json','source-blocker-attribution.json']"
+  },
+  {
+   "old": "'R90_PORT_NOMINATION_FROZEN'",
+   "new": "'R91_EXACT_BLOCKER_ATTRIBUTION_FROZEN'"
+  }
+ ],
+ "geometry_predicates_unchanged": true,
+ "independent_exact_R90_final_region_WKB_assertions": true
+}

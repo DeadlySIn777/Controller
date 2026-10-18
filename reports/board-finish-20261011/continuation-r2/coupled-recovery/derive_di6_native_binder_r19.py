@@ -1,0 +1,8 @@
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+src=HERE/'audit_di6_actual_scoped_native_r16.py';dst=HERE/'audit_di6_actual_scoped_native_r19.py';assert not dst.exists();t=src.read_text().replace('import physical_reference_losses_r1 as RF','import physical_reference_losses_r2 as RF').replace("out=HERE/'di6-actual-native-reference-independent-r16.json'","out=HERE/'di6-actual-native-reference-independent-r19.json'").replace("gdir=HERE/'di6-actual-r16-reference-gaps'","gdir=HERE/'di6-actual-r19-reference-gaps'").replace("saved=HERE/'di6-native-r16-actual-model.pkl'","saved=HERE/'di6-native-r19-actual-model.pkl'")
+needle="neighbor,proof=RF.audit(base,oldrefs,refs,GROUND);"
+insert="checkpoint=HERE/'di6-native-r19-pre-reference-checkpoint.pkl';assert not checkpoint.exists();checkpoint.write_bytes(pickle.dumps({'base':base,'actual':final,'oldgroups':og,'oldroot':oroot,'groups':groups,'root':root,'oldrefs':oldrefs,'refs':refs,'reference':reference,'reference_errors':errors,'paired':paired,'joined':joined,'sourceoverlap':sourceoverlap,'targetoverlap':targetoverlap,'contact_losses':lostcontacts,'obligations':obligations},protocol=5));print('DI6_NATIVE_PRE_GLOBAL_REFERENCE_CHECKPOINT',C.sha(checkpoint.read_bytes()),flush=True)\n neighbor,proof=RF.audit(base,oldrefs,refs,GROUND);"
+assert needle in t;t=t.replace(needle,insert)
+t=t.replace("'scope':'Exact eedf+11DI6 items;", "'preserved_R16_source_sha256':C.sha(A.read(HERE/'audit_di6_actual_scoped_native_r16.py')),'immutable_pre_reference_checkpoint_sha256':C.sha(checkpoint.read_bytes()),'scope':'Exact eedf+11DI6 items;")
+assert t!=src.read_text();dst.write_text(t);print(dst)

@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "manufacturing_ready": false,
+  "errors": [],
+  "calculations": {
+    "nominal_bypass_f": {
+      "CORE_1V2": 8.599999999999999e-06,
+      "IO_3V3": 3.551e-05
+    },
+    "max_bypass_before_dc_bias_f": {
+      "CORE_1V2": 1.0879e-05,
+      "IO_3V3": 4.492015e-05
+    },
+    "reset_high_z_screen_max_v": 0.3372448116270773,
+    "reset_with_permission_10k_pulldown_screen_max_v": 0.3090593686834819,
+    "reset_output_high_load_max_a": 0.003875,
+    "cdone_asserted_pullup_sink_max_a": 0.0004933333333333334,
+    "cdone_released_screen_min_v": 3.00887483355526,
+    "support_static_current_screen_a": 0.053810000000000004,
+    "support_reservation_a": 0.06,
+    "single_image_bytes": 680700,
+    "flash_capacity_bytes": 4194304,
+    "flash_image_size_fraction": 0.1622915267944336,
+    "clock_50ppm_rate_error_hz": 2500.0,
+    "limitations": [
+      "Static screen excludes unbounded GPIO/trace switching loads;60mA is an allocation, not a proved worst case.",
+      "Capacitor DC-bias/aging minima, mounting inductance, rail ramps and transient stability are not proved.",
+      "Reset screen includes both internal pullups; .8V is only a generic GPIO comparison. Dedicated CRESET Schmitt table lists thresholds without min/max; no guaranteed reset threshold is claimed.",
+      "Gate VOH>=2.4V at3V/16mA is a component limit; dedicated reset compatibility, partial-power transfer and shutdown still need confirmation.",
+      "Flash single-image fit does not implement atomic recovery, field-update security or a multiboot loader."
+    ]
+  },
+  "warnings": [
+    "Package pins are sourced; this allocation has not passed Efinity interface placement/routed timing/bitstream generation.",
+    "Enable stages and extra alarm/home/ABZ circuits remain incomplete;12STEP/DIR pins are not12 complete machine channels.",
+    "All interfaces are unisolated internal3.3V logic. Field interfaces require the separate protected circuits.",
+    "GPIO startup pulls are not a safety function; independent permission must inhibit unconfigured outputs.",
+    "No PCB,PDN simulation,DRC,programmer qualification,physical measurements or industrial qualification exists."
+  ]
+}

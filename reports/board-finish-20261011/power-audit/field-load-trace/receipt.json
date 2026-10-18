@@ -1,0 +1,484 @@
+{
+ "schema": "original-root106-field-load-trace-v1",
+ "verdict": "MODEL_RECONCILIATION_REQUIRED_NO_CIRCUIT_CAPACITY_QUALIFICATION",
+ "observed_utc": "2026-10-11T16:13:52.274999+00:00",
+ "original_ROOT106": true,
+ "historical_model_a": {
+  "FA": 5.036,
+  "FAG": 5.268,
+  "FB": 6.55,
+  "FBG": 6.61
+ },
+ "historical_policy_a": {
+  "FA": {
+   "design_a": 4.58,
+   "limit_a": 5.08
+  },
+  "FAG": {
+   "design_a": 4.58,
+   "limit_a": 5.08
+  },
+  "FB": {
+   "design_a": 4.82,
+   "limit_a": 5.32
+  },
+  "FBG": {
+   "design_a": 4.82,
+   "limit_a": 5.32
+  }
+ },
+ "unchanged_component_settings": {
+  "U11004": {
+   "ILIM": "R11011",
+   "resistance_ohm": 3000,
+   "nominal_threshold_a": 6
+  },
+  "U11006": {
+   "ILIM": "R11018",
+   "resistance_ohm": 3000,
+   "nominal_threshold_a": 6
+  },
+  "U19007": {
+   "CL": "R19038",
+   "resistance_ohm": 9530,
+   "inferred_programmed_overload_screen": {
+    "nominal_a": 0.05036726128016789,
+    "min_a": 0.0401031685864664,
+    "max_a": 0.06072894830710406
+   },
+   "normal_load_contract": "six2.75mA wetting receivers plus actual rail bleeds"
+  },
+  "U19018": {
+   "CL": "R19059",
+   "resistance_ohm": 4750,
+   "inferred_programmed_overload_screen": {
+    "nominal_a": 0.10105263157894737,
+    "min_a": 0.08045962034295258,
+    "max_a": 0.12184144786667404
+   },
+   "normal_load_contract_a": 0.05
+  },
+  "U19004_U19005_U19006": {
+   "SETI": "R19019/R19026/R19032",
+   "resistance_ohm": 1370,
+   "documented_normal_load_a_each": 0.2,
+   "inferred_static_limit_screen_each": {
+    "nominal_a": 0.21897810218978103,
+    "min_a": 0.2070449571154046,
+    "max_a": 0.2310235025984781
+   }
+  },
+  "U14026_U14027": {
+   "SETI": "R14057/R14063",
+   "resistance_ohm": 2490,
+   "documented_normal_load_a_each": 0.1,
+   "inferred_static_limit_screen_each": {
+    "nominal_a": 0.12048192771084337,
+    "min_a": 0.113916301706066,
+    "max_a": 0.12710931669072892
+   }
+  }
+ },
+ "arithmetic_illustration_only": {
+  "scope": "Replace generic branch entries with exact source-bound resistor screens for comparison only; retain every DO and the original buck/input reservations. This is not a corrected complete current ledger or usable route input. Chip Iq, bleeds, state-dependent loading, conversion, actual temperature, fault/inrush and current sharing remain to be reconciled.",
+  "FA_existing_remainder_plus_probe_static_screen_a": 4.990218633381458,
+  "FB_existing_remainder_plus_safe_lamp_sensor_static_screen_a": 5.175640903969213,
+  "full_rail_qualified": false,
+  "applicable_current_spec_emitted": false,
+  "concurrency_assumptions_added": false
+ },
+ "provisional_full_normal_ledger": {
+  "scope": "All fitted loads simultaneously at documented normal/planning contracts. OPEN symbolic ledger, not an authoritative numeric full-rail maximum; no operating concurrency exclusions. Components and settings are independently reconciled to originalROOT106 in detail.json; basepowerentry metadata alone is not current complete integratedsource (shutdownconnectors and B preregulation differ).",
+  "FA_external_normal_terms_a": {
+   "DO00_DO07_all_eight_at_point5A": 4.0,
+   "AUX24A_eightmotor_contract": 0.148,
+   "AUX24B_fourmotor_contract": 0.074,
+   "two_dedicated_probe_contracts": 0.2
+  },
+  "FA_5V_output_port": {
+   "U11009_OUT_FIELD5V_known_AUX5_load_a": 0.192,
+   "composition": "AUX5A .128 + AUX5B .064, all12motor auxiliaries preserved; add actual converter output divider/bleed and switch local consumption at this output port once."
+  },
+  "FA_3V3_output_port": {
+   "U11017_OUT_DOA3V3_prior_allocation_a": 0.02,
+   "composition": "Whole A logic reservation; DO VDD consumption belongs inside this load allocation, not added again as arbitrary .02A perquadGND."
+  },
+  "FA_protected_input_equation_A": "4.422 + I_U11009_VIN + I_U11017_IN + Q_FA_other; I_U11017_IN=I_A3V3_load+I_LDOA_ground; prior A3V3 allocation .020 gives4.442+I_U11009_VIN+I_LDOA_ground+Q_FA_other, still OPEN.",
+  "FB_external_normal_terms_a": {
+   "DO08_DO15_all_eight_at_point5A": 4.0,
+   "three_sensor_groups_at_point2A": 0.6,
+   "six_wetting_receivers_at_2point75mA": 0.0165,
+   "ARM_status_lamp_ON_contract": 0.05
+  },
+  "FB_5V_output_port": {
+   "U19028_FIELD_B5V_PRE_OUT": "I_U11018_IN + actual5Vdivider/bleed/local load; actualsource binds this buck to B3V3LDO IN/EN, not the old direct24VLDO circuit."
+  },
+  "FB_3V3_output_port": {
+   "U11018_OUT_DOB3V3_prior_DO_reservation_included_a": 0.02,
+   "new_logic_DC_screen_a": 0.05698636851520573,
+   "combined_conditional_DC_screen_a": 0.07698636851520572,
+   "planning_allocation_a": 0.085,
+   "scope": "Prior20mA DO allocation already included; current/hardwaremixedstates/switching remain open. Do not add another20mA separately to the85mAallocation."
+  },
+  "FB_protected_input_equation_A": "4.6665 + I_U19028_VIN + Q_FB_other; Q_FB_other includes actualsensor/SAFEoutputbleeds, limiter/switchVSquiescent and other24Vloads; U11018 outputload/Iq represented via U19028 VIN once.",
+  "all_converter_port_equations": [
+   "VIN*I_IN = VOUT*I_OUT + P_loss_total, with bias/quiescent included once in P_loss_total (or explicitly split once, never both). Actualefficiency/loss versus voltage/current/temp is not specified by the old.3A estimate.",
+   "I_GND_into_converter = I_OUT-I_IN plus any other real port currents. Thus ground-net injection by converter is I_IN-I_OUT; downstream returnI_OUT + converter injection = I_IN. Negative localgroundflow is permissible and essential.",
+   "LDO I_IN=I_OUT+I_GND, where I_GND is regulator ground/quiescent, not the output-load reservation. DO VDD is supplied via actual3V3path; DO VS quiescent is supplied separately from24V."
+  ],
+  "return_source_cut_equations": [
+   "J11003.2 totalreturn = signeddownstreamFAflow + actualFAraw/eFuse/entrylocalreturn drawn beforeU11004.OUT. Equal positive/return current applies at the samecompleteexternalpowerboundary, not automatically between protectedOUT and rawinputreturn cuts.",
+   "J11005.2 analogousexternalFBboundary. J11004.2/J11006.2 remain controlreturncontacts only; no extra externalpowercapacity credit."
+  ],
+  "unresolved": [
+   "Actualconverterloss/efficiency and its voltage/temperature/load envelope; complete outputdivider/bleed, limiterIq/VS-VDD split and all entryrawquiescent ledger.",
+   "Everyphysicalreturncut and terminal/harnessrole, currentsharing versus equalmodelallocations, steadyIR/thermal plus startup/inrush/fault/neck/reference/transient qualification.",
+   "The all-simultaneouscontract was retained in this ledger; actualglobaldynamicmaximum is not qualified. No invented exclusivity/concurrency was added."
+  ],
+  "complete_numeric_full_rail_maximum_available": false,
+  "full_rail_qualified": false
+ },
+ "cited_source_lines": {
+  "hardware/motherboard_do/design.json": [
+   12,
+   13
+  ],
+  "hardware/motherboard_power_entry/design.json": [
+   489,
+   799,
+   3961,
+   3976,
+   4122,
+   4123,
+   4124,
+   4128
+  ],
+  "hardware/motherboard_safety_sensor/design.json": [
+   585,
+   739,
+   878,
+   1015,
+   1674,
+   1686,
+   2847,
+   2859,
+   2871
+  ],
+  "hardware/motherboard_probe_limit_upgrade/design.json": [
+   1930,
+   1951,
+   1961,
+   2137,
+   3239
+  ],
+  "hardware/motherboard_safety_sensor/README.md": [
+   7,
+   11
+  ],
+  "hardware/motherboard_probe_limit_upgrade/README.md": [
+   7
+  ],
+  "tools/hardware_validate_motherboard_safety_sensor.py": [
+   30,
+   35,
+   40,
+   43
+  ],
+  "reports/motherboard-safety-sensor-20260930/electrical-review.json": [
+   "new_field_B3V3_terms_a",
+   "combined_field_B3V3_screen_a",
+   "proposed_total_B3V3_allocation_a"
+  ]
+ },
+ "return_accounting": {
+  "FAG_model_excess_over_FA_a": 0.232,
+  "AUX5_output_current_already_in_external_motor_returns_a": 0.192,
+  "separate_DO_ground_allocations_a": 0.04,
+  "FBG_model_excess_over_FB_a": 0.06,
+  "required_converter_model": "Signed multiport steady-state KCL, I_GND_in=I_OUT-I_IN (with all other actual ports included); source return at common-ground converter is I_IN after downstream load returns and converter ground are combined. Preserve I_OUT loads and actual converter loss/Iq. Do not sum I_IN as a separate positive converter-ground injection plus I_OUT downstream returns.",
+  "LDO_model": "LDO IN carries load+Iq; LDO GND carries ground/quiescent current, not its full output-load reservation. Split VS and VDD quiescent sources of every TPS274C65.",
+  "all_actual_ground_roles": {
+   "U11009": [
+    {
+     "ref": "U11009",
+     "pin": "9",
+     "pinfunction": "GND_9",
+     "pintype": "power_in",
+     "net": "/motherboard_motors{slash}FIELD_GND"
+    },
+    {
+     "ref": "U11009",
+     "pin": "8",
+     "pinfunction": "VOUT/BIAS_8",
+     "pintype": "input",
+     "net": "/motherboard_power_entry{slash}FIELD_5V"
+    },
+    {
+     "ref": "U11009",
+     "pin": "4",
+     "pinfunction": "VIN_4",
+     "pintype": "power_in",
+     "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED"
+    }
+   ],
+   "U11017": [
+    {
+     "ref": "U11017",
+     "pin": "4",
+     "pinfunction": "GND_4",
+     "pintype": "power_in",
+     "net": "/motherboard_motors{slash}FIELD_GND"
+    },
+    {
+     "ref": "U11017",
+     "pin": "9",
+     "pinfunction": "EP_GND_9",
+     "pintype": "power_in",
+     "net": "/motherboard_motors{slash}FIELD_GND"
+    },
+    {
+     "ref": "U11017",
+     "pin": "8",
+     "pinfunction": "IN_8",
+     "pintype": "power_in",
+     "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED"
+    }
+   ],
+   "U11018": [
+    {
+     "ref": "U11018",
+     "pin": "4",
+     "pinfunction": "GND_4",
+     "pintype": "power_in",
+     "net": "/motherboard_do{slash}FIELD_B_0V"
+    },
+    {
+     "ref": "U11018",
+     "pin": "9",
+     "pinfunction": "EP_GND_9",
+     "pintype": "power_in",
+     "net": "/motherboard_do{slash}FIELD_B_0V"
+    },
+    {
+     "ref": "U11018",
+     "pin": "8",
+     "pinfunction": "IN_8",
+     "pintype": "power_in",
+     "net": "/motherboard_safety_sensor{slash}FIELD_B_5V_PRE"
+    }
+   ],
+   "U19028": [
+    {
+     "ref": "U19028",
+     "pin": "9",
+     "pinfunction": "GND_9",
+     "pintype": "power_in",
+     "net": "/motherboard_do{slash}FIELD_B_0V"
+    },
+    {
+     "ref": "U19028",
+     "pin": "4",
+     "pinfunction": "VIN_4",
+     "pintype": "power_in",
+     "net": "/motherboard_power_entry{slash}FIELD_B_24V_PROTECTED"
+    },
+    {
+     "ref": "U19028",
+     "pin": "8",
+     "pinfunction": "VOUT/BIAS_8",
+     "pintype": "input",
+     "net": "/motherboard_safety_sensor{slash}FIELD_B_5V_PRE"
+    }
+   ]
+  },
+  "source_roots": "FAG true externalpowerreturn J11003.2 only; FBG J11005.2 only. J11004.2/J11006.2 are existing shutdown-control ground contacts; their copper stays but they cannot be assigned external load supply/harness capacity."
+ },
+ "required_corrections": [
+  "Distinguish4.58/4.82A routing-design policies,5.08/5.32A old current-table assumptions,6A nominal resistor thresholds,5.58/6.42A TI testpoint limits and physical qualified capacities. No silent policy/rating increase.",
+  "Replace generic0.9A TPS1H000 entries with normal and overload contracts bound to9530/4750R and official conditions; preserve fitted50mA lamp and all six wetting receivers.",
+  "Restore200mA normal per sensor group plus actual bleeds, bind1.37k tolerance/TCR/static limiter envelope; bind derived100mA probe source and2.49k envelope. No channel/load reduction.",
+  "Build signed positive/return converter and LDO port ledger, keeping every documented AUX load and tracing split VS/VDD quiescent branches. Size segments from the actual local signed flow/cuts and verified sharing, not a sum of all absolute ground allocations.",
+  "Use only actual externally powered terminal roots, preserve shutdown-control copper. Correct original1803578 plug-MPN versus PCB-header-footprint mismatch in a separately reviewed source/board derivative; identify exact mates/harness and derating.",
+  "Complete voltage/temperature/efficiency/current/bleed/inrush/fault/source/terminal/thermal/neck/reference/return qualification before authoritative full-field routing; no circuit-current rating change is justified by the obsolete6.55A aggregate alone."
+ ],
+ "primary_references": [
+  {
+   "url": "https://www.ti.com/lit/ds/symlink/tps2663.pdf",
+   "local_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\tps26630-ilim-independent.json",
+   "facts": "SLVSE94G RevG \u00a78.3.7.1 Eq5 and\u00a76.5,3k nominal6A min5.58/max6.42 at stated Vdrop/Vin/temp. TPS26630 active1xlimit; physical continuous capacity unproved."
+  },
+  {
+   "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/max17612a-max17612c.pdf",
+   "facts": "Rev1 currentlimit300/R(ohm) A,20\u2013250mA \u00b15% at stated temperatures/voltage;150k CLMODE latch-off. Values above combine source resistor tolerance/TCR as engineering inference.",
+   "remote_browser_read": true,
+   "local_pdf_cache": "NOT_SAVED_25SECOND_DOWNLOAD_TIMEOUT"
+  },
+  {
+   "url": "https://www.ti.com/lit/ds/symlink/tps1h000-q1.pdf",
+   "local_snapshot": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-process-20260930\\sources\\tps1h000-q1.pdf",
+   "facts": "RevE Eq1 VCL.8V\u00d7KCL600/R,\u226550mA \u00b120% external limit accuracy under statedVdrop\u22652.5V/overload>1.5\u00d7setting; not transient/normal current guarantee."
+  }
+ ],
+ "connector_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\connector-rating-audit\\original-source-connectors.json",
+ "checks": {
+  "exact_four_historical_model_sums_preserved": true,
+  "all_requested_model_cluster_roles_resolve": true,
+  "main_limit_resistors_match_original_source": true,
+  "sensor_limit_resistors_match_original_source": true,
+  "wetting_lamp_resistors_match_original_source": true,
+  "probe_derived_source_settings_match": true,
+  "sixteen_DO_channels_preserved_4A_perbank": true,
+  "sensor_normal_200mA_not_reduced": true,
+  "shutdown_source_roles_are_controls": true,
+  "fresh_export_semantics_match_original_saved_export": true,
+  "return_converter_algebra_preserves_all_output_load": true,
+  "old_return_model_excess_is_explicit": true
+ },
+ "read_set_sha256_before": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_do\\design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_power_entry\\design.json": "0632efcc3e18c341d3b5c648fa891c16ed0cf7afd98fc56f7f8abb765786edf0",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_power_entry\\README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_probe_limit_upgrade\\design.json": "42b3bf1b331b3320da55f8c206f1e16bd1df90d4c9f57c8218067cb3e70a9df9",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_probe_limit_upgrade\\README.md": "06b988fdda942fee3f56a884d6c3d6f470cde925c19bdc37102fc784d3e1012c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_safety_sensor\\design.json": "2fcebc28dab75483830c0453b72e1e1ccaa729bfa78fdc30940886eb90ebcfcc",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_safety_sensor\\README.md": "1374bfcca737177283bbfe4e4e80ecf5625c8019da7bf47f80d2a51965f7507f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\fpga_core.kicad_sch": "641b4c0a8a815dcca3837e4c06a3b1291065c65fd06375874d4dde5c85c1f307",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_local_power.kicad_sch": "2fb38f68153d4a8f0f0e02a1c32145c8178d294ffeae0679aabd7db2470da5c9",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_motor_buffers.kicad_sch": "7c8404bca2d9b0c9300f95f98ca44f34781f04485b5292563291ebe3d71ad8e1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_permission.kicad_sch": "04be127c32f6c7c59291d6ebee4b40baefe593eaa39cdb4d255038e40877d83a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard.kicad_sch": "f7594d73361f97b6f7eab12756a0ae0e25d239400b1328fcf15de36f619d636e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_acc_control.kicad_sch": "7d67cef09f389a042970affef1719811db51c45c013272259d60da545483c135",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_analog_input.kicad_sch": "7e71a80f66edb0bfc023b5b080dd6dfcad53f9aafeaaf811dd20596018d71bea",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_analog_output.kicad_sch": "499fb467da065fd7f3ac19d77058927ab28a057f5f410fc2aa3713e9642e0390",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_comms.kicad_sch": "207aecfdc4ae5d3c7a85731cbd643396b4f22bd06c4a732087da22e1599135fa",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_compute.kicad_sch": "e4dc7d4ac9b2bc9fdd318fb8a20107af8ecffb7ee1c4f7cae63738af7b9c5961",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_control_bridges.kicad_sch": "cd746e897e7228df8207c23aeee3a2580e8b2e47592e5211798db411706a00bb",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_di.kicad_sch": "265d2f460d8b0704a6920322323a69e1b7a7fc2a4bf78633308a104c68107e96",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_diagnostics.kicad_sch": "4d0b1fb8d4dcb2961baa6c74cb10828948c06a4c56cd786c7303255d8ceaf580",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_do.kicad_sch": "b4db38050ebb0030917bdcaffe1a62df521c3cb779ef51991f55daf41724ca91",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_esp_socket.kicad_sch": "700643233c567c435c38ed46fcd0f81c4c47c2a0b8229b8b3ed4188b857a8af5",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_fast_inputs.kicad_sch": "25843f344b0b579db0c30e18a539fb4dc7608b668a14e1effffc2eaacef75372",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_identity_io.kicad_sch": "6b9a247f5da2eb6209b295b2864386dbb74ec38f94b6f7815e0b1eed45d0763b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_io_control.kicad_sch": "4574d6f0d3c81f74ff5167b7a91593003713b960de885703dd070cc55e1c93fb",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_motor_power.kicad_sch": "8dbb3c534f6507eb199707cb4ce37a9b0307c8ac168f79e2df3b48289f70cba2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_motors.kicad_sch": "e508d84a785e6f6659f03aa4f6d21bd472bc7058a66aad2394ae6c539405d604",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_operator.kicad_sch": "af947426fc285fa5ba2c54f335cfea8c34aebb7fbfc659aaaf87fe3b06a13cbf",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_power_entry.kicad_sch": "2333b1aab8dcddfefcc3b3e42058cb832ca5a937bef2447b8c0f61b5fcee77e4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_process.kicad_sch": "b73b52b929efa4e840a55e4100f17aeb20f3fbd59ddb9b5dfe643ca7d7e115b4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_safety_sensor.kicad_sch": "c3b706fe9ebeea1582fa9abd1cf921eac245f79b8db27a875e32cbcbcfbcb673",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_status.kicad_sch": "3e75fe88bece70572f3a3f1a195bd1916a1172b849aa3f1ddc834ed4418d4fc3",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_terminals.kicad_sch": "2f644652c0fda0584c7e32110e6a037dec608fd6074cfc9cd86d7dd9afbe08c8",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\sch.net": "df5f6cc6dbc7fa5d657fde31cd516927de84e5abcdfcb8c336eebd74ae32c65c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\watchdog_conditioning.kicad_sch": "c539024249040a3a60693b2a0c6a16a44c1189b01fb59650198d074c264788d2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\receipt.json": "d08774ee40e3e87a9792d65d5d211da2ccf25cdd3713e559a8ac01cf5b4c6d68",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-identity.json": "e5871af08c81611af7d7d459a5f796909988ff381759f403d1ee716b5b1533f3",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\connector-rating-audit\\original-source-connectors.json": "138f8d9bac8dd9308ae88c2af3145290434eedfe36a7bdbffd1b72376848566b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\1-power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\2-rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\3-load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\4-design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\5-README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\staged\\r07-four-path-fag-repaired.kicad_pcb": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\build_trace_receipt.py": "c0d258773c9c7db29e8516b1a34158ecbf86d4c988bc15d9de3880581b1bbe7f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\detail.json": "74f265d7716868ac6d4ab78593ff9443ae0f5073639a26308a4b62f2334515bd",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\inspect_source.py": "e5ee68e1a73c3894b05054de24b17fab78353878860e21d33861009d3a591859",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\source-inventory.json": "7191c377fb05d9350c3884d8820d3c4f25de820135708230c907ba6ef0ea9018",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\tps26630-ilim-independent.json": "0e6160bd02df2c34d101c7d777e78a9732f4f9135191708c4efb6af8de771c31",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\trace_detail.py": "d9af55c1d0abd70315f320bb26e876b1c182e8149f480790db41ee9912a45fd7",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.pdf": "44b8df8d0cdc7f8497690bb97e652697251f5e7c2802a9551602e31c29bb0ac8",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.txt": "bcd64c133ac2f7a925ebf89846d27543d1c83c8d2a5d94096ae3306a83ac8b3c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-power-entry-20260930\\sources\\tps7a16.txt": "c30edd5cd3bd67a41c4dafa48440d5d87930416ee323c9f0daa3582b6d8c9a21",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-probe-limit-20260930\\receipt-r01.json": "2a94b3fb937c4eac8d61c4975cfd192870d6d888fe7dd9f2ff063e437135127e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-process-20260930\\sources\\tps1h000-q1.pdf": "653ac6dbba26f15573d0624dd8149d37a5ff50171a237d4f085f881d1bd7c8a2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-process-20260930\\sources\\tps1h000-q1.txt": "461020d8d63c577abce1abe1f14fc305339f11d87b335f4778cc7381585cae7a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\electrical-review.json": "471b417d6ffd0e73105abaec514e633b8859ffc1d577015e8180f2adbe38f773",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\receipt-r01.json": "d3417ff668b5eba791ad664a493c60a713c33fc314c28d95ac45f8aac1cd3394",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\processor-hardware-20260929\\source\\research\\field-power\\lmr36506.txt": "3c02f92f6b861d92280128ec17a4c4a5f393a04ddeeea5064d9348d8bc372051",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_validate_motherboard_safety_sensor.py": "96a6d6d40300dcf2a6ffa9898996456e8d41a27a778968e2270163452654beba",
+  "Z:\\pcb-runs\\claude-finish\\tools\\field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "Z:\\pcb-runs\\claude-finish\\tools\\fix\\load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "Z:\\pcb-runs\\claude-finish\\tools\\power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "Z:\\pcb-runs\\claude-finish\\tools\\verify\\rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6"
+ },
+ "read_set_sha256_after": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_do\\design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_power_entry\\design.json": "0632efcc3e18c341d3b5c648fa891c16ed0cf7afd98fc56f7f8abb765786edf0",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_power_entry\\README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_probe_limit_upgrade\\design.json": "42b3bf1b331b3320da55f8c206f1e16bd1df90d4c9f57c8218067cb3e70a9df9",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_probe_limit_upgrade\\README.md": "06b988fdda942fee3f56a884d6c3d6f470cde925c19bdc37102fc784d3e1012c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_safety_sensor\\design.json": "2fcebc28dab75483830c0453b72e1e1ccaa729bfa78fdc30940886eb90ebcfcc",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_safety_sensor\\README.md": "1374bfcca737177283bbfe4e4e80ecf5625c8019da7bf47f80d2a51965f7507f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\fpga_core.kicad_sch": "641b4c0a8a815dcca3837e4c06a3b1291065c65fd06375874d4dde5c85c1f307",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_local_power.kicad_sch": "2fb38f68153d4a8f0f0e02a1c32145c8178d294ffeae0679aabd7db2470da5c9",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_motor_buffers.kicad_sch": "7c8404bca2d9b0c9300f95f98ca44f34781f04485b5292563291ebe3d71ad8e1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\mc_permission.kicad_sch": "04be127c32f6c7c59291d6ebee4b40baefe593eaa39cdb4d255038e40877d83a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard.kicad_sch": "f7594d73361f97b6f7eab12756a0ae0e25d239400b1328fcf15de36f619d636e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_acc_control.kicad_sch": "7d67cef09f389a042970affef1719811db51c45c013272259d60da545483c135",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_analog_input.kicad_sch": "7e71a80f66edb0bfc023b5b080dd6dfcad53f9aafeaaf811dd20596018d71bea",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_analog_output.kicad_sch": "499fb467da065fd7f3ac19d77058927ab28a057f5f410fc2aa3713e9642e0390",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_comms.kicad_sch": "207aecfdc4ae5d3c7a85731cbd643396b4f22bd06c4a732087da22e1599135fa",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_compute.kicad_sch": "e4dc7d4ac9b2bc9fdd318fb8a20107af8ecffb7ee1c4f7cae63738af7b9c5961",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_control_bridges.kicad_sch": "cd746e897e7228df8207c23aeee3a2580e8b2e47592e5211798db411706a00bb",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_di.kicad_sch": "265d2f460d8b0704a6920322323a69e1b7a7fc2a4bf78633308a104c68107e96",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_diagnostics.kicad_sch": "4d0b1fb8d4dcb2961baa6c74cb10828948c06a4c56cd786c7303255d8ceaf580",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_do.kicad_sch": "b4db38050ebb0030917bdcaffe1a62df521c3cb779ef51991f55daf41724ca91",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_esp_socket.kicad_sch": "700643233c567c435c38ed46fcd0f81c4c47c2a0b8229b8b3ed4188b857a8af5",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_fast_inputs.kicad_sch": "25843f344b0b579db0c30e18a539fb4dc7608b668a14e1effffc2eaacef75372",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_identity_io.kicad_sch": "6b9a247f5da2eb6209b295b2864386dbb74ec38f94b6f7815e0b1eed45d0763b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_io_control.kicad_sch": "4574d6f0d3c81f74ff5167b7a91593003713b960de885703dd070cc55e1c93fb",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_motor_power.kicad_sch": "8dbb3c534f6507eb199707cb4ce37a9b0307c8ac168f79e2df3b48289f70cba2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_motors.kicad_sch": "e508d84a785e6f6659f03aa4f6d21bd472bc7058a66aad2394ae6c539405d604",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_operator.kicad_sch": "af947426fc285fa5ba2c54f335cfea8c34aebb7fbfc659aaaf87fe3b06a13cbf",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_power_entry.kicad_sch": "2333b1aab8dcddfefcc3b3e42058cb832ca5a937bef2447b8c0f61b5fcee77e4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_process.kicad_sch": "b73b52b929efa4e840a55e4100f17aeb20f3fbd59ddb9b5dfe643ca7d7e115b4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_safety_sensor.kicad_sch": "c3b706fe9ebeea1582fa9abd1cf921eac245f79b8db27a875e32cbcbcfbcb673",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_status.kicad_sch": "3e75fe88bece70572f3a3f1a195bd1916a1172b849aa3f1ddc834ed4418d4fc3",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_terminals.kicad_sch": "2f644652c0fda0584c7e32110e6a037dec608fd6074cfc9cd86d7dd9afbe08c8",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\sch.net": "df5f6cc6dbc7fa5d657fde31cd516927de84e5abcdfcb8c336eebd74ae32c65c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\watchdog_conditioning.kicad_sch": "c539024249040a3a60693b2a0c6a16a44c1189b01fb59650198d074c264788d2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\receipt.json": "d08774ee40e3e87a9792d65d5d211da2ccf25cdd3713e559a8ac01cf5b4c6d68",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-identity.json": "e5871af08c81611af7d7d459a5f796909988ff381759f403d1ee716b5b1533f3",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\connector-rating-audit\\original-source-connectors.json": "138f8d9bac8dd9308ae88c2af3145290434eedfe36a7bdbffd1b72376848566b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\1-power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\2-rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\3-load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\4-design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\5-README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\staged\\r07-four-path-fag-repaired.kicad_pcb": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\build_trace_receipt.py": "c0d258773c9c7db29e8516b1a34158ecbf86d4c988bc15d9de3880581b1bbe7f",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\detail.json": "74f265d7716868ac6d4ab78593ff9443ae0f5073639a26308a4b62f2334515bd",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\inspect_source.py": "e5ee68e1a73c3894b05054de24b17fab78353878860e21d33861009d3a591859",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\source-inventory.json": "7191c377fb05d9350c3884d8820d3c4f25de820135708230c907ba6ef0ea9018",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\tps26630-ilim-independent.json": "0e6160bd02df2c34d101c7d777e78a9732f4f9135191708c4efb6af8de771c31",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\trace_detail.py": "d9af55c1d0abd70315f320bb26e876b1c182e8149f480790db41ee9912a45fd7",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.pdf": "44b8df8d0cdc7f8497690bb97e652697251f5e7c2802a9551602e31c29bb0ac8",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.txt": "bcd64c133ac2f7a925ebf89846d27543d1c83c8d2a5d94096ae3306a83ac8b3c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-power-entry-20260930\\sources\\tps7a16.txt": "c30edd5cd3bd67a41c4dafa48440d5d87930416ee323c9f0daa3582b6d8c9a21",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-probe-limit-20260930\\receipt-r01.json": "2a94b3fb937c4eac8d61c4975cfd192870d6d888fe7dd9f2ff063e437135127e",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-process-20260930\\sources\\tps1h000-q1.pdf": "653ac6dbba26f15573d0624dd8149d37a5ff50171a237d4f085f881d1bd7c8a2",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-process-20260930\\sources\\tps1h000-q1.txt": "461020d8d63c577abce1abe1f14fc305339f11d87b335f4778cc7381585cae7a",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\electrical-review.json": "471b417d6ffd0e73105abaec514e633b8859ffc1d577015e8180f2adbe38f773",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\receipt-r01.json": "d3417ff668b5eba791ad664a493c60a713c33fc314c28d95ac45f8aac1cd3394",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\processor-hardware-20260929\\source\\research\\field-power\\lmr36506.txt": "3c02f92f6b861d92280128ec17a4c4a5f393a04ddeeea5064d9348d8bc372051",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_validate_motherboard_safety_sensor.py": "96a6d6d40300dcf2a6ffa9898996456e8d41a27a778968e2270163452654beba",
+  "Z:\\pcb-runs\\claude-finish\\tools\\field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "Z:\\pcb-runs\\claude-finish\\tools\\fix\\load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "Z:\\pcb-runs\\claude-finish\\tools\\power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "Z:\\pcb-runs\\claude-finish\\tools\\verify\\rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6"
+ },
+ "native_jobs": 0,
+ "gpu_jobs": 0,
+ "source_or_board_edits": 0,
+ "load_or_rating_changes": 0,
+ "applicable_routes_or_specs_emitted": false,
+ "full_rail_qualified": false,
+ "physical_qualification": false,
+ "manufacturing_ready": false,
+ "adopted": false
+}

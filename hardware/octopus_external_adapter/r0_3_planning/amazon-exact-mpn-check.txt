@@ -1,0 +1,28 @@
+OEA r0.3 exact-component Amazon check
+2026-10-06; web search/read only. No browser/cart/order changes. No substitutions.
+
+Requested candidate             Result
+NX6008NBKR                      No verifiable Amazon.com bare-part listing found.
+MP2459GJ-Z                      No verifiable Amazon.com bare-IC listing found.
+ATtiny202                       No verifiable Amazon.com bare-IC listing found.
+Inexpensive UPDI programmer     No verifiable Amazon.com listing found in this focused pass.
+
+Searches used exact component names with site:amazon.com, then shortened NX6008 / MP2459 searches and a general ATtiny202 Amazon search. A missing search result is NOT proof that Amazon cannot supply a part. It means no product URL, exact ordering code/package, seller, stock or genuine origin was established. Do not mark the Amazon cart/BOM complete or buy generic MOSFET kits, differently rated buck modules, or other ATtiny family chips as equivalents.
+
+ATtiny202 is a family designation; the final procurement list still needs its exact package/temperature/packing ordering code. Microchip's official product page confirms the family is in production, but is not Amazon availability evidence:
+https://www.microchip.com/en-us/product/ATtiny202
+
+Verified non-Amazon programmer reference (not added to any cart):
+Adafruit UPDI Friend, product 5879, US$6.95 direct, displayed in stock. The manufacturer's board has USB-C, CH340E serial conversion, a 1 kOhm RX/TX loopback, selectable 3 V/5 V power and I/O, and an included JST-SH cable. It is an ordinary serial-UPDI programmer, not a claim of high-voltage recovery capability. Use the target's appropriate voltage and preserve the UPDI function in firmware/fuse settings. No Amazon offer was verified.
+https://www.adafruit.com/product/5879
+https://learn.adafruit.com/adafruit-updi-friend?view=all
+
+WEP 946D IV hotplate, exact supplied ASIN B0FDWNMC71
+
+Amazon page confirmed the WEP 946D IV, 210 W, 100 x 50 mm plate and 110 V product variant; the retrieved seller was WEP TOOLS. A live checkout price and delivery date were not verified by this subtask. No price inferred from a different model or regional listing.
+https://www.amazon.com/dp/B0FDWNMC71
+
+The manufacturer's 946D-IV page describes PID stabilization, adjustable 50-400 C temperature, digital calibration and Celsius/Fahrenheit selection. It uses the phrase 'PID programmable controls temperature', which describes the internal regulation and is not evidence of a user-programmable multi-stage reflow profile. No staged ramp/soak/reflow program is documented on that page. Treat this candidate as a manually managed temperature-setpoint hotplate unless its exact supplied manual proves otherwise.
+https://yihua-gz.com/products/yihua-946d-iv-fast-heating-table-mini-split-separator-bga-preheat-soldering-station-for-repair-remove-pcb-smd-component
+
+The larger 100 x 50 mm surface relaxes the provisional <=50 mm board-length target, but does not solve double-sided SMT contact problems. For this home assembly plan, reflow a single populated SMT face with the empty PCB underside on the plate; fit projecting through-hole headers/connectors afterward. Board dimensions must still satisfy host-board clearance. A hotplate reading is not measured solder-joint temperature, and manual profile timing must follow the selected paste and component limits.

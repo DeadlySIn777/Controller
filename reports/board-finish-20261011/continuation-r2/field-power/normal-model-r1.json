@@ -1,0 +1,920 @@
+{
+ "schema": "root106-signed-field-normal-planning-v2",
+ "candidate_sha256": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+ "source_export_sha256": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+ "scope": "Planning row-envelope and explicit reservations, not a guaranteed arbitrary-mode/temperature or transient maximum. All16DO(.5Aeach),12motoraux,3sensor(.2Aeach),2probe(.1Aeach),6wetting(.00275Aeach),.05AONlamp preserved simultaneously; no concurrency exclusion.",
+ "bounds_and_conditions": {
+  "input_voltage_v": [
+   18,
+   30
+  ],
+  "field5_planning_v": [
+   4.9,
+   5.1
+  ],
+  "LDO3V3_max_v": 3.366,
+  "resistor_combined_error": 0.025,
+  "LDO_ground_current_reservation_a": 0.001,
+  "LDO_ground_basis": "TPS7A16 table gives15uA max at10uA output; loaded100mA ground5uA is typical only.1mA is explicit planning margin, not a guaranteed new component bound.",
+  "buck_efficiency_basis": "TI LMR36506 RevC \u00a77.3.10 uses.8 as conservative normal light-load estimate; not guaranteed full-corner efficiency. Bias reservation50uA covers listed nonswitchingVIN/EN/BIAS rows once; switching/load losses already represented by.8.",
+  "isolator_basis": "Largest listed DC/1/10/100Mbps same-side maxima;100Mbps cases atCL15pF. This preserves8.333MHzSPI and does not interpolate a lower current. Mixed-state/load/capacitance actual dynamic guarantee remains open.",
+  "TPS274_basis": "VS2.5mA externalVDD/all-diagnostics/SCLKoff row;VDD1.6mA maximum of separate externalVDD SCLK/ADC rows. SimultaneousSCLK+allADCdiagnostics not guaranteed by those rows."
+ },
+ "component_current_terms": {
+  "A3V3": {
+   "U10003_ISO7762_VCC2_100Mbps_max": 0.026,
+   "U10004_VDD_row_max": 0.0016,
+   "U10009_VDD_row_max": 0.0016,
+   "U14028_ISO7720_VCC1_max_DC_AC_rows": 0.0042,
+   "U22001_TPS3700_VDD_reservation": 1.5e-05,
+   "U22002_ISO7720_VCC1_max_DC_AC_rows": 0.0042,
+   "additional_leak_switching_margin": 0.001
+  },
+  "B3V3": {
+   "U10016_ISO7762_VCC2_100Mbps_max": 0.026,
+   "U10017_VDD_row_max": 0.0016,
+   "U10022_VDD_row_max": 0.0016,
+   "U19008_LTC2962_VCC_max": 0.00021,
+   "U19009_U19011_LVC_unloaded_plus_switching_reservation": 0.001,
+   "U19017_ISO7720_VCC2_100Mbps_max": 0.0117,
+   "U19019_ISO7760_VCC1_max_DC_AC_rows": 0.0114,
+   "U19025_ISO1540_VCC2_LOW_max": 0.0067,
+   "U19026_ADS1115_operating_fulltemp_max": 0.0003,
+   "U19027_TMUX1511_VDD_max": 7e-05,
+   "U22003_ISO7720_VCC1_max_DC_AC_rows": 0.0042,
+   "additional_leak_switching_margin": 0.001
+  },
+  "FIELD5V": {
+   "U11013_U11014_TPS2553_input_max_rows": 0.00028,
+   "U11025_U11026_LVC_unloaded_plus_switching_reservation": 0.001,
+   "U9003_U9004_LTC2962_VCC_max": 0.00042,
+   "U9007_ISO7720_VCC1_max_DC_AC_rows": 0.0042,
+   "additional_leak_switching_margin": 0.001
+  }
+ },
+ "resistor_source_upper_bounds": {
+  "FIELD_A_24V_PROTECTED": [
+   {
+    "ref": "R11012",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/FA_PGTH",
+    "ohm": 140000.0,
+    "current_upper_a": 0.00021978021978021978,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11038",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry{slash}FA_PGOOD",
+    "ohm": 100100.0,
+    "current_upper_a": 0.00030738492276953815,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11057",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX24_A_UVLO",
+    "ohm": 1.0,
+    "current_upper_a": 30.76923076923077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11061",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX24_B_UVLO",
+    "ohm": 1.0,
+    "current_upper_a": 30.76923076923077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14058",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_operator/PRB0_UVLO",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14064",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_operator/PRB1_UVLO",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "FIELD_B_24V_PROTECTED": [
+   {
+    "ref": "R11019",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/FB_PGTH",
+    "ohm": 140000.0,
+    "current_upper_a": 0.00021978021978021978,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19021",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_G0_UV",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19028",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_G1_UV",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19034",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_G2_UV",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19083",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/FIELD_B_PRE_EN",
+    "ohm": 100100.0,
+    "current_upper_a": 0.00030738492276953815,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "FIELD_5V": [
+   {
+    "ref": "R11040",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/FIELD_FIELD_5V_PGOOD",
+    "ohm": 10100.0,
+    "current_upper_a": 0.0005178979436405178,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11041",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100100.0,
+    "current_upper_a": 5.225543687082148e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11051",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX5_A_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11054",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX5_B_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11058",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX24_A_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11062",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/AUX24_B_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11071",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_A",
+    "ohm": 120.1,
+    "current_upper_a": 0.04355344904886953,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11073",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_power_entry/FIELD_HEALTH_B_LED_A",
+    "ohm": 120.1,
+    "current_upper_a": 0.04355344904886953,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9029",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power{slash}MOTOR_FIELD_HEALTH_A_RAW",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9039",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power{slash}MOTOR_FIELD_HEALTH_B_RAW",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0005230716923599995,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "FIELD_B_5V_PRE": [
+   {
+    "ref": "R19085",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/FIELD_B_PRE_5V_PGOOD",
+    "ohm": 10100.0,
+    "current_upper_a": 0.0005178979436405178,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19086",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100100.0,
+    "current_upper_a": 5.225543687082148e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "DOA_FIELD_3V3": [
+   {
+    "ref": "R10012",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_do/DOA_CS_N_FIELD",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R10014",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_do/DOA_FLT_N_FIELD",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11064",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14059",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_operator/PRB0_SHDN_N",
+    "ohm": 3320.1,
+    "current_upper_a": 0.0010398203946591043,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14061",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_operator/PRB0_FIELD_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14065",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_operator/PRB1_SHDN_N",
+    "ohm": 3320.1,
+    "current_upper_a": 0.0010398203946591043,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R14067",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_operator/PRB1_FIELD_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R22001",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_diagnostics/FA_PGOOD_LEVEL_3V3",
+    "ohm": 10000.0,
+    "current_upper_a": 0.0003452307692307692,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "DOB_FIELD_3V3": [
+   {
+    "ref": "R10032",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_do/DOB_CS_N_FIELD",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R10034",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_do/DOB_FLT_N_FIELD",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R11065",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19023",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/DI_G0_FLT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19025",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 3.452304240003452e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19030",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/DI_G1_FLT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19036",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/DI_G2_FLT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19040",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/SAFE_SWITCH_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19045",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DOB_FIELD_3V3_SAFE_UV",
+    "ohm": 48700.0,
+    "current_upper_a": 7.088927499605118e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19047",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DOB_FIELD_3V3_SAFE_OV",
+    "ohm": 60400.0,
+    "current_upper_a": 5.7157412124299546e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19049",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/SAFE_DOMAIN_HEALTH",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19051",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/EXT_PERMIT_HEALTH_LED_A",
+    "ohm": 215.1,
+    "current_upper_a": 0.01604978006651647,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19053",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/PROCESS_PERMIT_HEALTH_LED_A",
+    "ohm": 215.1,
+    "current_upper_a": 0.01604978006651647,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19060",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/ARM_LAMP_FAULT_N",
+    "ohm": 10000.1,
+    "current_upper_a": 0.0003452273169575997,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19081",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_SDA_FIELD",
+    "ohm": 4420.1,
+    "current_upper_a": 0.0007810474180013331,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19082",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_SCL_FIELD",
+    "ohm": 4420.1,
+    "current_upper_a": 0.0007810474180013331,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R22002",
+    "source_pin": "2",
+    "other_pin": "1",
+    "other_net": "/motherboard_power_entry{slash}FB_PGOOD",
+    "ohm": 10000.0,
+    "current_upper_a": 0.0003452307692307692,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "AUX_24V_A": [
+   {
+    "ref": "R11059",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9025",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_A_1_UV",
+    "ohm": 355000.0,
+    "current_upper_a": 8.66738894907909e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9027",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_A_1_OV",
+    "ohm": 580000.0,
+    "current_upper_a": 5.305039787798409e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "AUX_24V_B": [
+   {
+    "ref": "R11063",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9035",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_B_1_UV",
+    "ohm": 355000.0,
+    "current_upper_a": 8.66738894907909e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9037",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_B_1_OV",
+    "ohm": 580000.0,
+    "current_upper_a": 5.305039787798409e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "AUX_5V_A": [
+   {
+    "ref": "R11052",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 5.23076400000523e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9021",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_A_0_UV",
+    "ohm": 86700.0,
+    "current_upper_a": 6.0331825037707385e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9023",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_A_0_OV",
+    "ohm": 93100.0,
+    "current_upper_a": 5.6184417086672724e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "AUX_5V_B": [
+   {
+    "ref": "R11055",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 5.23076400000523e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9031",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_B_0_UV",
+    "ohm": 86700.0,
+    "current_upper_a": 6.0331825037707385e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R9033",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motor_power/MOTOR_PWR_FIELD_B_0_OV",
+    "ohm": 93100.0,
+    "current_upper_a": 5.6184417086672724e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "PRB0_24V": [
+   {
+    "ref": "R14062",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "PRB1_24V": [
+   {
+    "ref": "R14068",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_motors{slash}FIELD_GND",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "SENS24_G0": [
+   {
+    "ref": "R19024",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19067",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_DIV0",
+    "ohm": 130000.0,
+    "current_upper_a": 0.00023668639053254438,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "SENS24_G1": [
+   {
+    "ref": "R19031",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19070",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_DIV1",
+    "ohm": 130000.0,
+    "current_upper_a": 0.00023668639053254438,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "SENS24_G2": [
+   {
+    "ref": "R19037",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19073",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_DIV2",
+    "ohm": 130000.0,
+    "current_upper_a": 0.00023668639053254438,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "SAFE_24V": [
+   {
+    "ref": "R19039",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19041",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/SAFE_24V_SAFE_UV",
+    "ohm": 287000.0,
+    "current_upper_a": 0.00010720986330742428,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19043",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/SAFE_24V_SAFE_OV",
+    "ohm": 615000.0,
+    "current_upper_a": 5.0031269543464665e-05,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   },
+   {
+    "ref": "R19076",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_safety_sensor/DI_SENSOR_DIV3",
+    "ohm": 130000.0,
+    "current_upper_a": 0.00023668639053254438,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ],
+  "ARM_LAMP": [
+   {
+    "ref": "R19061",
+    "source_pin": "1",
+    "other_pin": "2",
+    "other_net": "/motherboard_do{slash}FIELD_B_0V",
+    "ohm": 100000.1,
+    "current_upper_a": 0.0003076920000003077,
+    "basis": "Vmax/Rmin, zero-drop bound, Rmin=.975R (1% initial +100ppm/K*150K); normal other-node potentials within0..source. No assumed LED VF or logicVOL reduces this bound."
+   }
+  ]
+ },
+ "normal_contract_external24_terms_a": {
+  "FA_EXTERNAL24_NORMAL_A": 4.421999999999999,
+  "FB_EXTERNAL24_NORMAL_A": 4.6665
+ },
+ "computed_local_output_envelopes_a": {
+  "DOA3V3": 0.042766008143336975,
+  "DOB3V3": 0.10305650132040517,
+  "FIELD5V_original_without_A_LDO": 0.2900531293966593,
+  "FIELD5V_A_prereg_revision": 0.34105312939665927,
+  "FIELD_B5V_PRE_with_120mA_B_reservation": 0.12157015338051133
+ },
+ "routing_local_targets_a": {
+  "DOA3V3": 0.05,
+  "DOB3V3_complete_required": 0.12,
+  "FIELD5V_after_A_prereg": 0.36,
+  "FIELD_B5V_PRE_complete": 0.13
+ },
+ "signed_regulator_ports": {
+  "U11009": {
+   "IN_load_a": 0.12754999999999997,
+   "OUT_injection_a": 0.36,
+   "GND_injection_a": -0.23245000000000002,
+   "GND_current_into_IC_a": 0.23245000000000002,
+   "input_power_w": 2.2958999999999996,
+   "output_power_w": 1.8359999999999999,
+   "total_loss_reservation_w": 0.45989999999999975,
+   "vin_v": 18.0,
+   "vout_v": 5.1,
+   "efficiency_planning_estimate": 0.8,
+   "additional_input_bias_reservation_a": 5e-05
+  },
+  "U11017_A_prereg_revision": {
+   "IN_load_a": 0.051000000000000004,
+   "OUT_injection_a": 0.05,
+   "GND_injection_a": 0.001
+  },
+  "U19028": {
+   "IN_load_a": 0.04609166666666666,
+   "OUT_injection_a": 0.13,
+   "GND_injection_a": -0.08390833333333333,
+   "GND_current_into_IC_a": 0.08390833333333333,
+   "input_power_w": 0.8296499999999999,
+   "output_power_w": 0.6629999999999999,
+   "total_loss_reservation_w": 0.16664999999999996,
+   "vin_v": 18.0,
+   "vout_v": 5.1,
+   "efficiency_planning_estimate": 0.8,
+   "additional_input_bias_reservation_a": 5e-05
+  },
+  "U11018_complete_B_budget": {
+   "IN_load_a": 0.121,
+   "OUT_injection_a": 0.12,
+   "GND_injection_a": 0.001
+  }
+ },
+ "B_LDO_capacity_screen": {
+  "existing_device_output_rating_a": 0.1,
+  "computed_envelope_a": 0.10305650132040517,
+  "conservative_envelope_exceeds_existing_rating": true,
+  "not_an_observed_overload": true,
+  "recommended_source_change": "Split dedicated DO3V3(U10016/17/22 and owned decoupling/pullups) from retained safety/diagnostic3V3; add an exact reviewed TPS7A1633 with own input/output bypass/bleed fed by existingFIELD_B5V_PRE. Eachsource keeps60V input rating. Root review required before stagingB."
+ },
+ "A_LDO_correction": {
+  "feed_IN_EN_C11074_from": "FIELD_5V",
+  "unchanged_output_rating_a": 0.1,
+  "routing_output_target_a": 0.05,
+  "old_direct30V_loss_w": 1.3683,
+  "new5V_loss_w": 0.09839999999999999,
+  "native_source_export": "PENDING"
+ },
+ "proposed_trunk_capacity_policy": {
+  "FA": {
+   "copper_capacity_target_a": 6.5,
+   "minimum_existing_width_fit_mm_raw": 7.189380495778413,
+   "ordinary_0p6_0p3_vias_min_at_assumed_point5A": 13,
+   "unchanged_per_net_drop_budget_v": 0.48,
+   "unchanged_rise_policy_c": 10.0
+  },
+  "FAG": {
+   "copper_capacity_target_a": 6.5,
+   "minimum_existing_width_fit_mm_raw": 7.189380495778413,
+   "ordinary_0p6_0p3_vias_min_at_assumed_point5A": 13,
+   "unchanged_per_net_drop_budget_v": 0.48,
+   "unchanged_rise_policy_c": 10.0
+  },
+  "FB": {
+   "copper_capacity_target_a": 6.5,
+   "minimum_existing_width_fit_mm_raw": 7.189380495778413,
+   "ordinary_0p6_0p3_vias_min_at_assumed_point5A": 13,
+   "unchanged_per_net_drop_budget_v": 0.48,
+   "unchanged_rise_policy_c": 10.0
+  },
+  "FBG": {
+   "copper_capacity_target_a": 6.5,
+   "minimum_existing_width_fit_mm_raw": 7.189380495778413,
+   "ordinary_0p6_0p3_vias_min_at_assumed_point5A": 13,
+   "unchanged_per_net_drop_budget_v": 0.48,
+   "unchanged_rise_policy_c": 10.0
+  }
+ },
+ "actual_limits_unchanged": {
+  "DO_channel_a": 0.5,
+  "DO_quad_a": 2.0,
+  "TPS26630_3kohm_nominal_A": 6.0,
+  "TPS26630_3kohm_table_A": [
+   5.58,
+   6.42
+  ],
+  "source_continuous_board_rating": "NOT_QUALIFIED",
+  "maximum_simultaneous_fault_current": "NOT_BOUNDED_BY_DC_THRESHOLD"
+ },
+ "real_external_power_roots": {
+  "FA_POSITIVE": [
+   "J11003",
+   "1"
+  ],
+  "FA_RETURN": [
+   "J11003",
+   "2"
+  ],
+  "FB_POSITIVE": [
+   "J11005",
+   "1"
+  ],
+  "FB_RETURN": [
+   "J11005",
+   "2"
+  ]
+ },
+ "shutdown_contacts_are_not_power_roots": [
+  "J11004",
+  "J11006"
+ ],
+ "legacy_policy_retained_as_history": {
+  "FA_FAG_design_a": 4.58,
+  "FB_FBG_design_a": 4.82,
+  "claimed_FA_limit_a": 5.08,
+  "claimed_FB_limit_a": 5.32
+ },
+ "necessary_planner_change": "Groundnet route sizing must use signed multiport injections and absolute downstream cut currents, not all-positive converterGND=VINplusloadOUT. Preserve local converter return circulatingcurrent and branch paths. Existing installedfield_current_guard intentionally rejects negativeclusters and cannot consume this signedledger without separatelyreviewed solver changes.",
+ "unresolved_branch_inputs": "Root MAX17612/TPS1H000/TPS26624/entry consumption receipts pending; no missing value becomeszero.",
+ "inputs_before": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\staged\\r07-four-path-fag-repaired.kicad_pcb": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\field-power\\inventory.json": "d6f6b8ae07149c4e4d3f8173bde147054a7eb507c00be2efa39ba288190bda57",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\receipt.json": "3e280b586ca9ad939058bde5bee54d79e7274005ed727dad8605a9c1dd030745",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.txt": "bcd64c133ac2f7a925ebf89846d27543d1c83c8d2a5d94096ae3306a83ac8b3c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-power-entry-20260930\\sources\\tps7a16.txt": "c30edd5cd3bd67a41c4dafa48440d5d87930416ee323c9f0daa3582b6d8c9a21",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\processor-hardware-20260929\\source\\research\\field-power\\lmr36506.txt": "3c02f92f6b861d92280128ec17a4c4a5f393a04ddeeea5064d9348d8bc372051",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\sources\\iso7760.txt": "e9f50aef427753d286d83c29fb2c2cbf23bcad26a6624a9498441bc157a79934",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-operator-20260930\\sources\\iso7720.txt": "d06dfc2a6fecbbe8825bdf3afb6ee3398976699a275fe6fc2295420f3033e19e"
+ },
+ "inputs_after": {
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r07-repair\\staged\\r07-four-path-fag-repaired.kicad_pcb": "198bba53ad2cf983940c68f5e732b575d28d5fb962bc1fa4d3fd959c23a427ab",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\continuation-r2\\field-power\\inventory.json": "d6f6b8ae07149c4e4d3f8173bde147054a7eb507c00be2efa39ba288190bda57",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\receipt.json": "3e280b586ca9ad939058bde5bee54d79e7274005ed727dad8605a9c1dd030745",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-do-20260930\\sources\\tps274c65.txt": "bcd64c133ac2f7a925ebf89846d27543d1c83c8d2a5d94096ae3306a83ac8b3c",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-power-entry-20260930\\sources\\tps7a16.txt": "c30edd5cd3bd67a41c4dafa48440d5d87930416ee323c9f0daa3582b6d8c9a21",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\processor-hardware-20260929\\source\\research\\field-power\\lmr36506.txt": "3c02f92f6b861d92280128ec17a4c4a5f393a04ddeeea5064d9348d8bc372051",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-safety-sensor-20260930\\sources\\iso7760.txt": "e9f50aef427753d286d83c29fb2c2cbf23bcad26a6624a9498441bc157a79934",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-operator-20260930\\sources\\iso7720.txt": "d06dfc2a6fecbbe8825bdf3afb6ee3398976699a275fe6fc2295420f3033e19e"
+ },
+ "native_jobs": 0,
+ "board_or_original_source_edits": 0,
+ "applicable_routes_emitted": false,
+ "full_rail_qualified": false,
+ "manufacturing_ready": false
+}

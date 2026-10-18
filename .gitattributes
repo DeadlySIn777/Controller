@@ -1,1 +1,62 @@
+# Line-ending policy
+#
+# Evidence manifests and review records (gateware/**/manifest.json, cnc1/evidence/**,
+# hardware/*.json, reports/*.json, research/*.json, firmware SHA256SUMS, ...) hash raw
+# file bytes. This working tree mixes LF and CRLF files, and this host sets
+# core.autocrlf=true system-wide, so any conversion on commit or checkout would change
+# recorded hashes. The default is therefore: no end-of-line conversion at all. Every
+# file is stored and checked out byte-for-byte on Windows, Linux and macOS clones.
+# (-text only disables conversion; diff and merge still treat text files as text.)
 * -text
+
+# Sources that the documented WSL/Linux commands execute or parse must be LF
+# (run_tests.sh, gateware/synthesis/run.sh, postmap/run.sh, LinuxCNC profiles,
+# Yosys scripts, C/C++ built under WSL). Every such file is LF in the working tree,
+# so normalising them does not change any recorded hash; a CRLF edit is converted
+# back to LF instead of silently breaking the Linux reproduction.
+*.sh text eol=lf
+*.v text eol=lf
+*.sv text eol=lf
+*.ys text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.ini text eol=lf
+*.hal text eol=lf
+*.ngc text eol=lf
+*.tbl text eol=lf
+display-client text eol=lf
+# *.py and *.hex deliberately follow the byte-exact default: several hashed Python
+# tools and tests outside gateware/ are CRLF or mixed (for example
+# tools/build_hardware_cost_data.py, tools/check_release.py, the tools/hardware_*
+# scripts, tests/test_release.py and tools/build_compute_display_matrix.py), and an
+# eol=lf rule would rewrite them on a fresh clone.
+# More specific rules live beside the trees that need them: gateware/.gitattributes
+# makes everything under gateware/ LF (its before-audit-fixes archives stay -text);
+# cnc1/.gitattributes forces LF for its *.py, C/C++ and shell sources;
+# controller_backend/.gitattributes covers only *.ini, *.hal, *.sh, *.ngc and
+# display-client (it has no *.py rule).
+
+# Binary artefacts.
+*.so binary
+*.o binary
+*.a binary
+*.elf binary
+*.bin binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.xlsx binary
+*.zip binary
+
+# Large generated netlists: tracked because manifests hash them and the post-map flow
+# consumes them, but not worth line diffs.
+gateware/synthesis/results/cnc_endpoint_efinix.json -diff linguist-generated
+gateware/synthesis/results/*.edif -diff linguist-generated
+gateware/synthesis/postmap/results/mapped.v -diff linguist-generated
+reports/root-verification-*/**/gateware/synthesis/results/cnc_endpoint_efinix.json -diff linguist-generated
+reports/root-verification-*/**/gateware/synthesis/results/*.edif -diff linguist-generated
+reports/root-verification-*/**/gateware/synthesis/postmap/results/mapped.v -diff linguist-generated

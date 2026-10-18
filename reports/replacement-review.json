@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-28",
+  "scope": "Disconnected cartridge, virtual module replacement and new-compute import; no physical hardware qualification",
+  "observed_checks": {
+    "python_unittest_discover": {
+      "passed": 200,
+      "exit_code": 0,
+      "output": "........................................................................................................................................................................................................\r\n----------------------------------------------------------------------\r\nRan 200 tests in 3.864s\r\n\r\nOK\r\n"
+    },
+    "replacement_demo": {
+      "exit_code": 0,
+      "result": {
+        "simulation_only": true,
+        "physical_commands": 0,
+        "cartridge": {
+          "record_bytes": [
+            6906,
+            6906
+          ],
+          "two_record_bytes": 13812,
+          "modeled_capacity_bytes": 32768,
+          "fallback_generation_after_torn_write": 2,
+          "fallback_generation_after_corruption": 2
+        },
+        "input_bank_replacement": {
+          "assignments_unchanged": true,
+          "old_factory_metadata": {
+            "input_filter_clock_correction_ppm": 15,
+            "evidence": "illustrative_fixture_not_measured"
+          },
+          "new_factory_metadata": {
+            "input_filter_clock_correction_ppm": -22,
+            "evidence": "illustrative_fixture_not_measured"
+          },
+          "verification_required": [
+            {
+              "device": "x-home",
+              "resource": "SIM.DI0",
+              "checks": [
+                "wiring",
+                "polarity"
+              ],
+              "status": "pending"
+            },
+            {
+              "device": "y-home",
+              "resource": "SIM.DI1",
+              "checks": [
+                "wiring",
+                "polarity"
+              ],
+              "status": "pending"
+            },
+            {
+              "device": "z-home",
+              "resource": "SIM.DI2",
+              "checks": [
+                "wiring",
+                "polarity"
+              ],
+              "status": "pending"
+            }
+          ],
+          "outputs_inhibited": true,
+          "homed": false,
+          "run_permission": false
+        },
+        "new_compute": {
+          "different_store_identity": true,
+          "same_machine_identity": true,
+          "configuration_retained": true,
+          "store_revision": 1,
+          "verification_required_count": 6,
+          "outputs_inhibited": true,
+          "homed": false,
+          "run_permission": false
+        },
+        "refused": [
+          "MODULE_INCOMPATIBLE",
+          "BACKUP_IDENTITY"
+        ],
+        "temporary_files_removed_on_return": true
+      }
+    }
+  },
+  "source_sha256": {
+    "controller_config/recovery.py": "2be492351059c81ee2687de1564c2b6b6dfb245f21bf9f2b79f9393f233511ee",
+    "tests/test_configuration_recovery.py": "210ecb6198af810836f1a375a47603a6730c9f8da9dc47dcebcfc2b02ec8efaa",
+    "examples/configuration/replacement_demo.py": "51c9c56ecf6e76811daf66e016ef14936579d9214e0980a705230fd7f9c33ffc",
+    "reports/MODULE_REPLACEMENT_DEMO.md": "b9e6c983601f6f5f54ecfdfc3d99b75f19e95de2abf480e121dde7a0db02a8bd",
+    "docs/MODULAR_REPAIR_AND_MEMORY.md": "a105b56954fa025b4459c0f70ba51dbee25575cd6a492d07c27c3f593f3f7686"
+  },
+  "user_note_sha256": "c7f0c1ae6a17e3f444ace377105712b90acf4ae78380328e5c9c0c8a8841ef78",
+  "review_changes": [
+    "Exact framing rejects every injected partial record, including final-byte interruption.",
+    "Unsupported outer/embedded schemas fail closed.",
+    "Applied bindings reject cartridge generation rollback and conflicting host edits.",
+    "Shared-store lock plus revalidation detects intervening edits before receipt finalization.",
+    "Machine settings remain separate from module factory metadata and runtime authority."
+  ],
+  "limitations": [
+    "File-backed JSON slots are not an EEPROM driver or physical power-loss qualification.",
+    "Module identity, calibration metadata and stopped state are authored virtual fixtures.",
+    "No predecessor-chain, production mirror authority or reconciliation implementation.",
+    "Recovery commands are not yet wired into customer UI/CLI.",
+    "Physical modularity, protection, manufacturing and complete costs remain unresolved."
+  ],
+  "previous_integration_sources_unchanged": {
+    "controller_config/model.py": true,
+    "controller_config/service.py": true,
+    "controller_config/__main__.py": true,
+    "tests/test_configuration_service.py": true,
+    "examples/configuration/demo.py": true,
+    "tools/build_compute_display_matrix.py": true
+  },
+  "document_checks": {
+    "local_links_checked": 196,
+    "documents": 15,
+    "missing_links": [],
+    "source_note_identical": true
+  }
+}

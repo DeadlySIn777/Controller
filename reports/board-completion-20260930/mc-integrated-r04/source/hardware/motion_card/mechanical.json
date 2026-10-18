@@ -1,0 +1,418 @@
+{
+  "schema": "controller.motion_card.mechanical.v1",
+  "date": "2026-09-30",
+  "status": "source-backed review candidate; no manufacturing release",
+  "manufacturing_ready": false,
+  "frozen_is1_changed": false,
+  "required_card": {
+    "width_along_mating_edge_mm": 220,
+    "insertion_depth_mm": 100,
+    "arrangement": "standing removable card perpendicular to fixed flat passive wiring base",
+    "connector_count": 2,
+    "contacts_per_connector": 160,
+    "guide_part_selected": false,
+    "lever_part_selected": false,
+    "captive_screw_selected": false,
+    "board_thickness_qualified": false
+  },
+  "sources": {
+    "efinix_package_v53": {
+      "path": "research/motion-card-mechanical/trion-packaging-ug-v5.3.pdf",
+      "url": "https://www.efinixinc.com/docs/trion-packaging-ug-v5.3.pdf",
+      "description": "June 2025; Figure 28 p29; Tables 12/13/14 pp58-60",
+      "retrieved_utc": "2026-09-30T11:25:14.644389+00:00",
+      "sha256": "0b1a2aa8d679553adf3acb6a9b4276968e9b99e497340592bc85d8a507446a23",
+      "bytes": 5054477
+    },
+    "efinix_pinout_v35": {
+      "path": "research/motion-card-mechanical/t20-pinout-current.xlsx",
+      "url": "https://www.efinixinc.com/docs/t20_pinout-v3.5.xlsx",
+      "description": "official current T20 pinout v3.5 March 2025; T20F256 sheet",
+      "retrieved_utc": "2026-09-30T11:37:27.305307+00:00",
+      "sha256": "bfbdc850656904043631e562ca1d26073ffa0ff3d191b7b1f21c0fd174b6db93",
+      "bytes": 160341
+    },
+    "harting_family": {
+      "path": "research/motion-card-mechanical/harting-harbus64-catalogue-current.pdf",
+      "url": "https://b2b.harting.com/files/livebooks/en/PRD0200000100183/downloads/livebook.pdf",
+      "description": "system diagram PDF p5; male angled p9 /02.11; female straight p10 /02.12; female angled p12 /02.14; document publication date not established",
+      "retrieved_utc": "2026-09-30T11:25:19.317215+00:00",
+      "sha256": "8876ecdc0200b131acd52e60f18c05590ddec7398f71b30212a70d099259996e",
+      "bytes": 4396700
+    },
+    "harting_pressin_2016": {
+      "path": "research/motion-card-mechanical/harting-harbus64-catalogue-2016.pdf",
+      "url": "https://b2b.harting.com/files/livebooks/en/PRD0200000100063/downloads/livebook.pdf",
+      "description": "retained 2016 catalogue; PDF p33 /printed00.25 finish-dependent press-in hole requirements",
+      "retrieved_utc": "2026-09-30T11:25:54.098813+00:00",
+      "sha256": "46280e3eedb9f76a61cbcc40c5bdff2652cb20bd4a89161bde1d3f630865fb41",
+      "bytes": 29528805
+    },
+    "harting_exact_female": {
+      "path": "research/motion-card-mechanical/harting-02021601201.html",
+      "url": "https://www.harting.com/en-US/p/DIN-Signal-harbus64-160FP-45-50C1-1-02021601201",
+      "description": "exact part, straight female, level1, press-in, 500cycles, nohotplug, forces, board thickness",
+      "retrieved_utc": "2026-09-30T11:37:29.661279+00:00",
+      "sha256": "9f483982a132f606ba52e46e024e0ea41284ac1b1c3288f2799faa19ca0da09d",
+      "bytes": 927382
+    },
+    "abracon_ase": {
+      "path": "research/fpga-core/ase.pdf",
+      "url": "https://abracon.com/Oscillators/ASEseries.pdf",
+      "description": "retained Rev18 February2022; outline and land pattern p5",
+      "retrieved_utc": null,
+      "sha256": "5f5a3070e85cac34ace32dc6dfbec8066f5b09e63e19ca7084fb208296e261f1",
+      "bytes": 406886
+    }
+  },
+  "fpga": {
+    "mpn": "T20F256I4",
+    "source": "efinix_package_v53",
+    "package_basic_xy_mm": [
+      13,
+      13
+    ],
+    "package_overall_height_mm": {
+      "nominal": 1.04,
+      "tolerance_plus_minus": 0.1,
+      "maximum": 1.14
+    },
+    "package_standoff_drawing_mm": {
+      "nominal": 0.3,
+      "tolerance_plus_minus": 0.05,
+      "assembled_reflow_standoff_qualified": false
+    },
+    "package_lateral_profile_drawing_mm": 0.1,
+    "complete_lateral_max_envelope_closed": false,
+    "ball_diameter_mm": {
+      "nominal": 0.4,
+      "tolerance_plus_minus": 0.05
+    },
+    "pitch_mm": 0.8,
+    "rows": "ABCDEFGHJKLMNPRT",
+    "columns": [
+      1,
+      16
+    ],
+    "balls": 256,
+    "current_pinout_source": "efinix_pinout_v35",
+    "current_and_retained_ball_sets_match": true,
+    "current_and_retained_ball_properties_A_to_F_match": true,
+    "retained_ball_workbook": {
+      "path": "research/fpga-core/t20-pinout.xlsx",
+      "sha256": "bfbdc850656904043631e562ca1d26073ffa0ff3d191b7b1f21c0fd174b6db93"
+    },
+    "chosen_land_pattern": "NSMD manufacturer optimum candidate",
+    "pad_copper_diameter_mm": 0.35,
+    "mask_aperture_diameter_mm": 0.5,
+    "mask_radial_margin_mm": 0.075,
+    "nsmd_trace_to_pad_min_mm": 0.1,
+    "reference_via_capture_pad_diameter_mm": 0.4,
+    "reference_finished_via_diameter_mm": 0.25,
+    "reference_pad_to_offset_via_min_mm": 0.11,
+    "trace_via_dimensions_are_fabrication_qualified": false,
+    "footprint": {
+      "path": "hardware/motion_card/CNC_Motion.pretty/T20F256_Efinix_NSMD.kicad_mod",
+      "sha256": "9f584fb156e1f44d6da58dbd67d8e094531336ad2fb861d5c1f0f814f67ce6b5",
+      "derived_from": "KiCad community Package_BGA:TFBGA-256_13x13mm_Layout16x16_P0.8mm",
+      "original_sha256": "4f6cb042e32c58b59db2659494bee2eb4fd9bd411cb5fbb45d06c884bb204ca6",
+      "original_copper_diameter_mm": 0.32,
+      "original_mask_aperture_mm": 0.47,
+      "pad_names_and_coordinates_preserved": true,
+      "A1_top_view_mm": [
+        -6,
+        -6
+      ],
+      "exposed_pad": false,
+      "license_path": "hardware/motion_card/CNC_Motion.pretty/LICENSE.md",
+      "license_sha256": "45d2bce75e5a4208f5afb01b8fb2c406e700371c4fe2b5f5cd5c443d46db4d8f",
+      "process_qualified": false
+    },
+    "model": {
+      "path": "hardware/motion_card/3dmodels/T20F256_source_envelope.wrl",
+      "sha256": "d2610d014e61c32bf5029643a16724285f62e7b6a136663e003277fc8b2ce353",
+      "vrml_unit_mm": 2.54,
+      "vertices": 8,
+      "native_kicad_render_succeeded": true,
+      "render_visually_inspected": true,
+      "manufacturer_step": false,
+      "bounds": {
+        "min_mm": [
+          -6.4999999999994,
+          -6.4999999999994,
+          0.0
+        ],
+        "max_mm": [
+          6.4999999999994,
+          6.4999999999994,
+          1.14000000000052
+        ]
+      },
+      "nominal_xy_only": true,
+      "maximum_package_height_mm": 1.14,
+      "render_path": "tmp/pdfs/motion-card-mechanical/package-geometry-3d.png"
+    },
+    "qualification_open": [
+      "lateral full tolerance envelope",
+      "mask registration and stencil/paste",
+      "ball escape/stack-up/via process",
+      "PDN and thermal layout",
+      "reflow and inspection process",
+      "assembled stand-off and cage collision fit"
+    ]
+  },
+  "oscillator": {
+    "mpn": "ASE-50.000MHZ-L-C-T",
+    "source": "abracon_ase",
+    "body_xy_mm": [
+      3.2,
+      2.5
+    ],
+    "body_xy_tolerance_plus_minus_mm": [
+      0.2,
+      0.2
+    ],
+    "height_max_mm": 1.2,
+    "land_pad_size_mm": [
+      1.3,
+      1.1
+    ],
+    "land_center_spacing_xy_mm": [
+      2.1,
+      1.65
+    ],
+    "pads": {
+      "1": {
+        "x_mm": -1.05,
+        "y_mm": 0.825,
+        "width_mm": 1.3,
+        "height_mm": 1.1
+      },
+      "2": {
+        "x_mm": 1.05,
+        "y_mm": 0.825,
+        "width_mm": 1.3,
+        "height_mm": 1.1
+      },
+      "3": {
+        "x_mm": 1.05,
+        "y_mm": -0.825,
+        "width_mm": 1.3,
+        "height_mm": 1.1
+      },
+      "4": {
+        "x_mm": -1.05,
+        "y_mm": -0.825,
+        "width_mm": 1.3,
+        "height_mm": 1.1
+      }
+    },
+    "functions": {
+      "1": "standby",
+      "2": "ground/case",
+      "3": "output",
+      "4": "Vdd"
+    },
+    "stock_footprint": "Oscillator:Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm",
+    "stock_sha256": "fd7279d6b50d0370d11a93ac2f4e145e58901c4f51109bdb2f06d4c1d10bbe5e",
+    "stock_matches_source": true,
+    "manufacturer_3d_model_retained": false,
+    "source_electrical_footprint_assignment_changed_by_this_task": false
+  },
+  "hb160": {
+    "is1_original": {
+      "card": "02041601101 female angled",
+      "base": "02011601101 male angled",
+      "orthogonal_card_flat_base_axes_compatible": false,
+      "source": "harting_family",
+      "frozen_document_unchanged": true
+    },
+    "proposed_is2_pair": {
+      "card_part": "02011601101",
+      "card_gender": "male",
+      "card_orientation": "angled",
+      "card_termination": "solder/THR",
+      "card_retention_clip": false,
+      "base_part": "02021601201",
+      "base_gender": "female",
+      "base_orientation": "straight",
+      "base_termination": "press-in",
+      "base_fixing_flange": true,
+      "base_tail_lengths_by_row_mm": {
+        "z": 5.0,
+        "a": 4.5,
+        "b": 4.5,
+        "c": 4.5,
+        "d": 5.0
+      },
+      "family": "HARTING har-bus64 IEC61076-4-113",
+      "performance_level": 1,
+      "cycles_min": 500,
+      "hot_plug_allowed": false,
+      "sources": [
+        "harting_family",
+        "harting_exact_female"
+      ],
+      "status": "pair candidate; integrated interface revision and supplier assembly geometry acceptance pending"
+    },
+    "contact_mapping": {
+      "per_connector_count": 160,
+      "rows": [
+        "z",
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "positions": [
+        1,
+        32
+      ],
+      "per_pair_identity": "like-named row/position contacts mate",
+      "frame": "manufacturer board-drilling mounting-side drawing, origin midpoint rowb16/17; xright, ydown",
+      "x_formula_mm": "(16.5 - position) * 2.54",
+      "male_y_mm": {
+        "z": 5.08,
+        "a": 2.54,
+        "b": 0.0,
+        "c": -2.54,
+        "d": -5.08
+      },
+      "female_y_mm": {
+        "z": -5.08,
+        "a": -2.54,
+        "b": -0.0,
+        "c": 2.54,
+        "d": 5.08
+      },
+      "grid_file": "hardware/motion_card/hb160-contact-grid.csv",
+      "grid_sha256": "8330974f84887dbce8cc6fb02a43425a2b3e23a80389b22894ecfe0568b1d7e4",
+      "records": 320,
+      "electrical_net_allocation_closed": false,
+      "native_connector_footprints_created": false,
+      "assembly_view_transform_qualified": false
+    },
+    "male_dimensions": {
+      "body_length_mm": {
+        "nominal": 94.0,
+        "tolerance_plus": 0,
+        "tolerance_minus": 0.2
+      },
+      "signal_position_span_mm": 78.74,
+      "row_span_mm": 10.16,
+      "signal_hole_diameter_drawing_mm": {
+        "nominal": 1.0,
+        "tolerance_plus_minus": 0.1
+      },
+      "mount_hole_pitch_mm": {
+        "nominal": 88.9,
+        "tolerance_plus_minus": 0.1
+      },
+      "mount_hole_diameter_mm": {
+        "nominal": 2.8,
+        "tolerance_plus": 0.1,
+        "tolerance_minus": 0
+      },
+      "mount_hole_center_y_in_grid_mm": 5.08
+    },
+    "female_dimensions": {
+      "body_length_mm": {
+        "nominal": 94.9,
+        "tolerance_plus": 0,
+        "tolerance_minus": 0.2
+      },
+      "signal_position_span_mm": 78.74,
+      "row_span_mm": 10.16,
+      "mount_hole_pitch_mm": {
+        "nominal": 90.0,
+        "tolerance_plus_minus": 0.1
+      },
+      "mount_hole_diameter_mm": {
+        "nominal": 2.8,
+        "tolerance_plus": 0.1,
+        "tolerance_minus": 0
+      },
+      "flange_centerline_datum_mm": {
+        "nominal": 0.3,
+        "tolerance_plus_minus": 0.1
+      },
+      "mount_hole_center_y_in_grid_mm": null,
+      "mount_hole_y_note": "do not snap onto rowb; sign/transform to be checked against exact-part engineering drawing during native footprint acceptance"
+    },
+    "press_in_requirements_retained": {
+      "source": "harting_pressin_2016",
+      "not_final_drill_instructions": true,
+      "pcb_thickness_min_mm": 1.6,
+      "raw_drill_diameter_mm": {
+        "nominal": 1.15,
+        "tolerance_plus_minus": 0.025
+      },
+      "copper_plating_min_um": 25,
+      "finished_hole_AuNi_Ag_chemicalSn_OSP_mm": [
+        1.0,
+        1.1
+      ],
+      "finished_hole_HALSn_mm": [
+        0.94,
+        1.09
+      ],
+      "HALSn_plating_max_um": 15,
+      "exact_part_supplier_and_PCBWay_process_acceptance": false
+    },
+    "mechanical_force_design_bounds": {
+      "insertion_each_max_N": 160,
+      "withdrawal_each_max_N": 120,
+      "simultaneous_two_upper_sum_insertion_N": 320,
+      "simultaneous_two_upper_sum_withdrawal_N": 240,
+      "physical_measurement": false
+    },
+    "length_allocation_proposal": {
+      "chosen_not_manufacturer_centers_mm": [
+        55,
+        165
+      ],
+      "male_edge_margins_mm": [
+        8,
+        8
+      ],
+      "male_interbody_gap_mm": 16,
+      "female_edge_margins_mm": [
+        7.55,
+        7.55
+      ],
+      "female_interbody_gap_mm": 15.1,
+      "proves_only": "nominal body-length feasibility along220mm edge",
+      "cage_fit_proven": false
+    },
+    "preserved_contact_budget": {
+      "available": 320,
+      "used_is1": 272,
+      "spare_is1": 48,
+      "power_contact_continuous_design_A": 0.5,
+      "net_group_assignment_unchanged": true
+    },
+    "qualification_open": [
+      "exact-part supplier envelope/engagement model",
+      "native footprint and mounting-side transforms",
+      "contact-to-net allocation and safe domains",
+      "male solder-hole/annular-ring fab process",
+      "female press-in plated-hole finish/tooling/support",
+      "card-guide/key/lever/captive-screw parts and tolerances",
+      "adjacent card pitch and cage collision",
+      "service force and no-hotplug service procedure"
+    ]
+  },
+  "verification": {
+    "native_kicad10_package_geometry_record": "reports/board-completion-20260930/PACKAGE_GEOMETRY_CHECK.json",
+    "source_pdf_visual_inspection": true,
+    "fpga_ball_map_source_comparison": true,
+    "native_land_pattern_checks": true,
+    "native_model_render_visual_inspection": true,
+    "circuit_ERC_performed_by_this_task": false,
+    "production_board_DRC_performed_by_this_task": false,
+    "target_compilation_performed_by_this_task": false,
+    "FPGA_synthesis_performed_by_this_task": false,
+    "physical_measurements": false,
+    "manufacturing_release": false
+  }
+}

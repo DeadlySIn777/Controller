@@ -1,0 +1,120 @@
+OEA r0.2 - First-article qualification and factory acceptance test
+6 October 2026 | Proposed procedure for quotation and agreement
+
+Test the adapter and its finished harness together. Use the exact released
+revision and record serial number, component substitutions, firmware/profile,
+instruments, supply settings and measured results. Do not connect a moving
+machine during these tests. Driver/motor tests use an isolated bench fixture.
+
+FIRST ARTICLE - COMPLETE BEFORE RELEASING THE REMAINING QUANTITY
+
+1. Inspect and check fit with power disconnected
+Verify all 50 components, polarities, solder joints and header orientation
+against the BOM and assembly drawing. J1/J2 posts point into the host;
+the VM position has no pin or plated hole. Verify switch pad 2 connects to
+pad 1 in the labelled 5V position and to pad 3 in EXT. Confirm break-before-
+make action with an appropriate fixture; never test by hot switching.
+
+Fit the 15.24 x 38.10 mm assembly on the named host model/revision, with
+adjacent slots occupied. Check the 17.78 mm DIR-end extension, bottom SMT,
+solder-tail clearance and access to J3, J4 and SW1. Check the populated
+underside cannot touch host copper/components. Support the adapter while
+operating the terminal or switch. Record dimensions and photographs.
+
+2. Verify the finished harness before any power test
+Check cavity numbering rather than wire colors:
+  J3.1 -> PUL+, DIR+, ENA+ through the factory positive fanout
+  J3.2 -> PUL-     J3.3 -> DIR-     J3.4 -> ENA-
+Test continuity of every intended connection and absence of every unintended
+short. Verify six separate finished driver terminations, durable labels,
+length, splice insulation and retention. Approve crimp/retention and harness
+drawing details before duplicating the first article.
+
+3. Initial electrical checks
+With the host and driver disconnected, check no short between EXT+ and GND,
+COM+ and GND, or adjacent connector contacts. Check polarity and diode paths
+against the schematic; capacitor charging must not be mistaken for a short.
+Verify no adapter power rail is tied to HOST_VIO or the omitted VM position.
+
+Use a current-limited regulated bench supply at J4 and a logic source with
+shared GND. Start with STEP, DIR and EN low. Use an initial 100 mA current
+limit for the unloaded unit; resolve unexpected current or heating before
+raising a limit or attaching loads. Record V_LOGIC, V5_REG, COM+ and input
+current. V_LOGIC is nominally 3.343 V; a proposed steady-state acceptance band
+is 3.20-3.50 V after settling. Any failure requires engineering review.
+
+4. Run the normal supply/selector matrix
+Power off both sources and discharge before each selector change.
+
+Terminal supply    Selector   Required observation
+5.00 V             EXT        COM+ follows external supply; logic stays powered.
+12.00 V            5V         Buck supplies nominal 5 V; logic stays powered.
+24.00 V            5V         Buck supplies nominal 5 V; logic stays powered.
+24.00 V            EXT        COM+ follows external supply; logic stays powered.
+
+For each case, test unloaded and with 20 mA per signal channel, including
+all three channels active together (60 mA total driver-input load). A fixture
+must emulate driver inputs correctly: each load goes between COM+ and its
+MINUS output. Confirm a HIGH controller input turns the corresponding sink
+ON, a LOW turns it OFF, and the other two channels remain independent.
+
+Repeat with both 3.3 V and 5 V host logic. Record loaded COM+ at the far end
+of the supplied harness, ON voltage at each MINUS terminal, OFF leakage and
+actual current. Proposed sink acceptance is <=0.20 V at 20 mA at room
+temperature; establish the full ambient/load limits on the first article.
+The exact drive must receive its required input current and voltage after
+all diode, wire and sink losses. Do not accept '5V' silkscreen or an unloaded
+5 V reading as proof of a compatible driver input.
+
+Qualify supply tolerance and declared ambient limits separately. In 5 V
+EXT mode, test the minimum intended source voltage with the actual harness.
+In buck mode, verify start/restart at the minimum intended 12 V source and
+regulation at the maximum intended 24 V source. The initial terminal target
+is 4.75-26.4 V; that range is not released until these measurements pass.
+Do not rate 5 V terminal input with the selector in 5V mode as supported.
+
+5. Driver timing, enable and sequencing
+Use the exact drive model, revision and its approved 5 V/24 V input setting.
+Measure PUL/DIR/ENA at the driver's terminals with the finished cable. Verify
+input currents, pulse high/low time, DIR setup/hold and EN lead time against
+that manual. Sweep the intended operating rate, then exercise the declared
+maximum under load and confirm commanded counts/direction without missing
+or extra steps. Do not copy a driver's maximum rate onto the adapter without
+measuring the complete interface.
+
+Initialize STEP low before output-enable release. Test adapter-first,
+host-first and simultaneous power-up; host reset; power-down; brownout;
+and loss/reconnection of each supply and signal cable. Record supervisor
+release and any pulse edge or EN transition. An already-HIGH STEP can produce
+an edge when the buffer becomes active. An open/unpowered ENA input may
+enable the drive. Approve the actual startup/disable sequence explicitly;
+the adapter is not an emergency stop or independent machine inhibit.
+
+6. Power/protection and sustained-load qualification
+Check rapid input removal/collapse and stored-charge discharge, including
+the isolated buck input reservoir and the LDO output. Verify no damaging
+reverse current, rail overshoot or backfeed into the host. With suitable
+engineering equipment, qualify reverse-polarity behavior, input ringing,
+fuse clearing/fault energy and the intended supply-lead arrangement.
+Do not conduct destructive fault tests on the customer's controller/drive.
+Measure steady temperatures at worst declared source, ambient and load.
+Record the actual supported limits; component datasheets alone are not an
+assembled-board surge, thermal or safety certification.
+
+FACTORY TEST - EVERY DELIVERED ADAPTER AND HARNESS
+
+After the first article establishes acceptance limits, PCBWay shall:
+  1. Inspect assembly, polarity, header orientation and connector/switch labels.
+  2. Perform the full harness continuity/short, retention and label checks.
+  3. Check unpowered shorts and both selector continuity states.
+  4. Run all four normal supply/selector cases above with the agreed fixture.
+  5. Verify all three channels at 3.3 V and 5 V logic, unloaded and at the
+     agreed load, recording supply current, COM+ and sink voltage.
+  6. Run the agreed pulse/direction/enable pattern at the qualified rate.
+  7. Recheck after final connector-tail trimming and depaneling; attach the
+     unit test record and package the matched board/harness for delivery.
+
+Use the first article's written limits and fixture revision for pass/fail.
+Unspecified or failed results require disposition; do not substitute an ERC,
+DRC, visual inspection or generic power-on test for these functional checks.
+Quote one-time qualification/fixture work separately from recurring unit tests.

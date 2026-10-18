@@ -1,0 +1,17 @@
+# Field converter primary-source review — 2026-09-28
+
+The downloaded bytes, hashes and source URLs are in `sources.json`. Text extracts are convenience copies; the official PDF pages govern. Direct PDF downloads from TDK and Coilcraft returned HTTP 403; those pages were read through web retrieval and are not claimed to have locally archived source bytes.
+
+| Source | Checked use / limitation |
+|---|---|
+| [TI LMR36506 Rev C](https://www.ti.com/lit/ds/symlink/lmr36506.pdf), tables 4, 5-1, 6.1/6.3/6.5, 8-1 | R5 fixed-5V variant, exact nine pins, recommended 22uH / 2x22uF at 1MHz, RT to VCC. Figure 5-1 visually checked. EN leakage limit is at 3.3V only. The fixed-5V initial accuracy test is labelled FPWM although R5 uses PFM at light load; the entire 4.85-5.15V system envelope is not proved here. |
+| Same source, §8.2.2.5 | Input-cap paragraph says 4.7uF but names LMR38010-Q1, unlike table 8-1's 2.2uF. The study uses a conservative 4.7uF effective input-cap gate and flags this inconsistency instead of treating either as a universal guarantee. |
+| [TI TPS2663 Rev G](https://www.ti.com/lit/ds/symlink/tps2663.pdf), §8.3.2 and electrical table | Entry PGOOD is open drain, can enable downstream DC/DC and be biased from protected OUT. The 130ohm sink and +/-150nA leakage are characterized only within the stated powered conditions. No fail-low claim below valid input. |
+| [TI LMR36506 EVM guide SNVU671](https://www.ti.com/lit/ug/snvu671/snvu671.pdf), BOM | Supports selected 100nF input/bootstrap and 1uF VCC capacitor MPNs and the 22uF output family. The proposed circuit is not an EVM performance reproduction. |
+| [Coilcraft LPS6235-223 product page](https://www.coilcraft.com/en-us/products/power/shielded-inductors/ferrite-drum/lps/lps6235/lps6235-223/) | Exact LPS6235-223MRC: 22uH +/-20%, max DCR 0.15ohm, 1.6A at 10% inductance drop and 1.1A for 20C rise at the published 25C conditions. Temperature/fault behavior still needs qualification; Irms is not an absolute current guarantee. |
+| [TDK CGA5L3X7S2A225K160AB](https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA5L3X7S2A225K160AB), [characterization sheet](https://product.tdk.com/system/files/dam/doc/product/capacitor/ceramic/mlcc/charasheet/cga5l3x7s2a225k160ab.pdf) | 2.2uF +/-10%, 100V, X7S +/-22%, 1206. No guaranteed effective capacitance at combined DC bias, temperature and age has been established. |
+| [Murata GCM31CR71A226KE02 family](https://www.murata.com/en-GB/products/productdetail?partno=GCM31CR71A226KE02%23) | 22uF 10V X7R 1206 family and L packaging suffix checked in primary search retrieval; direct page open subsequently returned 404. EVM BOM independently specifies this base family. Current purchasing status and guaranteed bias derating remain unverified. |
+| [Wurth 885012206052](https://www.we-online.com/components/products/datasheet/885012206052.pdf) | 1uF 16V +/-10%, X7R 0603. Direct download returned revision 1.0 dated 2014-11-06; web retrieval showed revision 002.000 dated 2021-01-03. Electrical values used agree; final purchasing package needs the current controlled drawing. |
+| [Vishay CRCW](https://www.vishay.com/docs/20035/dcrcwe3.pdf) | F tolerance +/-1%, K TCR +/-100ppm/K, 0603 voltage 75V. Study conservatively budgets 0.1W at 70C rather than the newer table's 0.125W; enclosure derating and long-term drift remain gates. |
+
+No distributor quotes, component availability promises or physical measurements were made. The exact inductor and IC land patterns still need controlled footprint creation/review.

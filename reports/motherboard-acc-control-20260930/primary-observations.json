@@ -1,0 +1,83 @@
+{
+  "local_ST_raw_downloads": "Timed out or connection reset; no local PDF hash is invented. Official ST familyPDF was successfully read using the web browser tool.",
+  "stm32g031": {
+    "url": "https://www.st.com/resource/en/datasheet/stm32g031j6.pdf",
+    "document": "DS12992Rev4June2025,126pages; coversG031C8/K8 as well asJ6",
+    "facts": {
+      "Tables12_13_14": "Actual LQFP48 and LQFP32 packagepin columns andGPIO alternate mappings independently transcribed for generator and checker. SPI1 slave PA4/NSS,PA5/SCK,PA6/MISO,PA7/MOSI AF0. DO SPI2 master PB8/SCK AF1,PB7/MOSI AF1,PB6/MISO AF4; PB9 softwareCS.",
+      "Table42": "LSI fullrange29.5\u201334kHz; nominal32kHz is not a worstcase limit.",
+      "Table67": "PRdivisor4 andRLR9 gives counted40LSIclocks:1.176\u20131.356ms; additional APB/LSIphase/reset/load propagation is not included or physically measured.",
+      "Table25": "64MHz/Flash/corebaseline ALL peripheralsdisabled,cacheenabled,prefetchdisabled: max6.9mAat85\u00b0C(VDD3.6V),6.7mA25\u00b0C/7.6mA130\u00b0C. Table33 peripherals and ADC/GPIOloads must be added; this is not a fullnode current quote.",
+      "pin_reset_states": "GeneralGPIO analoginput afterreset; PA13SWDIOpullup/PA14SWCLKpulldown exceptions. PC13\u201315 input allocation avoids their3mA/output restriction. PA11/12defaultmapping must not remap onto PA9/10DI/slotpins.",
+      "packages": "STM32G031C8T6 LQFP48body7x7mm0.5mmpitch;K8T6 LQFP32body7x7mm0.8mmpitch. Bothsuffix6industrial -40..85\u00b0Cambient; no highergrade claimed."
+    }
+  },
+  "rm0444": {
+    "url": "https://www.st.com/resource/en/reference_manual/DM00371828-.pdf",
+    "document": "RM0444Rev6 manufacturer-authored reference; officialindexed FLASH_OPTR text and alternate official paths read",
+    "facts": {
+      "NRST_MODE3": "Bidirectional NRST input/output; internalIWDGreset must propagate to the reset buffer/frontend. Inputonlymode1 would hide internal reset at that pin.",
+      "IRHEN1": "Internal reset holder enabled until NRST observedLOW.",
+      "IWDG_SW0": "Hardwarestart required; optionbytes need actual programming/readback verification, not a sourceclaim.",
+      "nBOOT_SEL1_nBOOT0_1": "Use option-controlled mainflash boot; physicalPA14fallbackpulldown retained while SWD fixture may drive clock."
+    }
+  },
+  "an5096": {
+    "url": "https://www.st.com/resource/en/application_note/dm00443870-getting-started-with-stm32g0-series-hardware-development-stmicroelectronics.pdf",
+    "document": "AN5096Rev4 manufacturerapplicationnote, officialindexed text read",
+    "facts": "Local VDD100nF/4.7uF, reset100nF and factorySWDPA13/PA14/NRST/power-return path; actual flashoptions/bootloader/SWDqualification remain."
+  },
+  "murata_4u7": {
+    "old_mpn": "GRM21BR71A475KA73L",
+    "replacement_mpn": "GRM21BR71A475KE51K",
+    "primary_url": "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM21BR71A475KE51-01A-EN_PDF_CERAMICCAPACITORSMD",
+    "primary_file": "sources/GRM21BR71A475KE51.pdf",
+    "primary_sha256": "173f002b244e4027b37fb26fc01193cf05431b5ef51ded8a221c5108913c0abc",
+    "document_date": "2026-06-25",
+    "electrical": {
+      "capacitance_f": 4.7e-06,
+      "tolerance_percent": 10,
+      "rated_v": 10,
+      "temperature": "X7R -55..125C"
+    },
+    "mechanical_mm": {
+      "L": 2,
+      "W": 1.25,
+      "T": 1.25,
+      "dimension_tolerance": 0.15
+    },
+    "packing": {
+      "K": "330mm reel, 10000 pcs; distributor cut tape permitted",
+      "L": "180mm reel, 3000 pcs"
+    },
+    "distributor_observation": {
+      "url": "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR71A475KE51K/16707226",
+      "date": "2026-09-30",
+      "part_status": "Active",
+      "stock": 1068,
+      "cut_tape_MOQ": 1,
+      "USD_price_breaks": {
+        "1": 0.12,
+        "10": 0.066,
+        "50": 0.0456,
+        "100": 0.0394,
+        "500": 0.02904
+      },
+      "reel_MOQ": 10000,
+      "reel_unit_price": 0.01746,
+      "stock_and_price_are_dated_not_guaranteed": true
+    },
+    "obsolete_observation_url": "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR71A475KA73L/2546948",
+    "effective_bias_and_prototype_supply_qualification_complete": false
+  },
+  "ACC_additional_review": {
+    "ST_primary": "https://www.st.com/resource/en/datasheet/stm32g031c8.pdf",
+    "revision": "DS12992 Rev4 June2025",
+    "Table14": "PB13SCK/PB14MISO/PB15MOSI SPI2AF0;PB8SCL/PB9SDA I2C1AF6",
+    "package": "LQFP48 actual pins25/26/27 SPI2;47/48 I2C;48lead .5mmpitch",
+    "DAC80501_primary": "https://www.ti.com/lit/ds/symlink/dac80501.pdf",
+    "DAC_revision": "SBAS794E Aug2023",
+    "readback": "SPI 3wire has no SDO;I2C bidirectionalSDA reads buffer registers;use asyncupdate,not measured VOUT",
+    "local_ST_pdf_saved": false
+  }
+}

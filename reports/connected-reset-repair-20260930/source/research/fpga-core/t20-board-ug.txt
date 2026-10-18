@@ -1,0 +1,1276 @@
+Trion
+® T20 BGA256
+Development Kit User Guide
+T20F256-DK-UG-v1.9
+January 2025
+www.efinixinc.com
+Copyright © 2025. All rights reserved. Efinix, the Efinix logo, the Titanium logo, the Topaz logo, Quantum, Trion, and Efinity are trademarks of Efinix,
+Inc. All other trademarks and service marks are the property of their respective owners. All specifications subject to change without notice.
+
+Contents
+Introduction..................................................................................................................................... 3
+What's in the Box?........................................................................................................................................................... 3
+Download the Efinity
+® Software..................................................................................................................................... 3
+Installing the Linux USB Driver.......................................................................................................................................3
+Installing the Windows USB Drivers..............................................................................................................................4
+Board Functional Description..........................................................................................................5
+Features..............................................................................................................................................................................5
+Overview............................................................................................................................................................................ 6
+Power On...........................................................................................................................................................................7
+Reset................................................................................................................................................................................... 7
+Clock Sources................................................................................................................................................................... 8
+Headers..............................................................................................................................................................................8
+User Outputs...................................................................................................................................................................16
+User Inputs...................................................................................................................................................................... 16
+Installing Standoffs........................................................................................................................17
+Running the Demonstration Design............................................................................................. 17
+Creating Your Own Design........................................................................................................... 18
+Appendix 1: Shared Resources.....................................................................................................19
+Revision History.............................................................................................................................20
+
+Trion T20 BGA256 Development Kit User Guide
+Introduction
+Thank you for choosing the Trion® T20 BGA256 Development Kit (part number:
+T20F256C-DK), which allows you to explore the features of the T20 FPGA.
+Warning:  The board can be damaged without proper anti-static handling.
+What's in the Box?
+•
+Trion® T20 BGA256 Development Board preloaded with a demonstration design
+•
+4 standoﬀs
+•
+4 screws
+•
+3 foot micro-USB cable (type B)
+Note:  Shipout device may vary between C4 and I4.
+Download the Efinity® Software
+To develop your own designs for the T20 device on the board, you must install the Eﬁnity®
+software. You can obtain the software from the Support Center.
+The Eﬁnity® software includes tools to program the device on the board. Refer to the
+Eﬁnity® Software User Guide for information about how to program the device.
+Learn more:  Efinity® documentation is installed with the software (see Help > Documentation) and is also
+available in the Support Center under Documentation.
+Installing the Linux USB Driver
+The following instructions explain how to install a USB driver for Linux operating systems.
+1. Disconnect your board from your computer.
+2. In a terminal, use these commands:
+> sudo <installation directory>/bin/install_usb_driver.sh
+> sudo udevadm control --reload-rules
+> sudo udevadm trigger
+Note:  If your board was connected to your computer before you executed these
+commands, you need to disconnect it, then re-connect it.
+www.efinixinc.com
+3
+
+Trion T20 BGA256 Development Kit User Guide
+Installing the Windows USB Drivers
+Note:  If you have another Efinix board and are using the Trion® T20 BGA256 Development Board, you
+must manage drivers accordingly. Refer to AN 050: Managing Windows Drivers for more information.
+On Windows, you use software from Zadig to install drivers. Download the Zadig software
+(version 2.7 or later) from zadig.akeo.ie. (You do not need to install it; simply run the
+downloaded executable.)
+To install the driver:
+1. Connect the board to your computer with the appropriate cable and power it up.
+2. Run the Zadig software.
+Note:  To ensure that the USB driver is persistent across user sessions, run the
+Zadig software as administrator.
+3. Choose Options > List All Devices.
+4. Repeat the following steps for each interface. The interface names end with (Interface N),
+where N is the channel number.
+•
+Select libusb-win32 in the Driver drop-down list.
+•
+Click Replace Driver.
+5. Close the Zadig software.
+Note:  This section describes how to install the libusb-win32 driver for each interface separately. If you
+have previously installed a composite driver or installed using libusbK drivers, you do not need to update
+or reinstall the driver. They should continue to work correctly.
+www.efinixinc.com
+4
+
+Trion T20 BGA256 Development Kit User Guide
+Board Functional Description
+The Trion® T20 BGA256 Development Board contains a variety of components to help you
+build designs for the Trion® T20 device.
+Figure 1: Trion® T20 BGA256 Development Board Block Diagram
+Features
+•
+Compact design (106.7 mm x 76.2 mm) (4.2" x 3")
+•
+Eﬁnix® T20F256C device in an 256-ball FineLine BGA package
+•
+FTDI FT2232H dual-channel chipset with USB controller
+•
+Winbond 32 Mbit SPI NOR ﬂash memory
+•
+Micro-USB type AB receptacle
+•
+Power:
+— Power source: 5 V 4 A power supply or USB 5 V, 500 mA USB (for low-power
+consumption designs)
+— On-board switching regulators (maximum at 2.0 A) source 3.3 V, 2.5 V, and 1.2 V
+components; one on-board dropout regulator (maximum at 500 mA) sources 1.8 V
+components
+— Selectable 3.3 V, 2.5 V, and 1.8 V VDDIO for T20F256C I/O banks 1D_1E and
+1B_1C
+— Fixed 3.3 V VDDIO for T20F256C I/O banks 1A, 3, and 4
+— 5 V output header to provide power for external devices
+•
+50 MHz and 74.25 MHz oscillators for T20F256C PLL input
+•
+Optional external clock source available through SMA input to drive the T20F256C PLL
+input or clock input pin
+•
+User inputs:
+— 8 LEDs on T20F256C bank 3 for user outputs
+— 3 pushbutton switches (connected to bank 1A I/O pins)
+www.efinixinc.com
+5
+
+Trion T20 BGA256 Development Kit User Guide
+— 3 DIPswitches (connected to bank 3 I/O pins) for user inputs
+•
+3 GPIO headers and 2 LVDS headers to connect to external devices
+•
+Power good and T20F256C conﬁguration done LEDs
+Overview
+The board features the Eﬁnix® T20 programmable device in a 256-ball FBGA package, which
+is fabricated using Eﬁnix® Quantum® technology. The Quantum®-accelerated programmable
+logic and routing fabric is wrapped with an I/O interface in a small footprint package. T20
+devices also include embedded memory blocks and multiplier blocks (or DSP blocks). You
+create designs for the T20 device in the Eﬁnity® software, and then download the resulting
+conﬁguration bitstream to the board using the USB connection.
+Learn more:  For more information on T20 FPGAs, refer to the T20 Data Sheet.
+Figure 2: Trion® T20 BGA256 Development Board Components
+256 Mb SDR SDRAM
+Micro-USB
+Port (CON2)
+50 MHz Oscillator
+GPIO Banks
+1B, 1C (H4)
+Clock Select Header (J3) 
+(On-Board Oscillator or SMA)
+5 V DC Input
+Jack (CON1)
+GPIO Bank 3 (H3)
+FTDI Module
+SMA Clock Input (J5)
+LVDS Receiver (RX)
+& Clock (CON3)
+LVDS Transmitter (TX)
+(CON4)
+5 V Power for
+External Devices
+GPIO Banks
+1D, 1E (H2)
+Power Switch (S2)
+SPI Header (H1)
+JTAG Header (H6)
+CDONE (D1) &
+NSTATUS (D2) LEDs
+User DIPswitches (SW3)
+User Pushbuttons (SW4 - SW6)
+User LEDs (D3 - D10)
+Banks 1B/1C
+Voltage Select (H7)
+Banks 1D/1E
+Voltage Select (H8)
+Trion FPGA
+T20BGA256C
+The FTDI FT2232H module has two channels to support SPI (FTDI interface 0) and
+JTAG (FTDI interface 1) conﬁguration. It receives the T20 conﬁguration bitstream from a
+USB host and writes to the on-board SPI NOR ﬂash memory. After a reset in SPI passive
+mode, the FTDI controller can also write the conﬁguration bitstream directly to the
+FPGA. Additionally, it supports direct JTAG programming mode in which it writes the
+conﬁguration bitstream directly to the FPGA through the JTAG interface.
+Learn more:  Refer to AN 006 Configuring Trion FPGAs for more information.
+www.efinixinc.com
+6
+
+Trion T20 BGA256 Development Kit User Guide
+The SPI NOR ﬂash memory stores the conﬁguration bitstream it receives from the FTDI
+FT2232H module. The T20 device accesses this conﬁguration bitstream when it is in active
+conﬁguration mode (default).
+The SDRAM device provides 256 Mb of memory and has a 16-bit data bus with 4 banks.
+Note:  Although the Trion® T20 BGA256 Development Board has a different power-up sequence, you
+should follow the power-up sequence in the T20 Data Sheet when designing your own board. For
+improved reliability, Efinix® recommends that you use supervisor IC at CRESET_N explained in AN 006
+Configuring Trion FPGAs.
+The board's main power supply is the 5 V DC input. You must use your own DC power
+supply to provide the board with power through the 5 V input jack. The recommended
+power input is a 5 V (4 A maximum) DC power source. You can also power the board
+through the micro USB port for designs with low power consumption (< 500 mA).
+The board regulates down the 5 V DC input using on-board switching regulators to provide
+the necessary voltages for the T20 device, SPI ﬂash memory, SDRAM and on-board
+oscillator.
+Learn more:  Depending on your board revision, refer to either the Trion T20 BGA256 (Rev. BBA)
+Development Board Schematics and BOM or Trion T20 BGA256 (Rev. 3) Development Board Schematics
+and BOM for more information about the components used in the Trion® T20 BGA256 Development
+Board.
+Power On
+To turn on the development board, turn on switch SW2. Upon power-up, the 5 V DC power
+supply or micro-USB power is input to the on-board regulators through 5 V input jack
+(CON1) to generate the required 3.3 V, 2.5 V, 1.8 V, and 1.2 V for components on the board.
+When these voltages are up and stable, the board asserts a PWR OK signal (pulled high) from
+the components' respective regulators. When the board asserts the PWR OK signal, a green
+LED (D105) turns on, giving you a visual conﬁrmation that the power supplies on the board
+are up and stable.
+Note:  The micro-USB power supply powers up the board with limited current. Efinix recommends that
+you use an external DC 5 V DC supply if your user design requires high power.
+Reset
+The T20F256C device is typically brought out of reset with the CRESET signal. Upon power
+up, the T20F256C device is held in reset until CRESET toggles high-low-high.
+Note:  You can manually assert the high-low-high transition with pushbutton switch SW1.
+CRESET has a pull-up resistor. When you press SW1, the board drives CRESET low; when
+you release SW1, the board drives CRESET high. Thus, a single press of SW1 provides the
+required high-low-high transition.
+After toggling CRESET, the T20F256C device goes into conﬁguration mode and reads the
+device conﬁguration bitstream from the ﬂash memory. When conﬁguration completes
+successfully, the device drives the CDONE signal high. CDONE is connected to a green LED
+(D1), which turns on when the T20F256C device enters user mode.
+www.efinixinc.com
+7
+
+Trion T20 BGA256 Development Kit User Guide
+Clock Sources
+Two on-board oscillators, 50 MHz and 74.25 MHz, are available to drive the T20F256C PLL
+input pin and clock input. Alternatively, you can disable the 50 MHz oscillator and use an
+external clock source through the SMA input (J5). Set jumper J3 to use the 50 MHz or SMA
+input as the clock source.
+Clock Source
+PLL Input Pin
+Clock Input Pin
+50 MHz oscillator or SMA input
+GPIOR_157_PLLIN
+GPIOR_125_CLK10
+74.25 MHz oscillator
+GPIOL_75_PLLIN1
+–
+You can supply a clock to the PLL or clock network in the FPGA through a board header.
+Refer to H2, H3, and H4 under Headers on page 8 for the dedicated clock pins.
+Headers
+The board contains a variety of headers to provide power, inputs, and outputs, and to
+communicate with external devices or boards.
+Table 1: Trion® T20 BGA256 Development Board Headers
+Reference Designator
+Description
+CON1
+5 V DC power supply input jack
+CON2
+Micro-USB Type-AB receptacle
+CON3
+34-pin header for LVDS receiver (RX) and LVDS receiver clock (CLK)
+CON4
+34-pin header for LVDS transmitter (TX)
+H1
+SPI header
+H2
+36-pin header for bank 1D and 1E I/O
+H3
+36-pin header for bank 3 I/O
+H4
+36-pin header for bank 1B and 1C I/O
+H6
+JTAG header
+H7
+Selects 3.3 V, 2.5 V, or 1.8 V power for banks 1B and 1C
+H8
+Selects 3.3 V, 2.5 V, or 1.8 V power for banks 1D and 1E
+J1
+2-pin header for 5 V output
+J3
+3-pin header to select whether to use the on-board 50 MHz oscillator or SMA input
+from external clock source
+J5
+SMA connector for external 3.3 V clock source input
+Header CON1 (5 V Power)
+CON1 is a 5 V DC power supply input jack. CON1 supplies power to regulators on the
+board that power the T20F256C FPGA. The maximum current supply to this input jack is
+4 A.
+www.efinixinc.com
+8
+
+Trion T20 BGA256 Development Kit User Guide
+Header CON2 (USB Power)
+CON2, a micro-USB type B socket, is the interface between the board and your computer for
+power and communication. Connect the micro-USB cable for conﬁguring T20F256C FPGA
+and NOR ﬂash. The board supports three diﬀerent conﬁguration modes: SPI passive mode,
+SPI active mode, and JTAG mode. The USB cable provides a maximum of 500 mA.
+Headers CON3 and CON4 (LVDS)
+CON3 and CON4 contain the LVDS signals. CON3 has 13 dedicated LVDS RX channels,
+and one dedicated LVDS RX clock. CON4 has 13 dedicated LVDS TX channels. You can use
+LVDS pins for use as GPIO.
+Learn more:  Refer to the Trion Interfaces User Guide for instructions on use the LVDS pins as GPIO.
+Figure 3: LVDS Headers CON3 and CON4
+LVDS RX
+Clock Pin
+For the differential pair: 
+Left pin is the P channel
+Right pin is the N channel
+RX Channel
+TX Channel
+www.efinixinc.com
+9
+
+Trion T20 BGA256 Development Kit User Guide
+Table 2: CON3 Pin Assignments
+Pin
+Number
+T20F256C
+Pin Name
+Description
+Pin
+Number
+T20F256C
+Pin Name
+Description
+1
+GPIOB_CLKN0
+2
+GPIOB_RXN06
+3
+GPIOB_CLKP0
+Dedicated LVDS RX
+clock
+4
+GPIOB_RXP06
+Dedicated LVDS RX
+Channel 6
+5
+GND
+Ground
+6
+GND
+Ground
+7
+GPIOB_RXN12
+8
+GPIOB_RXN05
+9
+GPIOB_RXP12
+Dedicated LVDS RX
+Channel 12
+10
+GPIOB_RXP05
+Dedicated LVDS RX
+Channel 5
+11
+GPIOB_RXN11
+12
+GPIOB_RXN04
+13
+GPIOB_RXP11
+Dedicated LVDS RX
+Channel 11
+14
+GPIOB_RXP04
+Dedicated LVDS RX
+Channel 4
+15
+GND
+Ground
+16
+GND
+Ground
+17
+GPIOB_RXN10
+18
+GPIOB_RXN03
+19
+GPIOB_RXP10
+Dedicated LVDS RX
+Channel 10
+20
+GPIOB_RXP03
+Dedicated LVDS RX
+Channel 3
+21
+GPIOB_RXN09
+22
+GPIOB_RXN02
+23
+GPIOB_RXP09
+Dedicated LVDS RX
+Channel 9
+24
+GPIOB_RXP02
+Dedicated LVDS RX
+Channel 2
+25
+GND
+Ground
+26
+GND
+Ground
+27
+GPIOB_RXN08
+28
+GPIOB_RXN01
+29
+GPIOB_RXP08
+Dedicated LVDS RX
+Channel 8
+30
+GPIOB_RXP01
+Dedicated LVDS RX
+Channel 1
+31
+GPIOB_RXN07
+32
+GPIOB_RXN00
+33
+GPIOB_RXP07
+Dedicated LVDS RX
+Channel 7
+34
+GPIOB_RXP00
+Dedicated LVDS RX
+Channel 0
+www.efinixinc.com
+10
+
+Trion T20 BGA256 Development Kit User Guide
+Table 3: CON4 Pin Assignments
+Pin
+Number
+T20F256C
+Pin Name
+Description
+Pin
+Number
+T20F256C
+Pin Name
+Description
+1
+GPIOB_TXN12
+2
+GPIOB_TXN06
+3
+GPIOB_TXP12
+Dedicated LVDS TX
+Channel 12
+4
+GPIOB_TXP06
+Dedicated LVDS TX
+Channel 6
+5
+GND
+6
+GND
+Ground
+7
+GND
+8
+GPIOB_TXN05
+9
+GND
+Ground
+10
+GPIOB_TXP05
+Dedicated LVDS TX
+Channel 5
+11
+GPIOB_TXN11
+12
+GPIOB_TXN04
+13
+GPIOB_TXP11
+Dedicated LVDS TX
+Channel 10
+14
+GPIOB_TXP04
+Dedicated LVDS TX
+Channel 4
+15
+GND
+Ground
+16
+GND
+Ground
+17
+GPIOB_TXN10
+18
+GPIOB_TXN03
+19
+GPIOB_TXP10
+Dedicated LVDS TX
+Channel 9
+20
+GPIOB_TXP03
+Dedicated LVDS TX
+Channel 3
+21
+GPIOB_TXN09
+22
+GPIOB_TXN02
+23
+GPIOB_TXP09
+Dedicated LVDS TX
+Channel 8
+24
+GPIOB_TXP02
+Dedicated LVDS TX
+Channel 2
+25
+GND
+Ground
+26
+GND
+Ground
+27
+GPIOB_TXN08
+28
+GPIOB_TXN01
+29
+GPIOB_TXP08
+Dedicated LVDS TX
+Channel 7
+30
+GPIOB_TXP01
+Dedicated LVDS TX
+Channel 1
+31
+GPIOB_TXN07
+32
+GPIOB_TXN00
+33
+GPIOB_TXP07
+Dedicated LVDS TX
+Channel 6
+34
+GPIOB_TXP00
+Dedicated LVDS TX
+Channel 0
+Header H1 (SPI)
+H1 is a SPI interface that you can use to conﬁgure the on-board NOR ﬂash or T20F256C
+FPGA.
+Table 4: H1 Pin Assignment
+Pin Number
+Signal Name
+Description
+T20F256C Pin Name
+1
+CRESET_B
+Configuration reset pin (active low)
+CRESET_N
+2
+SPI_CLK
+SPI configuration clock
+GPIOL_01_CCK
+3
+CDONE
+Configuration done status pin
+CONDONE
+4
+SPI_MOSI
+SPI serial data output
+GPIOL_08_CDI0
+5
+HOLD
+SPI hold pin (active low)
+–
+6
+SPI_MISO
+SPI serial data input
+GPIOL_09_CDI1
+7
+3V3
+3.3 V power supply
+–
+8
+SPI_SS
+SPI slave select pin (active low)
+GPIOL_00_SS
+9
+GND
+Ground
+–
+10
+FT_RST
+Reset pin for on board FTDI FT2232
+chipset (active low)
+–
+www.efinixinc.com
+11
+
+Trion T20 BGA256 Development Kit User Guide
+Headers H2, H3, and H4 (GPIO)
+The board headers H2, H3, and H4 contain the Trion T20 Development Board GPIO pins.
+•
+H2 (36 pins) links to bank 1D and 1E GPIO pins. You select the VCCIO with the pins on
+header H8. Refer to Headers H7 and H8 on page 15 for details.
+•
+H3 (32 pins) links to bank 3 GPIO pins. VCCIO is ﬁxed at 3.3 V.
+•
+H4 (36 pins) links to bank 1B and 1C GPIO pins. You select the VCCIO with the pins on
+header H7. Refer to Headers H7 and H8 on page 15 for details.
+Table 5: H2 Pin Assignments
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+1
+VCCIO1D_1E
+–
+2
+VCCIO1D_1E
+–
+3
+GPIOL_74(1)
+No
+4
+GPIOL_73
+No
+5
+GPIOL_72
+No
+6
+GPIOL_71
+No
+7
+GPIOL_70(2)
+No
+8
+GPIOL_69(2)
+No
+9
+GPIOL_68
+No
+10
+GPIOL_67
+No
+11
+GPIOL_66
+No
+12
+GPIOL_65
+No
+13
+GPIOL_64
+No
+14
+GPIOL_63
+No
+15
+GPIOL_62
+No
+16
+–
+–
+17
+GPIOL_60
+Yes
+18
+GPIOL_61
+Yes
+19
+GPIOL_58
+Yes
+20
+GPIOL_59
+Yes
+21
+GPIOL_56
+Yes
+22
+GPIOL_57
+Yes
+23
+GPIOL_54
+Yes
+24
+GPIOL_55
+Yes
+25
+GPIOL_52
+Yes
+26
+GPIOL_53
+Yes
+27
+GPIOL_50
+Yes
+28
+GPIOL_51
+Yes
+29
+GPIOL_48
+Yes
+30
+GPIOL_49
+Yes
+31
+GPIOL_46
+Yes
+32
+GPIOL_47
+Yes
+33
+GPIOL_44
+Yes
+34
+GPIOL_45
+Yes
+35
+GND
+–
+36
+GND
+–
+(1) Dedicated PLL input pin that supplies the clock to FPGA's PLL.
+(2) If you are using multi-image configuration, GPIOL_69 and GPIOL_70 are the CBSEL[1] and CBSEL[0] pins that select the
+image to use. For more information, refer to AN 006: Configuring Trion FPGAs
+www.efinixinc.com
+12
+
+Trion T20 BGA256 Development Kit User Guide
+Table 6: H3 Pin Assignments
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+1
+3V3
+–
+2
+3V3
+–
+3
+GPIOR_76(1)
+No
+4
+GPIOR_77(1)
+No
+7
+GPIOR_78
+No
+8
+GPIOR_79
+No
+9
+–
+–
+10
+GPIOR_81
+No
+5
+GPIOR_104
+Yes
+6
+GPIOR_105
+Yes
+11
+GPIOR_110
+Yes
+12
+GPIOR_111
+Yes
+13
+GPIOR_113
+Yes
+14
+GPIOR_117
+Yes
+15
+GPIOR_118
+Yes
+16
+GPIOR_120(3)
+Yes
+17
+GPIOR_121(3)
+Yes
+18
+GPIOR_122(3)
+Yes
+19
+GPIOR_123(3)
+Yes
+20
+GPIOR_124(3)
+Yes
+21
+GPIOR_126(3)
+Yes
+22
+GPIOR_127(3)
+Yes
+23
+GPIOR_149
+Yes
+24
+GPIOR_150
+Yes
+25
+GPIOR_151
+Yes
+26
+GPIOR_153
+Yes
+27
+GPIOR_154
+Yes
+28
+GPIOR_155
+Yes
+29
+GPIOR_156
+Yes
+30
+GPIOR_158
+Yes
+31
+GND
+–
+32
+GND
+–
+(3) Dedicated clock input pin that supplies the clock to global clock network.
+www.efinixinc.com
+13
+
+Trion T20 BGA256 Development Kit User Guide
+Table 7: H4 Pin Assignments
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+Pin Number
+T20F256C
+Pin Name
+DDIO Mode
+Supported
+1
+VCCIO1B_1C
+–
+2
+VCCIO1B_1C
+–
+3
+GPIOL_43
+Yes
+4
+GPIOL_11
+Yes
+5
+GPIOL_42
+Yes
+6
+GPIOL_12
+Yes
+7
+GPIOL_41
+Yes
+8
+GPIOL_13
+Yes
+9
+GPIOL_40
+Yes
+10
+GPIOL_14
+Yes
+11
+GPIOL_39
+Yes
+12
+GPIOL_15
+Yes
+13
+GPIOL_37
+Yes
+14
+GPIOL_16
+Yes
+15
+GPIOL_36
+Yes
+16
+GPIOL_18
+Yes
+17
+GPIOL_35
+Yes
+18
+GPIOL_19
+Yes
+19
+GPIOL_34
+Yes
+20
+GPIOL_20
+Yes
+21
+GPIOL_33
+Yes
+22
+GPIOL_21
+Yes
+23
+GPIOL_32
+Yes
+24
+GPIOL_22
+Yes
+25
+GPIOL_31(3)
+Yes
+26
+GPIOL_23
+Yes
+27
+GPIOL_30(3)
+Yes
+28
+GPIOL_24(3)
+Yes
+29
+GPIOL_29(3)
+Yes
+30
+GPIOL_25(3)
+Yes
+31
+GPIOL_28(3)
+Yes
+32
+GPIOL_26(3)
+Yes
+33
+GPIOL_27(3)
+Yes
+34
+GND
+–
+35
+GND
+–
+36
+GND
+–
+Header H6
+Header H6 is the JTAG interface. You can access the T20F256C JTAG pins through this
+header.
+Pin Number
+Signal Name
+Description
+1
+3V3
+3.3 V power supply
+2
+TDO
+JTAG data output signal
+3
+TDI
+JTAG data input signal
+4
+TCK
+JTAG clock signal
+5
+FT_RST
+Reset pin for on board FTDI FT2232 module
+(active low)
+6
+TMS
+JTAG TMS mode select signal
+7
+GND
+Ground
+8
+GND
+Ground
+www.efinixinc.com
+14
+
+Trion T20 BGA256 Development Kit User Guide
+Headers H7 and H8
+H7 and H8 are 6-pin headers. You use a shunt across 2 pins to select 3.3 V, 2.5 V, or 1.8 V
+for the T20F256C bank VCCIO1B_1C and VCCIO1D_1E, respectively, from the on-board
+regulators.
+By default, the board ships with a shunt connecting pins 5 and 6 to supply 3.3 V.
+Table 8: Voltage Selection for VCCIO1B_1C and VCCIO1D_1E
+Shunt
+VCCIO1B_1C (H7)
+VCCIO1D_1E (H8)
+Connect pins 1 and 2
+1.8 V
+1.8 V
+Connect pins 3 and 4
+2.5 V
+2.5 V
+Connect pins 5 and 6
+3.3 V (default)
+3.3 V (default)
+CAUTION:  Only select one voltage at a time. Installing more than one shunt on H7 or H8 may cause
+contention.
+Header J1
+J1 is a 2-pin header that provides 5 V output as a power source for the external devices that
+interface with the development board. The 5 V DC power supply from header CON1
+supplies this 5 V output.
+Table 9: J1 Pin Assignments
+Pin Number
+Signal
+1
+5V
+2
+GND
+Note:  If you are supplying power to the board using the micro-USB cable only, limited power is available
+(<500 mA).
+Headers J3 and J5
+J3 is a 3-pin header used to select the source for the T20F256C clock input and PLL input.
+Drive a 3.3 V clock source input into the SMA connector, J5, if you are using the external
+clock source option.
+Table 10: Clock Selection Pin Assignments
+Pin Number
+Signal
+1
+50 MHz on-board oscillator
+2
+GPIOR_125_CLK10 and GPIOR_157_PLLN
+3
+External clock source from SMA input J5
+•
+A shunt connecting J3 pins 1 and 2 selects the 50 MHz on-board oscillator (default).
+•
+A shunt connecting J3 pins 2 and 3 selects the clock source from SMA input J5.
+www.efinixinc.com
+15
+
+Trion T20 BGA256 Development Kit User Guide
+User Outputs
+The board has 8 green user LEDs that are connected to I/O pins in T20F256C banks 1A/1B.
+By default, the T20F256C I/O connected to these LEDs have a pull-up resistor that turns the
+LEDs oﬀ; to turn a given LED on, pull the corresponding I/O signal low.
+Table 11: User Outputs
+Reference Designator
+T20F256C Pin Name
+Active
+D3
+GPIOR_104
+Low
+D4
+GPIOR_105
+Low
+D5
+GPIOR_117
+Low
+D6
+GPIOR_118
+Low
+D7
+GPIOR_153
+Low
+D8
+GPIOR_154
+Low
+D9
+GPIOR_155
+Low
+D10
+GPIOR_156
+Low
+User Inputs
+The board has 3 pushbutton switches that you can use as inputs to the T20F256C device. The
+T20F256C bank 1A I/O signals connected to these switches have a pull-up resistor. When
+you press the switch, the signal drives low, indicating user input.
+User Pushbuttons
+Table 12: User Pushbuttons
+Reference Designator
+T20F256C Pin Name
+Active
+SW4
+GPIOL_02
+Low
+SW5
+GPIOL_04
+Low
+SW6
+GPIOL_05
+Low
+User DIPswitches
+Table 13: User DIPswitches
+Reference Designator
+T20F256C Pin Name
+Off (Default)
+On
+SW3.1
+GPIOR_128
+Low
+High
+SW3.2
+GPIOR_129
+Low
+High
+SW3.3
+GPIOR_130
+Low
+High
+www.efinixinc.com
+16
+
+Trion T20 BGA256 Development Kit User Guide
+Installing Standoffs
+Before using the board, attach the standoﬀs with the screws (M3 size) provided in the kit.
+Warning:  You can damage the board if you over tighten the screws. Tighten all screws to a torque
+between 4 ± 0.5 kgf/cm and 5 ± 0.5 kgf/cm.
+Running the Demonstration Design
+Eﬁnix® preloads the Trion® T20 BGA256 Development Board with a demonstration design
+that operates the LEDs. The board receives power through USB cable. To run the design:
+1. Connect the 5 V DC power source or USB cable to the board and to your computer.
+2. Turn on the power switch (SW2). LED D105 (PWR OK) turns on, indicating that the
+board is receiving power correctly.
+Note:  The Trion® T20 BGA256 Development Kit does not include a DC power
+adapter.
+•
+While conﬁguration is in process, the conﬁguration done LED D1 (CDONE) turns
+OFF to indicate the device is in conﬁguration mode.
+•
+At the same time, the LED D2 (NSTATUS) turns ON to indicate there is no
+conﬁguration error.
+•
+When conﬁguration completes, the conﬁguration done LED (D1) turns on again. Four
+green LEDs (D3 - D10) turn on, sweeping from D3 to D10 in ascending order.
+Note:  If LED D105 does not turn off, the board is not receiving power correctly.
+3. Press and hold pushbutton SW4. The LEDs blink alternately between group 1 (D3, D5,
+D7, and D9) and group 2 (D4, D6, D8, and D10).
+4. Press and hold pushbutton SW5. The LEDs all blink on and oﬀ alternatively.
+5. Press and hold pushbutton SW6. The LEDs sweep in backwards order from D10 to D3.
+Figure 4: Running the Demonstration Design
+Connect a power
+cable to the board
+and your computer
+Turn on the 
+power switch
+1
+2
+PWR OK LED D105
+Press and hold
+pushbutton SW4
+3
+Press and hold
+pushbutton SW5
+4
+Press and hold
+pushbutton SW6
+5
+LEDs (D3 - D10)
+CDONE LED (D1)
+NSTATUS LED (D2)
+www.efinixinc.com
+17
+
+Trion T20 BGA256 Development Kit User Guide
+Creating Your Own Design
+The Trion® T20 BGA256 Development Board allows you to create and explore designs for
+the T20 device. Eﬁnix® provides example code and designs to help you get started:
+•
+Our Support Center includes examples targeting the board.
+•
+The Eﬁnity software includes also example designs that you can use as a starting point for
+your own project, and includes a step-by-step tutorial.
+•
+AN 027: Using the Raspberry Pi to HDMI Example Designs (T120 BGA576) includes
+example designs with additional features for Trion® T20 BGA256 Development Board.
+www.efinixinc.com
+18
+
+Trion T20 BGA256 Development Kit User Guide
+Appendix 1: Shared Resources
+Some of the resources available on the Trion® T20 BGA256 Development Board are
+connected to more than one I/Os. You need to ensure there are no overlapping assignments
+when using these resources. The following table lists the resources shared by more than one
+I/Os. You can refer to this table to help you plan the resources available in the Trion® T20
+BGA256 Development Board
+Note:  Resources that are not listed are only available from one I/O (see Headers on
+page 8).
+Table 14: Trion® T20 BGA256 Development Board Shared Resources
+<header name>.<pin name/number>
+Resource
+Connection 1
+Connection 2
+GPIOR_104
+H3.5
+LED.D3
+GPIOR_105
+H3.6
+LED.D4
+GPIOR_117
+H3.14
+LED.D5
+GPIOR_118
+H3.15
+LED.D6
+GPIOR_153
+H3.26
+LED.D7
+GPIOR_154
+H3.27
+LED.D8
+GPIOR_155
+H3.28
+LED.D9
+GPIOR_156
+H3.29
+LED.D10
+www.efinixinc.com
+19
+
+Trion T20 BGA256 Development Kit User Guide
+Revision History
+Table 15: Revision History
+Date
+Version
+Description
+January 2025
+1.9
+Note added for variations in box content. (DOC-2340)
+April 2023
+1.8
+Removed MIPI and LVDS Expansion Daughter Card
+section that was mistakenly added.
+Corrected board rev. to BBA.
+February 2023
+1.7
+Added pointer to schematics for board version 3.
+(DOC-)
+November 2022
+1.6
+Added link to AN 050: Managing Windows Drivers in
+Installing the Windows USB Drivers topic.
+September 2022
+1.5
+Updated Installing Windows Driver.
+June 2022
+1.4
+Added Appendix 1: Shared resources.
+December 2021
+1.3
+Corrected the user DIPswitch pin names.
+September 2021
+1.2
+Added USB driver installation topics. (DOC-463)
+February 2021
+1.1
+Added note about referring to the power-up
+sequence in the data sheet when designing a board
+and recommending supervisor IC for CRESET_N
+(DOC-388).
+February 2019
+1.0
+Initial release.
+www.efinixinc.com
+20

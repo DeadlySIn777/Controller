@@ -1,0 +1,5312 @@
+{
+ "spec_revision": "IS-1",
+ "section": "03-terminals-and-allocations",
+ "date": "2026-09-28",
+ "status": "Interface specification IS-1 (frozen revision for Codex hardware and Claude implementation). Design data only: not implemented, not measured, not ready for manufacture.",
+ "evidence_classes": {
+  "source_inspection": "Reading repository and Codex files",
+  "datasheet": "Manufacturer/distributor data read on 28 Sep 2026",
+  "arithmetic": "Derived numbers",
+  "proposal": "Engineering choice made under the user's delegated authority, not yet built"
+ },
+ "naming": "0-based channel names (M0-M11, ENC0-ENC11, DI0-DI23, DO0-DO15) identical on silkscreen, UI, HAL and CNC1",
+ "cnc1_field_note": "CNC1 field names resolve to spec/protocol.json: CMD./STS./EVT. names are frame 'logical' names (with ' bit n' for one bit of a mask), TEL. names are entries of telemetry_map (card data mirrored through the FPGA), HOST. names are entries of host_sources (host I2C, 1-Wire, tty, SocketCAN, sysfs; never CNC1). tools/interface_spec_validate.py checks every name",
+ "hal_note": "HAL pin names resolve to hal_pins in spec/protocol.json (section 01 governs the names)",
+ "codex_ball_source": "Codex hardware/fpga_core/pin-allocation.json, candidate minimum8_expand12_t20f256, sha256 24d4f7a4...; status candidate_not_vendor_fitted (source inspection)",
+ "configurations": [
+  {
+   "id": "A_router_3axis_gantry",
+   "title": "3-axis mill/router, dual-motor Y gantry with independent homing, 5 motors, ATC, drawbar, tool sensor, coolant, lube, spindle run/dir/ready/fault, Z brake, pendant",
+   "hardware": "Standard 8-motor controller (no expansion)",
+   "interpretation": "Five motors = X, Y1, Y2 (gantry pair, squared by independent home switches and a negative HOME_SEQUENCE), Z, and an ATC carousel stepper driven from HAL as an indexer. If the machine instead has dual X and dual Y (X1,X2,Y1,Y2,Z) it also fits (5 of 8 motors).",
+   "linuxcnc_mapping": "trivkins coordinates=XYYZ kinstype=BOTH; [KINS]JOINTS=5 with motmod num_extrajoints=1; joints 0-3 -> M0-M3; M4 carousel = extra joint 4 driven through joint.4.posthome-cmd by the carousel component after homing",
+   "assignments": [
+    {
+     "function": "X joint",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.0.position-fb",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Y1 joint (gantry left)",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.1.position-fb",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Y2 joint (gantry right)",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.2.position-fb",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Z joint",
+     "resource_class": "motor",
+     "channel": 3,
+     "terminal": "XM3.1-14",
+     "hal": {
+      "joint": 3,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.3.position-fb",
+      "targets": [
+       "cnc1.3.position-cmd <- joint.3.motor-pos-cmd",
+       "cnc1.3.enable <- joint.3.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "ATC carousel stepper (HAL indexer)",
+     "resource_class": "motor",
+     "channel": 4,
+     "terminal": "XM4.1-14",
+     "hal": {
+      "joint": 4,
+      "axis": "-",
+      "extra_joint": true,
+      "pos_fb": "cnc1.4.position-fb",
+      "targets": [
+       "cnc1.4.position-cmd <- joint.4.motor-pos-cmd",
+       "cnc1.4.enable <- joint.4.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Home X",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Y1",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Y2",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Z",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.3.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit X (both ends, NC series)",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y1",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y2",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "joint.2.neg-lim-sw-in",
+       "joint.2.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Z",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "joint.3.neg-lim-sw-in",
+       "joint.3.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "ATC carousel home",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "joint.4.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "ATC cover open confirm",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-00"
+      ]
+     }
+    },
+    {
+     "function": "ATC cover closed confirm",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "motion.digital-in-01"
+      ]
+     }
+    },
+    {
+     "function": "Drawbar clamped",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "motion.digital-in-02"
+      ]
+     }
+    },
+    {
+     "function": "Drawbar released",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-03"
+      ]
+     }
+    },
+    {
+     "function": "Air pressure OK",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "motion.digital-in-04"
+      ]
+     }
+    },
+    {
+     "function": "Lube level/pressure OK",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "motion.digital-in-05"
+      ]
+     }
+    },
+    {
+     "function": "Spindle ready / at speed (VFD relay)",
+     "resource_class": "di",
+     "channel": 15,
+     "terminal": "XDI1.8",
+     "hal": {
+      "targets": [
+       "spindle.0.at-speed"
+      ]
+     }
+    },
+    {
+     "function": "Spindle fault (VFD relay)",
+     "resource_class": "di",
+     "channel": 16,
+     "terminal": "XDI2.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-06"
+      ]
+     }
+    },
+    {
+     "function": "Enclosure door closed (status, not safety)",
+     "resource_class": "di",
+     "channel": 17,
+     "terminal": "XDI2.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-07"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 18,
+     "terminal": "XDI2.3",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 19,
+     "terminal": "XDI2.4",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "Coolant level OK",
+     "resource_class": "di",
+     "channel": 20,
+     "terminal": "XDI2.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-08"
+      ]
+     }
+    },
+    {
+     "function": "Dust collector running",
+     "resource_class": "di",
+     "channel": 21,
+     "terminal": "XDI2.6",
+     "hal": {
+      "targets": [
+       "motion.digital-in-09"
+      ]
+     }
+    },
+    {
+     "function": "Touch probe",
+     "resource_class": "probe",
+     "channel": 0,
+     "terminal": "XPR.1",
+     "hal": {
+      "targets": [
+       "or2.probe.in0 <- cnc1.probe.0.in"
+      ]
+     }
+    },
+    {
+     "function": "Tool length sensor",
+     "resource_class": "probe",
+     "channel": 1,
+     "terminal": "XPR.4",
+     "hal": {
+      "targets": [
+       "or2.probe.in1 <- cnc1.probe.1.in"
+      ]
+     }
+    },
+    {
+     "function": "Spindle forward/run (VFD input via interposing relay or VFD 24 V input)",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.forward"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Spindle reverse/dir",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.reverse"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Drawbar release valve (interlocked: spindle stopped)",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle cone air blast",
+     "resource_class": "do",
+     "channel": 3,
+     "terminal": "XDO0.4",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-01"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "ATC cover valve",
+     "resource_class": "do",
+     "channel": 4,
+     "terminal": "XDO0.5",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-02"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Coolant flood (pump contactor coil relay)",
+     "resource_class": "do",
+     "channel": 5,
+     "terminal": "XDO0.6",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "iocontrol.0.coolant-flood"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Coolant mist valve",
+     "resource_class": "do",
+     "channel": 6,
+     "terminal": "XDO0.7",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "iocontrol.0.coolant-mist"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Lube pump (through an interposing relay; the pump start current is on the relay contact)",
+     "resource_class": "do",
+     "channel": 7,
+     "terminal": "XDO0.8",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-03"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Z brake release (coil must be <= 0.5 A continuous, else interposing relay)",
+     "resource_class": "do",
+     "channel": 8,
+     "terminal": "XDO1.1",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.3.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Dust collector (contactor relay)",
+     "resource_class": "do",
+     "channel": 9,
+     "terminal": "XDO1.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-04"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Dust boot lift valve",
+     "resource_class": "do",
+     "channel": 10,
+     "terminal": "XDO1.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-05"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Work light",
+     "resource_class": "do",
+     "channel": 11,
+     "terminal": "XDO1.4",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-06"
+     },
+     "peak_a": 0.3,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Stack light green",
+     "resource_class": "do",
+     "channel": 12,
+     "terminal": "XDO1.5",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-07"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Stack light amber",
+     "resource_class": "do",
+     "channel": 13,
+     "terminal": "XDO1.6",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-08"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Stack light red",
+     "resource_class": "do",
+     "channel": 14,
+     "terminal": "XDO1.7",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-09"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Spindle speed 0-10 V to VFD",
+     "resource_class": "ao",
+     "channel": 0,
+     "terminal": "XAO.1-2",
+     "hal": {
+      "writer": "spindle.0.speed-out-abs (scaled to volts)"
+     }
+    },
+    {
+     "function": "Drive STO feedback",
+     "resource_class": "sto_fb",
+     "channel": 0,
+     "terminal": "XS1.8"
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Y",
+     "resource_class": "pendant_sel",
+     "channel": 1,
+     "terminal": "XH2.2",
+     "hal": {
+      "axis": "Y"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 8,
+     "used": 5,
+     "spare": 3
+    },
+    "encoder": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "di": {
+     "capacity": 24,
+     "used": 22,
+     "spare": 2
+    },
+    "do": {
+     "capacity": 16,
+     "used": 15,
+     "spare": 1
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 2,
+     "spare": 0
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 6,
+     "spare": 4
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 0.9,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0.3,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [
+    "ENC0 spindle encoder for rigid tapping (fits: 4 encoders free)",
+    "RS-485 Modbus VFD speed/direction plus DO0 as the hardware run-enable (fits; Modbus is never the only run path)"
+   ],
+   "variants_not_fitting": [],
+   "safety_note": null,
+   "hal_map": {
+    "kinematic_joints": 4,
+    "extra_joints": 1,
+    "joints_total": 5,
+    "homing_groups": [
+     {
+      "axis": "Y",
+      "joints": [
+       1,
+       2
+      ],
+      "home_sequence": -1,
+      "rule": "identical negative HOME_SEQUENCE and identical search/latch velocities; each joint squares on its own switch"
+     },
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 1
+     },
+     {
+      "axis": "Z",
+      "joints": [
+       3
+      ],
+      "home_sequence": 0
+     },
+     {
+      "axis": "-",
+      "joints": [
+       4
+      ],
+      "home_sequence": 2,
+      "extra_joint": true
+     }
+    ],
+    "probe_net": {
+     "mode": "or2",
+     "component": "or2.probe",
+     "target": "motion.probe-input",
+     "rule": "both probes normalised to 'triggered = 1' by their CONFIGURE_IO polarity, combined by one generated or2 whose output is the only writer of motion.probe-input; the setup service records which probe is fitted and active"
+    },
+    "spindles": [
+     {
+      "id": 0,
+      "run_paths": [
+       "do:0",
+       "do:1"
+      ],
+      "speed": "ao:0",
+      "at_speed": "din:15",
+      "feedback": null
+     }
+    ],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "M4 (ATC carousel) is LinuxCNC extra joint 4 (motmod num_extrajoints=1, [KINS]JOINTS=5): it homes with the joints, then the carousel component drives joint.4.posthome-cmd; enable, amp-fault and unhome follow the joint rules"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. No output of this sheet is on XPC0/XPC1, so XS1.3 removes nothing here; a spindle stop belongs in the EXT_PERMIT safety chain or needs the spindle run/STO input wired through XPC0."
+  },
+  {
+   "id": "B_mill_5axis_trunnion",
+   "title": "5-axis mill (A/C trunnion) with spindle encoder, rotary scales, umbrella ATC on a stepper, rotary clamps, through-spindle coolant",
+   "hardware": "Standard 8-motor controller",
+   "interpretation": "Separate X/Y/Z limit inputs would need 25 DI; this sheet uses one combined X/Y/Z overtravel chain (standard LinuxCNC practice, loses which-axis identification) to fit 23 DI. Variant B2 (separate limits) is recorded as NOT FITTING.",
+   "linuxcnc_mapping": "xyzac-trt-kins (TCP); [KINS]JOINTS=6 with num_extrajoints=1; joints 0-4 -> M0-M4; M5 carousel = extra joint 5; spindle.0 from ENC0 (revs, speed-in, index-enable)",
+   "assignments": [
+    {
+     "function": "X joint",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.0.position-fb",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Y joint",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.1.position-fb",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Z joint",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.2.position-fb",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "A (trunnion tilt) joint",
+     "resource_class": "motor",
+     "channel": 3,
+     "terminal": "XM3.1-14",
+     "hal": {
+      "joint": 3,
+      "axis": "A",
+      "extra_joint": false,
+      "pos_fb": "cnc1.3.position-fb",
+      "targets": [
+       "cnc1.3.position-cmd <- joint.3.motor-pos-cmd",
+       "cnc1.3.enable <- joint.3.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "C (rotary table) joint",
+     "resource_class": "motor",
+     "channel": 4,
+     "terminal": "XM4.1-14",
+     "hal": {
+      "joint": 4,
+      "axis": "C",
+      "extra_joint": false,
+      "pos_fb": "cnc1.4.position-fb",
+      "targets": [
+       "cnc1.4.position-cmd <- joint.4.motor-pos-cmd",
+       "cnc1.4.enable <- joint.4.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Umbrella carousel stepper",
+     "resource_class": "motor",
+     "channel": 5,
+     "terminal": "XM5.1-14",
+     "hal": {
+      "joint": 5,
+      "axis": "-",
+      "extra_joint": true,
+      "pos_fb": "cnc1.5.position-fb",
+      "targets": [
+       "cnc1.5.position-cmd <- joint.5.motor-pos-cmd",
+       "cnc1.5.enable <- joint.5.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Spindle encoder (ABZ, index)",
+     "resource_class": "encoder",
+     "channel": 0,
+     "terminal": "XE0.1-10",
+     "hal": {
+      "targets": [
+       "spindle.0.revs <- cnc1.encoder.0.position",
+       "spindle.0.speed-in <- cnc1.encoder.0.velocity (scaled to rev/s)",
+       "spindle.0.index-enable <-> cnc1.encoder.0.index-enable"
+      ]
+     }
+    },
+    {
+     "function": "A-axis rotary scale",
+     "resource_class": "encoder",
+     "channel": 1,
+     "terminal": "XE1.1-10",
+     "hal": {
+      "targets": [
+       "measured position of joint 3 for the preview overlay and the service disagreement check (no motor-pos-fb)"
+      ]
+     }
+    },
+    {
+     "function": "C-axis rotary scale",
+     "resource_class": "encoder",
+     "channel": 2,
+     "terminal": "XE2.1-10",
+     "hal": {
+      "targets": [
+       "measured position of joint 4 for the preview overlay and the service disagreement check (no motor-pos-fb)"
+      ]
+     }
+    },
+    {
+     "function": "Home X",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Y",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Z",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home A",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.3.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home C",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.4.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Combined X/Y/Z overtravel chain (NC series)",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in",
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in",
+       "joint.2.neg-lim-sw-in",
+       "joint.2.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "A overtravel",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "joint.3.neg-lim-sw-in",
+       "joint.3.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Carousel home",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "joint.5.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Carousel arm in",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-00"
+      ]
+     }
+    },
+    {
+     "function": "Carousel arm out",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-01"
+      ]
+     }
+    },
+    {
+     "function": "Drawbar clamped",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "motion.digital-in-02"
+      ]
+     }
+    },
+    {
+     "function": "Drawbar released",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "motion.digital-in-03"
+      ]
+     }
+    },
+    {
+     "function": "A clamped",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-04"
+      ]
+     }
+    },
+    {
+     "function": "C clamped",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "motion.digital-in-05"
+      ]
+     }
+    },
+    {
+     "function": "Air OK",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "motion.digital-in-06"
+      ]
+     }
+    },
+    {
+     "function": "Lube OK",
+     "resource_class": "di",
+     "channel": 15,
+     "terminal": "XDI1.8",
+     "hal": {
+      "targets": [
+       "motion.digital-in-07"
+      ]
+     }
+    },
+    {
+     "function": "Coolant level OK",
+     "resource_class": "di",
+     "channel": 16,
+     "terminal": "XDI2.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-08"
+      ]
+     }
+    },
+    {
+     "function": "Through-spindle coolant pressure OK",
+     "resource_class": "di",
+     "channel": 17,
+     "terminal": "XDI2.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-09"
+      ]
+     }
+    },
+    {
+     "function": "Spindle ready",
+     "resource_class": "di",
+     "channel": 18,
+     "terminal": "XDI2.3",
+     "hal": {
+      "targets": [
+       "spindle.0.at-speed"
+      ]
+     }
+    },
+    {
+     "function": "Spindle fault",
+     "resource_class": "di",
+     "channel": 19,
+     "terminal": "XDI2.4",
+     "hal": {
+      "targets": [
+       "motion.digital-in-10"
+      ]
+     }
+    },
+    {
+     "function": "Door closed (status)",
+     "resource_class": "di",
+     "channel": 20,
+     "terminal": "XDI2.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-11"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 21,
+     "terminal": "XDI2.6",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 22,
+     "terminal": "XDI2.7",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "3D touch probe",
+     "resource_class": "probe",
+     "channel": 0,
+     "terminal": "XPR.1",
+     "hal": {
+      "targets": [
+       "or2.probe.in0 <- cnc1.probe.0.in"
+      ]
+     }
+    },
+    {
+     "function": "Tool setter",
+     "resource_class": "probe",
+     "channel": 1,
+     "terminal": "XPR.4",
+     "hal": {
+      "targets": [
+       "or2.probe.in1 <- cnc1.probe.1.in"
+      ]
+     }
+    },
+    {
+     "function": "Spindle run",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.forward"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle reverse",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.reverse"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Drawbar release valve",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Cone air blast",
+     "resource_class": "do",
+     "channel": 3,
+     "terminal": "XDO0.4",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-01"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Carousel arm in valve",
+     "resource_class": "do",
+     "channel": 4,
+     "terminal": "XDO0.5",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-02"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Carousel arm out valve",
+     "resource_class": "do",
+     "channel": 5,
+     "terminal": "XDO0.6",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-03"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "A clamp release valve (spring-applied clamp; energise to release, section 04 section 9)",
+     "resource_class": "do",
+     "channel": 6,
+     "terminal": "XDO0.7",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-04"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "C clamp release valve (spring-applied clamp)",
+     "resource_class": "do",
+     "channel": 7,
+     "terminal": "XDO0.8",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-05"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Coolant flood (relay)",
+     "resource_class": "do",
+     "channel": 8,
+     "terminal": "XDO1.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "iocontrol.0.coolant-flood"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Through-spindle coolant (relay)",
+     "resource_class": "do",
+     "channel": 9,
+     "terminal": "XDO1.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "iocontrol.0.coolant-mist"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Lube pump (through an interposing relay; the pump start current is on the relay contact)",
+     "resource_class": "do",
+     "channel": 10,
+     "terminal": "XDO1.3",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-06"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Chip conveyor (relay)",
+     "resource_class": "do",
+     "channel": 11,
+     "terminal": "XDO1.4",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-07"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Z brake release (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 12,
+     "terminal": "XDO1.5",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.2.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Work light",
+     "resource_class": "do",
+     "channel": 13,
+     "terminal": "XDO1.6",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-08"
+     },
+     "peak_a": 0.3,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Spindle speed 0-10 V",
+     "resource_class": "ao",
+     "channel": 0,
+     "terminal": "XAO.1-2",
+     "hal": {
+      "writer": "spindle.0.speed-out-abs (scaled to volts)"
+     }
+    },
+    {
+     "function": "Drive STO feedback",
+     "resource_class": "sto_fb",
+     "channel": 0,
+     "terminal": "XS1.8"
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Y",
+     "resource_class": "pendant_sel",
+     "channel": 1,
+     "terminal": "XH2.2",
+     "hal": {
+      "axis": "Y"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant axis select A",
+     "resource_class": "pendant_sel",
+     "channel": 3,
+     "terminal": "XH2.4",
+     "hal": {
+      "axis": "A"
+     }
+    },
+    {
+     "function": "Pendant axis select C",
+     "resource_class": "pendant_sel",
+     "channel": 5,
+     "terminal": "XH2.6",
+     "hal": {
+      "axis": "C"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 8,
+     "used": 6,
+     "spare": 2
+    },
+    "encoder": {
+     "capacity": 4,
+     "used": 3,
+     "spare": 1
+    },
+    "di": {
+     "capacity": 24,
+     "used": 23,
+     "spare": 1
+    },
+    "do": {
+     "capacity": 16,
+     "used": 14,
+     "spare": 2
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 2,
+     "spare": 0
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 8,
+     "spare": 2
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 1.0,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 0.2,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [
+    "Spindle speed/direction via Modbus RS-485 plus DO0 as the hardware run-enable (fits; Modbus is never the only run path)",
+    "ENC3 linear scale (fits: 1 encoder free)"
+   ],
+   "variants_not_fitting": [
+    {
+     "id": "B2_separate_limits",
+     "reason": "Separate X, Y and Z overtravel inputs need 25 general DI; 24 exist. Short by 1 DI.",
+     "resolution": "Use B (combined chain), or move cycle start/feed hold onto the pendant (only if those buttons are physically on the pendant), or add the optional industrial-I/O module (proposal, not in the standard product). Never drop a limit silently."
+    }
+   ],
+   "safety_note": null,
+   "hal_map": {
+    "kinematic_joints": 5,
+    "extra_joints": 1,
+    "joints_total": 6,
+    "homing_groups": [
+     {
+      "axis": "Z",
+      "joints": [
+       2
+      ],
+      "home_sequence": 0
+     },
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 1
+     },
+     {
+      "axis": "Y",
+      "joints": [
+       1
+      ],
+      "home_sequence": 1
+     },
+     {
+      "axis": "A",
+      "joints": [
+       3
+      ],
+      "home_sequence": 2
+     },
+     {
+      "axis": "C",
+      "joints": [
+       4
+      ],
+      "home_sequence": 2
+     },
+     {
+      "axis": "-",
+      "joints": [
+       5
+      ],
+      "home_sequence": 3,
+      "extra_joint": true
+     }
+    ],
+    "probe_net": {
+     "mode": "or2",
+     "component": "or2.probe",
+     "target": "motion.probe-input",
+     "rule": "both probes normalised to 'triggered = 1' by their CONFIGURE_IO polarity, combined by one generated or2 whose output is the only writer of motion.probe-input; the setup service records which probe is fitted and active"
+    },
+    "spindles": [
+     {
+      "id": 0,
+      "run_paths": [
+       "do:0",
+       "do:1"
+      ],
+      "speed": "ao:0",
+      "at_speed": "din:18",
+      "feedback": "encoder:0"
+     }
+    ],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "M5 (umbrella carousel) is extra joint 5 (num_extrajoints=1, [KINS]JOINTS=6)",
+     "the A/C rotary scales are measured-only in this sheet; a closed-loop variant with pid is a profile option"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. No output of this sheet is on XPC0/XPC1, so XS1.3 removes nothing here; a spindle stop belongs in the EXT_PERMIT safety chain or needs the spindle run/STO input wired through XPC0."
+  },
+  {
+   "id": "C_lathe",
+   "title": "Lathe with spindle encoder (threading/CSS), stepper-indexed turret, hydraulic chuck and tailstock",
+   "hardware": "Standard 8-motor controller",
+   "interpretation": "Turret indexed by a stepper on M2 (HAL indexer + lock valve); chuck and tailstock by valves with position confirmation; spindle encoder with index for G33/G76 and CSS.",
+   "linuxcnc_mapping": "trivkins coordinates=XZ; [KINS]JOINTS=3 with num_extrajoints=1; joints 0-1 -> M0-M1; M2 turret = extra joint 2; spindle.0.revs/speed-in/index-enable from ENC0; lathe mode in the INI",
+   "assignments": [
+    {
+     "function": "X joint",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.0.position-fb",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Z joint",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.1.position-fb",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Turret indexer stepper",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "-",
+      "extra_joint": true,
+      "pos_fb": "cnc1.2.position-fb",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Spindle encoder A/B/index (threading)",
+     "resource_class": "encoder",
+     "channel": 0,
+     "terminal": "XE0.1-10",
+     "hal": {
+      "targets": [
+       "spindle.0.revs <- cnc1.encoder.0.position",
+       "spindle.0.speed-in <- cnc1.encoder.0.velocity (scaled to rev/s)",
+       "spindle.0.index-enable <-> cnc1.encoder.0.index-enable"
+      ]
+     }
+    },
+    {
+     "function": "Home X",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Z",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit X",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Z",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Turret home",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Turret locked",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "motion.digital-in-00"
+      ]
+     }
+    },
+    {
+     "function": "Chuck clamped",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "motion.digital-in-01"
+      ]
+     }
+    },
+    {
+     "function": "Chuck open",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "motion.digital-in-02"
+      ]
+     }
+    },
+    {
+     "function": "Tailstock advanced",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-03"
+      ]
+     }
+    },
+    {
+     "function": "Tailstock retracted",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-04"
+      ]
+     }
+    },
+    {
+     "function": "Hydraulic pressure OK",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "motion.digital-in-05"
+      ]
+     }
+    },
+    {
+     "function": "Lube OK",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "motion.digital-in-06"
+      ]
+     }
+    },
+    {
+     "function": "Coolant level OK",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-07"
+      ]
+     }
+    },
+    {
+     "function": "Spindle ready",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "spindle.0.at-speed"
+      ]
+     }
+    },
+    {
+     "function": "Spindle fault",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "motion.digital-in-08"
+      ]
+     }
+    },
+    {
+     "function": "Door closed (status)",
+     "resource_class": "di",
+     "channel": 15,
+     "terminal": "XDI1.8",
+     "hal": {
+      "targets": [
+       "motion.digital-in-09"
+      ]
+     }
+    },
+    {
+     "function": "Chuck foot pedal",
+     "resource_class": "di",
+     "channel": 16,
+     "terminal": "XDI2.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-10"
+      ]
+     }
+    },
+    {
+     "function": "Tailstock foot pedal",
+     "resource_class": "di",
+     "channel": 17,
+     "terminal": "XDI2.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-11"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 18,
+     "terminal": "XDI2.3",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 19,
+     "terminal": "XDI2.4",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "Tool setter arm contact",
+     "resource_class": "probe",
+     "channel": 1,
+     "terminal": "XPR.4",
+     "hal": {
+      "targets": [
+       "motion.probe-input <- cnc1.probe.1.in"
+      ]
+     }
+    },
+    {
+     "function": "Spindle run",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.forward"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle reverse",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.reverse"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Chuck clamp coil of a bistable (detented) valve - holds position on de-energise (section 04 section 9)",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Chuck unclamp coil of the bistable valve (interlocked: spindle stopped)",
+     "resource_class": "do",
+     "channel": 3,
+     "terminal": "XDO0.4",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-01"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Tailstock advance coil (bistable valve)",
+     "resource_class": "do",
+     "channel": 4,
+     "terminal": "XDO0.5",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-02"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Tailstock retract coil (bistable valve)",
+     "resource_class": "do",
+     "channel": 5,
+     "terminal": "XDO0.6",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-03"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Turret lock valve",
+     "resource_class": "do",
+     "channel": 6,
+     "terminal": "XDO0.7",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-04"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Coolant (relay)",
+     "resource_class": "do",
+     "channel": 7,
+     "terminal": "XDO0.8",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "iocontrol.0.coolant-flood"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Lube pump (through an interposing relay; the pump start current is on the relay contact)",
+     "resource_class": "do",
+     "channel": 8,
+     "terminal": "XDO1.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-05"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Chip conveyor (relay)",
+     "resource_class": "do",
+     "channel": 9,
+     "terminal": "XDO1.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-06"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Work light",
+     "resource_class": "do",
+     "channel": 10,
+     "terminal": "XDO1.3",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-07"
+     },
+     "peak_a": 0.3,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Hydraulic pump (relay)",
+     "resource_class": "do",
+     "channel": 11,
+     "terminal": "XDO1.4",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-08"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Spindle speed 0-10 V",
+     "resource_class": "ao",
+     "channel": 0,
+     "terminal": "XAO.1-2",
+     "hal": {
+      "writer": "spindle.0.speed-out-abs (scaled to volts)"
+     }
+    },
+    {
+     "function": "Drive STO feedback",
+     "resource_class": "sto_fb",
+     "channel": 0,
+     "terminal": "XS1.8"
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 8,
+     "used": 3,
+     "spare": 5
+    },
+    "encoder": {
+     "capacity": 4,
+     "used": 1,
+     "spare": 3
+    },
+    "di": {
+     "capacity": 24,
+     "used": 20,
+     "spare": 4
+    },
+    "do": {
+     "capacity": 16,
+     "used": 12,
+     "spare": 4
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 5,
+     "spare": 5
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 0.8,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 0.25,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [
+    "C-axis/live tooling motor on M3 with its encoder on ENC1 (fits)"
+   ],
+   "variants_not_fitting": [],
+   "safety_note": "Chuck-open-while-spinning protection must be part of the machine safety design (a pressure switch in the EXT_PERMIT safety chain, XS1.2), not only the DO3 software interlock. XS1.3 gates only the process-enable contacts XPC0/XPC1 and does not stop the spindle in this sheet.",
+   "hal_map": {
+    "kinematic_joints": 2,
+    "extra_joints": 1,
+    "joints_total": 3,
+    "homing_groups": [
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 0
+     },
+     {
+      "axis": "Z",
+      "joints": [
+       1
+      ],
+      "home_sequence": 1
+     },
+     {
+      "axis": "-",
+      "joints": [
+       2
+      ],
+      "home_sequence": 2,
+      "extra_joint": true
+     }
+    ],
+    "probe_net": {
+     "mode": "direct",
+     "target": "motion.probe-input",
+     "rule": "single probe wired directly: cnc1.probe.1.in is the only writer of motion.probe-input"
+    },
+    "spindles": [
+     {
+      "id": 0,
+      "run_paths": [
+       "do:0",
+       "do:1"
+      ],
+      "speed": "ao:0",
+      "at_speed": "din:13",
+      "feedback": "encoder:0"
+     }
+    ],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "M2 (turret) is extra joint 2 (num_extrajoints=1, [KINS]JOINTS=3)",
+     "optional C axis on M3 would be kinematic joint 2 and the turret would become extra joint 3: joint and channel numbers differ, so unhome and enable follow the channel-to-joint map, never the channel number"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. No output of this sheet is on XPC0/XPC1, so XS1.3 removes nothing here; a spindle stop belongs in the EXT_PERMIT safety chain or needs the spindle run/STO input wired through XPC0."
+  },
+  {
+   "id": "D_plasma",
+   "title": "Plasma table: dual-Y gantry, torch height Z, divided-voltage THC module on FREQ0, torch start, Arc OK, float switch, breakaway; ohmic sensing only with a qualified external ohmic module (not specified in IS-1)",
+   "hardware": "Standard 8-motor controller + plasma.divided_voltage.v1 module (separately rated, own identity) on XF",
+   "interpretation": "Arc voltage enters only through the isolated plasma.divided_voltage.v1 module into FREQ0; raw arc voltage never reaches any controller terminal. Arc OK and torch start are wired direct (DI7, XPC0) only when the source's CNC port provides a dry Arc OK contact and a torch-start input within the XPC contact rating (0-30 V, <= 50 mA); otherwise both pass through the module. This supersedes PLASMA_MODULE_SYSTEM section 2's 'module provides Arc OK and torch start' for sources that meet those conditions; the module still carries the divided voltage. Float switch uses PRB0 (hardware capture during probe-down); PRB1 takes the contact output of an external ohmic module, which is not specified in IS-1; ohmic enable uses process enable 1. HF-start sources with ohmic sensing are rejected by profile.",
+   "linuxcnc_mapping": "trivkins coordinates=XYYZ; [KINS]JOINTS=4; plasmac component: arc-voltage-in from cnc1.freq.0 via the module calibration chain; arc-ok-in from DI7; float-switch from PRB0, ohmic-probe from PRB1; torch-on -> cnc1.proc-en.0",
+   "assignments": [
+    {
+     "function": "X joint",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.0.position-fb",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Y1 joint",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.1.position-fb",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Y2 joint",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.2.position-fb",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Z (torch height) joint",
+     "resource_class": "motor",
+     "channel": 3,
+     "terminal": "XM3.1-14",
+     "hal": {
+      "joint": 3,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.3.position-fb",
+      "targets": [
+       "cnc1.3.position-cmd <- joint.3.motor-pos-cmd",
+       "cnc1.3.enable <- joint.3.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Arc voltage (divided-voltage module, frequency; module presence XF.8 and 1-Wire identity XF.7 bind the module record)",
+     "resource_class": "freq",
+     "channel": 0,
+     "terminal": "XF.3-4",
+     "note": "FREQ1 declared 'absent' in the module record",
+     "hal": {
+      "targets": [
+       "plasmac.arc-voltage-in <- cnc1.freq.0.frequency through the module calibration"
+      ]
+     }
+    },
+    {
+     "function": "Torch start (isolated contact to source CNC port)",
+     "resource_class": "proc_en",
+     "channel": 0,
+     "terminal": "XPC0.1-2",
+     "hal": {
+      "writer": "plasmac.torch-on"
+     }
+    },
+    {
+     "function": "Ohmic sensing enable (external ohmic module, not specified in IS-1)",
+     "resource_class": "proc_en",
+     "channel": 1,
+     "terminal": "XPC1.1-2",
+     "hal": {
+      "writer": "plasmac.ohmic-enable"
+     }
+    },
+    {
+     "function": "Float switch (captured)",
+     "resource_class": "probe",
+     "channel": 0,
+     "terminal": "XPR.1",
+     "hal": {
+      "targets": [
+       "plasmac.float-switch <- cnc1.probe.0.in"
+      ]
+     }
+    },
+    {
+     "function": "Ohmic contact sense (requires a qualified external ohmic module, not specified in IS-1)",
+     "resource_class": "probe",
+     "channel": 1,
+     "terminal": "XPR.4",
+     "hal": {
+      "targets": [
+       "plasmac.ohmic-probe <- cnc1.probe.1.in"
+      ]
+     }
+    },
+    {
+     "function": "Home X",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Y1",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Y2",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home Z (top)",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.3.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit X",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y1",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y2",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "joint.2.neg-lim-sw-in",
+       "joint.2.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Arc OK (source contact, wetted from sensor supply)",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "plasmac.arc-ok-in"
+      ]
+     }
+    },
+    {
+     "function": "Torch breakaway",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "plasmac.breakaway"
+      ]
+     }
+    },
+    {
+     "function": "Plasma source ready/fault status",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-00"
+      ]
+     }
+    },
+    {
+     "function": "Air pressure OK",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "motion.digital-in-01"
+      ]
+     }
+    },
+    {
+     "function": "Water table level",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "motion.digital-in-02"
+      ]
+     }
+    },
+    {
+     "function": "Fume extraction running",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-03"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "Fume extraction fan (relay)",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Water table pump (relay)",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-01"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Scribe/marker valve",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-02"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Laser crosshair pointer",
+     "resource_class": "do",
+     "channel": 3,
+     "terminal": "XDO0.4",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-03"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Z brake release (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 4,
+     "terminal": "XDO0.5",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.3.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Stack light green",
+     "resource_class": "do",
+     "channel": 5,
+     "terminal": "XDO0.6",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-04"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Stack light red",
+     "resource_class": "do",
+     "channel": 6,
+     "terminal": "XDO0.7",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-05"
+     },
+     "peak_a": 0.2,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Drive STO feedback",
+     "resource_class": "sto_fb",
+     "channel": 0,
+     "terminal": "XS1.8"
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Y",
+     "resource_class": "pendant_sel",
+     "channel": 1,
+     "terminal": "XH2.2",
+     "hal": {
+      "axis": "Y"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 8,
+     "used": 4,
+     "spare": 4
+    },
+    "encoder": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "di": {
+     "capacity": 24,
+     "used": 15,
+     "spare": 9
+    },
+    "do": {
+     "capacity": 16,
+     "used": 7,
+     "spare": 9
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 2,
+     "spare": 0
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 2,
+     "spare": 0
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 6,
+     "spare": 4
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 0.45,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 0.7,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [
+    "Powermax RS-485 remote settings via XB1 on a supported source option (profile-specific)"
+   ],
+   "variants_not_fitting": [],
+   "safety_note": "Torch start closes only with PROC_PERMIT (OUT_PERMIT AND TX_PERMIT AND the XS1.3 process interlock). HF-start sources combined with ohmic sensing are rejected by the profile (QtPlasmaC caution, PLASMA_MODULE_SYSTEM section 6). Raw arc voltage never enters any controller terminal.",
+   "hal_map": {
+    "kinematic_joints": 4,
+    "extra_joints": 0,
+    "joints_total": 4,
+    "homing_groups": [
+     {
+      "axis": "Y",
+      "joints": [
+       1,
+       2
+      ],
+      "home_sequence": -1,
+      "rule": "identical negative HOME_SEQUENCE and identical search/latch velocities"
+     },
+     {
+      "axis": "Z",
+      "joints": [
+       3
+      ],
+      "home_sequence": 0
+     },
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 1
+     }
+    ],
+    "probe_net": {
+     "mode": "plasmac",
+     "target": "plasmac.float-switch / plasmac.ohmic-probe",
+     "rule": "PRB0 -> plasmac.float-switch and PRB1 -> plasmac.ohmic-probe, one writer each; motion.probe-input is not used"
+    },
+    "spindles": [],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "Ohmic sensing needs a separately qualified external ohmic module; it is not specified in IS-1 (PRB1 accepts its isolated contact output)"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. It gates the torch start and the ohmic enable in this sheet."
+  },
+  {
+   "id": "E_twelve_motor_with_encoder_expansion",
+   "title": "Twelve-motor multi-head gantry machine, every motor with encoder feedback (MX4 + EX8 fitted together)",
+   "hardware": "Twelve-motor controller: MX4 motor expansion + EX8 encoder expansion + XTB terminal board, all factory-fitted",
+   "interpretation": "Joint map follows the sim-12motor profile (XYYZABCUVWZZ): gantry Y1/Y2, three ganged plunging heads (Z, Z2, Z3 share the Z coordinate and move together), A/C head, B rotary table, U/V/W offset slides. All twelve drives return ABZ to ENC0-ENC11. The three spindles take speed and direction over Modbus RS-485 and each has a hardware run-enable on DO12-DO14, so a bus failure, host crash or permission loss stops them.",
+   "linuxcnc_mapping": "trivkins coordinates=XYYZABCUVWZZ kinstype=BOTH; motmod num_joints=12 (module-load tested only, MOTION_EXPANSION section 10), num_spindles=3; each joint's motor-pos-fb from its own encoder only",
+   "assignments": [
+    {
+     "function": "Joint 0 (X)",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.0.position",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 1 (Y1)",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.1.position",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 2 (Y2)",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.2.position",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 3 (Z)",
+     "resource_class": "motor",
+     "channel": 3,
+     "terminal": "XM3.1-14",
+     "hal": {
+      "joint": 3,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.3.position",
+      "targets": [
+       "cnc1.3.position-cmd <- joint.3.motor-pos-cmd",
+       "cnc1.3.enable <- joint.3.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 4 (A)",
+     "resource_class": "motor",
+     "channel": 4,
+     "terminal": "XM4.1-14",
+     "hal": {
+      "joint": 4,
+      "axis": "A",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.4.position",
+      "targets": [
+       "cnc1.4.position-cmd <- joint.4.motor-pos-cmd",
+       "cnc1.4.enable <- joint.4.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 5 (B)",
+     "resource_class": "motor",
+     "channel": 5,
+     "terminal": "XM5.1-14",
+     "hal": {
+      "joint": 5,
+      "axis": "B",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.5.position",
+      "targets": [
+       "cnc1.5.position-cmd <- joint.5.motor-pos-cmd",
+       "cnc1.5.enable <- joint.5.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 6 (C)",
+     "resource_class": "motor",
+     "channel": 6,
+     "terminal": "XM6.1-14",
+     "hal": {
+      "joint": 6,
+      "axis": "C",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.6.position",
+      "targets": [
+       "cnc1.6.position-cmd <- joint.6.motor-pos-cmd",
+       "cnc1.6.enable <- joint.6.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 7 (U)",
+     "resource_class": "motor",
+     "channel": 7,
+     "terminal": "XM7.1-14",
+     "hal": {
+      "joint": 7,
+      "axis": "U",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.7.position",
+      "targets": [
+       "cnc1.7.position-cmd <- joint.7.motor-pos-cmd",
+       "cnc1.7.enable <- joint.7.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 8 (V)",
+     "resource_class": "motor",
+     "channel": 8,
+     "terminal": "XM8.1-14",
+     "hal": {
+      "joint": 8,
+      "axis": "V",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.8.position",
+      "targets": [
+       "cnc1.8.position-cmd <- joint.8.motor-pos-cmd",
+       "cnc1.8.enable <- joint.8.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 9 (W)",
+     "resource_class": "motor",
+     "channel": 9,
+     "terminal": "XM9.1-14",
+     "hal": {
+      "joint": 9,
+      "axis": "W",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.9.position",
+      "targets": [
+       "cnc1.9.position-cmd <- joint.9.motor-pos-cmd",
+       "cnc1.9.enable <- joint.9.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 10 (Z2)",
+     "resource_class": "motor",
+     "channel": 10,
+     "terminal": "XM10.1-14",
+     "hal": {
+      "joint": 10,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.10.position",
+      "targets": [
+       "cnc1.10.position-cmd <- joint.10.motor-pos-cmd",
+       "cnc1.10.enable <- joint.10.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 11 (Z3)",
+     "resource_class": "motor",
+     "channel": 11,
+     "terminal": "XM11.1-14",
+     "hal": {
+      "joint": 11,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.encoder.11.position",
+      "targets": [
+       "cnc1.11.position-cmd <- joint.11.motor-pos-cmd",
+       "cnc1.11.enable <- joint.11.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Motor M0 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 0,
+     "terminal": "XE0.1-10",
+     "hal": {
+      "targets": [
+       "joint.0.motor-pos-fb <- cnc1.encoder.0.position (the only pos_fb source of joint 0)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M1 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 1,
+     "terminal": "XE1.1-10",
+     "hal": {
+      "targets": [
+       "joint.1.motor-pos-fb <- cnc1.encoder.1.position (the only pos_fb source of joint 1)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M2 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 2,
+     "terminal": "XE2.1-10",
+     "hal": {
+      "targets": [
+       "joint.2.motor-pos-fb <- cnc1.encoder.2.position (the only pos_fb source of joint 2)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M3 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 3,
+     "terminal": "XE3.1-10",
+     "hal": {
+      "targets": [
+       "joint.3.motor-pos-fb <- cnc1.encoder.3.position (the only pos_fb source of joint 3)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M4 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 4,
+     "terminal": "XE4.1-10",
+     "hal": {
+      "targets": [
+       "joint.4.motor-pos-fb <- cnc1.encoder.4.position (the only pos_fb source of joint 4)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M5 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 5,
+     "terminal": "XE5.1-10",
+     "hal": {
+      "targets": [
+       "joint.5.motor-pos-fb <- cnc1.encoder.5.position (the only pos_fb source of joint 5)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M6 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 6,
+     "terminal": "XE6.1-10",
+     "hal": {
+      "targets": [
+       "joint.6.motor-pos-fb <- cnc1.encoder.6.position (the only pos_fb source of joint 6)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M7 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 7,
+     "terminal": "XE7.1-10",
+     "hal": {
+      "targets": [
+       "joint.7.motor-pos-fb <- cnc1.encoder.7.position (the only pos_fb source of joint 7)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M8 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 8,
+     "terminal": "XE8.1-10",
+     "hal": {
+      "targets": [
+       "joint.8.motor-pos-fb <- cnc1.encoder.8.position (the only pos_fb source of joint 8)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M9 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 9,
+     "terminal": "XE9.1-10",
+     "hal": {
+      "targets": [
+       "joint.9.motor-pos-fb <- cnc1.encoder.9.position (the only pos_fb source of joint 9)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M10 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 10,
+     "terminal": "XE10.1-10",
+     "hal": {
+      "targets": [
+       "joint.10.motor-pos-fb <- cnc1.encoder.10.position (the only pos_fb source of joint 10)"
+      ]
+     }
+    },
+    {
+     "function": "Motor M11 encoder feedback",
+     "resource_class": "encoder",
+     "channel": 11,
+     "terminal": "XE11.1-10",
+     "hal": {
+      "targets": [
+       "joint.11.motor-pos-fb <- cnc1.encoder.11.position (the only pos_fb source of joint 11)"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 0",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 1",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 2",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 3",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.3.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 4",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.4.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 5",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "joint.5.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 6",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "joint.6.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 7",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "joint.7.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 8",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "joint.8.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 9",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "joint.9.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 10",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "joint.10.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 11",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "joint.11.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit X",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y1",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit Y2",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "joint.2.neg-lim-sw-in",
+       "joint.2.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Head Z/Z2/Z3 top overtravel chain",
+     "resource_class": "di",
+     "channel": 15,
+     "terminal": "XDI1.8",
+     "hal": {
+      "targets": [
+       "joint.3.pos-lim-sw-in",
+       "joint.10.pos-lim-sw-in",
+       "joint.11.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Air OK",
+     "resource_class": "di",
+     "channel": 16,
+     "terminal": "XDI2.1",
+     "hal": {
+      "targets": [
+       "motion.digital-in-00"
+      ]
+     }
+    },
+    {
+     "function": "Lube OK",
+     "resource_class": "di",
+     "channel": 17,
+     "terminal": "XDI2.2",
+     "hal": {
+      "targets": [
+       "motion.digital-in-01"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 18,
+     "terminal": "XDI2.3",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 19,
+     "terminal": "XDI2.4",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "Door closed (status)",
+     "resource_class": "di",
+     "channel": 20,
+     "terminal": "XDI2.5",
+     "hal": {
+      "targets": [
+       "motion.digital-in-02"
+      ]
+     }
+    },
+    {
+     "function": "Dust collector running",
+     "resource_class": "di",
+     "channel": 21,
+     "terminal": "XDI2.6",
+     "hal": {
+      "targets": [
+       "motion.digital-in-03"
+      ]
+     }
+    },
+    {
+     "function": "Spindle VFDs x3 (Modbus RTU)",
+     "resource_class": "rs485",
+     "channel": 0,
+     "terminal": "XB1.1-6"
+    },
+    {
+     "function": "Tool setter",
+     "resource_class": "probe",
+     "channel": 1,
+     "terminal": "XPR.4",
+     "hal": {
+      "targets": [
+       "or2.probe.in1 <- cnc1.probe.1.in"
+      ]
+     }
+    },
+    {
+     "function": "Touch probe",
+     "resource_class": "probe",
+     "channel": 0,
+     "terminal": "XPR.1",
+     "hal": {
+      "targets": [
+       "or2.probe.in0 <- cnc1.probe.0.in"
+      ]
+     }
+    },
+    {
+     "function": "Head 1 dust hood valve",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Head 2 dust hood valve",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-01"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Head 3 dust hood valve",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-02"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Head 1 mist",
+     "resource_class": "do",
+     "channel": 3,
+     "terminal": "XDO0.4",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-03"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Head 2 mist",
+     "resource_class": "do",
+     "channel": 4,
+     "terminal": "XDO0.5",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-04"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Head 3 mist",
+     "resource_class": "do",
+     "channel": 5,
+     "terminal": "XDO0.6",
+     "assumed_load_a": 0.25,
+     "hal": {
+      "writer": "motion.digital-out-05"
+     },
+     "peak_a": 0.25,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Lube pump (through an interposing relay; the pump start current is on the relay contact)",
+     "resource_class": "do",
+     "channel": 6,
+     "terminal": "XDO0.7",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-06"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Dust collector (relay)",
+     "resource_class": "do",
+     "channel": 7,
+     "terminal": "XDO0.8",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-07"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Z brake (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 8,
+     "terminal": "XDO1.1",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.3.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Z2 brake (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 9,
+     "terminal": "XDO1.2",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.10.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Z3 brake (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 10,
+     "terminal": "XDO1.3",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.11.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Work light",
+     "resource_class": "do",
+     "channel": 11,
+     "terminal": "XDO1.4",
+     "assumed_load_a": 0.1,
+     "hal": {
+      "writer": "motion.digital-out-08"
+     },
+     "peak_a": 0.3,
+     "peak_ms": 5,
+     "via_relay": false,
+     "device": "24 V LED lamp (device profile declares its start current)"
+    },
+    {
+     "function": "Drive STO feedback",
+     "resource_class": "sto_fb",
+     "channel": 0,
+     "terminal": "XS1.8"
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Y",
+     "resource_class": "pendant_sel",
+     "channel": 1,
+     "terminal": "XH2.2",
+     "hal": {
+      "axis": "Y"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant axis select A",
+     "resource_class": "pendant_sel",
+     "channel": 3,
+     "terminal": "XH2.4",
+     "hal": {
+      "axis": "A"
+     }
+    },
+    {
+     "function": "Pendant axis select B",
+     "resource_class": "pendant_sel",
+     "channel": 4,
+     "terminal": "XH2.5",
+     "hal": {
+      "axis": "B"
+     }
+    },
+    {
+     "function": "Pendant axis select C",
+     "resource_class": "pendant_sel",
+     "channel": 5,
+     "terminal": "XH2.6",
+     "hal": {
+      "axis": "C"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    },
+    {
+     "function": "Spindle 1 VFD run-enable (hardware; Modbus carries speed and direction)",
+     "resource_class": "do",
+     "channel": 12,
+     "terminal": "XDO1.5",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.on"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle 2 VFD run-enable (hardware)",
+     "resource_class": "do",
+     "channel": 13,
+     "terminal": "XDO1.6",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.1.on"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle 3 VFD run-enable (hardware)",
+     "resource_class": "do",
+     "channel": 14,
+     "terminal": "XDO1.7",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.2.on"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 12,
+     "used": 12,
+     "spare": 0
+    },
+    "encoder": {
+     "capacity": 12,
+     "used": 12,
+     "spare": 0
+    },
+    "di": {
+     "capacity": 24,
+     "used": 22,
+     "spare": 2
+    },
+    "do": {
+     "capacity": 16,
+     "used": 15,
+     "spare": 1
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 2,
+     "spare": 0
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 9,
+     "spare": 1
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 1.0,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 1.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0.15,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [],
+   "variants_not_fitting": [
+    {
+     "id": "E2_plus_spindle_encoder",
+     "reason": "A spindle encoder would be a 13th ABZ encoder; 12 exist with EX8 fitted. Short by 1 encoder.",
+     "resolution": "Run one non-critical motor (e.g. an offset slide) without external feedback, or use a Modbus spindle speed/position report for non-synchronized work. The MPG has its own receiver and is unaffected."
+    }
+   ],
+   "safety_note": null,
+   "hal_map": {
+    "kinematic_joints": 12,
+    "extra_joints": 0,
+    "joints_total": 12,
+    "homing_groups": [
+     {
+      "axis": "Y",
+      "joints": [
+       1,
+       2
+      ],
+      "home_sequence": -1,
+      "rule": "identical negative HOME_SEQUENCE and identical search/latch velocities"
+     },
+     {
+      "axis": "Z",
+      "joints": [
+       3,
+       10,
+       11
+      ],
+      "home_sequence": -2,
+      "rule": "identical negative HOME_SEQUENCE; the three Z joints square on their own switches"
+     },
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 3
+     },
+     {
+      "axis": "A",
+      "joints": [
+       4
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "B",
+      "joints": [
+       5
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "C",
+      "joints": [
+       6
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "U",
+      "joints": [
+       7
+      ],
+      "home_sequence": 5
+     },
+     {
+      "axis": "V",
+      "joints": [
+       8
+      ],
+      "home_sequence": 5
+     },
+     {
+      "axis": "W",
+      "joints": [
+       9
+      ],
+      "home_sequence": 5
+     }
+    ],
+    "probe_net": {
+     "mode": "or2",
+     "component": "or2.probe",
+     "target": "motion.probe-input",
+     "rule": "both probes normalised to 'triggered = 1' by their CONFIGURE_IO polarity, combined by one generated or2 whose output is the only writer of motion.probe-input; the setup service records which probe is fitted and active"
+    },
+    "spindles": [
+     {
+      "id": 0,
+      "run_paths": [
+       "do:12"
+      ],
+      "speed": "rs485:modbus",
+      "at_speed": "modbus status",
+      "feedback": null
+     },
+     {
+      "id": 1,
+      "run_paths": [
+       "do:13"
+      ],
+      "speed": "rs485:modbus",
+      "at_speed": "modbus status",
+      "feedback": null
+     },
+     {
+      "id": 2,
+      "run_paths": [
+       "do:14"
+      ],
+      "speed": "rs485:modbus",
+      "at_speed": "modbus status",
+      "feedback": null
+     }
+    ],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "Z, Z2 and Z3 are duplicate trivkins Z letters, so they move together as one ganged axis; independent plunging heads are not possible with the nine letters XYZABCUVW already in use",
+     "each joint's motor-pos-fb comes from its encoder only; the step count cnc1.C.position-fb is not connected to motor-pos-fb in this sheet"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. No output of this sheet is on XPC0/XPC1, so XS1.3 removes nothing here; a spindle stop belongs in the EXT_PERMIT safety chain or needs the spindle run/STO input wired through XPC0."
+  },
+  {
+   "id": "F_twelve_motor_open_loop",
+   "title": "Twelve-motor configuration without encoder expansion (MX4 only)",
+   "hardware": "MX4 + XTB, no EX8",
+   "interpretation": "Same joint map as E with open-loop drives; 4 base encoders used for spindle + 3 scales. Shows the motor expansion does not require the encoder expansion.",
+   "linuxcnc_mapping": "trivkins coordinates=XYYZABCUVWZZ kinstype=BOTH",
+   "assignments": [
+    {
+     "function": "Joint 0",
+     "resource_class": "motor",
+     "channel": 0,
+     "terminal": "XM0.1-14",
+     "hal": {
+      "joint": 0,
+      "axis": "X",
+      "extra_joint": false,
+      "pos_fb": "cnc1.0.position-fb",
+      "targets": [
+       "cnc1.0.position-cmd <- joint.0.motor-pos-cmd",
+       "cnc1.0.enable <- joint.0.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 1",
+     "resource_class": "motor",
+     "channel": 1,
+     "terminal": "XM1.1-14",
+     "hal": {
+      "joint": 1,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.1.position-fb",
+      "targets": [
+       "cnc1.1.position-cmd <- joint.1.motor-pos-cmd",
+       "cnc1.1.enable <- joint.1.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 2",
+     "resource_class": "motor",
+     "channel": 2,
+     "terminal": "XM2.1-14",
+     "hal": {
+      "joint": 2,
+      "axis": "Y",
+      "extra_joint": false,
+      "pos_fb": "cnc1.2.position-fb",
+      "targets": [
+       "cnc1.2.position-cmd <- joint.2.motor-pos-cmd",
+       "cnc1.2.enable <- joint.2.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 3",
+     "resource_class": "motor",
+     "channel": 3,
+     "terminal": "XM3.1-14",
+     "hal": {
+      "joint": 3,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.3.position-fb",
+      "targets": [
+       "cnc1.3.position-cmd <- joint.3.motor-pos-cmd",
+       "cnc1.3.enable <- joint.3.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 4",
+     "resource_class": "motor",
+     "channel": 4,
+     "terminal": "XM4.1-14",
+     "hal": {
+      "joint": 4,
+      "axis": "A",
+      "extra_joint": false,
+      "pos_fb": "cnc1.4.position-fb",
+      "targets": [
+       "cnc1.4.position-cmd <- joint.4.motor-pos-cmd",
+       "cnc1.4.enable <- joint.4.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 5",
+     "resource_class": "motor",
+     "channel": 5,
+     "terminal": "XM5.1-14",
+     "hal": {
+      "joint": 5,
+      "axis": "B",
+      "extra_joint": false,
+      "pos_fb": "cnc1.5.position-fb",
+      "targets": [
+       "cnc1.5.position-cmd <- joint.5.motor-pos-cmd",
+       "cnc1.5.enable <- joint.5.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 6",
+     "resource_class": "motor",
+     "channel": 6,
+     "terminal": "XM6.1-14",
+     "hal": {
+      "joint": 6,
+      "axis": "C",
+      "extra_joint": false,
+      "pos_fb": "cnc1.6.position-fb",
+      "targets": [
+       "cnc1.6.position-cmd <- joint.6.motor-pos-cmd",
+       "cnc1.6.enable <- joint.6.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 7",
+     "resource_class": "motor",
+     "channel": 7,
+     "terminal": "XM7.1-14",
+     "hal": {
+      "joint": 7,
+      "axis": "U",
+      "extra_joint": false,
+      "pos_fb": "cnc1.7.position-fb",
+      "targets": [
+       "cnc1.7.position-cmd <- joint.7.motor-pos-cmd",
+       "cnc1.7.enable <- joint.7.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 8",
+     "resource_class": "motor",
+     "channel": 8,
+     "terminal": "XM8.1-14",
+     "hal": {
+      "joint": 8,
+      "axis": "V",
+      "extra_joint": false,
+      "pos_fb": "cnc1.8.position-fb",
+      "targets": [
+       "cnc1.8.position-cmd <- joint.8.motor-pos-cmd",
+       "cnc1.8.enable <- joint.8.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 9",
+     "resource_class": "motor",
+     "channel": 9,
+     "terminal": "XM9.1-14",
+     "hal": {
+      "joint": 9,
+      "axis": "W",
+      "extra_joint": false,
+      "pos_fb": "cnc1.9.position-fb",
+      "targets": [
+       "cnc1.9.position-cmd <- joint.9.motor-pos-cmd",
+       "cnc1.9.enable <- joint.9.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 10",
+     "resource_class": "motor",
+     "channel": 10,
+     "terminal": "XM10.1-14",
+     "hal": {
+      "joint": 10,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.10.position-fb",
+      "targets": [
+       "cnc1.10.position-cmd <- joint.10.motor-pos-cmd",
+       "cnc1.10.enable <- joint.10.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Joint 11",
+     "resource_class": "motor",
+     "channel": 11,
+     "terminal": "XM11.1-14",
+     "hal": {
+      "joint": 11,
+      "axis": "Z",
+      "extra_joint": false,
+      "pos_fb": "cnc1.11.position-fb",
+      "targets": [
+       "cnc1.11.position-cmd <- joint.11.motor-pos-cmd",
+       "cnc1.11.enable <- joint.11.amp-enable-out"
+      ]
+     }
+    },
+    {
+     "function": "Spindle encoder",
+     "resource_class": "encoder",
+     "channel": 0,
+     "terminal": "XE0.1-10",
+     "hal": {
+      "targets": [
+       "spindle.0.revs <- cnc1.encoder.0.position",
+       "spindle.0.speed-in <- cnc1.encoder.0.velocity (scaled to rev/s)",
+       "spindle.0.index-enable <-> cnc1.encoder.0.index-enable"
+      ]
+     }
+    },
+    {
+     "function": "X scale",
+     "resource_class": "encoder",
+     "channel": 1,
+     "terminal": "XE1.1-10",
+     "hal": {
+      "targets": [
+       "measured position of joint 0 (preview overlay and disagreement check)"
+      ]
+     }
+    },
+    {
+     "function": "Y1 scale",
+     "resource_class": "encoder",
+     "channel": 2,
+     "terminal": "XE2.1-10",
+     "hal": {
+      "targets": [
+       "measured position of joint 1 (preview overlay and disagreement check)"
+      ]
+     }
+    },
+    {
+     "function": "Y2 scale",
+     "resource_class": "encoder",
+     "channel": 3,
+     "terminal": "XE3.1-10",
+     "hal": {
+      "targets": [
+       "measured position of joint 2 (preview overlay and disagreement check)"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 0",
+     "resource_class": "di",
+     "channel": 0,
+     "terminal": "XDI0.1",
+     "hal": {
+      "targets": [
+       "joint.0.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 1",
+     "resource_class": "di",
+     "channel": 1,
+     "terminal": "XDI0.2",
+     "hal": {
+      "targets": [
+       "joint.1.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 2",
+     "resource_class": "di",
+     "channel": 2,
+     "terminal": "XDI0.3",
+     "hal": {
+      "targets": [
+       "joint.2.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 3",
+     "resource_class": "di",
+     "channel": 3,
+     "terminal": "XDI0.4",
+     "hal": {
+      "targets": [
+       "joint.3.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 4",
+     "resource_class": "di",
+     "channel": 4,
+     "terminal": "XDI0.5",
+     "hal": {
+      "targets": [
+       "joint.4.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 5",
+     "resource_class": "di",
+     "channel": 5,
+     "terminal": "XDI0.6",
+     "hal": {
+      "targets": [
+       "joint.5.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 6",
+     "resource_class": "di",
+     "channel": 6,
+     "terminal": "XDI0.7",
+     "hal": {
+      "targets": [
+       "joint.6.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 7",
+     "resource_class": "di",
+     "channel": 7,
+     "terminal": "XDI0.8",
+     "hal": {
+      "targets": [
+       "joint.7.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 8",
+     "resource_class": "di",
+     "channel": 8,
+     "terminal": "XDI1.1",
+     "hal": {
+      "targets": [
+       "joint.8.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 9",
+     "resource_class": "di",
+     "channel": 9,
+     "terminal": "XDI1.2",
+     "hal": {
+      "targets": [
+       "joint.9.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 10",
+     "resource_class": "di",
+     "channel": 10,
+     "terminal": "XDI1.3",
+     "hal": {
+      "targets": [
+       "joint.10.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Home joint 11",
+     "resource_class": "di",
+     "channel": 11,
+     "terminal": "XDI1.4",
+     "hal": {
+      "targets": [
+       "joint.11.home-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Limit chain",
+     "resource_class": "di",
+     "channel": 12,
+     "terminal": "XDI1.5",
+     "hal": {
+      "targets": [
+       "joint.0.neg-lim-sw-in",
+       "joint.0.pos-lim-sw-in",
+       "joint.1.neg-lim-sw-in",
+       "joint.1.pos-lim-sw-in",
+       "joint.2.neg-lim-sw-in",
+       "joint.2.pos-lim-sw-in",
+       "joint.3.neg-lim-sw-in",
+       "joint.3.pos-lim-sw-in",
+       "joint.4.neg-lim-sw-in",
+       "joint.4.pos-lim-sw-in",
+       "joint.5.neg-lim-sw-in",
+       "joint.5.pos-lim-sw-in",
+       "joint.6.neg-lim-sw-in",
+       "joint.6.pos-lim-sw-in",
+       "joint.7.neg-lim-sw-in",
+       "joint.7.pos-lim-sw-in",
+       "joint.8.neg-lim-sw-in",
+       "joint.8.pos-lim-sw-in",
+       "joint.9.neg-lim-sw-in",
+       "joint.9.pos-lim-sw-in",
+       "joint.10.neg-lim-sw-in",
+       "joint.10.pos-lim-sw-in",
+       "joint.11.neg-lim-sw-in",
+       "joint.11.pos-lim-sw-in"
+      ]
+     }
+    },
+    {
+     "function": "Cycle start",
+     "resource_class": "di",
+     "channel": 13,
+     "terminal": "XDI1.6",
+     "hal": {
+      "targets": [
+       "halui.program.run"
+      ]
+     }
+    },
+    {
+     "function": "Feed hold",
+     "resource_class": "di",
+     "channel": 14,
+     "terminal": "XDI1.7",
+     "hal": {
+      "targets": [
+       "halui.program.pause"
+      ]
+     }
+    },
+    {
+     "function": "Lube pump (through an interposing relay; the pump start current is on the relay contact)",
+     "resource_class": "do",
+     "channel": 0,
+     "terminal": "XDO0.1",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "motion.digital-out-00"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": true
+    },
+    {
+     "function": "Z brake (<= 0.5 A)",
+     "resource_class": "do",
+     "channel": 1,
+     "terminal": "XDO0.2",
+     "assumed_load_a": 0.5,
+     "hal": {
+      "writer": "joint.3.amp-enable-out"
+     },
+     "peak_a": 0.5,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle run",
+     "resource_class": "do",
+     "channel": 2,
+     "terminal": "XDO0.3",
+     "assumed_load_a": 0.05,
+     "hal": {
+      "writer": "spindle.0.forward"
+     },
+     "peak_a": 0.05,
+     "peak_ms": 0,
+     "via_relay": false
+    },
+    {
+     "function": "Spindle speed",
+     "resource_class": "ao",
+     "channel": 0,
+     "terminal": "XAO.1-2",
+     "hal": {
+      "writer": "spindle.0.speed-out-abs (scaled to volts)"
+     }
+    },
+    {
+     "function": "Machine E-stop/safety relay output -> external permit",
+     "resource_class": "safety_ext_permit",
+     "channel": 0,
+     "terminal": "XS1.2"
+    },
+    {
+     "function": "Process-enable interlock (gates XPC0/XPC1 only; not a spindle stop)",
+     "resource_class": "process_permit",
+     "channel": 0,
+     "terminal": "XS1.3"
+    },
+    {
+     "function": "Safety relay diagnostic status",
+     "resource_class": "safety_status",
+     "channel": 0,
+     "terminal": "XS1.4"
+    },
+    {
+     "function": "Reset/arm pushbutton with lamp",
+     "resource_class": "reset_arm",
+     "channel": 0,
+     "terminal": "XS1.5 (+XS1.6 lamp)"
+    },
+    {
+     "function": "Drive-power contactor mirror contact",
+     "resource_class": "contactor_fb",
+     "channel": 0,
+     "terminal": "XS1.7"
+    },
+    {
+     "function": "Output permission contact in series with contactor request",
+     "resource_class": "permit_out",
+     "channel": 0,
+     "terminal": "XS1.10-11"
+    },
+    {
+     "function": "Handwheel (MPG) with enable button",
+     "resource_class": "mpg",
+     "channel": 0,
+     "terminal": "XH1.1-10"
+    },
+    {
+     "function": "Pendant axis select X",
+     "resource_class": "pendant_sel",
+     "channel": 0,
+     "terminal": "XH2.1",
+     "hal": {
+      "axis": "X"
+     }
+    },
+    {
+     "function": "Pendant axis select Y",
+     "resource_class": "pendant_sel",
+     "channel": 1,
+     "terminal": "XH2.2",
+     "hal": {
+      "axis": "Y"
+     }
+    },
+    {
+     "function": "Pendant axis select Z",
+     "resource_class": "pendant_sel",
+     "channel": 2,
+     "terminal": "XH2.3",
+     "hal": {
+      "axis": "Z"
+     }
+    },
+    {
+     "function": "Pendant x1",
+     "resource_class": "pendant_sel",
+     "channel": 6,
+     "terminal": "XH2.7"
+    },
+    {
+     "function": "Pendant x10",
+     "resource_class": "pendant_sel",
+     "channel": 7,
+     "terminal": "XH2.8"
+    },
+    {
+     "function": "Pendant x100",
+     "resource_class": "pendant_sel",
+     "channel": 8,
+     "terminal": "XH2.9"
+    }
+   ],
+   "counts": {
+    "motor": {
+     "capacity": 12,
+     "used": 12,
+     "spare": 0
+    },
+    "encoder": {
+     "capacity": 4,
+     "used": 4,
+     "spare": 0
+    },
+    "di": {
+     "capacity": 24,
+     "used": 15,
+     "spare": 9
+    },
+    "do": {
+     "capacity": 16,
+     "used": 3,
+     "spare": 13
+    },
+    "probe": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "freq": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "pwm": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "proc_en": {
+     "capacity": 2,
+     "used": 0,
+     "spare": 2
+    },
+    "ao": {
+     "capacity": 2,
+     "used": 1,
+     "spare": 1
+    },
+    "ai": {
+     "capacity": 4,
+     "used": 0,
+     "spare": 4
+    },
+    "rs485": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "can": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "mpg": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_ext_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "process_permit": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "safety_status": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "reset_arm": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "contactor_fb": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "sto_fb": {
+     "capacity": 1,
+     "used": 0,
+     "spare": 1
+    },
+    "permit_out": {
+     "capacity": 1,
+     "used": 1,
+     "spare": 0
+    },
+    "pendant_sel": {
+     "capacity": 10,
+     "used": 6,
+     "spare": 4
+    }
+   },
+   "do_group_current_check": {
+    "DO0-DO3 (FIELD_A)": {
+     "assumed_all_on_a": 0.6,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO4-DO7 (FIELD_A)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO8-DO11 (FIELD_B)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    },
+    "DO12-DO15 (FIELD_B)": {
+     "assumed_all_on_a": 0,
+     "group_limit_a": 2.0,
+     "fits": true
+    }
+   },
+   "do_bank_current_basis": "Arithmetic from assumed example loads (valve 0.25 A, 24 V LED lamp 0.1 A, relay coil 0.05 A, brake 0.5 A max; pumps through an interposing relay); every DO also carries a declared peak current and duration: a load whose peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay (validator V-EL-06). Actual values come from the selected device profiles",
+   "conflicts": [],
+   "fits": true,
+   "optional": [],
+   "variants_not_fitting": [],
+   "safety_note": null,
+   "hal_map": {
+    "kinematic_joints": 12,
+    "extra_joints": 0,
+    "joints_total": 12,
+    "homing_groups": [
+     {
+      "axis": "Y",
+      "joints": [
+       1,
+       2
+      ],
+      "home_sequence": -1,
+      "rule": "identical negative HOME_SEQUENCE"
+     },
+     {
+      "axis": "Z",
+      "joints": [
+       3,
+       10,
+       11
+      ],
+      "home_sequence": -2,
+      "rule": "identical negative HOME_SEQUENCE"
+     },
+     {
+      "axis": "X",
+      "joints": [
+       0
+      ],
+      "home_sequence": 3
+     },
+     {
+      "axis": "A",
+      "joints": [
+       4
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "B",
+      "joints": [
+       5
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "C",
+      "joints": [
+       6
+      ],
+      "home_sequence": 4
+     },
+     {
+      "axis": "U",
+      "joints": [
+       7
+      ],
+      "home_sequence": 5
+     },
+     {
+      "axis": "V",
+      "joints": [
+       8
+      ],
+      "home_sequence": 5
+     },
+     {
+      "axis": "W",
+      "joints": [
+       9
+      ],
+      "home_sequence": 5
+     }
+    ],
+    "probe_net": {
+     "mode": "none",
+     "target": "motion.probe-input",
+     "rule": "no probe fitted; motion.probe-input unconnected"
+    },
+    "spindles": [
+     {
+      "id": 0,
+      "run_paths": [
+       "do:2"
+      ],
+      "speed": "ao:0",
+      "at_speed": "near comparator on spindle.0.speed-in (encoder 0)",
+      "feedback": "encoder:0"
+     }
+    ],
+    "generic_rules": "per joint J with channel C: joint.J.motor-pos-cmd -> cnc1.C.position-cmd; joint.J.amp-enable-out -> cnc1.C.enable; or2(cnc1.C.alarm-latched, cnc1.fault) -> joint.J.amp-fault-in; pos_fb -> joint.J.motor-pos-fb (one source per joint); halui.joint.J.unhome when any channel of J loses continuity",
+    "notes": [
+     "Z, Z2 and Z3 move together (duplicate Z letters)"
+    ]
+   },
+   "process_interlock_scope": "XS1.3 open opens XPC0 and XPC1 only. No output of this sheet is on XPC0/XPC1, so XS1.3 removes nothing here; a spindle stop belongs in the EXT_PERMIT safety chain or needs the spindle run/STO input wired through XPC0."
+  }
+ ],
+ "summary": [
+  {
+   "id": "A_router_3axis_gantry",
+   "fits": true,
+   "not_fitting_variants": [],
+   "spare": {
+    "motor": 3,
+    "encoder": 4,
+    "di": 2,
+    "do": 1,
+    "probe": 0,
+    "freq": 2,
+    "pwm": 2,
+    "proc_en": 2,
+    "ao": 1,
+    "ai": 4
+   }
+  },
+  {
+   "id": "B_mill_5axis_trunnion",
+   "fits": true,
+   "not_fitting_variants": [
+    "B2_separate_limits"
+   ],
+   "spare": {
+    "motor": 2,
+    "encoder": 1,
+    "di": 1,
+    "do": 2,
+    "probe": 0,
+    "freq": 2,
+    "pwm": 2,
+    "proc_en": 2,
+    "ao": 1,
+    "ai": 4
+   }
+  },
+  {
+   "id": "C_lathe",
+   "fits": true,
+   "not_fitting_variants": [],
+   "spare": {
+    "motor": 5,
+    "encoder": 3,
+    "di": 4,
+    "do": 4,
+    "probe": 1,
+    "freq": 2,
+    "pwm": 2,
+    "proc_en": 2,
+    "ao": 1,
+    "ai": 4
+   }
+  },
+  {
+   "id": "D_plasma",
+   "fits": true,
+   "not_fitting_variants": [],
+   "spare": {
+    "motor": 4,
+    "encoder": 4,
+    "di": 9,
+    "do": 9,
+    "probe": 0,
+    "freq": 1,
+    "pwm": 2,
+    "proc_en": 0,
+    "ao": 2,
+    "ai": 4
+   }
+  },
+  {
+   "id": "E_twelve_motor_with_encoder_expansion",
+   "fits": true,
+   "not_fitting_variants": [
+    "E2_plus_spindle_encoder"
+   ],
+   "spare": {
+    "motor": 0,
+    "encoder": 0,
+    "di": 2,
+    "do": 1,
+    "probe": 0,
+    "freq": 2,
+    "pwm": 2,
+    "proc_en": 2,
+    "ao": 2,
+    "ai": 4
+   }
+  },
+  {
+   "id": "F_twelve_motor_open_loop",
+   "fits": true,
+   "not_fitting_variants": [],
+   "spare": {
+    "motor": 0,
+    "encoder": 0,
+    "di": 9,
+    "do": 13,
+    "probe": 2,
+    "freq": 2,
+    "pwm": 2,
+    "proc_en": 2,
+    "ao": 1,
+    "ai": 4
+   }
+  }
+ ],
+ "hal_map_note": "Every assignment carries a 'hal' block: motors give joint, axis letter, extra-joint flag and the single motor-pos-fb source; DI, encoders, probes and frequency inputs list the pins they write; DO, AO and process enables name their single writer. tools/interface_spec_validate.py builds the net list from these blocks and refuses two writers on one pin, a joint without exactly one feedback source, gantry members with different HOME_SEQUENCE values, an unhome index beyond the joint count, a bus-only spindle run path, a mislabelled pendant selector and a DO peak above the 0.62 A current-limit minimum without a relay."
+}

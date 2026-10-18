@@ -1,0 +1,184 @@
+{
+  "status": "PROPOSED_IS2_NOT_ADOPTED",
+  "version": "MBR2",
+  "base_IOL1_wire_frame_bytes": 40,
+  "CNC3_command_feedback_bytes": [
+    96,
+    176
+  ],
+  "soldered_regions": {
+    "0": "DIC11",
+    "1": "DOA21",
+    "2": "DOB21",
+    "3": "ACC31"
+  },
+  "one_motherboard_serial_shared_by_all_regions": true,
+  "actual_unique_MCU_UID_per_region": true,
+  "no_removable_card_identity_or_custom_board": true,
+  "record_layout": [
+    [
+      0,
+      4,
+      "MBR2 magic"
+    ],
+    [
+      4,
+      1,
+      "record format2"
+    ],
+    [
+      5,
+      1,
+      "IOL1 functional class"
+    ],
+    [
+      6,
+      1,
+      "actual fitted lane/slot"
+    ],
+    [
+      7,
+      1,
+      "hardware major0..15"
+    ],
+    [
+      8,
+      1,
+      "hardware minor"
+    ],
+    [
+      9,
+      1,
+      "IS2 integrated topology1"
+    ],
+    [
+      10,
+      2,
+      "512byte length BE"
+    ],
+    [
+      12,
+      4,
+      "nonzero generation BE, no wrap allocation"
+    ],
+    [
+      16,
+      16,
+      "common board serial printableASCII zero padded"
+    ],
+    [
+      32,
+      12,
+      "actual STM32 UID bytes atUID_BASE in address order"
+    ],
+    [
+      44,
+      2,
+      "layout revision BE"
+    ],
+    [
+      46,
+      2,
+      "minimum/max CNC3ABI bytes"
+    ],
+    [
+      48,
+      4,
+      "minimum/max firmware u16BE"
+    ],
+    [
+      52,
+      4,
+      "minimum/max gateware u16BE"
+    ],
+    [
+      56,
+      10,
+      "source population12motors/4ABZ/24DI/16DO/2probe/2freq/2PWM/2AO/4AI/0Flanes, no qualification"
+    ],
+    [
+      66,
+      2,
+      "zero reserved"
+    ],
+    [
+      68,
+      32,
+      "electrical source manifest SHA256"
+    ],
+    [
+      100,
+      32,
+      "own board-region calibration record SHA256, actual method/range/units/provenance in separately bound record"
+    ],
+    [
+      132,
+      32,
+      "actual factory test record SHA256"
+    ],
+    [
+      164,
+      32,
+      "firmware image SHA256"
+    ],
+    [
+      196,
+      16,
+      "SHA256 public key fingerprint prefix"
+    ],
+    [
+      212,
+      228,
+      "FF reserved"
+    ],
+    [
+      440,
+      64,
+      "Ed25519 signature over0..439"
+    ],
+    [
+      504,
+      4,
+      "CRC32C over0..503"
+    ],
+    [
+      508,
+      4,
+      "CMT2 commit tag"
+    ]
+  ],
+  "IDENT_READ_supplement": {
+    "control": 8,
+    "telemetry_request": 255,
+    "command_payload10": "chunk0..63",
+    "command_payload11_35": "zero",
+    "response_telemetry_page": "0x80|chunk",
+    "response26_27": "chunk index u16BE",
+    "response28_35": "actual8B record slice orFF when unprovisioned",
+    "response_realtime10_25": "ordinary actual realtime preserved",
+    "response_header3": "actual integrity-validated observed HWmajor inuppernibble, actualfittedslot inlower",
+    "latency": "prepared after preceding CSrelease, chunk selection only after full acceptedCRC/epoch/sequence command",
+    "authority": "none"
+  },
+  "DIC_CONFIG_frozen_bytes": {
+    "control": 16,
+    "telemetry_request": 255,
+    "payload10": "blob0",
+    "payload11": "format1",
+    "payload12_14": "3 group debounce100us units0..255",
+    "payload15_34": "zero",
+    "payload35": "zero",
+    "actual_applied_CRC": "page1 telemetry32..35 over exact24B config",
+    "config_storage": "volatile only, cleared onnewactualepoch; noflashwrites"
+  },
+  "trust": {
+    "CRC": "integrity only",
+    "target_UID": "mix-up check, not secure remote attestation",
+    "host_signature": "real Ed25519 under explicit supplied registry",
+    "production_trust": "notimplemented, cannot be granted by renamedfixturemetadata",
+    "ACTIVE_outputs_ARM": "notimplemented and remainsLOW",
+    "calibration_accuracy": "notinferred from hash/signature"
+  },
+  "backwards_safe": "Unprovisionedflash yields nofactoryrecord, major0, noACTIVE; original polls/SYNC unchanged. NewIDENT supplement/version requires coordinated host/master review beforeadoption. Diagnostic major0 reader cannot silently accept provisionedmajor1.",
+  "machine_license": "independent machine-bound entitlement; board serial replacement doesnotrequire software repurchase; licensingnotimplementedbyrecord"
+}

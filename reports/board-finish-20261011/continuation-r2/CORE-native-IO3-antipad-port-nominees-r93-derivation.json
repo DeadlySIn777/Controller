@@ -1,0 +1,31 @@
+{
+ "prior_attribution_receipt_sha256": "29d8c70a8ca07844b96da7080b378c6d6c15b089cca8f148a48e538ed4aeefdd",
+ "base_script_sha256": "89949dab99ef0ed3d1ecb462982f3450268718b0482d63d3ff34642780c9b8b0",
+ "derived_script_sha256": "878d87503cf02843fd8061c1af5b6f0319f714d8effca5812a958ba271e6ffad",
+ "changes": [
+  {
+   "old": "CORE-ordinary-external-fill-port-blocker-diagnosis-r92';assert",
+   "new": "CORE-native-IO3-antipad-external-port-nominees-r93';assert"
+  },
+  {
+   "old": "  print('R92_BLOCKERS'",
+   "new": "  self.propose_IO3_antipad_ports(candidate,out,side)\n  print('R93_BLOCKERS'"
+  },
+  {
+   "old": "\ndef main():",
+   "new": "\n def propose_IO3_antipad_ports(self,candidate,out,side):\n  allowed_UUID='54921f4b-0308-4821-9549-ff9360bf05ca'\n  eligible=[r for r in self.rows if r['family']=='native_foreign_power_filled_Cu'and r.get('UUID')==allowed_UUID]\n  assert eligible and all(r['raw_net']=='/IO_3V3'and r['layer']=='In2.Cu'for r in eligible)\n  retained=[r['shape']for r in self.rows if r not in eligible]\n  region=set_precision(candidate.difference(unary_union(retained)),1e-6)\n  (out/(side+'-new-native-IO3-antipad-prospective-port-region.wkb')).write_bytes(region.wkb)\n  proposals=[]\n  for face in sorted(parts(region),key=lambda q:-q.area)[:6]:\n   point=face.representative_point();xy=[round(point.x,6),round(point.y,6)]\n   if not region.covers(Point(xy)):continue\n   uid=str(uuid.uuid5(uuid.NAMESPACE_URL,'controller-CORE-native-IO3-antipad-r93/'+side+'/'+repr(xy)))\n   proposals.append({'side':side,'via':{'uuid':uid,'net':'/CORE_1V2','x':xy[0],'y':xy[1],'d':.5,'drill':.2,'flashed':['F.Cu','In1.Cu','In2.Cu','In3.Cu','In4.Cu','B.Cu'],'prospective_not_native':True},'ordinary_site_face_area_mm2':face.area,'one_native_IO3_plane_exact_new_hole_and_annulus_antipad_required':allowed_UUID})\n  (out/(side+'-prospective-new-ordinary-ports.pkl')).write_bytes(pickle.dumps(proposals,protocol=5))\n  put(out/(side+'-antipad-site-proposal.json'),{'side':side,'prospective_new_ordinary_port_region_area_mm2':region.area,'proposals':proposals,'all_original_R90_guards_except_one_literal_IO3_native_filled_plane_remain_hard':True,'native_zone_original_outline_and_settings_unchanged':True,'required_new_antipad_predicate':'new CORE ordinary .5/.2 via, .15 same-domain Cu+.025 planning margin and >=.275 foreign-hole clearance; ALL old IO3 source/direct-layer-contact/shape/no-loss checks required','ordinary_native_flashes_all6': 'UNPROVEN','actual_CORE_In3_finite_annular_overlap':'REQUIRES_EXACT_MODEL_CHECK','all77_contacts_all_original_discrete_IO3_fill_contacts_full_2A_IO3_and_0_8A_CORE_current_return_drop_thermal_native_DRC':'OPEN','no_native_or_board_written':True,'adopted':False})\n  print('R93_IO3_ANTIPAD_ORDINARY_PORT_NOMINEES',side,region.area,len(proposals),flush=True)\n\ndef main():"
+  },
+  {
+   "old": "'verdict':'EXACT_R90_ORDINARY_SITE_BLOCKER_ATTRIBUTION_ONLY'",
+   "new": "'verdict':'LITERAL_NATIVE_IO3_NEW_ANTIPAD_ORDINARY_PORT_PROPOSALS_ONLY'"
+  },
+  {
+   "old": "'R92_EXACT_BLOCKER_ATTRIBUTION_FROZEN'",
+   "new": "'R93_LITERAL_IO3_ANTIPAD_PORT_PROPOSALS_FROZEN'"
+  }
+ ],
+ "ordinary_site_counterfactual_only": true,
+ "prior_R90_full_guard_zero_region_WKB_must_still_equal": true,
+ "only_literal_native_IO3_54921f4b_plane_antipad_proposed": true,
+ "all_old_source_direct_filled_contact_and_current_native_checks_open": true
+}

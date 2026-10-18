@@ -1,0 +1,119 @@
+# Rev A qualification and integration gaps — 4 October 2026
+
+The current setup/readiness/recovery/diagnostics/accounting/dark-red UI is the
+**frozen Rev A feature baseline**. This pass adds qualification evidence and a
+disconnected HAL integration candidate. It does not add frontend features,
+change machine settings or touch Claude's ROOT105/routing.
+
+[Machine-readable gap register](gaps.json) binds the canonical host, RTL, vendor
+and preservation receipts. Its independent recheck verifies **440 source and
+artifact hashes**, with no mismatch. [Final byte-preservation verification](preservation-final.json)
+passes for every captured group. [Independent review](review/receipt.json)
+records the final source/evidence boundaries and corrected runner failure controls.
+
+**The requested complete twelve-channel milestone remains BLOCKED.** The real
+CNC3 host requires a complete capability/provider contract. The report-local
+motion candidate has twelve generators/four encoders but lacks CAP3 discovery;
+the separate IS-2 CAP3 candidate explicitly marks its full profile incomplete
+and reports no installed motion channels. Qualification must preserve that
+refusal. Neither endpoint is an adopted, complete motherboard runtime.
+
+## SOFTWARE PASS
+
+- The 24 service/frontend baseline files exactly match the source pinned by the
+  [last executed regression](../deep-upgrade-20261004/host-tests.json): **508
+  passes, one Windows privilege skip, zero failures/errors**. That run is retained
+  evidence, not a newly repeated 509-case run.
+- [The preservation checker](../../tools/check_rev_a_baseline.py) verifies those
+  24 files, 3,308 main hardware/gateware/firmware/config/schema files, 20 preserved
+  external CNC3/specification files, 21 existing preview/settings files and 20
+  regression-test files. [Initial verification](preservation-initial.json)
+  passes. [Seven executed negative controls](baseline-negative-controls.json)
+  reject changed expected hashes, existing-output overwrite and an output path
+  outside reports. Actual source/settings are never mutated by those controls.
+- [Current diagnostic replay](rtl/current-iol1-r01/receipt.json) executes **5,441
+  C checks** and compile/links **DIC, DOA, DOB and ACC ARM targets**. Target
+  execution and physical timing remain untested.
+- [New report-local HAL integration](host/receipt.json) passes **six executed
+  cases/124 assertions** using the actual LinuxCNC 2.9.4 HAL scheduler, retained
+  IS-2-compatible C-host candidate and actual serial RTL pins. Twelve commands,
+  twelve feedback outputs, twelve independent simulated STEP monitors and four
+  encoder pins are exported. The incomplete profile produces a bounded
+  qualification refusal; reset/enable cannot bypass it. CRC-corrupted feedback,
+  unavailable resources, unchanged IS-1 driver incompatibility and absent
+  simulation opt-in also refuse. No CONFIGURE/ARM/UPDATE or STEP edge/authority
+  is observed. This is an executed inhibited path, with no trajectory planner,
+  ACTIVE motion or valid encoder feedback.
+- All 38 HAL-run input hashes remain unchanged, seven original C/H copies match
+  the external archive, and **183 existing rootfs modules** are restored byte
+  for byte. Independent review reproduced a partial-install cleanup defect;
+  the corrected runner restores after partial failures and publishes completed
+  modules atomically without replacement. [Four executed inert Linux failure
+  controls](review/module-install-corrected-controls.json) pass. Earlier failed
+  build/runner attempts and the pre-correction pass remain preserved; final
+  `host/run-r06` binds the corrected current sources.
+
+## FPGA PASS
+
+**BLOCKED — no FPGA vendor PASS is claimed.** Current motherboard source selects
+`T20F256I4`; historical C4 prose is not the present target identity. Efinity and a
+qualified complete-design vendor project/pin-bank/timing flow have not been
+demonstrated in this environment.
+
+[Vendor audit and exact unblocking steps](vendor/README.md) record the actual
+tool-search scope/errors, all 256 native balls, source bank/rail/function ledger
+and clock evidence. Entitlement remains not demonstrated. These are source
+observations, without applied vendor pin/timing legality or physical proof.
+
+[Fresh structural Efinix-family mapping](vendor/structural-family-r01/receipt.json)
+is a **generic synthesis screen only**. Its top contains large internal parallel
+buses and is not the complete pin-ready motherboard top. It cannot qualify
+actual-device capacity, placement, routing, timing or a bitstream.
+
+## SIMULATION PASS
+
+| Executed evidence | Result | Boundary |
+|---|---|---|
+| [Current structural CNC3 C/RTL/SPI](rtl/cnc3-structural-r01/receipt.json) | 743 C-oracle cases; actual serial checks and rejection cases pass | Frozen 96/176 frames, structural validation/packing; no stateful motion or HAL proof |
+| [Current C ↔ HDL diagnostic replay](rtl/current-iol1-r01/receipt.json) | 78 watchdog/progress/failure checks pass | Four real compiled C diagnostic peers; historical six/two bringup wrapper; GPIO fixtures and all output authority LOW |
+| [Twelve-generator timing](rtl/twelve-generator-timing-r01/receipt.json) | Original-algorithm equivalence and dynamic drain/reversal pass | Twelve instances in compiled RTL; component evidence |
+| [Four ABZ/filter checks](rtl/four-abz-filter-r01/receipt.json) | Position/filter/illegal-transition checks pass | Base four algorithms; no completed index one-shot/event path or physical receiver qualification |
+| [Actual serial twelve-output/four-encoder plant](rtl/spi-twelve-four-plant-r01/receipt.json) | All 18 retained scenarios pass | Real compiled serial/state/generator/encoder RTL with ideal mechanics; no actual LinuxCNC task/HAL integration, general I/O authority or probe/limit event acquisition |
+| [Individual channel faults and unsupported functions](rtl/explicit-boundaries-r02/receipt.json) | 22 cases pass: 12 alarms, four encoder losses, six unsupported commands | All twelve actual simulated STEP channels emit before each injection. Six DO/probe/index/PWM/I/O requests are structurally valid in the frozen C oracle and refuse at the stateful boundary; DI/AI remains unavailable |
+
+[Motion-source provenance](rtl/motion-inputs/provenance.json) identifies the
+unchanged report-local stateful candidate and current frozen-protocol validator.
+Its authored legacy qualification signals are logical simulation fixtures, not
+IS-2 soldered-region/card discovery or evidence of actual modules. Commanded
+motion, actual simulated STEP edges and virtual encoder position remain distinct.
+General DI/AI observations remain unavailable; general DO/process authority is
+not completed. Home/limit/probe values computed by ideal mechanics do not prove
+that an FPGA acquisition path consumed them.
+
+## PHYSICAL VALIDATION REQUIRED
+
+**No physical measurements or device connections occur in this pass.** Physical
+commissioning, safety and manufacturing readiness remain unchanged and open.
+The next hardware evidence must cover live acquisition, actual firmware/FPGA
+execution, loaded target transport/servo timing, independent watchdog/inhibit
+propagation, output current limits, analog accuracy, thermals and brownout/
+power-fail behavior. Simulation cannot qualify the 20 ms electrical inhibit
+requirement, 2 MHz/channel product target or a physical touchscreen/machine.
+
+The required order is: complete the versioned IS-2 runtime/provider integration;
+prove the whole twelve-channel virtual machine through the unmodified host
+guards; run the actual complete-design Efinity flow; finish and independently
+verify Claude's routing/adoption; build and qualify hardware. Signed updates,
+replacement provisioning, discovery and novice/paid-model studies remain open
+product gates; they do not authorize more frontend features during this freeze.
+
+Historical six-joint/two-encoder CNC1 results and previous report-local receipts
+remain preserved. Passing independent component runs is never added together to
+claim the continuous milestone. [Qualification policy](../../docs/REV_A_QUALIFICATION.md)
+records this distinction and the feature freeze.
+
+The first boundary fixture incorrectly required motion `permit_out_req` LOW
+while armed. Its failed [r01 receipt](rtl/explicit-boundaries-r01/receipt.json)
+remains preserved; the corrected test checks general-I/O request/progress and
+independently decodes fault feedback. All eight RTL hashes match between those
+runs. This was a test correction, with no production source edit.

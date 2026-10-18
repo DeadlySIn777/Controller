@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [
+    "22 floating-substrate label warnings are expected and retained; no broad ERC suppression.",
+    "Output state during power loss/brownout is undetermined; input-valid masking is required outside this sheet.",
+    "0-30V sinking-input study only; neither universal voltage, AC nor NPN mode is qualified.",
+    "Field input currents, sensor leakage, cable/filter delay, full-board EMC and isolation require qualification.",
+    "Probe/toolsetter accuracy and cycle-start intent cannot be inferred from a raw input level."
+  ],
+  "calculations": {
+    "active_input_current_screen_a": [
+      0.0020297029702970298,
+      0.0027777777777777775
+    ],
+    "all_22_active_field_current_screen_a": 0.0611111111111111,
+    "all_22_field_power_at_30v_screen_w": 1.833333333333333,
+    "rthreshold_dc_power_max_w": 0.007832175925925923,
+    "rsense_dc_power_max_w": 0.004423581790123456,
+    "rthreshold_30v_step_initial_power_screen_w": 0.9136592051164916,
+    "filter_30v_charge_energy_screen_j": 4.739175e-06,
+    "filter_rc_time_constant_screen_s": [
+      9.329901075e-06,
+      1.0689999074999999e-05
+    ],
+    "filter_cap_max_f": 1.05315e-08,
+    "rising_threshold_conservative_screen_max_v": 11.369583333333333,
+    "falling_threshold_intrinsic_screen_min_v": 6.5,
+    "logic_static_current_screen_a": 0.021663187429854094,
+    "output_high_screen_min_v": 2.8000000000000003,
+    "output_low_spec_max_v": 0.4,
+    "per_ic_power_upper_screen_w": 0.17312666666666665,
+    "limitations": [
+      "Current/threshold TCR extension is an engineering screen, not a newly guaranteed component specification; intrinsic comparator bounds assumed to remain applicable.",
+      "Published 2.2-2.47mA values describe typical-temperature behavior; use 2.05-2.75mA guaranteed table range at stated Rs conditions for active inputs below30V.",
+      "RTHR*CIN is not propagation delay: source impedance, cable capacitance, nonlinear input current, FPGA synchronization/filtering and latch timing remain outside the model.",
+      "Logic current excludes switching/load-capacitance current. Field input current comes from external sources and is not FIELD_5V consumption.",
+      "Pulse resistor screen is a 30V RC step, not IEC surge/EFT or a cable energy qualification.",
+      "No lifetime resistor drift, connector fault or board thermal/EMC/isolation qualification is implied."
+    ]
+  },
+  "manufacturing_ready": false
+}

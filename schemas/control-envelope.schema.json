@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:controller-lab:control-envelope:v1",
+  "title": "Proposed supervisory command envelope; not an actuator protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "boot_id", "session_id", "sequence", "deadline_ms", "action"],
+  "properties": {
+    "version": {"const": 1},
+    "boot_id": {"type": "string", "minLength": 1},
+    "session_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "deadline_ms": {"type": "integer", "minimum": 0},
+    "action": {"enum": ["heartbeat", "arm", "start", "hold", "resume", "disarm"]}
+  }
+}

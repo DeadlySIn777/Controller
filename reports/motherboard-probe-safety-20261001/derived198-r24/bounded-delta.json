@@ -1,0 +1,456 @@
+{
+  "changed_components": {
+    "U14026": {
+      "old": {
+        "kind": "SW24",
+        "mpn": "TPS26624DRCR",
+        "value": "TPS26624DRCR",
+        "footprint": "CNC_MB_Operator:TPS2662_DRC10_TI",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB0_UVLO",
+          "3": "FIELD_GND",
+          "4": "PRB0_SHDN_N",
+          "5": "FIELD_GND",
+          "6": "FIELD_GND",
+          "7": "PRB0_ILIM",
+          "8": "PRB0_DVDT",
+          "9": "PRB0_FIELD_FAULT_N",
+          "10": "PRB0_24V",
+          "11": "FIELD_GND"
+        },
+        "role": "independent probe latch-off eFuse;current/short bound remains source gate"
+      },
+      "new": {
+        "kind": "SW24",
+        "mpn": "MAX17612AATB+T",
+        "value": "MAX17612AATB+T",
+        "footprint": "CNC_MB_Operator:MAX17612_T1033_ADI",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB0_UVLO",
+          "3": "FIELD_GND",
+          "4": "PRB0_CLMODE",
+          "5": "PRB0_SHDN_N",
+          "6": "PRB0_FIELD_FAULT_N",
+          "7": "PRB0_FIELD_FAULT_N",
+          "8": "PRB0_ILIM",
+          "9": "FIELD_GND",
+          "10": "PRB0_24V",
+          "11": "FIELD_GND"
+        },
+        "role": "source-qualified20\u2013250mA current limiter; UV/current/reverse faults combined; latched fault"
+      }
+    },
+    "R14057": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW060349K9FKEA",
+        "value": "49900R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB0_ILIM",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 49900,
+        "tolerance": 0.01,
+        "role": "unqualified49.9k limit candidate, no invented guaranteedpoint"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "TNPW06032K49BEEA",
+        "value": "2490R0.1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB0_ILIM",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 2490,
+        "tolerance": 0.001,
+        "role": "fullrange \u00b15% current accuracy,100mA load and150mA static cap",
+        "tcr_ppm_K": 25
+      }
+    },
+    "R14058": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW06031M00FKEA",
+        "value": "1000000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB0_UVLO"
+        },
+        "resistance_ohm": 1000000,
+        "tolerance": 0.01,
+        "role": "TI disableexternalUVLOvia>=1M;parententry enforces19\u201330V"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW0603100KFKEA",
+        "value": "100000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB0_UVLO"
+        },
+        "resistance_ohm": 100000,
+        "tolerance": 0.01,
+        "role": "16.5V nominalUV threshold highleg"
+      }
+    },
+    "R14059": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW060310K0FKEA",
+        "value": "10000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "DOA_FIELD_3V3",
+          "2": "PRB0_SHDN_N"
+        },
+        "resistance_ohm": 10000,
+        "tolerance": 0.01,
+        "role": "probe on withfieldrail ready;no software automaticclear"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW06033K32FKEA",
+        "value": "3320R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "DOA_FIELD_3V3",
+          "2": "PRB0_SHDN_N"
+        },
+        "resistance_ohm": 3320,
+        "tolerance": 0.01,
+        "role": "strong receiving ENpullup,maintainsHIGH with ENinputload"
+      }
+    },
+    "R14060": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW0603100KFKEA",
+        "value": "100000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB0_SHDN_N",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 100000,
+        "tolerance": 0.01,
+        "role": "field3V3 absent defaults shutdown"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW060310K0FKEA",
+        "value": "10000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB0_SHDN_N",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 10000,
+        "tolerance": 0.01,
+        "role": "ENinternal8uA pullupcannot exceed .0808V with field3.3absent"
+      }
+    },
+    "C14044": {
+      "old": {
+        "kind": "C",
+        "mpn": "GRM1885C2A103JA01D",
+        "value": "10nF100V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB0_DVDT",
+          "2": "FIELD_GND"
+        },
+        "capacitance_f": 1e-08,
+        "voltage_rating_v": 100,
+        "role": "inrush slew setting;startup tolerance unqualified"
+      },
+      "new": {
+        "kind": "C",
+        "mpn": "GRM188R71H105KA12D",
+        "value": "1000nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "FIELD_GND"
+        },
+        "capacitance_f": 1e-06,
+        "voltage_rating_v": 50,
+        "role": "actual inputbulk,effective>=.47uF DCbias remains qualification"
+      }
+    },
+    "U14027": {
+      "old": {
+        "kind": "SW24",
+        "mpn": "TPS26624DRCR",
+        "value": "TPS26624DRCR",
+        "footprint": "CNC_MB_Operator:TPS2662_DRC10_TI",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB1_UVLO",
+          "3": "FIELD_GND",
+          "4": "PRB1_SHDN_N",
+          "5": "FIELD_GND",
+          "6": "FIELD_GND",
+          "7": "PRB1_ILIM",
+          "8": "PRB1_DVDT",
+          "9": "PRB1_FIELD_FAULT_N",
+          "10": "PRB1_24V",
+          "11": "FIELD_GND"
+        },
+        "role": "independent probe latch-off eFuse;current/short bound remains source gate"
+      },
+      "new": {
+        "kind": "SW24",
+        "mpn": "MAX17612AATB+T",
+        "value": "MAX17612AATB+T",
+        "footprint": "CNC_MB_Operator:MAX17612_T1033_ADI",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB1_UVLO",
+          "3": "FIELD_GND",
+          "4": "PRB1_CLMODE",
+          "5": "PRB1_SHDN_N",
+          "6": "PRB1_FIELD_FAULT_N",
+          "7": "PRB1_FIELD_FAULT_N",
+          "8": "PRB1_ILIM",
+          "9": "FIELD_GND",
+          "10": "PRB1_24V",
+          "11": "FIELD_GND"
+        },
+        "role": "source-qualified20\u2013250mA current limiter; UV/current/reverse faults combined; latched fault"
+      }
+    },
+    "R14063": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW060349K9FKEA",
+        "value": "49900R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB1_ILIM",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 49900,
+        "tolerance": 0.01,
+        "role": "unqualified49.9k limit candidate, no invented guaranteedpoint"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "TNPW06032K49BEEA",
+        "value": "2490R0.1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB1_ILIM",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 2490,
+        "tolerance": 0.001,
+        "role": "fullrange \u00b15% current accuracy,100mA load and150mA static cap",
+        "tcr_ppm_K": 25
+      }
+    },
+    "R14064": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW06031M00FKEA",
+        "value": "1000000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB1_UVLO"
+        },
+        "resistance_ohm": 1000000,
+        "tolerance": 0.01,
+        "role": "TI disableexternalUVLOvia>=1M;parententry enforces19\u201330V"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW0603100KFKEA",
+        "value": "100000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "PRB1_UVLO"
+        },
+        "resistance_ohm": 100000,
+        "tolerance": 0.01,
+        "role": "16.5V nominalUV threshold highleg"
+      }
+    },
+    "R14065": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW060310K0FKEA",
+        "value": "10000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "DOA_FIELD_3V3",
+          "2": "PRB1_SHDN_N"
+        },
+        "resistance_ohm": 10000,
+        "tolerance": 0.01,
+        "role": "probe on withfieldrail ready;no software automaticclear"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW06033K32FKEA",
+        "value": "3320R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "DOA_FIELD_3V3",
+          "2": "PRB1_SHDN_N"
+        },
+        "resistance_ohm": 3320,
+        "tolerance": 0.01,
+        "role": "strong receiving ENpullup,maintainsHIGH with ENinputload"
+      }
+    },
+    "R14066": {
+      "old": {
+        "kind": "R",
+        "mpn": "CRCW0603100KFKEA",
+        "value": "100000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB1_SHDN_N",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 100000,
+        "tolerance": 0.01,
+        "role": "field3V3 absent defaults shutdown"
+      },
+      "new": {
+        "kind": "R",
+        "mpn": "CRCW060310K0FKEA",
+        "value": "10000R1%",
+        "footprint": "Resistor_SMD:R_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB1_SHDN_N",
+          "2": "FIELD_GND"
+        },
+        "resistance_ohm": 10000,
+        "tolerance": 0.01,
+        "role": "ENinternal8uA pullupcannot exceed .0808V with field3.3absent"
+      }
+    },
+    "C14049": {
+      "old": {
+        "kind": "C",
+        "mpn": "GRM1885C2A103JA01D",
+        "value": "10nF100V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "PRB1_DVDT",
+          "2": "FIELD_GND"
+        },
+        "capacitance_f": 1e-08,
+        "voltage_rating_v": 100,
+        "role": "inrush slew setting;startup tolerance unqualified"
+      },
+      "new": {
+        "kind": "C",
+        "mpn": "GRM188R71H105KA12D",
+        "value": "1000nF50V",
+        "footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "physical": true,
+        "pins": {
+          "1": "FIELD_A_24V_PROTECTED",
+          "2": "FIELD_GND"
+        },
+        "capacitance_f": 1e-06,
+        "voltage_rating_v": 50,
+        "role": "actual inputbulk,effective>=.47uF DCbias remains qualification"
+      }
+    }
+  },
+  "added_components": {
+    "R19401": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PRB0_UVLO",
+        "2": "FIELD_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "role": "UVLO16.5V bottom"
+    },
+    "R19403": {
+      "kind": "R",
+      "mpn": "CRCW0603150KFKEA",
+      "value": "150000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PRB0_CLMODE",
+        "2": "FIELD_GND"
+      },
+      "resistance_ohm": 150000,
+      "tolerance": 0.01,
+      "role": "manufacturer150k latch-off"
+    },
+    "R19402": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PRB1_UVLO",
+        "2": "FIELD_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "role": "UVLO16.5V bottom"
+    },
+    "R19404": {
+      "kind": "R",
+      "mpn": "CRCW0603150KFKEA",
+      "value": "150000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PRB1_CLMODE",
+        "2": "FIELD_GND"
+      },
+      "resistance_ohm": 150000,
+      "tolerance": 0.01,
+      "role": "manufacturer150k latch-off"
+    }
+  },
+  "removed_components": [],
+  "all_other_original_components_unchanged": true,
+  "baseline_revision": "motherboard-operator-r0.1",
+  "physical_qualification": false
+}

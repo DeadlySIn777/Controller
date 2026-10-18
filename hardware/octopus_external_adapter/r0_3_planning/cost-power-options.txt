@@ -1,0 +1,210 @@
+OEA r0.3 cost and power architecture study — 2026-10-06
+RESEARCH PROPOSAL ONLY. No r0.3 schematic, PCB, electrical release or order implied.
+The partially routed r0.2 remains historical, unreleased work. It was not changed
+by this study. Prices below are USD catalogue observations, not Amazon prices,
+checkout totals, stocked supply commitments or a confirmed manufactured price.
+
+RECOMMENDATION
+Prototype three directly driven NX6008NBKR SOT-23 N-FET current sinks, a
+conventional MP2459GJ-Z buck, external 5/12/24 V input, and a non-shorting 5V/EXT
+selector. Remove the two LVC buffers, supervisor and 3.3 V LDO from the command
+path. The separately requested voltage indicators still need their own design.
+Use one SMT side, 0603 or larger passives, visible-lead SOT-23/TSOT23 packages,
+ordinary plated vias and a two-layer 6/6 mil minimum design target. This should
+be markedly easier to assemble on a controlled reflow hotplate than r0.2.
+Actual fit, routing, paste stencil, solder profile and host clearance remain open.
+
+DIRECT GATE DRIVE — SUPPORTING DATA AND LIMITS
+Nexperia NX6008NBK data sheet specifies 60 V drain rating and +/-8 V gate rating.
+At 25 C, maximum RDS(on) is 3 ohms at VGS=2.5 V/ID=200 mA, and 3.9 ohms at
+1.8 V/50 mA. Maximum total gate charge is 0.7 nC at the specified 4.5 V gate,
+30 V drain and 300 mA test; Ciss=27 pF and Crss=1.9 pF are typical, not maxima.
+Pin mapping is 1 gate, 2 source, 3 drain. NX6008NBKR is the ordinary SOT-23 part,
+not the smaller NBKW SOT-323 part used in r0.2. Generic 2N7002/BSS138 substitutions
+are not automatically equivalent at 2.5 V gate drive.
+https://assets.nexperia.com/documents/data-sheet/NX6008NBK.pdf
+
+Proposed STEP/DIR: host pin -> 1 kohm -> gate; 10 kohm gate-to-source; source to
+shared GND; drain to driver-minus. Host high asserts input current. COM+ is the
+selected signal voltage and fans out to the external driver's three plus inputs.
+This is a common-positive sink interface, not a differential transmitter.
+
+Calculated screening, before tolerances: the 1 kohm resistor bounds the initial
+current of a 5.5 V step to 5.5 mA, within the task's 6 mA host-drive screening
+level. The gate divider produces 3.00 V from 3.3 V and 4.545 V from 5 V; static
+host loads are 0.300/0.455 mA. To claim the 2.5 V on-resistance condition, require
+actual guaranteed host VOH >=2.75 V before tolerances. At 20 mA, 3 ohms implies
+60 mV sink drop and 1.2 mW dissipation at the stated data-sheet temperature.
+Do not extrapolate that 25 C maximum into an unstated full-temperature guarantee.
+
+The 6 mA figure is a VOH/VOL load specification, not proof of a particular
+controller's maximum allowable capacitive load. Q/I=0.7 nC/6 mA=117 ns is only a
+charge-time screening number; resistor current decreases during the transition.
+Ciss alone misses Miller charge. Gate, drain and driver-terminal waveforms at
+3.3/5 V, 5/12/24 V common and intended pulse widths must therefore be measured.
+Do not publish a maximum STEP frequency from those arithmetic estimates.
+Short local gate paths, a close pulldown and power-off cable connection are
+important. Host low level, hot leakage, drain-edge coupling, host reset and
+host-unpowered behavior remain qualification cases.
+
+EN POLICY MUST BE EXPLICIT
+The inexpensive baseline is the same series resistor/pulldown on EN. All sinks
+are off with an undriven host; that does not mean the motor driver is disabled.
+CL57T ENA-open behavior is specifically not a universal disable state. Firmware
+must map EN polarity for the exact driver and initialize STEP low before common
+power is applied. Host-high STEP at power application can create an input edge.
+There is no remaining local power-good delay or brownout gating in this proposal.
+
+An optional EN-only host-powered pullup may establish a reset default while VIO
+exists. For example, 4.7 kohm from HOST_VIO to EN before the 1 kohm series resistor,
+and 47 kohm gate pulldown, gives approximately 2.94 V at the gate from 3.3 V when
+the host pin is high-impedance. It draws about 0.7 mA from a low-driving 3.3 V host.
+That different EN network has a slower release and must be reviewed separately.
+Never pull any host signal up to external 5/12/24 V. No local rail powers HOST_VIO.
+Neither EN option provides STO, an emergency stop or host-loss motor inhibition.
+
+BUCK CHOICE
+AP63205WU-7 is attractive at $0.511 each/100 (Mouser observation). It uses a
+visible-lead TSOT26, fixed 5 V output and a 3.8–32 V input range. It needs an
+external inductor, bootstrap and input/output capacitors. However, the r0.2
+SMAJ28CA clamp can reach 45.4 V at its stated pulse test. That does not protect a
+32 V buck. A 24 V +/-10% steady source is not a sufficient transient analysis.
+Do not transplant the old TVS and claim AP63205 is protected.
+https://www.diodes.com/datasheet/download/AP63200-AP63201-AP63203-AP63205.pdf
+https://www.mouser.com/en/ProductDetail/Diodes-Incorporated/AP63205WU-7?qs=u16ybLDytRZtkj8PzdWCOw%3D%3D
+
+Prefer MP2459GJ-Z for this cost study: manufacturer's direct page lists $0.86 at
+100. It is active, TSOT23-6, and supports 4.5–55 V input. Its asynchronous circuit
+adds a catch diode and feedback divider compared with the AP63205. Pins are
+1 BST, 2 GND, 3 FB, 4 EN, 5 IN, 6 SW. The data sheet has 60 V absolute input max,
+0.792–0.832 V feedback limits under the stated conditions, and 1.0–1.5 A switch
+current limit. The high input rating is component margin, not a 48 V product
+rating. Retain the product's 5/12/24 V regulated-source scope, max 26.4 V steady.
+https://www.monolithicpower.com/en/products/power-management/switching-converters-controllers/step-down-buck/converters/mp2459.html
+https://www.monolithicpower.com/media/document/MP2459_r1.01.pdf
+
+Candidate support: 15 uH SRN5040-150M, 5x5x4 mm, 2 A listed saturation current,
+0.096 ohm maximum DCR; $0.264 each/100. Its 4 mm height needs mechanical review.
+The cheaper/smaller SRN4018-150M has only 1.1 A listed saturation current, below
+the buck's 1.5 A maximum current limit, so it is not the fault-screened default.
+Normal 60 mA load alone must not determine inductor saturation requirements.
+Retain effective capacitance, inductor tolerance/hot saturation, startup and
+short-circuit tests as selection gates. The MPS application circuit is a starting
+point, not a finished BOM for this board.
+https://www.bourns.com/docs/product-datasheets/srn5040.pdf
+https://www.mouser.com/ProductDetail/Bourns/SRN5040-150M?qs=U0ECReq1GB%252BK3VpL6%2Fxonw%3D%3D
+
+MP2459 EN must not connect directly to 24 V. Its ordinary control pins have a
+6 V absolute maximum. Review a divider and clamp for steady supply and the TVS
+pulse envelope; the nominal 1.35 V EN threshold is not a guaranteed UVLO window.
+Use an input-isolation diode for buck-only reverse flow and retain the selector
+leg diode. Size the catch diode for switch peak current, not only average 60 mA;
+the exact diode, capacitors and divider values are still unselected here.
+
+POWER ENTRY AND SELECTOR
+Retain a fuse, bidirectional input TVS, reverse-polarity P-FET, gate resistor and
+gate-source zener. PMV100EPAR is an existing 60 V SOT-23 candidate, with a $0.411
+each/100 catalogue observation; its low gate-voltage and hot resistance require
+review for the direct-5 V path. A cheap high-resistance BSS84 replacement could
+lose appreciable voltage at 60 mA and is not accepted just because VDS is high.
+SMAJ28CA has 28 V stand-off and 45.4 V maximum clamp at the stated 8.8 A test.
+That offers useful MP2459 input margin, but PCB inductance, fuse I-squared-t,
+TVS pulse energy and available source current still require coordination.
+https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf
+https://www.mouser.com/es/ProductDetail/Nexperia/PMV100EPAR?qs=vmHwEFxEFR%2FYGVY%2F8WC8mQ%3D%3D
+https://www.littelfuse.com/~/media/electronics/datasheets/tvs_diodes/littelfuse_tvs_diode_smaj_datasheet.pdf.pdf
+
+Use external 5 V only in EXT position. Use 12/24 V with 5V or EXT as the driver
+profile requires. Ground remains continuous. No VM socket connection is needed.
+Retain E-Switch EG1218 non-shorting SPDT as the priced selector candidate, 0.2 A
+at 30 VDC, $0.494 each/100. Retain a reverse-blocking diode on its regulated-5 V
+leg and a small common discharge resistor. Switch only with power off and
+discharged: break-before-make does not remove stored charge from a connected
+cable/driver input. Verify actual actuator direction against finished labels.
+https://www.mouser.com/en/ProductDetail/E-Switch/EG1218?qs=xDsBkp9LkocT0c8K%252B5e%2FgA%3D%3D
+https://www.digikey.com/en/products/detail/e-switch/EG1218/101726
+
+The selector diode means a nominal 5 V buck does not deliver exactly 5 V at the
+driver. Do not silently raise the regulator setpoint or sense after the diode
+without reviewing accuracy, no-load behavior and loop stability. Delivered
+voltage/current must meet the target driver's minimum and maximum. The supply
+can pass 12 V, but that alone does not qualify a particular driver's 12 V input.
+
+COST EVIDENCE AND BUDGET — HISTORICAL INITIAL ALLOWANCE, SUPERSEDED BELOW
+Observed quantity-100 USD catalogue prices, excluding delivery/tax/tariffs:
+  NX6008NBKR             3 x $0.082 = $0.246  Mouser
+  MP2459GJ-Z             1 x $0.860 = $0.860  manufacturer direct
+  SRN5040-150M           1 x $0.264 = $0.264  Mouser
+  PMV100EPAR             1 x $0.411 = $0.411  Mouser
+  EG1218                1 x $0.494 = $0.494  Mouser
+  Known subtotal                    $2.275  INCOMPLETE
+NX6008 current stock information conflicts between dated search results and
+product pages; verify cart stock before selecting a procurement batch.
+https://www.mouser.com/en/ProductDetail/Nexperia/NX6008NBKR?qs=Wj%2FVkw3K%252BMD22NxXi7o2Bg%3D%3D
+
+The following are design allowances ONLY, not quotations or confirmed prices:
+  Remaining protection/buck passives/diodes             $0.80–1.20
+  Headers, keyed output, input connector, LED classifier $0.60–1.00
+  PCB + matched harness + inbound freight                $0.65–1.10
+  Assembly, inspection, electrical test and yield         $0.65–1.25
+  Resulting planning envelope                            $4.98–6.83
+These initial allowances are withdrawn by the complete power-subsystem costing
+below. The $5–6 landed target is not established. Three exclusive voltage indicators
+must be included before a complete BOM total is reported. Keep the $15 resale
+ceiling fixed and validate the real basket, batch size and labor time against it.
+Sales fees, outbound delivery, packaging, returns, support and profit still have
+to fit above landed manufacturing cost; a $15 selling price is not a $15 BOM.
+
+For a four-board hand-built prototype, whole-pack purchasing, spare parts,
+stencil and hotplate cash can greatly exceed four times the eventual consumed
+unit cost. Amazon baskets cannot be inferred from the distributor prices above.
+Unbranded modules or mixed transistor kits are not exact-MPN substitutes until
+their actual ratings, markings, dimensions and delivered units are verified.
+An external shared 5 V buck could reduce cost per axis further but adds supply
+wiring and removes independent on-adapter conversion. Do not silently substitute
+that architecture for the user's requested combined adapter.
+
+NEXT ELECTRICAL GATES BEFORE CAD RELEASE
+Lock exact host VOH/VOL and driver pulse/current/polarity profiles; select the
+remaining buck support components and exclusive 5/12/24 indicator circuit;
+complete price/stock capture; build one-sided native CAD to standard fabrication
+rules; then ERC, DRC, connector continuity, current-limited power sequencing,
+loaded waveform, short-circuit, hot/cold and fit checks. A clean CAD check cannot
+replace these physical checks. No purchase, upload or public compatibility claim
+was performed by this research task.
+
+FINAL POWER PROPOSAL AND COST UPDATE — 2026-10-06
+This section supersedes the initial loose cost envelope above. The saved
+power_spec.json revision r0.3-power-proposal-3 contains 27 exact power parts,
+including both reservoir isolation diodes, the selected5V reverse-blocking
+diode,82ohm indicator inrush resistor and330ohm buck output bleeder. The buck
+design load is90mA; its main signal-common budget is60mA, indicator budget5mA,
+and the new always-on buck bleed consumes up to15.90mA. The indicator budget
+includes its4.7kohm3.3V rail bleed. Regulated buck mode is only specified for
+nominal12/24V input. External nominal5V must use EXT; no48V input is supported.
+
+power-cost-observations.json and .txt price all27 power parts/22 exactMPNs
+at observed quantity100 USD catalogue tiers. Power consumed-parts subtotal
+is $3.8067 per adapter. Parent's actual browser calculator observation for
+100 purple two-layer50x15.24mm HASL boards plusDHL is $98.76, or $0.9876/board,
+beforetax/duties. Thus power parts plus provisional PCB ALONE total $4.7943.
+Sinks/gate resistors, all connectors/headers/switch/harness, indicator MCU,
+LEDs/divider/decoupling, component freight/tax, assembly/programming/test,
+spares/yield and tools remain additional. The old $4.98–6.83 total envelope
+and $0.65–1.10 PCB+harness+freight allowance must not be reused. A complete
+unit landed below $6 has not been demonstrated by this exact candidate.
+The user's $15 resale ceiling is retained; no profit/margin guarantee follows.
+
+Several exact distributor offers show zero stock/future delivery. C26 is
+listedNRND at DigiKey despite existingstock. Catalogue price is not a ready
+Amazon basket, a stock commitment, nor an authorized substitution. Manufacturer
+capacitor typical DC-bias curves were captured with source brackets in
+capacitor-bias-source-data.json. They are engineering screens, not guaranteed
+combined minima. Prototype power tests, sourcing/lifecycle review and complete
+landed cost remain required before production/order/public-sale claims.
+
+The sibling's native schematic reports ERC0 and136 exactpad/net checks passing.
+That is schematic evidence only. No completedPCB/DRC/fabrication release or
+physical electrical/thermal/fit qualification is implied by this power report.
+
+Price revision2: directly opened US/USD exact-MPN seller offers supersede the initial mixed-seller power subtotal$4.3945. Current power subtotal$3.8067 at100-piece tiers; quantity1-tier consumed subtotal$8.79. Neither is an order-ready basket; several exactparts are backordered and PMV100EPAR displayed only3pieces. Circuit snapshot unchanged.

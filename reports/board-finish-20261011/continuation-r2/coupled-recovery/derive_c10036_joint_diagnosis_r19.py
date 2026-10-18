@@ -1,0 +1,8 @@
+"""Diagnose exact blockers of the joint route without reducing guards."""
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+s=(HERE/'construct_c10036_joint_reference_bridge_r18.py').read_text().replace('c10036-joint-reference-bridge-recipe-r18.json','c10036-joint-reference-bridge-diagnostic-r19.json')
+s=s.replace("'power_route_options':len(options)","'power_route_options':len(options),'joint_free_components':[{'bounds':p.bounds,'area':p.area,'start_distance':p.distance(Point(old['a'])),'end_distance':p.distance(Point(old['b']))} for p in pieces(legal)],'joint_endpoint_checks':[{'xy':xy,'Bcentre_free':blegal.buffer(-.156).covers(Point(xy)),'In4_bridgecentre_free':glegal.buffer(-.256).covers(Point(xy))} for xy in(old['a'],old['b'])],'no_zones_areas_near_window':[{'uuid':r['uuid'],'layers':r['layers'],'bounds':[sh.bounds for sh in L.poly(r['outline'])]} for r in g['rule_areas'] if r.get('no_zones') and any(sh.intersects(win) for sh in L.poly(r['outline']))]")
+s=s.replace("('verdict','B_power_route','return_clearance_errors','power_route_options','return_finite_annular_source_interior_mm2')","('verdict','B_power_route','return_clearance_errors','power_route_options','return_finite_annular_source_interior_mm2','joint_free_components','joint_endpoint_checks','no_zones_areas_near_window')")
+s=s.replace(" report['read_files_sha256']=A.READS;", " (HERE/'c10036-joint-reference-bridge-diagnostic-r19.pkl').write_bytes(pickle.dumps({'glegal':glegal,'blegal':blegal,'jointlegal':legal,'gob':gob,'old':old,'g':g,'planes':planes},protocol=5));report['read_files_sha256']=A.READS;")
+t=HERE/'construct_c10036_joint_diagnosis_r19.py';assert not t.exists();t.write_text(s);print(t)

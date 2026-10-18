@@ -1,0 +1,175 @@
+Yep — and looking at that board, this is exactly the point where I’d stop thinking in terms of “does it work?” and start extracting hard limits from the design.
+
+The goal should be a pre-production datasheet with two columns:
+
+- simulated / design limit
+- hardware-qualified limit
+
+Before fabrication, we can get surprisingly close on most of the important numbers.
+
+| Spec | How we establish it before building |
+|---|---|
+| Max STEP rate/channel | RTL simulation + Efinity place/route timing + output-driver timing |
+| 12-channel simultaneous rate | RTL stress test with all 12 running + FPGA resource/timing closure |
+| LinuxCNC servo rate | real LinuxCNC + actual CNC3 driver + Verilated FPGA + worst-case host load |
+| SPI maximum / margin | FPGA timing closure + host SPI timing + protocol simulation |
+| Encoder max frequency | RTL timing + receiver datasheet timing + SI simulation |
+| Probe latency/jitter | RTL/event simulation + input receiver timing |
+| 24 V input switching threshold | SPICE corner analysis across voltage/temp/component tolerance |
+| Output current/channel | TPS274C65 limits + copper/connector/thermal model |
+| Output bank current | copper loss + connector limits + power-entry thermal simulation |
+| 12/24 V rail capacity | converter efficiency + load model + thermal analysis |
+| Analog accuracy | op-amp/DAC/ADC tolerances + Monte Carlo SPICE |
+| Watchdog trip time | worst-case SPICE + datasheet timing corners |
+| Power-up/brownout limits | transient SPICE with ramp/dip profiles |
+| FPGA junction temperature | power estimator + enclosure/airflow thermal model |
+| Board temperature hotspots | PCB power-density / thermal model |
+| Cable STEP/DIR length | IBIS/SI simulation using the actual routed traces + cable model + receiver load |
+| EMC confidence | edge-rate/current-loop/SI modeling; actual compliance still requires hardware |
+| Power consumption | component worst-case + realistic operating profiles |
+
+### For motion specifically
+
+I would tell the engineering agent to find the actual cliff, not merely test your requested 2 MHz.
+
+For example:
+
+> Sweep all 12 channels from 100 kHz upward until timing, pulse width, driver-interface timing, or FPGA timing fails.
+
+Maybe it turns out the FPGA logic could do:
+
+`3.8 MHz × 12`
+
+but the selected line driver/cable design is only comfortable to:
+
+`2.4 MHz`
+
+Then the product rating becomes something conservative like:
+
+> STEP/DIR: 2.0 MHz per channel, 12 channels simultaneously
+
+with perhaps:
+
+> internal simulated margin: ≥20%
+
+That is a real engineering specification.
+
+Do the same with encoders.
+
+Don't ask:
+
+> “Can ENC0 do 10 MHz?”
+
+Ask:
+
+> “At what quadrature edge rate does the complete receiver + FPGA design first violate setup, filtering, or counting requirements under worst-case corners?”
+
+Then rate below that.
+
+### We should intentionally test until failure
+
+For each subsystem:
+
+```text
+normal
+↓
+rated maximum
+↓
++10%
+↓
++20%
+↓
++50%
+↓
+FAIL
+```
+
+Then establish the production rating below the simulated failure point.
+
+Example:
+
+```text
+12-channel STEP simulation
+
+2.0 MHz ........ PASS
+2.5 MHz ........ PASS
+3.0 MHz ........ PASS
+3.5 MHz ........ PASS
+3.8 MHz ........ marginal
+4.0 MHz ........ FAIL
+
+Provisional product spec:
+2.0 MHz/channel × 12 simultaneous
+```
+
+That gives you margin instead of advertising the cliff.
+
+### And we should find the ugly combinations
+
+Not just individual maximums.
+
+Run:
+
+> 12 motors at maximum rate  
+> + all encoders active  
+> + 24 inputs changing  
+> + 16 outputs active  
+> + analog acquisition  
+> + CAN/RS-485 traffic  
+> + touchscreen rendering  
+> + network transfer  
+> + ESP Wi-Fi activity
+
+while measuring:
+
+- servo deadline margin
+- SPI utilization
+- FPGA timing margin
+- FPGA resource utilization
+- CPU jitter
+- rail current
+- estimated temperatures
+
+That becomes your true “full load” specification.
+
+### The image matters here
+
+That board is dense enough that the final routing itself becomes part of the electrical specification.
+
+Once the remaining nets are routed, we can use the actual:
+
+- trace lengths
+- layer changes
+- return-path geometry
+- differential pair geometry
+- plane impedance
+- via count
+- copper widths
+
+instead of generic assumptions.
+
+So I would not publish cable length, high-speed edge-rate, or max-output-bank-current specs until the final route is frozen.
+
+### What I'd tell the agent now
+
+> Before fabrication, create a PRE-HARDWARE CHARACTERIZATION report for the completed motherboard. Determine the simulated/design limits of every performance-critical subsystem rather than merely checking the requested nominal values.
+>
+> Sweep STEP rate, encoder rate, SPI rate, servo timing, output load, rail load, analog accuracy, watchdog timing, power-up/brownout conditions and thermal load until the design fails or reaches a component hard limit.
+>
+> Run worst-case component, voltage and temperature corners where models permit.
+>
+> Run the complete controller at simultaneous worst-case workload, not only subsystem tests.
+>
+> From those results produce conservative provisional product ratings with explicit margin below the simulated limit.
+>
+> Label every value either:
+> `DESIGN LIMIT`,
+> `SIMULATED LIMIT`,
+> `DATASHEET LIMIT`,
+> or `PHYSICAL VALIDATION REQUIRED`.
+>
+> Do not convert simulation into a hardware-qualified claim.
+>
+> Generate a provisional datasheet before PCB fabrication, then use Rev A hardware testing to confirm or derate those numbers.
+
+That would let you order the first board already knowing roughly what class of controller you built instead of discovering afterward that it happens to be capable of much more.

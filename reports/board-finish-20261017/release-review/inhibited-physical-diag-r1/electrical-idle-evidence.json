@@ -1,0 +1,85 @@
+{
+  "authority_clamp": {
+    "source": "hardware/mc_permission/design.json",
+    "components": [
+      "U3",
+      "U4",
+      "U5",
+      "U6",
+      "U7",
+      "U8",
+      "R1"
+    ],
+    "fact": "Endpoint LOW holds both physical latch clears LOW; motion/output request LOW also blocks final permission gates. No useful-progress/rearm/clear pulse is generated."
+  },
+  "motor_idle": {
+    "source": "hardware/motherboard/design.json",
+    "components": [
+      "U5001",
+      "R5063"
+    ],
+    "fact": "Noninverting LVC244 STEP/DIR/EN_N path; EN_N default pull-up, all12 HIGH inactive. Existing current runtime uses enable_n=~gen_enable."
+  },
+  "process": {
+    "source": "hardware/motherboard_process/design.json",
+    "components": [
+      "U14403",
+      "R14408",
+      "R14409",
+      "R14410",
+      "R14411"
+    ],
+    "fact": "PWM/PEN AND gated with physical permission, FPGA inputs default LOW."
+  },
+  "port_power": {
+    "source": "hardware/motherboard_operator/design.json",
+    "components": [
+      "R14025",
+      "R14026",
+      "U14015",
+      "U14016"
+    ],
+    "fact": "LOW request/default keeps frontend/accessory protected port switches OFF."
+  },
+  "shift_idle": {
+    "source": "hardware/motherboard_operator/design.json",
+    "components": [
+      "R14077",
+      "R14078"
+    ],
+    "fact": "Clock LOW pulldown; load_n HIGH pullup. Reader unimplemented in this bounded wrapper."
+  },
+  "common_controls": {
+    "source": "hardware/motherboard_control_bridges/design.json",
+    "components": [
+      "R12001",
+      "R12002",
+      "R12003",
+      "R12004",
+      "R12005",
+      "R12006"
+    ],
+    "fact": "OPI motor rearm and active-HIGH watchdog clear have LOW common-stem defaults; no strobe emitted. OUT independent rearm held LOW."
+  },
+  "arm_lamp": {
+    "source": "hardware/motherboard/design.json",
+    "components": [
+      "U19017"
+    ],
+    "fact": "ISO7720F command path default LOW. Lamp request remains LOW."
+  },
+  "fault_test_pins": {
+    "source": "hardware/motherboard/design.json",
+    "components": [
+      "TP22001",
+      "TP22002",
+      "TP22003",
+      "TP22004"
+    ],
+    "fact": "Bare diagnostic test points only, no field/motion authority. Historical cnc_motherboard_motion_bringup defines active-HIGH faults; four asserted pins explicitly identify unqualified diagnostic image."
+  },
+  "SPI": {
+    "source": "selected cnc3_spi_transport_stateful.v and cnc_iol1_record_master.v",
+    "fact": "Existing mode0 masters reset CS high, SCLK/MOSI low. Host MISO raw reset/CS-dependent OE retained, inferred top tri-state requires later vendor IO implementation review."
+  }
+}

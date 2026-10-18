@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "scope": "SAME 3.3V LOGIC DOMAIN / DELIBERATE REARM AND ACTIVE-HIGH CLEAR REQUEST\nOPI_REARM_M and WATCHDOG_TRIP_CLEAR default LOW. FPGA unconfigured GPIO must be high-impedance.\nClear request drives U4018 inverter INPUTS WD_REARM_M/O. U4019 owns the active-low latch-clear OUTPUTS.\nSeparate receiving nets and power-reset qualification remain. No automatic restart or healthy bypass.\nGateware, GPIO startup pulls, IOZ at intermediate supplies and loaded response remain qualification gates.",
+  "components": {
+    "R12001": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "OPI_REARM_TX"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12002": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "OPI_REARM_BOE"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12003": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "WD_REARM_M"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12004": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "WD_REARM_O"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12005": {
+      "kind": "R",
+      "physical": true,
+      "value": "100000R 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 100000,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined common-stem bias"
+    },
+    "R12006": {
+      "kind": "R",
+      "physical": true,
+      "value": "100000R 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 100000,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined common-stem bias"
+    }
+  },
+  "one_custom_motherboard": true
+}

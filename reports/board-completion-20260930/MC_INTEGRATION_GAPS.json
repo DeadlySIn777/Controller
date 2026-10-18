@@ -1,0 +1,3253 @@
+{
+  "status": "read-only integration source-inspection; candidatelabels are notfrozennetmaps",
+  "date": "2026-09-30",
+  "frozen_head": "67b1bfc",
+  "source_files": {
+    "spec/modules.json": {
+      "absolute": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\spec\\modules.json",
+      "sha256": "d9bc85530a921e8db26814abf80dca814d09cb7f15eb951b0c163a25cd9c0597"
+    },
+    "spec/safety.json": {
+      "absolute": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\spec\\safety.json",
+      "sha256": "fbf0fd4adfd697c7ed2c59c9ce157d0b2e4f08af2ef5f191f7b3c224a14a3093"
+    },
+    "docs/interface-spec/01-protocol-and-schedule.md": {
+      "absolute": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\01-protocol-and-schedule.md",
+      "sha256": "2730d33874d0faad2a987b857189fe7fb8ceb8ec4a818fc07a4476953ef75300"
+    },
+    "docs/interface-spec/02-modules-and-boundaries.md": {
+      "absolute": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\02-modules-and-boundaries.md",
+      "sha256": "48e95762f2e2735b59b74c7a278b6ee35c609321a1f3a92ab385262b8297dd25"
+    },
+    "docs/interface-spec/04-safety-power-timing.md": {
+      "absolute": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\04-safety-power-timing.md",
+      "sha256": "6ddd6aba07b5e064dd0d9408cec4717e3128189233f016cfbf530e44d380f830"
+    }
+  },
+  "current_fpga_source": {
+    "path": "hardware/fpga_core/pin-allocation.json",
+    "sha256": "c75d461531b2753f253b4438407f949a9f21ea7498c78fb806ad81bffef27655",
+    "user_allocations": 96
+  },
+  "exact_contact_to_net_assignment_exists": false,
+  "frozen_mc_boundary": {
+    "connector": "2 x HB160",
+    "contacts_total": 320,
+    "contacts_used": 272,
+    "contacts_spare": 48,
+    "single_ended_signals": 194,
+    "differential_pairs": 0,
+    "signal_returns": 66,
+    "power_contacts": 8,
+    "field_conductors_other": 0,
+    "presence_contacts": 2,
+    "identity_bus_contacts": 2,
+    "groups": [
+      {
+        "group": "STEP/DIR/EN_N M0-M7 to MIA through Ioff buffers on the MC",
+        "kind": "se",
+        "count": 24,
+        "conductors": 24
+      },
+      {
+        "group": "STEP/DIR/EN_N M8-M11 to MX4 through Ioff buffers on the MC (reserved)",
+        "kind": "se",
+        "count": 12,
+        "conductors": 12
+      },
+      {
+        "group": "ALM0-7 from MIA",
+        "kind": "se",
+        "count": 8,
+        "conductors": 8
+      },
+      {
+        "group": "ALM8-11 from MX4 (reserved)",
+        "kind": "se",
+        "count": 4,
+        "conductors": 4
+      },
+      {
+        "group": "ENC0-3 A/B/Z from EIA",
+        "kind": "se",
+        "count": 12,
+        "conductors": 12
+      },
+      {
+        "group": "ENC4-11 A/B/Z from EX8 (reserved)",
+        "kind": "se",
+        "count": 24,
+        "conductors": 24
+      },
+      {
+        "group": "FREQ0-1, MPG A/B, PRB0-1 from EIA",
+        "kind": "se",
+        "count": 6,
+        "conductors": 6
+      },
+      {
+        "group": "PWM0-1 and PEN0-1 commands to ACC",
+        "kind": "se",
+        "count": 4,
+        "conductors": 4
+      },
+      {
+        "group": "XS1 status/feedback from DIC: EXT_PERMIT, PROCESS_PERMIT, SAFETY_STATUS, RESET_ARM, CONTACTOR_FB, STO_FB",
+        "kind": "se",
+        "count": 6,
+        "conductors": 6
+      },
+      {
+        "group": "ARM_LAMP to DIC",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "IOL1 links L0-L3 to DIC, DOA, DOB, ACC (SCLK, CMD, RSP, CS_N each)",
+        "kind": "se",
+        "count": 16,
+        "conductors": 16
+      },
+      {
+        "group": "status shift registers EIA (3) and EX8 (3, reserved)",
+        "kind": "se",
+        "count": 6,
+        "conductors": 6
+      },
+      {
+        "group": "host SPI SCLK/MOSI/MISO/CS_FB/CS_CMD from CMC (section 01 D01-1)",
+        "kind": "se",
+        "count": 5,
+        "conductors": 5
+      },
+      {
+        "group": "MX4 status PRESENT_A/B, EXP_PGOOD, MOD_ID0-2 (reserved)",
+        "kind": "se",
+        "count": 6,
+        "conductors": 6
+      },
+      {
+        "group": "TAMPER_N from PSM",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "MIA status PRESENT_A/B, PGOOD",
+        "kind": "se",
+        "count": 3,
+        "conductors": 3
+      },
+      {
+        "group": "OPI_OK_A, OPI_OK_B, OPI_REARM",
+        "kind": "se",
+        "count": 3,
+        "conductors": 3
+      },
+      {
+        "group": "RAILS_OK from PSM",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "slot presence A/B and power-good to the MC slot status register: EIA, EX8, DIC, DOA, DOB, ACC, ESC, CMC, XS (27) and SCART presence A/B (2); the DIC lines also feed the DIC_OK filter of base_ok",
+        "kind": "se",
+        "count": 29,
+        "conductors": 29
+      },
+      {
+        "group": "XS link (4) + SYNC_STROBE + XS_REFCLK (reserved)",
+        "kind": "se",
+        "count": 6,
+        "conductors": 6
+      },
+      {
+        "group": "TX_PERMIT_A to MIA; TX_PERMIT_B (Ioff copy) to MX4",
+        "kind": "se",
+        "count": 2,
+        "conductors": 2
+      },
+      {
+        "group": "OUT_PERMIT_DOA, OUT_PERMIT_DOB, OUT_PERMIT_ACC (own driver and pull-down each)",
+        "kind": "se",
+        "count": 3,
+        "conductors": 3
+      },
+      {
+        "group": "PROC_PERMIT to ACC",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "PERMIT_OUT drive to DIC photorelay",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "XS_PERMIT (reserved)",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "configuration-flash restore path from CMC: SCK, MOSI, MISO, CS_N, CRESET_N, CDONE, BUS_SEL",
+        "kind": "se",
+        "count": 7,
+        "conductors": 7
+      },
+      {
+        "group": "MOTION_DISARMED observation to ESC",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "presence A and B at opposite connector ends",
+        "kind": "pres",
+        "count": 2,
+        "conductors": 2
+      },
+      {
+        "group": "card power-good, open drain",
+        "kind": "se",
+        "count": 1,
+        "conductors": 1
+      },
+      {
+        "group": "identity I2C branch SDA/SCL",
+        "kind": "id",
+        "count": 2,
+        "conductors": 2
+      },
+      {
+        "group": "LOGIC_GND signal returns, 1 per 3 signals",
+        "kind": "ret",
+        "count": 66,
+        "conductors": 66
+      },
+      {
+        "group": "CORE_5V feed (0.5 A/contact design)",
+        "kind": "pwr",
+        "count": 4,
+        "conductors": 4
+      },
+      {
+        "group": "CORE_5V return",
+        "kind": "pwr",
+        "count": 4,
+        "conductors": 4
+      }
+    ],
+    "note": "P1+P2 pooled: P1 motion and feedback groups, P2 links, host, flash and supervision; rows z and d used as ground rows"
+  },
+  "enumerated_se_boundary_count": 194,
+  "boundary_net_directions": [
+    {
+      "name_candidate": "STEP0",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR0",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN0_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM0",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP1",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR1",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN1_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM1",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP2",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR2",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN2_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM2",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP3",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR3",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN3_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM3",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP4",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR4",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN4_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM4",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP5",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR5",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN5_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM5",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP6",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR6",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN6_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM6",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP7",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR7",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN7_N",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM7",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP8",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR8",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN8_N",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM8",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP9",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR9",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN9_N",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM9",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP10",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR10",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN10_N",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM10",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STEP11",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "DIR11",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "EN11_N",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": "Ioff onMC; bankA OEactive, bankB positivequalifiedOE also clearsOPI_BOE"
+    },
+    {
+      "name_candidate": "ALM11",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC0_A",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC0_B",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC0_Z",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC1_A",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC1_B",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC1_Z",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC2_A",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC2_B",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC2_Z",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC3_A",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC3_B",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC3_Z",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC4_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC4_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC4_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC5_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC5_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC5_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC6_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC6_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC6_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC7_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC7_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC7_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC8_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC8_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC8_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC9_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC9_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC9_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC10_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC10_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC10_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC11_A",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC11_B",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ENC11_Z",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "FREQ0",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "FREQ1",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MPG_A",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MPG_B",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PRB0",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PRB1",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PWM0",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PWM1",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PEN0",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PEN1",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EXT_PERMIT_3V3",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "PROCESS_PERMIT_EXT_3V3",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "SAFETY_STATUS",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "RESET_ARM",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "CONTACTOR_FB",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "STO_FB",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "ARM_LAMP",
+      "direction_relative_MC": "out",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "IOL1_L0_SCLK",
+      "direction_relative_MC": "out",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L0_CMD",
+      "direction_relative_MC": "out",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L0_RSP",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L0_CS_N",
+      "direction_relative_MC": "out",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L1_SCLK",
+      "direction_relative_MC": "out",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L1_CMD",
+      "direction_relative_MC": "out",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L1_RSP",
+      "direction_relative_MC": "in",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L1_CS_N",
+      "direction_relative_MC": "out",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L2_SCLK",
+      "direction_relative_MC": "out",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L2_CMD",
+      "direction_relative_MC": "out",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L2_RSP",
+      "direction_relative_MC": "in",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L2_CS_N",
+      "direction_relative_MC": "out",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L3_SCLK",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L3_CMD",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L3_RSP",
+      "direction_relative_MC": "in",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "IOL1_L3_CS_N",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "connector Ioff+series termination atbothends; roundtrip<60nsrequired"
+    },
+    {
+      "name_candidate": "EIA_SSR_CLK",
+      "direction_relative_MC": "out",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EIA_SSR_LOAD_N",
+      "direction_relative_MC": "out",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EIA_SSR_DATA",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EX8_SSR_CLK",
+      "direction_relative_MC": "out",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EX8_SSR_LOAD_N",
+      "direction_relative_MC": "out",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EX8_SSR_DATA",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "HOST_SPI_SCLK",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "HOST_SPI_MOSI",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "HOST_SPI_MISO",
+      "direction_relative_MC": "out",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "HOST_SPI_CS_FB_N",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "HOST_SPI_CS_CMD_N",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MX4_PRESENT_A",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MX4_PRESENT_B",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EXP_PGOOD",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MOD_ID0",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MOD_ID1",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MOD_ID2",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "TAMPER_N",
+      "direction_relative_MC": "in",
+      "peer": "PSM",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MIA_PRESENT_A",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MIA_PRESENT_B",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MIA_PGOOD",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "OPI_OK_A",
+      "direction_relative_MC": "in",
+      "peer": "MIA",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "OPI_OK_B",
+      "direction_relative_MC": "in",
+      "peer": "MX4",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "OPI_REARM",
+      "direction_relative_MC": "out",
+      "peer": "MIA+MX4",
+      "kind": "logic",
+      "note": "oneFPGAstrobealso clockslocalTXandBOElatches"
+    },
+    {
+      "name_candidate": "RAILS_OK",
+      "direction_relative_MC": "in",
+      "peer": "PSM",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "EIA_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "EIA_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "EIA_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EIA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "EX8_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "EX8_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "EX8_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "EX8",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DIC_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DIC_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DIC_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DIC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOA_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOA_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOA_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOA",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOB_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOB_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "DOB_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "DOB",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ACC_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ACC_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ACC_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ACC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ESC_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ESC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ESC_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ESC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "ESC_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "ESC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "CMC_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "CMC_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "CMC_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "XS_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "XS_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "XS_PGOOD_SSR",
+      "direction_relative_MC": "in",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "input tolocal40-bitMCstatuschain; DIClinealsohardwiredqualification"
+    },
+    {
+      "name_candidate": "SCART_PRESENT_A_SSR",
+      "direction_relative_MC": "in",
+      "peer": "SCART",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "SCART_PRESENT_B_SSR",
+      "direction_relative_MC": "in",
+      "peer": "SCART",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "XS_SCLK",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "XS_CMD",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "XS_RSP",
+      "direction_relative_MC": "in",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "XS_CS_N",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "SYNC_STROBE",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "XS_REFCLK",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "logic",
+      "note": "reserved"
+    },
+    {
+      "name_candidate": "TX_PERMIT_A",
+      "direction_relative_MC": "out",
+      "peer": "MIA",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "TX_PERMIT_B",
+      "direction_relative_MC": "out",
+      "peer": "MX4",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "OUT_PERMIT_DOA",
+      "direction_relative_MC": "out",
+      "peer": "DOA",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "OUT_PERMIT_DOB",
+      "direction_relative_MC": "out",
+      "peer": "DOB",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "OUT_PERMIT_ACC",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "PROC_PERMIT",
+      "direction_relative_MC": "out",
+      "peer": "ACC",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "PERMIT_OUT_DRIVE",
+      "direction_relative_MC": "out",
+      "peer": "DIC",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "XS_PERMIT",
+      "direction_relative_MC": "out",
+      "peer": "XS",
+      "kind": "hardware_permission",
+      "note": "hardwiredgate, nevera serialpermission; XSreserved"
+    },
+    {
+      "name_candidate": "RESTORE_SCK",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_MOSI",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_MISO",
+      "direction_relative_MC": "out",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_CS_N",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_CRESET_N",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_CDONE",
+      "direction_relative_MC": "out",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "RESTORE_BUS_SEL",
+      "direction_relative_MC": "in",
+      "peer": "CMC",
+      "kind": "configuration_restore",
+      "note": "flashbusownershipswitch+CRESEThold; notadditionaluserGPIOassignment"
+    },
+    {
+      "name_candidate": "MOTION_DISARMED",
+      "direction_relative_MC": "out",
+      "peer": "ESC",
+      "kind": "logic",
+      "note": ""
+    },
+    {
+      "name_candidate": "MC_PGOOD",
+      "direction_relative_MC": "out_open_drain",
+      "peer": "base/CMC/PSM",
+      "kind": "power_status",
+      "note": ""
+    }
+  ],
+  "other_contacts": {
+    "LOGIC_GND_signal_returns": 66,
+    "CORE_5V_switched_feed": 4,
+    "CORE_5V_return": 4,
+    "presence_A_B": 2,
+    "identity_I2C_SDA_SCL": 2,
+    "spares": 48
+  },
+  "frozen_fpga_budget": {
+    "groups": [
+      {
+        "group": "STEP/DIR/EN_N/ALM M0-M11 (section 03)",
+        "pins": 48,
+        "note": "M8-M11: 16 reserved for MX4"
+      },
+      {
+        "group": "ENC0-11 A/B/Z (section 03)",
+        "pins": 36,
+        "note": "ENC4-11: 24 reserved for EX8"
+      },
+      {
+        "group": "FREQ, MPG A/B, probes, PWM, process enables (section 03)",
+        "pins": 10,
+        "note": ""
+      },
+      {
+        "group": "XS1 status/feedback + ARM_LAMP (section 03)",
+        "pins": 7,
+        "note": ""
+      },
+      {
+        "group": "serial links DIC/DOA/DOB/ACC + shift registers EIA/EX8 (section 03)",
+        "pins": 22,
+        "note": "EX8 register: 3 reserved"
+      },
+      {
+        "group": "host SPI SCLK/MOSI/MISO/CS_FB/CS_CMD",
+        "pins": 5,
+        "note": "two chip selects, section 01"
+      },
+      {
+        "group": "MX4 PRESENT_A/B, EXP_PGOOD, MOD_ID0-2 + TAMPER_N",
+        "pins": 7,
+        "note": "6 reserved"
+      },
+      {
+        "group": "MIA PRESENT_A/B, PGOOD",
+        "pins": 3,
+        "note": ""
+      },
+      {
+        "group": "OPI_OK_TX/A/B + OPI_REARM",
+        "pins": 4,
+        "note": "OPI_OK_B reserved"
+      },
+      {
+        "group": "RAILS_OK readback",
+        "pins": 1,
+        "note": ""
+      },
+      {
+        "group": "XS link + SYNC_STROBE + XS_REFCLK",
+        "pins": 6,
+        "note": "reserved"
+      },
+      {
+        "group": "progress_m, progress_o, MOTION_REQUEST, OUTPUT_REQUEST, ENDPOINT_READY",
+        "pins": 5,
+        "note": "local to MC"
+      },
+      {
+        "group": "WD_M_OK, WD_O_OK, TX/OUT/PROC_PERMIT readback",
+        "pins": 5,
+        "note": "local to MC"
+      },
+      {
+        "group": "watchdog trip flags x2 + clear",
+        "pins": 3,
+        "note": "local to MC"
+      },
+      {
+        "group": "clock, local reset",
+        "pins": 2,
+        "note": "local to MC"
+      },
+      {
+        "group": "fault LEDs",
+        "pins": 4,
+        "note": "local to MC"
+      },
+      {
+        "group": "MC slot status register SSR_CLK/SSR_LOAD_N/SSR_DATA",
+        "pins": 3,
+        "note": "local to MC; section 01 section 4.10"
+      },
+      {
+        "group": "OPI_OK_BOE, OPI_OK_OUT, OPI_REARM_O",
+        "pins": 3,
+        "note": "local to MC; section 04 section 4.2"
+      },
+      {
+        "group": "PERMIT_OUT_REQ",
+        "pins": 1,
+        "note": "local to MC; section 04 section 6.2"
+      }
+    ],
+    "total": 175,
+    "field_driven_section_03": 123,
+    "reserved_for_expansion": 56,
+    "local_to_mc": 27,
+    "t20f256_usable": 189,
+    "t20f256_full_feature": 137,
+    "spare": 14,
+    "on_lvds_as_gpio_min": 38,
+    "evidence": "arithmetic; no package fit, bank audit or place-and-route"
+  },
+  "required_pin_nodes_with_raw_inhibit": 176,
+  "expanded_fpga_requirements_and_alias_candidates": [
+    {
+      "name_candidate": "STEP0_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "P2",
+      "existing_name": "STEP0_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR0_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "J5",
+      "existing_name": "DIR0_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN0_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "H12",
+      "existing_name": "DRIVE_ENABLE0_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM0_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "B12",
+      "existing_name": "ALM0_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP1_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "J4",
+      "existing_name": "STEP1_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR1_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "K3",
+      "existing_name": "DIR1_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN1_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "J12",
+      "existing_name": "DRIVE_ENABLE1_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM1_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "B13",
+      "existing_name": "ALM1_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP2_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "J3",
+      "existing_name": "STEP2_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR2_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "K1",
+      "existing_name": "DIR2_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN2_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "L16",
+      "existing_name": "DRIVE_ENABLE2_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM2_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "B15",
+      "existing_name": "ALM2_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP3_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "K2",
+      "existing_name": "STEP3_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR3_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "H1",
+      "existing_name": "DIR3_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN3_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "M15",
+      "existing_name": "DRIVE_ENABLE3_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM3_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "C13",
+      "existing_name": "ALM3_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP4_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "L1",
+      "existing_name": "STEP4_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR4_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "H2",
+      "existing_name": "DIR4_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN4_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "M16",
+      "existing_name": "DRIVE_ENABLE4_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM4_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "C16",
+      "existing_name": "ALM4_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP5_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "H4",
+      "existing_name": "STEP5_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR5_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "G3",
+      "existing_name": "DIR5_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN5_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "P16",
+      "existing_name": "DRIVE_ENABLE5_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM5_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "E14",
+      "existing_name": "ALM5_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP6_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "G5",
+      "existing_name": "STEP6_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR6_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "G2",
+      "existing_name": "DIR6_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN6_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "L15",
+      "existing_name": "DRIVE_ENABLE6_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM6_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "F12",
+      "existing_name": "ALM6_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP7_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "F1",
+      "existing_name": "STEP7_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR7_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "C1",
+      "existing_name": "DIR7_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN7_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "K12",
+      "existing_name": "DRIVE_ENABLE7_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM7_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "D16",
+      "existing_name": "ALM7_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP8_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "E2",
+      "existing_name": "STEP8_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR8_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "F3",
+      "existing_name": "DIR8_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN8_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "N14",
+      "existing_name": "DRIVE_ENABLE8_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM8_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "G13",
+      "existing_name": "ALM8_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP9_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "D1",
+      "existing_name": "STEP9_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR9_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "E1",
+      "existing_name": "DIR9_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN9_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "N16",
+      "existing_name": "DRIVE_ENABLE9_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM9_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "F14",
+      "existing_name": "ALM9_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP10_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "E3",
+      "existing_name": "STEP10_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR10_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "G4",
+      "existing_name": "DIR10_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN10_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "P15",
+      "existing_name": "DRIVE_ENABLE10_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM10_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "E16",
+      "existing_name": "ALM10_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STEP11_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "F4",
+      "existing_name": "STEP11_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "DIR11_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "B1",
+      "existing_name": "DIR11_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EN11_N_FPGA",
+      "direction_relative_FPGA": "out",
+      "group": "motor",
+      "existing_ball_candidate": "M14",
+      "existing_name": "DRIVE_ENABLE11_FPGA_RESERVED",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "ALM11_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "motor",
+      "existing_ball_candidate": "E15",
+      "existing_name": "ALM11_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC0_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "B5",
+      "existing_name": "ENC0_A_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC0_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "A7",
+      "existing_name": "ENC0_B_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC0_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "B7",
+      "existing_name": "ENC0_Z_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC1_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "B6",
+      "existing_name": "ENC1_A_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC1_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "A6",
+      "existing_name": "ENC1_B_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC1_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "E7",
+      "existing_name": "ENC1_Z_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC2_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "D9",
+      "existing_name": "ENC2_A_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC2_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "E8",
+      "existing_name": "ENC2_B_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC2_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "C9",
+      "existing_name": "ENC2_Z_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC3_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "D10",
+      "existing_name": "ENC3_A_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC3_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "B9",
+      "existing_name": "ENC3_B_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC3_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": "C10",
+      "existing_name": "ENC3_Z_FPGA",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC4_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC4_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC4_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC5_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC5_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC5_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC6_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC6_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC6_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC7_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC7_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC7_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC8_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC8_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC8_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC9_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC9_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC9_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC10_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC10_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC10_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC11_A_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC11_B_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ENC11_Z_FPGA",
+      "direction_relative_FPGA": "in",
+      "group": "encoders",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FREQ0",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FREQ1",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MPG_A",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MPG_B",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PRB0",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": "G12",
+      "existing_name": "PROBE_FPGA",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "PRB1",
+      "direction_relative_FPGA": "in",
+      "group": "capture",
+      "existing_ball_candidate": "G15",
+      "existing_name": "TOOLSETTER_FPGA",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "PWM0",
+      "direction_relative_FPGA": "out",
+      "group": "direct_process",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PWM1",
+      "direction_relative_FPGA": "out",
+      "group": "direct_process",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PEN0",
+      "direction_relative_FPGA": "out",
+      "group": "direct_process",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PEN1",
+      "direction_relative_FPGA": "out",
+      "group": "direct_process",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EXT_PERMIT_3V3",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": "G16",
+      "existing_name": "PROTECTIVE_STATUS_FPGA",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "PROCESS_PERMIT_EXT_3V3",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "SAFETY_STATUS",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "RESET_ARM",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "CONTACTOR_FB",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "STO_FB",
+      "direction_relative_FPGA": "in",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "ARM_LAMP",
+      "direction_relative_FPGA": "out",
+      "group": "safety",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L0_SCLK",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L0_CMD",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L0_RSP",
+      "direction_relative_FPGA": "in",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L0_CS_N",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L1_SCLK",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L1_CMD",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L1_RSP",
+      "direction_relative_FPGA": "in",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L1_CS_N",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L2_SCLK",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L2_CMD",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L2_RSP",
+      "direction_relative_FPGA": "in",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L2_CS_N",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L3_SCLK",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L3_CMD",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L3_RSP",
+      "direction_relative_FPGA": "in",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "IOL1_L3_CS_N",
+      "direction_relative_FPGA": "out",
+      "group": "IOL1",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EIA_SSR_CLK",
+      "direction_relative_FPGA": "out",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EIA_SSR_LOAD_N",
+      "direction_relative_FPGA": "out",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EIA_SSR_DATA",
+      "direction_relative_FPGA": "in",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EX8_SSR_CLK",
+      "direction_relative_FPGA": "out",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EX8_SSR_LOAD_N",
+      "direction_relative_FPGA": "out",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EX8_SSR_DATA",
+      "direction_relative_FPGA": "in",
+      "group": "status_registers",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "HOST_SPI_SCLK",
+      "direction_relative_FPGA": "in",
+      "group": "host",
+      "existing_ball_candidate": "D3",
+      "existing_name": "HOST_SPI_SCLK",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "HOST_SPI_MOSI",
+      "direction_relative_FPGA": "in",
+      "group": "host",
+      "existing_ball_candidate": "D4",
+      "existing_name": "HOST_SPI_MOSI",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "HOST_SPI_MISO",
+      "direction_relative_FPGA": "out",
+      "group": "host",
+      "existing_ball_candidate": "C3",
+      "existing_name": "HOST_SPI_MISO",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "HOST_SPI_CS_FB_N",
+      "direction_relative_FPGA": "in",
+      "group": "host",
+      "existing_ball_candidate": "B2",
+      "existing_name": "HOST_SPI_CS_N",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "HOST_SPI_CS_CMD_N",
+      "direction_relative_FPGA": "in",
+      "group": "host",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MX4_PRESENT_A",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MX4_PRESENT_B",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "EXP_PGOOD",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MOD_ID0",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MOD_ID1",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MOD_ID2",
+      "direction_relative_FPGA": "in",
+      "group": "MX4_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "TAMPER_N",
+      "direction_relative_FPGA": "in",
+      "group": "tamper",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MIA_PRESENT_A",
+      "direction_relative_FPGA": "in",
+      "group": "MIA_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MIA_PRESENT_B",
+      "direction_relative_FPGA": "in",
+      "group": "MIA_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "MIA_PGOOD",
+      "direction_relative_FPGA": "in",
+      "group": "MIA_status",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_OK_A",
+      "direction_relative_FPGA": "in",
+      "group": "OPI",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_OK_B",
+      "direction_relative_FPGA": "in",
+      "group": "OPI",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_OK_TX",
+      "direction_relative_FPGA": "in",
+      "group": "OPI",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_REARM",
+      "direction_relative_FPGA": "out",
+      "group": "OPI",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "RAILS_OK",
+      "direction_relative_FPGA": "in",
+      "group": "rail_readback",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "XS_SCLK",
+      "direction_relative_FPGA": "out",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "XS_CMD",
+      "direction_relative_FPGA": "out",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "XS_RSP",
+      "direction_relative_FPGA": "in",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "XS_CS_N",
+      "direction_relative_FPGA": "out",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "SYNC_STROBE",
+      "direction_relative_FPGA": "out",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "XS_REFCLK",
+      "direction_relative_FPGA": "out",
+      "group": "XS_reserved",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "progress_m",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "E4",
+      "existing_name": "FPGA_PROGRESS_WDI",
+      "rename_needed": true
+    },
+    {
+      "name_candidate": "progress_o",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_MOTION_REQUEST",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "B3",
+      "existing_name": "FPGA_MOTION_REQUEST",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_OUTPUT_REQUEST",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_ENDPOINT_READY",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "C4",
+      "existing_name": "FPGA_ENDPOINT_READY",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "WD_M_OK",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "WD_O_OK",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "TX_PERMIT",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": "E6",
+      "existing_name": "TX_PERMIT",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OUT_PERMIT",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PROC_PERMIT_READBACK",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "WD_M_TRIP_N",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "WD_O_TRIP_N",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "WD_TRIP_RECORD_CLEAR",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_CLK_50M",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": "H3",
+      "existing_name": "FPGA_CLK_50M",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_LOCAL_RESET_N",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": "P1",
+      "existing_name": "FPGA_LOCAL_RESET_N",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_LINK_FAULT",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "A3",
+      "existing_name": "FPGA_LINK_FAULT",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_WATCHDOG_FAULT",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "C6",
+      "existing_name": "FPGA_WATCHDOG_FAULT",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_INHIBIT_FAULT",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "A4",
+      "existing_name": "FPGA_INHIBIT_FAULT",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "FPGA_TIMING_FAULT",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": "E5",
+      "existing_name": "FPGA_TIMING_FAULT",
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "SSR_CLK",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "SSR_LOAD_N",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "SSR_DATA",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_OK_BOE",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_OK_OUT",
+      "direction_relative_FPGA": "in",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "OPI_REARM_O",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "PERMIT_OUT_REQ",
+      "direction_relative_FPGA": "out",
+      "group": "MC_local",
+      "existing_ball_candidate": null,
+      "existing_name": null,
+      "rename_needed": false
+    },
+    {
+      "name_candidate": "RAW_INHIBIT_N",
+      "direction_relative_FPGA": "in",
+      "group": "normative_equation_but_omitted_from_frozen_budget",
+      "existing_ball_candidate": "A2",
+      "existing_name": "HW_WATCHDOG_OK_N",
+      "rename_needed": true
+    }
+  ],
+  "new_named_nodes_not_in_current_allocation": [
+    "ENC4_A_FPGA",
+    "ENC4_B_FPGA",
+    "ENC4_Z_FPGA",
+    "ENC5_A_FPGA",
+    "ENC5_B_FPGA",
+    "ENC5_Z_FPGA",
+    "ENC6_A_FPGA",
+    "ENC6_B_FPGA",
+    "ENC6_Z_FPGA",
+    "ENC7_A_FPGA",
+    "ENC7_B_FPGA",
+    "ENC7_Z_FPGA",
+    "ENC8_A_FPGA",
+    "ENC8_B_FPGA",
+    "ENC8_Z_FPGA",
+    "ENC9_A_FPGA",
+    "ENC9_B_FPGA",
+    "ENC9_Z_FPGA",
+    "ENC10_A_FPGA",
+    "ENC10_B_FPGA",
+    "ENC10_Z_FPGA",
+    "ENC11_A_FPGA",
+    "ENC11_B_FPGA",
+    "ENC11_Z_FPGA",
+    "FREQ0",
+    "FREQ1",
+    "MPG_A",
+    "MPG_B",
+    "PWM0",
+    "PWM1",
+    "PEN0",
+    "PEN1",
+    "PROCESS_PERMIT_EXT_3V3",
+    "SAFETY_STATUS",
+    "RESET_ARM",
+    "CONTACTOR_FB",
+    "STO_FB",
+    "ARM_LAMP",
+    "IOL1_L0_SCLK",
+    "IOL1_L0_CMD",
+    "IOL1_L0_RSP",
+    "IOL1_L0_CS_N",
+    "IOL1_L1_SCLK",
+    "IOL1_L1_CMD",
+    "IOL1_L1_RSP",
+    "IOL1_L1_CS_N",
+    "IOL1_L2_SCLK",
+    "IOL1_L2_CMD",
+    "IOL1_L2_RSP",
+    "IOL1_L2_CS_N",
+    "IOL1_L3_SCLK",
+    "IOL1_L3_CMD",
+    "IOL1_L3_RSP",
+    "IOL1_L3_CS_N",
+    "EIA_SSR_CLK",
+    "EIA_SSR_LOAD_N",
+    "EIA_SSR_DATA",
+    "EX8_SSR_CLK",
+    "EX8_SSR_LOAD_N",
+    "EX8_SSR_DATA",
+    "HOST_SPI_CS_CMD_N",
+    "MX4_PRESENT_A",
+    "MX4_PRESENT_B",
+    "EXP_PGOOD",
+    "MOD_ID0",
+    "MOD_ID1",
+    "MOD_ID2",
+    "TAMPER_N",
+    "MIA_PRESENT_A",
+    "MIA_PRESENT_B",
+    "MIA_PGOOD",
+    "OPI_OK_A",
+    "OPI_OK_B",
+    "OPI_OK_TX",
+    "OPI_REARM",
+    "RAILS_OK",
+    "XS_SCLK",
+    "XS_CMD",
+    "XS_RSP",
+    "XS_CS_N",
+    "SYNC_STROBE",
+    "XS_REFCLK",
+    "progress_o",
+    "FPGA_OUTPUT_REQUEST",
+    "WD_M_OK",
+    "WD_O_OK",
+    "OUT_PERMIT",
+    "PROC_PERMIT_READBACK",
+    "WD_M_TRIP_N",
+    "WD_O_TRIP_N",
+    "WD_TRIP_RECORD_CLEAR",
+    "SSR_CLK",
+    "SSR_LOAD_N",
+    "SSR_DATA",
+    "OPI_OK_BOE",
+    "OPI_OK_OUT",
+    "OPI_REARM_O",
+    "PERMIT_OUT_REQ"
+  ],
+  "new_named_nodes_count": 98,
+  "issues": [
+    "RAW_INHIBIT_Nnormativebutmissingfrom175budget; explicitnewrevisionnominal176/spare13/LVDSmin39underretainedcountingmodel",
+    "rowsz/dmustnotbothbefullydedicatedgrounds:128groundsleaves192contactsfor194seplustwoI2Candotherfunctions",
+    "MCpermissionindependentOPI_REARM_TX/BOEportsaliasoneOPI_REARMstrobe; WD_REARM_M/OaliasoneclearstrobetoretainsingleGPIObudget,aftereventspersisted",
+    "MCdoesnotrequireanSTM32; IOL1remotecontrollersareonDIC/DOA/DOB/ACC",
+    "allFPGAphysicalbankfitandGPIOversusdedicatedpinclassificationremainunproven"
+  ],
+  "Ioff_candidates": {
+    "always_enabled": "SN74LVC244APWR; activeLOWOEtiedGNDperbankArequirements; VCCIO_3V3",
+    "bank_B": "SN74LVC2G126DCUR; activeHIGHOEdirectqualifiedphysicalnetalsotoOPI_BOECLR_N; thirteenmotor/TXoutputs=>sevenderiveddualparts",
+    "not_equivalent": "SN74LVC126AquaddoesnotguaranteeIoffinitsdatasheet",
+    "primary_sources": [
+      "https://www.ti.com/lit/ds/symlink/sn74lvc244a.pdf",
+      "https://www.ti.com/lit/ds/symlink/sn74lvc2g126.pdf"
+    ],
+    "whole_MC_output_isolation_completed": false
+  }
+}

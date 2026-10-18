@@ -1,0 +1,207 @@
+{
+  "title": "Provisional engineering datasheet \u2014 no released hardware ratings",
+  "revision": "Source26 / ROOT101 characterization-r01",
+  "status": "INCOMPLETE_DO_NOT_ADVERTISE_AS_QUALIFIED",
+  "coverage_file": "requirements-and-coverage.json",
+  "evidence_sha256": {
+    "reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r02\\receipt.json": "36a7d492c666d41c69f0f272890eb25497df50917e12a068fc820724261c74aa",
+    "reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\receipt.json": "1c5fb6825fd8c9faa3fb30a916f6fa231a43760ccbc453c33df5363159fb710d",
+    "reports\\motherboard-pcb-integration-20261001\\source26-BankA-health-U25-C19033-merged-trial-r101\\adoption.json": "9a7f90700c2b5105fea8a4343bada60b796400c254d1a1d495c6abc569e1a8bd",
+    "hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "research\\user-notes\\2026-10-01-pre-hardware-characterization.txt": "982baefc9eb08d367ef32536883120ff0634b1fadd7a408da6965e53bfa303e0",
+    "research\\user-notes\\2026-10-01-virtual-machine-bench.txt": "9ace66a1419070de23c10e7c762ff263d9afabbde5259fd088ad587b495acce4",
+    "reports\\pre-hardware-characterization-20261001\\build_characterization_register_r01.py": "3dbc2d39c1fd2353151ff6800824b40b099bcb53847b91edfb44998cb3832108"
+  },
+  "ratings": [
+    {
+      "parameter": "Per-channel steady STEP rate; twelve generator instances",
+      "profile": "historical-default",
+      "label": "SIMULATED LIMIT",
+      "assumed_clock_hz": 50000000,
+      "pulse_high_cycles": 100,
+      "pulse_low_cycles": 100,
+      "safe_DDS_hz": 248756.21311366558,
+      "first_adversarial_failure_hz": 248756.22475519776,
+      "margin_relative_to_2MHz": -0.8756218934431672,
+      "finite_cycles_per_case": 4096,
+      "cases": 48,
+      "simulated_component_only": true,
+      "product_rating_hz": null,
+      "hardware_qualified_hz": null
+    },
+    {
+      "parameter": "Per-channel steady STEP rate; twelve generator instances",
+      "profile": "exploratory-12-tick",
+      "label": "SIMULATED LIMIT",
+      "assumed_clock_hz": 50000000,
+      "pulse_high_cycles": 12,
+      "pulse_low_cycles": 12,
+      "safe_DDS_hz": 1999999.990221113,
+      "first_adversarial_failure_hz": 2000000.0018626451,
+      "margin_relative_to_2MHz": -4.889443516731262e-09,
+      "finite_cycles_per_case": 4096,
+      "cases": 48,
+      "simulated_component_only": true,
+      "product_rating_hz": null,
+      "hardware_qualified_hz": null
+    },
+    {
+      "parameter": "Per-channel steady STEP rate; twelve generator instances",
+      "profile": "exploratory-9-tick",
+      "label": "SIMULATED LIMIT",
+      "assumed_clock_hz": 50000000,
+      "pulse_high_cycles": 9,
+      "pulse_low_cycles": 9,
+      "safe_DDS_hz": 2631578.9436921477,
+      "first_adversarial_failure_hz": 2631578.95533368,
+      "margin_relative_to_2MHz": 0.31578947184607387,
+      "finite_cycles_per_case": 4096,
+      "cases": 48,
+      "simulated_component_only": true,
+      "product_rating_hz": null,
+      "hardware_qualified_hz": null
+    },
+    {
+      "parameter": "Historical CNC1 endpoint configured rate cap",
+      "label": "DESIGN LIMIT",
+      "value": 195312.5,
+      "unit": "pulses/s/channel",
+      "scope": "Six-channel runtime, assumed50MHz, MAX_RATE0x01000000; no endpoint change",
+      "hardware_qualified_value": null
+    },
+    {
+      "parameter": "Source26 general output current",
+      "label": "DESIGN LIMIT",
+      "value": 0.5,
+      "unit": "A/channel",
+      "bank_limit_A": 2,
+      "channels_per_bank": 4,
+      "MPN": "TPS274C65ASRHAR",
+      "hardware_qualified_value": null
+    },
+    {
+      "parameter": "Independent watchdog/inhibit",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "target_max_ms": 20,
+      "conditional_budget_ms": 14.12402,
+      "remaining_unbounded_propagation_allowance_ms": 5.87598,
+      "full_simulated_limit_ms": null,
+      "hardware_qualified_value": null
+    },
+    {
+      "parameter": "Four base ABZ paths, expansion toward twelve",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Complete expanded RTL and selected receiver timing models, then source-bound pin allocation/fit and measured signal integrity"
+    },
+    {
+      "parameter": "Host and local I/O transports",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Actual CNC3 RTL/HAL transport absent; final routed paths and package timing needed"
+    },
+    {
+      "parameter": "1 kHz target with 700 us completion budget",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Historical CNC1 six/two evidence is separate; host simulation cannot qualify target PREEMPT_RT jitter"
+    },
+    {
+      "parameter": "24 DI plus alarms and fast inputs",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Source26 block-specific models and declared corner ranges needed"
+    },
+    {
+      "parameter": "Probe, toolsetter and frequency capture",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Full FPGA endpoint/event transport and source-bound input models needed"
+    },
+    {
+      "parameter": "Power entry and actual rail distribution",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Final routes/copper/cooling and validated component models needed; net names are not fabricated voltage limits"
+    },
+    {
+      "parameter": "Analog inputs and process/0-10 V outputs",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Actual circuit models, calibration policy and complete error budget needed; no accuracy specification invented"
+    },
+    {
+      "parameter": "CAN, RS-485, ESP and expansion",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Existing isolated host/IOL1/ESP tests are partial evidence, not complete physical bus qualification"
+    },
+    {
+      "parameter": "FPGA, converters, output banks and enclosure",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Vendor power estimator, final copper, enclosure/cooling and component dissipation models missing"
+    },
+    {
+      "parameter": "STEP/DIR cable and high-speed traces",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "Board still has 3528 required joins; no cable-length or high-speed electrical rating before routed stackup and models"
+    },
+    {
+      "parameter": "All features active together",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "No assembled full virtual controller yet; report servo/SPI/resource/power/temperature denominators together"
+    },
+    {
+      "parameter": "Blank setup through fault and recovery",
+      "label": "PHYSICAL VALIDATION REQUIRED",
+      "design_limit": null,
+      "simulated_limit": null,
+      "datasheet_limit": null,
+      "hardware_qualified_value": null,
+      "reason": "File-only configuration/host tests are not complete UX acceptance; unsupported machine types remain explicitly unavailable"
+    }
+  ],
+  "notes": [
+    "The 12/12tick exploratory limit leaves effectively no timing margin at2MHz.",
+    "The 9/9tick experiment does not change production defaults and does not qualify external drive pulse widths.",
+    "Four mutation controls on separately compiled copies detect stuck counts, missing fault flags, short pulse widths and silent channel11.",
+    "Initial mutation r01 expected a later assertion; the earlier correct pulse-mismatch assertion fired. r02 isolates the timing-boundary case and passes all specified assertions. No production code was changed.",
+    "DATASHEET LIMIT entries require exact manufacturer revision/table/conditions; no generic component maximum is substituted for this unfinished board."
+  ]
+}

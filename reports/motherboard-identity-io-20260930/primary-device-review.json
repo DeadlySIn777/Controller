@@ -1,0 +1,78 @@
+{
+  "primary_sources": [
+    {
+      "name": "lsf0101.pdf",
+      "sha256": "ef8f98dd94dc2e37b43d8ff7f1387c59aeeadbb79342e0088db36e2c42170009"
+    },
+    {
+      "name": "pca9306.pdf",
+      "sha256": "1cd97c734729f2bfca26ccaa93521c04c373568e4ebe6d892267dba2571e21e6"
+    },
+    {
+      "name": "pca9517.pdf",
+      "sha256": "bdd9a889c16f5f5a063e7468a8a9b6d20cb903584df44e691eb3bc805b9d1436"
+    },
+    {
+      "name": "tca9406.pdf",
+      "sha256": "fdb80d682fbacd5ef18cbafc57e4d9375a295daa38da33721af6e055f8a7da61"
+    },
+    {
+      "name": "tca9517a.pdf",
+      "sha256": "ad2d7dc5994583006aa21b67ee9f18507a2698ad9366285dff56816f065790c6"
+    },
+    {
+      "name": "tpd1e10b06.pdf",
+      "sha256": "6ffe72cb5f5e607fcafd05eef9809632402241eb44cd859a3652f43a35323da9"
+    },
+    {
+      "name": "tps3700.pdf",
+      "sha256": "3bb7daed20b154bf22ded78e23269c6437eb587400b89bce0f543813df94ebf0"
+    },
+    {
+      "name": "txs0101.pdf",
+      "sha256": "cd997a51842d6310449502f0079c51005ceceb0126b8b0d4992808272d3a5310"
+    }
+  ],
+  "exact_selected": [
+    "TCA9517ADGKR Rev E SCPS245E October2025, DGK0008A4214862/A04/2023 land",
+    "TPS3700DDCR SBVS187G, actual A+UV and B-OV open-drain window",
+    "TPD1E10B06DPYR Rev G DPY0002A4224561/C07/2024 land"
+  ],
+  "STM32_primary": {
+    "url": "https://www.st.com/resource/en/datasheet/stm32g031j6.pdf",
+    "document": "DS12992 Rev4 June2025",
+    "facts": "Table53 p74 VOLmax.4V at8mA,VDD>=2.7; Tables19/51 require aggregate current and actual3.3V input limits; browser primary read, no retainedSTPDF hash"
+  },
+  "TCA_primary_url": "https://www.ti.com/lit/ds/symlink/tca9517a.pdf",
+  "rejected": {
+    "TCA9517_nonA": "VILC.4 does not bound STM32 VOL.4 plus realPCBdrop",
+    "TCA9406_and_TXS0101": "external LOW.15 notguaranteed by actualPD3; TXSoneshot cable behavior also unqualified",
+    "LSF0101/PCA9306": "notchosen; unpoweredEN/referencebias/partialpower notproven"
+  },
+  "scope": "manufacturer facts and bounded DC/RC source screens, not target/physical/systemESD proof",
+  "threshold_screens": {
+    "host_LOW_max_v": 0.40386039654295885,
+    "host_receiver_LOW_limit_v": 0.45,
+    "host_receive_LOW_max_v": 0.6,
+    "host_receive_LOW_limit_v": 0.81,
+    "field_receive_LOW_max_v": 0.5991276271241441,
+    "field_receive_LOW_limit_v": 0.8,
+    "host_rise_to70percent_rc_s": 6.11919177798657e-07,
+    "field_rise_to70percent_rc_s": 2.30081610852295e-06,
+    "rise_screens_are_not_loaded_latency_proof": true
+  },
+  "power_budget": {
+    "IO_3V3_bypass_nominal_uf": 0.2,
+    "FREQ_5V_LIMITED_bypass_nominal_uf": 0.1,
+    "TCA_B_max_quiescent_datasheet5V5_a": 0.005,
+    "TCA_A_max_quiescent_a": 0.001,
+    "TPS3700_IDD_max_table_at5V_a": 1.3e-05,
+    "TPS3700_IO3_reservation_a": 1.8e-05,
+    "host_pullup_max_screen_a": 0.00038603965429588204,
+    "field_pullup_max_screen_a": 0.0011898452119546994,
+    "field_window_dividers_max_screen_a": 8.85944910060846e-05,
+    "no_total_dynamic_qualification": true
+  },
+  "independent_review": "contract agent confirmed exact TCA/STM32 bounded LOW screens; dynamic/cable/Ioff/ramps remain explicit gates",
+  "warning_justification": "Both unused SCL bidirectionalpins2/7 are directlygrounded as TI Table4-1 expressly requires; nativewarnings are retained, unsuppressed, no electrical signal role is falsely changed."
+}

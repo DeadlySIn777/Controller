@@ -1,0 +1,377 @@
+{
+  "status": "PASS",
+  "failure": null,
+  "input_sha256": {
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_alarm_filter.v": "c02ff736f523f44c79940471fbb43f05e0a5d8e1a417a2f3bf2e031f6cc2c39d",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_encoder_runtime.v": "f92a47bc75e7f3b51f8ab445ffa34c91b43a2baf2152e638c7aa8d257908da7b",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_motion_spi.v": "d6bb4aa0af489bda3de3ec5c99ee21552775a62b3a8357046157ec5a9ded3aff",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_motion_state.v": "4317ddad0c64fffeadafaee1a35ca74661a26acdace540714b7ffc92e2d171bf",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_spi_transport_stateful.v": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_stepgen_runtime.v": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_command_validate.v": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af",
+    "reports\\cnc3-stateful-implementation-20261001\\serial-actual-SPI-motion-r01\\cnc3_rate_admission_serial.v": "209326f95eb8f92f3629d9149147ced49d750eec2edb489552f3e42264e2bc7b",
+    "reports\\controller-plant-20261001\\stage-r01\\edge_plant.hpp": "5bd5795412cac1ae5cd4fab76045ad103e14dd318d8119dc5ad895eb0143ba2f",
+    "reports\\controller-plant-20261001\\stage-r01\\spi_edge_plant.cpp": "fdce6a975850bcdf394368a50c3610afff36415d6e60d0261de6f57990cbff98",
+    "reports\\controller-plant-20261001\\run_spi_edge_plant_r01.py": "305546950372986f41bd64b38bff52fee4f14bed149c43e1b2c6ae642121f826",
+    "gateware\\v3\\frozen\\protocol_v3.py": "53b6a4a097596cda593d2ddc4fae14068efee156f40265654a378c25c928c8ae",
+    "gateware\\v3\\frozen\\spec\\protocol.json": "7b99fe71d695dd9dfbecc75da980402169805ed8359626ca24eca2e8bb91bf07"
+  },
+  "source_unchanged": true,
+  "command_frames_sha256": "7f3526cc3f999962c1e0ef0e8ba34092ca9435edc8c9c052eae02332e155ba89",
+  "cases": [
+    {
+      "scenario": "clean",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "four_actual_position_encoders": true,
+        "continuity_preserved_after_clean_stop": true
+      },
+      "state_sha256": "7252763aca9381ec4da32194818ca9378802614827c681879db43f1ceec8a7d1",
+      "responses_sha256": "2466737d17a16f0c31ac3f231834cefce828017bd04dcbfe2fdf9df00e25607e",
+      "fixture_assertions": 76
+    },
+    {
+      "scenario": "missed_steps",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "four_actual_position_encoders": true,
+        "continuity_preserved_after_clean_stop": true,
+        "physical_encoder_differs_from_step_command": true
+      },
+      "state_sha256": "5c6530af79031c50856121d45f02c9723eef6231f89ff1c165975a41a12f14b5",
+      "responses_sha256": "29d31d9b277e6510435c238dc68554fcbbf6f16a2da66f728bb873f204e6f829",
+      "fixture_assertions": 65
+    },
+    {
+      "scenario": "watchdog",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "62c4b73d0aa6b46daae2960b2e37c579f0888d5726dd35fcfdd37df65330d1c8",
+      "responses_sha256": "3c04882950a9150c97c3f403b503ae78e893a7186cdb3352c73b6c363c2760a1",
+      "fixture_assertions": 78
+    },
+    {
+      "scenario": "encoder_unplug",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "8e06196f1e19532ad0a8b1a91e76da641c1133645d00e922039acd6152fae8eb",
+      "responses_sha256": "8a7d262df70b6be565260b62f654b4295b74939f12a75a2972bffcca63ec91d4",
+      "fixture_assertions": 78
+    },
+    {
+      "scenario": "permission_drop",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "bb54ca1f75a3d73e4aeced53cb3e7f098f8cb7761f728c3f11d9336c8a50b527",
+      "responses_sha256": "9382af30030153c962eda1fe15b52eab2a0f656e13c85618895c06aa72786051",
+      "fixture_assertions": 78
+    },
+    {
+      "scenario": "drive_alarm",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "bac60204a41a0cd1bf2abeed321cd367107913569ecaf56ed902caec611c0244",
+      "responses_sha256": "c46148bddbc84d6347b386cbbc6569c487d9f6d8a52b8870f9a110ff1d133dbc",
+      "fixture_assertions": 78
+    },
+    {
+      "scenario": "field_power_loss",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "f57339a16ee5c13686f50f3a0d06fde7d4be8132868f57bf23512f2ee9add0d4",
+      "responses_sha256": "9382af30030153c962eda1fe15b52eab2a0f656e13c85618895c06aa72786051",
+      "fixture_assertions": 90
+    },
+    {
+      "scenario": "provider_missing",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "f57339a16ee5c13686f50f3a0d06fde7d4be8132868f57bf23512f2ee9add0d4",
+      "responses_sha256": "9382af30030153c962eda1fe15b52eab2a0f656e13c85618895c06aa72786051",
+      "fixture_assertions": 90
+    },
+    {
+      "scenario": "sensor_power_loss",
+      "passed": true,
+      "checks": {
+        "actual_stopped_outputs": true,
+        "all_twelve_pin_counts": true,
+        "actual_encoder_waveform_drained": true,
+        "actual_digital_analog_sources_unavailable": true,
+        "fault_continuity_invalid": true
+      },
+      "state_sha256": "5dfaad29198ac813f05a3eb0d7c922d5cca06dc09adb526dadf25cecde81d034",
+      "responses_sha256": "8a7d262df70b6be565260b62f654b4295b74939f12a75a2972bffcca63ec91d4",
+      "fixture_assertions": 79
+    }
+  ],
+  "executions": [
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "verilator",
+        "--cc",
+        "--compiler",
+        "clang",
+        "--top-module",
+        "cnc3_motion_spi",
+        "--Mdir",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj",
+        "-Wall",
+        "-Wno-fatal",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_alarm_filter.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_encoder_runtime.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_motion_spi.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_motion_state.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_spi_transport_stateful.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_stepgen_runtime.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_command_validate.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/cnc3_rate_admission_serial.v"
+      ],
+      "exit_code": 0,
+      "log": "verilate.log",
+      "log_sha256": "23c894c4d38dc9bf3cf141907a590576c7fd98e91c87f127b40e19f4944eba31",
+      "seconds": 0.6098562999395654
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "clang++",
+        "-std=c++17",
+        "-O1",
+        "-pthread",
+        "-I/usr/share/verilator/include",
+        "-I/usr/share/verilator/include/vltstd",
+        "-I/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj",
+        "-I/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/inputs/spi_edge_plant.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi___024root__0.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi___024root__0__Slow.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi___024root__1.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi___024root__Slow.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi__ConstPool__0__Slow.cpp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/obj/Vcnc3_motion_spi__Syms__Slow.cpp",
+        "/usr/share/verilator/include/verilated.cpp",
+        "/usr/share/verilator/include/verilated_threads.cpp",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant"
+      ],
+      "exit_code": 0,
+      "log": "compile.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 16.25208169990219
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/clean",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "clean"
+      ],
+      "exit_code": 0,
+      "log": "clean\\execute.log",
+      "log_sha256": "cab883599d7176647e80b7b7a65447f849d985d2281e24ee44bc85941c5af01f",
+      "seconds": 0.6772975999629125
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/missed_steps",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "missed_steps"
+      ],
+      "exit_code": 0,
+      "log": "missed_steps\\execute.log",
+      "log_sha256": "9ba104e6bb53e6e2d712c2a27cedd415b7a4c25ebf2fb73fc4ce38c0f9eadfef",
+      "seconds": 0.6495745000429451
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/watchdog",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "watchdog"
+      ],
+      "exit_code": 0,
+      "log": "watchdog\\execute.log",
+      "log_sha256": "18b3d39ae18fe8f3a40b2c64632a176a2d55847cce11022cc60094fa826ccf1e",
+      "seconds": 0.7770450999960303
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/encoder_unplug",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "encoder_unplug"
+      ],
+      "exit_code": 0,
+      "log": "encoder_unplug\\execute.log",
+      "log_sha256": "553958cab5652d352cf4c25830cdf363519a3c3afc7e9c21eea27ae15480c993",
+      "seconds": 0.6854908999521285
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/permission_drop",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "permission_drop"
+      ],
+      "exit_code": 0,
+      "log": "permission_drop\\execute.log",
+      "log_sha256": "fcaee4350f0b4b8f28a1607a8c283f6b6b530c60b3e78f3ac59f08e95aa16caf",
+      "seconds": 0.6680030000861734
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/drive_alarm",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "drive_alarm"
+      ],
+      "exit_code": 0,
+      "log": "drive_alarm\\execute.log",
+      "log_sha256": "5d78edcae072b3105ebb8c5e2e2a01b0bf62708d582dc903f7fb38e9a65f6540",
+      "seconds": 0.6947826000396162
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/field_power_loss",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "field_power_loss"
+      ],
+      "exit_code": 0,
+      "log": "field_power_loss\\execute.log",
+      "log_sha256": "8d39130833af04d5784388097e240e6878482ed884ef74d90270d71285c43218",
+      "seconds": 0.6662505000131205
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/provider_missing",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "provider_missing"
+      ],
+      "exit_code": 0,
+      "log": "provider_missing\\execute.log",
+      "log_sha256": "843b6096aed4c83385f6ee2c8da41d58afaa818d3f787c43ad56700a32a3cf93",
+      "seconds": 0.6661553999874741
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--cd",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/sensor_power_loss",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/public-SPI-bench-stage-r01/actual_cnc3_SPI_edge_plant-evidence/spi_edge_plant",
+        "sensor_power_loss"
+      ],
+      "exit_code": 0,
+      "log": "sensor_power_loss\\execute.log",
+      "log_sha256": "b1020d8684babc947acfd1445d664a78edce664b26956195878853755d05f52d",
+      "seconds": 0.6726393999997526
+    }
+  ],
+  "actual_FPGA_integration": true,
+  "actual_LinuxCNC_integration": false,
+  "behavioral_FPGA_substitution": false,
+  "physical_qualified": false,
+  "manufacturing_ready": false,
+  "complete_nine_machine_suite": false,
+  "complete_safety_chain": false,
+  "scope": "Actual Verilated CNC3 serial transport/state/12 DDS/4 encoder RTL; emitted pins drive disconnected ideal mechanics; real serial feedback decoded independently",
+  "gaps": [
+    "actual CNC3 HAL and LinuxCNC",
+    "selected-part physical power/permission/watchdog circuits",
+    "IOL1 and complete output authority",
+    "home/limit/probe computed but not yet connected to actual RTL event acquisition",
+    "inertia/torque/acceleration capability",
+    "complete nine machine kinematics/UI",
+    "vendor fit/static timing and physical measurements"
+  ]
+}

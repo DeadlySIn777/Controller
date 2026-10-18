@@ -1,0 +1,1190 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-process-r0.1",
+  "parent_reference_index": 14,
+  "status": "source_candidate_not_qualified",
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "firmware_implemented": false,
+  "components": {
+    "U14401": {
+      "kind": "DFF",
+      "mpn": "SN74LVC1G74DCUR",
+      "value": "SN74LVC1G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "physical": true,
+      "pins": {
+        "1": "ACC_IO_ENABLE_STROBE",
+        "2": "IO_3V3",
+        "3": null,
+        "4": "LOGIC_GND",
+        "5": "ACC_OUT_EN_LATCH",
+        "6": "ACC_CLR_N",
+        "7": "IO_3V3",
+        "8": "IO_3V3"
+      },
+      "role": "permission/reset drop clears latch; next enable needs fresh valid-frame-controlled edge"
+    },
+    "U14402": {
+      "kind": "AND4",
+      "mpn": "SN74LVC08APWR",
+      "value": "SN74LVC08APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_ACC",
+        "2": "ACC_CONTROLLER_RESET_N",
+        "3": "ACC_CLR_N",
+        "4": "ACC_OUT_EN_LATCH",
+        "5": "ACC_CARD_EN",
+        "6": "ACC_READY",
+        "7": "LOGIC_GND",
+        "8": "PWM_ENABLE_LOGIC",
+        "9": "ACC_READY",
+        "10": "OUT_PERMIT_ACC",
+        "11": "PEN_PERMIT_READY",
+        "12": "ACC_READY",
+        "13": "PROC_PERMIT",
+        "14": "IO_3V3"
+      },
+      "role": "independent OUT/PROC permissions; MCU cannot override hardware inhibit"
+    },
+    "U14403": {
+      "kind": "AND4",
+      "mpn": "SN74LVC08APWR",
+      "value": "SN74LVC08APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "PWM_ENABLE_LOGIC",
+        "2": "PWM0_FPGA",
+        "3": "PWM0_GATED",
+        "4": "PWM_ENABLE_LOGIC",
+        "5": "PWM1_FPGA",
+        "6": "PWM1_GATED",
+        "7": "LOGIC_GND",
+        "8": "PEN0_LED_REQUEST",
+        "9": "PEN_ENABLE_LOGIC",
+        "10": "PEN0_CMD",
+        "11": "PEN1_LED_REQUEST",
+        "12": "PEN_ENABLE_LOGIC",
+        "13": "PEN1_CMD",
+        "14": "IO_3V3"
+      },
+      "role": "commands physically gated; no constant permit"
+    },
+    "C14401": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14401 local bypass"
+    },
+    "C14402": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14402 local bypass"
+    },
+    "C14403": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14403 local bypass"
+    },
+    "U14404": {
+      "kind": "AND1",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "ACC_CLR_N",
+        "2": "PROC_PERMIT",
+        "3": "LOGIC_GND",
+        "4": "PEN_CLR_N",
+        "5": "IO_3V3"
+      },
+      "role": "process permission/reset loss independently clears process rearm latch"
+    },
+    "U14405": {
+      "kind": "DFF",
+      "mpn": "SN74LVC1G74DCUR",
+      "value": "SN74LVC1G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "physical": true,
+      "pins": {
+        "1": "ACC_IO_ENABLE_STROBE",
+        "2": "IO_3V3",
+        "3": null,
+        "4": "LOGIC_GND",
+        "5": "PEN_OUT_EN_LATCH",
+        "6": "PEN_CLR_N",
+        "7": "IO_3V3",
+        "8": "IO_3V3"
+      },
+      "role": "process cannot automatically resume when PROC permission returns; new accepted rearm edge required"
+    },
+    "U14406": {
+      "kind": "AND1",
+      "mpn": "SN74LVC1G08DBVR",
+      "value": "SN74LVC1G08DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": "PEN_OUT_EN_LATCH",
+        "2": "PEN_PERMIT_READY",
+        "3": "LOGIC_GND",
+        "4": "PEN_ENABLE_LOGIC",
+        "5": "IO_3V3"
+      },
+      "role": "process latch plus live permission; PWM lane remains independently armed"
+    },
+    "C14404": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14404 local bypass"
+    },
+    "C14405": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14405 local bypass"
+    },
+    "C14406": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14406 local bypass"
+    },
+    "R14401": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_ACC",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14402": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PROC_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14403": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "ACC_CONTROLLER_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14404": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "ACC_IO_ENABLE_STROBE",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14405": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "ACC_CARD_EN",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14406": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_ENABLE_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14407": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN_ENABLE_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "missing controller/permission defaults OFF"
+    },
+    "R14408": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM0_FPGA",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LOW default includes unused-user FPGA weak pull-up; receiving leakage to qualify"
+    },
+    "R14409": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM1_FPGA",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LOW default includes unused-user FPGA weak pull-up; receiving leakage to qualify"
+    },
+    "R14410": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN0_CMD",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LOW default includes unused-user FPGA weak pull-up; receiving leakage to qualify"
+    },
+    "R14411": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN1_CMD",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LOW default includes unused-user FPGA weak pull-up; receiving leakage to qualify"
+    },
+    "U14407": {
+      "kind": "DIODEPOWER",
+      "mpn": "LM66100DCKR",
+      "value": "LM66100DCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND",
+        "3": "PWM_5V_INTERNAL",
+        "4": null,
+        "5": null,
+        "6": "PWM_5V_INTERNAL"
+      },
+      "role": "real ideal diode CE senses VOUT; prevents steady-state receiver/clamp backfeed into motion rail; switching energy remains qualification"
+    },
+    "C14407": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MOTION_5V_RAW",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14407 input bypass"
+    },
+    "C14408": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14407 local bypass"
+    },
+    "C14409": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "U14407 storage"
+    },
+    "R14412": {
+      "kind": "R",
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "isolated PWM section bleed"
+    },
+    "U14408": {
+      "kind": "T45",
+      "mpn": "SN74LVC2T45DCTR",
+      "value": "SN74LVC2T45DCTR",
+      "footprint": "Package_SO:SSOP-8_2.95x2.8mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "PWM0_GATED",
+        "3": "PWM1_GATED",
+        "4": "LOGIC_GND",
+        "5": "IO_3V3",
+        "6": "PWM1_DRIVER",
+        "7": "PWM0_DRIVER",
+        "8": "PWM_5V_INTERNAL"
+      },
+      "role": "dual supply noninverting A-to-B translator; 5V \u00b132mA device drive supports \u00b120mA port rating"
+    },
+    "C14410": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14408 A-side bypass"
+    },
+    "C14411": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14408 B-side bypass"
+    },
+    "U14409": {
+      "kind": "ODINV",
+      "mpn": "SN74LVC1G06DBVR",
+      "value": "SN74LVC1G06DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "PWM_ENABLE_LOGIC",
+        "3": "LOGIC_GND",
+        "4": "PWM_CLAMP_GATE",
+        "5": "IO_3V3"
+      },
+      "role": "HIGH enable sinks common clamp gate; missingIO3 Ioff leaves gate pulled5V and clamps ON"
+    },
+    "C14412": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14409 bypass"
+    },
+    "R14413": {
+      "kind": "R",
+      "mpn": "CRCW060356K0FKEA",
+      "value": "56000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_CLAMP_GATE",
+        "2": "PWM_5V_INTERNAL"
+      },
+      "resistance_ohm": 56000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "enabled OD load<100uA givesmaxVOL0.1V;missingIO3 clamp gate remainsabove2.5V screen;transitiontiming unqualified"
+    },
+    "U14410": {
+      "kind": "NMOS",
+      "mpn": "PMV20XNEAR",
+      "value": "PMV20XNEAR",
+      "footprint": "CNC_MB_Process:PMV20XNEA_SOT23_NXP",
+      "physical": true,
+      "pins": {
+        "1": "PWM_CLAMP_GATE",
+        "2": "LOGIC_GND",
+        "3": "PWM0_DRIVER"
+      },
+      "role": "independent fail-LOW shunt before terminal resistor; maxRDS34mohm at2.5V/25C,20mohm4.5V/25C and30mohm4.5V/150C"
+    },
+    "R14414": {
+      "kind": "R",
+      "mpn": "CRCW06034R70FKEA",
+      "value": "4.7R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM0_DRIVER",
+        "2": "PWM0"
+      },
+      "resistance_ohm": 4.7,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "bounded20mA drop94mV; cable/protection qualification required"
+    },
+    "R14415": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM0",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "terminal LOW bias ifallrails absent"
+    },
+    "D14401": {
+      "kind": "TVS",
+      "mpn": "TPD1E10B06DPYR",
+      "value": "TPD1E10B06DPYR",
+      "footprint": "CNC_MB_Process:TPD1E10B06_DPY2_TI",
+      "physical": true,
+      "pins": {
+        "1": "PWM0",
+        "2": "LOGIC_GND"
+      },
+      "bidirectional": true,
+      "role": "primary bidirectional suppressor; assembled protection not claimed"
+    },
+    "U14411": {
+      "kind": "CLAMP",
+      "mpn": "BAT54S,215",
+      "value": "BAT54S,215",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "physical": true,
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "PWM_5V_INTERNAL",
+        "3": "PWM0"
+      },
+      "role": "secondary Schottky rail clamp onto reverse-blocked local rail; not24V tolerant"
+    },
+    "U14412": {
+      "kind": "NMOS",
+      "mpn": "PMV20XNEAR",
+      "value": "PMV20XNEAR",
+      "footprint": "CNC_MB_Process:PMV20XNEA_SOT23_NXP",
+      "physical": true,
+      "pins": {
+        "1": "PWM_CLAMP_GATE",
+        "2": "LOGIC_GND",
+        "3": "PWM1_DRIVER"
+      },
+      "role": "independent fail-LOW shunt before terminal resistor; maxRDS34mohm at2.5V/25C,20mohm4.5V/25C and30mohm4.5V/150C"
+    },
+    "R14416": {
+      "kind": "R",
+      "mpn": "CRCW06034R70FKEA",
+      "value": "4.7R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM1_DRIVER",
+        "2": "PWM1"
+      },
+      "resistance_ohm": 4.7,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "bounded20mA drop94mV; cable/protection qualification required"
+    },
+    "R14417": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM1",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "terminal LOW bias ifallrails absent"
+    },
+    "D14402": {
+      "kind": "TVS",
+      "mpn": "TPD1E10B06DPYR",
+      "value": "TPD1E10B06DPYR",
+      "footprint": "CNC_MB_Process:TPD1E10B06_DPY2_TI",
+      "physical": true,
+      "pins": {
+        "1": "PWM1",
+        "2": "LOGIC_GND"
+      },
+      "bidirectional": true,
+      "role": "primary bidirectional suppressor; assembled protection not claimed"
+    },
+    "U14413": {
+      "kind": "CLAMP",
+      "mpn": "BAT54S,215",
+      "value": "BAT54S,215",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "physical": true,
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "PWM_5V_INTERNAL",
+        "3": "PWM1"
+      },
+      "role": "secondary Schottky rail clamp onto reverse-blocked local rail; not24V tolerant"
+    },
+    "U14414": {
+      "kind": "LOAD",
+      "mpn": "TPS22918DBVR",
+      "value": "TPS22918DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND",
+        "3": "PEN_ENABLE_LOGIC",
+        "4": null,
+        "5": "PEN_LED_5V",
+        "6": "PEN_LED_5V"
+      },
+      "role": "shared permitted LED power; QOD engaged independently of command buffers"
+    },
+    "C14413": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14414 VIN bypass"
+    },
+    "C14414": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN_LED_5V",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14414 output bypass"
+    },
+    "R14418": {
+      "kind": "R",
+      "mpn": "CRCW0603330RFKEA",
+      "value": "330R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN_LED_5V",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 330,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LED supply discharge worstcase conservative bleed"
+    },
+    "U14415": {
+      "kind": "ODINV",
+      "mpn": "SN74LVC1G06DBVR",
+      "value": "SN74LVC1G06DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "PEN0_LED_REQUEST",
+        "3": "LOGIC_GND",
+        "4": "PEN0_LED_SINK",
+        "5": "IO_3V3"
+      },
+      "role": "realLED sink defaults highZ withmissingpower/LOWrequest"
+    },
+    "C14415": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14415 bypass"
+    },
+    "U14416": {
+      "kind": "RELAY",
+      "mpn": "TLP3640A(TPL,E",
+      "value": "TLP3640A(TPL,E",
+      "footprint": "CNC_MB_Process:TLP3640A_SO4_11-3C1",
+      "physical": true,
+      "pins": {
+        "1": "PEN_LED_5V",
+        "2": "PEN0_LED_K",
+        "3": "PEN0_1",
+        "4": "PEN0_2"
+      },
+      "role": "floatingNO process contact0\u201330VAC/DC50mA; hardware cuts LED power and sink"
+    },
+    "R14419": {
+      "kind": "R",
+      "mpn": "CRCW0603330RFKEA",
+      "value": "330R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN0_LED_K",
+        "2": "PEN0_LED_SINK"
+      },
+      "resistance_ohm": 330,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LEDcurrent screen meetsIFTmax3mA, preserves20mA LED maximum"
+    },
+    "D14403": {
+      "kind": "TVS",
+      "mpn": "SMBJ33CA-E3/52",
+      "value": "SMBJ33CA-E3/52",
+      "footprint": "Diode_SMD:D_SMB",
+      "physical": true,
+      "pins": {
+        "1": "PEN0_1",
+        "2": "PEN0_2"
+      },
+      "bidirectional": true,
+      "role": "primary bidirectional suppressor; assembled protection not claimed"
+    },
+    "U14417": {
+      "kind": "ODINV",
+      "mpn": "SN74LVC1G06DBVR",
+      "value": "SN74LVC1G06DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "1": null,
+        "2": "PEN1_LED_REQUEST",
+        "3": "LOGIC_GND",
+        "4": "PEN1_LED_SINK",
+        "5": "IO_3V3"
+      },
+      "role": "realLED sink defaults highZ withmissingpower/LOWrequest"
+    },
+    "C14416": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14417 bypass"
+    },
+    "U14418": {
+      "kind": "RELAY",
+      "mpn": "TLP3640A(TPL,E",
+      "value": "TLP3640A(TPL,E",
+      "footprint": "CNC_MB_Process:TLP3640A_SO4_11-3C1",
+      "physical": true,
+      "pins": {
+        "1": "PEN_LED_5V",
+        "2": "PEN1_LED_K",
+        "3": "PEN1_1",
+        "4": "PEN1_2"
+      },
+      "role": "floatingNO process contact0\u201330VAC/DC50mA; hardware cuts LED power and sink"
+    },
+    "R14420": {
+      "kind": "R",
+      "mpn": "CRCW0603330RFKEA",
+      "value": "330R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PEN1_LED_K",
+        "2": "PEN1_LED_SINK"
+      },
+      "resistance_ohm": 330,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "LEDcurrent screen meetsIFTmax3mA, preserves20mA LED maximum"
+    },
+    "D14404": {
+      "kind": "TVS",
+      "mpn": "SMBJ33CA-E3/52",
+      "value": "SMBJ33CA-E3/52",
+      "footprint": "Diode_SMD:D_SMB",
+      "physical": true,
+      "pins": {
+        "1": "PEN1_1",
+        "2": "PEN1_2"
+      },
+      "bidirectional": true,
+      "role": "primary bidirectional suppressor; assembled protection not claimed"
+    },
+    "U14419": {
+      "kind": "LIMIT",
+      "mpn": "TPS1H000AQDGNRQ1",
+      "value": "TPS1H000AQDGNRQ1",
+      "footprint": "CNC_MB_Process:TPS1H000_DGN8_TI",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "IO_3V3",
+        "3": "PWM_AUX_FAULT_N",
+        "4": "PWM_AUX_ILIM",
+        "5": "PWM_AUX_DELAY",
+        "6": "LOGIC_GND",
+        "7": "PWM_5V_AUX",
+        "8": "PWM_5V_INTERNAL",
+        "9": "LOGIC_GND"
+      },
+      "role": "actual latch-off auxiliary supply; on withlogic, fault telemetry, noauto retry"
+    },
+    "R14421": {
+      "kind": "R",
+      "mpn": "TNPW06039K53BEEA",
+      "value": "9530R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_AUX_ILIM",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 9530,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "role": "exactprecision resistor keeps programmedsetting above50mA forpublished\u00b120%bound"
+    },
+    "C14417": {
+      "kind": "C",
+      "mpn": "GRM1885C2A103JA01D",
+      "value": "10nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_AUX_DELAY",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-08,
+      "voltage_rating_v": 100,
+      "role": "latchoff capacitor; delay source 4.5uA/1.45V is typical only"
+    },
+    "R14422": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_AUX_FAULT_N",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "actual open-drain diagnostic; validity requires parentMOTIONrailgood"
+    },
+    "R14423": {
+      "kind": "R",
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_AUX",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "role": "passive auxiliary discharge"
+    },
+    "C14418": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14419 input bypass"
+    },
+    "C14419": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_INTERNAL",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "U14419 input storage"
+    },
+    "C14420": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_AUX",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "role": "U14419 output bypass"
+    },
+    "C14421": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_AUX",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "role": "U14419 output storage"
+    },
+    "D14405": {
+      "kind": "TVS",
+      "mpn": "TPD1E10B06DPYR",
+      "value": "TPD1E10B06DPYR",
+      "footprint": "CNC_MB_Process:TPD1E10B06_DPY2_TI",
+      "physical": true,
+      "pins": {
+        "1": "PWM_5V_AUX",
+        "2": "LOGIC_GND"
+      },
+      "bidirectional": true,
+      "role": "primary bidirectional suppressor; assembled protection not claimed"
+    }
+  },
+  "boundaries": {
+    "J14401": {
+      "kind": "Boundary9",
+      "mpn": "",
+      "value": "PARENT: parentrails,actualhardwarepermissions andallocatedFPGAcommands",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "MOTION_5V_RAW",
+        "4": "OUT_PERMIT_ACC",
+        "5": "PROC_PERMIT",
+        "6": "PWM0_FPGA",
+        "7": "PWM1_FPGA",
+        "8": "PEN0_CMD",
+        "9": "PEN1_CMD"
+      },
+      "role": "parentrails,actualhardwarepermissions andallocatedFPGAcommands"
+    },
+    "J14402": {
+      "kind": "Boundary8",
+      "mpn": "",
+      "value": "PARENT: actualfourthIOL1ACCcontroller/observations required, notconstanthealthy",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "ACC_CONTROLLER_RESET_N",
+        "2": "ACC_IO_ENABLE_STROBE",
+        "3": "ACC_CARD_EN",
+        "4": "ACC_OUT_EN_LATCH",
+        "5": "PEN_OUT_EN_LATCH",
+        "6": "PWM_ENABLE_LOGIC",
+        "7": "PEN_ENABLE_LOGIC",
+        "8": "PWM_AUX_FAULT_N"
+      },
+      "role": "actualfourthIOL1ACCcontroller/observations required, notconstanthealthy"
+    },
+    "J14403": {
+      "kind": "Boundary8",
+      "mpn": "",
+      "value": "PARENT: typedfieldterminalsmating/shielding remainparent",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "PWM0",
+        "2": "PWM1",
+        "3": "PWM_5V_AUX",
+        "4": "LOGIC_GND",
+        "5": "PEN0_1",
+        "6": "PEN0_2",
+        "7": "PEN1_1",
+        "8": "PEN1_2"
+      },
+      "role": "typedfieldterminalsmating/shielding remainparent"
+    }
+  },
+  "fitted_component_count": 68,
+  "fitted_pad_count": 216,
+  "latch_ref": "U14401",
+  "process_latch_ref": "U14405",
+  "process_clear_ref": "U14404",
+  "process_permission_ref": "U14406",
+  "permission_gate_ref": "U14402",
+  "command_gate_ref": "U14403",
+  "clamp_gate_ref": "U14409",
+  "relay_supply_ref": "U14414",
+  "reverse_feed_ref": "U14407",
+  "PWM_channels": [
+    {
+      "channel": 0,
+      "driver_ref": "U14408",
+      "clamp_ref": "U14410",
+      "series_ref": "R14414",
+      "pulldown_ref": "R14415",
+      "tvs_ref": "D14401",
+      "rail_clamp_ref": "U14411",
+      "net": "PWM0",
+      "supply_v_nominal": 5,
+      "continuous_source_sink_a": 0.02,
+      "loaded_VOH_min_screen_v": 3.70506,
+      "loaded_VOL_max_screen_v": 0.6449400000000001,
+      "noIO3_clamp_ON": true,
+      "clamp_gate_pullup_ohm": 56000,
+      "clamp_gate_noIO3_min_screen_v": 3.3688,
+      "enabled_sink_max_load_a": 9.46969696969697e-05,
+      "gate_specs_temperature_c": 25,
+      "physical_response_qualified": false
+    },
+    {
+      "channel": 1,
+      "driver_ref": "U14408",
+      "clamp_ref": "U14412",
+      "series_ref": "R14416",
+      "pulldown_ref": "R14417",
+      "tvs_ref": "D14402",
+      "rail_clamp_ref": "U14413",
+      "net": "PWM1",
+      "supply_v_nominal": 5,
+      "continuous_source_sink_a": 0.02,
+      "loaded_VOH_min_screen_v": 3.70506,
+      "loaded_VOL_max_screen_v": 0.6449400000000001,
+      "noIO3_clamp_ON": true,
+      "clamp_gate_pullup_ohm": 56000,
+      "clamp_gate_noIO3_min_screen_v": 3.3688,
+      "enabled_sink_max_load_a": 9.46969696969697e-05,
+      "gate_specs_temperature_c": 25,
+      "physical_response_qualified": false
+    }
+  ],
+  "process_channels": [
+    {
+      "channel": 0,
+      "relay_ref": "U14416",
+      "sink_ref": "U14415",
+      "LED_resistor_ref": "R14419",
+      "tvs_ref": "D14403",
+      "contact_v_max": 30,
+      "contact_continuous_a": 0.05,
+      "normally_open": true,
+      "floating": true,
+      "LED_min_screen_a": 0.00615061506150615,
+      "LED_max_conservative_a": 0.016069788797061526,
+      "physical_response_qualified": false
+    },
+    {
+      "channel": 1,
+      "relay_ref": "U14418",
+      "sink_ref": "U14417",
+      "LED_resistor_ref": "R14420",
+      "tvs_ref": "D14404",
+      "contact_v_max": 30,
+      "contact_continuous_a": 0.05,
+      "normally_open": true,
+      "floating": true,
+      "LED_min_screen_a": 0.00615061506150615,
+      "LED_max_conservative_a": 0.016069788797061526,
+      "physical_response_qualified": false
+    }
+  ],
+  "aux_supply": {
+    "limiter_ref": "U14419",
+    "ilim_ref": "R14421",
+    "current_limit_target_a": 0.05,
+    "programmed_nominal_a": 0.05036726128016789,
+    "programmed_low_resistor_allowance_a": 0.050128960733083004,
+    "overload_min_screen_a": 0.040103168586466405,
+    "overload_max_screen_a": 0.06072894830710407,
+    "accuracy_condition": "programmedlimit>=50mA,VS\u2013VOUT>=2.5V,overload>1.5xsetting;TI5.5note2",
+    "not_a_guaranteed_50mA_maximum": true,
+    "latchoff": true,
+    "delay_physical_qualified": false
+  },
+  "unimplemented_parent_obligations": [
+    "ActualACC/IOL1L3 MCU,supervisor/rearmfirmware,hardware-startIWDG andidentity/readback.",
+    "Actual parentMOTIONrailqualification andpermissionfanout loading.",
+    "Final typedterminal/chassis/return routing andportorientation.",
+    "LoadedPWMlevels/short/clampcontention/EMC/processcontactturnoffwhole20msfaultpath."
+  ],
+  "electrical_limits": {
+    "PWM_channels": 2,
+    "PWM_source_sink_a": 0.02,
+    "process_channels": 2,
+    "process_contact_v": 30,
+    "process_contact_a": 0.05,
+    "no_automatic_rearm": true
+  }
+}

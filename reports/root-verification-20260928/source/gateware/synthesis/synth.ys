@@ -1,0 +1,19 @@
+# Six STEP/DIR channels, two ABZ encoders, CNC1 ABI2 discovery.
+# Device-family technology mapping only: no package/pin/clock constraints.
+read_verilog -sv rtl/cnc_endpoint.v rtl/cnc_spi_frame.v rtl/cnc_stepgen.v rtl/cnc_encoder.v
+chparam -set ENABLE_DISCOVERY 1 cnc_endpoint
+hierarchy -check -top cnc_endpoint
+rename -top cnc_endpoint
+proc
+check -assert
+select -assert-none t:$dlatch t:$adlatch t:$dlatchsr
+tee -o results/structural-stat.json stat -json
+synth_efinix -top cnc_endpoint
+# Flattening retains hierarchy debug metadata; it has no circuit ports/behavior.
+# Remove only this known metadata before requiring every circuit cell to map.
+delete t:$scopeinfo
+check -assert -mapped
+select -assert-none t:EFX_LATCH t:$_DLATCH_* t:$dlatch t:$adlatch t:$dlatchsr
+tee -o results/mapped-stat.json stat -json
+write_json results/cnc_endpoint_efinix.json
+write_edif results/cnc_endpoint_efinix.edif

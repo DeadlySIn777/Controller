@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "input_hashes": {
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/stage-r01/cnc3_motion_state.v": "2e76335e99beba49bd7b6c6d5e7528b6a00fcf8443a67a3a70a0f4199b43d2b5",
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/stage-r01/cnc3_stepgen_runtime.v": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3",
+    "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-stateful-implementation-20261001/stage-r01/inputs/workspace/gateware/v3/rtl/cnc3_command_validate.v": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af"
+  },
+  "source_unchanged": true,
+  "cases": [
+    {
+      "high": 100,
+      "low": 100,
+      "actual_generator_period": 201,
+      "timing_cap": 21367996,
+      "admission_cap": 16777216
+    },
+    {
+      "high": 100,
+      "low": 155,
+      "actual_generator_period": 256,
+      "timing_cap": 16777216,
+      "admission_cap": 16777216
+    },
+    {
+      "high": 1023,
+      "low": 1023,
+      "actual_generator_period": 2047,
+      "timing_cap": 2098176,
+      "admission_cap": 2098176
+    },
+    {
+      "high": 101,
+      "low": 900,
+      "actual_generator_period": 1002,
+      "timing_cap": 4286394,
+      "admission_cap": 4286394
+    },
+    {
+      "high": 1023,
+      "low": 100,
+      "actual_generator_period": 1124,
+      "timing_cap": 3821145,
+      "admission_cap": 3821145
+    }
+  ],
+  "controls": [
+    {
+      "name": "baseline",
+      "passed": true,
+      "actual_compiled_source_sha256": "2e76335e99beba49bd7b6c6d5e7528b6a00fcf8443a67a3a70a0f4199b43d2b5",
+      "log_sha256": "211b872d434634cd83c95b16575861718115d55408c00ee4a5c014f0922f0be1",
+      "detail": "RATE_ADMISSION_PASS checks=3260 actual_cases=365 actual_generators=12\nrate.sv:164: $finish called at 28628340000 (1ps)\n"
+    },
+    {
+      "name": "removed-global-clamp",
+      "passed": true,
+      "actual_compiled_source_sha256": "74b81665ec049b7ec40d3be7496b18d6d6c287bce605414393cd9e672cc899b7",
+      "log_sha256": "e2de74263425790ae732726d2a2f621d826497186e6d70f8d1304f5a71e12aa4",
+      "detail": "FATAL: rate.sv:84: bad rate rejected atomically before admission tick1007387 fault00000000\n       Time: 20147821000  Scope: tb.check\n"
+    },
+    {
+      "name": "removed-timing-validity",
+      "passed": true,
+      "actual_compiled_source_sha256": "12f623b0456ffa1885392e5ae18f2f50f07a9ca541926f050d2929c73872aa59",
+      "log_sha256": "ad224fbffc0d481ba9b5436566396a79b898470e991f69ef8b4f2cbec2c36de0",
+      "detail": "FATAL: rate.sv:84: bad rate rejected atomically before admission tick1179783 fault00000000\n       Time: 23595741000  Scope: tb.check\n"
+    }
+  ],
+  "global_protocol_MAX_RATE": 16777216,
+  "global_protocol_cap_pps_at_50MHz": 195312.5,
+  "timing_validity": "unsigned abs32; validated high/low100..1023; exact36-bit magnitude25*(high+low+1)11<=2^32",
+  "drive_machine_limits_remain_host_duty": true,
+  "no_ABI_rate_or_hardware_rating_change": true,
+  "vendor_fit_physical_or_full_HAL_qualification": false
+}

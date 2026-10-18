@@ -1,0 +1,3107 @@
+{
+  "passed": true,
+  "scope": "Additional exact endpoint inventory only, frozen ordinary112 review/DSN unchanged. Visual LED load power is proposed separately; actual smart-DO data SPI stays excluded.",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-return-zoning-20261001\\ROOT102-health-current110-composed-r31\\motherboard-bounded-merged-candidate.kicad_pcb": "639e1b7803bfaa24480d824d97d0d487e545b658a0e3e343435e8297083ef053",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\netlist.xml": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\freerouting-evaluation-20261002\\review_additional_visual_loads_and_DO_data_r04.py": "de1049b8f4961699c1b1c4089c87f24ef90ed0da233b080acd1f4591fef7ab77",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_status\\design.json": "f176d8d6cfb8a3ad85a374fa2d937d86933bb25ba0e597d2672960a343e38346",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_do\\design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_io_control\\design.json": "512f421153e5896a5baa7a257fef4c6a0e35e270fd5721e27d3ed2d04eae5265"
+  },
+  "board_sha256": "639e1b7803bfaa24480d824d97d0d487e545b658a0e3e343435e8297083ef053",
+  "additional_proposed_visual_load_nets": 48,
+  "visual_loads": [
+    {
+      "net": "/motherboard_status/OBS0_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17001",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "4d74f5e7-8abb-41e7-abbc-d3bb922d5697",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17001",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "7222dc97-ab67-47df-a0bd-69fb145a96eb",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17002",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "732b181b-beab-48a3-a1aa-5565c3be5780",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS0_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17001",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "a4710aa9-2484-41ca-9c70-0fd81ed76ceb",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17002",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "1dba53cf-05f3-4c82-8dfe-1484800c00bc",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "2",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS0_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "3464867d-0afa-4bec-8dc4-b34ab5d5e0a5",
+          "native_pin_function": "1Y_2",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS1_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17002",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "8ec527ca-f660-4452-9f91-b333b9678d84",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17003",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "1aa50bf7-1f1a-487e-91d8-af098cbdba74",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17004",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "6a286f09-fdd5-4da1-a863-6b8ce1941b47",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS1_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17002",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "8c171209-f104-4713-80cc-070fb50bc9b4",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17004",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "4c334917-84d2-40db-9f87-9eec615fe658",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "4",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS1_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "79cea421-4528-4176-8eba-d23223204a7d",
+          "native_pin_function": "2Y_4",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS2_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17003",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "295a0208-df57-4c9d-a1e1-10534262fe8a",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17005",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "0c4f620e-e385-48a9-a2a3-d6a9b3c494a0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17006",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "18edbd77-66af-4ae7-9e4f-ef4096c39c92",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS2_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17003",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "f8c9e8c7-34ff-4e72-901a-0596ea71d2d3",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17006",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "eef171cd-6b87-4819-bf05-4cd0aa1f58a0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "6",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS2_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "ec4d8bc2-ba28-40e0-be11-3596a3fa8405",
+          "native_pin_function": "3Y_6",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS3_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17004",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "6e79cc2d-b0f3-4534-b0da-5ea5838bfd44",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17007",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "19ac2161-edb6-4bb4-9065-5e2d8b229149",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17008",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "d16a1528-baf1-4047-9b0b-bf5a7e66bf78",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS3_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17004",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "c8c6935a-2a50-4e6b-b635-f788a682276a",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17008",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "ba6265c7-1ade-46d7-8745-b3fa91405cde",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "8",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS3_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "062f94a1-0c98-4d23-afc6-1a65b43f993a",
+          "native_pin_function": "4Y_8",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS4_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17005",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "dde60d9a-8897-4f84-870d-0073c82f1a88",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17009",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "291c17ac-fc45-4e01-b8bb-edc30ccc229e",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17010",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "60d7517d-ba3f-4d7a-b049-e759b0919395",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 3,
+      "required_joins_before": 2,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS4_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17005",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "1195b618-891e-4a2f-bbca-7c84216ebed1",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17010",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fd748599-80ad-417e-a448-03e5748968d5",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "10",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS4_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "f5fcaecc-2510-4648-b8e9-686b78fff15a",
+          "native_pin_function": "5Y_10",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS5_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17006",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "f329ecb0-a529-4b8f-abd4-235a5142d542",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17011",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "7c49f050-e3ad-4cd8-89ad-dd9dc9740968",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17012",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "edb435db-138c-45ab-befb-fe7d2bdebfb0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS5_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17006",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "96402625-e49c-471a-8dca-2a3b20a9c550",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17012",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "921047b9-e3f5-4d7b-a42e-5df62078a1c4",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17002",
+          "pin": "12",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS5_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "af6fd3b7-aaa3-43ff-ab4a-b9e1fa4cb1dc",
+          "native_pin_function": "6Y_12",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 3,
+      "required_joins_before": 2,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS6_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17007",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "aa4b4333-5ef8-4fc0-98fd-481475135d72",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17013",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "d20fa62a-7262-4113-a3ea-7c5fdd0fd6a0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17014",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "cb9132f9-402b-44bb-a70a-5fe410dc62e5",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS6_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17007",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "76f60766-4498-488b-9563-c465c898e405",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17014",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "14a8cd18-a55c-4483-9c47-fca2f3bfe91f",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "2",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS6_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "a1e8ff3e-c846-4c23-93f7-ea73877673c1",
+          "native_pin_function": "1Y_2",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS7_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17008",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "00444466-4e9f-4c31-9828-781d3004c695",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17015",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "e57ba3e3-0695-4db9-a061-713eba6b0952",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17016",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "a81f5c24-ffe9-4384-99cb-9d35969c7ddf",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS7_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17008",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "09f2c9ba-4aa3-47ee-9d2a-e96f4bd41db7",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17016",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fa9ce015-f804-42b9-ab49-3816a1f4e987",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "4",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS7_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "e1d1b952-e15c-4d76-801f-758f52480df5",
+          "native_pin_function": "2Y_4",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS8_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17009",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "83910388-afa5-4294-a8e7-a04798005c78",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17017",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "c1453068-6e91-4767-9467-4a48286a250f",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17018",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fccc9ea7-3bca-443b-96ae-d1e28c4a6f5f",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS8_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17009",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "bde4ee24-c6af-4c1e-b629-ecf9dfa54a01",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17018",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "dffb2aa1-f329-457b-b1c7-274c52c63368",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "6",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS8_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "9bb4fb84-3899-457c-afe6-ad99e8116ae1",
+          "native_pin_function": "3Y_6",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS9_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17010",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "27e65517-0546-4fb1-a7d6-7685bab38780",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17019",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "eeff0fed-0166-4212-b2f2-3c6b9d773841",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17020",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "02a4f407-0581-4990-817b-4accbd480047",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 3,
+      "required_joins_before": 2,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS9_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17010",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "24856b9b-3c51-4082-adff-fb65fdad7dec",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17020",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "dabc2894-6c4b-4c95-b684-478f772d4375",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "8",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS9_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "2b0eb9d6-f943-4fcf-80cf-8214ae3eea64",
+          "native_pin_function": "4Y_8",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS10_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17011",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "2cf60f31-284b-4fad-af17-064993b98bf8",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17021",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "9865c5e2-6f85-45d2-bff9-d7a52cc2e91e",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17022",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "dffa9b2d-ea65-4513-b261-c7ccba877896",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS10_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17011",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "0910c744-d445-4ce9-9bd1-88a04e97be71",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17022",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fa114e46-5f38-4a71-a086-936a1e6a0ec4",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "10",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS10_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "017e327f-2c31-4dbb-afa1-a18dfd87c8a2",
+          "native_pin_function": "5Y_10",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS11_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17012",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "7d39e413-5fc6-4dbe-8888-a03636a6b149",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17023",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "0ce1ad4a-ca81-4ed3-a3da-c684b9509210",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17024",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "6a970e50-7619-463d-9e03-28e763acea70",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS11_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17012",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "8f9e2af4-842d-4e38-b123-470fadca8c2e",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17024",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "cbd48588-0eba-4549-a98e-153bfef68c30",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17004",
+          "pin": "12",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS11_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "e410b8ec-91c6-4e27-8441-bd5fa2234f0c",
+          "native_pin_function": "6Y_12",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS12_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17013",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "172aa646-6a86-4e9f-8f79-99e48b92f036",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17025",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "de2250a6-83a4-44fc-ae21-0abec1f82f48",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17026",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "de87a555-26d3-4671-a9b1-3ba67322a972",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS12_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17013",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "e76e7446-3526-4343-b6db-782df9926b2c",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17026",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "00d7c21f-323c-4992-84c0-603873bf70f4",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "2",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS12_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "bfa297d5-d3d5-4a7a-b549-869ccb22a536",
+          "native_pin_function": "1Y_2",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS13_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17014",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "d892961c-5947-46d0-b6f9-c0370b962535",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17027",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "4c35d956-2770-4e45-a408-400df8167b6b",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17028",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "b98f39d9-3744-4c65-8463-2a9ddc6a2ce4",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS13_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17014",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "49a3d543-03f3-4519-96e2-3dfa21d55bfd",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17028",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "09e25524-9ef6-4861-8876-54641b68cf41",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "4",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS13_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "a9eed5f7-034a-48b7-b4da-a72e150672bf",
+          "native_pin_function": "2Y_4",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS14_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17015",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "ea7bf912-60d7-422a-b5ea-2aeadf64e6c0",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17029",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "84602036-fa61-47b8-a488-fdefead18720",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17030",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "51a94f48-eec4-49e9-a175-6aa958beb9e5",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS14_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17015",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "e1439592-1cb5-4473-ad1f-c49f10d0e1e1",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17030",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fcca0471-4daf-406c-bfb8-1432057bc8ea",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "6",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS14_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "e22743f8-1ebf-45eb-b550-38e64b4ce2e3",
+          "native_pin_function": "3Y_6",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS15_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17016",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "3537d444-4b3d-40fa-bd94-41caa1337da0",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17031",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "fa1831f5-068d-433f-8653-c70d19ffbbaf",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17032",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "2f160dd5-556b-467c-bf12-95cd48de7cb0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS15_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17016",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "602c0dcf-fb2a-46db-8265-972f24df89ed",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17032",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "74d2de06-86e5-407a-a641-0c02658be333",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "8",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS15_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "2eeb73c0-3764-4d15-b4ce-b01aa4b4fd3d",
+          "native_pin_function": "4Y_8",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS16_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17017",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "fa1df16d-3eb7-4d21-b3c5-32aa41b7081c",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17033",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "f81d8e9e-ff80-4660-9aac-459a63e3050e",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17034",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "db245fd6-7d13-4961-8b62-36fcbe6e1f50",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS16_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17017",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "a8f61b4e-d237-4081-a019-7485ab2bec0e",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17034",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "ff1cd984-3779-4e1c-86a2-faec705d9dd0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "10",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS16_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "f4b34370-02e9-4907-a0cb-b18aa4888d05",
+          "native_pin_function": "5Y_10",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS17_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17018",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "a1ea040a-ab4c-485d-8023-3b5d6520e230",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17035",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "e3c77e7e-968a-49bb-b836-77ed13803000",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17036",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "5556c408-def8-4f8a-a780-7cd156a6d049",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS17_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17018",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "9e0f543f-ee90-4c45-b078-1dbd6d5707e8",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17036",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "ea6f14c5-372b-4269-89e5-d12620010515",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17006",
+          "pin": "12",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS17_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "3453b37e-3d1a-4b8e-853f-85907184c4b6",
+          "native_pin_function": "6Y_12",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 3,
+      "required_joins_before": 2,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS18_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17019",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "a2f70cee-02b4-418b-9b55-db8f9cbbc6bc",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17037",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "89a52887-d1f9-4937-b261-45d5d264468c",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17038",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "966c4143-c775-4c11-9235-55ceb4ae0224",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS18_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17019",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "bc313f4f-4e0b-4f8d-821a-29edf4b37aba",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17038",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "ac0394a4-deea-45a7-a193-71a24080faf1",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "2",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS18_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "7ec2b830-3934-40cb-b5dd-1276b1ce87a2",
+          "native_pin_function": "1Y_2",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS19_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17020",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "d3b9c222-dd78-4675-827f-135467d24cdf",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17039",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "dff59379-b2bb-46d9-bb90-359500577d77",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17040",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "cbc5f391-0da9-4621-bbe8-154791ead273",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS19_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17020",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "f9e66b90-4ee9-461c-974d-9fc9cc9f0514",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17040",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "fd5ea293-f2ed-4f8f-958f-c0adf1aec9e3",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "4",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS19_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "9707d841-1221-4122-ba91-1b25abb852b9",
+          "native_pin_function": "2Y_4",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS20_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17021",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "3f2100ad-160a-414c-b9af-49df26e6bb2b",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17041",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "d77aa82d-2c05-492f-a9e8-30b56f5db736",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17042",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "31fbbba4-326e-4856-9297-73656b788003",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS20_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17021",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "10402b01-3c1d-4dd3-b914-6082449a6847",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17042",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "934a8d55-0067-488f-aa05-84bec316e2bf",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "6",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS20_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "c58ca0ed-c356-4a29-a7ca-ae3e6a94f52e",
+          "native_pin_function": "3Y_6",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS21_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17022",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "bf1c1590-ed71-40b5-b7e8-9ade20e5171c",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17043",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "243f4b08-c28c-4ea9-87eb-16ad3eebb1ce",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17044",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "868a8d61-6155-4e33-94f3-026e7b8726d9",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS21_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17022",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "d5afb012-fe0e-4cee-84cf-2cb44846ad33",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17044",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "87edaab6-c836-4225-a059-098c30c5af72",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "8",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS21_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "8ba187b5-81de-400f-bceb-4c451a59963d",
+          "native_pin_function": "4Y_8",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 3,
+      "required_joins_before": 2,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS22_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17023",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "ac7a2e3e-7a3a-43b9-9e0b-8af5ac5ef79f",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17045",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "91e87369-c644-4afd-b299-2ec60c12a0d0",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17046",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "f70c83e0-2536-4784-ad97-ff23a60943d4",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 1,
+      "required_joins_before": 0,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS22_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17023",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "c352b730-1988-4bc3-b4be-2809e84230b4",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17046",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "0951ef10-b7d6-4916-9040-bf4d932ba59c",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "10",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS22_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "dc703fc1-db8c-4ccb-b141-71066efb4c58",
+          "native_pin_function": "5Y_10",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS23_A",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17024",
+          "pin": "2",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_A",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "d25d9d2e-54b4-4e72-9a0f-57064d1dc8dc",
+          "native_pin_function": "A_2",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17047",
+          "pin": "2",
+          "mpn": "CRCW06031K00FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_A",
+          "source_role": "bounded receive LED current, even a shorted LED",
+          "native_pad_UUID": "818cf65a-a623-4659-8ee6-0d7ff32666f6",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17048",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_A",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "3c847840-3ade-46c9-8077-1c581ff2acef",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    },
+    {
+      "net": "/motherboard_status/OBS23_K",
+      "classification": "ordinary_general_DI_visual_LED_load_power",
+      "exact_source_endpoints": [
+        {
+          "reference": "D17024",
+          "pin": "1",
+          "mpn": "APT1608SGC",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_K",
+          "source_role": "actual protected receive HIGH observation",
+          "native_pad_UUID": "9347747d-e689-4f92-b695-01f3a3d7e9fa",
+          "native_pin_function": "K_1",
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "R17048",
+          "pin": "2",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_K",
+          "source_role": "off-leak shunt prevents an LED path becoming a leakage display",
+          "native_pad_UUID": "68345281-a7f7-44fa-add1-5358435bf19b",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U17008",
+          "pin": "12",
+          "mpn": "74LVC07APW,118",
+          "source_block": "motherboard_status",
+          "model_pin_net": "OBS23_K",
+          "source_role": "5V open-drain sink with explicit powered-HIGH and unpowered leakage bounds",
+          "native_pad_UUID": "4f773ae0-6442-4770-b32f-5608ad211764",
+          "native_pin_function": "6Y_12",
+          "native_pin_type": "open_collector"
+        }
+      ],
+      "nonphysical_integration_ports": [],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "All three exact endpoints are only the IN1\u2013IN24 visible LED load,1k series resistor,10k off-leak shunt or independent07 sink. No controller permission, enable, watchdog, fault qualifier, motion, clock or process-PWM endpoint. Candidate for a NEW separately reviewed low-current LED-power route scope; not admitted by the frozen ordinary112 executor and not a digital reference/authority grant.",
+      "proposed_scope_eligible": true,
+      "allowlist_or_executor_changed": false,
+      "actual_return_net": "/LOGIC_GND",
+      "source_voltage_ceiling_v": 5.5,
+      "conservative_zero_VF_LED_current_a": 0.005555555555555556,
+      "required_separate_acceptance": [
+        "complete actual Source current-loop/return continuity",
+        "allocated LED current and trace/drop screen",
+        "native foreign copper/drill/board geometry",
+        "actual receiving/sink/default behavior; no visual hardware-health claim"
+      ]
+    }
+  ],
+  "additional_actual_unjoined_visual_nets": 21,
+  "additional_actual_visual_joins": 26,
+  "reviewed_actual_smart_DO_bus_nets": [
+    {
+      "net": "/motherboard_do/DOA_SCLK_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10006",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_SCLK_HOST",
+          "source_role": "logic fail-off/default bias",
+          "native_pad_UUID": "02662f7e-6701-42db-a8a8-6ce24f1d4505",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10003",
+          "pin": "2",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_SCLK_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "f2b89e62-af11-4c56-bed8-212095869081",
+          "native_pin_function": "INA_2",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13004",
+          "pin": "32",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOA_SCLK_HOST",
+          "source_role": "DOA soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "7f49730c-003d-4b95-baa5-2a4bcfa13e51",
+          "native_pin_function": "PB8_32",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10005",
+          "pin": "7",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13006",
+          "pin": "1",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOA_SDI_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10007",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_SDI_HOST",
+          "source_role": "logic fail-off/default bias",
+          "native_pad_UUID": "73245088-596c-4cd0-9e99-7bb29eaef6dd",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10003",
+          "pin": "3",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_SDI_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "c91b4163-e0d2-4483-8172-951f769d0c61",
+          "native_pin_function": "INB_3",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13004",
+          "pin": "31",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOA_SDI_HOST",
+          "source_role": "DOA soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "87cf32f2-af1b-4628-9848-6b2950d5d882",
+          "native_pin_function": "PB7_31",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10005",
+          "pin": "8",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13006",
+          "pin": "2",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOA_SDO_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "U10003",
+          "pin": "6",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_SDO_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "bc6f1aa5-548d-47a1-84d2-43cbc70301b0",
+          "native_pin_function": "OUTE_6",
+          "native_pin_type": "output"
+        },
+        {
+          "reference": "U13004",
+          "pin": "30",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOA_SDO_HOST",
+          "source_role": "DOA soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "1e776f1e-38ff-42f8-abdb-66dfe1cfb1f2",
+          "native_pin_function": "PB6_30",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10005",
+          "pin": "10",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13006",
+          "pin": "3",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOA_CS_N_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10008",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_CS_N_HOST",
+          "source_role": "host SPI default deselected",
+          "native_pad_UUID": "e2b7b360-6af7-46c9-bff1-ad7567d40a97",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10003",
+          "pin": "4",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOA_CS_N_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "7c352ddb-4de3-4b3b-8aae-68baca6efa0b",
+          "native_pin_function": "INC_4",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13004",
+          "pin": "1",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOA_CS_N_HOST",
+          "source_role": "DOA soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "70f118dd-a4fb-4cbf-8142-a97ce51760f8",
+          "native_pin_function": "PB9_1",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10005",
+          "pin": "9",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13006",
+          "pin": "4",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOB_SCLK_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10026",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_SCLK_HOST",
+          "source_role": "logic fail-off/default bias",
+          "native_pad_UUID": "11dd9e46-3bdc-4bb7-81c8-95e98e62025d",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10016",
+          "pin": "2",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_SCLK_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "f9c41686-920f-4784-8cd2-c520f38a75bf",
+          "native_pin_function": "INA_2",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13008",
+          "pin": "32",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOB_SCLK_HOST",
+          "source_role": "DOB soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "d25a974e-6f8b-482c-8a71-a337b38c7133",
+          "native_pin_function": "PB8_32",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10006",
+          "pin": "7",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13007",
+          "pin": "1",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOB_SDI_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10027",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_SDI_HOST",
+          "source_role": "logic fail-off/default bias",
+          "native_pad_UUID": "90b4569d-4446-446d-9c91-5639b6a67221",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10016",
+          "pin": "3",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_SDI_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "a5fcc9f3-17e9-4004-82e9-a067cd5ff6b4",
+          "native_pin_function": "INB_3",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13008",
+          "pin": "31",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOB_SDI_HOST",
+          "source_role": "DOB soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "c3bf7487-1d0f-4486-ba69-c9718922fd2b",
+          "native_pin_function": "PB7_31",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10006",
+          "pin": "8",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13007",
+          "pin": "2",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOB_SDO_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "U10016",
+          "pin": "6",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_SDO_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "3d355cf2-e883-41e6-a8da-57584a8e3016",
+          "native_pin_function": "OUTE_6",
+          "native_pin_type": "output"
+        },
+        {
+          "reference": "U13008",
+          "pin": "30",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOB_SDO_HOST",
+          "source_role": "DOB soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "86797bf3-5f9f-4e97-b6a8-01b2a0ddba07",
+          "native_pin_function": "PB6_30",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10006",
+          "pin": "10",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13007",
+          "pin": "3",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    },
+    {
+      "net": "/motherboard_do/DOB_CS_N_HOST",
+      "classification": "actual_smart_DO_serial_data_bus",
+      "exact_source_endpoints": [
+        {
+          "reference": "R10028",
+          "pin": "1",
+          "mpn": "CRCW060310K0FKEA",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_CS_N_HOST",
+          "source_role": "host SPI default deselected",
+          "native_pad_UUID": "d5e699b1-3349-4705-9e9d-07762e4676e1",
+          "native_pin_function": null,
+          "native_pin_type": "passive"
+        },
+        {
+          "reference": "U10016",
+          "pin": "4",
+          "mpn": "ISO7762FDBQR",
+          "source_block": "motherboard_do",
+          "model_pin_net": "DOB_CS_N_HOST",
+          "source_role": "F variant: all missing-input outputs default LOW",
+          "native_pad_UUID": "454c98b8-09c5-41c2-9923-0e1b00aea0b5",
+          "native_pin_function": "INC_4",
+          "native_pin_type": "input"
+        },
+        {
+          "reference": "U13008",
+          "pin": "1",
+          "mpn": "STM32G031K8T6",
+          "source_block": "motherboard_io_control",
+          "model_pin_net": "DOB_CS_N_HOST",
+          "source_role": "DOB soldered IOL1 acquisition/control MCU; firmware not implemented",
+          "native_pad_UUID": "80380ed0-9c99-4273-ba8f-bf2130f2cc57",
+          "native_pin_function": "PB9_1",
+          "native_pin_type": "bidirectional"
+        }
+      ],
+      "nonphysical_integration_ports": [
+        {
+          "reference": "J10006",
+          "pin": "9",
+          "physical": false,
+          "role": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        },
+        {
+          "reference": "J13007",
+          "pin": "4",
+          "physical": false,
+          "role": "PARENT: existing smart DO frontend control/reset and actual observations",
+          "native_source_explicitly_exclude_from_board": true,
+          "native_source_explicitly_exclude_from_bom": true
+        }
+      ],
+      "actual_source_components_before": 2,
+      "required_joins_before": 1,
+      "disposition": "These actual MCU-to-ISO7762 endpoints are SPI data/clock/chip-select, with TPS addressed CRC/watchdog/commissioning semantics downstream. They are independently hardware-gated, but this does not convert their actual timing/CRC/SPI role into a generic GPIO. Retain under controlled source/electrical/timing routing unless a NEW separately reviewed bus scope is explicitly accepted; no ordinary112 admission or safety/enable routing exception.",
+      "proposed_scope_eligible": false,
+      "general_individual_DO_command_GPIO_found": false,
+      "reason": "Actual Source uses addressed SPI, not individual low-speed digital channel-command pins.",
+      "user_exclusion_preserved": "SPI/clock and all power/permission/enable/inhibit paths remain protected"
+    }
+  ],
+  "new_gpio_DO_command_nets": 0,
+  "ordinary_allowlist_or_executor_modified": false,
+  "any_actual_route_run": false,
+  "manufacturing_ready": false
+}

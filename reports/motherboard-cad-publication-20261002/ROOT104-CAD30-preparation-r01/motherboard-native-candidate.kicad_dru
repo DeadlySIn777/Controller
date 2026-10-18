@@ -1,0 +1,37 @@
+(version 1)
+# Nominal 0.8mm-pitch diagonal pad/via clearance = 0.140685mm.
+# Only FPGA pad / conventional via pairs use this dimensional rule.
+(rule "T20 conventional BGA pad-via clearance"
+  (condition "(A.memberOfFootprint('U1001') && B.Type == 'Via') || (B.memberOfFootprint('U1001') && A.Type == 'Via')")
+  (constraint clearance (min 0.125mm)))
+(rule "BGA conventional via dimensions"
+  (condition "A.Type == 'Via'")
+  (constraint hole_size (min 0.20mm))
+  (constraint annular_width (min 0.15mm)))
+
+# PCBWay six-layer normal-process inner-hole isolation >=8mil.
+(rule "Six-layer inner drill to copper separation"
+  (layer inner)
+  (constraint hole_clearance (min 0.205mm)))
+
+# Exact GCT USB4105-GF-A recommended land: own .65mm locating holes
+# to adjacent own outer GND lands have nominal .1944mm copper separation.
+# PCBWay published special minimum NP-hole/copper .15mm; required .18mm
+# applies ONLY to these own-pad pairs. All other .25mm rules remain.
+(rule "GCT USB4105 own locating hole to outer ground lands"
+  (condition "A.memberOfFootprint('J15006') && B.memberOfFootprint('J15006') && ((A.Pad_Type == 'NPTH, mechanical' && A.Hole_Size_X == 0.65mm && (B.Pad_Number == 'A1' || B.Pad_Number == 'A12' || B.Pad_Number == 'B1' || B.Pad_Number == 'B12')) || (B.Pad_Type == 'NPTH, mechanical' && B.Hole_Size_X == 0.65mm && (A.Pad_Number == 'A1' || A.Pad_Number == 'A12' || A.Pad_Number == 'B1' || A.Pad_Number == 'B12')))")
+  (constraint hole_clearance (min 0.18mm)))
+
+# Four exact low-current control escapes only; PCBWay advanced DFM/price pending.
+(rule "Four exact converter control escapes"
+  (condition "A.Type == 'Via' && ((A.NetName == '/motherboard_power_entry/C_PGOOD' && A.Position_X == 234.650000mm && A.Position_Y == 156.180000mm) || (A.NetName == '/motherboard_power_entry/CORE_CORE_CONFIG' && A.Position_X == 237.380000mm && A.Position_Y == 156.450000mm) || (A.NetName == '/motherboard_power_entry/C_PGOOD' && A.Position_X == 230.650000mm && A.Position_Y == 182.180000mm) || (A.NetName == '/motherboard_power_entry/MOTION_CORE_CONFIG' && A.Position_X == 233.380000mm && A.Position_Y == 182.450000mm))")
+  (constraint via_diameter (min 0.40mm) (max 0.40mm))
+  (constraint hole_size (min 0.20mm) (max 0.20mm))
+  (constraint annular_width (min 0.10mm)))
+
+# Maintain the previous effective .20 minimum everywhere outside exact necks.
+(rule "Effective general track minimum remains .20" (condition "A.Type == 'Track' || A.Type == 'Arc'") (constraint track_width (min 0.20mm)))
+(rule "U1001 exact assigned F signal necks only" (layer "F.Cu")
+ (condition "A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core/FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core/HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core/HOST_SPI_CS_N' || A.NetName == '/fpga_core/HOST_SPI_MISO' || A.NetName == '/fpga_core/HOST_SPI_MOSI' || A.NetName == '/fpga_core/HOST_SPI_SCLK' || A.NetName == '/fpga_core/IOL1_L0_CS_N' || A.NetName == '/fpga_core/IOL1_L0_MISO' || A.NetName == '/fpga_core/IOL1_L0_MOSI' || A.NetName == '/fpga_core/IOL1_L0_SCLK' || A.NetName == '/fpga_core/IOL1_L1_CS_N' || A.NetName == '/fpga_core/IOL1_L1_MISO' || A.NetName == '/fpga_core/IOL1_L1_MOSI' || A.NetName == '/fpga_core/IOL1_L1_SCLK' || A.NetName == '/fpga_core/IOL1_L2_CS_N' || A.NetName == '/fpga_core/IOL1_L2_MISO' || A.NetName == '/fpga_core/IOL1_L2_MOSI' || A.NetName == '/fpga_core/IOL1_L2_SCLK' || A.NetName == '/fpga_core/IOL1_L3_CS_N' || A.NetName == '/fpga_core/IOL1_L3_MISO' || A.NetName == '/fpga_core/IOL1_L3_MOSI' || A.NetName == '/fpga_core/IOL1_L3_SCLK')")
+ (constraint track_width (min 0.15mm) (max 0.15mm))
+ (constraint track_segment_length (max 1.0mm)))

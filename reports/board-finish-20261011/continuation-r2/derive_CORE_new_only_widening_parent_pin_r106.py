@@ -1,0 +1,6 @@
+"""Correct a transcription error in the immutable parent SHA only."""
+import hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+base=H/'widen_CORE_only_new_legal_envelope_parts_r105.py';s=base.read_text();wrong='e9d67e30fd34bf5e42db2faa23b8c4c32ea11e8be9b8e5419fd2bd2c';correct='e9d67e30fd34bf5e42db2faa23b8c4c32ea11e8be9b8e414b8f8e5419fd2bd2c';assert s.count(wrong)==1;assert sha(H/'joint-positive-head-signal-reference-mask-proposal-r83/model.pkl')==correct;s=s.replace(wrong,correct).replace('CORE-wider-new-only-legal-envelope-proposal-r105','CORE-wider-new-only-legal-envelope-proposal-r106').replace('R105_NEW_ONLY_LEGAL_CORE_WIDENING','R106_NEW_ONLY_LEGAL_CORE_WIDENING');out=H/'widen_CORE_only_new_legal_envelope_parts_r106.py';assert not out.exists();compile(s,str(out),'exec');out.write_text(s);(H/'CORE-new-only-widening-r106-derivation.json').write_text(json.dumps({'base_sha256':sha(base),'new_sha256':sha(out),'prior_failure':'mistyped incomplete R83 SHA; actual immutable input unchanged','exact_original_R83_parent_pin_restored':correct,'geometry_predicates_and_actual_required_gates_unchanged':True},indent=1)+'\n');print('R106_DERIVED',sha(out),flush=True)

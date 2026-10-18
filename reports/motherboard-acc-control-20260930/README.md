@@ -1,0 +1,13 @@
+# Fourth ACC/IOL1 source
+
+This source adds one actual soldered STM32G031C8T6 LQFP48 controller, a TPS3808 rail supervisor, an exact Nexperia 74LVC125A link buffer, a reset Schmitt buffer and passive defaults. It contains **48 physical footprints: 42 purchased parts and six bare copper factory test pads; 155 electrical pads**. It closes the fourth IOL1 L3 electrical endpoint and the existing process frontend's controller reset/strobe/card-enable and observation connections. It does not introduce a custom card or module.
+
+The LQFP48 package provides separate real SPI1 host, SPI2 analog-acquisition and I2C1 DAC interfaces while retaining reset, factory programming, latch/permission observations, analog requests and independent supply/fault observations. ST DS12992 Rev4 tables13/14 verify SPI1 PA4–PA7 AF0, SPI2 PB13–PB15 AF0, and I2C1 PB8/PB9 AF6. PB12 is software chip select. GPIO remapping must preserve PA11/12 and PA9/10 as independently allocated pins. PC14/15 are only strap inputs; their restricted output drive is unused.
+
+The four slot straps encode logical node3, not card presence. Missing analog/bus monitor sources are physically biased fault/not-good. Analog enable requests default LOW. Existing process strobe/card-enable LOW biases are reused rather than fitted twice. The real NRST buffer drives the separately pulled-LOW process reset endpoint; it avoids a direct pull-up/pull-down divider and allows a correctly provisioned bidirectional watchdog reset to propagate.
+
+DAC80501 has no SPI SDO; I2C mode supports real DAC-buffer register readback. The analog source must use asynchronous update and report this register evidence separately from actual terminal-voltage measurement. The selected analog frontends and monitor boundaries are still unfinished and are not represented by this controller receipt.
+
+Native KiCad ERC is zero errors/warnings without ignored checks. Independent XML/pin/AF/default checks and all native footprints pass. The exact receipt records **237 fresh disconnected tests**, including 33 fourth-node tests and preserved process/control/operator/DO/DI/motor regressions, with unchanged source hashes. Source pin checks do not establish programmed options, target firmware, physical timings or manufacture. The inherited hardware-start IWDG, protected bootloader, 1 ms accepted-frame expiry and deliberate rearm requirements remain unimplemented target work; nominal/count arithmetic is not whole-controller inhibit proof.
+
+Use `receipt.json`, `input-hashes.json`, `primary-observations.json`, the native footprint review and `frozen-inputs/` for the exact scope. Parent integration and PCB routing remain separate evidence.

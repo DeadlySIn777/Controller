@@ -1,0 +1,33 @@
+{
+  "stages": [
+    {
+      "name": "actual_four_lane_record_config_SPI",
+      "runner": "run_record_acquisition.py",
+      "evidence_type": "actual simulated SPI into exact r03 target C; all2048 bytes and applied DIC configuration echo; no target MMIO",
+      "status": "FAIL",
+      "reason": "frozen input hashes differ"
+    },
+    {
+      "name": "shared_record_integrity_controls",
+      "runner": "run_stream_controls.py",
+      "evidence_type": "actual compiled bit-serial CRC/shape/queue; independent20-case host vectors plus six compiled mutations",
+      "status": "FAIL",
+      "reason": "frozen input hashes differ"
+    },
+    {
+      "name": "actual_previous_command_tuple_controls",
+      "runner": "run_wire_tuple_controls.py",
+      "evidence_type": "actual wire frames into exact C; two compiled current-vs-cached response metadata mutations",
+      "status": "FAIL",
+      "reason": "frozen input hashes differ"
+    },
+    {
+      "name": "composed_family_mapping",
+      "runner": "run_record_family.py",
+      "evidence_type": "family mapping of actual twelve-axis motion/session plus acquisition; separate failed T20 cell screen, no vendor fit",
+      "status": "FAIL",
+      "reason": "frozen input hashes differ"
+    }
+  ],
+  "bundle_integrity": false
+}

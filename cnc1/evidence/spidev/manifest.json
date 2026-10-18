@@ -1,0 +1,61 @@
+{
+  "date": "2026-09-28",
+  "scope": "Linux spidev laboratory backend, all successful device operations mocked; no physical measurements",
+  "checks": {
+    "normal_assertions": 892,
+    "asan_ubsan_assertions": 892,
+    "cpp_header_c_object_link": "passed",
+    "physical_device_opens": 0
+  },
+  "source_sha256": {
+    "cnc1/src/spidev_transport.h": "7002af2a6c5495e1f8b7291298fea80cfd04c499b23a1918c700f28a6a222129",
+    "cnc1/src/spidev_transport.c": "ae97f700c45c52ec2d8c91764eb423e0dccf80599741887fbe8a79eefc1438d3",
+    "cnc1/tests/test_spidev.c": "c7965a746fa4051596c29e48912b5a04af4c96219129a47184b553d21f7e6357",
+    "cnc1/tests/test_spidev_cpp.cpp": "108d16b62a2b12c3401de317f7989c5c228ea73ab941cfd596af2fad8e83843a",
+    "cnc1/tools/test_spidev.sh": "953a3b8423dee40e7ef1cb1ce10109359defeaa1dd71518f0f84cdac230ea875",
+    "cnc1/tools/record_spidev_evidence.py": "fb85bf5c5a3dfc2aad80a30dc9b18a9161f7350fada53f62db207ba19c238ef6",
+    "reports/SPI_TRANSPORT_IMPLEMENTATION.md": "718e8ae6d21635bea565b167e32d421001d3842cc8d5bf43e4109ee257b982bd",
+    "cnc1/src/cnc1.h": "0e244ab095a4282c04b879fb5347e4a157b012b8fd75fd50ad26e46a780e3822"
+  },
+  "compiled_common_header": {
+    "path": "cnc1/evidence/spidev/build-cnc1.h",
+    "sha256": "0e244ab095a4282c04b879fb5347e4a157b012b8fd75fd50ad26e46a780e3822",
+    "current_common_header_matches": true,
+    "current_common_header_sha256": "0e244ab095a4282c04b879fb5347e4a157b012b8fd75fd50ad26e46a780e3822",
+    "note": "Copied by test_spidev.sh from the isolated rootfs work/spidev-lab/src/cnc1.h after the successful normal+ASan/UBSan+C++ link run."
+  },
+  "evidence_sha256": {
+    "cnc1/evidence/spidev/tests.log": "f3fb774375545c6fb831569244529c35caaa6c9f6b1c28274b2c7f351f979fe8",
+    "cnc1/evidence/spidev/build-packages.tsv": "9beca216ca1cd6870d397a57dfa2746b5b44981eb7759f9301da9d42d17a4cf7",
+    "cnc1/evidence/spidev/build-cnc1.h": "0e244ab095a4282c04b879fb5347e4a157b012b8fd75fd50ad26e46a780e3822",
+    "cnc1/evidence/spidev/initial-sanitizer-environment.log": "34b19403c7f6ece51d2ae420da7911139dbe637d9bc5976935535facb743abaa",
+    "cnc1/evidence/spidev/intermediate-header-regression.log": "e295f643ec55d331ea6feecfbe136dfd23edbc376c7f24efc6c97a9e395e04f2",
+    "cnc1/evidence/spidev/before-persistent-header/archive-index.json": "4aee03925f9c5ad809a6112c8877df970a87e202745e7d0af1b09d11a644d03d"
+  },
+  "binary_sha256": {
+    "cnc1/evidence/spidev/binaries/test_spidev": "4a9debb4003da58014943703e2850b71a8401536c5da7bd6e0d6a25b1b01452e",
+    "cnc1/evidence/spidev/binaries/test_spidev_sanitized": "12c3a3d5f1835de9d17609bfc5f8748bca9b8d6ffcf80d9f97c02156049f0400",
+    "cnc1/evidence/spidev/binaries/test_spidev_cpp": "3bf7f8fc9224a3a00c6b82cc0ebe11b8598fce7aaa41eeadafa175508ff7625c",
+    "cnc1/evidence/spidev/binaries/spidev_transport.o": "81992ba9ec8844ebd950b215139920dc3885552cf434f1ec79179ae398e8a138"
+  },
+  "limitations": [
+    "Synchronous ioctl has no enforced completion deadline.",
+    "Advisory flock is cooperative ownership, not system-wide exclusion.",
+    "No default HAL profile loads this backend.",
+    "No target electrical, timing, device-tree or machine qualification."
+  ],
+  "initial_failure": "Sanitizer initially could not inspect /proc in isolated rootfs. Launcher corrected by mounting proc in private namespaces. The retained initial-sanitizer-environment.log was produced from an earlier revision of cnc1/tests/test_spidev.c (840 assertions, all passed before LeakSanitizer aborted); it does not correspond to the test_spidev.c hash in source_sha256 and is kept only as the failed-environment record.",
+  "recorded_utc": "2026-09-28T20:30:34.657675+00:00",
+  "regression": "Rerun from a clean rootfs work copy against the current common header (driver fields for the persistence stage revision and watchdog-derived limits, with the repair-round comment correction on what the persistence precondition guarantees); spidev transport/test sources unchanged",
+  "prior_runs": [
+    {
+      "archive": "cnc1/evidence/spidev/before-audit-fixes-2026-09-28",
+      "prior_manifest_sha256": "2fae6e2c9ed7f0597cbb5fdbaaf5eef11ee9ab1e8d4fbebf92c83ad7a2a5ac1b"
+    },
+    {
+      "archive": "cnc1/evidence/spidev/before-audit-repair-2026-09-28",
+      "prior_manifest_sha256": "d3d46725989de6d17b2a37fafb7a27cb4c4d087e726663ed9fb757acba503f38"
+    }
+  ],
+  "intermediate_regression": "intermediate-header-regression.log preserves an earlier successful header refresh (historical, before-persistent-header milestone)."
+}

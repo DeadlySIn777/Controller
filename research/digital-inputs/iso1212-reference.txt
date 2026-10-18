@@ -1,0 +1,1049 @@
+TIDA-01508
+2x
+LaunchPad
+SN74LV165
+SN74LV165
+8
+8
+8
+8
+3
+Protection
+...
+16x DI
+2x   FGND
+2x   PE
+3x
+ISO1212
+2x
+ISO1211
+3.3-V 
+supply
+CS
+CLK
+MISO
+Copyright © 2017, Texas Instruments Incorporated
+1
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+TI Designs: TIDA-01508
+Sub 1-W, 16-Channel, Isolated Digital Input Module
+Reference Design
+Description
+This reference design shows a compact
+implementation of 16 isolated digital input channels
+using TI's ISO121x devices. The design works without
+an isolated supply and supports up to 100-kHz input
+signals (200-kbit) per channel. All 16 channels
+consume less than 1-W input power combined, which
+enables a compact layout and results in minimum heat
+dissipation. All input channels are designed to
+withstand ESD, EFT, and surge events according to
+IEC 6100-4-2. Furthermore, these channels can
+withstand input voltages of up to ±60 V.
+Resources
+TIDA-01508
+Design Folder
+ISO1211
+Product Folder
+ISO1212
+Product Folder
+SN74LV165A
+Product Folder
+SN74LVC1GU04
+Product Folder
+TVS3300
+Product Folder
+ASK Our E2E™Experts
+Features
+•
+16 Digital Input Channels With up to ±60-V Input
+Voltage Tolerance
+•
+Works With Primary Supply Only, No Isolated
+Power Supply Needed
+•
+Parallel and Serial Output Option
+•
+±6-kV IEC 61000-4-2 ESD Performance
+•
+Designed to Withstand ±2-kV Surge and EFT Burst
+Tolerant
+•
+LaunchPad™Header for Quick and Easy
+Evaluation
+Applications
+•
+Digital Input Modules
+•
+Industrial Robot IO Modules
+An IMPORTANT NOTICE at the end of this TI reference design addresses authorized use, intellectual property matters and other
+important disclaimers and information.
+
+System Description
+www.ti.com
+2
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+1
+System Description
+This reference design shows a compact implementation of 16 isolated digital input channels using TI's
+new ISO121x devices, a single (ISO1211) and dual (ISO1212) channel, isolated, 24-V digital input
+receiver. The ISO121x device provides an accurate current limit for digital inputs, enabling a power
+dissipation of less than 1 W for 16 inputs channels. The 16 channels are divided into two groups of eight
+channels, each consisting out of three dual-channel ISO1212 and two single-channel ISO1211 devices.
+ISO121x devices can be configured for IEC 61131-2 Type 1, 2, 3 compliant characteristics with only two
+external resistors, which are at the same time protecting the device itself against ESD, EFT, and surge
+events. In this design, all inputs are configured for Type 1.
+Every channel is designed to withstand ESD, EFT, and surge events according to IEC 6100-4-2, IEC
+6100-4-4, and IEC 6100-4-5, respectively. This protection is achieved by using pulse resistant resistors to
+configure ISO121x for Type 1. Furthermore, every input can withstand input voltages of up to ±60 V. For
+additional protection, every channel is either protected with a varistor or with two of TI's TVS3300 TVS
+diodes.
+To read the output states of the 16 channels, each group of eight outputs is connected to a parallel-in
+serial-out register (SN74LV165A). The serial outputs of the two registers can be read out using the SPI of
+a microcontroller. Therefore, this reference design can be plugged onto the MSP430FR5969 LaunchPad
+or any other TI LaunchPad with the same SPI pinout. The LaunchPad also supplies power to the system.
+For serial readout of the output states, the board is designed to support up to input signals of up to 100
+kHz (200 kbit) per channel. However, ISO121x devices support data rates of up to 4 Mbps. For parallel
+readout, an additional 16-pin connector is mounted on the board.
+1.1
+Key System Specifications
+Table 1. Key System Specifications
+PARAMETER
+SPECIFICATIONS
+DETAILS
+Number of channels
+16 (in groups of 8)
+Section 2.3.1
+Low level threshold = 0
+12.5 V
+Section 2.3.1
+High level threshold = 1
+13.65 V
+Section 2.3.1
+Typical threshold voltage hysteresis
+1.2 V
+Section 2.3.1
+I(INx+SENSEx), typ
+Typical sum of current drawn from IN and SENSE
+pins across temperature
+2.2 mA per 2.47 mA per channel
+Section 3.2.2.1
+I(INx+SENSEx), max
+Maximum sum of current drawn from IN and
+SENSE pins across temperature
+2.1 mA to 2.83 mA per channel; 30 V < VSENSE < 36 V
+Section 3.2.2.1
+Power consumption
+859 mW for 16 channels, 24 VIN
+Section 3.2.2.1
+Maximum sampling speed, serial
+100 kHz (200 kbps) per channel
+Section 3.2.2.3
+Maximum sampling speed, parallel
+2 MHz (4 Mbps) per channel
+Section 3.2.2.3
+Thermal dissipation
+43°C max after 1 hour of continuous operation, 24 VIN,
+25°C ambient temperature
+Section 3.2.2.1
+ISO121x CHARACTERISTICS
+Propagation delay
+125 ns
+Isolation rating
+3 kVRMS
+Working voltage
+500 VRMS for 1 minute
+Common-mode transient immunity
+25 kV/µs
+Maximum standoff voltage at input pins
+±60 V
+
+Input
+RTHR
+IN
+Sense
+ILIM
+Out
+Capacitive 
+Isolation
+FGND
+Copyright © 2017, Texas Instruments Incorporated
+TIDA-01508
+2x
+LaunchPad
+SN74LV165
+SN74LV165
+8
+8
+8
+8
+3
+Protection
+...
+16x DI
+2x   FGND
+2x   PE
+3x
+ISO1212
+2x
+ISO1211
+3.3-V 
+supply
+CS
+CLK
+MISO
+Copyright © 2017, Texas Instruments Incorporated
+www.ti.com
+System Overview
+3
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+2
+System Overview
+2.1
+Block Diagram
+Figure 1. Block Diagram of TIDA-01508
+2.2
+Highlighted Products
+2.2.1
+ISO121x
+The ISO1211 and ISO1212 are isolated 24-V digital input receivers, compliant to IEC 61131-2 Type 1, 2,
+and 3 characteristics, and suitable for programmable logic controllers (PLCs) and motor-control digital
+input modules. Unlike traditional optocoupler solutions with discrete, imprecise current limiting circuitry, the
+ISO121x devices provide a simple, low-power solution with an accurate current limit to enable the design
+of compact and high-density I/O modules. These devices do not require field-side power supply and are
+compatible with high-side or low-side switches. The ISO121x devices operate over the supply range of
+2.25 V to 5.5 V, supporting 2.5-V, 3.3-V, and 5-V controllers. A ±60-V input tolerance with reverse polarity
+protection helps ensure the input pins are protected in case of faults with negligible reverse current. These
+devices support up to 4-Mbps data rates passing a minimum pulse width of 150 ns for high-speed
+operation. The ISO1211 device is ideal for designs that require channel-to-channel isolation and the
+ISO1212 device is ideal for multichannel space-constrained designs.
+Figure 2 shows the functional block diagram of one channel of the ISO121x family.
+Figure 2. Functional Block Diagram of ISO121x
+
+A
+B
+C
+D
+E
+F
+G
+H
+11
+12
+13
+14
+3
+4
+5
+6
+SH/LD
+1
+15
+2
+CLK INH
+CLK
+10
+SER
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+S
+C1
+1D
+R
+7
+9
+QH
+QH
+System Overview
+www.ti.com
+4
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+2.2.2
+SN74LV165A
+The SN74LV165A devices are parallel-load, 8-bit shift registers designed for 2-V to 5.5-V VCC operation.
+When the devices are clocked, data is shifted toward the serial output QH. Parallel-in access to each
+stage is provided by eight individual direct data inputs that are enabled by a low level at the shift/load
+(SH/LD) input. The SN74LV165A devices feature a clock-inhibit function and a complemented serial
+output, QH.
+Figure 3 shows a functional block diagram of SN74LV165A.
+Figure 3. Functional Block Diagram of SN74LV165A
+2.2.3
+SN74LVC1GU04
+This single inverter gate is designed for 1.65-V to 5.5-V VCC operation. The SN74LVC1GU04 device
+contains one inverter with an unbuffered output and performs the boolean function Y = A.
+2.2.4
+TVS3300
+The TVS3300 is a transient voltage suppressor that provides robust protection for electronic circuits
+exposed to high transient voltage events. Unlike a traditional TVS diode, the TVS3300 precision clamp
+triggers at a lower breakdown voltage and regulates to maintain a flat clamping voltage throughout a
+transient overvoltage event. The lower clamping voltage combined with a low dynamic resistance enables
+a unique TVS protection solution that can lower the voltage a system is exposed during a surge event by
+up to 30% in unidirectional configuration and up to 20% in bidirectional configuration when compared to
+traditional TVS diodes.
+2.3
+System Design Theory
+This section explains the digital input stage and readout functionality of the design.
+2.3.1
+Digital Input Stage
+The 16 inputs of this reference design are built up in two groups of eight channels. Three dual-channel
+ISO1212 and two single-channel ISO1211 are used per group so that maximum flexibility is provided to
+the user. Figure 4 and Figure 5 show the input stages of one ISO1212 and one ISO1211, respectively.
+Although not visible in these figures, pin FGND of the ISO1211 as well as pins FGND1 and FGND2 of the
+ISO1212 are all connected to input port FGND, which is the common field ground of all digital inputs.
+
+
+
+IL
+THR
+SENSE
+2.25 mA
+562
+V
+min
+7.1 V
+R
+12.5 V
+R
+u
+:
+ 
+
+u
+ 
+
+
+IH
+THR
+SENSE
+2.25 mA
+562
+V
+typ
+8.25 V
+R
+13.65 V
+R
+u
+:
+ 
+
+u
+ 
+VCC1
+2
+GND1
+1
+EN
+3
+OUT1
+4
+NC
+6
+OUT2
+5
+NC
+7
+GND1
+8
+FGND2
+9
+IN2
+10
+SENSE2
+11
+SUB2
+12
+SUB1
+13
+FGND1
+14
+IN1
+15
+SENSE1
+16
+U5_DI6
+ISO1212DBQR
+NC
+NC
+3V3
+562
+R10_DI6
+0.01µF
+C6_DI6
+0.01µF
+C7_DI6
+562
+R12_DI6
+DGND
+FGND_float
+IN2
+IN1
+Varistor is standard protection
+TVS3300 is optional
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U6_DI6
+TVS3300YZFR
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U8_DI6
+TVS3300YZFR
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U4_DI6
+TVS3300YZFR
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U7_DI6
+TVS3300YZFR
+FGND
+2.49k
+R9
+2.49k
+R11_DI6
+2
+1
+D6_DI6
+CGA 0603MLA-31900E
+2
+1
+D5_DI6
+CGA0603MLA -31900E
+Copyright © 2017, Texas Instruments Incorporated
+NC
+3V3
+562
+R16_Ch9-10
+0.01µF
+C10_Ch9-10
+DGND
+IN7
+Var istor is standar d protection
+TVS3300 is optional
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U11_Ch9-10
+TVS3300YZFR
+IN
+B1
+IN
+B2
+GND
+A2
+GND
+A1
+U10_Ch9-10
+TVS3300YZFR
+FGND
+2.49k
+R15
+VCC1
+1
+EN
+2
+OUT
+3
+GND1
+4
+PBKG
+5
+FGND
+6
+IN
+7
+SENSE
+8
+ISO1211DR
+U9_Ch9-10
+2
+1
+D9_Ch9-10
+CGA 0603M LA-31900E
+Copyright © 2017, Texas Instruments Incorporated
+www.ti.com
+System Overview
+5
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+Figure 4. ISO1211 Input Stage Schematic
+Figure 5. ISO1212 Input Stage Schematic
+Every input of the ISO1211 can be configured for Type 1, 2, 3 characteristics according to IEC 61131-2
+with resistors RTHR and RSENSE. In addition, an input capacitor CIN is connected after RTHR to GND creating
+an RC filter with RTHR for further protection against ESD, EFT, and surge events. To withstand high pulse
+voltages, RTHR is selected as a pulse proof resistor. Table 2 shows the configuration for Type 1 and 3
+digital inputs as well as the resulting voltage ratings according to IEC 61002-4-2, IEC 61002-4-4, and IEC
+61002-4-5 for specific values of RTHR, RSENSE, and CIN, respectively.
+Table 2. Surge, ESD, and EFT
+IEC 61131-2
+TYPE
+RSENSE
+RTHR
+CIN
+SURGE
+ESD
+IEC EFT
+LINE-TO-PE
+LINE-TO-LINE
+LINE-TO-FGND
+Type 1
+562
+3 kΩ
+10 nF
+±1 kV
+±1 kV
+±1 kV
+±6 kV
+±4 kV
+Type 3
+562
+1 kΩ
+10 nF
+±1 kV
+±1 kV
+±500 kV
+±6 kV
+±4 kV
+330 nF
+±1 kV
+±1 kV
+±1 kV
+±6 kV
+±4 kV
+To protect the inputs against surge events with even higher ratings, all inputs are as well protected with
+either a varistor or two TVS3300 TVS diodes. Those devices are placed in parallel to CIN.
+In this design, all channels as configured for Type 1 inputs with RTHR = 2.4 kΩ and RSENSE = 562 Ω. The
+typical high-level threshold VIH and minimum low-level threshold VIL at the ISO121x input (include RTHR) for
+output high and low are given by Equation 1 and Equation 2.
+(1)
+(2)
+
+DGND
+3V3
+5
+4
+1
+2
+3
+6
+7
+8
+9
+10
+J5
+DGND
+OUT11
+OUT21
+OUT12
+OUT22
+OUT13
+OUT23
+SH/LD
+1
+CLK
+2
+E
+3
+F
+4
+G
+5
+H
+6
+QH
+7
+GND
+8
+QH
+9
+SER
+10
+A
+11
+B
+12
+C
+13
+D
+14
+CLK INH
+15
+VCC
+16
+U1
+SN74LV165AD
+OUTCh7
+OUTCh8
+DGND
+Copyright © 2017, Texas Instruments Incorporated
+System Overview
+www.ti.com
+6
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+2.3.2
+Readout of Digital Outputs
+To readout the 16 digital output signals, there exist two options:
+1. Parallel readout of output signals at connectors J5 (channels 1–8) and J8 (channels 9–16)
+2. Serial readout of output signals from parallel-in serial-out registers U1 and U2
+Figure 6. Schematic of Parallel and Serial Readout Options for Output Signals
+For serial readout, all eight output signals per group are connected to the parallel-in serial-out register
+SN74LV165A. The output QH of register U1 is connected to input pin SER of register U2. To readout the
+register, the SPI of the LaunchPad is used. For this, the LaunchPad SPI is connected to the SN74LV165A
+registers as shown in Table 3:
+Table 3. Electrical Connections Between SPI and U1, U2
+LAUNCHPAD
+U1 (CHANNELS 1–8)
+U2 (CHANNELS 9–16)
+SPI_MOSI
+Not used
+Not used
+SPI_MISO
+Not connected
+QH
+SPI_nCS
+SH/LD
+SH/LD
+SPI_CLK
+CLK
+CLK
+QH
+SER
+NOTE:
+The SPI_nCS signal of the LaunchPad is inverted using a logic gate SN74LVC1GU04 with
+function Y = A.
+→SPI_nCS logic '0' / low = logic '1' / high at SH/LD pin of SN74LV165A
+The readout of the 16 output states works as follows:
+1. SPI_nCS is high →both SN74LV165A continuously load input states
+2. SPI_nCS pulled low →both SN74LV165A store current status of their respective eight inputs
+3. SPI_CLK is clocked 16 times →output QH of register U2 first gives out outputs states of inputs H–A
+(channel 9–16) of U2, second gives out output states H–A (channel 1–8) of U1.
+
+3V3
+5V
+DGND
+PWR
+ANA IN
+RX
+TX
+GPIO
+ANA IN
+SPI CLK
+GPIO
+SCL
+SDA
+I2S FSYNC
+I2S CLK
+I2S DOUT
+I2S DIN
+PWR
+ANA IN
+ANA IN
+GND
+5
+4
+1
+2
+3
+6
+7
+8
+9
+10
+J1
+5
+4
+1
+2
+3
+6
+7
+8
+9
+10
+J3
+ANA IN
+ANA IN
+DGND
+PWM/GPIO
+PWM/GPIO
+CCP/GPIO
+CCP/GPIO
+GPIO/NWP_LOG
+GPIO/WLAN_LOG
+GPIO/RS232_RX
+GPIO/RS232_TX
+GPIO
+SPI_CS
+TEST
+RESET
+SPI_MOSI
+SPI_MISO
+GPIO
+GPIO
+GPIO
+PWM/GPIO
+PWM/GPIO
+5
+4
+1
+2
+3
+6
+7
+8
+9
+10
+J4
+5
+4
+1
+2
+3
+6
+7
+8
+9
+10
+J2
+SPI_CLK
+SPI_MISO
+SPI_MOSI
+SPI_nCS
+BrWi9-16
+BrWi1-8
+Copyright © 2017, Texas Instruments Incorporated
+www.ti.com
+Hardware, Software, Testing Requirements, and Test Results
+7
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+3
+Hardware, Software, Testing Requirements, and Test Results
+3.1
+Required Hardware and Software
+The board can be powered and interfaced over connectors J1–J4. Figure 7 shows a snapshot of the
+interface. To simplify the evaluation, it is recommended to use a LaunchPad like the MSP430FR5969 or
+the CC3220 to power and interface the board.
+Figure 7. BoosterPack Interface of TIDA-01508
+3.1.1
+Hardware
+•
+Laptop
+•
+MSP430FR5969 LaunchPad
+•
+Signal generator and scope: National Instruments Virtual Bench
+•
+Precision source measure unit (SMU): Keysight B2912A
+3.1.2
+Software
+For parallel readout of the output signals of the ISO121x devices, no special hardware is required. For
+serial readout using registers U1 and U2, program an SPI routine as described in Section 2.3.2.
+
+LaunchPad
+TIDA-01508
+SMU
+USB
+Supplies and 
+measures voltage 
+and current
+Isolation barrier
+Copyright © 2017, Texas Instruments Incorporated
+Hardware, Software, Testing Requirements, and Test Results
+www.ti.com
+8
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+3.2
+Testing and Results
+3.2.1
+Test Setup
+This reference design is plugged onto an MSP430™LaunchPad, which is connected over USB to a
+laptop. The laptop is used to readout these stored values. Registers U1 and U2 are read out using the SPI
+of the LaunchPad. The LaunchPad performs multiple readout and stores the data in its memory.
+Afterwards, the information is sent to the laptop using the USB interface of the LaunchPad. To generate
+the digital input signals, test the voltage thresholds, and to measure the power consumption, the SMU is
+used.
+Figure 8 shows a simple picture of the test setup.
+Figure 8. Test Setup of TIDA-01508
+3.2.2
+Test Results
+3.2.2.1
+Power Dissipation and Thermal Images
+To test the power dissipation of the 16 inputs, a 24-V signal is connected from the SMU to each input. The
+current that is drawn from the inputs is measured by the same SMU. The setup is left running for one
+hour, then the current measured and a thermal image is taken.
+All 16 inputs together draw a current of 35.8 mA. Therefore, the power dissipation of all 16 channels
+together is 24 V × 35.8 mA = 859.2 mW. This means that every channel is only drawing 2.2375 mA in
+average.
+The thermal images show that the two channel devices (ISO1212) heat up to 43°C (see Figure 9). The
+ambient temperature is around 25.8°C, which is a difference of 17.2°C. Furthermore, this difference shows
+that the devices only dissipate a small amount of energy, which enables to use them also in applications
+with high ambient temperatures.
+
+www.ti.com
+Hardware, Software, Testing Requirements, and Test Results
+9
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+Figure 9. Thermal Image of TIDA-01508 After 1 Hour With 24-V Input Connected to Every Channel
+Next, the input signals are changed to 30 V and the test is repeated. The resulting input current is now
+36.3 mA, which results in a power dissipation of 1089 mW. Hence, every channel is only drawing 2.26875
+mA in average. Furthermore, this value shows that even for input voltages, the input current stays low.
+The power dissipation of the rest of the board is also measured. For an input voltage of 3.3 V, the board
+consumes 41 mA, which results in an additional 135-mW power dissipation, dominated by the LED power
+dissipation. This value is the same for 24-V inputs and 30-V inputs.
+3.2.2.2
+Serial Readout of Output States
+Figure 10 shows the CLK and MISO signal lines of the SPI for the readout of 16 channels. The output
+states of the channels are 0-0-1-1-1-1-0-1 and 1-1-0-1-1-0-1-0 (channels 9–16 and channels 1–8,
+respectively). The SPI is running at a frequency of 8 MHz. The overall readout procedure takes around 6
+µs. This results in a readout frequency of around 167 kHz.
+There is a delay between the readout of the first eight channels and the second eight channels. In a final
+application, this delay can be optimized to achieve higher readout frequencies.
+
+Hardware, Software, Testing Requirements, and Test Results
+www.ti.com
+10
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+Figure 10. Readout Procedure With SPI Running at 8 MHz
+Figure 11 shows the readout procedure for the first eight channels when the SPI is running at 16 MHz.
+This results in a readout time for eight output states of only 600 ns. Also for this higher speed, the readout
+works fine.
+Figure 11. Readout Procedure With SPI Running at 16 MHz
+
+www.ti.com
+Hardware, Software, Testing Requirements, and Test Results
+11
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+3.2.2.3
+Input Switching Frequency
+Both TVS3300 and varistor inputs are tested up to 100 kHz by using the signal generator of the SMU.
+Because the signal generator only supports signals up to 12 V peak to peak, the voltage threshold resistor
+RTHR has been removed for this test so that the voltage thresholds of the ISO121x are low enough. The
+signal is set to 12 V peak to peak, rectangular waveform, 100 kHz.
+The outputs of the ISO121x are measured with a scope. Furthermore, a 150-mΩ resistor is placed
+between the GND of this reference design and the actual GND of the power supply to observe peak
+currents with a scope. Figure 12 shows an input protected with the TVS3300, and Figure 13 shows an
+input protected with the varistor.
+Figure 12. Switching of Outputs and Peak Currents With TVS Protection
+
+Hardware, Software, Testing Requirements, and Test Results
+www.ti.com
+12
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+Figure 13. Switching of Outputs and Peak Currents With Varistor Protection
+For both protection schemes, the switching can go up to 100 kHz without any problem. Furthermore, when
+the 12-V signal is switching, a peak current of 200 mV/150 mΩ = 1.3 A is flowing for a very short time.
+This is due to the input capacitor in front of the ISO121x.
+
+www.ti.com
+Design Files
+13
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+4
+Design Files
+4.1
+Schematics
+To download the schematics, see the design files at TIDA-01508.
+4.2
+Bill of Materials
+To download the bill of materials (BOM), see the design files at TIDA-01508.
+4.3
+PCB Layout Recommendations
+For layout guidelines regarding the digital input stage, refer to the Layout section of ISO121x Isolated 24-V
+to 60-V Digital Input Receivers for Digital Input Modules .
+4.3.1
+Protection Circuit Input Stage
+Figure 14 shows the two input stages of one ISO1212 from left to right. In this case, the protection circuit
+consists of the resistor R THR and a varistor. Depending on the channel, the varistor can also be replaced
+by two TVS3300 devices. The two smaller components next to the ISO1211 input pins are the input
+capacitor C IN and the sense resistor R SENSE.
+Figure 14. Input Protection Stage of ISO1212
+As described in Section 2.3.1, RTHR is a pulse proof resistor in a 0207 footprint. After RTHR is passed, the
+signal line is first routed through the pads of the TVS3300, and varistors before it are connected to the
+pads of CIN and RSENSE. This connection ensures that in case of ESD, EFT, or surge events, the protection
+stage is always passed first before any possibly damaging voltage or current strikes reach the ISO121x.
+Furthermore, this results in a distance around 8 mm between the high-voltage side or left pad of RTHR,
+where the ESD, EFT, or surge event hits first, and the pad of CIN. This distance results in additional
+protection against voltage spikes.
+In general, do not place the resistor pad connected to external high voltage within 4 mm of the ISO121x
+device pins or the CIN and RSENSE pins to avoid flashovers during EMC tests (refer to the Layout section of
+ISO121x Isolated 24-V to 60-V Digital Input Receivers for Digital Input Modules ).
+4.3.2
+Layout Prints
+To download the layer plots, see the design files at TIDA-01508.
+4.4
+Altium Project
+To download the Altium project files, see the design files at TIDA-01508.
+
+Design Files
+www.ti.com
+14
+TIDUDI8–December 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+Sub 1-W, 16-Channel, Isolated Digital Input Module Reference Design
+4.5
+Gerber Files
+To download the Gerber files, see the design files at TIDA-01508.
+4.6
+Assembly Drawings
+To download the assembly drawings, see the design files at TIDA-01508.
+5
+Software Files
+To download the software files, see the design files at TIDA-01508.
+6
+Related Documentation
+1. Texas Instruments, ISO121x Isolated 24-V to 60-V Digital Input Receivers for Digital Input Modules
+Data Sheet
+2. Texas Instruments, SNx4LV165A Parallel-Load 8-Bit Shift Registers Data Sheet
+3. Texas Instruments, SN74LVC1GU04 Single Inverter Gate Data Sheet
+4. Texas Instruments, TVS3300 33-V Precision Surge Protection Clamp Data Sheet
+6.1
+Trademarks
+E2E, LaunchPad, MSP430 are trademarks of Texas Instruments.
+All other trademarks are the property of their respective owners.
+7
+About the Author
+TOBIAS PUETZ is a systems engineer in the Texas Instruments Factory Automation and Control team,
+where he is focusing on PLC and robotics. Tobias brings to this role his expertise in various sensing
+technologies as well as power design. Tobias earned his master's degree in electrical engineering and
+information technology at the Karlsruhe Institute of Technology (KIT), Germany in 2014.
+7.1
+Acknowledgments
+Thank you to ANANT KAMATH for his continuous feedback and support throughout the design process.
+
+IMPORTANT NOTICE FOR TI DESIGN INFORMATION AND RESOURCES
+Texas Instruments Incorporated (‘TI”) technical, application or other design advice, services or information, including, but not limited to,
+reference designs and materials relating to evaluation modules, (collectively, “TI Resources”) are intended to assist designers who are
+developing applications that incorporate TI products; by downloading, accessing or using any particular TI Resource in any way, you
+(individually or, if you are acting on behalf of a company, your company) agree to use it solely for this purpose and subject to the terms of
+this Notice.
+TI’s provision of TI Resources does not expand or otherwise alter TI’s applicable published warranties or warranty disclaimers for TI
+products, and no additional obligations or liabilities arise from TI providing such TI Resources. TI reserves the right to make corrections,
+enhancements, improvements and other changes to its TI Resources.
+You understand and agree that you remain responsible for using your independent analysis, evaluation and judgment in designing your
+applications and that you have full and exclusive responsibility to assure the safety of your applications and compliance of your applications
+(and of all TI products used in or for your applications) with all applicable regulations, laws and other applicable requirements. You
+represent that, with respect to your applications, you have all the necessary expertise to create and implement safeguards that (1)
+anticipate dangerous consequences of failures, (2) monitor failures and their consequences, and (3) lessen the likelihood of failures that
+might cause harm and take appropriate actions. You agree that prior to using or distributing any applications that include TI products, you
+will thoroughly test such applications and the functionality of such TI products as used in such applications. TI has not conducted any
+testing other than that specifically described in the published documentation for a particular TI Resource.
+You are authorized to use, copy and modify any individual TI Resource only in connection with the development of applications that include
+the TI product(s) identified in such TI Resource. NO OTHER LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE TO
+ANY OTHER TI INTELLECTUAL PROPERTY RIGHT, AND NO LICENSE TO ANY TECHNOLOGY OR INTELLECTUAL PROPERTY
+RIGHT OF TI OR ANY THIRD PARTY IS GRANTED HEREIN, including but not limited to any patent right, copyright, mask work right, or
+other intellectual property right relating to any combination, machine, or process in which TI products or services are used. Information
+regarding or referencing third-party products or services does not constitute a license to use such products or services, or a warranty or
+endorsement thereof. Use of TI Resources may require a license from a third party under the patents or other intellectual property of the
+third party, or a license from TI under the patents or other intellectual property of TI.
+TI RESOURCES ARE PROVIDED “AS IS” AND WITH ALL FAULTS. TI DISCLAIMS ALL OTHER WARRANTIES OR
+REPRESENTATIONS, EXPRESS OR IMPLIED, REGARDING TI RESOURCES OR USE THEREOF, INCLUDING BUT NOT LIMITED TO
+ACCURACY OR COMPLETENESS, TITLE, ANY EPIDEMIC FAILURE WARRANTY AND ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF ANY THIRD PARTY INTELLECTUAL
+PROPERTY RIGHTS.
+TI SHALL NOT BE LIABLE FOR AND SHALL NOT DEFEND OR INDEMNIFY YOU AGAINST ANY CLAIM, INCLUDING BUT NOT
+LIMITED TO ANY INFRINGEMENT CLAIM THAT RELATES TO OR IS BASED ON ANY COMBINATION OF PRODUCTS EVEN IF
+DESCRIBED IN TI RESOURCES OR OTHERWISE. IN NO EVENT SHALL TI BE LIABLE FOR ANY ACTUAL, DIRECT, SPECIAL,
+COLLATERAL, INDIRECT, PUNITIVE, INCIDENTAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES IN CONNECTION WITH OR
+ARISING OUT OF TI RESOURCES OR USE THEREOF, AND REGARDLESS OF WHETHER TI HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+You agree to fully indemnify TI and its representatives against any damages, costs, losses, and/or liabilities arising out of your non-
+compliance with the terms and provisions of this Notice.
+This Notice applies to TI Resources. Additional terms apply to the use and purchase of certain types of materials, TI products and services.
+These include; without limitation, TI’s standard terms for semiconductor products http://www.ti.com/sc/docs/stdterms.htm), evaluation
+modules, and samples (http://www.ti.com/sc/docs/sampterms.htm).
+Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+Copyright © 2017, Texas Instruments Incorporated

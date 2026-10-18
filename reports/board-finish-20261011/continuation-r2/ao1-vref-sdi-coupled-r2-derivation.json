@@ -1,0 +1,20 @@
+{
+ "prior_script_sha256": "b28c24d0e0453767c517a28838a476e9ea2e6191f5197e2c7853243c4a9453c0",
+ "derived_script_sha256": "801ae45e267899f52cb8c36357dd656ce440d707bd70b8da4fabba21cef82413",
+ "exact_replacements": [
+  [
+   "OUT=HERE/'ao1-vref-sdi-coupled-r1'",
+   "OUT=HERE/'ao1-vref-sdi-coupled-r2'"
+  ],
+  [
+   "original=C.inventory(A.read(P.R.R06_BOARD))",
+   "r06_path=Path('Z:/pcb-runs/claude-finish/integrate/revs/r06-stitch-plane-pads-2.kicad_pcb');r06_raw=A.read(r06_path)\n    if sha(r06_raw)!='0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53':raise ValueError('r06 exact restore board identity differs')\n    original=C.inventory(r06_raw)"
+  ],
+  [
+   "restored_errors,restored_checks,retreats=A.clearances(model,sorted(restores),.025)",
+   "parsed={u:G.parse(u,ch,{}) for u,ch in chunks.items()}\n    restored_errors,restored_checks,retreats=A.clearance(model,parsed,set(),restores)\n    smd_shapes=[q for p in g['pads'] if p['smd'] for layer,rings in p['layers'].items() if layer in ['F.Cu','B.Cu'] for q in S.poly(rings)]\n    for u in restores:\n        v=parsed[u]\n        if v['kind']=='via':\n            gap=min(Point(v['at']).distance(q) for q in smd_shapes)-v['drill']/2\n            if gap<.275:restored_errors.append({'uuid':u,'kind':'stronger_drill_SMD_aperture','gap_mm':gap,'required_mm':.275})"
+  ]
+ ],
+ "prior_failure_preserved": true,
+ "prior_failure": "Unknown R06_BOARD import attribute; stopped before any geometry or board construction"
+}

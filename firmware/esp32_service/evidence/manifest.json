@@ -1,0 +1,91 @@
+{
+  "recorded_utc": "2026-09-28T21:48:07.903168+00:00",
+  "evidence_class": "target compilation (ESP-IDF) plus host test; no device flashed",
+  "reproducible_build": false,
+  "reproducibility_note": "Not reproducible: CONFIG_APP_COMPILE_TIME_DATE embeds the time at which the ESP-IDF app descriptor was compiled (app_description.embedded_date/time; an incremental build keeps the earlier stamp) and CONFIG_APP_REPRODUCIBLE_BUILD is unset, so a clean rebuild of identical source yields different image hashes. The hashes identify the retained copies in this folder, not something a rebuild is expected to reproduce.",
+  "ran_builds_this_record": false,
+  "build_mode": "not rebuilt (images checked newer than all firmware inputs)",
+  "ran_host_tests_this_record": true,
+  "flashed": false,
+  "physical_hardware_tested": false,
+  "motion_authority": false,
+  "builds": [
+    {
+      "variant": "esp32s3",
+      "result": "compiled-and-linked",
+      "host_rx_gpio": -1,
+      "gpio_approved_for_hardware": false,
+      "retained_image": "firmware/esp32_service/evidence/cnc_service-esp32s3.bin",
+      "size_bytes": 177376,
+      "sha256": "f88c7d4ecbc1e5d5be7bf7985c1de9d3b9bfaf5892f416f9874e96a1a1971113",
+      "build_log": "firmware/esp32_service/evidence/default-build.log",
+      "build_log_sha256": "d0724c5f5c1a2893c3c73a05d3e1713fe740eb7b2964ddaf07fc38917d83d049",
+      "effective_sdkconfig": "firmware/esp32_service/sdkconfig",
+      "effective_sdkconfig_sha256": "a564daca63aa6bd5be7d2c83e9ff3ba08ee76db1eac0b87900af3cfc5ce0c520",
+      "app_description": {
+        "project_version": "0.1.0",
+        "project_name": "cnc_service",
+        "embedded_time": "15:15:59",
+        "embedded_date": "Sep 28 2026",
+        "idf_ver": "v5.5.4",
+        "app_elf_sha256": "492050568ca97ac63d2ab2ff6d6abaeab50d9d2625cedb89e3ecc88718272b5a"
+      },
+      "sdkconfig": {
+        "app_reproducible_build": false,
+        "app_compile_time_date": true,
+        "bootloader_compile_time_date": true
+      }
+    },
+    {
+      "variant": "uart-compile-check",
+      "result": "compiled-and-linked",
+      "host_rx_gpio": 4,
+      "gpio_approved_for_hardware": false,
+      "retained_image": "firmware/esp32_service/evidence/cnc_service-uart-compile-check.bin",
+      "size_bytes": 202352,
+      "sha256": "f7b0a69dde6bff4354abaf33de8ca7399de83b0d132367adcdf8384ccc85e04f",
+      "build_log": "firmware/esp32_service/evidence/uart-build-check.log",
+      "build_log_sha256": "a93311acd8b6e6327e02a250126ed3433cf58ec43792c9eb091c90ea5a95dd0c",
+      "effective_sdkconfig": "firmware/esp32_service/evidence/uart-compile-check.sdkconfig",
+      "effective_sdkconfig_sha256": "83953fd2bae59a50b540de22c95a4d773b8a9e56b4c8777663a5658aee39a783",
+      "app_description": {
+        "project_version": "0.1.0",
+        "project_name": "cnc_service",
+        "embedded_time": "15:16:45",
+        "embedded_date": "Sep 28 2026",
+        "idf_ver": "v5.5.4",
+        "app_elf_sha256": "759ec64aa7cb3f1fdc261bdeb63c69de5ab82a626c7a15904a79c88b88653ecc"
+      },
+      "sdkconfig": {
+        "app_reproducible_build": false,
+        "app_compile_time_date": true,
+        "bootloader_compile_time_date": true
+      }
+    }
+  ],
+  "host_core_test": {
+    "result": "passed",
+    "distro": "GarciaMechBuilder",
+    "environment": "Alpine Linux v3.24",
+    "compiler": "gcc (Alpine 15.2.0) 15.2.0",
+    "pass_line": "PASS: service health CRC, replay, clocks, deadlines, documented cadence, progress, restart, framing and corruption checks",
+    "log": "firmware/esp32_service/evidence/host-core-test.log",
+    "log_sha256": "b1f7b91d272ea28fed9c58b4ac1da0e54e08fa840cd799abf690e0b327b56ced"
+  },
+  "source_sha256": {
+    "firmware/esp32_service/core/service_health.c": "e1fd78b8ba3a9e2277076447e73021aad99641ca074146655a618d0c126b7c26",
+    "firmware/esp32_service/core/service_health.h": "07c034d83b4b9a9fb52e44317ecc1ba1014e44e6ebaee15aa10e902ecc575944",
+    "firmware/esp32_service/main/service_main.c": "31c2725854a405035a4f0a319dde6404fa4fe072e2d2f1b3b4f5062e58824807",
+    "firmware/esp32_service/main/CMakeLists.txt": "cd060313778e90301d9e8680e7e6d5a293f5da8ddd0717bfe1849da9d22feb89",
+    "firmware/esp32_service/main/Kconfig.projbuild": "e6cbf11484a3066f7234a0caae8260d3b9a07523f6b07ab9570c14c7e1e2ddb7",
+    "firmware/esp32_service/CMakeLists.txt": "e9cebfca2b1656a64fb5d4b4e27e2621ff20105d06370813b69cc2eb13e01671",
+    "firmware/esp32_service/sdkconfig": "a564daca63aa6bd5be7d2c83e9ff3ba08ee76db1eac0b87900af3cfc5ce0c520",
+    "firmware/esp32_service/sdkconfig.defaults": "87c8a4da3bb36b79c9273ec7f5860b5e44785150daa21e3d325bfbcfe5fb7752",
+    "firmware/esp32_service/sdkconfig.uart-build-check.defaults": "0c6d4ba7871bceb64d11ce1dbfa13391926378a8abc693ba3301f467c81e3165",
+    "firmware/esp32_service/build-local.ps1": "1fac06ef152557f93cb94af65e296262114e5f81c91256d371ad545dea1e5c32",
+    "firmware/esp32_service/record_evidence.py": "43cb8239df4328fab5228adc0d596588414eccfab42dbb6f1753ab9b8147c8ee",
+    "firmware/esp32_service/tests/test_service_health.c": "c6d7a258d1348f7ed8ab4a9ce8fc193160a0105bbe5e921ed97a4385f18a2131",
+    "controller_lab/service_health.py": "3bb8a56af499f3c084274ec6343a990e698bd2fe0d25e66e15b005a644d82bb7",
+    "tests/test_service_health.py": "b3ec8df079d8feb87b7f5d95278c3af4dcdfffc46fbd66171de664fcbb2d8c88"
+  }
+}

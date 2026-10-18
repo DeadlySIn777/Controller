@@ -1,0 +1,97 @@
+OEA r0.2 — prototype assembly and wiring requirements
+Engineering candidate. Quote and DFM review only; no production release.
+
+DELIVERY
+Quote five completely assembled adapters and five matching finished signal
+harnesses (four axes and one spare). PCBWay supplies all PCB components,
+connectors, wire, crimps, splices, insulation, identification and agreed testing.
+No user soldering, crimping or cable splicing is included in the installation.
+Quote harness work explicitly, even if performed by a subcontractor.
+PCB finish: purple solder mask, white legend and ENIG.
+
+CONNECTORS AND ORIENTATION
+J1: eight male contacts underneath, 2.54 mm pitch.
+J2: seven male contacts underneath. The VM position above J2 has no contact
+and no plated hole. J1 and J2 row centers are 12.70 mm apart.
+Long mating posts face DOWN into the controller. Do not reverse the headers.
+J3: top-mounted keyed JST XH 4-position header, 2.50 mm pitch, cable entry UP.
+The finished cable uses the matching XHP-4 housing and female crimp contacts.
+J4: top-mounted two-position screw terminal, EXT+ and GND.
+Its wire entry faces outward at the DIR end. SW1 sits toward the header rows,
+so supply wires can leave the board without crossing the selector.
+SW1: top-mounted non-shorting selector. Pad 2 is common, pad 1 is the protected
+5 V buck output and pad 3 is the protected external supply. Verify actual
+actuator direction against the final 5V/EXT labels on the first article.
+J3, J4 and SW1 solder tails require controlled factory trimming where needed;
+propose <=1.2 mm projection below the PCB without damaging the solder fillet.
+Never trim the long J1/J2 mating posts. Confirm all projection and fit limits
+on the assembly drawing before production.
+
+POWER AND SELECTOR — EXTERNAL POWER IS REQUIRED IN BOTH MODES
+Supply at J4         SW1 position       Common delivered to the driver
+12 V or 24 V        5V                 Nominal 5 V, less diode/protection loss
+Regulated 5 V       EXT                External 5 V, less protection loss
+Regulated 24 V      EXT                External 24 V, less protection loss
+12 V               EXT                Only for a driver explicitly allowing it
+
+Use a regulated, appropriately protected DC source. Initial design scope is
+nominal 5/12/24 V, with 4.75–26.4 V terminal range subject to qualification.
+No 36/48 V input rating. Socket motor power is not used.
+The switch changes the signal common only. Ground and logic power stay connected.
+Switch only with controller and external supply power OFF and discharged.
+Match the driver's own input-voltage selector/resistors to the delivered voltage.
+For the provisional CL57T V4.1 profile, use its 5 V setting with adapter 5V mode
+or external 5 V, and its 24 V setting with external 24 V. Its 12 V signal mode
+is not established by this adapter's ability to pass 12 V.
+
+SIGNAL CABLE — CAVITY NUMBERS CONTROL WIRING
+J3.1 COM+  -> three separate finished leads: PUL+, DIR+, ENA+
+J3.2 PUL-  -> PUL-
+J3.3 DIR-  -> DIR-
+J3.4 ENA-  -> ENA-
+No motor, encoder, alarm or ground conductor occupies these four cavities.
+Common-positive optocoupler input drivers are the intended topology.
+This is a common-ground interface, not galvanically isolated or differential.
+
+HARNESS FOR QUOTATION
+500 +/-10 mm overall from plug mating face to each driver termination.
+Last 80 mm forms the six-lead fanout. 24 AWG stranded copper, insulated for
+at least 60 V DC, with finished outside diameter matching the JST contact.
+JST XHP-4 housing; four SXH-001T-P0.6 contacts using qualified factory tooling.
+Suggested colors: cavity 1 red, 2 white, 3 green, 4 black; numbering and durable
+end labels take precedence over colors. The common conductor branches through
+one fully insulated factory crimp splice or ultrasonic weld into three leads.
+No solder-tinned crimp wires. No three wires packed into one driver ferrule.
+One approved driver termination per lead. Exact ferrule size/length, terminal
+strip length and torque remain subject to the actual driver terminal identity.
+Factory to propose these details with its harness drawing before build release.
+No bare-end substitution without a revised agreed cable specification.
+Label both ends OEA-H1 r0.2. Identify the board end COM+/PUL-/DIR-/ENA-;
+label the six driver ends PUL+, DIR+, ENA+, PUL-, DIR-, ENA- individually.
+Test every intended connection, every possible unintended short, retention,
+splice insulation, labels, strain relief and final length. Keep test records.
+
+INSTALLATION AND FIRST ARTICLE
+Identify the exact controller model/revision and drive model before energizing.
+The electrical target is a standard StepStick socket with 3.3 V or 5 V STEP,
+DIR and EN signals. Brand name alone does not establish the socket pinout.
+The longer board overhang and populated underside require a non-powered fit
+check with adjacent driver slots occupied and all intended cables connected.
+Do not press the switch or tighten terminal screws against unsupported headers.
+Support the adapter mechanically while handling connectors or terminal screws.
+Mount the four-wire signal run away from motor and supply wiring; qualify the
+actual cable length, routing and grounding with loaded timing measurements.
+
+STARTUP AND ENABLE
+A logic HIGH turns its output current sink ON. A logic LOW turns it OFF.
+Host firmware must initialize STEP LOW before the buffer is enabled. A HIGH
+STEP at release of the local power supervisor can create a pulse edge.
+An unpowered adapter or open ENA input does not necessarily disable the driver.
+This board is not an emergency stop, STO or independent machine inhibit.
+The first article must establish the exact drive's EN polarity and startup,
+reset, brownout, power-loss and reconnection behavior before machine use.
+
+EVIDENCE
+ERC, DRC, parts matching and document review are file checks. They do not prove
+physical fit, loaded electrical operation, EMC, thermal behavior or a safe
+machine state. The verification record must identify each check separately.

@@ -1,0 +1,157 @@
+{
+  "id": "MB-IO3-001",
+  "old_mpn": "TPS62901RPJR",
+  "new_mpn": "TPS62902RPJR",
+  "same_footprint": "CNC_MC_Power:TPS62901_RPJ9",
+  "pin_function_map": {
+    "1": "PG",
+    "2": "SW",
+    "3": "VOS",
+    "4": "GND",
+    "5": "EN",
+    "6": "VIN",
+    "7": "MODE/S-CONF",
+    "8": "SS/TR",
+    "9": "FB/VSET"
+  },
+  "exact_pin_net_ledger": [
+    {
+      "ref": "U2002",
+      "pin": "3",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "L2002",
+      "pin": "2",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "C2005",
+      "pin": "1",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "C2010",
+      "pin": "1",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    }
+  ],
+  "mode_pin_ledger": {
+    "ref": "R2005",
+    "pin": "2",
+    "old_model_net": "LOGIC_GND",
+    "new_model_net": "CORE_5V",
+    "new_native_parent_net": "/mc_local_power/CORE_5V",
+    "old_mpn": "CRCW060332K4FKEA",
+    "old_value": "32.4k 1%",
+    "new_mpn": "CRCW06030000Z0EA",
+    "new_value": "0ohm MODE tied VIN"
+  },
+  "bottom_part_ledger": {
+    "ref": "R2008",
+    "old_mpn": "CRCW0603301KFKEA",
+    "old_value": "301k 1%",
+    "new_mpn": "TNPW06032K55BYEA",
+    "new_value": "2.55k 0.1% 10ppm",
+    "pins_unchanged": true
+  },
+  "added_refs": [
+    "R18001",
+    "R18002"
+  ],
+  "new_components": {
+    "R18001": {
+      "kind": "R",
+      "value": "15mohm 1% 50ppm 1W",
+      "mpn": "KRL2012E-C-R015-F-T5",
+      "footprint": "CNC_MB_IO3:KRL2012_Susumu",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_REG_LOCAL",
+        "2": "IO_3V3"
+      },
+      "no_connect": [],
+      "resistance_ohm": 0.015,
+      "tolerance": 0.01,
+      "temperature_coefficient_ppm_k": 50,
+      "power_rating_w": 1,
+      "source_block": "motherboard_io3_upgrade",
+      "source_reference": "R18001",
+      "role": "controlled distributed-cap damping; local VOS remains upstream",
+      "status": "source_candidate_not_layout_or_physical_qualified"
+    },
+    "R18002": {
+      "kind": "R",
+      "value": "11.5k 0.1% 10ppm",
+      "mpn": "TNPW060311K5BYEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_REG_LOCAL",
+        "2": "IO_3V3_VSET"
+      },
+      "no_connect": [],
+      "resistance_ohm": 11500,
+      "tolerance": 0.001,
+      "temperature_coefficient_ppm_k": 10,
+      "source_block": "motherboard_io3_upgrade",
+      "source_reference": "R18002",
+      "status": "source_candidate_not_layout_or_physical_qualified",
+      "role": "scaled-low-impedance external-FB top;70nA leakage screen"
+    }
+  },
+  "all_other_retained_endpoints_unchanged": true,
+  "library_id": "CNC_MB_IO3:TPS62902RPJR",
+  "library_file": "hardware/motherboard_io3_upgrade/CNC_MB_IO3.kicad_sym",
+  "footprint_file": "hardware/motherboard_io3_upgrade/CNC_MB_IO3.pretty/KRL2012_Susumu.kicad_mod",
+  "manufacturing_ready": false,
+  "original_mc_changed": false,
+  "source_bounds": {
+    "rmin_at_max_junction_175c_ohm": 0.014738625,
+    "rmax_at_max_junction_175c_ohm": 0.015263625000000001,
+    "normal_design_current_a": 0.9087077446234255,
+    "regulator_rating_a": 2,
+    "local_nominal_cout_f": 2.21e-05,
+    "distributed_nominal_cout_f": 6.611e-05,
+    "fb_resistors_ohm": [
+      11500,
+      2550
+    ],
+    "fb_current_max_a": 7e-08,
+    "fb_error_max_v": 0.0008066905,
+    "fb_reference_error_fraction": 0.009,
+    "fb_resistor_temperature_range_c": [
+      0,
+      85
+    ],
+    "fb_resistor_drift_fraction": 0.0005,
+    "mode": "HIGH externalFB2.5MHz forcedPWM outputdischarge"
+  },
+  "open_engineering_gates": [
+    "Actual effective local Cout>=10uF and distributed damping stability/ESR.",
+    "PCB must not bypass R18001 by planes/traces; VOS Kelvin local node.",
+    "FB resistors use0..85C and published500ppm/1000h general-operation drift limit; exact lifetime/purchasing and routing/noise margins remain qualified conditions.",
+    "Regulator input/inductor thermal/actual startup and target FPGA power.",
+    "Overall allocation uses explicit reservations rather than complete guaranteed dynamic maxima."
+  ],
+  "source_sha256": {
+    "hardware/motion_card/mc_local_power.kicad_sch": "7575e229660d33291680d121f59c29df2e2b88cc3ddde21e865427d3ee122841",
+    "hardware/motion_card/design.json": "8cad1942b123437927e2fd24fea36d6c17865da3c3cac796aa9b5328d4757f6a",
+    "hardware/motherboard_io3_upgrade/motherboard_io3_upgrade.kicad_sch": "18909577689af16b4316c44309d52f1669f02f46d831438cc4752b6cd7f0241d",
+    "hardware/motherboard_io3_upgrade/design.json": "c2e7ada6c5df24d492abd3473dce46d994c6954b8a04f1fb6bc4576561c0650e",
+    "hardware/motherboard_io3_upgrade/CNC_MB_IO3.kicad_sym": "87f224da153aadb006466c2e7d5d8fd1ae1461b344aa13c3e86bfa09ad1e53f2",
+    "hardware/motherboard_io3_upgrade/CNC_MB_IO3.pretty/KRL2012_Susumu.kicad_mod": "2c5d37df4215c5d53d198986b0c6ab11342dfc4fbde39afb08eb2cf7353991d8"
+  }
+}

@@ -1,0 +1,85 @@
+{
+ "_doc": [
+  "Field power-distribution design input for tools/field_pdn_design.py (Claude, 11 Oct 2026). One entry per rail: the net (board spelling),",
+  "its galvanic domain, the source pads, the design current (tools/power_widths.json) and the load / terminal clusters with a current",
+  "share. A cluster current is the DOCUMENTED maximum of that load (basis + citation); a trunk segment carries the sum of the clusters",
+  "downstream of it, capped at the rail design current ('at the design current', task brief). Clusters without a document get an even",
+  "split of what the documented clusters leave of the design current (basis 'EVEN SPLIT', flagged). Return nets mirror their supply:",
+  "the external load current of each terminal block returns through its 0 V terminals; IC ground pins carry only quiescent current.",
+  "Field-A AUX supplies (AUX_24V_A/B, AUX_5V_A/B) and the probe supplies (PRB0/1_24V) return through the motor / probe connector 0 V",
+  "terminals; the FIELD_5V buck input current returns at the buck GND (counted once, at the buck: conservative).",
+  "All values are DESIGN ASSUMPTIONS from the documents cited, not measurements."
+ ],
+ "citations": {
+  "PW": "Z:/pcb-runs/claude-finish/tools/power_widths.json (rail design current and table width)",
+  "DO": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/hardware/motherboard_do/design.json: continuous_limit_a_per_channel 0.5, continuous_limit_a_per_quad 2.0, banks A (U10004, U10009, DO00-07 -> JD09.A1-A8) and B (U10017, U10022, DO08-15 -> JD09.B1-B8)",
+  "PE_README": "C:/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/hardware/motherboard_power_entry/README.md: TPS26624 AUX24 A overload testpoint 0.237-0.257 A, AUX24 B 0.145-0.159 A; TPS7A1633 field regulators 20 mA reservation per bank; both motor AUX banks supplied from the protected field A supply",
+  "RM": "Z:/pcb-runs/claude-finish/tools/verify/rail_model.json (FIELD_A/B_24V_PROTECTED loads: MAX17612 0.15 A, TPS1H000 0.9 A, LMR36506 VIN 0.3 A; FIELD_5V loads TPS2553 AUX5 A 0.128 A, AUX5 B 0.064 A)",
+  "LC": "Z:/pcb-runs/claude-finish/tools/fix/load_currents.json",
+  "NET": "Z:/pcb-runs/claude-finish/integrate/sch.net (pin to net; connector pinouts JD01-JD09, JD14, J11003-J11006)",
+  "EFUSE": "TPS26630 eFuse current limits: FIELD_A 5.08 A, FIELD_B 5.32 A (tools/power_widths.json FIELD_x_24V_INPUT notes; tools/fix/load_currents.json U11004/U11006)",
+  "IPC2152": "IPC-2152 (2009) Standard for Determining Current Carrying Capacity in Printed Board Design; fit used: Brooks & Adam, 'Trace Currents and Temperatures Revisited', PCD&F 2015, Eq. 5, dT = 215.3 I^2 W^-1.15 Th^-1 (W, Th in mil), the external-trace fit; IPC-2152 reports internal traces in a board run as cool as or cooler than external ones, so the external fit is conservative for In3 (same method as tools/verify/pdn_ir.py)"
+ },
+ "via": {"d": 0.6, "drill": 0.3, "amps_per_via": 0.5},
+ "drop_budget_v": 0.48,
+ "drop_budget_basis": "DRAFT: 2 % of 24 V at the rail design current (task brief); judged per net from source to the farthest terminal cluster, the supply+return loop is reported too",
+ "rise_limit_c": 10.0,
+ "rails": [
+  {"id": "FA", "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED", "role": "supply", "domain": "DOM_FIELD_A", "pair": "FAG",
+   "design_a": 4.58, "limit_a": 5.08, "cite": ["PW", "EFUSE"],
+   "source": {"name": "U11004 OUT (TPS26630 FIELD_A eFuse exit)", "pads": [["U11004", "17"], ["U11004", "18"]]},
+   "clusters": [
+    {"name": "DO-A quad 0 VS (DO00-DO03 -> JD09.A1-A4)", "pads": [["U10004", "*"]], "amps": 2.0, "basis": "0.5 A x 4 channels, quad continuous limit 2.0 A", "cite": ["DO"]},
+    {"name": "DO-A quad 1 VS (DO04-DO07 -> JD09.A5-A8)", "pads": [["U10009", "*"]], "amps": 2.0, "basis": "0.5 A x 4 channels, quad continuous limit 2.0 A", "cite": ["DO"]},
+    {"name": "FIELD_5V buck VIN (U11009, LMR36506; AUX_5V_A/B to motors 1-12)", "pads": [["U11009", "4"]], "amps": 0.3, "basis": "buck input estimate for the 1.0 A FIELD_5V table current", "cite": ["RM", "LC"]},
+    {"name": "AUX24 A eFuse IN (U11015, motors 1-8 AUX_24V_A -> JD01-JD04 A12/B12)", "pads": [["U11015", "1"]], "amps": 0.257, "basis": "TPS26624 overload testpoint max", "cite": ["PE_README"]},
+    {"name": "AUX24 B eFuse IN (U11016, motors 9-12 AUX_24V_B -> JD05-JD06 A12/B12)", "pads": [["U11016", "1"]], "amps": 0.159, "basis": "TPS26624 overload testpoint max", "cite": ["PE_README"]},
+    {"name": "probe 0 supply limiter IN (U14026 MAX17612, PRB0_24V -> JD14.B2)", "pads": [["U14026", "1"]], "amps": 0.15, "basis": "MAX17612 rail-model current", "cite": ["RM"]},
+    {"name": "probe 1 supply limiter IN (U14027 MAX17612, PRB1_24V -> JD14.B5)", "pads": [["U14027", "1"]], "amps": 0.15, "basis": "MAX17612 rail-model current", "cite": ["RM"]},
+    {"name": "DOA field LDO IN (U11017 TPS7A1633)", "pads": [["U11017", "5"], ["U11017", "8"]], "amps": 0.02, "basis": "20 mA reservation", "cite": ["PE_README"]}
+   ]},
+  {"id": "FAG", "net": "/motherboard_motors{slash}FIELD_GND", "role": "return", "domain": "DOM_FIELD_A", "pair": "FA",
+   "design_a": 4.58, "limit_a": 5.08, "cite": ["PW", "EFUSE", "NET"],
+   "source": {"name": "J11003.2 FIELD_A 0 V input terminal (+ J11004.2 shutdown-contact 0 V)", "pads": [["J11003", "2"], ["J11004", "2"]]},
+   "clusters": [
+    {"name": "JD09 A9-A12 DO-A load returns (DO00-DO07)", "pads": [["JD09", "A9"], ["JD09", "A10"], ["JD09", "A11"], ["JD09", "A12"]], "amps": 4.0, "basis": "8 channels x 0.5 A, assumed to return through the board terminal (worst case)", "cite": ["DO", "NET"]},
+    {"name": "JD01 A13/B13 motors 1-2 field I/O 0 V", "pads": [["JD01", "A13"], ["JD01", "B13"]], "amps": 0.096, "basis": "(AUX24 A 0.257 A + AUX5 A 0.128 A) / 4 connectors", "cite": ["PE_README", "RM"]},
+    {"name": "JD02 A13/B13 motors 3-4 field I/O 0 V", "pads": [["JD02", "A13"], ["JD02", "B13"]], "amps": 0.096, "basis": "(AUX24 A + AUX5 A) / 4", "cite": ["PE_README", "RM"]},
+    {"name": "JD03 A13/B13 motors 5-6 field I/O 0 V", "pads": [["JD03", "A13"], ["JD03", "B13"]], "amps": 0.096, "basis": "(AUX24 A + AUX5 A) / 4", "cite": ["PE_README", "RM"]},
+    {"name": "JD04 A13/B13 motors 7-8 field I/O 0 V", "pads": [["JD04", "A13"], ["JD04", "B13"]], "amps": 0.096, "basis": "(AUX24 A + AUX5 A) / 4", "cite": ["PE_README", "RM"]},
+    {"name": "JD05 A13/B13 motors 9-10 field I/O 0 V", "pads": [["JD05", "A13"], ["JD05", "B13"]], "amps": 0.112, "basis": "(AUX24 B 0.159 A + AUX5 B 0.064 A) / 2", "cite": ["PE_README", "RM"]},
+    {"name": "JD06 A13/B13 motors 11-12 field I/O 0 V", "pads": [["JD06", "A13"], ["JD06", "B13"]], "amps": 0.112, "basis": "(AUX24 B + AUX5 B) / 2", "cite": ["PE_README", "RM"]},
+    {"name": "JD14 B3/B6 probe supply returns", "pads": [["JD14", "B3"], ["JD14", "B6"]], "amps": 0.3, "basis": "2 x MAX17612 0.15 A", "cite": ["RM"]},
+    {"name": "U11009 FIELD_5V buck GND (input return)", "pads": [["U11009", "*"]], "amps": 0.3, "basis": "buck input current returned at its GND", "cite": ["RM", "LC"]},
+    {"name": "U10004 DO-A quad 0 GND (quiescent)", "pads": [["U10004", "*"]], "amps": 0.02, "basis": "quiescent only (high-side switch: load current does not flow in GND)", "cite": ["DO"]},
+    {"name": "U10009 DO-A quad 1 GND (quiescent)", "pads": [["U10009", "*"]], "amps": 0.02, "basis": "quiescent only", "cite": ["DO"]},
+    {"name": "U11017 DOA LDO GND", "pads": [["U11017", "*"]], "amps": 0.02, "basis": "20 mA reservation", "cite": ["PE_README"]}
+   ]},
+  {"id": "FB", "net": "/motherboard_power_entry{slash}FIELD_B_24V_PROTECTED", "role": "supply", "domain": "DOM_FIELD_B", "pair": "FBG",
+   "design_a": 4.82, "limit_a": 5.32, "cite": ["PW", "EFUSE"],
+   "source": {"name": "U11006 OUT (TPS26630 FIELD_B eFuse exit)", "pads": [["U11006", "17"], ["U11006", "18"]]},
+   "clusters": [
+    {"name": "DO-B quad 0 VS (DO08-DO11 -> JD09.B1-B4)", "pads": [["U10017", "*"]], "amps": 2.0, "basis": "0.5 A x 4, quad limit 2.0 A", "cite": ["DO"]},
+    {"name": "DO-B quad 1 VS (DO12-DO15 -> JD09.B5-B8)", "pads": [["U10022", "*"]], "amps": 2.0, "basis": "0.5 A x 4, quad limit 2.0 A", "cite": ["DO"]},
+    {"name": "SAFE_24V switch IN (U19007 TPS1H000 -> JD08.A1)", "pads": [["U19007", "8"]], "amps": 0.9, "basis": "TPS1H000 Imax 0.9 A", "cite": ["RM"]},
+    {"name": "ARM_LAMP switch IN (U19018 TPS1H000 -> JD08.A6)", "pads": [["U19018", "8"]], "amps": 0.9, "basis": "TPS1H000 Imax 0.9 A", "cite": ["RM"]},
+    {"name": "DI sensor supply G0 limiter IN (U19004 -> SENS24_G0 JD07.A9/A10)", "pads": [["U19004", "1"]], "amps": 0.15, "basis": "MAX17612", "cite": ["RM"]},
+    {"name": "DI sensor supply G1 limiter IN (U19005 -> SENS24_G1 JD07.B9/B10)", "pads": [["U19005", "1"]], "amps": 0.15, "basis": "MAX17612", "cite": ["RM"]},
+    {"name": "DI sensor supply G2 limiter IN (U19006 -> SENS24_G2 JD08.B9/B10)", "pads": [["U19006", "1"]], "amps": 0.15, "basis": "MAX17612", "cite": ["RM"]},
+    {"name": "FIELD_B 5 V buck VIN (U19028 LMR36506)", "pads": [["U19028", "4"]], "amps": 0.3, "basis": "LMR36506 input estimate", "cite": ["RM", "LC"]}
+   ]},
+  {"id": "FBG", "net": "/motherboard_do{slash}FIELD_B_0V", "role": "return", "domain": "DOM_FIELD_B", "pair": "FB",
+   "design_a": 4.82, "limit_a": 5.32, "cite": ["PW", "EFUSE", "NET"],
+   "source": {"name": "J11005.2 FIELD_B 0 V input terminal (+ J11006.2 shutdown-contact 0 V)", "pads": [["J11005", "2"], ["J11006", "2"]]},
+   "clusters": [
+    {"name": "JD09 B9-B12 DO-B load returns (DO08-DO15)", "pads": [["JD09", "B9"], ["JD09", "B10"], ["JD09", "B11"], ["JD09", "B12"]], "amps": 4.0, "basis": "8 x 0.5 A, assumed to return through the board terminal (worst case)", "cite": ["DO", "NET"]},
+    {"name": "JD08 A9 SAFE_24V + ARM_LAMP returns", "pads": [["JD08", "A9"]], "amps": 1.8, "basis": "2 x TPS1H000 0.9 A", "cite": ["RM", "NET"]},
+    {"name": "JD08 B11/B12 DI group 2 sensor returns", "pads": [["JD08", "B11"], ["JD08", "B12"]], "amps": 0.15, "basis": "MAX17612 SENS24_G2", "cite": ["RM", "NET"]},
+    {"name": "JD07 A11/A12/B11/B12 DI groups 0-1 sensor returns", "pads": [["JD07", "A11"], ["JD07", "A12"], ["JD07", "B11"], ["JD07", "B12"]], "amps": 0.3, "basis": "2 x MAX17612 SENS24_G0/G1", "cite": ["RM", "NET"]},
+    {"name": "U19028 FIELD_B 5 V buck GND (input return)", "pads": [["U19028", "*"]], "amps": 0.3, "basis": "buck input current returned at its GND", "cite": ["RM"]},
+    {"name": "U10017 DO-B quad 0 GND (quiescent)", "pads": [["U10017", "*"]], "amps": 0.02, "basis": "quiescent only", "cite": ["DO"]},
+    {"name": "U10022 DO-B quad 1 GND (quiescent)", "pads": [["U10022", "*"]], "amps": 0.02, "basis": "quiescent only", "cite": ["DO"]},
+    {"name": "U11018 DOB LDO GND", "pads": [["U11018", "*"]], "amps": 0.02, "basis": "20 mA reservation", "cite": ["PE_README"]}
+   ]}
+ ]
+}

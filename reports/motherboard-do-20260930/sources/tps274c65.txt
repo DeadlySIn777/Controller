@@ -1,0 +1,4490 @@
+TPS274C65xS 72mΩ, Quad-Channel Smart High-Side Switch With SPI Interface and 
+Diagnostics
+1 Features
+• Quad-channel 72mΩ RON SPI-controlled smart 
+high-side switch
+– Low RON ensures low power dissipation for 
+500mA to 2A DC loads
+– SPI control allows for simple isolation of control 
+from output
+• Adjustable current limiting enables improved 
+system level reliability
+– TPS274C65AS, TPS274C65BS: Current limit 
+set-point from 250mA to 2.2A
+– TPS274C65ASH: Current limit set-point from 
+290mA to 2.45A
+• Capable of driving inductive, capacitive, and 
+resistive loads
+– Dual current limit threshold for inrush current 
+management
+– Integrated output clamp to demagnetize 
+inductive loads
+• Robust output protection
+– Integrated thermal shutdown
+– Protection against short to ground events
+– Configurable fault handling
+• Diagnostic features enable improved module 
+intelligence
+– Output load current measurements
+– Wire-break and short-to-supply detection
+• Small 6mm × 6mm leadless package
+2 Applications
+• Industrial PLC system
+– Digital output module
+– IOLink master port
+– Sensor supply
+Gate drive  
+Config, Flags & Protection
+Current Sense
+Output Clamp
+SPI
+Temp  Sense
+4 SPIInterface
+VIN/VOUT MON
+Charge Pump
+MUX
+LEDModule
+VS
+4
+OUTx
+FLT
+LEDx
+VDD
+RCBx
+4
+ADC
+Reverse Current Blocking
+VOUT  Sense
+Status LEDs
+LOAD
+MCU
+Open Load Detection
+5 V / 3.3 V
+24V
+DC/DC Converter
+Optional
+INT_REG
+TPS274C65xS
+REG_EN
+Typical Application Schematic
+3 Description
+The TPS274C65xS device is a quad-channel smart 
+high-side switch with a serial interface (SPI) control 
+and is designed to meet the requirements of industrial 
+control systems. The low 72m Ω R DSON minimizes 
+device power dissipation even when providing large 
+output load current. The device integrates protection 
+and diagnostic features to ensure system protection 
+even during harmful events like short circuits or load 
+failures. The device protects against faults through a 
+reliable current limit  which is adjustable from 250mA 
+to 2.45A to provide protection regardless of output 
+load current. The TPS274C65xS has a configurable 
+inrush current period which sets a higher current limit 
+during turn-on for high inrush current loads, charging 
+capacitive loads faster, or driving incandescent bulbs.
+The TPS274C65xS also provides accurate current 
+sense and an integrated analog to digital converter 
+(AS) that allows for improved load diagnostics. By 
+reporting load current digitally, the device allows 
+for communication over any isolation barrier while 
+enabling predictive maintenance and load diagnostics 
+to improve system lifetime. Additional diagnostic 
+features are integrated, such as on-state or off-state 
+open load detection and short-to-supply detection.
+The TPS274C65xS is available in a small 6mm × 
+6mm VQFN package with 0.5mm pin pitch, which 
+minimizes design PCB footprint.
+Package Information
+PART NUMBER PACKAGE(1) PACKAGE SIZE(2)
+TPS274C65xS RHA (VQFN, 40) 6.00mm × 6.00mm
+(1) For all available packages, see the orderable addendum at 
+the end of the data sheet.
+(2) The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Device Comparison Table...............................................3
+5 Pin Configuration and Functions...................................4
+6 Specifications.................................................................. 7
+6.1 Absolute Maximum Ratings........................................ 7
+6.2 ESD Ratings............................................................... 7
+6.3 Recommended Operating Conditions.........................7
+6.4 Thermal Information....................................................8
+6.5 Electrical Characteristics.............................................8
+6.6 Switching Characteristics..........................................13
+6.7 SPI Timing Requirements......................................... 14
+6.8 Typical Characteristics..............................................15
+7 Parameter Measurement Information..........................16
+8 Detailed Description......................................................17
+8.1 Overview...................................................................17
+8.2 Functional Block Diagram.........................................17
+8.3 Feature Description...................................................18
+8.4 Device Functional Modes..........................................48
+8.5 TPS274C65BS Available Registers List................... 48
+8.6 TPS274C65 Registers.............................................. 51
+9 Application and Implementation..................................75
+9.1 Application Information............................................. 75
+9.2 Typical Application.................................................... 75
+9.3 Power Supply Recommendations.............................78
+9.4 Layout....................................................................... 78
+10 Device and Documentation Support..........................80
+10.1 Receiving Notification of Documentation Updates..80
+10.2 Support Resources................................................. 80
+10.3 Trademarks.............................................................80
+10.4 Electrostatic Discharge Caution..............................80
+10.5 Glossary..................................................................80
+11 Revision History.......................................................... 80
+12 Mechanical, Packaging, and Orderable 
+Information.................................................................... 81
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+2 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+4 Device Comparison Table
+Table 4-1. Functionality Comparison
+Part Number Interface
+Reverse 
+Current 
+Blocking 
+(RCB)
+Integrated 
+LED 
+Driver
+Integrated 
+ADC
+Current 
+Limit 
+Settings 
+Allow for 
+2A 
+Operation
+Current Sense Available Registers
+TPS274C65AS SPI Yes Yes Yes No Digital via SPI or analog 
+output
+See TPS274C65 
+Registers
+TPS274C65ASH SPI Yes Yes Yes Yes Digital via SPI or analog 
+output
+See TPS274C65 
+Registers
+TPS274C65BS SPI No No No No No current sense See TPS274C65BS 
+Available Registers List
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 3
+Product Folder Links: TPS274C65
+5 Pin Configuration and Functions
+ADDCFG
+DSPI
+40 39 38 37 36 35 34 33 32 31
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+OUT1
+OUT1
+VS
+VS
+OUT2
+OUT2
+OUT4
+OUT4
+VS
+VS
+VS
+VS
+OUT3
+OUT3
+GND
+SCLK
+SDO
+SDI
+CS
+FLT
+VDD
+GND
+11 12 13 14 15 16 17 18 19 20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+VS
+VS
+READY
+REG_EN
+DO_EN
+DNC
+ISNS
+RCB1
+RCB2RCB4
+RCB3
+LEDOUT1
+LEDOUT2
+LEDOUT3
+LEDOUT4
+DNC
+PowerPAD™  
+Figure 5-1. RHA Package, 40-Pin VQFN – AS and ASH Version (Top View)
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+4 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+ADDCFG
+DSPI
+40 39 38 37 36 35 34 33 32 31
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+OUT1
+OUT1
+VS
+VS
+OUT2
+OUT2
+OUT4
+OUT4
+VS
+VS
+VS
+VS
+OUT3
+OUT3
+GND
+SCLK
+SDO
+SDI
+CS
+FLT
+VDD
+GND
+11 12 13 14 15 16 17 18 19 20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+VS
+VS
+REG_EN
+DO_EN
+DNC
+DNC
+DNC
+DNCDNC
+DNC
+DNC
+DNC
+DNC
+DNC
+DNC
+PowerPAD™  
+DNC
+Figure 5-2. RHA Package, 40-Pin VQFN – BS Version (Top View)
+Table 5-1. Pin Functions – Version AS and BS
+Do not connect for pins labeled DNC
+PIN
+TYPE(1) DESCRIPTION
+NO. TPS274C65AS, 
+TPS274C65ASH TPS274C65BS
+1 READY DNC(3) O Logic low output indicating the IC is ready for SPI data transmission 
+(connect to GND pin of the IC with resistor).
+2 FLT FLT O Fault output – on any (one or more) channel - open drain, needs to 
+be pulled up to VDD pin.
+3 DO_EN DO_EN I Setting this pin low would disable all of the outputs. Set high to 
+enable SPI based output Internal pull-down.
+4 VDD(2) VDD(2) P Logic Supply Input(2) .
+5, 21 GND GND — Device ground.
+6 ISNS DNC(3) O SNS current output – use a parallel RC network to the GND pin of 
+the IC.
+7 SDO SDO O SPI Data Output from the device.
+8 SDI SDI I SPI device (secondary) data input.
+9 SCLK SCLK O SPI Clock Input.
+10 CS CS I SPI Chip select.
+11 RCB3 DNC(3) O Gate connection for reverse current blocking FET Ch3.
+12, 13 OUT3 OUT3 O Output voltage for channel 3.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 5
+Product Folder Links: TPS274C65
+Table 5-1. Pin Functions – Version AS and BS (continued)
+Do not connect for pins labeled DNC
+PIN
+TYPE(1) DESCRIPTION
+NO. TPS274C65AS, 
+TPS274C65ASH TPS274C65BS
+14–17 VS VS P 24V Switch Supply input to the IC.
+18, 19 OUT4 OUT4 O Output voltage for channel 4.
+20 RCB4 DNC(3) O Gate connection for reverse current blocking FET Ch4.
+22 LEDOUT1 DNC(3) O LED matrix select driver.
+23 LEDOUT2 DNC(3) O LED matrix select driver.
+24 LEDOUT3 DNC(3) O LED matrix select driver.
+25 LEDOUT4 DNC(3) O LED matrix select driver.
+26 DNC(3) DNC(3) — Do not connect.
+27 DNC(3) DNC(3) — Do not connect.
+28 DSPI DSPI I Configure the device in daisy chain SPI mode when the pin is pulled 
+HI.
+29 REG_EN REG_EN I Internal Regulator Enable pin, float to enable. Tie to GND to disable 
+and use an external supply input to VDD.
+30 ADDCFG ADDCFG I
+SPI IC Address Configuration pin – set the 3-bit address of each IC 
+(up to 8 on one board) with a resistor to GND pin of the IC. Leave 
+floating if using Daisy Chain mode.
+31 RCB2 DNC(3) O Gate connection for reverse current blocking FET Ch2.
+32, 33 OUT2 OUT2 O Output voltage for channel 2.
+34–37 VS VS P 24V Switch Supply input to the IC.
+38, 39 OUT1 OUT1 O Output voltage for channel 1.
+40 RCB1 DNC(3) O Gate connection for reverse current blocking FET Ch1.
+Exposed 
+Pad GND GND I Connected to GND pin of the IC.
+(1) I = input, O = output, P = power.
+(2) When the device is configured to support an external regulator connected to VDD, it is required that the
+supply input for the external regulator is derived from the same VS supply of TPS274C65 as shown in the Typical Application 
+Schematic.
+(3) Do not connect for pins labeled DNC.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+6 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+6 Specifications
+6.1 Absolute Maximum Ratings
+Over operating free-air temperature range (unless otherwise noted)(1)
+MIN MAX UNIT
+Continuous supply voltage, VVS to IC_GND –0.3 40 V
+Maximum transient (< 1 ms) voltage at the supply pin (with respect to IC GND), VVS, during ON state –0.3 60 V
+VOUT  voltage to IC_GND –30 VVS + 0.3 V
+VDS voltage VDS voltage –0.7 39 V
+Low voltage supply pin voltage, VDD Low voltage supply pin voltage, VDD –0.3 7.0 V
+Digital Input  pin voltages, VDIG –0.3 7.0 V
+LED drive pin voltage, VLED_OUT -0.3 7.0 V
+Analog pin voltage REG_EN –0.3 7.0 V
+RCBx pin voltage, VRCBx RCBx pin voltage, VRCBx
+VOUT – 
+0.7 VOUT + 6 V
+Sense pin voltage, VSNS –0.3 7.0 V
+FLT pin voltage, VFLT FLT pin voltage, VFLT –0.3 7.0 V
+Reverse ground current, IGND VS < 0 V –50 mA
+Maximum junction temperature, TJ 150 °C
+Storage temperature, Tstg –65 150 °C
+(1) Operation outside the Absolute Maximum Ratings may cause permanent device damage. Absolute Maximum Ratings do not imply 
+functional operation of the device at these or any other conditions beyond those listed under Recommended Operating Conditions. 
+If used outside the Recommended Operating Conditions but within the Absolute Maximum Ratings, the device may not be fully 
+functional, and this may affect device reliability, functionality, performance, and shorten the device lifetime.
+6.2 ESD Ratings
+VALUE UNIT
+VESD1
+Electrostatic 
+discharge
+Human body model (HBM), per
+ANSI/ESDA/JEDEC JS-001(1)
+All pins except VS and 
+VOUTx ±2000 V
+VESD2
+Electrostatic 
+discharge
+Human body model (HBM), per
+ANSI/ESDA/JEDEC JS-001(1)
+VS and VOUTx with respect 
+to GND ±4000 V
+VESD3
+Electrostatic 
+discharge
+Charged device model (CDM), per ANSI/ESDA/
+JEDEC JS-002, all pins(2) All pins ±500 V
+Vsurge
+Electrostatic 
+discharge
+Surge protection with 42 Ω, per IEC 61000-4-5; 
+1.2/50 μs VS, OUTx ±1000 V
+(1) JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2) JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN MAX UNIT
+VS_OPMAX Nominal supply voltage 12 36 V
+VDD Low voltage supply voltages 3.0 5.5 V
+VDIG All digital input pin voltage –0.3 5.5 V
+ VFLT FLT pin voltage –0.3 5.5 V
+VLED_OUTx LED_OUTx pin voltage –0.3 5.5 V
+VANA REG_EN pin voltage –0.3 5.0 V
+VANA SNS, ADDCFG pin voltage –0.3 5.0 V
+TA Operating free-air temperature –40 125 °C
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 7
+Product Folder Links: TPS274C65
+6.4 Thermal Information
+THERMAL METRIC(1) (2)
+TPS274C65X
+UNITRHA (VQFN)
+40 PINS
+RθJA Junction-to-ambient thermal resistance 25.4 °C/W
+RθJC(top) Junction-to-case (top) thermal resistance 15.8 °C/W
+RθJB Junction-to-board thermal resistance 7.6 °C/W
+ψJT Junction-to-top characterization parameter 0.2 °C/W
+ψJB Junction-to-board characterization parameter 7.6 °C/W
+RθJC(bot) Junction-to-case (bottom) thermal resistance 0.6 °C/W
+(1) For more information about traditional and new thermal metrics, see the SPRA953 application report.
+(2) The thermal parameters are based on a 4-layer PCB according to the JESD51-5 and JESD51-7 standards.
+6.5 Electrical Characteristics
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+INPUT VOLTAGE AND CURRENT
+VDS_Clamp 
+CHx VDS clamp voltage FET current = 10 mA, VS = 24 V 40 44 50 V
+VDS_Clamp 
+CHx VDS clamp voltage FET current = 10 mA, VS = 19 V 40 44 50 V
+VDS_Clamp 
+CHx VDS clamp voltage FET current = 10 mA, VS = 10 V 33 37 41 V
+VS_UVPF
+VS undervoltage 
+protection falling
+Measured with respect 
+to the GND pin of the 
+device, All channels ON
+Output FETs turned off 
+at VS less than this 
+threshold.
+8.6 9 9.3 V
+VS_UVPR
+VS undervoltage 
+protection recovery rising
+Measured with respect 
+to the GND pin of the 
+device, All channels ON
+Output FETs turned ON 
+at VS more than this 
+threshold.
+9.5 10 10.3 V
+VS_UVPRH
+VS undervoltage 
+protection deglitch time Time from triggering the UVP fault to FET turn-off 15 20 25 µs
+VS_UVWF
+VS undervoltage warning 
+falling
+Measured with respect 
+to the GND pin of the 
+device,
+Reported in 
+VS_UV_WRN register 
+bit when below this 
+threshold
+12 12.5 13.5 V
+VS_UVWR
+VS undervoltage warning 
+recovery rising
+Measured with respect 
+to the GND pin of the 
+device, 
+VS_UV_WRN register bit 
+cleared when below this 
+threshold and register 
+read
+11.2 13.5 15.8 V
+VS_UVLOF
+VS  undervoltage lockout 
+falling
+Measured with respect 
+to the GND pin of the 
+device
+Device will hit POR and 
+READY pin will be pulled 
+low
+3.0 V
+VS,UVLOR
+VS undervoltage lockout 
+rising
+Measured with respect 
+to the GND pin of the 
+device
+READY pin will go high 2.7 3 3.3 V
+VDD,UVLOF
+VDD  undervoltage 
+lockout falling Measured with respect to the GND pin of the device 2.7 2.8 2.9 V
+VDD,UVLOR
+VDD undervoltage lockout 
+rising Measured with respect to the GND pin of the device 2.8 2.88 2.98 V
+ILNOM
+Continuous load current, 
+per channel
+All channels enabled, TAMB = 85°C 1.6 A
+Two channels enabled, TAMB = 85°C 2.5 A
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+8 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+6.5 Electrical Characteristics (continued)
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+IOUT,LEAKX
+Leakage current from 
+OUT to GND in OFF 
+state
+Vs = VOUT < 36 V, Switch and all diagnostics 
+disabled, measured into the OUTx pin 40 µA
+IOUT(OFF)
+Output leakage current 
+(per channel)
+VS <= 36 V, VOUT = 0
+Channel disabled, diagnostics disabled Tj <= 125°C 0 0.8 10 µA
+VDD IQ
+VDD quiescent current, 
+SCLK ON, all 
+diagnostics disabled,
+(WB_OFF, WB_ON, 
+SHRT_VS, ADC) 
+external VDD
+VS ≤ 36 V, VDD = 5.5 V
+All channels enabled,  IOUTx = 0 A 1.3 1.6 mA
+VDD IQ
+VDD quiescent current, 
+SCLK ON, all 
+diagnostics disabled,
+(WB_OFF, WB_ON, 
+SHRT_VS, ADC) 
+external VDD
+VS ≤ 36 V, VDD = 3.0 V
+All channels enabled,  IOUTx = 0 A 1 1.2 mA
+VDD IQ
+VDD quiescent current, 
+SCLK off, all diagnostics 
+disabled ((WB_OFF, 
+WB_ON, SHRT_VS), 
+ADC enabled and 
+converting, external VDD
+VS ≤ 36 V, VDD = 5.5 V
+All channels enabled,  IOUTx = 0 A 1.2 1.6 mA
+VS IQ
+VS quiescent current, 
+SCLK off, all 
+diagnostics disabled,
+(WB_OFF, WB_ON, 
+SHRT_VS, ADC) internal 
+VDD
+VS ≤ 36 V, 
+All channels enabled,  IOUTx = 0 A 2.8 3.2 mA
+VS IQ
+VS quiescent current, 
+SCLK off, all diagnostics 
+(WB_OFF, WB_ON, 
+SHRT_VS, ADC) 
+enabled, external VDD
+VS ≤ 36 V, VDD = 3.0 V
+All channels enabled,  IOUTx = 0 A 1.7 2.5 mA
+VS IQ
+VS quiescent current, 
+SCLK off, all diagnostics 
+(WB_OFF, WB_ON, 
+SHRT_VS, ADC) 
+disabled, RCB enabled, 
+external VDD
+VS ≤ 36 V, VDD = 3.0 V
+All channels enabled,  IOUTx = 0 A 1.4 2.45 mA
+Ileak_LG
+Leakage current out of 
+the output pins with the 
+GND of IC disconnected, 
+Load ground connected 
+to supply ground
+VS≤ 30 V, VDD = 5.5 V, RL = 24 Ω
+All channels enabled 0.8 0.9 mA
+RON CHARACTERISTICS
+RON
+On-resistance
+(Includes MOSFET and 
+package)
+10 V ≤ VS ≤ 36 V, IOUT1 = 
+IOUT2 = 200 mA
+TJ = 25°C 72 mΩ
+TJ = 125°C 110 mΩ
+On-resistance when 2 
+channels are paralleled
+(Includes MOSFET and 
+package)
+10 V ≤ VS ≤ 36 V, IOUT1 = 
+IOUT2 > 200 mA.
+VOUT1 tied to VOUT2
+TJ = 25°C 33 mΩ
+TJ = 125°C 55 mΩ
+VDD_REG CHARACTERISTICS
+VVDD
+VDD Output voltage 
+(Internal regulator 
+enabled)
+6 V ≤ VS ≤ 36 V, IVDD < 
+20 mA
+Includes load and line 
+regulation across the 
+range.
+3.1 3.3 3.6 V
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 9
+Product Folder Links: TPS274C65
+6.5 Electrical Characteristics (continued)
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+LRVDD
+Load regulation of 
+internal VDD regulator 
+when enabled
+6 V ≤ VS ≤ 36 V, IVDD < 20 mA 0.95 V/A
+LRtran_VDD
+Load transient regulation 
+of internal VDD regulator 
+when enabled
+6 V ≤ VS ≤ 36 V, IVDD 
+<step from 5 mA to 15 
+mA in 10 μs
+1 uF 10 mV
+ICL_VDD
+Current Limit of internal 
+regulator 6 V ≤ VS ≤ 36 V 25 50 mA
+CURRENT SENSE CHARACTERISTICS
+ISNSI CHx Current sense ratio
+IOUTx / ISNS
+IOUTX = 1 A, Range = 2.4 
+A IOUTX = 1 A 1160
+ISNSI CHx CHx Current sense 
+current
+Current Sense Diagnostic 
+Enabled, RSNS = 1kΩ
+IOUTx = 2 A 1.69 1.73 1.77 mA
+IOUT1 = 1 A 0.834 0.862 0.890 mA
+IOUT1 = 500 mA 0.410 0.424 0.45 mA
+IOUT1 = 200 mA 0.151 0.168 0.184 mA
+IOUT1 = 100 mA 0.068 0.081 0.092 mA
+IOUT1 = 50 mA 0.02 0.037 0.054 mA
+ISNSI CHx CHx Current sense 
+current
+Current Sense Diagnostic 
+Enabled, RSNS = 1kΩ IOUT1 = 20 mA 0.005 0.010 0.028 mA
+ISNSI CHx CHx Current sense 
+current
+Current Sense Diagnostic 
+Enabled, RSNS = 1kΩ IOUT1 = 10 mA 0.002 0.005 0.008 mA
+ISNSI CHx CHx Current sense 
+current
+Current Sense Diagnostic 
+Enabled, RSNS = 1kΩ IOUT1 = 5 mA 0.000 0.002 0.004 mA
+ADC Performance Characteristics
+VADCEFfHI ADC refernce voltage 2.72 2.8 2.85 V
+Tconv1 ADC sample update time 
+in each measurement 128 µs
+SNS CHARACTERISTICS
+TSNSout1 TSNS output TJ = –40°C 2.57 V
+TSNSout2 TSNS output TJ = 25°C 2.17 V
+TSNSout3 TSNS output TJ = 125°C 1.55 V
+VOUTSNS_
+CHx
+VOUTSNS output VOUT_CHx = 20 V 1.87 V
+CURRENT LIMIT CHARACTERISTICS
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+10 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+6.5 Electrical Characteristics (continued)
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+ICLx
+CHx ICL current limitation 
+level, H version
+Regulated current at 
+short circuit RL < 
+200 mohms when 
+Enabled. VDD = 3.3 V.
+Setting = 2.45 A 2.06 2.45 2.84 A
+Setting = 2.26 A 2.01 2.26 2.88 A
+Setting = 2.07 A 1.74 2.07 2.4 A
+Setting = 1.9 A 1.6 1.9 2.3 A
+Setting =1.71 A 1.42 1.71 1.94 A
+Setting = 1.52 A 1.2 1.52 1.78 A
+Setting = 1.33 A 1.06 1.33 1.6 A
+Setting = 1.15 A 0.94 1.15 1.36 A
+Setting = 0.96 A 0.78 0.96 1.1 A
+Setting = 0.86 A 0.72 0.86 1.02 A
+Setting = 0.76 A 0.64 0.76 0.88 A
+Setting = 0.67 A 0.53 0.67 0.78 A
+Setting = 0.57 A 0.47 0.57 0.65 A
+Setting = 0.48 A 0.4 0.48 0.55 A
+Setting = 0.38 A 0.3 0.38 0.45 A
+Setting = 0.29 A 0.22 0.29 0.39 A
+ICLx
+CHx ICL current limitation 
+level
+Regulated current at 
+short circuit RL < 
+200 mohms when 
+Enabled. VDD = 3.3 V.
+Setting = 2.2 A 1.85 2.2 2.55 A
+Setting = 1.9 A 1.6 1.9 2.3 A
+Setting = 1.75 A 1.5 1.75 2.05 A
+Setting = 1.6 A 1.35 1.6 1.85 A
+Setting =1.5 A 1.19 1.5 1.75 A
+Setting = 1.25 A 1 1.25 1.5 A
+Setting = 1.1 A 0.9 1.1 1.3 A
+Setting = 1 A 0.85 1 1.15 A
+Setting = 0.85 A 0.72 0.85 1 A
+Setting = 0.72 A 0.62 0.72 0.82 A
+Setting = 0.67 A 0.53 0.67 0.78 A
+Setting = 0.56 A 0.47 0.56 0.63 A
+Setting = 0.48 A 0.4 0.48 0.55 A
+Setting = 0.4 A 0.32 0.4 0.47 A
+Setting = 0.33 A 0.26 0.33 0.39 A
+Setting = 0.25 A 0.19 0.25 0.33 A
+ICL_LINPK
+Overcurrent limit 
+threshold
+Threshold before current 
+limiting - Overload 
+condition
+Setting = 2.2 A VVS – 
+VVOUT < 1 V 2.75 A
+ICL_LINPK
+Overcurrent limit 
+threshold
+Threshold before current 
+limiting - Overload 
+Conditions
+Setting = 0.85 A VVS-
+VVOUT < 1V 1.1 A
+ICL_PK1
+Peak current before 
+regulation while enabling 
+switch into 100 mohm 
+load
+TJ = –40°C to 125°C 
+VS = 24 V, Minimum 
+inductance = 2.2 µH
+Settting = 2.2 A 10 A
+ICL_PK2
+Peak current threshold 
+when short is applied 
+while switch enabled
+TJ = –40°C to 125°C 
+VS = 24 V, Minimum 
+inductance = 2.2 µH
+Settting = 2.2 A 9.4 A
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 11
+Product Folder Links: TPS274C65
+6.5 Electrical Characteristics (continued)
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+ICL_P
+Parallel ICL Current 
+Limitation Level
+Regulated current at 
+short circuit RL < 200 
+mohms when Enabled
+Settting = 2.2 A 4.3 A
+ICL_PK1_P
+Paralled Peak current 
+enabling into permanent 
+short
+TJ = –40°C to 125°C 
+VS = 24V, Minimum 
+inductance = 2.2 µH
+Settting = 2.2 A 6.4 A
+ICL,PARALLE
+L
+Paralled Channels 
+Current Limit Accuracy 
+Multiplier
+ VOUT1 tied to VOUT2, 
+parallel channel mode 
+enabled
+Settting = 2.2 A 0.9 1.1
+FAULT CHARACTERISTICS
+IWB_ON_TH
+Wire-break (WB) or 
+Open-load (OL) detection 
+on-state threshold
+Switch enabled, WB_ON_CHx = enabled 
+WB_ON_TH_= 000 0.38 0.49 0.61 mA
+IWB_OFF
+Off State Wirebreak or 
+Open-load (OL) detection 
+internal pullup current
+Switch disabled, WB_OFF_CHx = enabled 
+WB_PU=00 38 51 64 µA
+VSHRT_VS_T
+H
+Off state short to VS 
+detection voltage
+Channel Disabled, off-state short_VS diagnostics 
+enabled 12.0 V
+VWB_OFF_P
+U
+Off state WireBreak 
+(WB) or Open-load (OL) 
+detection pull up current 
+source voltage
+Channel Disabled, off-state wire-break diagnostics 
+enabled 6.7 V
+VWB_OFF_T
+H
+Off state WireBreak 
+(WB) or Open-load (OL) 
+detection voltage
+Channel Disabled, off-state wire-break diagnostics 
+enabled 5.6 6 6.5 V
+tRCB_DGL
+CHx RCB Fault Deglitch 
+time Channel Enabled, RCB enabled 1.2 ms
+TABS Thermal shutdown 160 185 210 °C
+TOTW
+Thermal shutdown 
+warning 110 130 150 °C
+THYS
+Thermal shutdown 
+hysteresis 20 27 35 °C
+Vol_FLT Fault low-output voltage IFLT = 2 mA, sink current into the pin 0.4 V
+tRETRY Retry time Time from thermal shutdown until switch re-enable. 0.6 ms
+tRCB_F
+Reverse current 
+protection comparator 
+delay
+Time from VS – VOUT < 50 mV overdrive to FET 
+gate off 1.6 2 2.4 µs
+VRCB_F
+V(VS) – V(OUT) 
+threshold for
+reverse protection 
+comparator,
+falling
+-104 -64 -23 mV
+tRCB_comp_r
+eset
+RCB internal comparator 
+reset interval 100 ms
+VRCB_pu RCBx FET gate voltage 6 7 V
+VRCB_R
+V(VS) – V(OUT) 
+threshold for
+reverse protection 
+comparator,
+rising
+28 45 58 mV
+DIGITAL INPUT PIN CHARACTERISTIC
+VIH, DIG
+DIG pin Input voltage 
+high-level 3.0 V ≤ VDD ≤ 5.5 V 0.7 × 
+VVDD
+V
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+12 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+6.5 Electrical Characteristics (continued)
+VVS = 11 V to 36 V, VVDD = 3.0 V to 5.5 V, TJ = –40°C to 125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+VIL, DIG
+DIG pin Input voltage 
+low-level 3.0 V ≤ VDD ≤ 5.5 V 0.3 × 
+VVDD
+V
+RREG_EN
+Internal pullup resistance 
+for REG_EN pin 1 MΩ
+RDIGx Internal pulldown resistor 0.7 1 2.0 MΩ
+IIH, DIG Input current high-level VDIG = 5 V 5 µA
+DIGITAL OUTPUT PIN CHARACTERISTICS
+VOH
+Output Logic High 
+Voltage Drop READY Pin current = –4 mA -0.5 V
+VOL_SDO Output Logic Low Voltage SDO Pin current = –4 mA 0.2 V
+VOL_FLT Output Logic Low Voltage FLT Pin current = –4 mA 0.4 V
+LED DRIVER CHARACTERISTICS
+Vdrop_HL14
+LED High Side / Low side 
+drop Channels 1 and 4
+I_LED (average current over 4 phases) = 4 mA, LED 
+switch current = 16 mA 0.2 V
+Vdrop_HL23
+LED High Side / Low side 
+drop Channels 2 and 3
+I_LED (average current over 4 phases) = 4 mA, LED 
+switch current = 32 mA 0.2 V
+fPWM_LED
+LED driver PWM 
+frequency 1000  Hz
+6.6 Switching Characteristics
+VS = 6 V to 36 V, TJ = –40°C to +125°C (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+tDR CHx Turnon delay time VS = 24 V, RL = 48 Ω 50% of EN to 
+10% of VOUT 5 18 25 µs
+tDF CHx Turnoff delay time VS = 24 V, RL = 48 Ω 50% of EN to 
+90% of VOUT 16 24 33 µs
+SR2R VOUTx rising slew rate VS = 24 V, 25% to 75% of VOUT,
+RL = 48 Ω, 1 1.6 2.2 V/µs
+SR2F VOUTx falling slew rate VS = 24 V, 75% to 25% of VOUT,
+RL = 48 Ω, 1 1.4 1.8 V/µs
+fmax Maximum PWM frequency 1 kHz
+tON CHx Turnon time VS = 24 V, RL = 48 Ω  50% of EN to 
+90% of VOUT 33 42 µs
+tOFF CHx Turnoff time VS = 24 V, RL = 48 Ω  50% of EN to 
+10% of VOUT 46 57 µs
+tON - tOFF CHx Turnon and off matching 1ms ON time switch enable 
+pulse VBB = 24 V, RL = 48 Ω –41 –7 23 µs
+tON - tOFF CHx Turnon and off matching 100-µs OFF time switch enable 
+pulse, VS = 24 V, RL = 48 Ω, F = fmax
+–41 –7 23 µs
+tON - tOFF CHxTurnon and off matching 100-µs ON time switch enable 
+pulse, VS = 24 V, RL = 48 Ω, F = fmax
+–41 –7 23 µs
+ΔPWM
+CHx PWM accuracy - average load 
+current
+200-µs enable pulse, VS = 24 V, RL = 
+48 Ω 
+F = fmax
+–20 20 %
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 13
+Product Folder Links: TPS274C65
+6.7 SPI Timing Requirements
+Over operating junction temperature TJ = –40°C to 125°C and operating VVS = 2.3 to 36 V (unless otherwise noted).
+MIN NOM MAX UNIT
+tSPI SPI clock (SCLK) period CSDO = 30 pF;
+ 100 ns
+thigh High time: SCLK logic high-time duration 45 ns
+tlow Low time: SCLK logic low-time duration 45 ns
+tsucs NCS setup time: Time delay between falling edge of NCS and rising edge of SCLK 45 ns
+tsu_SDI SDI setup time: Setup time of SDI before the falling edge of SCLK 15 ns
+th_SDI SDI hold time: Hold time of SDI before the falling edge of SCLK 30 ns
+td_SDO Delay time: Time delay from rising edge of SCLK to data valid at SDO 30 ns
+thcs Hold time: Time between the falling edge of SCLK and rising edge of NCS 45 ns
+tdis_cs nCS disable time, nCS high to SDO high impedance 10 ns
+thics
+SPI transfer inactive time (time between two transfers) during which NCS must remain 
+high 500 ns
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+14 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+6.8 Typical Characteristics
+VEN = 0 to 5 V VS = 12 V TAMB = 25°C
+Figure 6-1. Turn-on Time (tON) 
+VEN = 5 to 0 V VS = 12 V TAMB = 25°C
+Figure 6-2. Turn-off Time (tOFF)
+VS = 24 V TAMB = 25°C RLOAD = 470 μF + 
+50 Ω
+ILIM_REG[3:0] = 
+0x5
+ILIM_REG[7:4] = 
+0x1
+INRUSH_LIMIT[1:0
+] = 0x1
+Figure 6-3. Charging a 470-μF Capacitor
+VS = 12 V PWM Frequency = 
+250 Hz
+Duty Cycle = 5%
+TAMB = 25 °C RLOAD = 48Ω
+Figure 6-4. Switching the Part With 250-Hz PWM 
+Signal
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 15
+Product Folder Links: TPS274C65
+7 Parameter Measurement Information
+VDO_EN
+(1)
+VOUT
+tDR tDF
+tON tOFF
+50% 50%
+10%
+90%
+10%
+90%
+Copyright © 2017, Texas Instruments Incorporated
+(1) Rise and fall time of VDO_EN is 100 ns.
+Figure 7-1. Switching Characteristics Definitions
+thics tsucs
+tSPI
+thigh tlow
+MSB LSB
+th_SDItsu_SDI
+Z ZMSB LSB
+thcs
+tdis_cs
+X X
+td_SDO
+CS
+SCLK
+SDI
+SDO
+Figure 7-2. SPI Timing
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+16 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8 Detailed Description
+8.1 Overview
+The TPS274C65 device is a quad channel 72-m Ω smart high-side switch intended for use for output ports 
+with protection for 24-V industrial systems. The device is designed to drive a variety of resistive, inductive 
+and capacitive loads. The device integrates various protection features including overload protection through 
+current limiting, thermal protection, short-circuit protection, and reverse current protection. For more details on 
+the protection features, refer to the Feature Description and Application Information sections of the document.
+In addition, the device diagnostics features include a digital per-channel readout of output current, output voltage 
+and FET temperature. The high-accuracy load current sense allows for integration of load measurement features 
+that can enable predictive maintenance for the system by watching for leading indicators of load failures. The 
+device also integrates open load detection in on and off states to enable protection against wire breaks. In 
+addition, the device includes an open drain FLT pin output that indicates device fault states such as short to 
+GND, short to supply, overtemperature, and the other fault states discussed.
+8.2 Functional Block Diagram
+Gate drive  
+Config, 
+Flags and 
+Protection
+Current Sense
+Output 
+Clamp
+SPI
+Temp  Sense
+4
+SPI
+Interface
+V IN /V OUT 
+MON
+Charge Pump
+MUX
+LED
+Module
+VS
+4
+OUTx
+GND
+FLT
+LEDx
+VDD
+RCBx
+4
+ADC
+RCB
+VOUT  Sense
+REG_EN
+3.3 V 
+Reg
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 17
+Product Folder Links: TPS274C65
+8.3 Feature Description
+8.3.1 Pin Diagrams
+This section presents the I/O structure of all digital input and output pins.
+VDD
+Logic High
+INPUT
+VIH
+STATE
+Tied to VDD
+CONNECTION
+VIL Tied to GND Logic Low
+RPDESD
+Figure 8-1. Logic Level Input Pin
+Figure 8-2 shows the input structure for the logic levels pin, CS. The input can be with a voltage or external 
+resistor.
+VDD
+Logic High
+INPUT
+VIH
+STATE
+Tied to VDD
+CONNECTION
+VIL Tied to GND Logic Low
+RPU
+VDD
+ESD
+Figure 8-2. Logic Level Input Pin (CS)
+Figure 8-3 shows the structure of the open-drain output pin, FAULT. The open-drain output requires an external 
+pullup resistor to function properly.
+VDD
+Inactive
+OUTPUT
+No Fault
+STATE
+Pulled-Up
+STATUS
+Fault Pulled-Down
+Active
+RPU
+ESD
+Figure 8-3. Open Drain Output Pin (FAULT)
+8.3.2 SPI Mode Operation
+The TPS274C65xS communicates with the host controller through a high-speed SPI serial interface. The 
+interface has three logic inputs: clock (CLK), chip select ( CS), serial data in (SDI), and one data out (SDO). 
+The SDO is three-stated when CS is high. The maximum SPI clock rate is 10 MHz. The capacitance at 
+SPI communication pins (CLK, CS, SDI, SDO) needs to be minimized to achieve high SPI communication 
+frequencies.
+The device supports both simple daisy chain 1 and addressable SPI; the selection of mode is from the DSPI 
+pin. The main advantage of the addressable SPI mode is that diagnostics and configuration is easier. The two 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+18 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+different modes of SPI that is fixed for a given system implementation and cannot be changed dynamically or on 
+the fly. The two modes can be used with or without CRC.
+The two modes are described in detail:
+1. Addressable SPI mode - non-daisy-chained SPI bus with one single/shared CS through chip addressing. 
+Each chip on the shared SPI is assigned an individual chip address with the address set through a resistor 
+(three-bit address for the chip). Addressed SPI (DSPI pin pulled low) allows direct communication with up 
+to eight TPS274C65xS on a shared SPI using a single shared CS signal. The three-bit address of each IC 
+(up to eight on one board) is set with a resistor to GND on this pin Addressed SPI offers the advantage 
+of direct chip access. CRC check is enabled when CRCEN=1. The SPI main device addresses a specific 
+chip by sending the appropriate A2, A1, A0 logic in the first three bits of the SPI read/write command. The 
+TPS274C65xS monitors the SPI address in each SPI read or write cycle and responds appropriately when 
+the address matches the programmed address for that IC. The added advantage is that it is possible to 
+update the SW state register and read the data in the various read only fault and data registers in every read 
+as well as write command frame. The transmission speed will be faster for addressable SPI compared to the 
+daisy chain SPI as the direct data transmission will happen immediately once the address is transmitted.
+2. Daisy chain SPI mode is enabled by setting DSPI pin high. In this mode, multiple TPS274C65xS devices 
+are configured in a serial fashion. In the 16-bit daisy-chain mode, only a minimum read capability and Switch 
+state ON/OFF write is possible- the FAULT status can be read out on each write to the switch ON-OFF 
+register. It is not possible to write to the LED registers or re-configure the device and at the same time 
+update the switch state. However, it is possible to update the SW state register and read the data in the 
+various read only fault and data registers. The 24-bit SPI format allows the write to the SW_STATE register 
+in every read as well as write command frame as well enable CRC. The speed of the transmission for daisy 
+chain will be depending on the CLK frequency as well as the number of devices connected in series.
+The communication between the TPS274C65 IC and the controller or MCU is through a SPI bus in a master-
+slave configuration. The external MCU is always an SPI master that sends command requests on the SDI pin of 
+the TPS274C65 IC and receives device responses on the SDO pin of the IC. The TPS274C65 device is always 
+an SPI slave device that receives command requests and sends responses (such as status and measured 
+values) to the external MCU over the SDO line. The following lists the characteristics of the SPI:
+The TPS274C65 device can be connected to the master MCU in the following formats.
+• One slave device
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 19
+Product Folder Links: TPS274C65
+TPS274C65
+SDO
+SCLK
+SDI
+nSCS
+SPI 
+Communication
+TPS274C65
+SDO
+SCLK
+SDI
+nSCS
+SPI 
+Communication
+Controller
+SPI 
+Communication
+CS2
+CS1
+MI
+MO
+MCLK
+Figure 8-4. Independent Slave Configuration
+• Multiple slave devices in parallel connection (addressable SPI mode)
+TPS274C65
+SDO
+SCLK
+SDI
+nSCS
+SPI 
+Communication
+TPS274C65
+SDO
+SCLK
+SDI
+nSCS
+SPI 
+Communication
+Controller
+SPI 
+Communication
+CS
+MI
+MO
+MCLK
+ADDCFG
+ADDCFG
+Figure 8-5. Addressable SPI Configuration
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+20 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+• Multiple slave devices in series (daisy chain) connection limited only by the SPI write frame speed 
+requirements.
+TPS274C65
+SDI
+SCLK
+SDO
+nSCS
+SPI 
+Communication
+TPS274C65
+SCLK
+SDI
+SDO
+nSCS
+SPI 
+Communication
+Controller
+SPI 
+Communication
+CS
+MI
+MO
+MCLK
+Figure 8-6. Daisy Chain Configuration
+SPI mode controls the following functions.
+• ON/OFF control of the switches.
+• Disable the diagnostics to reduce the quiescent current consumption.
+• Select the channel(s) and measurements for VOUT, IOUT and TEMP.
+• Fault management (clearing faults and action/response on fault).
+• Watchdog timer - the device will generate an error if the SW_STATE register has not been successfully 
+written into within the watchdog timeout period. The customer can disable the watchdog feature using the 
+WD_EN bit (default is off).
+• The current limit protection threshold
+Table 8-1. SPI IC Address Configuration
+Resistor Value(kΩ) ADDCFG Code
+13.3 000
+17.8 001
+23.7 010
+31.6 011
+44.2 100
+59 101
+78.7 110
+110 111
+Note: Please use resistor with <1% tolerance.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 21
+Product Folder Links: TPS274C65
+Table 8-2. SPI Configuration
+Pin Configuration SPI Register Configuration SCLK Cycle per Frame
+DSPI D24BIT CRC_EN
+0
+x 0 24 bits, no CRC
+x 1 32 bits, with CRC
+1
+0 0 16 bits, no CRC
+1 1 24 bits, with CRC
+1 0 24 bits, no CRC
+SPI Sequence Frame Format
+Note
+FAULT STATUS TYPE bits in the SDO frame are equivalent to the FAULT_TYPE_STAT register (0h) 
+listed in TPS274C65 Registers.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+Don’t CareRegister Address
+DATA OUTFAULT STATUS TYPE
+17 18 19 20 21 22 23 24
+A2 A1 A0 R(0) CH4 CH3 CH2 CH1 RSVD RA6 RA5 RA4 RA3 RA2 RA1 RA0 0 0 0 0 0 0 0 0
+Hi-Z Hi-Z Hi-Z SPIErr A2 A1 A0 X F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0SDO
+Chip Address
+Chip Address SW STATERd
+ErrHi-Z X
+Figure 8-7. 24-bit Read, DSPI=0, D24BIT=x, CRC_EN=0
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+DATA INRegister Address
+Per Channel FAULTFAULT STATUS TYPE
+17 18 19 20 21 22 23 24
+A2 A1 A0 W(1) CH4 CH3 CH2 CH1 RSVD RA6 RA5 RA4 RA3 RA2 RA1 RA0 D7 D6 D5 D4 D3 D2 D1 D0
+Hi-Z Hi-Z Hi-Z SpiErr A2 A1 A0 X F7 F6 F5 F4 F3 F2 F1 F0 RSVD RSVD RSVD RSVD CH4 CH3 CH2 CH1SDO
+Chip Address
+SW STATEWrChip Address
+ErrHi-Z X
+Figure 8-8. 24-bit Write, DSPI=0, D24BIT=x, CRC_EN=0
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+CRC BYTEDon’t Care
+CRC BYTEDATA OUT
+17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+A1 A2 A0 R(0) CH4 CH3 CH2 CH1 RSVD RA6 RA5 RA4 RA3 RA2 RA1 RA0 X X X X X X X X 0 0 0 0 CRC3 CRC2 CRC1 CRC0
+Hi-Z Hi-Z Hi-Z SpiErr A2 A1 A0 X F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0 0 0 0 0 CRC3 CRC2 CRC1 CRC0SDO
+FAULT STAUS TYPE
+Register Address
+Chip AddressHI-Z
+SW STATERdChip Address
+Err x
+Figure 8-9. 32-bit Read, DSPI=0, D24BIT=x, CRC_EN=1
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+22 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+CRC BYTEDATA IN
+CRC BYTEPer Channel Fault Status
+17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+A2 A1 A0 W(1) CH4 CH3 CH2 CH1 RSVD RA6 RA5 RA4 RA3 RA2 RA1 RA0 D7 D6 D5 D4 D3 D2 D1 D0 0 0 0 0 CRC3 CRC2 CRC1 CRC0
+Hi-Z Hi-Z Hi-Z SpiErr A2 A1 A0 X F7 F6 F5 F4 F3 F2 F1 F0 RSVD RSVD RSVD RSVD CH4 CH3 CH2 CH1 0 0 0 0 CRC3 CRC2 CRC1 CRC0SDO
+FAULT STAUS TYPE
+Register Address
+Chip AddressHI-Z
+SW STATEWrChip Address
+Err x
+Figure 8-10. 32-bit Write, DSPI=0, D24BIT=x, CRC_EN=1
+1
+R(0)
+2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+RA6 RA5 RA4 RA3 RA2 RA1 RA0 RSVD RSVD RSVD RSVD CH4 CH3 CH2 CH1
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0
+CS
+CLK
+SDI
+SDO
+SW STATERegister AddressRead
+DATA OUTFAULT_STATUS_TYPE
+Figure 8-11. 16-bit Read, DSPI=1, D24BIT=0, CRC_EN=0
+1
+W(1)
+2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+RA6 RA5 RA4 RA3 RA2 RA1 RA0 D7 D6 D5 D4 D3 D2 D1 D0
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0
+CS
+CLK
+SDI
+SDO
+WRITE DATARegister AddressWrite
+DATA_OUT FAULT_STATUS_TYPE
+Figure 8-12. 16-bit Write, DSPI=1, D24BIT=0, CRC_EN=0
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+Don’t CareSW STATE
+Don’t CareDATA OUT
+17 18 19 20 21 22 23 24
+R(0) RA6 RA5 RA4 RA3 RA2 RA0 RSVD RSVD RSVD RSVD CH4 CH3 CH2 CH1 X X X X X X X X
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0 X X X X X X X XSDO
+FAULT STAUS TYPE
+Register Address
+RA1
+Rd
+Figure 8-13. 24-bit Read, DSPI=1, D24BIT=1, CRC_EN=0
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 23
+Product Folder Links: TPS274C65
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+Don’t CareWRITE DATA
+Don’t CareDATA OUT
+17 18 19 20 21 22 23 24
+W(1) RA6 RA5 RA4 RA3 RA2 RA1 RA0 D7 D6 D5 D4 D3 D2 D1 D0 CH4 CH3 CH2 CH1 X X X X
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0 X X X X X X X XSDO
+FAULT STAUS TYPE
+Register Address SW STATEWr
+Figure 8-14. 24-bit Write, DSPI=1, D24BIT=1, CRC_EN=0
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+CRC BYTESW STATE
+CRC BYTE DATA OUT
+17 18 19 20 21 22 23 24
+R(0) RA6 RA5 RA4 RA3 RA2 RA1 RA0 RSVD RSVD RSVD RSVD CH4 CH3 CH2 CH1 0 0 0 0 CRC3 CRC2 CRC1 CRC0
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D2 D1 D0 0 0 0 0 CRC3 CRC2 CRC1 CRC0SDO
+FAULT STAUS TYPE
+Register AddressRd
+Figure 8-15. 24-bit Read, DSPI=1, D24BIT=1, CRC_EN=1
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+CS
+CLK
+SDI X
+CRC BYTEWRITE DATA
+CRC BYTEDATA OUT
+17 18 19 20 21 22 23 24
+W(1) RA6 RA5 RA4 RA3 RA2 RA1 RA0 D7 D6 D5 D4 D3 D2 D1 D0 CH4 CH3 CH2 CH1 CRC3 CRC2 CRC1 CRC0
+F7 F6 F5 F4 F3 F2 F1 F0 D7 D6 D5 D4 D3 D3 D2 D0 0 0 0 0 CRC3 CRC2 CRC1 CRC0SDO
+FAULT STAUS TYPE
+Register Address SW STATEWr
+Figure 8-16. 24-bit Write, DSPI=1, D24BIT=1, CRC_EN=1
+8.3.2.1 Diagnostic Bit Behavior
+0MUXMUXMUXMUX
+THERMAL_SD_CH_STAT
+ILIM_STAT
+WB_ON_STAT
+WB_OFF_STAT
+SHRT_VS_STAT
+Read Clear Faults
+Real Time Faults
+FAULT_TYPE_STAT[1...6]
+FLT_LTCH_DIS
+0
+1
+THERMAL_SD_CH_STAT_RT
+ILIMIT_STAT_RT
+WB_ON_STAT_RT
+WB_OFF_STAT_RT
+SHRT_VS_STAT_RT
+5
+5
+Figure 8-17. Fault Signaling Scheme
+8.3.3 Programmable Current Limit
+The TPS274C65xS integrates a dual stage adjustable current limit. For the most efficient and reliable output 
+protection, the current limit can be set as close to the DC current level as possible. However often systems 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+24 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+require high inrush current handling as well (example incandescent lamp and capacitive loads). By integrating a 
+dual stage current limit, the TPS274C65xS enables robust DC current limiting while still allowing flexible inrush 
+handling.
+A lower current limit lowers fault energy and current during a load failure event such as a short-circuit or a partial 
+load failure. By lowering fault energy and current, the overall system improves through:
+• Reduced size and cost in current carrying components such as PCB traces and module connectors
+• Less disturbance at the power supply (VS pin) during a short circuit event
+• Less additional budget for the power supply to account for overload currents in one channel or more
+• Improved protection of the downstream load
+Table 8-3. Current Limit Setting Table for TPS274C65ASH
+ILIM_REG_xx[3] ILIM_REG_xx[2] ILIM_REG_xx[1] ILIM_REG_xx[0] Typical ILIM 
+Threshold(A)
+0 0 0 0 0.29
+0 0 0 1 0.38
+0 0 1 0 0.48
+0 0 1 1 0.57
+0 1 0 0 0.67
+0 1 0 1 0.76
+0 1 1 0 0.86
+0 1 1 1 0.96
+1 0 0 0 1.15
+1 0 0 1 1.33
+1 0 1 0 1.52
+1 0 1 1 1.71
+1 1 0 0 1.9
+1 1 0 1 2.07
+1 1 1 0 2.26
+1 1 1 1 2.45
+Table 8-4. Current Limit Setting Table for TPS274C65AS, TPS274C65BS
+ILIM_REG_xx[3] ILIM_REG_xx[2] ILIM_REG_xx[1] ILIM_REG_xx[0] Typical ILIM 
+Threshold(A)
+0 0 0 0 0.25
+0 0 0 1 0.33
+0 0 1 0 0.4
+0 0 1 1 0.48
+0 1 0 0 0.56
+0 1 0 1 0.67
+0 1 1 0 0.72
+0 1 1 1 0.85
+1 0 0 0 1
+1 0 0 1 1.1
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 25
+Product Folder Links: TPS274C65
+Table 8-4. Current Limit Setting Table for TPS274C65AS, TPS274C65BS (continued)
+ILIM_REG_xx[3] ILIM_REG_xx[2] ILIM_REG_xx[1] ILIM_REG_xx[0] Typical ILIM 
+Threshold(A)
+1 0 1 0 1.25
+1 0 1 1 1.5
+1 1 0 0 1.6
+1 1 0 1 1.75
+1 1 1 0 1.9
+1 1 1 1 2.2
+Table 8-5. Inrush Current Period Setting Table
+ILIM_REG_xx[7] ILIM_REG_xx[6] ILIM_REG_xx[5] ILIM_REG_xx[4] Inrush Period (ms)
+0 0 0 0 0
+0 0 0 1 2
+0 0 1 0 4
+0 0 1 1 6
+0 1 0 0 8
+0 1 0 1 10
+0 1 1 0 12
+0 1 1 1 16
+1 0 0 0 20
+1 0 0 1 24
+1 0 1 0 28
+1 0 1 1 32
+1 1 0 0 40
+1 1 0 1 48
+1 1 1 0 56
+1 1 1 1 64
+Table 8-6. ILIM Configuration Table
+ILIM_CONFIG ILIM level during ILIMDELAY FLT reporting during ILIMDELAY
+0 As programmed with INRUSH_LIMIT[1:0] 
+and ILIM_REG_xx[3:0]
+Fault not reported
+1 As programmed with ILIM_REG_xx[3:0] Fault is reported
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+26 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.3.3.1 Inrush Current Handling
+The current limit thresholds and the inrush current time duration can be set by SPI register writes to enable 
+flexible inrush current control behavior. The following table shows the various options available.
+Table 8-7. Inrush Current Limit Options
+INRUSH_LIMI
+T[1]
+INRUSH_LIMI
+T[0]
+Current Limit During Inrush 
+Duration
+Notes
+0 0 Current limit at the level set by
+register
+The device will show constant current limit threshold in each channel 
+at all times set by the register values
+0 1 Current limit at 2x the level set by
+register
+The current is set higher during the duration of the inrush delay 
+to support high inrush current loads like incandescent lamps - See 
+figure (Case B) showing ex current limit behavior enabling into a 
+short circuit
+1 0
+Current limit at 0.5x the level set 
+by
+register
+Feature to limit the current and power dissipation during the charging 
+large power supply capacitor loads.
+1 1 Current limit fixed at 2.2 A 
+threshold
+An example current limit timing behavior is shown Figure 8-18.
+tDELAY
+IOUT
+2xILIM
+1xILIM
+Figure 8-18. Inrush current limit set to 2x ILIM with a delay set by the ILIMDELAY register setting. 
+Initially current load is higher than the twice the limit and then decreases to the 1x limit
+The above waveform shows the current limiting behavior on enabling the outputs during the initial inrush period. 
+The initial inrush current period when the current limit is higher enables two different system advantages when 
+driving loads
+• Enables higher load current to be supported for a period of time in the order of milliseconds to drive high 
+inrush current loads like incandescent bulb loads.
+• Enables fast capacitive load charging. In some situations, it is ideal to charge capacitive loads at a higher 
+current than the DC current to ensure quick supply bring up. This architecture allows a module to quickly 
+charge a capacitive load using the initial higher inrush current limit and then use a lower current limit to 
+reliably protect the module under overload or short circuit conditions.
+While in current limiting mode, at any level, the device will have a high power dissipation. If the FET temperature 
+exceeds the over-temperature shutdown threshold, the device will turn off just the channel that is overloaded. 
+After cooling down, the device will either latch off or re-try, depending on the latch configuration. If the device is 
+turning off prematurely on start-up, it is recommended to improve the PCB thermal layout, lower the current limit 
+to lower power dissipation, or decrease the inrush current (capacitive loading).
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 27
+Product Folder Links: TPS274C65
+8.3.4 DO_EN Feature
+DO_EN pin allows user to turn OFF all the channels regardless of the SW_STATE register status. If the DO_EN 
+is kept low, all the output channels cannot be turned ON even if the SW_STATE register shows channels are 
+enabled.
+When the SW_STATE commands are sent during DO_EN low period, the register values will be stored in 
+the register. Once the DO_EN goes high, then the output states will follow the register values stored in the 
+SW_STATE.
+8.3.5 Protection Mechanisms
+The TPS274C65xS protects the system against load fault events like short circuits, inductive load kickback, 
+overload events and over-temperature events. This section describes the details for protecting against each of 
+these fault cases.
+There are protection features which, if triggered, will cause the switch to automatically disable:
+• Thermal Shutdown
+The fault indication is reset and the switch will turn back on when all of the below conditions are met:
+• tRETRY has expired
+• All faults are cleared (thermal shutdown and current limit)
+Please note that if device hits thermal shutdown during the inrush period, the device will retry with the higher 
+inrush current.
+8.3.5.1 Overcurrent Protection
+When I OUT reaches the current limit threshold, I CL, the device will register an overcurrent fault and begin 
+regulating the current at the set limit. When any switch is in the FAULT state it will be indicated on the FLT 
+pin. This protects the system against overload cases where the load attempts to draw more than it's max rated 
+current, so the TPS274C65 can recognize and limit current or shut off during these cases. In the case of a slow 
+overload with the device channel enabled for a while, the current limit levels are as shown in Figure 8-19.
+I CL_th = I CL_S
+Switch Turns Off
+I OUTx
+t
+t1 t2
+I CL_Reg
+Slow overload
+Figure 8-19. Overload Response
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+28 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+I CL
+I OUTx
+ENx
+t
+T J
+Normal operation
+Load current increases to threshold.  Current is 
+limited.  Temp increases but does not reach 
+T ABS/REL .
+Normal operation
+T ABS
+VOUTx
+STx
+Figure 8-20. Overcurrent Behavior
+For more details on the current limiting functionality, please see Programmable Current Limit.
+8.3.5.2 Short Circuit Protection
+The TPS274C65xS provides output short-circuit protection to ensure that the device will prevent current flow 
+in the event of a low impedance path to GND, removing the risk of damage or significant supply droop. The 
+TPS274C65xS is guaranteed to protect against short-circuit events regardless of the state of the ILIM pins and 
+with up to 36 V supply at 125°C.
+Figure 8-21 shows the behavior of the TPS274C65xS when the device is enabled into a short-circuit.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 29
+Product Folder Links: TPS274C65
+Time (s)
+I CL
+I CL_ENPS
+Current (A)
+Current Limit t RETRY
+Thermal Shutdown
+Figure 8-21. Enable into Short-Circuit Behavior
+Due to the low impedance path, the output current will rapidly increase until it hits the current limit threshold. Due 
+to series inductance and deglitch, the measured maximum current may temporarily exceed the I CL value defined 
+as ICL_ENPS, however it will settle to the current limit.
+In this state high power is dissipated in the FET, so eventually the internal thermal protection temperature for the 
+FET is reached and the device safely shuts down. If the device is not configured in latch mode, the device will 
+wait tRETRY amount of time and turn the channel back on.
+Figure 8-22  shows the behavior of the TPS274C65xS when a short-circuit occurs when the device is in the 
+on-state and already outputting current. When the internal pass FET is fully enabled, the current clamping 
+settling time is slower so to ensure overshoot is limited, the device implements a fast trip level at a level I OVCR. 
+When this fast trip threshold is hit, the device immediately shuts off for a short period of time before quickly 
+re-enabling and clamping the current to I CL_Reg level after a brief transient overshoot to the I CL_ENPS level. The 
+device will then keep the current clamped at the regulation current limit until the thermal shutdown temperature is 
+hit and the device will safely shut-off.
+Time (s)
+I CL
+I OVCR
+Current (A)
+Current Limit t RETRY
+I NOM
+I CL_ENPS
+Thermal Shutdown
+Figure 8-22. On-State Short-Circuit Behavior
+Soft Short- Circuit Behavior illustrated in Soft Short-Circuit Behavior  shows the behavior of the TPS274C65xS 
+when there is a small change in impedance that sends the load current above the I CL threshold. The current 
+rises to ICL_LINPK since the FET is still in the linear mode. Then the current limit kicks in and the current drops to 
+the ICL value.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+30 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+I CL
+Current (A)
+Current Limit t RETRY
+I NOM
+I CL_LINPK
+Time (s)
+I CL_ENPS
+Thermal Shutdown
+Figure 8-23. Soft Short-Circuit Behavior
+In all of these cases, the internal thermal shutdown is safe to hit repetitively. There is no device risk or lifetime 
+reliability concerns from repeatedly hitting this thermal shutdown level.
+8.3.5.2.1 VS During Short-to-Ground
+When VOUT is shorted to ground, the module power supply (V S) can see a transient decrease. This is caused 
+by the sudden increase in current flowing through the cable inductance. For ideal system behavior, it is 
+recommended that the module supply capacitance be increased by adding bulk capacitance on the power 
+supply node.
+8.3.5.3 Inductive-Load Switching-Off Clamp
+When an inductive load is switching off, the output voltage is pulled down to negative, due to the inductance 
+characteristics. The power FET may break down if the voltage is not clamped during the current-decay period. 
+To protect the power FET in this situation, internally clamp the drain-to-source voltage, namely V DS,clamp, the 
+clamp diode between the drain and gate.
+VDS,Clamp = VS – VOUT (1)
+During the current-decay period (T DECAY), the power FET is turned on for inductance-energy dissipation. Both 
+the energy of the power supply (E S) and the load (E LOAD) are dissipated on the high-side power switch itself, 
+which is called E HSD. If resistance is in series with inductance, some of the load energy is dissipated in the 
+resistance.
+EHSD = ES + ELOAD = ES + EL – ER (2)
+From the high-side power switch’s view, EHSD equals the integration value during the current-decay period.
+DECAYT
+HSD DS,clamp OUT0
+E V I (t)dt u ³
+(3)
+OUT(MAX) OUT
+DECAY
+OUT
+R I VLT ln R V
+§ · u  ¨ ¸  u ¨ ¸ 
+© ¹ 
+(4)
+BAT OUT OUT(MAX) OUT
+OUT(MAX) OUTHSD 2
+OUT
+V V R I V( / 5 , ± 9 OQ VR
+ª º § · u  « » u u u ¨ ¸ 
+¨ ¸ « »© ¹ ¬ ¼
+(5)
+When R approximately equals 0, EHSD can be given simply as:
+2 BAT OUT
+HSD OUT(MAX) 2
+V V 1E L I 2 R
+
+ u u
+(6)
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 31
+Product Folder Links: TPS274C65
+Power Supply
+EN Gate Driver
+L
+VS
+VOUTGND
+VDS 
+VOUT 
+R
+Figure 8-24. Driving Inductive Load
+INPUT
+VOUT
+IOUT
+VDS, clamp
+tDECAY
+EHSD
+VIN(BAT)
+Figure 8-25. Inductive-Load Switching-Off Diagram
+As discussed previously, when switching off, supply energy and load energy are dissipated on the high-side 
+power switch, which leads to the large thermal variation. For each high-side power switch, the upper limit of 
+the maximum safe power dissipation depends on the device intrinsic capacity, ambient temperature, and board 
+dissipation condition.
+8.3.5.4 Inductive Load Demagnetization
+When switching off an inductive load, the inductor can impose a negative voltage on the output of the switch. 
+The TPS274C65 includes voltage clamps between VS and VOUT to limit the voltage across the FETs and 
+demagnetize load inductance if there is any. The negative voltage applied at the OUT pin drives the discharge 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+32 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+of inductor current. Figure 8-26 shows the device discharging a load of 100mH paralleled with 48 Ω, resulting 
+500mA at the turn-off.
+Figure 8-26. TPS274C65 Inductive Discharge (100mH + 48Ω)
+The maximum acceptable load inductance is a function of the energy dissipated in the device and therefore the 
+load current and the inductive load. The maximum energy and the load inductance the device can withstand for 
+one pulse inductive dissipation at 125°C is shown in Figure 8-27. The device can withstand 40% of this energy 
+for one million inductive repetitive pulses with a 2Hz repetitive pulse. If the application parameters exceed this 
+device limit, use a protection device like a freewheeling diode to dissipate the energy stored in the inductor.
+0.6 0.8 1 1.2 1.4 1.6 1.8 2
+Current (A)
+120
+160
+200
+240
+280
+320
+360
+400
+440
+480
+520
+Single Pulse Inductive Discharge Energy (mJ)
+VS = 24 V
+Figure 8-27. Maximum Energy Dissipation (EAS) Allowed TJ, START = 125°C – Single Pulse, One Channel
+8.3.5.5 Thermal Shutdown
+The TPS274C65 includes a temperature sensor on the power FET and also within the controller portion of the 
+device. There are two cases that the device will register a thermal shutdown fault:
+• TJ,FET > TABS
+• (TJ,FET – TJ,controller) > TREL
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 33
+Product Folder Links: TPS274C65
+The first condition enables the device to register a long-term overtemperature event (caused by ambient 
+temperature or too high DC current flow), while the second condition allows the device to quickly register 
+transient heating that is causes in events like short-circuits.
+After the fault is detected, the switch will turn off. If T J,FET passes T ABS, the fault is cleared when the switch 
+temperature decreases by the hysteresis value, T HYS. If instead the T REL threshold is exceeded, the fault is 
+cleared after TRETRY passes.
+Each channel will shut down independently in case of a thermal event, as each has it's own temperature sensor 
+and fault reporting.
+8.3.5.6 Undervoltage protection on VS
+The device monitors the supply voltage V S to prevent unpredicted behaviors in the event that the supply voltage 
+is too low. When the supply voltage falls down to V S_UVPF, the swtiches will shut off When the supply rises up to 
+VS_UVPR, the device turns back on.
+The VS undervoltage fault will be indicated through the register and FLTpin unless masked.
+Switch is Disabled. But the device is in enabled 
+state.
+VS rises.
+Normal SW  operation after 
+delay.
+VS
+t
+VS decreases below V UVF .
+ENx
+VOUTx
+VDD
+V HYS
+V VS_UVR
+t DLY_VSUV
+V VS_UVF
+Figure 8-28. VS UVP
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+34 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.3.5.7 Undervoltage Lockout on Low Voltage Supply (VDD_UVLO)
+The device monitors the input supply voltage VVDD to prevent unpredictable behavior in the event that the supply 
+voltage is too low. When the supply voltage falls down to V VDD_UVLOF, the device channel outputs are disabled 
+and READY pin is pulled high. The device will resume normal operation when VDD rises above the VDD UVLOR 
+threashold. The device will indicate through the POR bit if a reset of the digital has occured.
+The device is disabled and the digital registers 
+are reset.
+VDD rises.
+Normal powerup operation
+VDD
+t
+VDD decreases below V UVLOF .
+VOUTx
+VS
+V HYS
+V VDD_UVLOR
+t DLY_RST
+V VDD_UVLOF
+Figure 8-29. VDD UVLO
+8.3.5.8 Power-Up and Power-Down Behavior
+Device is in OFF or POR state when the device is not powered. FAULT, READY and VOUTx will be in high-Z 
+state.
+Once the VS > VS_UVPR and VDD > VDD,UVLOR, the device starts to read in the configurations and READY will be 
+pulled low when the device is ready for the SPI communication.
+In case the VDD power supply is enabled the first and the VDD voltage exceeds VDD,UVLOR before the VS supply 
+is up and VS voltage exceeds VS_UVPR, the outputs remain disabled.
+8.3.5.9 Reverse Current Blocking
+Reverse current occurs when VVS<VOUT. In this case, current will flow from VOUTx to VS. Reverse current can be 
+caused by miswiring at the output, or a capacitive or inductive load can cause inverse current. For example, if 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 35
+Product Folder Links: TPS274C65
+there is a significant amount of load capacitance and the V S node has a transient droop, V OUTx may be greater 
+than V S. The V Sdroop may be caused by inrush current from a different load. Similarly load/supply faults and 
+inductive loads can cause supply to be pushed up as well. Another application is to provide protection when 
+output connection to supply (miswiring) occurs when the input power supply is not available or connected. The 
+device monitors V S and V OUT to provide true reverse current blocking when a reverse condition or input power 
+failure condition is detected.
+To prevent reverse current flow, TPS274C65AS integrates a NMOS gate driver that drives an external blocking 
+FET. The blocking FET is enabled as soon as the device is enabled and V VS > VS_UVP. When a reverse current 
+condition is detected such as V OUT － V VS > V RCB_R, the blocking FET gets disabled to prevent unwanted 
+reverse currents and signaled through RVRS_BLK_FLT and FLT. Once off, TPS274C65AS has the hysteresis 
+implemented to keep the RCB FET off as long as V OUT － V VS < V RCB_F. After t RCB_comp_reset timer expired, 
+the RCB FET is enabled to check if the reverse current condition has cleared, and the comparator threshold 
+is reset from V RCB_F to V RCB_R. If V OUT － V VS > V RCB_Rcondition is met after the RCB FET is re-enabled, 
+TPS274C65AS again turns off the RCB FET. During reverse current event, current sensing is not available, and 
+ISNS and ADC register go to 0 mA.
+In case the RCB FET needs to be kept off, the per channel RCB bit RCB_CHx can be turned low to keep the 
+RCB FET off. However, the main FET needs to be off as well to avoid excessive heat through the RCB FET that 
+can lead to the RCB FET damage. If there's no external RCB FET connected, RCB_DIS bit needs to be turned 
+high , and the RCB pins need to be left floating. Each channel has RCB_CHx bit to configure the RCB FET to be 
+always OFF or with normal RCB function as described above. Table 8-8 shows some example use cases for the 
+RCB feature.
+Table 8-8. Common Applications for RCB
+Example Application RCB_DIS Per Channel RCB Comment
+Digital Output Module but reverse 
+current blocking function is not 
+desired
+1 RCB_CHx = X RCB pin left floating and not 
+connected to the RCB FET.
+Digital Output Module and 
+reverse current blocking function 
+is needed
+0 RCB_CHx = 1 RCB pin connected to the RCB 
+FET gate with normal RCB 
+function.
+Digital Input Ouput module with 
+RCB FET used to conduct current 
+in DI configuration
+0 RCB_CHx = 0 RCB pin connected to the RCB 
+FET gate with RCB FET always 
+OFF. No RCB detection.
+Digital Input Ouput module with 
+the channel in Digital Output 
+configuration
+0 RCB_CHx = 1 RCB pin connected to the FET 
+gate with normal RCB function.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+36 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+VS dips 
+below 
+VOUTx, 
+RCB FET 
+OFF
+VOUTx 
+spikes 
+above 
+VS, RCB 
+FET OFF
+t
+RCB_EN_CHx 
+low, RCB FET 
+OFF. Main FET 
+needs to stay OFF 
+in this 
+configuration
+Normal operation
+ENx
+Voltage at the output 
+of the RCB FET
+STx
+RCB_EN
+RCB_VGS
+VS
+I VOUTx
+RCB_EN_CHx 
+high, RCB FET 
+ON, Normal 
+Operation
+t RCB_comp_reset
+RCB FET is kept off, and will be 
+turned on periodically to check if 
+the reverse current condition goes 
+away
+t RCB_comp_reset
+Figure 8-30. Reverse Current Blocking
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 37
+Product Folder Links: TPS274C65
+8.3.6 Diagnostic Mechanisms
+As systems demand more intelligence, it is becoming increasingly important to have robust diagnostics 
+measuring the conditions of output power. The TPS274C65 integrates many diagnostic features that enable 
+modules to provide predictive maintenance and intelligence power monitoring to the system.
+8.3.6.1 Current Sense
+The SNS output may be used to sense the load current through any channel. The SNS pin will output a current 
+that is proportional to the load current through either channel. This current will be sourced into an external 
+resistor to create a voltage that is proportional to the load current. This voltage may be measured by an ADC 
+or comparator and used to implement intelligent current monitoring for a system. To ensure accurate sensing 
+measurement, RSNS should be connected to the same ground potential as the μC ADC.
+Equation 3 shows the transfer function for calculating the load current from the SNS pin current.
+ISNSI = IOUT / KSNS (7)
+dISNST/dT and KSNS are defined in the Specifications section.
+8.3.6.1.1 RSNS Value
+The following factors should be considered when selecting the RSNS value:
+• Current sense ratio (KSNS)
+• Largest and smallest diagnosable load current required for application operation
+• Full-scale voltage of the ADC
+• Resolution of the ADC
+8.3.6.1.1.1 SNS Output Filter
+To achieve the most accurate current sense value, it is recommended to filter the SNS output. There are two 
+methods of filtering:
+• Low-Pass RC filter between the SNS pin and the ADC input. This filter is illustrated in Figure 9-1 with typical 
+values for the resistor and capacitor. The designer should select a CSNS capacitor value based on system 
+requirements. A larger value will provide improved filtering but a smaller value will allow for faster transient 
+response.
+• The ADC and microcontroller can also be used for filtering. It is recommended that the ADC collects several 
+measurements of the SNS output. The median value of this data set should be considered as the most 
+accurate result. By performing this median calculation, the microcontroller can filter out any noise or outlier 
+data.
+8.3.6.2 Fault Indication
+The following faults will be register a fault that will show on the FLT pin (unless masked):.
+• FET Thermal Shutdown
+• Active Current Regulation
+• Thermal Shutdown caused by Current Limitation
+• Open load detection in on-state or off-state
+• VOUT Short to Battery
+Condition VS VDD ENx OUTx LATCH(AUTO_
+RETRY_DIS) FLT FAULT 
+Recovery
+VS 
+Undervoltage <VS_UVP >VDD,UVLO X X X H -
+Normal
+>VS_UVP >VDD,UVLO L L X H -
+>VS_UVP >VDD,UVLO H H X H -
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+38 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Condition VS VDD ENx OUTx LATCH(AUTO_
+RETRY_DIS) FLT FAULT 
+Recovery
+Short to Supply, 
+Off-state open 
+load
+>VS_UVP >VDD,UVLO L H X L -
+Short to GND, 
+Overload, TSD
+>VS_UVP >VDD,UVLO H L L L Auto-retry
+>VS_UVP >VDD,UVLO H L H L
+Latch-off. Fault 
+recovers when 
+ENx toggles.
+8.3.6.2.1 Current Limit Behavior
+I OUTx
+tT_delay
+2xI CL_Reg
+t
+FLT
+1xI CL_Reg
+t
+ENx
+Figure 8-31. FLT Pin Behavior With an Overcurrent Event on Channel Enable
+Figure 8-32 shows the device fault and retry behavior when there is a slow creep into an over-current event. As 
+shown, the switch clamps the current until it hits thermal shutdown, and then the device will remain latched off 
+until the AUTO_RETRY_DIS bit is low.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 39
+Product Folder Links: TPS274C65
+ICL
+IOUTx
+TABS
+TJ
+t
+Load reaches limit.  Current is 
+limited. Temp reaches limit.
+Switch is disabled.  Temp 
+decreases by THYS
+Switch follows ENx.  
+Normal opera on.
+ENx
+VOUTx
+STx
+THYS
+tRETRY
+Figure 8-32. Current Limit – Latched Behavior
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+40 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Figure 8-33  shows the behavior with AUTO_RETRY_DIS = 1 (Latched behavior); hence, the switch will retry 
+after the fault is cleared and tRETRY has expired.
+ICL
+IOUTx
+ENx
+t
+TJ
+Load reaches limit.  Current is 
+limited.  Temp reaches limit.
+Switch is disabled.  TJ 
+decreases by THYS
+Switch follows ENx.  Normal 
+opera on.
+TABS
+VOUTx
+STx
+THYS
+Figure 8-33. Current Limit – AUTO_RETRY_DIS = 0
+When the switch retries after a shutdown event, the fault indication will remain until V OUTx has risen to VBB – 1.8 
+V. Once VOUTx has risen, the FLT output is reset and current sensing is available. If there is a short-to-ground 
+and V OUT is not able to rise, the SNS fault indication will remain indefinitely. Figure 8-34 illustrates auto-retry 
+behavior and provides a zoomed-in view of the fault indication during retry.
+Note
+Figure 8-34 assumes that tRETRY has expired by the time that TJ reaches the hysteresis threshold.
+AUTO_RETRY_DIS = 0
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 41
+Product Folder Links: TPS274C65
+t
+EN
+t
+T J
+T ABS
+VOUT
+SNS
+T HYS
+SNS signals 
+over-current
+EN
+T J
+T ABS
+VOUT
+SNS
+SNS signals over-current
+T HYS
+Current Sense
+VS – 1.8 V
+Copyright © 2019, Texas Instruments Incorporated
+FLT
+SNS signals 
+over-current
+SNS signals 
+over-current
+SNS signals 
+over-current
+FLT
+Figure 8-34. Fault Indication During Retry
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+42 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.3.6.3 Short-to-Battery and Open-Load Detection
+The TPS274C65 is capable of detecting short-to-battery and open-load events regardless of whether the switch 
+is turned on or off, however the two conditions use different methods to signify fault. This feature enables 
+systems to recognize mis-wiring or wire-break events.
+8.3.6.4 On-State Wire-Break Detection
+When the switch is enabled, TPS274C65 supports on-state open load detecttion as low as 0.32mA. In order 
+to achieve this accuracy, TPS274C65 uses a higher resistance path that is enabled for a short period of 
+time(TWB_ON1). If the WB_ON is kept high, the higher resistance path will be turned on again after 100ms retry 
+time. The wire-break will also be retried whenever the WB_ON signal is toggled. Please refer to Figure 8-35 
+for the wire-break detection timing diagram. This functionality is enabled when EN_WB_ON and diagnostics 
+are enabled, during this time open-load threshold will be detected and signaled through WB_ON_FLT bit if wire 
+break is detected.
+Table 8-9. Open-Load ON-State Detection Threshold
+WB_ON_THD[2] WB_ON_THD[1] WB_ON_THD[0] Typical Current Threshold (mA)
+0 0 0 0.32
+0 0 1 0.64
+0 1 0 0.96
+0 1 1 1.28
+1 0 0 1.6
+1 0 1 1.92
+1 1 0 2.24
+1 1 1 2.56
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 43
+Product Folder Links: TPS274C65
+IL 
+switche
+d to 
+higher 
+R FET 
+for 
+20us
+t
+Switch is in the ON state
+ENx
+VOUTx
+WB_ON Diagnostic 
+EN
+tWB_ON1 = 20us
+Switches back to the main FET
+and out of diagnostic as current 
+is greater than WB_diag 
+threshold for 100ms
+STxFLT
+IL
+2 A 2 A
+IL 
+switche
+d to 
+higher 
+R FET 
+for 
+20us
+No WB_ON fault  
+Requesting Diagnostic before 
+auto-retry
+100ms auto-retry
+IL 
+switche
+d to 
+higher 
+R FET 
+for 
+20us
+Switches back to 
+the main FET
+Figure 8-35. ON-State Wire-Break Detection
+8.3.6.5 Off State Wire-Break Detection
+While the switch disabled and WB_OFF_CHx_EN high, an internal comparator watches the condition of V OUT. 
+The TPS274C65 includes a current source connected to V OUT controlled by the DIA_EN signal. So, if the load 
+is disconnected (open load condition) or there is a short to battery the V OUT voltage will be pulled towards V S. In 
+either of these events, the internal comparator will measure VOUT as higher than the open load threshold (VOL,off) 
+and a fault is indicated on the FLT pin and on the SNS pin. No external component are required in most cases, 
+however if there is external pull-down resistor to GND on V OUT, an additional external pull-up resistor might be 
+necessary to bias VOUT appropriately.
+The comparator and detection circuitry is only enabled when EN = LOW. Open load will be indicated on the FLT 
+pin even if WB_OFF_CHx_EN is set low, but will need an external pull-up resistor (and potentially a switch). 
+Open load fault signaling on the SNS is enabled only if WB_OFF_CHx_EN is set HI.
+While the switch is disabled, the fault indication mechanisms will continuously represent the present status. For 
+example, if VOUT decreases from greater than V OL to less than V OL, the fault indication is reset. Additionally, the 
+fault indication is reset upon WB_OFF_CHx_EN = 0 or the rising edge of EN.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+44 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+VOUT
+V WB_OFF_TH
+Load
+Fault 
+Register
+TPS274C65
+VS
+OUT
+FLT
+6.7 V
+VOUT
+V SHRT_VS_TH
+Figure 8-36. Open Load Detection Circuit
+Diagnostic
+Disabled
+t
+Switch is disabled and DIA_EN goes 
+high.
+The condition is determined by the 
+internal comparator.
+ENx
+VOUTx
+WB Diagnostic EN
+Enabled
+V OL
+t WB_OFF2
+The open-load fault is 
+indicated.
+VOUT depends on 
+external conditions
+STxFLT
+Figure 8-37. Off-State Open Load Detection Timing
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 45
+Product Folder Links: TPS274C65
+Diagnostic 
+Disabled
+t
+Switch is disabled by the enable 
+pin.
+The condition is determined by the internal 
+comparator.
+ENx
+VOUTx
+WB Diagnostic EN
+Enabled
+V OL
+t WB_OFF1
+The fault is indicated.
+VOUT depends on external conditions
+STxFLT
+Figure 8-38. Off-State Open Load Detection Timing
+8.3.6.6 ADC
+The device includes an internal ADC that can convert the current sense, temperature sense, input and output 
+voltages. The ADC reference voltage is fixed internally as shown in the electrical characteristics table.
+The TPS274C65AS device has a successive approximation 10-bit ADC which can convert multiple channels 
+serially. The ADC can be used to convert the following (but each or all of these can be disabled using SPI 
+register configuration.
+1. Sensed load current. The sense resistor converting the sense current to voltage should be sized such that 
+the max load current (including the 20% over the nominal load value) produces a voltage value at the SNS 
+pin (V_ISNS) that falls roughly at 80% of the ADC range. In this case, if ISNS is at the upper end of the ADC 
+range, the device ADC output indicates that there is an over-load condition, and if ISNS is in the lower end of 
+the ADC range, they know that there is an under-load condition. However, given the very low current values 
+that need to be diagnosed, additional scaling of the V_ISNS voltage or the sensed current may be needed 
+at the very low current limit. Note that the current output occurs only when the switch is enabled ON. The 
+V_ISNS voltage would be sampled by the MUX switch only when the switch is fully ON (switch enable digital 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+46 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+signal gated with the ISNS_DELAY signal from) allowing the SNS current to settle. The four-sample average 
+would be done only after the MUX switch is ON. The ADC ISNS reports FF as the output value.
+ADCcurrent in decimal = round[(2number of ADC bits-1)*Iload*RSNS/(KSNS*VADCREF)] (8)
+2. VS/VOUT voltage signals applied to the general purpose ADC pins. Note that the VOUT voltage need only 
+be sensed as a fraction of the VS voltage.
+ADCvoltage in decimal = round[(2number of ADC bits-1)*VS/OUT/30] (9)
+where VS/OUT can be either VS or VOUT
+3. Temperature sensed in each FET.
+ADCtemp in decimal = round[(2number of ADC bits-1)*(0.83-TIC/450)] (10)
+where TIC is in ℃
+The ADC’s reference voltage pin is ADREFHI which is generated internally thus making the max voltage 
+convertible to the ADCREFHI. Internally the ADC’s ground reference is connected to the IC GND pin, so 
+externally should be connected to the same pin to minimize the PCB ground shift errors.
+The ADC scheduling is round robin with the following order:
+1. ISNS
+2. TSNS
+3. VOUT_SNS
+4. VSNS.
+Averaging
+Decimation
+Raw 
+Analog 
+Signal
+GND
+ADC_REFHI
+8 bit register10 bit ADCMUX
+TSNS
+RSNS
+VS_SNS
+VOUT_SNS
+4
+4
+Figure 8-39. ADC Block Diagram
+8.3.7 LED Driver
+TPS274C65 integrates an LED driver designed to drive 8 Status LEDs using only 4 outputs(LEDOUT1-
+LEDOUT4). This design provides the flexibility to ensure any combination of LEDs can be turned on at any 
+given time and the user can configure the outputs through SPI using the TPS274C65 Registers. This LED driver 
+is designed to control each output with independent clock signals with ON phases offset from each other. This 
+ensures maximum flexibility for the user assigning use cases when configuring LED driver.
+An example application is to provide ON/OFF channel status and fault indication per channel. In this example, 
+the user could assign channel specific functionality for D1-D4 such as channel on or off and tie D5-D8 as fault 
+indication LEDs. However, the user has full discretion on how they want to leverage these outputs.
+RS and RF resistors determine the LED current through each LED and should be chosen according to the LED's 
+current/light density specifications. Current will flow from VDD pins to the LEDs, and the average current through 
+each LED will be VDD/RS(or RF)/4.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 47
+Product Folder Links: TPS274C65
+D1 D3 D4D2
+D8 D6 D5D7
+RS
+RF
+VDD
+LEDOUT2
+LEDOUT3
+LEDOUT4
+LEDOUT1
+SPI
+4
+SPI Interface
+3.3 V / 5 V
+GND
+Figure 8-40. LED Driver
+8.4 Device Functional Modes
+During typical operation, the TPS274C65 can operate in a number of states that are described below.
+8.4.1 OFF/POR
+Off state occurs when the device is not powered. FAULT, READY and VOUTx will be in high-Z state.
+8.4.2 INIT
+Once the VS > VS_UVPR and VDD > VDD,UVLOR, the device starts to read in the configurations and READY will be 
+high in this state.
+8.4.3 Active
+Once READY is low from the INIT state, the device enters active state, where the switch states are constantly 
+written in through SPI.
+8.5 TPS274C65BS Available Registers List
+The registers listed in TPS274C65 Registers  section show all available registers in the AS version. Some 
+registers are not available in the BS version. Available Registers in TPS274C65BS Version shows the registers' 
+availability in the BS version.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+48 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-10. Available Registers in TPS274C65BS Version
+ADDRESS REG_NAME FUNCTIONAL IN BS 
+VERSION
+ADDRESS REG_NAME FUNCTIONAL IN BS 
+VERSION
+0x00 FAULT_TYPE_STAT Y 0x18 ADC_RESULT_CH2_
+V
+N
+0x01 FAULT_CH_STAT Y 0x19 ADC_RESULT_CH3_
+V
+N
+0x02 FAULT_GOBAL_TYP
+E
+Y 0x1A ADC_RESULT_CH4_
+V
+N
+0x03 SHRT_VS_CH_STAT Y 0x1B ADC_RESULT_VS N
+0x04 WB_OFF_CH_STAT Y 0x1C ADC_RESULT_VS_L
+SB
+N
+0x05 WB_ON_CH_STAT Y 0x1D SW_STATE Y
+0x06 ILIMIT_CH_STAT Y 0x1E LED_OUT_ON N
+0x07 THERMAL_SD_CH_
+STAT
+Y 0x1F LED_ERR_ON N
+0x08 THERMAL_WRN_CH
+_STAT
+Y 0x20 SW_FS_STATE Y
+0x09 RVRS_BLK_CH_STA
+T
+N 0x21 DEV_CONFIG1 Y
+0x0A RESERVED N 0x22 DEV_CONFIG2 Y
+0x0B ADC_RESULT_CH1_
+I
+N 0x23 DEV_CONFIG3 See Registers with 
+Partial BIts Available 
+in BS
+0x0C ADC_RESULT_CH1_
+I_LSB
+N 0x24 DEV_CONFIG4 Y
+0x0D ADC_RESULT_CH2_
+I
+N 0x25 DEV_CONFIG5 See Registers with 
+Partial BIts Available 
+in BS
+0x0E ADC_RESULT_CH2_
+I_LSB
+N 0x26 DEV_CONFIG6 N
+0x0F ADC_RESULT_CH3_
+I
+N 0x27 FAULT_MASK See Registers with 
+Partial BIts Available 
+in BS
+0x10 ADC_RESULT_CH3_
+I_LSB
+N 0x28 EN_WB_OFF_CH Y
+0x11 ADC_RESULT_CH4_
+I
+N 0x29 EN_WB_ON_CH Y
+0x12 ADC_RESULT_CH4_
+I_LSB
+N 0x2A EN_SHRT_VS_CH Y
+0x13 ADC_RESULT_CH1_
+T
+N 0x2B ADC_ISNS_DIS N
+0x14 ADC_RESULT_CH2_
+T
+N 0x2C ADC_TSNS_DIS N
+0x15 ADC_RESULT_CH3_
+T
+N 0x2D ADC_VSNS_DIS N
+0x16 ADC_RESULT_CH4_
+T
+N 0x2E ADC_CONFIG1 N
+0x17 ADC_RESULT_CH1_
+V
+N 0x2F CFG_CRC Y
+There are some registers contains bits that are not available in the BS version. The bits marked RSVD in Table 
+8-11 are not functional in the BS version.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 49
+Product Folder Links: TPS274C65
+Table 8-11. Registers with Partial Bits Available in BS
+ADDRESS REG_NAME b7 b6 b5 b4 b3 b2 b1 b0
+0x23 DEV_CONFI
+G3
+RSVD ILIM_SET RSVD PARALLEL_
+34
+PARALLEL_
+12
+ILIM_CONFI
+G
+INRUSH_ILI
+M
+INRUSH_ILI
+M
+0x25 DEV_CONFI
+G5
+RSVD RSVD RSVD AUTO_RET
+RY_DIS
+WB_SVS_B
+LANK1
+WB_SVS_B
+LANK0
+SW_FS_CF
+G
+FLT_BIT_LT
+CH_DIS
+0x27 FAULT_MAS
+K
+MASK_SPI_
+ERR
+MASK_WD_
+ERR
+MASK_ILIMI
+T
+RSVD MASK_SHR
+T_VS
+MASK_WB_
+OFF
+MASK_WB_
+ON
+MASK_VSU
+V
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+50 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.6 TPS274C65 Registers
+Table 8-12 lists the memory-mapped registers for the TPS274C65 registers. All register offset addresses not 
+listed in Table 8-12 should be considered as reserved locations and the register contents should not be modified.
+Table 8-12. TPS274C65 Registers
+Offset Acronym Register Name Section
+0h FAULT_TYPE_STAT Fault Type Register Section 8.6.1 
+1h FAULT_CH_STAT Faulted channel register Section 8.6.2 
+2h FAULT_GLOBAL_TYPE Global fault type register Section 8.6.3 
+3h SHRT_VS_CH_STAT Short_to VS Faulted Channel Register Section 8.6.4 
+4h WB_OFF_CH_STAT Off-state Wire-break faulted channel register Section 8.6.5 
+5h WB_ON_CH_STAT On-state Wire-break faulted channel register Section 8.6.6 
+6h ILIMIT_CH_STAT Current Limit faulted channel register Section 8.6.7 
+7h THERMAL_SD_CH_STAT Thermal Shutdown faulted channel register Section 8.6.8 
+8h THERMAL_WRN_CH_STAT Thermal warning threshold faulted channel register Section 8.6.9 
+9h RVRS_BLK_CH_STAT Reverse Current flow (blocked) faulted channel register Section 8.6.10 
+Bh ADC_RESULT_CH1_I ADC conversion result ISNS CH1 Section 8.6.11 
+Ch ADC_RESULT_CH1_I_LSB ADC conversion result ISNS CH1 LSBs Section 8.6.12 
+Dh ADC_RESULT_CH2_I ADC conversion result ISNS CH2 Section 8.6.13 
+Eh ADC_RESULT_CH2_I_LSB ADC conversion result ISNS CH2 LSBs Section 8.6.14 
+Fh ADC_RESULT_CH3_I ADC conversion result ISNS CH3 Section 8.6.15 
+10h ADC_RESULT_CH3_I_LSB ADC conversion result ISNS CH3 LSBs Section 8.6.16 
+11h ADC_RESULT_CH4_I ADC conversion result ISNS CH4 Section 8.6.17 
+12h ADC_RESULT_CH4_I_LSB ADC conversion result ISNS CH4 LSBs Section 8.6.18 
+13h ADC_RESULT_CH1_T ADC conversion result TSNS CH1 Section 8.6.19 
+14h ADC_RESULT_CH2_T ADC conversion result TSNS CH2 Section 8.6.20 
+15h ADC_RESULT_CH3_T ADC conversion result TSNS CH3 Section 8.6.21 
+16h ADC_RESULT_CH4_T ADC conversion result TSNS CH4 Section 8.6.22 
+17h ADC_RESULT_CH1_V ADC conversion result VSNS CH1 Section 8.6.23 
+18h ADC_RESULT_CH2_V ADC conversion result VSNS CH2 Section 8.6.24 
+19h ADC_RESULT_CH3_V ADC conversion result VSNS CH3 Section 8.6.25 
+1Ah ADC_RESULT_CH4_V ADC conversion result VSNS CH4 Section 8.6.26 
+1Bh ADC_RESULT_VS ADC conversion result VS Section 8.6.27 
+1Ch ADC_RESULT_VS_LSB ADC conversion result VS Section 8.6.28 
+1Dh SW_STATE Switch state per channel register Section 8.6.29 
+1Eh LED1_4_CTL LED1-LED4 Control Section 8.6.30 
+1Fh LED_5_8_CTL LED5-LED8 Control Section 8.6.31 
+20h FS_SW_STATE SPI/WD error state per channel register Section 8.6.32 
+21h DEV_CONFIG1 Device Configuration Register #1 Section 8.6.33 
+22h DEV_CONFIG2 Device Configuration Register #2 Section 8.6.34 
+23h DEV_CONFIG3 Device Configuration Register #3 Section 8.6.35 
+24h DEV_CONFIG4 Device Configuration Register #4 Section 8.6.36 
+25h DEV_CONFIG5 Device Configuration Register #5 Section 8.6.37 
+26h DEV_CONFIG6 Device Configuration Register #6 Section 8.6.38 
+27h FAULT_MASK Fault Mask register Section 8.6.39 
+28h EN_WB_OFF Enable Off-state Wire-break fault per channel Section 8.6.40 
+29h EN_WB_ON Enable On-state Wire-break fault per channel Section 8.6.41 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 51
+Product Folder Links: TPS274C65
+Table 8-12. TPS274C65 Registers (continued)
+Offset Acronym Register Name Section
+2Ah EN_SHRT_VS Enable Output Short_to-VS fault per channel Section 8.6.42 
+2Bh ADC_ISNS_DIS ADC conversion disable ISNS channels Section 8.6.43 
+2Ch ADC_TSNS_DIS ADC conversion disable TSNS channels Section 8.6.44 
+2Dh ADC_VSNS_DIS ADC conversion disable VSNS channels Section 8.6.45 
+2Eh ADC_CONFIG1 ADC configuration - disable conversion Section 8.6.46 
+2Fh CRC_CONFIG Configure CRC Section 8.6.47 
+Complex bit access types are encoded to fit into small table cells. Table 8-13 shows the codes that are used for 
+access types in this section.
+Table 8-13. TPS274C65 Access Type Codes
+Access Type Code Description
+Read Type
+R R Read
+RC R
+C
+Read
+to Clear
+Write Type
+W W Write
+Reset or Default Value
+-n Value after reset or the default 
+value
+8.6.1 FAULT_TYPE_STAT Register (Offset = 0h) [Reset = 80h] 
+FAULT_TYPE_STAT is shown in Table 8-14.
+Return to the Summary Table.
+The register reports the fault type in any of the channels (OR of all channels)
+Table 8-14. FAULT_TYPE_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7 SUPPLY_FLT R 1h The bit is set if either the VDD_UVLO or VS_UV are faults occur. If 
+FLT_LTCH_DIS bit is set, then the fault bit is latched and is cleared 
+only when the FLT_GLOBAL_TYPE register is read and the fault 
+condition no longer exists.
+0h = no UV fault in VDD, VINT or VS 
+1h = UV fault in VDD, VINT or VS 
+6 RVRS_BLK_FLT R 0h The bit is set if there is a reverse current fault in any one of the 
+channels. If FLT_LTCH_DIS bit is set, then the fault bit is latched and 
+is cleared only when the RVRS_BLK_CH_STAT register is read and 
+the fault condition no longer exists.
+0h = no reverse current blocking fault in any of the channels 
+1h = reverse current blocking fault in one of the channels 
+5 CHAN_TSD R 0h The bit is set if there is a thermal shutdown fault due to thermal 
+overload in any one of the channels. If FLT_LTCH_DIS bit is 
+set, then the fault bit is latched and is cleared only when the 
+THERMAL_SD_CH_STAT register is read and the fault condition no 
+longer exists.
+0h = no thermal shutdown fault in any of the channels 
+1h = thermal shutdown fault in one of the channels 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+52 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-14. FAULT_TYPE_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+4 ILIMIT_FLT R 0h The bit is set if there is a current limit fault due to ovecurrent in any 
+one of the channels. If FLT_LTCH_DIS bit is set, then the fault bit 
+is latched and is cleared only when the ILIMIT_CH_STAT register is 
+read and the fault condition no longer exists.
+0h = no current limit (overcurrent) fault in any of the channels 
+1h = current limit (overcurrent) fault in one of the channels 
+3 WB_ON_FLT R 0h The bit is set if there is a wire break in the on state fault in any one of 
+the channels. If FLT_LTCH_DIS bit is set, then the fault bit is latched 
+and is cleared only when the WB_ON_CH_STAT register is read and 
+the fault condition no longer exists
+0h = no on-state wire-break fault in any of the channels 
+1h = on-state wire-break fault in one of the channels 
+2 WB_OFF_FLT R 0h The bit is set if either there is a wire break in the off-state fault in any 
+one of the channels. If FLT_LTCH_DIS bit is set, then the fault bit is 
+latched and is cleared only when the WB_OFF_CH_STAT register is 
+read and the fault condition no longer exists
+0h = no off-state wire-break fault in any of the channels 
+1h = off-state wire-break fault in one of the channels 
+1 SHRT_VS_FLT R 0h The bit is set if there is a short to VS supply in the off-state fault 
+in any one of the channels. If FLT_LTCH_DIS bit is set, then the 
+fault bit is latched and is cleared only when the SHRT_VS_CH_STAT 
+register is read and the fault condition no longer exists
+0h = no off-state short to VS fault in any of the channels 
+1h = off-state short to VS fault in one of the channels 
+0 GLOBAL_ERR_WRN R 0h The bit is set if there is a global fault reported in 
+the FLT_GLOBAL_TYPE register (SPI error, watchdog error, 
+VS_UV_WRN fault or chip thermal warning occurs. If 
+FLT_LTCH_DIS bit is set, then the fault bit is latched and is cleared 
+only when the FLT_GLOBAL_TYPE register is read and the fault 
+condition no longer exists.
+0h = no global fault (SPI error, watchdog error, VS_UV_WRN fault or 
+chip thermal warning) 
+1h = One of the following errors have occurred: SPI error, watchdog 
+error, VS_UV_WRN fault or chip thermal warning 
+8.6.2 FAULT_CH_STAT Register (Offset = 1h) [Reset = 00h] 
+FAULT_CH_STAT is shown in Table 8-15.
+Return to the Summary Table.
+The register reports faulted channel(s) (OR of all fault types in each channel)
+Table 8-15. FAULT_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 CH4 R 0h The bit is set if any type of fault (RVRS_BLK, THERMAL_SD_CH, 
+ILIMIT, WB_ON, WB_OFF, SHRT_VS) occurs in CH4
+0h = No fault in CH4 
+1h = One or more fault has occurred in CH4 
+2 CH3 R 0h The bit is set if any type of fault (RVRS_BLK, THERMAL_SD_CH, 
+ILIMIT, WB_ON, WB_OFF, SHRT_VS) occurs in CH3
+0h = No fault in CH4 
+1h = One or more fault has occurred in CH2 
+1 CH2 R 0h The bit is set if any type of fault (RVRS_BLK, THERMAL_SD_CH, 
+ILIMIT, WB_ON, WB_OFF, SHRT_VS) occurs in CH2
+0h = No fault in CH4 
+1h = One or more fault has occurred in CH3 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 53
+Product Folder Links: TPS274C65
+Table 8-15. FAULT_CH_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+0 CH1 R 0h The bit is set if any type of fault (RVRS_BLK, THERMAL_SD_CH, 
+ILIMIT, WB_ON, WB_OFF, SHRT_VS) occurs in CH1
+0h = No fault in CH4 
+1h = One or more fault has occurred in CH1 
+8.6.3 FAULT_GLOBAL_TYPE Register (Offset = 2h) [Reset = 47h] 
+FAULT_GLOBAL_TYPE is shown in Table 8-16.
+Return to the Summary Table.
+The register reports the type of global fault that has occurred in the IC
+Table 8-16. FAULT_GLOBAL_TYPE Register Field Descriptions
+Bit Field Type Reset Description
+7 RESERVED R 0h Reserved
+6 POR RC 1h The bit is indicative of whether a power on reset has occurred.
+0h = There is no power-on reset anytime after the last register read 
+The register bit is cleared on read, so if read again and the bit is 0, 
+means that no power-on reset has occurred since the read. 
+1h = A power-on reset has occurred since the last register read. 
+5 CHIP_THERMALSD RC 0h The bit is set if the chip thermal warning is triggered at any time. The 
+fault bit is cleared if the GLOBAL_FAULT_TYPE register is read and 
+the chip thermal shutdown error condition is removed
+0h = No chip thermal warning 
+1h = Chip thermal warning threshold exceeded 
+4 SPI_ERR RC 0h The bit is set if there is an SPI communication error either from 
+format, clock or CRC errors.The fault bit is latched and cleared only 
+after read and the error is removed.
+0h = No SPI communication error fault 
+1h = SPI communication error either from format, clock or CRC has 
+occurred 
+3 WD_ERR RC 0h The bit is set if the watchdog timeout on SPI read or write occurs. 
+The fault bit is latched and cleared only after read and the error is 
+removed.
+0h = No SPI interface watchdog error 
+1h = SPI watchdog timeout error has occurred 
+2 VDD_UVLO RC 1h The bit is set if VDD supply is below the UVLO threshold at any time. 
+The fault bit is cleared if the GLOBAL_FAULT_TYPE register is read 
+and the UVLO condition is removed
+0h = No VDD UVLO fault 
+1h = VDD UVLO fault 
+1 VS_UV_WRN RC 1h The bit is set if VS supply is below the UV warning 
+(UV_WRN) threshold at any time. The fault bit is cleared if the 
+GLOBAL_FAULT_TYPE register is read and the UV condition is 
+removed
+0h = No VS UV_WRN fault 
+1h = VS UV_WRN fault 
+0 VS_UV RC 1h The bit is set if VS supply is below the UV threshold at any time. The 
+fault bit is cleared if the GLOBAL_FAULT_TYPE register is read and 
+the UV condition is removed
+0h = No VS UV fault 
+1h = VS UV fault 
+8.6.4 SHRT_VS_CH_STAT Register (Offset = 3h) [Reset = 00h] 
+SHRT_VS_CH_STAT is shown in Table 8-17.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+54 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Return to the Summary Table.
+The register reports faulted channel(s) with the off-state short-to-supply fault
+Table 8-17. SHRT_VS_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 SHRT_VS_CH4 RC 0h The bit is set if any short to supply (VS) fault has occurred 
+at any time in CH4. The fault is latched and cleared when the 
+SHRT_VS_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No fault in CH4 
+1h = Short to VS fault has occurred in CH4 
+2 SHRT_VS_CH3 RC 0h The bit is set if any short to supply (VS) fault has occurred 
+at any time in CH3. The fault is latched and cleared when the 
+SHRT_VS_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No fault in CH4 
+1h = Short to VS fault has occurred in CH3 
+1 SHRT_VS_CH2 RC 0h The bit is set if any short to supply (VS) fault has occurred 
+at any time in CH2. The fault is latched and cleared when the 
+SHRT_VS_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No fault in CH4 
+1h = Short to VS fault has occurred in CH2 
+0 SHRT_VS_CH1 RC 0h The bit is set if any short to supply (VS) fault has occurred 
+at any time in CH1. The fault is latched and cleared when the 
+SHRT_VS_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No fault in CH4 
+1h = Short to VS fault has occurred in CH1 
+8.6.5 WB_OFF_CH_STAT Register (Offset = 4h) [Reset = 00h] 
+WB_OFF_CH_STAT is shown in Table 8-18.
+Return to the Summary Table.
+The register reports faulted channel(s) with the off-state wire-break fault
+Table 8-18. WB_OFF_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 WB_OFF_CH4 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH4. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (off-state) fault in CH4 
+1h = Wire break (open load) fault in off-state has occurred in CH4 
+2 WB_OFF_CH3 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH3. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (off-state) fault in CH3 
+1h = Wire break (open load) fault in off-state has occurred in CH3 
+1 WB_OFF_CH2 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH2. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (off-state) fault in CH2 
+1h = Wire break (open load) fault in off-state has occurred in CH2 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 55
+Product Folder Links: TPS274C65
+Table 8-18. WB_OFF_CH_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+0 WB_OFF_CH1 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH1. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (off-state) fault in CH1 
+1h = Wire break (open load) fault in off-state has occurred in CH1 
+8.6.6 WB_ON_CH_STAT Register (Offset = 5h) [Reset = 00h] 
+WB_ON_CH_STAT is shown in Table 8-19.
+Return to the Summary Table.
+The register reports faulted channel(s) with the on-state wire-break fault
+Table 8-19. WB_ON_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 WB_ON_CH4 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH4. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (on-state) fault in CH4 
+1h = Wire break (open load) fault in on-state has occurred in CH4 
+2 WB_ON_CH3 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH3. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (on-state) fault in CH3 
+1h = Wire break (open load) fault in on-state has occurred in CH3 
+1 WB_ON_CH2 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH2. The fault is latched and cleared 
+when the WB_OFF_CH_STAT register is read and fault condition is 
+cleared.
+0h = No wire-break (on-state) fault in CH2 
+1h = Wire break (open load) fault in on-state has occurred in CH2 
+0 WB_ON_CH1 RC 0h The bit is set if the wire break (open load) fault in off-state has 
+occurred at any time in CH1. The fault is latched and cleared when 
+the WB_OFF_CH_STAT register is read and fault condition does not 
+exist anymore.
+0h = No wire-break (on-state) fault in CH1 
+1h = Wire break (open load) fault in on-state has occurred in CH1 
+8.6.7 ILIMIT_CH_STAT Register (Offset = 6h) [Reset = 00h] 
+ILIMIT_CH_STAT is shown in Table 8-20.
+Return to the Summary Table.
+The register reports faulted channel(s) with the current limit fault
+Table 8-20. ILIMIT_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+56 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-20. ILIMIT_CH_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+3 ILIMIT_CH4 RC 0h The bit is set if current limiting due to overcurrent has occurred 
+at any time in CH4. The fault is latched and cleared when the 
+ILIMIT_CH_STAT register is read and fault condition does not exist 
+anymore.
+0h = No current limit fault in CH4 
+1h = Current limit due to overcurrent fault has occurred in CH4 
+2 ILIMIT_CH3 RC 0h The bit is set if current limiting due to overcurrent has occurred 
+at any time in CH3. The fault is latched and cleared when the 
+ILIMIT_CH_STAT register is read and fault condition does not exist 
+anymore.
+0h = No current limit fault in CH3 
+1h = Current limit due to overcurrent fault has occurred in CH3 
+1 ILIMIT_CH2 RC 0h The bit is set if current limiting due to overcurrent has occurred 
+at any time in CH2. The fault is latched and cleared when the 
+ILIMIT_CH_STAT register is read and fault condition does not exist 
+anymore.
+0h = No current limit fault in CH2 
+1h = Current limit due to overcurrent fault has occurred in CH2 
+0 ILIMIT_CH1 RC 0h The bit is set if current limiting due to overcurrent has occurred 
+at any time in CH1. The fault is latched and cleared when the 
+ILIMIT_CH_STAT register is read and fault condition does not exist 
+anymore.
+0h = No current limit fault in CH1 
+1h = Current limit due to overcurrent fault has occurred in CH1 
+8.6.8 THERMAL_SD_CH_STAT Register (Offset = 7h) [Reset = 00h] 
+THERMAL_SD_CH_STAT is shown in Table 8-21.
+Return to the Summary Table.
+The register reports faulted channel(s) with the thermal shutdown fault
+Table 8-21. THERMAL_SD_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 THERMAL_SD_CH4 RC 0h The bit is set if the thermal shutdown has occurred at any 
+time in CH4. The fault is latched and cleared when the 
+THERMAL_SD_CH_STAT register is read and channel temperature 
+has fallen below the thermal shutdown reset threshold.
+0h = No thermal shutdown fault in CH4 
+1h = Thermal shudtwon has occurred in CH4 
+2 THERMAL_SD_CH3 RC 0h The bit is set if the thermal shutdown has occurred at any 
+time in CH3. The fault is latched and cleared when the 
+THERMAL_SD_CH_STAT register is read and channel temperature 
+has fallen below the thermal shutdown reset threshold.
+0h = No thermal shutdown fault in CH3 
+1h = Thermal shudtwon has occurred in CH3 
+1 THERMAL_SD_CH2 RC 0h The bit is set if the thermal shutdown has occurred at any 
+time in CH2. The fault is latched and cleared when the 
+THERMAL_SD_CH_STAT register is read and channel temperature 
+has fallen below the thermal shutdown reset threshold.
+0h = No thermal shutdown fault in CH2 
+1h = Thermal shudtwon has occurred in CH2 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 57
+Product Folder Links: TPS274C65
+Table 8-21. THERMAL_SD_CH_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+0 THERMAL_SD_CH1 RC 0h The bit is set if the thermal shutdown has occurred at any 
+time in CH1. The fault is latched and cleared when the 
+THERMAL_SD_CH_STAT register is read and channel temperature 
+has fallen below the thermal shutdown reset threshold.
+0h = No thermal shutdown fault in CH1 
+1h = Thermal shudtwon has occurred in CH1 
+8.6.9 THERMAL_WRN_CH_STAT Register (Offset = 8h) [Reset = 00h] 
+THERMAL_WRN_CH_STAT is shown in Table 8-22.
+Return to the Summary Table.
+The register reports channel(s) with the temperature above thermal warning threshold
+Table 8-22. THERMAL_WRN_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 THERMAL_WRN_CH4 R 0h The bit is set if FET temperature is above the overtemperature 
+warning threshold in CH4. The bit is cleared when over-temperature 
+earning condition does not exist anymore.
+0h = FET temperatire below over-temperature warning threshold in 
+CH4 
+1h = FET temperatire above over-temperature warning threshold in 
+CH4 
+2 THERMAL_WRN_CH3 R 0h The bit is set if FET temperature is above the overtemperature 
+warning threshold in CH3. The bit is cleared when over-temperature 
+earning condition does not exist anymore.
+0h = FET temperatire below over-temperature warning threshold in 
+CH4 
+1h = FET temperatire above over-temperature warning threshold in 
+CH3 
+1 THERMAL_WRN_CH2 R 0h The bit is set if FET temperature is above the overtemperature 
+warning threshold in CH2. The bit is cleared when over-temperature 
+earning condition does not exist anymore.
+0h = FET temperatire below over-temperature warning threshold in 
+CH2 
+1h = FET temperatire above over-temperature warning threshold in 
+CH2 
+0 THERMAL_WRN_CH1 R 0h The bit is set if FET temperature is above the overtemperature 
+warning threshold in CH1. The bit is cleared when over-temperature 
+earning condition does not exist anymore.
+0h = FET temperatire below over-temperature warning threshold in 
+CH1 
+1h = FET temperatire above over-temperature warning threshold in 
+CH1 
+8.6.10 RVRS_BLK_CH_STAT Register (Offset = 9h) [Reset = 00h] 
+RVRS_BLK_CH_STAT is shown in Table 8-23.
+Return to the Summary Table.
+The register reports faulted channel(s) with the reverse current flow (blocked) fault
+Table 8-23. RVRS_BLK_CH_STAT Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+58 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-23. RVRS_BLK_CH_STAT Register Field Descriptions (continued)
+Bit Field Type Reset Description
+3 RVRS_BLK_CH4 RC 0h The bit is set if the reverse current fault (blocked) has occurred 
+at any time in CH4. The fault is latched and cleared when the 
+RVRS_BLK_CH_STAT register is read.
+0h = No reverse current fault in CH4 
+1h = Reverse current flow (blocked) fault in on-state has occurred in 
+CH4 
+2 RVRS_BLK_CH3 RC 0h The bit is set if the reverse current fault (blocked) has occurred 
+at any time in CH3. The fault is latched and cleared when the 
+RVRS_BLK_CH_STAT register is read.
+0h = No reverse current fault in CH3 
+1h = Reverse current flow (blocked) fault in on-state has occurred in 
+CH4 
+1 RVRS_BLK_CH2 RC 0h The bit is set if the reverse current fault (blocked) has occurred 
+at any time in CH2. The fault is latched and cleared when the 
+RVRS_BLK_CH_STAT register is read.
+0h = No reverse current fault in CH2 
+1h = Reverse current flow (blocked) fault in on-state has occurred in 
+CH4 
+0 RVRS_BLK_CH1 RC 0h The bit is set if the reverse current fault (blocked) has occurred 
+at any time in CH1. The fault is latched and cleared when the 
+RVRS_BLK_CH_STAT register is read.
+0h = No reverse current fault in CH1 
+1h = Reverse current flow (blocked) fault in on-state has occurred in 
+CH4 
+8.6.11 ADC_RESULT_CH1_I Register (Offset = Bh) [Reset = 00h] 
+ADC_RESULT_CH1_I is shown in Table 8-24.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH1
+Table 8-24. ADC_RESULT_CH1_I Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_ISNS_CH1 R 0h ADC result (8-bits) from the conversion of the current in CH1
+8.6.12 ADC_RESULT_CH1_I_LSB Register (Offset = Ch) [Reset = 00h] 
+ADC_RESULT_CH1_I_LSB is shown in Table 8-25.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH1 (Two LSBs)
+Table 8-25. ADC_RESULT_CH1_I_LSB Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+1-0 ADC_ISNS_CH1_LSB R 0h Least Significant Bits for ADC result from conversion of the current in 
+CH1
+8.6.13 ADC_RESULT_CH2_I Register (Offset = Dh) [Reset = 00h] 
+ADC_RESULT_CH2_I is shown in Table 8-26.
+Return to the Summary Table.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 59
+Product Folder Links: TPS274C65
+The register records ADC conversion result for current sense of CH2
+Table 8-26. ADC_RESULT_CH2_I Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_ISNS_CH2 R 0h ADC result (8-bits) from the conversion of the current in CH2
+8.6.14 ADC_RESULT_CH2_I_LSB Register (Offset = Eh) [Reset = 00h] 
+ADC_RESULT_CH2_I_LSB is shown in Table 8-27.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH2 (Two LSBs)
+Table 8-27. ADC_RESULT_CH2_I_LSB Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+1-0 ADC_ISNS_CH2_LSB R 0h Least Significant Bits for ADC result from conversion of the current in 
+CH2
+8.6.15 ADC_RESULT_CH3_I Register (Offset = Fh) [Reset = 00h] 
+ADC_RESULT_CH3_I is shown in Table 8-28.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH3
+Table 8-28. ADC_RESULT_CH3_I Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_ISNS_CH3 R 0h ADC result (8-bits) from the conversion of the current in CH3
+8.6.16 ADC_RESULT_CH3_I_LSB Register (Offset = 10h) [Reset = 00h] 
+ADC_RESULT_CH3_I_LSB is shown in Table 8-29.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH3 (Two LSBs)
+Table 8-29. ADC_RESULT_CH3_I_LSB Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+1-0 ADC_ISNS_CH3_LSB R 0h Least Significant Bits for ADC result from conversion of the current in 
+CH3
+8.6.17 ADC_RESULT_CH4_I Register (Offset = 11h) [Reset = 00h] 
+ADC_RESULT_CH4_I is shown in Table 8-30.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH4
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+60 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-30. ADC_RESULT_CH4_I Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_ISNS_CH4 R 0h ADC result (8-bits) from the conversion of the current in CH4
+8.6.18 ADC_RESULT_CH4_I_LSB Register (Offset = 12h) [Reset = 00h] 
+ADC_RESULT_CH4_I_LSB is shown in Table 8-31.
+Return to the Summary Table.
+The register records ADC conversion result for current sense of CH4 (Two LSBs)
+Table 8-31. ADC_RESULT_CH4_I_LSB Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+1-0 ADC_ISNS_CH4_LSB R 0h Least Significant Bits for ADC result from conversion of the current in 
+CH4
+8.6.19 ADC_RESULT_CH1_T Register (Offset = 13h) [Reset = 00h] 
+ADC_RESULT_CH1_T is shown in Table 8-32.
+Return to the Summary Table.
+The register records ADC conversion result for temperature sense of CH1
+Table 8-32. ADC_RESULT_CH1_T Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_TSNS_CH1 R 0h ADC result (8-bits) from the conversion of the temperature in CH1
+8.6.20 ADC_RESULT_CH2_T Register (Offset = 14h) [Reset = 00h] 
+ADC_RESULT_CH2_T is shown in Table 8-33.
+Return to the Summary Table.
+The register records ADC conversion result for temperature sense of CH2
+Table 8-33. ADC_RESULT_CH2_T Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_TSNS_CH2 R 0h ADC result (8-bits) from the conversion of the temperature in CH2
+8.6.21 ADC_RESULT_CH3_T Register (Offset = 15h) [Reset = 00h] 
+ADC_RESULT_CH3_T is shown in Table 8-34.
+Return to the Summary Table.
+The register records ADC conversion result for temperature sense of CH3
+Table 8-34. ADC_RESULT_CH3_T Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_TSNS_CH3 R 0h ADC result (8-bits) from the conversion of the temperature in CH3
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 61
+Product Folder Links: TPS274C65
+8.6.22 ADC_RESULT_CH4_T Register (Offset = 16h) [Reset = 00h] 
+ADC_RESULT_CH4_T is shown in Table 8-35.
+Return to the Summary Table.
+The register records ADC conversion result for temperature sense of CH4
+Table 8-35. ADC_RESULT_CH4_T Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_TSNS_CH4 R 0h ADC result (8-bits) from the conversion of the temperature in CH4
+8.6.23 ADC_RESULT_CH1_V Register (Offset = 17h) [Reset = 00h] 
+ADC_RESULT_CH1_V is shown in Table 8-36.
+Return to the Summary Table.
+The register records ADC conversion result for voltage sense of CH1
+Table 8-36. ADC_RESULT_CH1_V Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_VSNS_CH1 R 0h ADC result (8-bits) from the conversion of the voltage in CH1
+8.6.24 ADC_RESULT_CH2_V Register (Offset = 18h) [Reset = 00h] 
+ADC_RESULT_CH2_V is shown in Table 8-37.
+Return to the Summary Table.
+The register records ADC conversion result for voltage sense of CH2
+Table 8-37. ADC_RESULT_CH2_V Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_VSNS_CH2 R 0h ADC result (8-bits) from the conversion of the voltage in CH2
+8.6.25 ADC_RESULT_CH3_V Register (Offset = 19h) [Reset = 00h] 
+ADC_RESULT_CH3_V is shown in Table 8-38.
+Return to the Summary Table.
+The register records ADC conversion result for voltage sense of CH3
+Table 8-38. ADC_RESULT_CH3_V Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_VSNS_CH3 R 0h ADC result (8-bits) from the conversion of the voltage in CH3
+8.6.26 ADC_RESULT_CH4_V Register (Offset = 1Ah) [Reset = 00h] 
+ADC_RESULT_CH4_V is shown in Table 8-39.
+Return to the Summary Table.
+The register records ADC conversion result for voltage sense of CH4
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+62 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-39. ADC_RESULT_CH4_V Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_VSNS_CH4 R 0h ADC result (8-bits) from the conversion of the voltage in CH4
+8.6.27 ADC_RESULT_VS Register (Offset = 1Bh) [Reset = 00h] 
+ADC_RESULT_VS is shown in Table 8-40.
+Return to the Summary Table.
+The register records ADC conversion result for supply voltage sense
+Table 8-40. ADC_RESULT_VS Register Field Descriptions
+Bit Field Type Reset Description
+7-0 ADC_VS_SNS R 0h ADC result (8-bits) from the conversion of the supply voltage input 
+(VS pin)
+8.6.28 ADC_RESULT_VS_LSB Register (Offset = 1Ch) [Reset = 00h] 
+ADC_RESULT_VS_LSB is shown in Table 8-41.
+Return to the Summary Table.
+The register records ADC conversion result for supply voltage sense (Two LSBs)
+Table 8-41. ADC_RESULT_VS_LSB Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+1-0 ADC_VS_SNS_CH4_LSB R 0h Least Significant Bits for ADC result from conversion of the supply 
+voltage input (VS pin)
+8.6.29 SW_STATE Register (Offset = 1Dh) [Reset = 00h] 
+SW_STATE is shown in Table 8-42.
+Return to the Summary Table.
+The register sets the switch state (ON/OFF) of each output channel. The switch state bits in the SPI frame are 
+ignored when a write to this register is performed (only the contents of the DATA_IN field of the SPI frame are 
+used to update the switch state)
+Table 8-42. SW_STATE Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 CH4_ON R/W 0h Set this bit to 1 to turn on the FET and CH4 output ON
+0h = CH4 Output set to OFF (FET is OFF). The switch state bits in 
+the SPI frame are ignored 
+1h = CH4 Output set to ON (FET is ON). The switch state bits in the 
+SPI frame are ignored 
+2 CH3_ON R/W 0h Set this bit to 1 to turn on the FET and CH3 output ON
+0h = CH3 Output set to OFF (FET is OFF). The switch state bits in 
+the SPI frame are ignored. 
+1h = CH3 Output set to ON (FET is ON). The switch state bits in the 
+SPI frame are ignored 
+1 CH2_ON R/W 0h Set this bit to 1 to turn on the FET and CH2 output ON
+0h = CH2 Output set to OFF (FET is OFF). The switch state bits in 
+the SPI frame are ignored 
+1h = CH2 Output set to ON (FET is ON). The switch state bits in the 
+SPI frame are ignored 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 63
+Product Folder Links: TPS274C65
+Table 8-42. SW_STATE Register Field Descriptions (continued)
+Bit Field Type Reset Description
+0 CH1_ON R/W 0h Set this bit to 1 to turn on the FET and CH1 output ON
+0h = CH1 Output set to OFF (FET is OFF). The switch state bits in 
+the SPI frame are ignored 
+1h = CH1 Output set to ON (FET is ON). The switch state bits in the 
+SPI frame are ignored 
+8.6.30 LED1_4_CTL Register (Offset = 1Eh) [Reset = 00h] 
+LED1_4_CTL is shown in Table 8-43.
+Return to the Summary Table.
+The register sets the LEDs ON or OFF
+Table 8-43. LED1_4_CTL Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 LED4_CTL R/W 0h Set this bit to 1 to turn on the LED4 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+2 LED3_CTL R/W 0h Set this bit to 1 to turn on the LED3 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+1 LED2_CTL R/W 0h Set this bit to 1 to turn on the LED2 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+0 LED1_CTL R/W 0h Set this bit to 1 to turn on the LED1 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+8.6.31 LED_5_8_CTL Register (Offset = 1Fh) [Reset = 00h] 
+LED_5_8_CTL is shown in Table 8-44.
+Return to the Summary Table.
+The register sets the LEDs ON or OFF
+Table 8-44. LED_5_8_CTL Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 LED8_CTL R/W 0h Set this bit to 1 to turn on the LED8 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+2 LED7_CTL R/W 0h Set this bit to 1 to turn on the LED7 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+1 LED6_CTL R/W 0h Set this bit to 1 to turn on the LED6 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+0 LED5_CTL R/W 0h Set this bit to 1 to turn on the LED5 Output Status indicator
+0h = LED set to OFF 
+1h = LED set to ON 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+64 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.6.32 FS_SW_STATE Register (Offset = 20h) [Reset = 00h] 
+FS_SW_STATE is shown in Table 8-45.
+Return to the Summary Table.
+The register sets the switch state (ON/OFF) of each output channel in case of SPI_ERR or WD_ERR
+Table 8-45. FS_SW_STATE Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 CH4_FS_ON R/W 0h Set this bit to 1 to turn on the CH4 FET and CH4 Output ON when 
+WD_ERR fault has occurred
+0h = CH4 Output set to OFF (FET is OFF) when WD_ERR occurs 
+1h = CH4 Output set to ON (FET is ON) when WD_ERR occurs 
+2 CH3_FS_ON R/W 0h Set this bit to 1 to turn on the CH3 FET and CH4 Output ON when 
+WD_ERR fault has occurred
+0h = CH3 Output set to OFF (FET is OFF) when WD_ERR occurs 
+1h = CH3 Output set to ON (FET is ON) when WD_ERR occurs 
+1 CH2_FS_ON R/W 0h Set this bit to 1 to turn on the CH2 FET and CH4 Output ON when 
+WD_ERR fault has occurred
+0h = CH2 Output set to OFF (FET is OFF) whenWD_ERR occurs 
+1h = CH2 Output set to ON (FET is ON) when WD_ERR occurs 
+0 CH1_FS_ON R/W 0h Set this bit to 1 to turn on the CH1 FET and CH4 Output ON when 
+WD_ERR fault has occurred
+0h = CH1 Output set to OFF (FET is OFF) when WD_ERR occurs 
+1h = CH1 Output set to ON (FET is ON) when WD_ERR occurs 
+8.6.33 DEV_CONFIG1 Register (Offset = 21h) [Reset = 0Ah] 
+DEV_CONFIG1 is shown in Table 8-46.
+Return to the Summary Table.
+Current limit setting and duration of initial inrush level and time channel 1/2
+Table 8-46. DEV_CONFIG1 Register Field Descriptions
+Bit Field Type Reset Description
+7-4 ILIM_DURATION_12 R/W 0h Sets the delay period during with inrush current limit level applies 
+(Ch1 and Ch2).
+0h = 0ms 
+1h = 2ms 
+2h = 4ms 
+3h = 6ms 
+4h = 8ms 
+5h = 10ms 
+6h = 12ms 
+7h = 16ms 
+8h = 20ms 
+9h = 24ms 
+Ah = 28ms 
+Bh = 32ms 
+Ch = 40ms 
+Dh = 48ms 
+Eh = 56ms 
+Fh = 64ms 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 65
+Product Folder Links: TPS274C65
+Table 8-46. DEV_CONFIG1 Register Field Descriptions (continued)
+Bit Field Type Reset Description
+3-0 ILIM_REG_12 R/W Ah Sets the current limit regulation value during overcurrent or short 
+circuit events (Ch1 and Ch2).
+0h = 0.25A 
+1h = 0.33A 
+2h = 0.4A 
+3h = 0.48A 
+4h = 0.56A 
+5h = 0.67A 
+6h = 0.72A 
+7h = 0.85A 
+8h = 1A 
+9h = 1.1A 
+Ah = 1.25A 
+Bh = 1.5A 
+Ch = 1.6A 
+Dh = 1.75A 
+Eh = 1.9A 
+Fh = 2.2A 
+8.6.34 DEV_CONFIG2 Register (Offset = 22h) [Reset = 0Ah] 
+DEV_CONFIG2 is shown in Table 8-47.
+Return to the Summary Table.
+Current limit setting and duration of initial inrush level and time channel 3/4
+Table 8-47. DEV_CONFIG2 Register Field Descriptions
+Bit Field Type Reset Description
+7-4 ILIM_DURATION_34 R/W 0h Sets the delay period during with inrush current limit level applies 
+(Ch3 and Ch4).
+0h = 0ms 
+1h = 2ms 
+2h = 4ms 
+3h = 6ms 
+4h = 8ms 
+5h = 10ms 
+6h = 12ms 
+7h = 16ms 
+8h = 20ms 
+9h = 24ms 
+Ah = 28ms 
+Bh = 32ms 
+Ch = 40ms 
+Dh = 48ms 
+Eh = 56ms 
+Fh = 64ms 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+66 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-47. DEV_CONFIG2 Register Field Descriptions (continued)
+Bit Field Type Reset Description
+3-0 ILIM_REG_34 R/W Ah Sets the current limit regulation value during overcurrent or short 
+circuit events(Ch3 and Ch4).
+0h = 0.25A 
+1h = 0.33A 
+2h = 0.4A 
+3h = 0.48A 
+4h = 0.56A 
+5h = 0.67A 
+6h = 0.72A 
+7h = 0.85A 
+8h = 1A 
+9h = 1.1A 
+Ah = 1.25A 
+Bh = 1.5A 
+Ch = 1.6A 
+Dh = 1.75A 
+Eh = 1.9A 
+Fh = 2.2A 
+8.6.35 DEV_CONFIG3 Register (Offset = 23h) [Reset = 00h] 
+DEV_CONFIG3 is shown in Table 8-48.
+Return to the Summary Table.
+Device Configuration register - RCB function disable in all channels,Sense current range Inrush current Limit 
+level config, Parallel chanel config Inrush current Limit level config, ILIM type config inrush or current limit 
+duration
+Table 8-48. DEV_CONFIG3 Register Field Descriptions
+Bit Field Type Reset Description
+7 RCB_DIS R/W 0h Setting this bit to 1, disable RCB function in all channels
+0h = RCB FET gate output set per channel. 
+1h = Disables RCB function 
+6 ILIM_SET R/W 0h Set this bit to allow CH1/CH2 to have different current limit setting 
+than CH3/CH4
+0h = Current Limit / inrush deay the same for all channels as in 
+register DEV_CONFIG1 
+1h = Current limit / inrsh delay set differenty for CH1/CH2 (as in 
+DEV_CONFIG1) and C3/CH4 (DEV_CONFIG2) 
+5 ISNS_RANGE R/W 0h Sets the load current sense range - optimizing the current sense 
+output
+0h = Load current to be sensed less than or equal to 800 mA 
+1h = Load current to be sensed more than 800 mA 
+4 PARALLEL_34 R/W 0h Set this bit to 1 to signal that channels 3 and 4 (CH3 and CH4) are 
+paralleled. Write to this bit is valid only when all four SW_STATE bits 
+are 0 and not rewritten to 1 in the same frame.
+0h = CH3 and CH4 are not paralleled together 
+1h = CH3 and CH4 are paralleled together 
+3 PARALLEL_12 R/W 0h Set this bit to 1 to signal that channels 1 and 2(CH1 and CH2) are 
+paralleled. Write to this bit is valid only when all four SW_STATE bits 
+are 0 and not rewritten to 1 in the same frame.
+0h = CH1 and CH2 are not paralleled together 
+1h = CH1 and CH2 are paralleled together 
+2 ILIM_CONFIG R/W 0h Set this bit to 1 to have the ILIM duration applied as the period of 
+inrush current limit or to set as the duration of current limiting before 
+switching off the FET.
+0h = ILIM duratiion set as the period of inrush current limit 
+1h = ILIM duration set as the period of current limiting before 
+switching off FET 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 67
+Product Folder Links: TPS274C65
+Table 8-48. DEV_CONFIG3 Register Field Descriptions (continued)
+Bit Field Type Reset Description
+1-0 INRUSH_LIMIT R/W 0h Sets the inrush current limit level that applies during the duration of 
+ILIM inrush duration. See table of inrush current limit level settings in 
+the datasheet
+8.6.36 DEV_CONFIG4 Register (Offset = 24h) [Reset = 02h] 
+DEV_CONFIG4 is shown in Table 8-49.
+Return to the Summary Table.
+Device Configuration register - Configuring WB_on_threshold current. WB_off PU current, Watchdog enable and 
+timer duration
+Table 8-49. DEV_CONFIG4 Register Field Descriptions
+Bit Field Type Reset Description
+7 WD_EN R/W 0h The bit is set to enable the watchdog function
+0h = Watchdog is disabled 
+1h = Watchdog function is enabled 
+6-5 WD_TO R/W 0h Sets the timeout period for the SPI watchdog monitor
+0h = Watchdog timeout 400 us 
+1h = Watchdog timeout is 400 ms 
+2h = Watchdog timeout is 800 ms 
+3h = Watchdog timeout is 1200 ms 
+4-3 WB_OFF_PU R/W 0h Sets the pullup current value (at the OUTx pins) by the off-state 
+wire-break (open load) detection circuit.
+0h = I_pu is 50 uA 
+1h = I_pu is 100 uA 
+2h = I_pu is 200 uA 
+3h = I_pu is 500 uA 
+2-0 WB_ON_THD R/W 2h Sets the current threshold for on-state wire-break (open load) 
+detection. See table of settings in the datasheet
+8.6.37 DEV_CONFIG5 Register (Offset = 25h) [Reset = 00h] 
+DEV_CONFIG5 is shown in Table 8-50.
+Return to the Summary Table.
+Device Configuration register - Device Configuration register - Fault bit LATCH_mode enable, ,Wire break or 
+short to VS blanking time in off-state,Sw_STATE config, fault latch with retry only on enable toggle.
+Table 8-50. DEV_CONFIG5 Register Field Descriptions
+Bit Field Type Reset Description
+7-6 RESERVED R 0h Reserved
+5 ADC_EN R/W 0h Setting this bit to 1, enables the ADC function
+0h = ADC function disabled 
+1h = ADC enabled 
+4 AUTO_RETRY_DIS R/W 0h Setting this bit to 1, disables the auto-retry and latches the channel 
+Output OFF on thermal shutdown of the channel occurs. Retry can 
+be attempted by toggling enable.
+0h = Auto-retry on thermal shutdown of the channel 
+1h = Latches the channel output off on thermal shutdown - retry on 
+toggling enable. 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+68 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-50. DEV_CONFIG5 Register Field Descriptions (continued)
+Bit Field Type Reset Description
+3-2 WB_SVS_BLANK R/W 0h Sets the blanking time for wire-break (ON-state and OFF-state) and 
+the short_to_VS faults before the fault is registered.
+0h = Blanking time is 0.4 ms 
+1h = Blanking time is 1.0 ms 
+2h = Blanking time is 2.0 ms 
+3h = Blanking time is 4.0 ms 
+1 SW_FS_CFG R/W 0h Set this bit to 1 to have the outputs hold state when WD_ERR 
+faults have occurred. Otherwise the device uses the FS_SW_STATE 
+register bits.
+0h = Switch (output) holds state 
+1h = Switch (output) state set by Sw_FS_STATE register when 
+WD_ERR occurs 
+0 FLT_LTCH_DIS R/W 0h Set this bit to 1 to not latch the fault bits in the register and cleared 
+on read.
+0h = Fault bits latched and cleared only on read 
+1h = Fault bits not latched, cleared when the fault disappears 
+8.6.38 DEV_CONFIG6 Register (Offset = 26h) [Reset = 0Fh] 
+DEV_CONFIG6 is shown in Table 8-51.
+Return to the Summary Table.
+Device Configuration register - Per Channel RCB FET gate off configuration
+Table 8-51. DEV_CONFIG6 Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 RCB_CH4 R/W 1h Bit determines the reverse current blocking FET gate control in CH4
+0h = Reverse current blocking FET gate pulldown (CH4) is enabled 
+(if RCB_DIS bit is not set) 
+1h = Reverse current blocking function in CH4 enabled (if RCB_DIS 
+bit is not set) 
+2 RCB_CH3 R/W 1h Bit determines the reverse current blocking FET gate control in CH3
+0h = Reverse current blocking FET gate pulldown (CH3) is enabled 
+(if RCB_DIS bit is not set) 
+1h = Reverse current blocking function in CH3 enabled (if RCB_DIS 
+bit is not set) 
+1 RCB_CH2 R/W 1h Bit determines the reverse current blocking FET gate control in CH2
+0h = Reverse current blocking FET gate pulldown (CH2) is enabled 
+(if RCB_DIS bit is not set) 
+1h = Reverse current blocking function in CH2 enabled (if RCB_DIS 
+bit is not set) 
+0 RCB_CH1 R/W 1h Bit determines the reverse current blocking FET gate control in CH1
+0h = Reverse current blocking FET gate pulldown (CH1) is enabled 
+(if RCB_DIS bit is not set) 
+1h = Reverse current blocking function in CH1 enabled (if RCB_DIS 
+bit is not set) 
+8.6.39 FAULT_MASK Register (Offset = 27h) [Reset = 00h] 
+FAULT_MASK is shown in Table 8-52.
+Return to the Summary Table.
+The register allows masking of certain types of faults.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 69
+Product Folder Links: TPS274C65
+Table 8-52. FAULT_MASK Register Field Descriptions
+Bit Field Type Reset Description
+7 MASK_SPI_ERR R/W 0h The bit is set to mask the SPI error (SPI_ERR) signaling in the FLT 
+pin output and FAULT_TYPE_STAT register
+0h = SPI error is signaled in FAULT_TYPE_STAT register and FLT 
+pin 
+1h = FLT pin not impacted by SPI error, but SPI error will be signaled 
+through FAULT_TYPE_STAT register 
+6 MASK_WD_ERR R/W 0h The bit is set to mask the SPI watchdog error (WD_ERR) signaling in 
+the FLT pin output and FAULT_TYPE_STAT register
+0h = SPI watchdog error is signaled in FAULT_TYPE_STAT register 
+and FLT pin 
+1h = FLT pin not impacted by SPI error, but watchdog error will be 
+signaled through FAULT_TYPE_STAT register 
+5 MASK_ILIMIT R/W 0h The bit is set to mask the signaling ILIMIT fault on the FLT pin
+0h = Fault is signaled on the FLT pin on current limit occuring 
+1h = Current limit fault is not signaled (masked from) on the FLT pin 
+4 MASK_RVRS_BLK R/W 0h The bit is set to mask the signaling reverse current fault on the FLT 
+pin
+0h = Fault is signaled on the FLT pin on reverse current fault 
+occuring 
+1h = Reverse current fault is not signaled (masked from) on the FLT 
+pin 
+3 MASK_SHRT_VS R/W 0h The bit is set to mask the signaling off-state Short to VS fault on the 
+FLT pin
+0h = Short to VS Fault is signaled on the FLT pin on detecting the 
+fault with the diagnostic 
+1h = Short to VS fault is not signaled (masked from) on the FLT pin 
+2 MASK_WB_OFF R/W 0h The bit is set to mask the signaling off-state wire-break fault on the 
+FLT pin
+0h = Off-state wire-break fault is signaled on the FLT pin on detecting 
+the fault with the diagnostic 
+1h = Off-state wire-break fault is not signaled (masked from) on the 
+FLT pin 
+1 MASK_WB_ON R/W 0h The bit is set to mask the signaling on-state wire-break fault on the 
+FLT pin
+0h = On-state wire-break fault is signaled on the FLT pin on detecting 
+the fault with the diagnostic 
+1h = On-state wire-break fault is not signaled (masked from) on the 
+FLT pin 
+0 MASK_VS_UV R/W 0h The bit is set to mask the supply voltage VS UV fault signaling on the 
+FLT pin output.
+0h = VS UV fault is signaled on the FLT pin on detecting the fault 
+with the diagnostic 
+1h = VS UV fault is not signaled (masked from) on the FLT pin 
+8.6.40 EN_WB_OFF Register (Offset = 28h) [Reset = 00h] 
+EN_WB_OFF is shown in Table 8-53.
+Return to the Summary Table.
+Enables diagnostic of the wire-break (off-state) faults in the fault registers
+Table 8-53. EN_WB_OFF Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 WB_OFF_CH4_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault in CH4
+0h = Wire-break (off-state) fault diagnostic in CH4 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH4 is enabled 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+70 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+Table 8-53. EN_WB_OFF Register Field Descriptions (continued)
+Bit Field Type Reset Description
+2 WB_OFF_CH3_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault in CH3
+0h = Wire-break (off-state) fault diagnostic in CH3 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH3 is enabled 
+1 WB_OFF_CH2_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault in CH2
+0h = Wire-break (off-state) fault diagnostic in CH2 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH2 is enabled 
+0 WB_OFF_CH1_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault in CH1
+0h = Wire-break (off-state) fault diagnostic in CH1 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH1 is enabled 
+8.6.41 EN_WB_ON Register (Offset = 29h) [Reset = 00h] 
+EN_WB_ON is shown in Table 8-54.
+Return to the Summary Table.
+The register allows masking of On-state Wire-break fault per channel
+Table 8-54. EN_WB_ON Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 WB_ON_CH4_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault diagnostic in 
+CH4
+0h = Wire-break (off-state) fault diagnostic in CH4 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH4 is enabled 
+2 WB_ON_CH3_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault diagnostic in 
+CH3
+0h = Wire-break (off-state) fault diagnostic in CH3 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH3 is enabled 
+1 WB_ON_CH2_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault diagnostic in 
+CH2
+0h = Wire-break (off-state) fault diagnostic in CH2 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH2 is enabled 
+0 WB_ON_CH1_EN R/W 0h Set this bit to 1 to enable the wire-break (off-state) fault diagnostic in 
+CH1
+0h = Wire-break (off-state) fault diagnostic in CH1 not enabled 
+1h = Wire-break (off-state) fault diagnostic in CH1 is enabled 
+8.6.42 EN_SHRT_VS Register (Offset = 2Ah) [Reset = 00h] 
+EN_SHRT_VS is shown in Table 8-55.
+Return to the Summary Table.
+The register allows masking of output short to supply (VS) fault per channel
+Table 8-55. EN_SHRT_VS Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 SHRT_VS_CH4_EN R/W 0h Set this bit to 1 to enable the short_to_VS (off-state) fault diagnostic 
+in CH4
+0h = short_to_VS (off-state) fault diagnostic in CH4 not enabled 
+1h = short_to_VS (off-state) fault diagnostic in CH4 enabled 
+2 SHRT_VS_CH3_EN R/W 0h Set this bit to 1 to enable the short_to_VS (off-state) fault diagnostic 
+in CH3
+0h = short_to_VS (off-state) fault diagnostic in CH3 not enabled 
+1h = short_to_VS (off-state) fault diagnostic in CH3 enabled 
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 71
+Product Folder Links: TPS274C65
+Table 8-55. EN_SHRT_VS Register Field Descriptions (continued)
+Bit Field Type Reset Description
+1 SHRT_VS_CH2_EN R/W 0h Set this bit to 1 to enable the short_to_VS (off-state) fault diagnostic 
+in CH2
+0h = short_to_VS (off-state) fault diagnostic in CH2 not enabled 
+1h = short_to_VS (off-state) fault diagnostic in CH2 enabled 
+0 SHRT_VS_CH1_EN R/W 0h Set this bit to 1 to enable the short_to_VS (off-state) fault diagnostic 
+in CH1
+0h = short_to_VS (off-state) fault diagnostic in CH1 not enabled 
+1h = short_to_VS (off-state) fault diagnostic in CH1 enabled 
+8.6.43 ADC_ISNS_DIS Register (Offset = 2Bh) [Reset = 00h] 
+ADC_ISNS_DIS is shown in Table 8-56.
+Return to the Summary Table.
+Allows disabling the ADC conversion of ISNS on a per channel basis
+Table 8-56. ADC_ISNS_DIS Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 ISNS_DIS_CH4 R/W 0h Set this bit to 1 disable ISNS_CH4 conversion
+0h = ISNS_CH4 ADC conversion included 
+1h = ISNS_CH4 ADC conversion disabled 
+2 ISNS_DIS_CH3 R/W 0h Set this bit to 1 disable ISNS_CH3 conversion
+0h = ISNS_CH3 ADC conversion included 
+1h = ISNS_CH3 ADC conversion disabled 
+1 ISNS_DIS_CH2 R/W 0h Set this bit to 1 disable ISNS_CH2 conversion
+0h = ISNS_CH2 ADC conversion included 
+1h = ISNS_CH2 ADC conversion disabled 
+0 ISNS_DIS_CH1 R/W 0h Set this bit to 1 disable ISNS_CH1 conversion
+0h = ISNS_CH1 ADC conversion included 
+1h = ISNS_CH1 ADC conversion disabled 
+8.6.44 ADC_TSNS_DIS Register (Offset = 2Ch) [Reset = 00h] 
+ADC_TSNS_DIS is shown in Table 8-57.
+Return to the Summary Table.
+Allows disabling the ADC conversion of TSNS on a per channel basis
+Table 8-57. ADC_TSNS_DIS Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 TSNS_DIS_CH4 R/W 0h Set this bit to 1 disable TSNS_CH4 conversion
+0h = TSNS_CH4 ADC conversion included 
+1h = TSNS_CH4 ADC conversion disabled 
+2 TSNS_DIS_CH3 R/W 0h Set this bit to 1 disable TSNS_CH3 conversion
+0h = TSNS_CH3 ADC conversion included 
+1h = TSNS_CH3 ADC conversion disabled 
+1 TSNS_DIS_CH2 R/W 0h Set this bit to 1 disable TSNS_CH2 conversion
+0h = TSNS_CH2 ADC conversion included 
+1h = TSNS_CH2 ADC conversion disabled 
+0 TSNS_DIS_CH1 R/W 0h Set this bit to 1 disable TSNS_CH1 conversion
+0h = TSNS_CH1 ADC conversion included 
+1h = TSNS_CH1 ADC conversion disabled 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+72 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+8.6.45 ADC_VSNS_DIS Register (Offset = 2Dh) [Reset = 00h] 
+ADC_VSNS_DIS is shown in Table 8-58.
+Return to the Summary Table.
+Allows disabling the ADC conversion of VSNS on a per channel basis
+Table 8-58. ADC_VSNS_DIS Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 VSNS_DIS_CH4 R/W 0h Set this bit to 1 disable VSNS_CH4 conversion
+0h = VSNS_CH4 ADC conversion included 
+1h = VSNS_CH4 ADC conversion disabled 
+2 VSNS_DIS_CH3 R/W 0h Set this bit to 1 disable VSNS_CH3 conversion
+0h = VSNS_CH3 ADC conversion included 
+1h = VSNS_CH3 ADC conversion disabled 
+1 VSNS_DIS_CH2 R/W 0h Set this bit to 1 disable VSNS_CH2 conversion
+0h = VSNS_CH2 ADC conversion included 
+1h = VSNS_CH2 ADC conversion disabled 
+0 VSNS_DIS_CH1 R/W 0h Set this bit to 1 disable VSNS_CH1 conversion
+0h = VSNS_CH1 ADC conversion included 
+1h = VSNS_CH1 ADC conversion disabled 
+8.6.46 ADC_CONFIG1 Register (Offset = 2Eh) [Reset = 00h] 
+ADC_CONFIG1 is shown in Table 8-59.
+Return to the Summary Table.
+ADC configuration - disable conversion of measurements not needed.
+Table 8-59. ADC_CONFIG1 Register Field Descriptions
+Bit Field Type Reset Description
+7-4 RESERVED R 0h Reserved
+3 ADC_TSNS_DIS R/W 0h Set this bit to 1 to disable the ADC TSNS functionality
+0h = TSNS ADC functionality enabled 
+1h = TSNS ADC functionality is disabled 
+2 ADC_VSNS_DIS R/W 0h Set this bit to 1 to disable the VSNS ADC functionality
+0h = VSNS ADC functionality enabled 
+1h = VSNS ADC functionality is disabled 
+1 ADC_ISNS_DIS R/W 0h Set this bit to 1 to disable ISNS ADC functionality
+0h = ISNS ADC functionality enabled 
+1h = ISNS ADC functionality is disabled 
+0 ADC_VS_DIS R/W 0h Set this bit to 1 to disable supply voltage V_VS conversion in the 
+ADC conversion sequence.
+0h = Include supply voltage V_VS conversion in the sequence 
+1h = No conversion of suppy voltage V_VS 
+8.6.47 CRC_CONFIG Register (Offset = 2Fh) [Reset = 00h] 
+CRC_CONFIG is shown in Table 8-60.
+Return to the Summary Table.
+Configure CRC
+Table 8-60. CRC_CONFIG Register Field Descriptions
+Bit Field Type Reset Description
+7-2 RESERVED R 0h Reserved
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 73
+Product Folder Links: TPS274C65
+Table 8-60. CRC_CONFIG Register Field Descriptions (continued)
+Bit Field Type Reset Description
+1 D24BIT R/W 0h Set this bit to 1 to use 24-bit SPI command frame in daisy chain 
+mode
+0h = 16-bit frame and No CRC check of SPI command frame 
+1h = 24-bit frame with the possibility of CRC check 
+0 CRC_EN R/W 0h Set this bit to 1 to enable CRC check of SPI command frame.
+0h = No CRC check of SPI command frame 
+1h = CRC check of SPI command frame enabled 
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+74 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+9.1 Application Information
+The following sections give examples of typical implementation and design examples.
+9.2 Typical Application
+Figure 9-1 shows the schematic of a typical application of the TPS274C65. The schematic includes all standard 
+external components. This section of the data sheet discusses the considerations in implementing commonly 
+required application functionality.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 75
+Product Folder Links: TPS274C65
+VDD VS
+DO_EN
+CVDD
+CVIN2
+OUT1
+RCB1
+OUT2
+RCB2
+OUT3
+RCB3
+OUT4
+RCB4
+ZTVS
+ISNS
+SCLK
+SDI
+SDO
+REG_EN
+DSPI
+ADDCFG
+FLT
+READY
+GND
+RREADY RFLT
+RSNS
+CS
+LEDOUT1 LEDOUT2 LEDOUT3 LEDOUT4
+D7
+D5
+D6
+D8
+D2
+D4
+D3
+D1
+RFRS
++3.3 V / 5.5 V +24 V
+COUT
+COUT
+COUT
+COUT
+CVIN1
+Load1
+Load2
+Load3
+Load4
+QRCB
+QRCB
+QRCB
+QRCB
+CSNS
+RGND
+ZGND
+Optional 
+Reverse 
+Polarity
+DGND
+Figure 9-1. Typical Application Circuit
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+76 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+9.2.1 Design Requirements
+Table 9-1. Recommended External Components
+COMPONENT TYPICAL VALUE PURPOSE
+RSNS 1 kΩ Translate the sense current into sense voltage.
+CSNS 100 pF Low-pass filter for the ADC input.
+RILIMx 5 kΩ to 80 kΩ Set current limit threshold, connect from pin to IC GND.
+CVin1 4.7 nF to Device GND Filtering of voltage transients (for example, ESD, IEC 61000-4-5) and improved 
+emissions.
+CVin2 100 nF to Module GND Stabilize the input supply and filter out low frequency noise.
+CVDD 2.2 µF to Module GND Stabilize the VDD supply and limit supply excursions. Needed with either external 
+or internal VDD supplies.
+COUT 22 nF Filtering of voltage transients (for example, ESD, RF transients).
+ZTVS 36-V TVS Clamp surge voltages at the supply input.
+DGND, ZGND
+Diode + max 10 Ω from 
+Device GND to Module 
+GND
+Optional for reverse polarity protection - if needed. Series resistor needed for surge 
+events.
+RGND 4.7 kΩ Stabilize IC GND in the event of negative output swings.
+QRCB 20-nC FET Optional for Reverse current blocking.
+RS 490 Ω Limiting the current flowing through the LEDs.
+RF 490 Ω Limiting the current flowing through the LEDs.
+9.2.2 Detailed Design Procedure
+In an example application with maximum load current of 500 mA, the current limit must be set to an acceptable 
+level. With the current limit variation and tolerance allowed for this specific application, the current limit setting of 
+1 A is chosen. Referring back to the Table 8-4, ILIM_REG[3:0] must be set to 0x8 through SPI.
+Depending on the tolerance on the maximum current for the application, the current limit resistor can be chosen 
+to leave the overhead needed before the current limit engages.
+9.2.2.1 IEC 61000-4-5 Surge
+The TPS274C65 is designed to survive against IEC 61000-4-5 surge using external TVS clamps. The device 
+is rated to 48 V ensuring that external TVS diodes can clamp below the rated maximum voltage of the 
+TPS274C65. Above 48V, the device includes V DS clamps to help shunt current and ensure that the device 
+will survive the transient pulses. Depending on the class of the output, it is recommend that the system has a 
+SMBJ36A or SMCJ36A between VS and module GND.
+9.2.2.2 Loss of GND
+The ground connection may be lost either on the device level or on the module level. If the ground connection 
+is lost, both the channel outputs will be disabled irrespective of the EN input level. If the switch was already 
+disabled when the ground connection was lost, the outputs will remain disabled even when the channels are 
+enabled. The steady state current from the output to the load that remains connected to the system ground is 
+below the level specified in the Specifications section of this document. When the ground is reconnected, normal 
+operation will resume.
+9.2.2.3 Paralleling Channels
+If an application requires lower power dissipation than is possible with a 65 m Ω switch, the TPS274C65 can 
+have up to two channel outputs (CH1 and CH2 OR CH3 and CH4) tied together to function as a single 32.5 
+mΩ high side switch. In this case, there will be some decrease in I SNS and I LIM accuracy, however the device 
+will function properly. The max continuous load current per channel while channels are paralleled is defined in 
+Electrical Characteristics.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 77
+Product Folder Links: TPS274C65
+9.2.3 Application Curves
+Figure 9-2 shows a test example of switching the load with 250-kHz PWM signal. Test conditions: VS =12 V, 
+Duty Cycle = 5%, T AMB = 25°C. Channel 1 is V OUT voltage. Channel 2 is EN pin voltage. Channel 3 is VS 
+voltage. Channel 4 is VS current.
+Figure 9-3 shows a test example of enabling a switch while there is a short at the output. Test conditions: VS 
+= 24 V, T AMB = 25°C. Channel 1 is V OUT voltage. Channel 2 is FAULT pin voltage. Channel 3 is VS voltage. 
+Channel 4 is VS current.
+Figure 9-2. 250-kHz PWM Switching
+ Figure 9-3. Enable into Short Circuit
+9.3 Power Supply Recommendations
+Table 9-2. Operating Voltage Range
+VS Voltage Range Note
+6 V to 36 V
+Nominal supply voltage, all 
+parametric specifications apply. 
+The device is completely short-
+circuit protected up to 125°C
+36 V to 48 V
+Functional operation per data 
+sheet (switch can turn-off), 
+but can not meet parametric 
+specifications.
+9.4 Layout
+9.4.1 Layout Guidelines
+To prevent thermal shutdown, TJ must be less than TABS. If the output current is very high, the power dissipation 
+can be large. The VQFN package has good thermal impedance. However, the PCB layout is very important. 
+Good PCB design can optimize heat transfer, which is absolutely essential for the long-term reliability of the 
+device.
+1. Maximize the copper coverage on the PCB to increase the thermal conductivity of the board. The major 
+heat-flow path from the package to the ambient is through the copper on the PCB. Maximum copper is 
+extremely important when there are not any heat sinks attached to the PCB on the other side of the board 
+opposite the package.
+2. Add as many thermal vias as possible directly under the package ground pad to optimize the thermal 
+conductivity of the board
+3. Plate shut or plug and cap all thermal vias on both sides of the board to prevent solder voids. To ensure 
+reliability and performance, the solder coverage must be at least 85%.
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+78 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+9.4.2 Layout Example
+ADDCFG
+DSPI
+40 39 38 37 36 35 34 33 32 31
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+OUT1
+OUT1
+VS
+VS
+OUT2
+OUT2
+OUT4
+OUT4
+VS
+VS
+VS
+VS
+OUT3
+OUT3
+GND
+SCLK
+SDO
+SDI
+CS
+FLT
+VDD
+GND
+11 12 13 14 15 16 17 18 19 20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+VS
+VS
+READY
+REG_EN
+DO_EN
+DNC
+ISNS
+RCB1
+RCB2RCB4
+RCB3
+LEDOUT1
+LEDOUT2
+LEDOUT3
+LEDOUT4
+DNC
+PowerPad 
+Figure 9-4. Layout Example
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 79
+Product Folder Links: TPS274C65
+10 Device and Documentation Support
+10.1 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Notifications to register and receive a weekly digest of any product information that has changed. For change 
+details, review the revision history included in any revised document.
+10.2 Support Resources
+TI E2E ™ support forums  are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+10.3 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+10.4 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+10.5 Glossary
+TI Glossary This glossary lists and explains terms, acronyms, and definitions.
+11 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision B (October 2023) to Revision C (February 2024) Page
+• Updated Device Comparison Table section to include the H version.................................................................3
+• Updated Electrical Characteristics section to include the current limit for H version devices.............................7
+• Updated Inductive Load Demagnetization section to include the discharge capability.................................... 32
+Changes from Revision A (October 2023) to Revision B (October 2023) Page
+• Changed VS and VOUT pins HBM ESD levels from 4 kV to 2 kV in the ESD Ratings section......................... 7
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+ www.ti.com
+80 Submit Document Feedback Copyright © 2024 Texas Instruments Incorporated
+Product Folder Links: TPS274C65
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+www.ti.com
+TPS274C65
+SLVSFZ2C – APRIL 2023 – REVISED FEBRUARY 2024
+Copyright © 2024 Texas Instruments Incorporated Submit Document Feedback 81
+Product Folder Links: TPS274C65
+PACKAGE OPTION ADDENDUM
+www.ti.com 19-Dec-2025
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS274C65ASHRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C6
+5ASHRHA
+TPS274C65ASHRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C6
+5ASHRHA
+TPS274C65ASHWRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C6
+5ASHWRHA
+TPS274C65ASHWRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C6
+5ASHWRHA
+TPS274C65ASRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65ASRHA
+TPS274C65ASRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65ASRHA
+TPS274C65ASWRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65ASWRHA
+TPS274C65ASWRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65ASWRHA
+TPS274C65BSRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65BSRHA
+TPS274C65BSRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65BSRHA
+TPS274C65BSWRHAR Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65BSWRHA
+TPS274C65BSWRHAR.A Active Production VQFN (RHA) | 40 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 TPS274C
+65BSWRHA
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com 19-Dec-2025
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 10-Sep-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0B0K0WDimension designed to accommodate the component lengthDimension designed to accommodate the component thicknessOverall width of the carrier tapePitch between successive cavity centersDimension designed to accommodate the component width
+TAPE DIMENSIONSK0 P1B0WA0Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket QuadrantsSprocket HolesQ1Q1Q2Q2Q3Q3Q4Q4User Direction of Feed
+P1ReelDiameter
+ 
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS274C65ASHRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+TPS274C65ASHWRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+TPS274C65ASRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+TPS274C65ASWRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+TPS274C65BSRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+TPS274C65BSWRHAR VQFN RHA 40 2500 330.0 16.4 6.3 6.3 1.1 12.0 16.0 Q2
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 10-Sep-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W LH
+ 
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS274C65ASHRHAR VQFN RHA 40 2500 367.0 367.0 35.0
+TPS274C65ASHWRHAR VQFN RHA 40 2500 367.0 367.0 35.0
+TPS274C65ASRHAR VQFN RHA 40 2500 360.0 360.0 36.0
+TPS274C65ASWRHAR VQFN RHA 40 2500 367.0 367.0 35.0
+TPS274C65BSRHAR VQFN RHA 40 2500 360.0 360.0 36.0
+TPS274C65BSWRHAR VQFN RHA 40 2500 367.0 367.0 35.0
+Pack Materials-Page 2
+www.ti.com
+GENERIC PACKAGE VIEW
+This image is a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+VQFN - 1 mm max heightRHA 40
+PLASTIC QUAD FLATPACK - NO LEAD6 x 6, 0.5 mm pitch
+4225870/A
+www.ti.com
+PACKAGE OUTLINE
+C
+40X 0.27
+0.17
+4.15 0.1
+40X 0.5
+0.3
+1 MAX
+(0.2) TYP
+0.05
+0.00
+2X
+4.5
+36X 0.5
+2X 4.5
+A 6.1
+5.9
+B
+6.1
+5.9
+VQFN - 1 mm max heightRHA0040B
+PLASTIC QUAD FLATPACK - NO LEAD
+4219052/A   06/2016
+PIN 1 INDEX AREA
+0.08
+SEATING PLANE
+1
+10 21
+30
+11 20
+40 31(OPTIONAL)
+PIN 1 ID 0.1 C A B
+0.05
+EXPOSED
+THERMAL PAD
+41 SYMM
+SYMM
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. The package thermal pad must be soldered to the printed circuit board for thermal and mechanical performance.
+SCALE  2.200
+www.ti.com
+EXAMPLE BOARD LAYOUT
+(1.14)
+TYP
+0.07 MIN
+ALL SIDES
+0.07 MAX
+ALL AROUND
+40X (0.22)
+40X (0.6)
+( 0.2) TYP
+VIA
+( 4.15)
+(R0.05) TYP
+(5.8)
+36X (0.5)
+(5.8)(0.685)
+TYP
+(1.14)
+TYP
+(0.685)
+TYP
+(0.25) TYP
+VQFN - 1 mm max heightRHA0040B
+PLASTIC QUAD FLATPACK - NO LEAD
+4219052/A   06/2016
+SYMM
+1
+10
+11 20
+21
+30
+3140
+SYMM
+LAND PATTERN EXAMPLE
+SCALE:12X
+41
+NOTES: (continued)
+ 
+4. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+    number SLUA271 (www.ti.com/lit/slua271).
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+METAL
+SOLDER MASK
+OPENING
+SOLDER MASK DETAILS
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(1.37) TYP
+(1.37)
+TYP
+40X (0.6)
+40X (0.22)
+9X ( 1.17)
+(R0.05) TYP
+(5.8)
+(5.8)
+36X (0.5)
+(0.25) TYP
+VQFN - 1 mm max heightRHA0040B
+PLASTIC QUAD FLATPACK - NO LEAD
+4219052/A   06/2016
+NOTES: (continued)
+ 
+5. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SYMM
+METAL
+TYP
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+ 
+EXPOSED PAD 41:
+72% PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+SCALE:12X
+SYMM
+1
+10
+11 20
+21
+30
+31
+41
+40
+AA
+www.ti.com
+PACKAGE OUTLINE
+6.1
+5.9
+6.1
+5.9
+1.0
+0.80.05
+0.00
+2X 4.5
+36X 0.5
+2X 4.5
+40X 0.5
+0.3
+40X 0.3
+0.2
+4.15 0.1
+0.1 MIN
+(0.2) TYP
+(0.13)
+(0.16) TYP
+VQFN - 1 mm max heightRHA0040M
+PLASTIC QUAD FLATPACK - NO LEAD
+4226110/A   07/2020
+0.08 C
+0.1 C A B
+0.05
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. The package thermal pad must be soldered to the printed circuit board for thermal and mechanical performance.
+PIN 1 INDEX AREA
+SEATING PLANE
+PIN 1 ID
+SYMMEXPOSED
+THERMAL PAD
+SYMM
+1
+10
+11 20
+21
+30
+3140
+41
+SCALE  2.000
+A-A 30.000
+SECTION A-A
+TYPICAL
+AB
+C
+www.ti.com
+EXAMPLE BOARD LAYOUT
+36X (0.5)
+(R0.05) TYP
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+40X (0.6)
+40X (0.25)
+(5.8)
+(5.8)
+( 4.15)
+( 0.2) TYP
+VIA
+(0.685) (1.14)
+(0.685)
+(1.14)
+VQFN - 1 mm max heightRHA0040M
+PLASTIC QUAD FLATPACK - NO LEAD
+4226110/A   07/2020
+NOTES: (continued)
+ 
+4. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+    number SLUA271 (www.ti.com/lit/slua271).
+5. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+    on this view. It is recommended that vias under paste be filled, plugged or tented.
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 15X
+SEE SOLDER MASK
+DETAIL
+1
+10
+11 20
+21
+30
+3140
+41
+METAL EDGE
+SOLDER MASK
+OPENING
+EXPOSED METAL
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED
+METAL
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DEFINED
+SOLDER MASK DETAILS
+www.ti.com
+EXAMPLE STENCIL DESIGN
+40X (0.6)
+40X (0.25)
+36X (0.5)
+(5.8)
+(5.8)
+9X (1.17)
+9X (1.17)
+(R0.05) TYP
+(1.37)
+(1.37)
+VQFN - 1 mm max heightRHA0040M
+PLASTIC QUAD FLATPACK - NO LEAD
+4226110/A   07/2020
+NOTES: (continued)
+ 
+6. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 MM THICK STENCIL
+SCALE: 15X
+ 
+EXPOSED PAD 41
+72% PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+SYMM
+SYMM
+1
+10
+11 20
+21
+30
+3140
+41
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

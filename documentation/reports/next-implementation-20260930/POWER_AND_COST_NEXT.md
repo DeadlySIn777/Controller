@@ -1,0 +1,97 @@
+# Power closure and later cost reduction: next implementation work
+
+30 September 2026. Read-only circuit/source/datasheet inspection and conditional arithmetic. No existing schematic, generator, test, memory, frozen IS-1 specification or worktree was changed. No circuit simulation, target build, ERC/DRC, physical measurement or supplier quotation was performed for this report. The user has asked for working quality first; cost reduction follows a demonstrated complete design.
+
+## Recommended next power architecture
+
+Implement the **IS-1 split power tree**, preserving the fixed wiring base and service cards: CORE_5V supplies compute and card-local logic; a separate MOTION_5V supplies motor transmitters, enable LEDs and the four base encoder/sensor ports; MX4 uses switched EXP_5V from MOTION_5V; EX8 has its own protected CORE_24V-fed converter. Preserve all eight standard/four expansion motor channels, individual enable/alarm, 24 general DI/16 general DO, simultaneous motor/encoder expansion and hardware-backed diagnostics.
+
+Retain the **LM70660RRXR** as the first CORE_5V candidate after removing motion loads. Begin MOTION_5V circuit design with **LM76003RNPR**, comparing a second LM70660RRXR if startup/fault/thermal closure requires more reserve. This is a concrete shortlist, not a production part selection. Card-local regulation is required for fault containment, and **moving the existing TPS62901 circuit onto a card alone does not fix its capacitance constraint**.
+
+The separate `C:/Users/Gluis/claude-worktrees/controller-interface-spec` checkout owns frozen IS-1. Its `docs/interface-spec/04-safety-power-timing.md` sections 10.1–10.4 and `02-modules-and-boundaries.md` sections 8.4/15 supply the proposed rail/card contract. Reviewed main-checkout integration remains pending. Any electrical change to a frozen contract needs the defined revision process; this report does not revise it.
+
+## What the currently drawn circuit fails to close
+
+| Constraint | Current source/arithmetic | Required change |
+|---|---|---|
+| Main current | Current expanded-power study: eight-motor cold charge 6.02 A; twelve-motor normal 6.06 A; host-charge 6.53 A against the drawn 6 A converter | Move transmitters **and base encoder power** off CORE_5V, then reconstruct all normal, single-fault, startup and warm-restart cases. Existing 6 A totals are not transferable. |
+| CORE_5V voltage and monitor | CM4 screen needs ≥4.819 V upstream at 3 A with the assumed 23 mΩ branch drop; current OV trip spans about 5.073–5.137 V, while existing load-release screening can exceed its minimum trip | Close one voltage budget from regulator accuracy/ripple/transients through switch, shunt, connectors and cable to the selected compute module. Redesign supervisor thresholds from that budget; neither lowering the compute minimum nor allowing overshoot silently is acceptable. |
+| Shared 3.3 V capacitance | Existing direct-output upper screens: IO_3V3 **78.0942 µF** and ESP_3V3 **60.866 µF**, before any further connected support capacitance | Inventory effective C and impedance per actual local regulator. Current TPS62901 1 MHz direct-output recommendation is 6–50 µF. Choose a supported frequency/LC configuration or a proved impedance partition, rather than relying on unqualified bias reduction. |
+| Input current | Main entry remains the older 7.50 kΩ ILIM/3 A source proposal; IS-1 requires a core current-limit minimum ≥3.61 A plus two separate field entries | Select core and both field limits from complete loads, branch-limit maxima, cable drop, startup, transient and fuse/thermal coordination. |
+| Minimum input voltage | IS-1 arithmetic uses 18 V at the input; current entry study uses 19 V because downstream analog converters need 18 V after path drop | Resolve the terminal-to-converter voltage contract before claiming an 18 V product. REC3.5-2424SRW/R8/A's recorded 18–36 V input cannot automatically operate at an 18 V terminal after losses. Preserve the promised I/O by qualifying a wider-input converter or formally resolving the contract. |
+| Startup and partial power | Current sequencing calculations do not bound all new card capacitance, locally retained rails or every field/core order | Add controlled slot startup, real power-good, output defaults, discharge and back-power analysis; include CORE absent/FIELD present because NC enable behavior depends on FIELD-derived AUX_5V staying valid. |
+
+Sources: [expanded power review](../EXPANDED_POWER_REVIEW.md), `research/expanded-power/analysis.json`, `hardware/core_converter/requirements.json`, `hardware/logic_power/design-envelope.json`, `hardware/power_entry/requirements.json`, `hardware/power_sequence/design-envelope.json`, and [hardware audit H04–H06](../audit-2026-09-30/HARDWARE_AUDIT.md).
+
+## Complete reservation cases to implement
+
+These figures come from frozen IS-1 and remain reservations/arithmetic, not measured loads:
+
+| Rail or entry | Eight-motor standard | Twelve motors and relevant expansion | Closure condition |
+|---|---:|---:|---|
+| CORE_5V | 4.50 A normal | 4.50 A normal | Six-amp converter is plausible after repartition; all card-local input currents, startup and peak modes still need calculation. |
+| MOTION_5V | 1.90 A normal | 2.35 A normal; 2.78 A summed branch-limit screen | At least 3 A continuous required by IS-1; design margin and load charging must also fit the actual converter/current-limit/thermal bounds. |
+| EXP_5V | Not fitted | 0.45 A normal | Switch current-limit minimum ≥0.60 A; separate real PGOOD and removal/default response. |
+| EX8 local 5 V | Not fitted | 1.60 A normal; 2.27 A fault-limit sum | Independent module converter and protected CORE_24V feed; can coexist with MX4. A 2 A converter is insufficient for the summed fault screen. |
+| CORE entry | 2.34 A nominal 18 V/85% screen | 2.49 A with MX4; 3.01 A with MX4+EX8 | IS-1 minimum limit ≥3.61 A is an initial requirement, not final startup/short qualification. |
+| FIELD_A | 4.58 A continuous | Same full standard output capability | Minimum limit ≥5.08 A for the specified single-short case; branch/output coordination must preserve unaffected loads. |
+| FIELD_B | 4.82 A continuous | Same full standard output capability | Minimum limit ≥5.32 A; independent fault/telemetry/return path. |
+
+The EX8 card table labels 0.523 A as input current at 24 V, whereas the power section derives it at **18 V** from `1.60 A × 5 V / 0.85 / 18 V`. Use the lower-input calculation for sizing and resolve that label during controlled integration; do not accidentally use a 24 V label as a measured input result.
+
+A separate conditional check reused the existing read-only `input_current()` helper without running its file-writing entry point. With CORE 4.50 A, MOTION 2.78 A, EX8 2.27 A at a screened 5.25 V; 85% efficiency; 18 V source; 0.2 Ω shared input path; and a **0.315 A auxiliary allowance** (0.06 AO + 0.19 AI + 0.065 control allowance), input is **3.734 A before startup**. At nominal 5 V and normal MOTION/EX8 loads it is 3.178 A. Both include assumptions, and both still omit a complete fitted startup/fault model. They show why ≥3.61 A is not sufficient evidence of full closure; they do not establish a new product rating.
+
+```text
+P5 = V5 × (Icore + Imotion + Iex8)
+Iinput solves: Iinput = Iaux + P5 / [efficiency × (Vsource − Rpath × Iinput)]
+```
+
+## Concrete circuit/part shortlist
+
+| Work item | Exact first candidate or documented choice | Bounds and remaining proof |
+|---|---|---|
+| CORE converter | **LM70660RRXR**, existing part | Retain after rail split; recompute compensation, effective L/C, current-limit peaks, unload, startup and 0–55°C internal-ambient thermal behavior. Vendor rating is 6 A, 4.5–65 V input; it is not a demonstrated board rating. [TI part](https://www.ti.com/product/LM70660/part-details/LM70660RRXR). |
+| MOTION converter | **LM76003RNPR**, first new study; **LM70660RRXR**, reserve comparison | LM76003: 3.5 A, 3.5–60 V, PGOOD, adjustable soft start, FPWM and internal compensation. Its 0.72 A headroom above the 2.78 A branch-limit screen must cover charge/transient/thermal limits; derive a complete 5 V circuit rather than transplanting the CORE BOM. A second LM70660 offers 6 A rating but extra board/parts/fault-energy consequences. [TI LM76003 data/part](https://www.ti.com/product/LM76003/part-details/LM76003RNPR). |
+| EX8 converter | **LM76003RNPR**, common-family candidate | 3.5 A exceeds the 2.27 A summed port-limit screen; actual thermal, startup, branch current limit, output ramp and connector behavior remain to prove. Reusing the family can simplify procurement and test fixtures without joining the two power domains. |
+| Core entry protection | **TPS26630RGER**, existing topology; **4.02 kΩ ILIM study point** | Datasheet gives 4.185–4.815 A at its stated 4.02 kΩ condition. Include selected resistor error/temp, source/cable/connector/fuse/PCB limits and inrush. This is a useful anchor above 3.61 A, not permission to claim all interpolated limits as guaranteed. |
+| Two field entries | **TPS26630RGER** repeated with coordinated fuse/reverse/TVS support | Datasheet gives 5.58–6.42 A at the 3 kΩ condition, a sizing anchor for both 5.08/5.32 A minima. Choose an actual resistor range meeting datasheet operating conditions and recheck its full error budget, maximum current, hot SOA and single-short coordination. The old 3.65 kΩ field setting cannot simply be inherited. [TI TPS2663 Rev.G, electrical table](https://www.ti.com/lit/ds/symlink/tps2663.pdf). |
+| MC core and local I/O | **TPS62901RPJR** first retain candidate | CORE_1V2 can begin at current 1 MHz/2.2 µH pending full MC capacitor inventory. For MC 3.3 V, compare **mode 10 / 32.4 kΩ**, 2.5 MHz, VSET, discharge, FPWM and a matched 1 µH LC study with existing 1 MHz/2.2 µH plus a proved distributed-impedance design. The 2.5 MHz direct-C recommendation is 10–100 µF; changing mode alone does not prove stability, current, EMI or startup. [TI TPS62901 Tables 5.3/6-1/7-3](https://www.ti.com/lit/ds/symlink/tps62901.pdf). |
+| ESP local rail | **TPS62901RPJR**, same frequency/LC comparison | The present 0.7 A reservation and 60.866 µF upper screen require a complete local startup/transient case. A card-local copy of the existing 1 MHz circuit retains its capacitance problem. Preserve isolated slot-fault and wired-recovery behavior. |
+| Local inductor comparison | **XGL4020-222MEC** at current 1 MHz; **XGL4020-102MEC** as 1 µH/2.5 MHz candidate | Manufacturer-family inductors appear in the TI recommendation table; qualify actual purchased suffix, hot inductance/saturation/DCR and operating peak, rather than treating typical 25°C Isat as a guarantee. Existing 2.2 µH source data is in `research/logic-power/xgl4020.pdf`. |
+| Low-current card 3.3 V | **TLV75533PDBVR**, conditional simplification study only | 500 mA LDO with EN; do not substitute for 0.8 A FPGA core or 0.7 A ESP. At 0.10 A, 5.25→3.3 V dissipates about 0.195 W before quiescent loss. Use only after card-specific current, thermal, actual capacitor, fault/discharge/back-power and PGOOD provision are proved. Its 500 mA label alone does not justify a 0.5 A card. [TI exact part](https://www.ti.com/product/TLV755P/part-details/TLV75533PDBVR). |
+| Wider-input AI isolated supply | **R3M-2424S/SMD**, comparison lead only; retain current **REC3.5-2424SRW/R8/A** until reviewed change | Manufacturer lists the R3M candidate at 9–36 V, 24 V, 3 W. The 120 mA/2.88 W reserved AI-side load leaves very little nameplate margin; full temperature derating, output accuracy, capacitive/startup load, fault and isolation-working-voltage review are mandatory. It is not an approved substitute for the frozen converter. Wider-input sourcing must preserve the isolated 100 mA sensor supply and measurement accuracy. [RECOM primary family](https://recom-power.com/de/rec-s-R3M.html). |
+
+No usable manufacturer price quotation was obtained for these new candidates. Active order codes establish identifiable parts, not procurement availability or guaranteed delivery. Do not populate a cost cell with zero because a page omits pricing.
+
+## Effective-capacitance data needed before drawing the revised rails
+
+Produce one per-regulator connected-capacitor ledger including **every** capacitor on that output, not just the regulator's own capacitor: FPGA ball decoupling/bulk, clock/flash, permission gates/watchdogs, card identity/temperature, buffers, ESP/radio, connected interface loads, and any capacitor reached through a switch in each operating state. Keep input and output capacitance separate; an RC reset capacitor is not automatically a directly connected rail capacitor.
+
+For each exact MLCC MPN and package, record nominal C, initial tolerance, measured or manufacturer-supported DC-bias curve at the actual rail voltage, temperature excursion, aging assumption, ESR/ESL and the evidence class. Existing local output **C2012X7S1A226M125AC** is 22 µF, ±20%, X7S; its 32.208 µF upper screening value does not prove the minimum at bias. The existing input **C3216X7R1E106K160AB**, FPGA decoupling parts and ESP parts need the same treatment. Where manufacturer curves are typical rather than guaranteed, identify the remaining qualification/acceptance requirement instead of presenting them as worst-case production bounds. Existing source references are in `research/logic-power/SOURCES.md`.
+
+Partition local versus remote capacitance only with a frequency-dependent interconnect/impedance model: trace/contact resistance, inductance, switch impedance and the sensor/VOS location. TI allows additional TPS62901 capacitance with associated series resistance; no known resistance threshold or guaranteed stability is established by the present connected schematic. Do not add a resistor blindly: its voltage drop, load-step response and reset sequencing can violate the rail contract. Verify the complete LC combination, any required ESR, actual switching range, load steps, output release and cold/warm ramp for each candidate.
+
+## Quality-first implementation order
+
+1. **Freeze one fitted power net/load/capacitor map for the adopted cards**, distinguishing eight-standard, MX4 fitted, EX8 fitted simultaneously, and optional display/AI supplies. Reconcile 18/19 V input and every isolated converter's minimum input; no unsupported terminal rating survives into the new ledger.
+2. **Implement CORE/MOTION split and card-local regulation** with exact support parts, controlled startup and PGOOD/defaults. Complete effective C/LC and main voltage/monitor budgets before regenerating a passing-looking schematic.
+3. **Implement three coordinated entries and port/slot containment.** Keep both field banks, full output ratings and diagnostics; validate worst-case single short, sensor-limit maxima, inrush, negative/inductive clamps and source/fuse/cable protection. A generic 7.5 A fuse label is not interruption or coordination evidence.
+4. **Add quantitative read-only validators from independent manufacturer limits**, including all connected C, all regulator/startup cases, no power-domain backfeed and measurement validity/age. Check generated netlists separately from the generator's own expectation tables.
+5. **Review actual schematic ERC and physical pin meanings**, then prepare layout constraints/DRC/thermal/SI/EMC and quantitative bench tests. Later target measurements establish regulation/stability, temperatures, current limits and brownout/partial-power behavior. Source arithmetic, ERC and host tests remain distinct.
+
+Power closure runs alongside the separately owned reset and ≤20 ms permission corrections; it cannot defer those blockers. No automatic restart follows clearing an eFuse, replacing a card or restoring a supply.
+
+## Cost after quality: largest drivers and bounded consolidation studies
+
+IS-1's quantity-100 estimates are **not quotes**: fixed base/card cage $243–384, field plugs $110–189, compute/carrier $136–167, ACC $121–159, PSM $64–119, MC $64–115, plus the remaining cards. Its estimated complete eight-motor assembly is $955–1,500 before the listed quote/yield/freight/warranty/certification gaps. This supports investigating connectors, modular overhead and analog isolation; it does not establish a market selling price or prove that any alternative reaches US$400. The original frozen estimate remains unchanged.
+
+| Consolidation study | Exact shared function preserved | Evidence/cost condition |
+|---|---|---|
+| Common converter building blocks and test points | One independently protected CORE branch, one MOTION branch and separate EX8 branch, each with its own identity/rating/fault behavior | Pool identical IC/passive MPNs and reuse reviewed layout/test procedures; never parallel or join branches merely to reduce converter count. Quote full fitted branches and assembly/test effort. |
+| Card-local LDO for truly small logic loads | Local 3.3 V for DIC/DOA/DOB/ACC controller, identity and buffer loads, still behind its protected switched slot feed | Compare TLV75533PDBVR plus required PGOOD circuitry against a complete switching solution at measured card load/55°C thermal conditions. MC/ESP high-load rails remain separately analyzed. Savings remain unknown until fitted BOM and qualification. |
+| Consolidate diagnostic acquisition where its domain permits | Voltage/current telemetry for the three named entries and card-local power/temperature; preserve independent protective hardware and per-output data | Compare shared host ADC/multiplexer acquisition with the three INA238 scheme using shunt drop, common-mode ranges, wiring/fault independence, accuracy and age/validity. Do not replace per-output TPS274C65 diagnostics with a bank-current number. Any frozen interface change uses the revision process. |
+| Reuse connector/contact families with class keying | Fixed base, retained field wires, coded service-card contacts, adequate return spacing and current/creepage ratings | Quote exact connector halves, keys, guide hardware, mating cycles and all assembly/test costs. Common family is not interchangeable voltage keying; do not promise an unqualified card-edge saving. |
+| Group compatible low-rate functions in a service boundary | Slow analog/communications/identity support that can share a fault domain; retain separately replaceable FPGA motion card and fixed wiring base | An IS-1 alternative study must price one complete fault-contained group against current separate cards, including larger spare cost and invalidated checks. Do not combine independent AO domains or merge core/field grounds to reduce parts. |
+| Retain package-only display power and optional AI companion | Same 7/10/12/14/18/21-inch UI/service and full machine I/O, with optional AI independent | Standard controller is not burdened with every screen's power/thermal load; cost and qualify every actual complete kit separately. |
+
+Do not remove redundant committed machine-memory records, per-motor enable/alarm, port/slot short containment, independent ≤20 ms watchdog/permission, general I/O capacity, measurement accuracy/age or offline repair/licensing to reduce price. Kits sell tested integration; ordinary qualified PSUs, screens and peripherals remain customer-sourceable. The next cost result should show **fitted BOM delta, capability preserved/gained, qualification burden and replacement-card cost**, with explicit unknowns and eventual PCBWay quotations.

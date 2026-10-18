@@ -1,0 +1,22 @@
+from pathlib import Path
+import hashlib,json,shutil
+out=Path('reports/motherboard-docs-20261001/motion-target-memory-r02');out.mkdir(exist_ok=False)
+files=[Path('PROJECT_MEMORY.md'),Path('docs/BUILD_PLAN.md'),Path('docs/MOTION_EXPANSION_8_TO_12.md'),Path('docs/CURRENT_ACCEPTANCE_GATES.md')]
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+before={str(p):sha(p)for p in files}
+for p in files:shutil.copyfile(p,out/p.name)
+memory='''**User motion target, 1 October 2026:** twelve simultaneously active STEP/DIR channels at up to 2 MHz/channel, per-channel STEP-high/low and DIR-setup/hold timing, polarity and drive-limited maximum rate, atomic twelve-channel updates in a deterministic 1 kHz LinuxCNC servo cycle, four ABZ inputs standard and qualified expansion toward twelve ABZ inputs while retaining all twelve motors. This is an unqualified target, not an implemented twelve-channel runtime or higher electrical rating. Existing CNC3 command/feedback lengths remain 96/176 bytes. Future eight additional ABZ channels require an explicit joint audit of actual spare FPGA resources, expansion-connector contacts, acquisition bandwidth/counters and feedback/validity capacity; any necessary future protocol revision remains unimplemented. Preserve current fixed frames and all existing motor/I/O allocations until that review. Details and acceptance gates: [motion target](docs/MOTION_EXPANSION_8_TO_12.md), [G23/G24](docs/CURRENT_ACCEPTANCE_GATES.md).
+
+'''
+plan='''**Additional motion qualification target, 1 October 2026:** qualify all twelve fitted STEP/DIR channels simultaneously at up to 2 MHz/channel with enforced per-drive timing/polarity/rate profiles and atomic commands in a deterministic 1 kHz servo cycle. Qualify four base ABZ inputs and expansion toward twelve alongside all twelve motors. First reconcile actual spare FPGA resources, expansion-connector contacts and current 96-byte command/176-byte feedback capability for eight more ABZ channels without consuming mandatory motor/I/O resources. Any necessary future protocol version is unimplemented; do not silently rewrite the frozen frames. Higher pulse rate, CPU affinity and prior LinuxCNC joint-module loading do not establish loaded real-time/electrical qualification. [Detailed target](MOTION_EXPANSION_8_TO_12.md); [G23/G24](CURRENT_ACCEPTANCE_GATES.md).
+
+'''
+for p,addition in zip(files[:2],[memory,plan]):
+ text=p.read_text();i=text.index('\n\n')+2;p.write_text(text[:i]+addition+text[i:],encoding='utf8');assert p.read_text().replace(addition,'')==(out/p.name).read_text()
+p=files[2];t=p.read_text().replace('reports/motherboard-docs-20261001/motion-target-2MHz-r01/receipt.json','reports/motherboard-docs-20261001/motion-target-2MHz-r01/receipt-final.json')
+marker='The earlier LinuxCNC 2.9.4 record reports'
+extra='Encoder expansion must explicitly prove sufficient actual free FPGA resources, expansion-connector contacts, acquisition/link bandwidth, counters and CNC3 feedback/validity capacity for eight additional ABZ channels without taking any motor or mandatory I/O function. The present 96-byte command/176-byte feedback frames remain frozen; any necessary future protocol version is an unimplemented engineering change, not implied support in this board or runtime.\n\n'
+assert marker in t;t=t.replace(marker,extra+marker,1);p.write_text(t,encoding='utf8')
+p=files[3];t=p.read_text();old='Exact expansion source/interface/resource and protected-supply limits; protocol freshness and configuration checks; vendor pin/resource fit; simultaneous loaded encoder/motor/IO timing and physical fault tests';new='Exact actual spare FPGA resources and expansion-connector contacts for eight more ABZ channels without taking any mandatory motor/I/O function; acquisition bandwidth/counters and current 96/176-byte CNC3 feedback/validity capacity, with any necessary future protocol version explicitly unimplemented; protected supplies and protocol freshness; vendor fit; simultaneous loaded encoder/motor/IO timing and physical faults';assert old in t;t=t.replace(old,new,1);p.write_text(t,encoding='utf8')
+r=dict(scope='Current motion requirements recorded in memory, plan and two existing motion/gate records only',before=before,after={str(p):sha(p)for p in files},no_electrical_or_runtime_changes=True,current_CNC3_fixed_frames_preserved=True,new_targets_qualified=False,new_12_ABZ_protocol_implemented=False)
+(out/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r))

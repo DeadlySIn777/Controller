@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "actual_board_sha256": "0a3d6c4d27214dac0e7feeaa6a668c4cb5bd2f8240f9c09b0ae9869395259b9d",
+  "cases": [
+    {
+      "case": "healthy",
+      "input_board_sha256": "0a3d6c4d27214dac0e7feeaa6a668c4cb5bd2f8240f9c09b0ae9869395259b9d",
+      "input_source_map_sha256": "f5ac07b44b6524e69da15cce9056badf26a4390b867c457894b217e34bd1141e",
+      "actual_native_accepted": true,
+      "expected_acceptance": true,
+      "passed": true,
+      "rejection_reason": "",
+      "mutated_board_saved": false,
+      "unchanged_reference_margin_mm": 0.4
+    },
+    {
+      "case": "missing-southern-transfer",
+      "input_board_sha256": "0a3d6c4d27214dac0e7feeaa6a668c4cb5bd2f8240f9c09b0ae9869395259b9d",
+      "input_source_map_sha256": "f5ac07b44b6524e69da15cce9056badf26a4390b867c457894b217e34bd1141e",
+      "actual_native_accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "rejection_reason": "Literal new return-bridge conductor missing/wrong net: d2759d95-0ae6-438b-aaf8-10d2c994c76d",
+      "mutated_board_saved": false,
+      "unchanged_reference_margin_mm": 0.4
+    },
+    {
+      "case": "wrong-domain-southern-transfer",
+      "input_board_sha256": "0a3d6c4d27214dac0e7feeaa6a668c4cb5bd2f8240f9c09b0ae9869395259b9d",
+      "input_source_map_sha256": "f5ac07b44b6524e69da15cce9056badf26a4390b867c457894b217e34bd1141e",
+      "actual_native_accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "rejection_reason": "Literal new return-bridge conductor missing/wrong net: d2759d95-0ae6-438b-aaf8-10d2c994c76d",
+      "mutated_board_saved": false,
+      "unchanged_reference_margin_mm": 0.4
+    },
+    {
+      "case": "original-in1-obstruction",
+      "input_board_sha256": "102168c6cb80c159736502b2f4734cb56171a7850aaceede6193930e8df22304",
+      "input_source_map_sha256": "f5ac07b44b6524e69da15cce9056badf26a4390b867c457894b217e34bd1141e",
+      "actual_native_accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "rejection_reason": "Actual original In1 FIELD_GND metal cuts the unchanged strict C17014 LOGIC reference corridor",
+      "mutated_board_saved": false,
+      "unchanged_reference_margin_mm": 0.4
+    },
+    {
+      "case": "via-span-without-required-annulus",
+      "input_board_sha256": "0a3d6c4d27214dac0e7feeaa6a668c4cb5bd2f8240f9c09b0ae9869395259b9d",
+      "input_source_map_sha256": "f5ac07b44b6524e69da15cce9056badf26a4390b867c457894b217e34bd1141e",
+      "actual_native_accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "rejection_reason": "New return bridge is physically orphaned from actual source pads: d2759d95-0ae6-438b-aaf8-10d2c994c76d",
+      "mutated_board_saved": false,
+      "unchanged_reference_margin_mm": 0.4
+    }
+  ],
+  "native_Source_bridge_regressions_passed": 6,
+  "persisted_prior_control_fixture_failure": "native-control-via-span-without-required-annulus.json",
+  "prior_fixture_cause": "Setting an end layer on a THROUGH via did not remove its In3 annulus; corrected fixture selects actual BLIND via and asserts In3 span is absent before the rejection check. The production donor was unchanged.",
+  "source_or_ready_donor_mutated": false,
+  "manufacturing_ready": false
+}

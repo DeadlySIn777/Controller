@@ -1,0 +1,537 @@
+{
+  "status": "Manual power routing proposal; not yet merged or fully routed; native DRC remains required",
+  "review_date": "2026-10-06",
+  "source": "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+  "source_sections": [
+    "8.4.1",
+    "8.4.1.1",
+    "8.4.2 Figure8-15"
+  ],
+  "coordinates": "Board-local mm matching build_pcb.py; builder adds its(100,100)offset",
+  "assumed_placement": {
+    "U20": [
+      10.2,
+      17.5,
+      0,
+      "top"
+    ],
+    "C20": [
+      5.3,
+      15.25,
+      180,
+      "top"
+    ],
+    "C21": [
+      8.8,
+      18.1,
+      180,
+      "bottom"
+    ],
+    "C22": [
+      11.5,
+      12.7,
+      90,
+      "top"
+    ],
+    "C23": [
+      5.3,
+      18.6,
+      180,
+      "top"
+    ],
+    "C24": [
+      5.3,
+      21.95,
+      180,
+      "top"
+    ],
+    "D22": [
+      11.45,
+      7.2,
+      90,
+      "top"
+    ],
+    "U3": [
+      9.75,
+      21.0,
+      90,
+      "bottom"
+    ],
+    "Q3": [
+      10.65,
+      13.3,
+      0,
+      "bottom"
+    ],
+    "R1": [
+      1.8,
+      22.0,
+      0,
+      "bottom"
+    ],
+    "R13": [
+      10.55,
+      15.5,
+      0,
+      "bottom"
+    ],
+    "R14": [
+      7.15,
+      21.7,
+      90,
+      "bottom"
+    ]
+  },
+  "placement_findings": [
+    "No top-side placement blocker identified for the reviewed power group. C21 is the critical loop component and must retain nearby VIN/GND vias.",
+    "C21 is bottom at8.8,18.1,180degrees. VIN pad1=8.025,18.1; GND pad2=9.575,18.1. Its vias deliberately avoid printed paste on both faces.",
+    "C22 VCC pad is roughly2mm from U20 VCC; route directly and provide adjacent plane return. Input/output capacitors need short wide connections and direct ground vias.",
+    "Solid inner GND planes shield bottom control/sense routing. Do not route through SW pads5/6 or BOOT7; those remain externally unconnected.",
+    "Minimum native land gap is0.100mm at pad8-to9 and pad1-to11;0.120mm is only the ground-stem-to-output/switch gap. Use explicit local rules, not suppressed violations."
+  ],
+  "via_policy": {
+    "diameter_mm": 0.6,
+    "drill_mm": 0.3,
+    "tented_front": true,
+    "tented_back": true,
+    "no_drill_in_solder_paste": true
+  },
+  "independent_bottom_via_checks": {
+    "10.6,14.4": "0.226mm minimum copper gap to Q3.2",
+    "9.8,20.1": "0.300mm minimum copper gap to U3.2; tented under component body",
+    "2.75,20.95": "0.275mm minimum copper gap to R1.1",
+    "7.7,16.85 and10.2,17.0": "Reserved and checked with C21 placement",
+    "7.95,20.1 and12.35,11.925 and2.75,15.25 and2.75,18.6": "Independently checked >=0.15mm bottom copper clearance"
+  },
+  "routes": [
+    {
+      "net": "V5_REG",
+      "points": [
+        [
+          9,
+          18.5
+        ],
+        [
+          8.9,
+          18.6
+        ],
+        [
+          6.775,
+          18.6
+        ]
+      ],
+      "width": 0.6,
+      "layer": "F.Cu",
+      "review_note": "Short output path from U20 pad4 to first output capacitor."
+    },
+    {
+      "net": "V5_REG",
+      "points": [
+        [
+          6.775,
+          18.6
+        ],
+        [
+          6.775,
+          21.95
+        ]
+      ],
+      "width": 0.6,
+      "layer": "F.Cu",
+      "review_note": "Continue to second output capacitor; no thin daisy-chain neck."
+    },
+    {
+      "net": "BUCK_VIN",
+      "points": [
+        [
+          8.8,
+          16.85
+        ],
+        [
+          7.7,
+          16.85
+        ]
+      ],
+      "width": 0.25,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          7.7,
+          16.85
+        ]
+      ],
+      "review_note": "Narrow only at the 0.35mm VIN pad; nearby via feeds HF capacitor on B.Cu."
+    },
+    {
+      "net": "BUCK_VIN",
+      "points": [
+        [
+          7.7,
+          16.85
+        ],
+        [
+          7.3,
+          16.45
+        ],
+        [
+          6.775,
+          16.45
+        ],
+        [
+          6.775,
+          15.25
+        ]
+      ],
+      "width": 0.5,
+      "layer": "F.Cu",
+      "review_note": "Input bulk remains top, with wider path after escaping pin3."
+    },
+    {
+      "net": "BUCK_VIN",
+      "points": [
+        [
+          11.45,
+          8.6
+        ],
+        [
+          9.1,
+          10.95
+        ],
+        [
+          9.1,
+          13.65
+        ],
+        [
+          8.0,
+          14.75
+        ],
+        [
+          6.775,
+          14.75
+        ],
+        [
+          6.775,
+          15.25
+        ]
+      ],
+      "width": 0.5,
+      "layer": "F.Cu",
+      "review_note": "D22 cathode to input bulk; passes right of J3 pin4. Final route must be checked after all other nets are routed."
+    },
+    {
+      "net": "BUCK_VIN",
+      "points": [
+        [
+          7.7,
+          16.85
+        ],
+        [
+          7.7,
+          17.775
+        ],
+        [
+          8.025,
+          18.1
+        ]
+      ],
+      "width": 0.25,
+      "layer": "B.Cu",
+      "review_note": "C21 VIN pad; approximately1.3mm connection. Must keep away from signal nets."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          10.2,
+          17.0
+        ],
+        [
+          10.2,
+          17.475
+        ],
+        [
+          9.575,
+          18.1
+        ]
+      ],
+      "width": 0.25,
+      "layer": "B.Cu",
+      "review_note": "C21 GND pad to local ground-stem via, with continuous inner ground reference."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          10.2,
+          15.825
+        ],
+        [
+          10.2,
+          17.0
+        ]
+      ],
+      "width": 0.25,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          10.2,
+          17.0
+        ]
+      ],
+      "review_note": "Via in masked copper extension under U20, outside module paste and C21 paste. Both sides tented."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          10.2,
+          17.0
+        ],
+        [
+          10.2,
+          19.7
+        ],
+        [
+          9.8,
+          20.1
+        ]
+      ],
+      "width": 0.25,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          9.8,
+          20.1
+        ]
+      ],
+      "review_note": "Lower ground extension to tented via beneath U3 body; no drill intersects either component paste. Keep native DRC and mask inspection."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          9.7,
+          15.45
+        ],
+        [
+          9.7,
+          14.4
+        ]
+      ],
+      "width": 0.15,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          9.7,
+          14.4
+        ]
+      ],
+      "review_note": "Fixed5V module MODE/SYNC pad11 to local GND plane. This pin is a mode input."
+    },
+    {
+      "net": "BUCK_VCC",
+      "points": [
+        [
+          11.5875,
+          15.5375
+        ],
+        [
+          11.5875,
+          14.0
+        ],
+        [
+          11.5,
+          13.9125
+        ],
+        [
+          11.5,
+          13.475
+        ]
+      ],
+      "width": 0.3,
+      "layer": "F.Cu",
+      "review_note": "Direct top-side internal VCC bypass; no external loads on this net."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          11.5,
+          11.925
+        ],
+        [
+          12.35,
+          11.925
+        ]
+      ],
+      "width": 0.3,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          12.35,
+          11.925
+        ]
+      ],
+      "review_note": "C22 local return via; bottom pad clearance independently checked."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          3.825,
+          15.25
+        ],
+        [
+          2.75,
+          15.25
+        ]
+      ],
+      "width": 0.5,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          2.75,
+          15.25
+        ]
+      ],
+      "review_note": "C20 return directly into inner GND planes."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          3.825,
+          18.6
+        ],
+        [
+          2.75,
+          18.6
+        ]
+      ],
+      "width": 0.5,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          2.75,
+          18.6
+        ]
+      ],
+      "review_note": "C23 return directly into inner GND planes."
+    },
+    {
+      "net": "GND",
+      "points": [
+        [
+          3.825,
+          21.95
+        ],
+        [
+          3.175,
+          21.95
+        ],
+        [
+          2.75,
+          21.525
+        ],
+        [
+          2.75,
+          20.95
+        ]
+      ],
+      "width": 0.4,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          2.75,
+          20.95
+        ]
+      ],
+      "review_note": "C24 ground via offset upward to avoid bottom R1 paste/copper."
+    },
+    {
+      "net": "V5_REG",
+      "points": [
+        [
+          6.775,
+          18.6
+        ],
+        [
+          7.95,
+          19.775
+        ],
+        [
+          7.95,
+          20.1
+        ]
+      ],
+      "width": 0.25,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          7.95,
+          20.1
+        ]
+      ],
+      "review_note": "Sense branch originates at the first output capacitor, with a via to a quiet bottom route."
+    },
+    {
+      "net": "V5_REG",
+      "points": [
+        [
+          10.6,
+          14.4
+        ],
+        [
+          10.7,
+          14.5
+        ],
+        [
+          10.7,
+          15.45
+        ]
+      ],
+      "width": 0.15,
+      "layer": "F.Cu",
+      "vias": [
+        [
+          10.6,
+          14.4
+        ]
+      ],
+      "review_note": "Bias pin9 escape; bottom sense connection between the two V5 vias is intentionally left to root routing, not fabricated here."
+    }
+  ],
+  "unrouted_required_connections": [
+    {
+      "net": "V5_REG",
+      "layer": "B.Cu",
+      "from": [
+        7.95,
+        20.1
+      ],
+      "to": [
+        10.6,
+        14.4
+      ],
+      "purpose": "Quiet BIAS feedback connection; avoid C21, gate traces and all pad obstacles. Route behind solid inner GND."
+    },
+    {
+      "net": "V_EXT_PROT",
+      "from_ref_pin": "Q20.2",
+      "to_ref_pin": "D22.2",
+      "purpose": "Protected input feed; bulk/localdecoupling at U20 makes this less critical than CIN loop."
+    },
+    {
+      "net": "BUCK_EN",
+      "from_ref_pin": "U20.2",
+      "purpose": "R21/R22 divider routing must stay short and avoid noisy SW copper."
+    }
+  ],
+  "verification_limit": "Pad and paste geometry was inspected for listed via sites; complete copper segment routing, filled-plane connectivity, board DRC and measured switching behavior have not been proved by this proposal.",
+  "native_trial_check": {
+    "tool": "KiCad10 native PCB DRC",
+    "trial_board": "C:/Users/Gluis/AppData/Local/Temp/oea-power/power-route-trial.kicad_pcb",
+    "result": "No copper clearance, short-circuit or footprint violations from proposed tracks. After plane fill, only2dangling V5_REG sense vias remain because their bottom link is intentionally unrouted. Overall trial has56unconnected items because other board nets are not routed. This is not a full-board DRC pass.",
+    "report": "C:\\Users\\Gluis\\AppData\\Local\\Temp\\oea-power\\power-route-filled-drc.json"
+  }
+}

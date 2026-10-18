@@ -1,0 +1,13 @@
+read_verilog rtl/cnc_motherboard_motion_bringup.v rtl/cnc_motherboard_watchdog_bringup.v rtl/cnc_iol1_readonly_master.v rtl/cnc_spi_frame.v rtl/cnc_stepgen.v rtl/cnc_encoder.v
+hierarchy -check -top cnc_motherboard_watchdog_bringup
+proc
+check -assert
+select -assert-none t:$dlatch t:$adlatch t:$dlatchsr
+tee -o structural-stat.json stat -json
+synth_efinix -top cnc_motherboard_watchdog_bringup
+delete t:$scopeinfo
+check -assert -mapped
+select -assert-none t:EFX_LATCH t:$_DLATCH_* t:$dlatch t:$adlatch t:$dlatchsr
+tee -o mapped-stat.json stat -json
+write_json motherboard_watchdog_bringup_efinix.json
+write_edif motherboard_watchdog_bringup_efinix.edif

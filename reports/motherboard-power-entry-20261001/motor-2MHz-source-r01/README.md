@@ -1,0 +1,5 @@
+The fitted six AM26C31IPWR packages provide 24 differential driver signals for twelve STEP/DIR motor channels. The adopted target is up to 2 MHz per signal, subject to each drive profile. This is a target to qualify, not a new component rating.
+
+TI specifies 12 ns maximum propagation delay and 4 ns maximum pulse skew under its switching test circuit, whose generator condition is PRR ≤1 MHz. Those rows do not prove the whole controller at 2 MHz. The 170 pF dissipation-capacitance value is a typical estimate: at 5 V and 24 signals ×2 MHz it predicts 0.204 W /40.8 mA of internal average dynamic contribution, before cable/receiver loading. It is not a guaranteed maximum.
+
+The .2244 A/package value used in a conservative feeder screen exceeds the driver’s 200 mA absolute package VCC stress limit. It therefore describes possible feeder capacity only. It must never become an allowed operating load of an AM26C31. Recommended output current is ±20 mA. Actual cable/termination, simultaneous switching, loaded pulse widths and package thermal/current limits must be checked before a drive profile enables the target rate. Source circuit and ratings are unchanged.

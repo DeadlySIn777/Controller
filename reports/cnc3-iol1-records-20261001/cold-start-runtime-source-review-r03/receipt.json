@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "evidence_type": "exact-byte source inspection only; requirement gaps explicitly retained",
+  "files": {
+    "target.c": "b69aade32b21136d87f6de405a92b3759cc1be4d9ec0efbef1310bcba1d57aa4",
+    "iol1.c": "6140e520dc514642d6094060e8c40a3b4bc528823ba96e84a9e586390a70c2f1",
+    "iol1.h": "27d58362e1f92d9e8568d25fb295a01c12c830816a2840dc8e264809207e3c2e",
+    "board_record.c": "e9524e45a814766d690880b4dce4647a632a2823167a9b3d7f8c92355f9a0d39",
+    "board_record.h": "4667cdc875004e43f6634dc954bded930005fef52de55254532ef0110c995a60",
+    "dic_filter.c": "fc2008bc4728d9f2d85f3299e4208b822485c1b0f83b3b4d76ab4b65086dc332",
+    "startup.S": "2d983a791c208f535a2de736f37c105f36f79a3aded9886599a028b76ec807ec",
+    "stm32g031.ld": "f17b17b04a936377a1f1e98564997aa8b5d47d8ad684b01dd6e45d84179a593b",
+    "primary-flash-observations.json": "cefeabf34c57390d687cbe28be785b98e5375b2d4bec75043b4d53309faa1483"
+  },
+  "findings": [
+    {
+      "scope": "cold_authority",
+      "status": "PASS",
+      "finding": "Zero-initialized node/state and BSS; safe_outputs drives PA0/PA1 and ACC PA8/9 LOW before output mode; no later authority HIGH code."
+    },
+    {
+      "scope": "factory_flash",
+      "status": "PASS",
+      "finding": "Only read-only UID and two reserved flash pages are accessed; target integrity/UID selection sets diagnostic pointer/major, never signature authentication or ACTIVE."
+    },
+    {
+      "scope": "page_atomicity",
+      "status": "PASS",
+      "finding": "Reserved pages30/31 remain outside60KiB app; selection rejects conflicting equal generation and mixed lineage. Fresh r03 tests exercise actual successor torn prefixes. No target erase/program routine exists."
+    },
+    {
+      "scope": "IRQ_generation",
+      "status": "PASS",
+      "finding": "DIC group/generation snapshot and commit use IRQ exclusion; commit requires unchanged generation. Reset/SYNC invalidate config and volatile filter restarts on generation."
+    },
+    {
+      "scope": "sample_age",
+      "status": "PASS",
+      "finding": "DIC/DO actual shared uint32 modular elapsed saturates>=FFFF and invalid latches until actual resample; cold invalid. Fresh r03 tests cover integer boundary, rollover and accepted SPI while samples stall."
+    },
+    {
+      "scope": "watchdog_progress",
+      "status": "PASS",
+      "finding": "Only exact accepted IOL1 frames refresh IWDG; main/peripheral loops do not. Watchdog starts before factory read; NMI/HardFault default loop cannot refresh it."
+    },
+    {
+      "scope": "startup_clock",
+      "status": "BLOCKED",
+      "finding": "Clock/LSI readiness loops precede software watchdog and have no bounded fallback; hardware-start IWDG/BOR/NRST options are neither provisioned nor read back. Hardware cold-start qualification remains required."
+    },
+    {
+      "scope": "ECC_NMI",
+      "status": "BLOCKED",
+      "finding": "No actual flash ECC/NMI execution or interrupted hardware programming measured; independent watchdog reset can repeat on persistent damaged pages. No automatic ECC recovery guarantee."
+    },
+    {
+      "scope": "physical_IRQ_SPI",
+      "status": "BLOCKED",
+      "finding": "Compiled target and same C/VPI proof do not execute STM32 MMIO/DMA/IRQ timing. Data cache/sample fixtures are explicit disconnected observations."
+    },
+    {
+      "scope": "production_identity",
+      "status": "BLOCKED",
+      "finding": "CRC/UID integrity is not authenticated identity. Factory signature trust registry, production programming/WRP and calibration records remain unprovisioned."
+    }
+  ],
+  "runtime_flash_erase_program": false,
+  "physical_MMIO_interrupt_watchdog_validation": false,
+  "commercial_ACTIVE_or_ARM_authority": false,
+  "actual_record_replay": "../record-config-replay-full-r03/report.json"
+}

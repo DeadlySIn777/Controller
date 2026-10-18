@@ -1,0 +1,23 @@
+DEVELOPMENT PROTOTYPE - NOT RELEASED FOR MANUFACTURE OR SALE
+The cover is a CAD render, not a photograph of tested hardware.
+
+OEA r0.1 is a single-axis StepStick-format interface intended to connect a compatible controller socket to an external stepper driver through one keyed four-wire cable. The intended finished product is a fully assembled adapter supplied with a finished matching harness, avoiding customer soldering or crimping.
+
+Candidate design
+- 15.24 x 20.32 mm, two-layer PCB, nominal 1.6 mm thickness.
+- SN74LVC3G06 triple open-drain inverter for STEP, DIR and ENABLE.
+- A top-mounted four-position JST XH connector.
+- Underside eight-pin and seven-pin plug headers; the motor-supply VM contact and plated hole are deliberately absent.
+- Proposed 500 mm, 24 AWG harness with a factory-insulated common-positive fanout and six labelled driver leads. Final cable length and driver-end terminals remain subject to qualification.
+
+Output connector: 1 = +5 V common; 2 = PUL-; 3 = DIR-; 4 = ENA-. The harness divides the common into PUL+, DIR+ and ENA+. Motor power, motor/encoder connections and alarm wiring remain separate.
+
+Compatibility
+This revision is based on the Octopus Pro V1.0 F429/F446 socket interface and expects a verified 5 V supply and 5 V control signals. CL57T V4.1 is a provisional target driver. Neither combination has yet been physically qualified. A matching socket does not establish electrical compatibility. General SKR, BTT and third-party controller compatibility has not been established. Boards with integrated stepper drivers do not offer the required removable-driver socket. Do not connect this revision to a 3.3 V-only control interface or use 24 V signal common without a separately reviewed design.
+
+Verification and release status
+Native KiCad schematic ERC and board DRC report zero errors and warnings, with zero unconnected items and zero schematic discrepancies. These are CAD checks only. There is no tested first article, loaded electrical validation, pulse-rate rating, startup/enable qualification, EMC test or emergency-stop/STO claim.
+
+Before ordering is enabled, the design needs exact host/driver qualification, populated mechanical fit, power and logic checks, agreed cable termination, loaded pulse/enable and power-sequence tests, factory DFM and a confirmed full-turnkey quotation. Production files and price have not been released. PCBWay's PCB + Assembly option and the separate finished-harness scope must be confirmed before any complete-set offer is advertised.
+
+Draft publication note: design-file distribution and licensing remain undecided. No source download or manufacturing-file release is authorized by this private draft. This development record is not an endorsement by BIGTREETECH, TI, JST or a driver manufacturer. All third-party names identify interfaces or components only. Attribution for any redistributed library assets will accompany a future source release. 

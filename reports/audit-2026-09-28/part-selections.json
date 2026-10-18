@@ -1,0 +1,713 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-09-28",
+  "scope": "Six-joint/two-encoder baseline (electrical-r0.1 ledger rows marked required_unselected). Candidate exact MPNs selected by desk research during the 2026-09-28 audit.",
+  "evidence_class": "Datasheet and manufacturer/distributor page inspection only. No ERC, DRC, SI/PDN or thermal simulation, Efinity power estimate, or physical measurement. Selecting an MPN does not qualify the circuit.",
+  "integration_status": "NOT integrated into hardware/electrical-design.json. The ledger generator tools/hardware_build_design.py is the authoritative place to adopt these; it was being edited concurrently by another tool during the audit, so these selections are handed off rather than applied.",
+  "no_prices_or_stock": "Prices and availability intentionally not recorded; PCBWay turnkey sourcing and quotation remain the cost authority.",
+  "manufacturing_ready": false,
+  "groups": [
+    {
+      "scope": "passive support bundles and analog/watchdog timing",
+      "parts": [
+        {
+          "ledger_id": "tx_series",
+          "mpn": "CRCW060333R0FKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "33.0 ohm, 1%, 100 ppm/K, 0.1 W (standard mode, P70) / 0.125 W extended, 75 V max operating voltage, thick film, AEC-Q200, packaging EA = 5000 pcs on a 7 in reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 12,
+          "calculation": "Logic-side input damping between the 3.3 V source and the AM26C31 data inputs (tx_six R1-R12). Dissipation is negligible: the AM26C31 input leakage is about 1 uA and the only other current is edge charge into a few pF, so the 0.1 W rating is not the limit. The value stays at the ledger's 33 ohm provision.",
+          "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verification_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verified_how": "Opened the Vishay D/CRCW e3 datasheet (doc 20035, rev 14-Apr-2026). Decoded the part number from its PART NUMBER table: CRCW0603 + 33R0 + F (1%) + K (100 ppm/K) + EA (5000 pcs, 7 in reel, listed for CRCW0603). Read the 0603 ratings (0.1/0.125 W, 75 V) from the same datasheet. The exact code appears in search results for DigiKey (1174497), Newark and Arrow product listings. Automated fetches of those distributor pages were refused (403 or timeout), so no distributor product page was opened.",
+          "open_qualification": "33 ohm is a damping provision. Its value needs a signal-integrity (SI) and layout review against the real source driver, trace length and AM26C31 input capacitance, and a measurement. It does not provide backfeed protection for an unpowered AM26C31.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "tx_data_pulldown",
+          "mpn": "CRCW060310K0FKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "10.0 kohm, 1%, 100 ppm/K, 0.1 W, 75 V, thick film, AEC-Q200, EA reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 12,
+          "calculation": "Holds each AM26C31 data input low when the upstream source is high impedance. Worst-case load is 3.4 V / 10 k = 0.34 mA, dissipating about 1.2 mW, well under 0.1 W. The pulldown still gives a valid low with the AM26C31 input leakage current.",
+          "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verification_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verified_how": "Opened the Vishay D/CRCW e3 datasheet (doc 20035) and decoded the ordering code: 10K0 + F (1%) + K (100 ppm/K) + EA. The exact code appears in search results for DigiKey (1174782), Farnell and Newark product listings; those distributor pages could not be fetched (403). The same resistor family is already used in hardware/encoder_power/bom.csv (CRCW0603110KFKEA).",
+          "open_qualification": "Check that the FPGA or level-source drive can pull high against 10 k plus any series resistor. Partial-power behaviour and backfeed into an unpowered driver remain open.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "tx_permit_pulldown",
+          "mpn": "CRCW060310K0FKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "10.0 kohm, 1%, 100 ppm/K, 0.1 W, 75 V, thick film, EA reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 3,
+          "calculation": "One pulldown per bank G pin, with the three sharing the TX_PERMIT net. In parallel they measure 3.33 k, so the permit source carries 3.4 V / 3.33 k = 1.02 mA. Each resistor dissipates 1.2 mW. The source's drive capability is still unreviewed (reports/SIX_JOINT_TRANSMITTER.md).",
+          "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verification_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verified_how": "Same MPN and verification as tx_data_pulldown: the Vishay doc 20035 ordering-code table was decoded, and the exact code appears in DigiKey/Farnell/Newark search results.",
+          "open_qualification": "The permit-source drive for the combined 1 mA load, and the gate/latch timing, remain open.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "tx_decoupling",
+          "mpn": "CL10B104KA8NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "100 nF, 10%, 25 V, X7R (-55 to +125 C), status Mass Production; package code C = 7 in cardboard (paper) reel",
+          "package": "0603 (1608 metric), 1.6 x 0.8 x 0.8 mm",
+          "qty_per_controller": 3,
+          "calculation": "TI AM26C31 Rev. P recommends a 0.1 uF bypass close to the supply pins. The part runs at 5.15 V maximum on a 25 V rating, so X7R DC-bias loss is small at about 20% of rated voltage.",
+          "datasheet_url": "https://product.samsungsem.com/mlcc/CL10B104KA8NNN.do",
+          "verification_url": "https://product.samsungsem.com/mlcc/CL10B104KA8NNN.do",
+          "verified_how": "Opened the Samsung SEM product page and parsed it. It shows 100.0 nF, +/-10%, 25.0 Vdc, X7R(-55~+125), size 0603 (1608), T 0.80 mm, Status Mass Production. Its package-code table lists the C/8/H suffixes as cardboard 7 in reels, and the page lists CL10B104KA8NNNC. DigiKey (3886664) and TME listings of the exact code appear in search results.",
+          "open_qualification": "Placement and loop inductance need layout review; there is no electrical qualification.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "tx_bulk",
+          "mpn": "CL10B105KA8NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "1.0 uF, 10%, 25 V, X7R, status Mass Production, C = 7 in cardboard reel",
+          "package": "0603 (1608 metric), 1.6 x 0.8 x 0.8 mm",
+          "qty_per_controller": 3,
+          "calculation": "Local bulk capacitance at each AM26C31 on CORE_5V (4.85-5.15 V). A 25 V rating at 5 V bias gives about 20% of rated voltage. Effective capacitance under DC bias was not verified; expect a meaningful X7R reduction from 1 uF, as the ledger's 'bias derating' note says.",
+          "datasheet_url": "https://product.samsungsem.com/mlcc/CL10B105KA8NNN.do",
+          "verification_url": "https://product.samsungsem.com/mlcc/CL10B105KA8NNN.do",
+          "verified_how": "Opened the Samsung SEM product page. It shows 1.0 uF, +/-10%, 25.0 Vdc, X7R, 0603 (1608), T 0.80 mm, Mass Production, with CL10B105KA8NNNC listed as the C-suffix reel code. A Newark listing of the exact code appears in search results.",
+          "open_qualification": "Effective capacitance at 5 V DC bias and temperature is unverified: check it on the Samsung DC-bias curve, or measure it. Whether 1 uF is enough for the driver's switching transients, and the layout, remain open.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "di_rsense",
+          "mpn": "CRCW0603562RFKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "562 ohm, 1%, 100 ppm/K, 0.1 W, 75 V, thick film, AEC-Q200, EA reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 22,
+          "calculation": "ISO1212 Rev. G, section 8.2.1.2.1, Eq. 1: IL = 2.25 mA x 562 ohm / RSENSE = 2.25 mA typ. A 1% tolerance is recommended. Dissipation is (about 2.5 mA)^2 x 562 = 3.5 mW, far below 0.1 W. Section 8.4.1 recommends 0603 for RSENSE. With RTHR = 1 k, Eq. 2 and 3 give VIH(typ) = 8.25 + 1k x 2.25 mA = 10.5 V and VIL(typ) = 7.1 + 2.25 = 9.35 V. Both sit inside the ledger's guaranteed-low 5 V and guaranteed-high 15 V targets.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso1212.pdf",
+          "verification_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verified_how": "CRCW0603562RFKEA is the literal example part number printed in the PART NUMBER section of Vishay doc 20035 (rev 14-Apr-2026). Newark (52K8624), Farnell and Future Electronics listings appear in search results. The ISO1212 recommendations come from the TI ISO1212 Rev. G PDF (SLLSEY7G, Feb 2025), which was downloaded and read.",
+          "open_qualification": "The thresholds need tolerance and temperature analysis (section 5.9 min/max), a measurement, and the combined timing of the filter capacitor (di_filter, not selected here). The field-side layout and FGND-plane rules still apply.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "di_rthreshold",
+          "mpn": "MMA02040C1001FB300",
+          "manufacturer": "Vishay Beyschlag",
+          "value_and_ratings": "1.00 kohm, 1%, 50 ppm/K, MELF thin film, 0.25 W (general mode, P70) / 0.4 W (power mode), 200 V operating voltage, 300 V insulation; B3 = 3000 pcs antistatic blister, 7 in reel; best-in-class pulse-load MELF",
+          "package": "MiniMELF 0204 (RC3715M)",
+          "qty_per_controller": 22,
+          "calculation": "ISO1212 section 8.2.1.2.1 recommends RTHR = 1 k for Type 3 and says '0.25W MELF resistors must be used'. Section 8.2.1.2.5 and Table 8-1 recommend 1 k RTHR with 10 nF CIN for 1 kV line-to-PE/line-to-line surge. Steady-state loss is about (2.5 mA)^2 x 1 k = 6 mW. Surge: a 1 kV, 42 ohm IEC 61000-4-5 pulse gives Ipk of roughly 0.96 A through RTHR if unclamped, so the integral of I^2 dt is Ipk^2 x tau/2 = 0.92 x 36 us, about 33 mJ. Reading the MMA 0204 1.2/50 us pulse-rating graph (datasheet p.8, EN 60115-1 clause 8.2) gives about 0.7-0.8 kV permissible test voltage at 1 kohm. The ledger's SMF36A input TVS at the terminal (not verified here) should clamp the resistor's stress to tens of volts.",
+          "datasheet_url": "https://www.vishay.com/docs/28963/mmu0102_mma0204_mmb0207.pdf",
+          "verification_url": "https://www.vishay.com/docs/28963/mmu0102_mma0204_mmb0207.pdf",
+          "verified_how": "Downloaded and read Vishay doc 28963 (rev 02-Jun-2026). The former Professional datasheet 28713 is merged into it. Decoded the part number: MMA0204 + 0 (version) + C (50 ppm/K) + 1001 (100 x 10^1 = 1 kohm) + F (1%) + B3 (3000 blister, 7 in) + 00, matching the datasheet's example format MMA02040D5620BB300. Checked the P70 ratings table and read the 1.2/50 pulse graph from a rendered page. Search results show exact-MPN listings at DigiKey (2000898), Newark and Arrow; the DigiKey page returned 403 when fetched.",
+          "open_qualification": "Surge coordination is open: the SMF36A position, clamp voltage and energy against RTHR's 1.2/50 rating of about 0.75 kV at 1 k. If an unclamped 1 kV line surge must be survived across RTHR, re-evaluate with MMB 0207. IEC 61000-4-2/4/5 tests, MELF land pattern and PCBWay placement of MELF parts are also open.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "di_decoupling",
+          "mpn": "CL10B104KA8NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "100 nF, 10%, 25 V, X7R, Mass Production, 7 in reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 11,
+          "calculation": "ISO1212 sections 8.2.1.1 and 8.3: 'A 100nF decoupling capacitor is required on VCC1', placed close to the pins. VCC1 = IO_3V3 (3.2-3.4 V), so it runs at about 14% of the 25 V rating.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso1212.pdf",
+          "verification_url": "https://product.samsungsem.com/mlcc/CL10B104KA8NNN.do",
+          "verified_how": "Same capacitor MPN and verification as tx_decoupling (Samsung product page opened). The requirement was read from the downloaded ISO1212 Rev. G sections 8.2.1.1 and 8.3.",
+          "open_qualification": "Placement only; layout review.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "iso_decoupling",
+          "mpn": "CL10B104KA8NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "100 nF, 10%, 25 V, X7R, Mass Production, 7 in reel",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 12,
+          "calculation": "One capacitor on each supply side of the 6 ISO7740F parts (IO_3V3, FIELD_5V, ANALOG_5V; 5.15 V maximum), giving 12. The TI ISO7740 application figures show 0.1 uF at each VCC pin.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso7740.pdf",
+          "verification_url": "https://product.samsungsem.com/mlcc/CL10B104KA8NNN.do",
+          "verified_how": "Same capacitor MPN and verification as tx_decoupling. The ISO7740 0.1 uF per-VCC bypass was read from the downloaded TI ISO7740 datasheet (SLLSEP4K, rev Aug 2026) application figures.",
+          "open_qualification": "Each capacitor must go on the correct side of the isolation barrier. Check creepage and clearance when placing parts near the barrier, and review emissions and layout.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "do_pulldown",
+          "mpn": "CRCW060310K0FKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "10.0 kohm, 1%, 100 ppm/K, 0.1 W, 75 V, thick film, EA reel. VALUE PROVISIONAL.",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 16,
+          "calculation": "Provisional external pulldown on all 16 TPS4H160 INx pins, including unused ones, on the FIELD_5V logic side. Each pulldown loads its ISO7740F output with 5.15 V / 10 k = 0.52 mA and dissipates 2.7 mW. The TPS4H160-Q1 already has an internal R(logic,pd) pulldown on INx, and the datasheet (section 8.2.2) recommends a 10 k series R(ser) for a 5 V MCU. The final pulldown and series topology and values are not decided here.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps4h160-q1.pdf",
+          "verification_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verified_how": "Same MPN and verification as tx_data_pulldown. The TPS4H160 internal pulldown and R(ser) recommendation were read from the downloaded TPS4H160-Q1 datasheet (SLVSCV8E, rev Jun 2025).",
+          "open_qualification": "The value is provisional. Still to decide: whether to add a 10 k series resistor per TI section 8.2.2; the ISO7740F default-low behaviour on loss of input or supply combined with these pulldowns; and the permission-gating timing.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "analog_gain",
+          "mpn": "ERA-3AEB303V",
+          "manufacturer": "Panasonic",
+          "value_and_ratings": "30.0 kohm (Rf), 0.1% (B), 25 ppm/K (E), 0.1 W at 85 C, thin film, AEC-Q200; V = punched carrier tape, 4 mm pitch, 5000 pcs",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 1,
+          "calculation": "DAC80501Z Equation 1: VOUT = code/65536 x VREFIO/DIV x GAIN. With REF-DIV=1 (DIV=2) and BUFF-GAIN=1 (GAIN=2) the full scale is 2.5 V. OPA197 non-inverting gain G = 1 + 30.0k/10.0k = 4.000, so the output reaches 10.00 V nominal. Tolerance: dG/G = 0.75 x (+/-0.1% +/-0.1%) = +/-0.15%. The internal reference is 2.4975-2.5025 V (+/-0.1%), the DAC full-scale error with REF-DIV=1 is +/-0.06 %FSR, and OPA197 Vos of +/-100 uV times 4 is 0.4 mV. Worst case at 25 C: FS(min) = 10 x 0.999 x 0.9994 x 0.9985 - 0.0004, about 9.968 V; FS(max) is about 10.031 V. Over temperature the reference adds 5 ppm/K, DAC FS 2 ppm/K, and resistor ratio mismatch up to 0.75 x 50 = 37.5 ppm/K. At dT = 45 K that is about -0.2% more, taking the minimum to about 9.95 V. Swing budget at ANALOG_12V minimum 11.4 V: output at most 10.031 V at about 1.25 mA (10 k receiver plus 40 k feedback), leaving 1.37 V headroom. OPA197 section 6.7 gives maximum swing-from-rail of 125 mV at RL = 10 k and 500 mV at 2 k, so the margin is at least 0.87 V. Rf dissipation is (7.5 V)^2 / 30 k = 1.9 mW.",
+          "datasheet_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf",
+          "verification_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf",
+          "verified_how": "Opened the Panasonic High Reliability Metal Film chip resistor (ERA-xA) datasheet PDF. Decoded the part number from its 'Explanation of part numbers' table: ERA + 3A (0603, 0.1 W) + E (+/-25 ppm/K) + B (+/-0.1%) + 303 (30 k, E24) + V (5000 pcs, 4 mm punched tape). The exact MPN appears in search results for element14/Farnell (1670196), TME, RS, Arrow and Octopart listings, all showing 30 kohm, 0.1%, 25 ppm, 0603; fetching those pages returned 403. The Vishay TNPW060330K0BEEA alternative was dropped because no distributor listing of that exact code could be found.",
+          "open_qualification": "The ledger's 'matched' pair is two discrete 25 ppm parts, whose ratio drift can reach 37.5 ppm/K of gain. A ratio-matched network would need a different package. Full-scale accuracy is not guaranteed to reach 10.00 V untrimmed (worst case about 9.95-10.03 V): calibration or a code clamp is needed if the limit is exact. Output isolation and filter, short protection, the zero clamp and ANALOG_12V ripple remain open (analog_support and analog_zero_clamp rows).",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "analog_gain",
+          "mpn": "ERA-3AEB103V",
+          "manufacturer": "Panasonic",
+          "value_and_ratings": "10.0 kohm (Rg), 0.1% (B), 25 ppm/K (E), 0.1 W at 85 C, thin film, AEC-Q200, V = 5000 pcs, 4 mm punched tape",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 1,
+          "calculation": "This is Rg of the gain-4 stage; see the ERA-3AEB303V entry for the full gain, accuracy and swing budget. Rg dissipation is (2.5 V)^2 / 10 k = 0.63 mW.",
+          "datasheet_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf",
+          "verification_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf",
+          "verified_how": "Decoded the part number from the same Panasonic ERA-xA datasheet (3A/E/B/103/V). The exact MPN appears in search results for Farnell (2981812), Mouser, DigiKey (1465878), TTI and RS listings showing 10 kohm, 0.1%, 25 ppm/K, 0603; fetching those pages returned 403 or connection resets.",
+          "open_qualification": "Same as ERA-3AEB303V: the ratio tracking and full-scale calibration decision remain open.",
+          "confidence": "verified"
+        }
+      ],
+      "not_selected": [
+        {
+          "ledger_id": "rx_termination",
+          "reason": "already selected: CRCW1210120RFKEA in hardware/rx_abz/bom.csv (R1-R6, 120R 1% 0.5 W 1210, qty 6 matches ledger). The hardware/electrical-design.json and bom-snapshot.csv rows are still mpn=null, so the ledger should be synced to the rx_abz block rather than a new part chosen."
+        },
+        {
+          "ledger_id": "watchdog_timing",
+          "reason": "The target cannot be met with the ledger's TPS3431SDRBR, so no timing capacitor was selected. TPS3431 datasheet (SNVSB66A), section 8.1.1.2, Eq. 1: tWD(ms) = 77.4 x CCWD(nF) + 55, with boundaries 0.905x and 1.095x (Table 8-2). The smallest designed and tested capacitor, 100 pF, gives 56.77 / 62.74 / 68.7 ms min/typ/max (Table 8-3), before C0G tolerance. The factory options are 170/200/230 ms (CWD 10 k to VDD) and 1360/1600/1840 ms (CWD NC) (Table 8-1). TPS3431SDRBR is the only orderable variant. So the requirement 'minimum > 5 ms and maximum <= 20 ms' is impossible: the fastest achievable maximum is about 68.7 ms, 3.4 times the 20 ms limit. For reference, the WDO pull-up must be 1 k-100 k to the pull-up rail (datasheet pin table; typical 10 k, e.g. CRCW060310K0FKEA to IO_3V3) and SET1 must be high to enable. Neither is recorded as a selection while the timing element is infeasible. A part change or a change to the external watchdog limit is a ledger decision; see notes."
+        }
+      ],
+      "engineering_notes": "Summary: 12 parts selected across 11 rows (analog_gain has two resistors). rx_termination was already selected in the rx_abz block. watchdog_timing is infeasible with the TPS3431 in the ledger.\n\nNothing was written inside the controller workspace. Scratch datasheet copies and extracted text are in C:/Users/Gluis/AppData/Local/Temp/claude/C--Users-Gluis-OneDrive-Documents-ChatGPT-Controller/280553e2-7c85-48b3-a5fa-96a4c2e06e60/scratchpad/ro/. I re-read the ledger files (mtime 04:48:46), the tx_six and rx_abz BOMs (unchanged) and the encoder_power BOM (updated at 14:57, no conflicting passive MPNs) before reporting.\n\n1) WATCHDOG IS INFEASIBLE AS SPECIFIED. With TPS3431SDRBR the shortest external timeout is 56.77 / 62.74 / 68.7 ms at CCWD = 100 pF (datasheet Table 8-3; Eq. 1 is 77.4 x C + 55 ms). The 20 ms maximum cannot be met, and the ledger limit was not changed. Candidate fix, not applied: TI TPS3851 'S' standard-timing parts (TPS3851G18SDRBR, TPS3851G33SDRBR, TPS3851G50SDRBR are active in the TI SBVS300B orderable addendum). Their Eq. 1 is tWD = 3.23 x CCWD(nF) + 0.381 ms, with boundaries 0.905x and 1.095x. With a 3.3 nF +/-5% C0G capacitor: min = 0.905 x (3.23 x 3.135 + 0.381) = 9.51 ms; typ = 11.04 ms; max = 1.095 x (3.23 x 3.465 + 0.381) = 12.67 ms. That meets > 5 ms and <= 20 ms. Caveats: TPS3851 is a supervisor as well as a watchdog, so pinout and footprint differ from TPS3431. On IO_3V3 the G33 threshold (3.168 V +/-0.8%, release up to about 3.22 V) conflicts with the 3.2 V rail minimum, so G18 or a different supervision split would be needed. Changing the watchdog MPN, footprint and permission design needs a separate ledger decision.\n\n2) DAC80501 CONFIGURATION. The '2.5 V reference, gain 1' decision works only as a net x1: REF-DIV=1 (divide by 2) with BUFF-GAIN=1 (x2). Datasheet section 7.3 limits VREFIO to 0.5 x VDD when REF-DIV=0, so the internal 2.5 V reference needs VDD >= 5.0 V in that mode. At the ANALOG_5V minimum of 4.85 V that is violated, and section 8.3.2 says an improper divider setting raises a reference alarm that forces VOUT to 0 V. The POR default (REF-DIV=0, BUFF-GAIN=1, for a 0-5 V range) is therefore a fail-to-zero configuration below 5.0 V. Gateware must write GAIN register 4h (REF-DIV=1, BUFF-GAIN=1) before output is enabled, and should check the alarm. BUFF-GAIN=0 with REF-DIV=0 is not an output range listed in the section 7.5 VO table. With REF-DIV=1 and BUFF-GAIN=1, full scale is 2.5 V and DAC headroom is 4.85 - 2.5025 = 2.35 V, against a 0.3 V spec at 10 mA. The ledger text 'internal2.5Vref gain1' should say this explicitly.\n\n3) ANALOG FULL-SCALE ACCURACY. 30.0k/10.0k 0.1% gives 10.00 V nominal. Untrimmed worst case is about 9.968-10.031 V at 25 C, and down to about 9.95 V over a 45 K temperature swing (discrete-resistor ratio drift dominates). If 10.0 V must be guaranteed, the options are software calibration with a code clamp, a slightly higher gain with a clamp, or a ratio-matched network. The ledger target was not changed.\n\nOPA197 swing budget: 11.4 V - 10.031 V = 1.37 V headroom, against at most 125 mV (10 k) or 500 mV (2 k) swing-from-rail in OPA197 section 6.7, which is ample. At the zero end, the single-supply output sits 5-25 mV above ground unloaded, plus DAC zero-code error of +/-1.5 mV x 4. The output is therefore not exactly 0 V, and the physical zero clamp is still required.\n\n4) ISO1212 RTHR. TI requires 0.25 W MELF parts (section 8.2.1.2.1). MMA 0204 at 1 k has a 1.2/50 us rating of only about 0.7-0.8 kV, read from the datasheet graph. It is adequate if the SMF36A input TVS clamps ahead of it; surge coordination remains open.\n\n5) VERIFICATION METHOD. DigiKey, Mouser, Newark, Farnell, TME, Octopart and TrustedParts returned 403, timeouts or resets to automated fetches. Manufacturer sources were opened directly: Vishay doc 20035 (CRCW), Vishay doc 28963 (MMA 0204), the Panasonic ERA-xA PDF, and Samsung SEM product pages. Each exact ordering code was decoded from, or shown on, those sources, and its existence was cross-checked in search-engine results for distributor listings of that exact MPN. No prices or stock were recorded. Selecting these MPNs does not qualify any circuit: SI, surge and EMC, thermal, layout, ERC/DRC and physical measurement are all still open."
+    },
+    {
+      "scope": "FPGA configuration, clock, JTAG, decoupling and host/ESP buffers",
+      "parts": [
+        {
+          "ledger_id": "fpga_flash",
+          "mpn": "W25Q32JVSSIQ",
+          "manufacturer": "Winbond",
+          "value_and_ratings": "32 Mbit SPI NOR with Dual and Quad output; 2.7-3.6 V; 133 MHz FR (3.0-3.6 V); -40 to +85 C (I grade); 'Q' ordering option means QE=1 is fixed by the factory; 3-byte addressing; supports ABh (release from power-down) and 0Bh/3Bh/6Bh (fast reads). Local bypass: 1x 100 nF CL05B104KO5NNNC (see fpga_decoupling). /WP(IO2) and /HOLD(IO3): 10 k CRCW060310K0FKEA pull-ups to IO_3V3 (2 pcs).",
+          "package": "SOIC-8 208 mil (package code SS); shipped in tube by default (a 'T' packing option exists for tape and reel)",
+          "qty_per_controller": 1,
+          "calculation": "AN006 v6.6 Table 1 gives T20 BGA256 a maximum single-image size of 5,255,968 bits, including an optional header of up to 1 kB. 32 Mbit / 5.256 Mbit = 6.38 images of capacity. Four CBSEL images (4 x 5.256 = 21.0 Mbit) would still fit with 11 Mbit left for user data. AN006 'Selecting the Right SPI Flash Device' lists the Winbond W25Q family as supported. It requires 3-byte addressing, and the device supports that (32 Mbit < 128 Mbit, so there is no 4-byte mode issue). Commands: the T20 datasheet v6.0 (Configuration section) says the FPGA sends a release from power-down, waits at least 30 us, then fast-reads (0Bh) from 24'h000000. W25Q32JV tRES1 is 3 us max (datasheet section 9), so this is covered. Clock: T20 Table 117 fMAX_M is 26 MHz max (DIV4), well below the 133 MHz FR. Voltage: 2.7-3.6 V covers the ledger IO_3V3 range of 3.2-3.4 V. AN006 requires the flash voltage to equal the VCCIO of the configuration bank, which is 3.3 V here. Configuration time at x1 and 20 MHz typ = 5.256 Mbit / 20 MHz = 263 ms (at the 14 MHz minimum it is 375 ms). The flash power-up requirement (VCC(min) to /CS low, tVSL 20 us) is met because CRESET_N is held by the supervisor.",
+          "datasheet_url": "https://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf",
+          "verification_url": "https://www.lcsc.com/product-detail/C179173.html",
+          "verified_how": "I downloaded and read the Winbond W25Q32JV datasheet (Rev G, 2018-03-27). Section 11.1 lists W25Q32JVSSIQ as a valid 12-digit product number (SOIC-8 208 mil, I grade, QE=1 fixed). I checked the instruction table (ABh, 0Bh, 3Bh, 6Bh with 24-bit address), the 133 MHz FR at 3.0-3.6 V, and tVSL/tRES1. The LCSC page C179173 confirms Winbond W25Q32JVSSIQ, SOIC-8-208mil, 32 Mbit, 2.7-3.6 V, -40 to 85 C, 133 MHz. Compatibility was cross-checked against Efinix AN006 v6.6 Table 1, Table 8 and Table 26, and the T20 datasheet DST20-v6.0 Table 117.",
+          "open_qualification": "Configuration mode is still open. The ledger reserves active SPI x1 ('activeconfigurationSPI4plusstraps'), and T20 datasheet Table 67 note 13 says F256 does not support multi-image in x1 mode. A golden/fallback image therefore needs either x2/x4 wiring (CBUS change plus CDI2/CDI3 routing) or AN010 internal reconfiguration. Also open: CCK/CDI SI at the chosen DIV setting, factory programming method (JTAG-bridge flash loader vs. PCBWay pre-programming, and the SRP-bit caution in AN006), and the Efinity bitstream size of the actual design. Configuration time is not yet measured.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_clock",
+          "mpn": "ECS-2520MV-500-BN-TR",
+          "manufacturer": "ECS Inc.",
+          "value_and_ratings": "50.000 MHz HCMOS XO. Supply 1.6-3.6 V, run at 3.3 V. All-inclusive stability of +/-50 ppm over -40 to +85 C (includes initial tolerance, temperature, supply, load, reflow and aging). Phase jitter 1 ps max (12 kHz-5 MHz). Duty cycle 45/55 % max. Rise/fall 7 ns max (10-90 %). Start-up 5 ms max. Load 15 pF max. Current 8.0 mA max at 3.3 V, 50 MHz. Pin 1 tri-state (NC or >=0.7 Vdd = active). Support parts, following Efinix T20F256 dev board sheet 5 (X1 network): ferrite BLM18PG330SN1D in series from IO_3V3, 4.7 uF CL10A475KO8NNNC on each side of the bead (2 pcs), 100 nF CL05B104KO5NNNC at the oscillator Vdd, and a 33 ohm CRCW060333R0FKEA series source resistor at the output driving a GPIO clock/PLLIN-capable ball. Tie pin 1 to Vdd.",
+          "package": "4-pad ceramic SMD, 2.5 x 2.0 x 0.8 mm, tape and reel",
+          "qty_per_controller": 1,
+          "calculation": "T20 datasheet v6.0 Table 114 (PLL AC) requires a GPIO clock HIGH/LOW pulse width of at least 2.25 ns and input long-term jitter of at most 800 ps pk-pk. At 50 MHz (T = 20 ns) the worst-case duty of 45 % gives a 9.0 ns minimum pulse, which is 4x the 2.25 ns limit. The 1 ps RMS phase jitter (12 kHz-5 MHz) is about 14 ps pk-pk at a 14-sigma estimate, far below 800 ps. The datasheet does not specify long-term jitter directly, so treat this as an estimate. FIN of 50 MHz is inside the 10-200 MHz core/GPIO PLL input range. Frequency error of +/-50 ppm means the 5 ms RTL watchdog (250,000 cycles) varies by +/-0.25 us, and step timing error is 50 ppm. The ledger step limits and the RTL rate cap (195312.5 steps/s = 50 MHz x 0x01000000 / 2^32) scale by the same 50 ppm; that is not a limit change. Start-up of 5 ms max happens while CRESET_N/configuration is still running (about 263 ms at x1, 20 MHz), but the user clock domain must still stay in reset until PLL lock (tLOCK 0.5 ms max) and tUSER have elapsed. The ledger already says 'reset release synchronized independently per clock domain'.",
+          "datasheet_url": "https://ecsxtal.com/store/pdf/ECS-2520MV.pdf",
+          "verification_url": "https://ecsxtal.com/products/oscillators/surface-mount-oscillators/ecs-2520mv/",
+          "verified_how": "I downloaded the ECS-2520MV datasheet (Rev 2026). It lists frequency code 500 = 50.000 MHz, B = +/-50 ppm, N = -40 to +85 C, -TR = tape and reel. I read the electrical table: stability, 1.6-3.6 V, 15 pF load, 7 ns rise/fall, 5 ms start-up, 1 ps phase jitter, 45/55 % duty, and current at 50 MHz and 3.3 V. The ECS product page lists ECS-2520MV-500-BN-TR (+/-50 ppm, -40 to 85 C, 1.6-3.6 V, 2.5 x 2.0 mm, HCMOS, enable/disable). T20 clock requirements come from DST20-v6.0 Table 114. The supply-filter topology comes from the Efinix T20F256 development board schematic Rev 3.0, sheet 5 (the board used Abracon ASE-50.000MHZ-ET; this selection is a different vendor part).",
+          "open_qualification": "Choose the clock ball when the package pin map is done (a GCLK/PLLIN-capable GPIO in a 3.3 V bank; the dev board used GPIOR_125_CLK10/GPIOR_157_PLLIN). Also open: SI of the clock trace with the 7 ns edge and 33 ohm source termination, verification of long-term jitter (the datasheet gives only integrated phase jitter), and ppm aging and temperature in the enclosure. The ECS-2520MV-500-CN-TR (+/-25 ppm), confirmed on the same ECS page, is an alternative if a tighter time base is wanted later. Measurement of frequency, duty and start-up on the built board is not done.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_jtag",
+          "mpn": "61201021621",
+          "manufacturer": "Wurth Elektronik",
+          "value_and_ratings": "WR-BHD 2.54 mm male box header, 10 positions (2x5), shrouded and keyed, THT vertical, gold contacts, 3 A, 250 V AC working, -40 to +105 C, 30 mating cycles. Proposed pinout (user-defined; Efinix sets no standard header): 1 VREF (IO_3V3 sense only, does not power the target), 2 TMS, 3 GND, 4 TCK, 5 GND, 6 TDO, 7 CRESET_N, 8 TDI, 9 GND, 10 SS_N. The adapter goes to an FTDI FT2232H/FT4232H Mini Module, which Efinix has tested. The header carries no enable, arm or machine signal. Straps, all 10 k 1 % CRCW060310K0FKEA to IO_3V3, 12 pcs (AN006 Tables 2, 3 and 5 plus Figure 19): CDONE, CRESET_N, SS_N (=1 selects SPI active), TEST_N, CSI, CBUS0, CBUS1, CBUS2 (3'b111 = x1 active), TCK, TMS, TDI, TDO. Recovery: 1x tactile switch PTS810SJM250SMTRLFS on the power supervisor MR input, not directly on CRESET_N (AN006 Figure 34 note). Test points: bare copper pads on CDONE, CRESET_N, SS_N, CCK and the 50 MHz clock (no MPN).",
+          "package": "THT 2x5 box header, 2.54 mm pitch, 20.36 mm body length",
+          "qty_per_controller": 1,
+          "calculation": "Resistor value: AN006 v6.6 'Resistors in Configuration Circuitry' recommends 10 k for all unspecified configuration pull-ups and pull-downs. Check against the T20 datasheet Table 73 and Table 75: 10 k in parallel with the internal pull-up (27-65 k) is 7.3-8.7 k. A 10 k pull-down against a 27 k minimum internal pull-up gives 3.3 x 10/(10+27) = 0.89 V < VT- 1.32 V, so a pull-down (for example an x2/x4 CBUS change) is still read as 0. JTAG fTCK is 25 MHz max (Table 120). On this package, CRESET_N must be pulsed low (at least 320 ns, Table 115) and released before JTAG programming (AN006 p.31, T20BGA256 listed), which is why CRESET_N and SS_N are on the header.",
+          "datasheet_url": "https://www.we-online.com/components/products/datasheet/61201021621.pdf",
+          "verification_url": "https://www.we-online.com/components/products/datasheet/61201021621.pdf",
+          "verified_how": "I downloaded the Wurth datasheet for order code 61201021621 (revision 002.001, 2026-08-30, status Valid). It confirms WR-BHD male box header, 2.54 mm pitch, pin-to-pin 10.16 mm (5 per row, 10 positions), gold plating, 3 A, 250 V AC, -40 to +105 C, tray packing. Strap requirements come from AN006 v6.6 Table 2, Table 3, Table 5, Figure 19 and page 51, and the T20 DST20-v6.0 Tables 73, 75, 115 and 120. The Efinity Programmer UG v3.3 says Efinix tested the FT2232H/FT4232H Mini Modules and does not recommend the C232HM cable. Resistor CRCW060310K0FKEA was confirmed on LCSC C844918 (Vishay, 10 k, +/-1 %, 100 mW, 0603). The switch PTS810SJM250SMTRLFS was confirmed on LCSC C116501 (C&K SPST SMD tactile, 50 mA 16 V, 1.6 N, -40 to 85 C).",
+          "open_qualification": "The final pinout depends on the FTDI adapter cable (not selected). Also open: TCK/TMS SI and possible buffering (the Trion Interfaces UG asks for monotonic, buffered TCK/TMS), and ESD on the header pins (no TVS selected). CBUS strapping depends on the x1 vs x2/x4 decision (see fpga_flash). Dual-footprint pull-up/pull-down pads on CBUS0/1 are recommended. The CRESET_N source (power_supervisor row) is still unselected. PCBWay must hand-place or wave-solder the THT header. None of this is ERC-checked or built.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_decoupling",
+          "mpn": "CL05B104KO5NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "100 nF, +/-10 %, 16 V, X7R. Placed under or near the BGA: VCC (CORE_1V2) 7 pcs at K9 x2, F9 x2, E9, F8, J6/J7; VCCA_BR/TR/TL 2 pcs (1 at the pin side, 1 on the VCC side of the VCCA bead); VCCIO (all 3.3 V on this board) 14 pcs: K6, L10/L11 x2, L6/L7 x2, H6/H7 x2, F6/G6 x2, E10/F10/F11 x3, J10/J11 x2. FPGA subtotal 23. The same MPN is also used for 1 at the flash and 1 at the oscillator (counted in those rows).",
+          "package": "0402 (1005 metric)",
+          "qty_per_controller": 23,
+          "calculation": "Counts reproduce the Efinix Trion T20 F256 development board schematic Rev 3.0, sheet 5 'Trion T20 Power and Clock': VCC C31-C37 7 x 0.1 uF, VCCIO groups 5+2+2+5 = 14 x 0.1 uF, VCCA C42 + C98 = 2 x 0.1 uF. The Efinix board used 0201; 0402 is chosen here for PCBWay assembly but must be checked against the 0.8 mm-pitch via fan-out. Voltage margin: 16 V rating on 1.2 V and 3.3 V rails, with small X7R DC-bias loss at 3.3 V in 0402. Unused-resource connections (T20 datasheet Table 66): VCCA_PLL to VCC. F256 has no MIPI/DDR balls on the Efinix sheet, so there is no MIPI decoupling.",
+          "datasheet_url": "https://www.lcsc.com/product-detail/C1525.html",
+          "verification_url": "https://www.lcsc.com/product-detail/C1525.html",
+          "verified_how": "The LCSC page C1525 confirms Samsung Electro-Mechanics CL05B104KO5NNNC, 100 nF, +/-10 %, 16 V, X7R, 0402. Quantities and placement come from the Efinix T20F256 dev-board schematic Rev 3.0 (docsdl.php?s=ef&pn=T20F256-BRD-SCHM), which I downloaded and rendered to an image to read the capacitor-to-ball placement notes. The Efinix 'Trion Hardware Design Checklist and Guidelines' could not be downloaded (every public docs URL version returned 404), so the per-rail set comes from the reference schematic, not the checklist.",
+          "open_qualification": "Not checked against the Efinix hardware design checklist (not reachable). Also open: PDN impedance/target-ripple analysis using the Efinity power estimate, layout feasibility of 0402 under a 0.8 mm BGA (0201 may be needed), and inrush (Table 65: VCC 35 mA transient). The ramp-rate limit VCCIO/10 to 10 V/ms (Table 71) must be checked against TPS62160 soft-start plus total capacitance. Rail ripple is not measured.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_decoupling",
+          "mpn": "CL05B224KO5NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "220 nF, +/-10 %, 16 V, X7R. VCC 2 pcs (F9/E9 region per the Efinix placement note: C94 near E9, C95 near F8); VCCIO 8 pcs (2 per VCCIO group, near the BGA).",
+          "package": "0402 (1005 metric)",
+          "qty_per_controller": 10,
+          "calculation": "Efinix T20F256 dev board Rev 3.0 sheet 5: VCC C94, C95 (2 x 0.22 uF); VCCIO C73, C76, C4, C5, C6, C46, C92, C93 (8 x 0.22 uF). Total 10.",
+          "datasheet_url": "https://www.lcsc.com/product-detail/C16772.html",
+          "verification_url": "https://www.lcsc.com/product-detail/C16772.html",
+          "verified_how": "The LCSC page C16772 confirms Samsung CL05B224KO5NNNC, 220 nF, +/-10 %, 16 V, X7R, 0402. Counts come from the rendered Efinix T20F256 dev-board schematic sheet 5.",
+          "open_qualification": "Same as the 100 nF entry: checklist unavailable, PDN analysis, layout and measurement are open.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_decoupling",
+          "mpn": "CL10A475KO8NNNC",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "4.7 uF, +/-10 %, 16 V, X5R. VCC bulk 1 (C30), VCCA pin-side bulk 1 (C41), VCCIO bulk 1 (C24). FPGA subtotal 3. The same MPN is also used for 2 in the oscillator filter (fpga_clock).",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 3,
+          "calculation": "Efinix reference: C30 (VCC), C41 (VCCA), C24 (3V3 VCCIO), each 4.7 uF. The 16 V rating is chosen over 6.3/10 V to reduce DC-bias loss at 3.3 V. TPS62160 output capacitors are separate and belong to the regulator rows.",
+          "datasheet_url": "https://www.lcsc.com/product-detail/C19666.html",
+          "verification_url": "https://www.lcsc.com/product-detail/C19666.html",
+          "verified_how": "The LCSC page C19666 confirms Samsung CL10A475KO8NNNC, 4.7 uF, +/-10 %, 16 V DC, X5R, 0603. Counts come from the Efinix dev-board sheet 5.",
+          "open_qualification": "Add a second VCCIO bulk capacitor if the PDN analysis shows the 1A/4A/4B group needs it (the Efinix group without its own bulk relied on the board 3V3 plane). DC-bias effective capacitance is not measured.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "fpga_decoupling",
+          "mpn": "BLM18PG330SN1D",
+          "manufacturer": "Murata",
+          "value_and_ratings": "Ferrite bead, 33 ohm @ 100 MHz, 3 A, 25 mohm DCR. 1 pc in series from CORE_1V2 VCC to VCCA_BR/TR/TL (the Efinix L29 position; the reference 0 ohm R29 is omitted). The same MPN is also used for 1 pc in the oscillator supply (fpga_clock).",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 1,
+          "calculation": "Efinix dev board: VCC -> L29 (33 ohm @ 100 MHz) + R29 0 R -> VCCA pins with C41 4.7 uF / C42 0.1 uF, and C98 0.1 uF on the VCC side. The DC drop is negligible: VCCA_PLL current is not specified separately but is PLL-only, so at an assumed 10 mA x 25 mohm the drop is 0.25 mV, which leaves the 1.17-1.23 V ledger window unchanged.",
+          "datasheet_url": "https://www.lcsc.com/product-detail/C88984.html",
+          "verification_url": "https://www.lcsc.com/product-detail/C88984.html",
+          "verified_how": "The LCSC page C88984 confirms muRata BLM18PG330SN1D, 33 ohm @ 100 MHz, 3 A, 25 mohm, 0603. The Murata PIM page redirected and returned no content.",
+          "open_qualification": "VCCA current is not taken from Efinity. Bead/capacitor resonance with 4.7 uF + 0.1 uF is not simulated. PLL jitter is not measured.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "host_spi_buffer",
+          "mpn": "SN74AVC4T774PWR",
+          "manufacturer": "Texas Instruments",
+          "value_and_ratings": "4-bit dual-supply transceiver, VCCA/VCCB 1.1-3.6 V, independent DIR per bit, active-low OE referenced to VCCA. Ioff is specified on both ports (+/-1 uA max at VI/VO 0-3.6 V with that port's VCC = 0 V). VCC-isolation feature: if either VCC is 0 V, both ports are Hi-Z. I/Os are 4.6 V tolerant. IOH/IOL +/-12 mA at 3.0-3.6 V. tpd 2.9 ns max at 3.3 V/3.3 V. Wiring: VCCA = IO_3V3 (FPGA side), VCCB = SBC header 3.3 V. DIR1-3 = H (A->B would be FPGA->SBC), so set DIR per bit: CS/SCLK/MOSI use DIR = L (B->A, SBC -> FPGA), MISO uses DIR = H (A->B, FPGA -> SBC). OE pulled up with 10 k CRCW060310K0FKEA to VCCA (default disabled) and driven low only by a rails-OK signal after both supplies are stable. 33 ohm CRCW060333R0FKEA series source resistors at each of the 4 outputs. 10 k pull-up on FPGA-side CS so it idles inactive. 100 nF CL10B104KA8NNNC on each of VCCA and VCCB.",
+          "package": "TSSOP-16 (PW), 2000/large tape and reel",
+          "qty_per_controller": 1,
+          "calculation": "The ledger requires <=5 MHz SPI mode 0 (100 ns half-period). Round-trip: SCLK buffer tpd 2.9 ns + FPGA clock-to-MISO (RTL-dependent; not known) + MISO buffer tpd 2.9 ns + 2 x 33 ohm RC is about 6 ns plus FPGA tco, against a 100 ns sample window, so the margin is large. Why OE is default off: TI SCES693I section 8.3 says OE must be tied to VCCA through a pull-up and not enabled until VCCA and VCCB are fully ramped. Efinix AN006 p.43 says not to drive Trion I/Os before VCCIO is up; VCC isolation guarantees this even if OE is low. Levels: FPGA 3.3 V LVCMOS VOH >= 2.4 V exceeds the AVC VIH of 2.0 V (VCC 3.0-3.6 V); AVC VOH >= 2.4 V into the SBC and FPGA (VIH 2.0 V). Pull-up choice: 10 k on OE gives 0.33 mA sink from the enabling driver.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74avc4t774.pdf",
+          "verification_url": "https://www.ti.com/product/SN74AVC4T774/part-details/SN74AVC4T774PWR",
+          "verified_how": "I downloaded TI datasheet SCES693I (Feb 2025) and read the Features (Ioff, VCC isolation, OE/DIR referenced to VCCA), the electrical table (Ioff +/-1 uA, IOH/IOL), switching characteristics section 5.10 (tpd 2.9 ns max at 3.3/3.3 V), function table 7-1 and the OE power-up rule in section 8.3. The package option addendum lists SN74AVC4T774PWR as Active, TSSOP-16 PW, 2000 large T&R, marking WT774. The TI part-details page confirms SN74AVC4T774PWR is ACTIVE, TSSOP-16, 2000 T&R. LCSC also lists it (C129363). This is an AVC dual-supply translator rather than a single-supply 74LVC buffer. It was chosen because it isolates in both power-off directions, including an unpowered SBC while the FPGA is powered, which a single-rail LVC125 powered from IO_3V3 cannot do for MISO.",
+          "open_qualification": "The SBC-side rail and pinmux on the Radxa ROCK 3C/CM3 header are open. The source of the OE enable signal (supervisor PGOOD vs. FPGA) depends on the unselected power_supervisor/permission gate. Also open: SI and ringing of AVC fast edges on the header cable with 33 ohm damping (needs IBIS or scope), partial-power injection test with each side unpowered, and the FPGA pin assignment. Not ERC/DRC-checked.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "host_spi_buffer",
+          "mpn": "CRCW060333R0FKEA",
+          "manufacturer": "Vishay Dale",
+          "value_and_ratings": "33 ohm, +/-1 %, 0.1 W, 100 ppm/K, 75 V, AEC-Q200. Used as 4 source-damping resistors on the host SPI buffer outputs. The same MPN is also used for the fpga_clock output.",
+          "package": "0603 (1608 metric)",
+          "qty_per_controller": 4,
+          "calculation": "The starting value of 33 ohm matches the existing tx_six/tx_bank source damping and the Efinix dev-board clock resistor. The final value is set by the trace impedance (Z0 about 50 ohm minus the AVC output impedance of roughly 15-25 ohm).",
+          "datasheet_url": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+          "verification_url": "https://shop.schukat.com/de/en/EUR/Vishay/CRCW060333R0FKEA/p/54895",
+          "verified_how": "The Schukat product page confirms Vishay CRCW060333R0FKEA, 33 ohm, 1 %, 0.1 W, 0603, AEC-Q200. The Vishay D/CRCW e3 datasheet URL resolves to a PDF (HTTP 200). DigiKey, Mouser, RS and Farnell refused automated access.",
+          "open_qualification": "Final damping value depends on the SI simulation or measurement.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "esp_uart_buffer",
+          "mpn": "SN74AVC4T774PWR",
+          "manufacturer": "Texas Instruments",
+          "value_and_ratings": "Same device as host_spi_buffer (BOM reuse). VCCA = the IO_3V3 peer domain (FPGA/SBC side that owns UART and PGOOD/DISARMED), VCCB = ESP_3V3. Bit use: peer UART TX -> ESP RX (DIR = H, A->B), ESP TX -> peer RX (DIR = L, B->A), PGOOD -> ESP (DIR = H), MOTION_DISARMED -> ESP (DIR = H). DIR pins are tied hard to VCCA/GND so the ESP cannot reverse any bit. OE pulled up with 10 k CRCW060310K0FKEA to VCCA and enabled from the IO_3V3-domain rails-OK signal, never by the ESP. 100 nF CL10B104KA8NNNC on VCCA and on VCCB. Optional 33 ohm series resistors are not needed at 115200 baud.",
+          "package": "TSSOP-16 (PW), 2000/large tape and reel",
+          "qty_per_controller": 1,
+          "calculation": "Ioff +/-1 uA with either VCC = 0 V and the VCC-isolation feature cover both partial-power cases: ESP branch shorted or off while the FPGA runs, and the reverse. This matches the ledger requirement that an ESP fault cannot load the FPGA rail or signals. ESP32-S3 input VIH = 0.75 x VDD = 2.475 V at 3.3 V (WROOM-1 datasheet v1.8 Table 6-3). The AVC B-port output referenced to ESP_3V3 at 3.2 V min gives VOH >= 2.4 V at -12 mA, and much closer to VCCB at uA loads. A 2.4 V guaranteed value at full load would be below 2.475 V, but at the ESP input load (50 nA) VOH is about VCCB - 0.1 V (the -100 uA VOH spec is VCCO - 0.2 V = 3.0 V >= 2.475 V), so this passes. ESP VOH 0.8 x VDD = 2.64 V > AVC VIH 2.0 V. Timing: 115200 baud (8.68 us per bit) against a 2.9 ns tpd is negligible.",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/sn74avc4t774.pdf",
+          "verification_url": "https://www.ti.com/product/SN74AVC4T774/part-details/SN74AVC4T774PWR",
+          "verified_how": "Same TI datasheet SCES693I and part-details page as host_spi_buffer. The VOH -100 uA condition (VCCO - 0.2 V) is from the TI electrical table. ESP32-S3 VIH/VOH come from the Espressif ESP32-S3-WROOM-1/1U datasheet v1.8 Table 6-3, which I downloaded and read.",
+          "open_qualification": "The UART peer (FPGA or SBC) and GPIO assignment are still omitted in the ledger. The enable-signal source depends on the power_supervisor row. Also open: ESD at any off-board service connector (not in this row), and a partial-power injection test.",
+          "confidence": "verified"
+        },
+        {
+          "ledger_id": "esp_decoupling_boot",
+          "mpn": "CL21A226MAQNNNE",
+          "manufacturer": "Samsung Electro-Mechanics",
+          "value_and_ratings": "22 uF, +/-20 %, 25 V, X5R, 1 pc at the module 3V3 pin (Espressif Figure 9-1 C1). Companion parts in this set, all verified: CL10B104KA8NNNC 100 nF 25 V X7R 0603, 1 pc at 3V3 (C3). EN RC: CRCW060310K0FKEA 10 k from ESP_3V3 to EN, 1 pc, plus CL10B105KA8NNNC 1 uF 25 V X7R 0603 from EN to GND, 1 pc. GPIO0 boot strap: CRCW060310K0FKEA 10 k pull-up to ESP_3V3, 1 pc (reinforces the internal weak pull-up so SPI Boot is the default). Buttons: PTS810SJM250SMTRLFS x2 (EN-to-GND reset; GPIO0-to-GND BOOT). Set total: 1 x 22 uF, 1 x 100 nF, 1 x 1 uF, 2 x 10 k, 2 switches. Leave GPIO45 unpulled (0 = VDD_SPI 3.3 V for the N8 module flash), GPIO46 at its default weak pull-down, and GPIO3 unconnected to anything driven at reset.",
+          "package": "0805 (2012 metric) for the 22 uF; the other parts are 0603 and SMD 4.2 x 3.2 mm switches",
+          "qty_per_controller": 1,
+          "calculation": "EN RC per the Espressif WROOM-1 datasheet v1.8 section 9 (R = 10 k, C = 1 uF): tau = 10 ms. EN reaches VIH = 0.75 x VDD at t = tau x ln(1/(1-0.75)) = 10 ms x 1.386 = 13.9 ms after ESP_3V3 is stable. That far exceeds tSTBL (50 us, Table 4-6), and the strapping hold tH of 3 ms (Table 4-2) is then measured from EN high. The button shorts the 1 uF capacitor to 0 V, below VIL_nRST = 0.25 x VDD, for well over tRST = 50 us. Supply: Table 6-2 requires at least 0.5 A delivered, and the ledger ESP_3V3 capacity is 1 A with a 0.7 A budget, which is consistent. The 22 uF 25 V X5R at 3.3 V keeps usable capacitance (DC-bias loss well below the 6.3 V-part case). The ESP32-S3 has a VIH of 0.75 x VDD on EN, so the RC must not be driven by other logic.",
+          "datasheet_url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
+          "verification_url": "https://www.lcsc.com/product-detail/C45783.html",
+          "verified_how": "The LCSC page C45783 confirms Samsung CL21A226MAQNNNE, 22 uF, +/-20 %, 25 V, X5R, 0805. LCSC C1590 confirms CL10B104KA8NNNC (100 nF, +/-10 %, 25 V, X7R, 0603). LCSC C29936 confirms CL10B105KA8NNNC (1 uF, +/-10 %, 25 V, X7R, 0603). LCSC C844918 confirms CRCW060310K0FKEA (Vishay 10 k, 1 %, 100 mW, 0603). LCSC C116501 confirms PTS810SJM250SMTRLFS (C&K SPST SMD tactile, 50 mA 16 V, -40 to 85 C). Circuit values come from the Espressif ESP32-S3-WROOM-1/1U datasheet v1.8, which I downloaded and read: section 9 Figure 9-1 and notes, Tables 4-1, 4-2, 4-3, 4-6, 6-2 and 6-3.",
+          "open_qualification": "The EN delay must be checked against the actual ESP_3V3 TPS62160 soft-start and the power_supervisor sequence (Espressif says to adjust R/C to the rail ramp). Also open: antenna keep-out and module placement per datasheet section 11.2 (layout, not a part), and radio-transient droop on ESP_3V3 (to be measured). The buttons are optional if a remote or USB download path is chosen. A boot-mode entry path is still needed if the UART-download method is used. Not ERC/DRC-checked.",
+          "confidence": "verified"
+        }
+      ],
+      "not_selected": [],
+      "engineering_notes": "Read-only run. No files inside the Controller tree were created or changed, and I ran no scripts there. Scratch files are only under .../scratchpad/ro/: t20ds.pdf/txt, an006.pdf/txt, pgm.pdf, tintf.pdf, t20brd.pdf, p4*.png, w25q32jv.pdf/txt, ecs2520mv.pdf/txt, we61201021621.pdf, avc4t774.pdf and avc.txt, and wroom1.pdf/txt. The ledger (hardware/electrical-design.json and bom-snapshot.csv, mtime 2026-09-28 04:48) still shows all seven assigned rows as required_unselected. Nothing under research/power-entry, hardware/encoder_power, hardware/rx_abz, hardware/tx_six, hardware/tx_bank or hardware/power_entry picks any of these parts. My passive choices follow the existing subsheet style: 0603 X7R 25 V caps and Vishay CRCW0603 resistors, with 0402 used only for the BGA bypass.\n\nRows with more than one MPN: fpga_decoupling (4 entries) and host_spi_buffer (2 entries) have one StructuredOutput entry per MPN under the same ledger_id. esp_decoupling_boot and fpga_jtag list their companion MPNs inside value_and_ratings.\n\nImportant findings and caveats:\n(1) The Efinix 'Trion Hardware Design Checklist and Guidelines' could not be downloaded; every guessed URL version returned 404. The decoupling set therefore copies the official Efinix T20F256 development board schematic Rev 3.0, sheet 5: VCC 7x0.1 uF + 2x0.22 uF + 4.7 uF; VCCA with a bead plus 4.7 uF and 2x0.1 uF; VCCIO 14x0.1 uF + 8x0.22 uF + 4.7 uF. It must be re-checked against the checklist before freeze.\n(2) The ledger reserves active SPI x1 ('activeconfigurationSPI4plusstraps'). T20 datasheet v6.0 Table 67 note 13 says F256 does not support multi-image in x1, so a golden-image or remote-update strategy needs x2/x4 wiring or AN010 internal reconfiguration. This is a decision for the user, not something I changed.\n(3) T20 VIN max is VCCIO + 0.3 V, and AN006 forbids driving Trion I/Os before VCCIO is up. For that reason both buffers are SN74AVC4T774PWR dual-supply parts with Ioff and VCC isolation, instead of a single-rail 74LVC125, which could back-power an unpowered SBC through MISO. The request named 74LVC/LV families only as examples; this is a deliberate substitution.\n(4) The T20 power-ramp constraint VCCIO/10 to 10 V/ms (Table 71), the recommended VCC-then-VCCIO sequence, and tCRESET_N >= 320 ns all belong to the unselected power_supervisor row. The recovery button must go to the supervisor MR input, not directly to CRESET_N.\n(5) No electrical or motion limit was changed. A +/-50 ppm oscillator scales the RTL rate cap (195312.5 steps/s) and the 5 ms RTL watchdog by at most 50 ppm.\n(6) Evidence level: datasheet and distributor-page desk selection only. There has been no ERC, DRC, SI/PDN simulation, Efinity power estimate, thermal analysis, or physical measurement, and nothing here is manufacturing-ready.\n\nSources opened: Efinix T20 datasheet DST20-v6.0 (efinixinc.com/docs/trion20-ds-v6.0.pdf), AN006 v6.6 (efinixinc.com/docs/an006-configuring-trion-fpgas-v6.6.pdf), Efinity Programmer UG v3.3 (efinixinc.com/docs/efinity-pgm-v3.3.pdf), T20F256 dev-board schematic (efinixinc.com/support/docsdl.php?s=ef&pn=T20F256-BRD-SCHM), Trion Interfaces UG v7.5 (elitestek.com mirror), and the manufacturer and LCSC pages listed per part."
+    },
+    {
+      "scope": "power supervision, branch limit, entry fuses and output-driver networks",
+      "parts": [
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "TPS386000RGPR",
+          "manufacturer": "Texas Instruments",
+          "value_and_ratings": "Quad supply supervisor: VDD 1.8-6.5 V; SENSE threshold 396/400/404 mV over -40 to 125 C; open-drain RESET1-4; SVS-4 is a window (SENSE4L undervoltage, SENSE4H overvoltage); separate watchdog WDO; CTn open gives a 14/20/24 ms delay",
+          "package": "VQFN-20 RGP 4x4 mm with exposed pad, 3000-piece T&R",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps386000.pdf",
+          "verification_url": "https://www.ti.com/lit/ds/symlink/tps386000.pdf",
+          "verified_how": "Downloaded the TI datasheet (SBVS105F) to the scratchpad. Orderable addendum: TPS386000RGPR Active, QFN(RGP) 20, 3000 LARGE T&R, -40 to 125 C. Checked VITN/VITP 396-404 mV, tD 14-24 ms with CT open, and that the watchdog has a dedicated WDO output tied to SVS-1 timing (WDO is not merged into RESETn unless wired).",
+          "calculation": "Supplied from CORE_5V. Threshold Vtrip = 0.4 V x (1 + Rtop/Rbot). Worst case uses 396-404 mV and a +/-0.2% divider ratio (0.1% RT parts). SVS-1 CORE_5V UV: 107k/10.0k gives 4.680 V nominal, 4.616-4.744 V (above AM26C31 4.5 V min, below 4.85 V rail min). SVS-4L CORE_1V2 UV: 19.1k/10.0k gives 1.164 V, 1.149-1.179 V. SVS-4H CORE_1V2 OV: 21.0k/10.0k gives 1.240 V, 1.224-1.256 V. SVS-2 IO_3V3 UV: 69.8k/10.0k gives 3.192 V, 3.149-3.235 V. SVS-3 ESP_3V3 UV: 66.5k/10.0k gives 3.060 V, 3.019-3.101 V. The 1.2 V and 3.3 V trip windows sit below Codex's TPS62901 regulation-only minima (1.185 V and 3.259 V in hardware/logic_power/design-envelope.json), so normal regulation should not cause nuisance resets. Sequencing wiring, per T20 DS 'Power Up Sequence' (VCC first, then VCCIO, then hold CRESET_N low for at least tCRESET_N = 320 ns): RESET1 (100k pull-up to CORE_5V) drives EN of the 1.2 V buck, the ESP buck and the esp_branch_limit switch. RESET4 (1.2 V window, 20 ms, 100k pull-up to CORE_5V) drives EN of the IO_3V3 buck. RESET2 (IO_3V3 UV, 20 ms, 10k pull-up to IO_3V3) drives CRESET_N. RESET3 (10k pull-up to ESP_3V3) drives ESP EN. MR has a 100k pull-up to CORE_5V. WDI goes to GND and WDO is left unconnected (TPS3431 remains the independent watchdog). SENSE leakage of +/-25 nA into about 10k gives under 0.3 mV error.",
+          "open_qualification": "The worst-case 1.2 V UV low edge (1.149 V) is 0.7 mV below the T20 1.15 V minimum. The OV high edge (1.256 V) is 6 mV above the T20 1.25 V recommended maximum (the absolute maximum is 1.42 V). Tightening either edge causes overlap with the regulator tolerance, so this needs review. Power-down order is not controlled: a 5 V collapse drops the 1.2 V EN before IO_3V3. EN abs-max of the TPS62901 at a 5.15 V pull-up was not checked (its datasheet was not read). RAILS_OK derivation for permission_logic, partial-power and backfeed paths, glitch filtering, the VDD 0.1 uF bypass MPN, and bench tests of sequence, ramp and brownout all remain open.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD07107KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "107 kohm, 0.1%, 25 ppm/C, 0.1 W, thin film (top resistor of CORE_5V UV divider)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD07107KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD07107KL",
+          "verified_how": "Yageo specsheet PDF downloaded and read: 'YAGEO, RT, Thin Film, SMD Chip, 107 kOhms, 0.1%, 0603', +/-25 ppm/C. A bogus code at the same URL returned 0 bytes, so the endpoint really validates codes.",
+          "open_qualification": "Final threshold tolerance budget and the SENSE-node noise filter remain open.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD0719K1L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "19.1 kohm, 0.1%, 25 ppm/C (CORE_1V2 UV top)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0719K1L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0719K1L",
+          "verified_how": "Yageo specsheet read: 19.1 kOhms, 0.1%, 0603, +/-25 ppm/C.",
+          "open_qualification": "See the TPS386000 row for the margin to the T20 1.15 V minimum.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD0721KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "21.0 kohm, 0.1%, 25 ppm/C (CORE_1V2 OV top, SENSE4H)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0721KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0721KL",
+          "verified_how": "Yageo specsheet read: 21 kOhms, 0.1%, 0603, +/-25 ppm/C.",
+          "open_qualification": "The OV edge can reach 1.256 V worst case; accept or redesign.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD0769K8L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "69.8 kohm, 0.1%, 25 ppm/C (IO_3V3 UV top)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0769K8L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0769K8L",
+          "verified_how": "Yageo specsheet read: 69.8 kOhms, 0.1%, 0603, +/-25 ppm/C.",
+          "open_qualification": "None beyond the supervisor row.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD0766K5L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "66.5 kohm, 0.1%, 25 ppm/C (ESP_3V3 UV top)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0766K5L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0766K5L",
+          "verified_how": "Yageo specsheet read: 66.5 kOhms, 0.1%, 0603, +/-25 ppm/C.",
+          "open_qualification": "The ESP32-S3 brownout and EN RC interaction must be reviewed.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RT0603BRD0710KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "10.0 kohm, 0.1%, 25 ppm/C (bottom resistor of all five SENSE dividers)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+          "verified_how": "Yageo specsheet read: 10 kOhms, 0.1%, 0603, +/-25 ppm/C.",
+          "open_qualification": "None beyond the supervisor row.",
+          "confidence": "verified",
+          "qty_per_controller": 5
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RC0603FR-07100KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "100 kohm, 1%, 100 ppm/C, 0.1 W (pull-ups for RESET1, RESET4 and MR to CORE_5V)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07100KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07100KL",
+          "verified_how": "Yageo specsheet read: RC thick film, 100 kOhms, 1%, 0603, +/-100 ppm/C.",
+          "open_qualification": "EN input leakage/threshold of the downstream TPS62901/TPS2553 at a 100k pull-up must be checked.",
+          "confidence": "verified",
+          "qty_per_controller": 3
+        },
+        {
+          "ledger_id": "power_supervisor",
+          "mpn": "RC0603FR-0710KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "10 kohm, 1%, 100 ppm/C (RESET2 pull-up to IO_3V3 for CRESET_N; RESET3 pull-up to ESP_3V3 for ESP EN)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verified_how": "Yageo specsheet read: 10 kOhms, 1%, 0603, +/-100 ppm/C.",
+          "open_qualification": "Interaction with the T20 CRESET_N internal weak pull-up and the ESP EN capacitor remains open.",
+          "confidence": "verified",
+          "qty_per_controller": 2
+        },
+        {
+          "ledger_id": "esp_branch_limit",
+          "mpn": "TPS2553DBVR-1",
+          "manufacturer": "Texas Instruments",
+          "value_and_ratings": "Adjustable current-limited latch-off (-1) load switch: 85/115 mohm DBV at 25 C (135 mohm max over temperature per the encoder_power record); 7.5 ms typical overcurrent deglitch before latch-off; active-high EN; open-drain FAULT_N",
+          "package": "SOT-23-6 DBV, 3000-piece T&R",
+          "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps2553-1.pdf",
+          "verification_url": "https://www.ti.com/lit/ds/symlink/tps2553-1.pdf",
+          "verified_how": "Downloaded the TI datasheet. Orderable addendum: TPS2553DBVR-1 Active, SOT-23 (DBV) 6, 3000 T&R, -40 to 125 C. Read the section 'Current-Limit Threshold Equations (IOS)' (Eq. 1). This is the same MPN Codex already uses in hardware/encoder_power, so it adds no new BOM line.",
+          "calculation": "Placed between CORE_5V and the VIN of the ESP 3.3 V buck. Branch budget from the ledger is esp3v3_input 0.60 A (Codex logic_power model 0.617 A). Target IOSmin of at least 0.78 A. Eq. 1 with R in kohm: IOSmin = 25230/R^1.016, IOSnom = 23950/R^0.977, IOSmax = 22980/R^0.94 (mA). RILIM = 29.4k (1%, 100 ppm/C, with a +/-2.5% total excursion over 150 K like Codex's encoder method) gives IOSmin 0.793 A, nominal 0.881 A, IOSmax 0.980 A. Margin over the 0.617 A budget is at least 28%. Worst-case fault adds at most 0.98 - 0.60 = 0.38 A to the CORE_5V reservation (5.35 A to 5.73 A), which stays below the 6 A rating before latch-off. EN comes from TPS386000 RESET1, so recovery needs a 5 V brownout or power cycle, or an explicit EN toggle if one is added. FAULT_N uses a 10k pull-up to IO_3V3 (RC0603FR-0710KL, counted in do_diag_support's 10k line only for the TPS4H160; add 1 more here).",
+          "open_qualification": "ESP radio and boot peak currents at the 5 V input need measuring against the 0.79 A minimum trip. Also open: latch-off recovery policy; input/output bypass capacitor MPNs; reverse current from ESP_3V3 backfeed; thermal behaviour in a near-short (5 V x 0.98 A before latch); and whether the added drop (at most 0.08 V) is acceptable at a 4.85 V CORE_5V minimum.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "esp_branch_limit",
+          "mpn": "RC0603FR-0729K4L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "29.4 kohm, 1%, 100 ppm/C, 0.1 W (RILIM)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0729K4L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0729K4L",
+          "verified_how": "Yageo specsheet read: RC thick film, 29.4 kOhms, 1%, 0603, +/-100 ppm/C.",
+          "calculation": "See the TPS2553DBVR-1 row. It sits inside the datasheet's recommended 15k-232k RILIM range.",
+          "open_qualification": "ILIM trace routing and noise, as the datasheet warns.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "esp_branch_limit",
+          "mpn": "RC0603FR-0710KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "10 kohm, 1% (FAULT_N pull-up to IO_3V3)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verified_how": "Yageo specsheet read: 10 kOhms, 1%, 0603.",
+          "open_qualification": "The FAULT_N destination (FPGA or ESP) and partial-power behaviour remain open.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "physical_entry_fuse_core",
+          "mpn": "0997003.WXN",
+          "manufacturer": "Littelfuse",
+          "value_and_ratings": "3 A MINI blade fuse, 58 VDC rated, 1000 A interrupting at 58 VDC (series rating), typical melting I2t 9.4 A2s, cold resistance 33.75 mohm",
+          "package": "MINI blade (10.9 x 8.8 x 3.8 mm), needs a holder",
+          "datasheet_url": "https://www.littelfuse.com/assetdocs/littelfuse-datasheet-997-mini58v?assetguid=838cc4ad-f429-4185-a8e8-ccc70cd2b713",
+          "verification_url": "https://www.tme.eu/en/details/0997003.wxn/miniature-automotive-fuses/littelfuse/",
+          "verified_how": "Opened the TME product page: MPN 0997003.WXN, 3 A, 58 VDC, MINI, in stock. Series interrupting rating, I2t and resistance come from the Littelfuse 997 datasheet content surfaced in web search and quoted in Codex's research/POWER_ENTRY_REVIEW.md; the Littelfuse PDF itself returned 403/stub and I did not read it. This matches Codex's catalog candidate, so it does not contradict it.",
+          "calculation": "Ledger CORE_24V normal load is 1.81 A (1.75 A logic converter + 0.06 A analog). With a 25% continuous derating: 3 x 0.75 = 2.25 A, which is 1.24x the load before ambient rerating. The core eFuse (TPS26630, RILIM 8.20k) limits at 1.97-2.43 A, which is at most 81% of rating and below the 110% no-open level, so the fuse does not open during eFuse-limited overload. TVS 10/1000 us pulse at 31 A: I2t = Ipk^2 x tau/2 = 0.69 A2s, far below 9.4 A2s, so no nuisance opening at the SMCJ30CA rated pulse. Coordination assumption (ISO 8820-style MINI curve, not read from the datasheet): opening in 5 s or less needs roughly 200% or more (at least 6 A prospective), and in 0.5 s or less roughly 350% (10.5 A). A source limited to 2-3 A (ledger 2 A; Codex proposes 3 A) will not clear this fuse. It is a backup for shorted eFuse, FET or TVS faults only when the source can deliver at least 6-10 A, and the wiring must withstand at least 135% x 3 A = 4.05 A for up to about 30 min.",
+          "open_qualification": "Needs the actual opening-time table and temperature rerating from the Littelfuse 997 datasheet, and the PSU's prospective fault current and foldback. Also open: wire and connector withstand, total clearing I2t against the SMCJ30CA, CSD19537Q3 and TPS26630 SOA, a holder that enforces the 58 V rejection feature, and fuse-plus-holder resistance inside Codex's 0.20 ohm series budget.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "physical_entry_fuse_core",
+          "mpn": "3568",
+          "manufacturer": "Keystone Electronics",
+          "value_and_ratings": "MINI automotive blade fuse holder, through-hole vertical entry, 30 A class, nylon 6/6 UL94V-0 base, brass tin-plated clips, -50 to +145 C",
+          "package": "THM vertical, 1 fuse",
+          "datasheet_url": "https://www.keyelco.com/product.cfm/product_id/306",
+          "verification_url": "https://www.lcsc.com/product-detail/C5249699.html",
+          "verified_how": "LCSC page opened: MPN 3568, Keystone, 'MINI AUTOMOTIVE FUSE CLIPS & HOLDERS', through hole, nylon 6/6 94V-0, -50 to 145 C. The 30 A rating and compatibility with Littelfuse 297/997 come from the Keystone blade-holder family datasheet ('Mini Blade Fuse holder is suitable for 30 Ampere applications') and distributor listings. The Keystone product page itself returned 403.",
+          "open_qualification": "It is unconfirmed whether this holder implements the 997 58 V rejection feature. A 32 V 297-series fuse could be inserted by mistake, so label it or choose a 58 V-keyed holder. Also open: PCBWay THT assembly, contact resistance and temperature rise at the load, and the enclosure service opening.",
+          "confidence": "likely",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "physical_entry_fuse_field",
+          "mpn": "099707.5WXN",
+          "manufacturer": "Littelfuse",
+          "value_and_ratings": "7.5 A MINI blade fuse, 58 VDC rated, 1000 A interrupting at 58 VDC (series), typical melting I2t 68 A2s, cold resistance 10.85 mohm",
+          "package": "MINI blade, needs a holder",
+          "datasheet_url": "https://www.littelfuse.com/assetdocs/littelfuse-datasheet-997-mini58v?assetguid=838cc4ad-f429-4185-a8e8-ccc70cd2b713",
+          "verification_url": "https://www.tme.eu/en/details/099707.5wxn/miniature-automotive-fuses/littelfuse/",
+          "verified_how": "Opened the TME product page: MPN 099707.5WXN, 7.5 A, 58 VDC, MINI. Series ratings and I2t come from web-search content of the Littelfuse 997 datasheet and Codex's POWER_ENTRY_REVIEW.md (the PDF was not read). This is Codex's catalog candidate.",
+          "calculation": "Ledger FIELD_24V normal load is 4.36 A (4.30 outputs + 0.06 control). With a 25% derating: 7.5 x 0.75 = 5.63 A, which is 1.29x the load before ambient rerating (5.81 A minimum nominal from Codex's 75% screen, so 7.5 A is the next size). The field eFuse (RILIM 3.65k) limits at 4.42-5.45 A, which is 73% of rating, so no opening during eFuse-limited overload. TVS pulse I2t of 0.69 A2s is far below 68 A2s. Assumed opening curve: 200% (15 A) opens in 5 s or less and 350% (26 A) in 0.5 s or less. A 6 A-capacity field PSU cannot clear it. Wiring and the field entry terminal must carry at least 135% x 7.5 A = 10.1 A without damage, which exceeds the ledger's '6 A' capacity wording.",
+          "open_qualification": "Same as the core fuse. In addition, the terminal (TBP01R1-508 candidate) and the wire gauge must be rated for at least 10 A. The field PSU fault and foldback behaviour must be known. The shorted-TVS or shorted-eFuse case may not clear with a current-limited PSU.",
+          "confidence": "verified",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "physical_entry_fuse_field",
+          "mpn": "3568",
+          "manufacturer": "Keystone Electronics",
+          "value_and_ratings": "MINI blade fuse holder, THM vertical, 30 A class",
+          "package": "THM vertical, 1 fuse",
+          "datasheet_url": "https://www.keyelco.com/product.cfm/product_id/306",
+          "verification_url": "https://www.lcsc.com/product-detail/C5249699.html",
+          "verified_how": "Same as the core holder row.",
+          "open_qualification": "Same as the core holder row. Keep it physically and labelling-wise distinct from F_CORE (different ratings in the same form factor).",
+          "confidence": "likely",
+          "qty_per_controller": 1
+        },
+        {
+          "ledger_id": "do_current_set",
+          "mpn": "RC0603FR-072K67L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "2.67 kohm, 1%, 100 ppm/C, 0.1 W (R_CL for DO0 and DO1, the 0.5 A general-output banks)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-072K67L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-072K67L",
+          "verified_how": "Yageo specsheet read: 2.67 kOhms, 1%, 0603. TPS4H160-Q1 datasheet SLVSCV8E downloaded and read: Eq. 4 R(CL) = VCL(th) x K(CL)/I_CL with VCL(th) 0.8 V and K(CL) 2500; accuracy +/-15% for 0.5-7 A (+/-20% for 0.25 A), applicable only at overloads above 1.5x the setting.",
+          "calculation": "I_CL = 0.8 x 2500 / 2670 = 0.749 A nominal, 0.63-0.87 A with +/-15% and 1%. The minimum is 1.26x the 0.5 A continuous target. The bank total at the 2 A target is 4 x 0.5 A. After thermal shutdown, ICL(TSD) is 70% of the setting, and THER is strapped high for latch mode. Coordination: one shorted channel draws at most 0.87 A. Eight simultaneous shorts (up to 6.96 A) exceed the field eFuse limit of 4.42-5.45 A, so the eFuse latches the whole field domain.",
+          "open_qualification": "Load inrush (lamps, solenoids, capacitive modules) against a 0.63 A minimum limit is unmeasured. Also open: thermal behaviour of 4 x 0.5 A continuous in HTSSOP with rDS(on) up to 280 mohm hot; inductive-load clamp energy; and the field fuse/eFuse interaction.",
+          "confidence": "verified",
+          "qty_per_controller": 2
+        },
+        {
+          "ledger_id": "do_current_set",
+          "mpn": "RC0603FR-077K87L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "7.87 kohm, 1%, 100 ppm/C (R_CL for DO2 and DO3, the 50 mA drive-enable banks)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-077K87L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-077K87L",
+          "verified_how": "Yageo specsheet read: 7.87 kOhms, 1%, 0603. The TPS4H160-Q1 equation and accuracy are as above.",
+          "calculation": "I_CL = 2000/7870 = 0.254 A nominal, 0.20-0.305 A with +/-20% (the specified accuracy region starts at 0.25 A, so it is not set lower). Enable loads are 50 mA each, giving at least 4x margin and limiting fault energy into drive-enable wiring. The ledger's single 'value TBD' row becomes two values, with total quantity kept at 4.",
+          "open_qualification": "Drive enable input inrush, cable capacitance, and whether the lower limit is acceptable to the user rather than one uniform 2.67k.",
+          "confidence": "verified",
+          "qty_per_controller": 2
+        },
+        {
+          "ledger_id": "do_diag_support",
+          "mpn": "RC0603FR-071K2L",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "1.2 kohm, 1%, 100 ppm/C (R_CS from CS to device GND, one per TPS4H160)",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-071K2L",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-071K2L",
+          "verified_how": "Yageo specsheet read: 1.2 kOhms, 1%, 0603. TPS4H160-Q1 section 7.3.1 Eq. 1-3 and the 8.2.2 design example (1200 ohm) were read.",
+          "calculation": "V_CS = I_OUT/K(CS) x R_CS with K(CS) = 300. At 0.5 A, VCS = 2.0 V. At the maximum I_CL of 0.87 A with +8% sense error, VCS = 3.76 V, below the 4 V linear limit (Eq. 2). In fault mode VCS(H) is up to 6.5 V, so I_CS is 5.4 mA or less (Eq. 3 check). CS is a local test point only: no isolated ADC exists in the baseline.",
+          "open_qualification": "There is no field-side ADC or isolation channel for CS; per-channel readback is unavailable in the baseline.",
+          "confidence": "verified",
+          "qty_per_controller": 4
+        },
+        {
+          "ledger_id": "do_diag_support",
+          "mpn": "RC0603FR-0710KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "10 kohm, 1%. Per device: FAULT pull-up to FIELD_5V; FAULT series resistor into the iso_fault ISO7740F input (TI recommends R(ser) of 10k for 5 V logic); SEL to GND; SEH to GND",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0710KL",
+          "verified_how": "Yageo specsheet read: 10 kOhms, 1%, 0603. TPS4H160-Q1 section 8.2.2 (R(ser) 10k for 5 V MCU, R(pu) 10k) and Table 7-1 (SEH/SEL = 0/0 selects CS channel 1) were read.",
+          "calculation": "4 resistors per device x 4 devices = 16. FAULT sinks 0.5 mA at 5 V through 10k, within the 2 mA VOL test point. SEL and SEH are defined low (not left to internal pull-downs only) because there are no spare isolated forward channels: iso_cmd has 16 channels and 14 are used.",
+          "open_qualification": "FIELD_5V can reach 5.15 V, but the TPS4H160 recommended FAULT/logic pin voltage is 5 V maximum (7 V absolute), so a pulled-up FAULT sits 0.15 V over the recommended level. Resolve by trimming FIELD_5V or adding a divider. The FAULT-to-isolator default and powered-off behaviour are not verified.",
+          "confidence": "verified",
+          "qty_per_controller": 16
+        },
+        {
+          "ledger_id": "do_diag_support",
+          "mpn": "RC0603FR-0720KL",
+          "manufacturer": "YAGEO",
+          "value_and_ratings": "20 kohm, 1%. Per device: DIAG_EN pull-up to FIELD_5V (enables FAULT reporting) and THER pull-up to FIELD_5V (thermal latch-off, the ledger's 'LATCH')",
+          "package": "0603",
+          "datasheet_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0720KL",
+          "verification_url": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-0720KL",
+          "verified_how": "Yageo specsheet read: 20 kOhms, 1%, 0603. TPS4H160-Q1 sections 7.3.5.1, 7.3.6.5.1 (THER high means latch mode) and Table 7-2 were read.",
+          "calculation": "2 per device x 4 = 8. The 20k series pull-up against the internal pull-down (datasheet roughly 175-350k) keeps the pin at about 4.8 V or less from a 5.15 V rail, respecting the 5 V recommended maximum while staying far above the logic-high threshold. THER high latches a channel after thermal shutdown until its IN toggles. This matches the ledger rule that field protection latches and recovery does not rearm actuators. DIAG_EN high adds standby current (I(off,diag), 5 mA class, from the garbled table) per device; include it in field_control's 0.06 A.",
+          "open_qualification": "The exact R(logic,pd) minimum and VIH were not legible in the extracted table and need a check against the PDF. The DIAG_EN standby current against the field_control reservation needs confirming.",
+          "confidence": "verified",
+          "qty_per_controller": 8
+        }
+      ],
+      "not_selected": [
+        {
+          "ledger_id": "local_buck_inductor",
+          "reason": "already selected: XGL4020-222MEC (x3) in hardware/logic_power/design-envelope.json. Codex replaced the TPS62160DSGR study candidate with TPS62901RPJR there. TPS62160 inductor work for reference: 2.2 uH standard (datasheet Table 2/3), Eq. 7/8 at 5.15 V in with L_min 1.76 uH gives peak currents of 1.12-1.15 A, and the dynamic limit (Eq. 2) is 2.52 A. XFL4020-222MEC (2.2 uH, 23.5 mohm max, 3.1 A Isat at 10% drop, LCSC C122469) would have fit, but it is moot."
+        },
+        {
+          "ledger_id": "local_buck_caps_feedback",
+          "reason": "already selected: TPS62901RPJR networks in hardware/logic_power/design-envelope.json (C3216X7R1E106K160AB Cin, C2012X7S1A226M125AC Cout, GRM1885C1H682JA01D SS 6.8 nF, CRCW0603 76.8k MODE, 10k/301k VSET/FB, 100k PG). The TPS62160 values I derived (not proposed): 1.2 V is R1 75.0k / R2 150k (TI Fig. 39), 3.3 V is R1 100k / R2 32.0k (0.1% RT0603BRD07 parts, verified), no external Cff because of the internal 25 pF, Cin GRM21BZ71E106KE15L and Cout GRM31CR71A226KE15L (both verified on LCSC). Two TPS62160 problems support Codex's device change; see notes."
+        },
+        {
+          "ledger_id": "main_5v_converter",
+          "reason": "already selected: LM70660RRXR (4.5-65 V in, fixed 5 V, 6 A rated) with XAL7070-472MEC etc. in hardware/core_converter/requirements.json. It is rated 6 A, not the 7 A or more this task asked for; Codex's own file shows only 0.48 A reserve above 5.52 A fault-case load. A verified 7 A-or-more alternative is ADI LT8645SEV#PBF (3.4-65 V in, 8 A, PG pin, LQFN-32 6x4 mm). It was confirmed in the datasheet order information (LT8645SEV#PBF / LT8645SIV#PBF) and on LCSC C514430, with FB 1.00M/240k (RT0603BRD071ML / RT0603BRD07240KL verified) giving 5.01 V nominal and 4.94-5.08 V from VFB 0.958-0.982 V. I did not override Codex; the user or Codex must decide."
+        },
+        {
+          "ledger_id": "field_5v_converter",
+          "reason": "already selected: LMR36506R5RPER (fixed 5 V, 600 mA, VQFN-HR 2x2) with LPS6235-223MRC etc. in hardware/field_power/design.json. A verified alternative, not proposed, is LM5165XDRCR (3-65 V, 150 mA, fixed 5 V at 4.9-5.1 V, PGOOD, VSON-10), confirmed in the TI datasheet orderable addendum."
+        },
+        {
+          "ledger_id": "encoder_load_switch",
+          "reason": "already selected: TPS2553DBVR-1 (x2, RILIM CRCW0603110KFKEA) in hardware/encoder_power/bom.csv and design-envelope.json"
+        },
+        {
+          "ledger_id": "efuse_core",
+          "reason": "already selected: TPS26630RGER + CSD19537Q3 + BSS138P,215, RILIM 8.20k, dVdT 100 nF, in hardware/power_entry/requirements.json and bom.csv (research/power-entry sources). Codex's core_converter file proposes a 7.50k revision that is not yet applied."
+        },
+        {
+          "ledger_id": "efuse_field",
+          "reason": "already selected: TPS26630RGER + CSD19537Q3 + BSS138P,215, RILIM 3.65k, dVdT 100 nF, MODE open (latch), in hardware/power_entry/requirements.json"
+        },
+        {
+          "ledger_id": "core_24_protection",
+          "reason": "already selected: SMCJ30CA (Littelfuse, bidirectional, DO-214AB) on CORE RAW_FUSED in hardware/power_entry/requirements.json and bom.csv D1. The EMI filter and the output negative clamp (D2) remain unselected there and are not closed here."
+        },
+        {
+          "ledger_id": "field_24_protection",
+          "reason": "already selected: SMCJ30CA on FIELD RAW_FUSED in hardware/power_entry/requirements.json and bom.csv D3. Bank-level EMI and the output clamp D4 remain open; the TPS4H160 channels provide per-channel current and thermal protection."
+        },
+        {
+          "ledger_id": "usb_recovery",
+          "reason": "Design task (USB-C data, CC and power role, backfeed isolation, no automatic machine power). No concrete part set follows from the ledger without a port-role and power-path decision."
+        },
+        {
+          "ledger_id": "expansion",
+          "reason": "Design task: the interface, power and timing class are undefined in the ledger, so there is nothing verifiable to select."
+        }
+      ],
+      "engineering_notes": "Work was read-only. Scratch datasheets are under C:/Users/Gluis/AppData/Local/Temp/claude/C--Users-Gluis-OneDrive-Documents-ChatGPT-Controller/280553e2-7c85-48b3-a5fa-96a4c2e06e60/scratchpad/ro/pwr/. Codex was writing concurrently (hardware/core_converter, field_power and logic_power appeared at 15:17-15:22), and I reported against those newest files. The canonical hardware/electrical-design.json (electrical-r0.1) still lists every assigned row as required_unselected, so the folder decisions are not yet integrated into the ledger.\n\nFindings that are infeasible or conflict with the ledger (no limits changed):\n(1) TPS62160 cannot meet the ledger rails. Its initial accuracy is +/-3% in PWM and -3.5%/+4% in power-save mode (Electrical Characteristics). That gives 1.164-1.236 V at 1.2 V, against the CORE_1V2 window of 1.17-1.23 V. At 3.3 V, power-save mode can reach 3.18 V, below the IO_3V3 minimum of 3.2 V.\n(2) The TPS62160 fixed soft-start slope of about 25 mV/us (25 V/ms, section 8.4.1) exceeds the T20 maximum ramp of 10 V/ms (T20 DS Table 71/87). Both findings support Codex's switch to TPS62901 with SS/TR; the ledger components buck_* still say TPS62160DSGR.\n(3) The main 5 V capacity is limited by the input path. At 18 V, 85% efficiency, a 2 A core entry and 0.06 A analog, CORE_5V can deliver at most about 5.94 A. The core eFuse (RILIM 8.20k) limits at 1.97-2.43 A input. A 7 A-or-more converter therefore gives no usable 7 A until the core source, wiring and eFuse are revised (Codex proposes a 3 A source).\n(4) The field fuse must be at least 7.5 A (4.36 A / 0.75 = 5.81 A), so field wiring and terminals must withstand at least 10 A, more than the '6 A' capacity wording. With a 6 A current-limited PSU, and a 2-3 A core PSU, neither physical fuse will clear. Each is only a backup against high-prospective-current sources, and the shorted-eFuse/TVS case depends on the PSU.\n(5) FIELD_5V can reach 5.15 V, but TPS4H160 logic, FAULT and THER pins are recommended at 5 V maximum (7 V absolute). I used 20k pull-ups for DIAG_EN and THER. The FAULT pull-up still reaches 5.15 V.\n(6) No isolated channels remain for TPS4H160 DIAG_EN, SEL or SEH (14 of 16 are used). DIAG_EN is strapped on and CS goes to a local test point only.\n(7) The field eFuse ILIM screening low of 4.42 A against a 4.36 A normal load leaves about 1.4% margin (Codex already flags this).\n\nThe 0.5 A output current-limit resistor is 2.67k (Eq. 4: 0.8 x 2500 / I). The drive-enable banks use 7.87k (0.254 A), keeping ledger quantity 4. The OMNI-BLOK SMD alternative is Littelfuse 0154003.DRT and 0154007.DR/DRT, but its 50 A @ 125 VDC interrupting rating is weak and the 0154007.DRT time-lag characteristic was not confirmed, so I followed Codex's 58 V MINI candidates. The fuse opening-time and rerating data are assumed ISO 8820-style curves because the Littelfuse PDF returned 403.\n\nEvidence level: only source inspection and datasheet/distributor checks were done. No ERC, simulation, thermal or bench measurement was performed. Nothing here qualifies a circuit or makes it ready to manufacture."
+    }
+  ],
+  "corrections": [
+    {
+      "date": "2026-09-28",
+      "ledger_id": "watchdog_timing",
+      "withdrawn": "TPS3851 standard timing with 3.3 nF C0G (9.51 / 11.04 / 12.67 ms), proposed in the passives group engineering_notes item 1",
+      "reason": "TPS3851 WDI restarts the timer only on a falling edge and progress_wdi inverts once per accepted UPDATE, so falling edges may legally be almost 10 ms apart (twice the 5 ms RTL command-gap watchdog). The external minimum timeout must exceed about 10 ms; 9.51 ms does not.",
+      "replacement_candidate": {
+        "mpn": "TPS3851G18SDRBT",
+        "manufacturer": "Texas Instruments",
+        "timing_capacitor": "CL10C472JB8NNNC (Samsung, 4.7 nF C0G +/-5 %, 0603, 50 V)",
+        "timeout_ms_min_nom_max": [
+          13.4,
+          15.56,
+          17.87
+        ],
+        "downstream_budget_ms": 2.13,
+        "basis": "TI SBVS300B Eq. 1 tWD = 3.23 x C[nF] + 0.381 ms, boundaries 0.905x / 1.095x; G18 variant used as supply-present check on IO_3V3",
+        "status": "candidate, not integrated; user decision versus the TPS3431 (about 57.7-71.9 ms) now drawn in hardware/machine_permission"
+      },
+      "evidence_class": "datasheet inspection and arithmetic only"
+    }
+  ]
+}

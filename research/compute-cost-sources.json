@@ -1,0 +1,273 @@
+{
+  "metadata": {
+    "purpose": "Compute-only procurement inputs for custom CNC controller architecture comparison; not an approved manufacturing BOM",
+    "date": "2026-09-28",
+    "currency": "USD",
+    "method": "Manufacturer specifications and seller product pages, cross-checked against live public Shopify product JSON for exact variant price, SKU, availability and quantity_price_breaks",
+    "price_scope": "Public merchandise prices before shipping, tax, tariff, currency conversion, assembly and test",
+    "volume_rule": "No published quantity discount or explicit volume quotation was found for selected compute variants or listed accessories. Quantity 10/100/1000 entries are null and require quotation. Do not present the quantity-one price as an actual volume quote.",
+    "availability_rule": "available:true indicates the seller allows the variant to be purchased. Exact stock counts and delivery schedules at 10/100/1000 units were not established.",
+    "selection_rule": "Two cost candidates only. Selection does not establish PREEMPT_RT, LinuxCNC, HostMot2, GPU, browser UI, environmental or lifetime suitability.",
+    "protected_scope": "This compute comparison does not reduce the six-joint protected machine I/O or the 21.5-inch FHD capacitive touch display requirement. Neither is included in these compute prices."
+  },
+  "date": "2026-09-28",
+  "candidates": [
+    {
+      "id": "A",
+      "name": "Radxa CM3 SODIMM",
+      "type": "compute_module",
+      "manufacturer": "Radxa",
+      "seller": "ALLNET China",
+      "sku": "RM117-D2E16",
+      "seller_variant_id": 39735504109670,
+      "configuration": "NO WiFi / 2GB RAM / 16GB eMMC",
+      "prices": [
+        {
+          "min_qty": 1,
+          "usd": 55.0,
+          "kind": "verified_public_unit_price"
+        },
+        {
+          "min_qty": 10,
+          "usd": null,
+          "kind": "not_quoted"
+        },
+        {
+          "min_qty": 100,
+          "usd": null,
+          "kind": "not_quoted"
+        },
+        {
+          "min_qty": 1000,
+          "usd": null,
+          "kind": "not_quoted"
+        }
+      ],
+      "published_quantity_price_breaks": [],
+      "availability": "Exact variant available:true in live product JSON; seller HTML SKU table says Add to cart. No stock count supplied.",
+      "included": [
+        "RK3566 quad-core Arm Cortex-A55 processor; seller specifies up to 1.6 GHz",
+        "2GB LPDDR4 RAM",
+        "16GB onboard eMMC storage",
+        "PMIC and module support circuitry",
+        "SPI3_M0 accessible on SODIMM pins 27 CS0, 29 MISO, 33 MOSI, 35 CLK; HDMI also on SODIMM pins",
+        "Gigabit Ethernet MAC signals; Ethernet PHY is not included",
+        "200-pin SODIMM edge connector and additional 100-pin board-to-board interface"
+      ],
+      "missing": [
+        "Custom carrier PCB, SODIMM socket AND extra J1 100-pin board-to-board mate are required to use Ethernet GMAC1_M0; verify exact connector part and revision",
+        "Ethernet PHY, its supplies/clock/passives, magnetics and RJ45 connector",
+        "HDMI connector/protection, USB connectors/protection and touch USB connection",
+        "System input power conversion and protection",
+        "WiFi/Bluetooth; selected module is explicitly the non-wireless variant",
+        "Qualified cooling, enclosure mounting and any thermal interface material",
+        "FPGA, motion interface, ESP helper and machine I/O"
+      ],
+      "costed_accessories": [
+        {
+          "role": "cooling_reference_only",
+          "name": "CM3 passive CPU heatsink, 14 x 14 x 6 mm, conductive tape included",
+          "sku": "HS-RDX-CM3",
+          "prices": [
+            {
+              "min_qty": 1,
+              "usd": 0.99,
+              "kind": "verified_public_unit_price"
+            },
+            {
+              "min_qty": 10,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 100,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 1000,
+              "usd": null,
+              "kind": "not_quoted"
+            }
+          ],
+          "availability": "available:true",
+          "qualification": "Seller names CM3, not specifically CM3 SODIMM. Physical clearance and thermal sufficiency on CM3S remain unverified; reference cost only, not a qualified cooling solution.",
+          "url": "https://shop.allnetchina.cn/products/heat-sink-for-cm3-passive"
+        }
+      ],
+      "compute_plus_storage_usd": 55.0,
+      "qualification": [
+        "Cost candidate for a custom carrier, not a ready-to-wire standalone board",
+        "Manufacturer schematic confirms HDMI, SPI and GMAC connector paths; carrier PHY and connector costs must not be silently omitted",
+        "V1.5 schematic page 19 confirms SPI3_M0 on SODIMM; page 20 places GMAC1_M0 on J1. Do not remux the SODIMM SPI3 pins into GMAC1_M1 if SPI is needed simultaneously. Actual pinmux and driver must still be proven.",
+        "Public CM3S hardware schematic is revision 1.5, January 2023; actual delivered revision and support lifetime require confirmation",
+        "A supported Linux image is not evidence of PREEMPT_RT timing qualification",
+        "Raspberry Pi-specific hm2_spix support does not automatically apply to RK3566; SPI host driver/LLIO and complete FPGA protocol compatibility must be established",
+        "Must measure real-time latency while HDMI, USB touch, browser 3D, storage, network and thermal load are active",
+        "16GB sufficiency depends on OS, update/rollback policy and model storage limits"
+      ],
+      "urls": [
+        "https://shop.allnetchina.cn/products/radxa-rock3-computing-module-sodimm?variant=39735504109670",
+        "https://shop.allnetchina.cn/products/radxa-rock3-computing-module-sodimm.js",
+        "https://dl.radxa.com/cm3s/docs/hw/RADXA_CM3S_V1.5_SCH.pdf",
+        "https://dl.radxa.com/cm3/docs/radxa_cm3sodimm_v1.0_pinout.xlsx",
+        "https://shop.allnetchina.cn/products/heat-sink-for-cm3-passive.js"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Radxa ROCK 3C",
+      "type": "standalone_sbc",
+      "manufacturer": "Radxa",
+      "seller": "Arace Tech",
+      "sku": "RS112-D2",
+      "seller_variant_id": 42476867059892,
+      "configuration": "2GB RAM, no storage bundled; current seller listing advertises WiFi 6 / Bluetooth 5.4",
+      "prices": [
+        {
+          "min_qty": 1,
+          "usd": 44.9,
+          "kind": "verified_public_unit_price"
+        },
+        {
+          "min_qty": 10,
+          "usd": null,
+          "kind": "not_quoted"
+        },
+        {
+          "min_qty": 100,
+          "usd": null,
+          "kind": "not_quoted"
+        },
+        {
+          "min_qty": 1000,
+          "usd": null,
+          "kind": "not_quoted"
+        }
+      ],
+      "published_quantity_price_breaks": [],
+      "availability": "Exact 2GB variant available:true in live JSON; seller page says In stock. No stock count supplied.",
+      "included": [
+        "RK3566 quad-core Cortex-A55 processor up to 1.6 GHz",
+        "2GB LPDDR4 RAM",
+        "Full-size HDMI, specified up to 1920 x 1080 at 60 Hz",
+        "Gigabit Ethernet PHY, magnetics and RJ45 on the SBC",
+        "40-pin GPIO header with SPI3_MOSI_M1 on pin 19, MISO on 21, clock on 23 and chip selects on 24/26",
+        "USB ports for capacitive touchscreen and other peripherals",
+        "USB-C power input, microSD slot and optional eMMC module connector",
+        "Current listing advertises onboard WiFi 6 / Bluetooth 5.4; board revision and exact wireless hardware must be fixed in the procurement specification"
+      ],
+      "missing": [
+        "OS storage: a separately costed microSD card is listed below",
+        "Power supply or integration into system 5V supply; manufacturer recommends 5V/3A without SSD",
+        "Cooling: separately costed AE007 heatsink/fan below",
+        "HDMI, USB touch, Ethernet and power cables as required by enclosure layout",
+        "Mounting and protected SPI connection to custom FPGA/I/O board",
+        "FPGA, ESP helper and protected machine I/O"
+      ],
+      "costed_accessories": [
+        {
+          "role": "local_storage",
+          "name": "ALLNET 64GB microSDXC UHS-1 Memory Card",
+          "sku": "ALN-TFUHS1-64",
+          "seller": "ALLNET China",
+          "prices": [
+            {
+              "min_qty": 1,
+              "usd": 16.99,
+              "kind": "verified_public_unit_price"
+            },
+            {
+              "min_qty": 10,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 100,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 1000,
+              "usd": null,
+              "kind": "not_quoted"
+            }
+          ],
+          "availability": "available:true",
+          "qualification": "Current in-stock seller reference. Exact card controller/NAND, endurance, boot reliability and power-loss behavior are unqualified. Cheaper Arace Lexar 32GB $4.99 listing is sold out and was not used.",
+          "url": "https://shop.allnetchina.cn/products/allnet-micro-sd"
+        },
+        {
+          "role": "cooling",
+          "name": "Radxa AE007 / Heatsink 2513, heatsink with fan",
+          "sku": "AE007",
+          "seller": "ALLNET China",
+          "prices": [
+            {
+              "min_qty": 1,
+              "usd": 2.9,
+              "kind": "verified_public_unit_price"
+            },
+            {
+              "min_qty": 10,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 100,
+              "usd": null,
+              "kind": "not_quoted"
+            },
+            {
+              "min_qty": 1000,
+              "usd": null,
+              "kind": "not_quoted"
+            }
+          ],
+          "availability": "available:true",
+          "qualification": "Seller calls this Heatsink for Rock5 Model A, but SKU AE007 matches Heatsink 2513. Radxa's Heatsink 2513 manufacturer page explicitly lists ROCK 3C under Works with. Thermal performance in the intended enclosure remains untested.",
+          "url": "https://shop.allnetchina.cn/products/heatsink-for-rock5-model-a"
+        }
+      ],
+      "compute_plus_storage_usd": 61.89,
+      "compute_plus_storage_and_cooling_usd": 64.79,
+      "qualification": [
+        "Preferred cost candidate for early hardware/software validation because Ethernet, HDMI, USB and power support circuitry are already assembled",
+        "No claim of PREEMPT_RT/LinuxCNC/HostMot2 readiness or tested browser 3D performance",
+        "Raspberry Pi-specific hm2_spix backend is not a Rockchip backend; a supported low-level SPI route must be proven",
+        "Confirm GPIO pin mux, clock, latency and electrical levels before FPGA interface design",
+        "Qualify exact WiFi hardware revision and firmware; older ROCK 3C boards use WiFi 5 / Bluetooth 5",
+        "Run worst-case timing and thermal testing with the complete 21.5-inch FHD UI workload",
+        "The microSD is a consumer storage reference; production endurance and loss-of-power behavior require testing"
+      ],
+      "urls": [
+        "https://arace.tech/products/radxa-rock-3c?variant=42476867059892",
+        "https://arace.tech/products/radxa-rock-3c.js",
+        "https://radxa.com/products/rock3/3c/",
+        "https://docs.radxa.com/en/rock3/rock3c/hardware-design/hardware-interface",
+        "https://wiki.radxa.com/Rock3/3c",
+        "https://shop.allnetchina.cn/products/allnet-micro-sd",
+        "https://shop.allnetchina.cn/products/allnet-micro-sd.js",
+        "https://shop.allnetchina.cn/products/heatsink-for-rock5-model-a.js",
+        "https://radxa.com/products/accessories/heatsink-2513/"
+      ]
+    }
+  ],
+  "screened_alternatives": [
+    {
+      "name": "Radxa CM3 B2B module",
+      "reason_not_selected": "2GB/16GB/no-WiFi RM116-D2E16W0 is $46 but sold out. In-stock 2GB/no-eMMC RM116-D2E0W0 is $48.99 and needs separately sourced OS storage. It includes Ethernet PHY, so it remains a useful alternate if total carrier cost offsets the storage difference.",
+      "url": "https://shop.allnetchina.cn/products/rock3-computing-module.js"
+    },
+    {
+      "name": "Radxa ZERO 3E 2GB",
+      "reason_not_selected": "Available 2GB RS109-D2E0H1 is $39.99 at Arace, with GbE and micro-HDMI but no onboard WiFi; needs microSD. ROCK 3C costs $4.91 more but provides WiFi/Bluetooth, full-size HDMI and more directly usable USB ports, avoiding adapters for the integrated display product.",
+      "url": "https://arace.tech/products/radxa-zero-3e.js"
+    },
+    {
+      "name": "Luckfox Core3566 Lite 2GB",
+      "reason_not_selected": "Official current starting price is $77.99 without eMMC or WiFi, making it less attractive than the selected Radxa module for this costing exercise.",
+      "url": "https://www.luckfox.com/EN-Core3566"
+    }
+  ]
+}

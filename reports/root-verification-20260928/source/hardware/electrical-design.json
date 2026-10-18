@@ -1,0 +1,2829 @@
+{
+  "schema_version": 1,
+  "revision": "electrical-r0.1",
+  "date": "2026-09-28",
+  "status": "proposed_not_qualified",
+  "manufacturing_ready": false,
+  "scope": "Six-joint costing profile; full electrical ledger plus independently drawn two-joint TX subcircuit. No full-board schematic/layout.",
+  "host": {
+    "engineering_baseline": "Radxa ROCK 3C RS112-D2",
+    "production_alternative": "Radxa CM3 SODIMM RM117-D2E16",
+    "interface": "dedicated short 3.3V SPI, not Ethernet motion; customer Ethernet on SBC",
+    "qualification": "PREEMPT_RT/SPI driver, pinmux, thermal and loaded UI timing unproved"
+  },
+  "sources": {
+    "T20": "https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf",
+    "TX": "https://www.ti.com/lit/ds/symlink/am26c31.pdf",
+    "RX": "https://www.ti.com/lit/ds/symlink/am26lv32e.pdf",
+    "DI": "https://www.ti.com/lit/ds/symlink/iso1212.pdf",
+    "DO": "https://www.ti.com/lit/ds/symlink/tps4h160-q1.pdf",
+    "ISO": "https://www.ti.com/product/ISO7740",
+    "DAC": "https://www.ti.com/lit/ds/symlink/dac80501.pdf",
+    "AMP": "https://www.ti.com/lit/ds/symlink/opa197.pdf",
+    "BUCK": "https://www.ti.com/lit/ds/symlink/tps62160.pdf",
+    "WDT": "https://www.ti.com/lit/ds/symlink/tps3431.pdf",
+    "EFUSE": "https://www.ti.com/lit/ds/symlink/tps2663.pdf",
+    "ROCK": "https://docs.radxa.com/en/rock3/rock3c/getting-started/before-start",
+    "ROCK_GPIO": "https://docs.radxa.com/rock3/rock3c/hardware-design/hardware-interface",
+    "CM3S": "https://dl.radxa.com/cm3s/docs/hw/RADXA_CM3S_V1.5_SCH.pdf",
+    "ESP": "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
+    "PCBWAY": "https://www.pcbway.com/assembly-file-requirements.html"
+  },
+  "domains": [
+    {
+      "id": "LOGIC",
+      "ground": "LOGIC_GND",
+      "external_ties": "SBC USB/HDMI shields and differential cable signal references require reviewed chassis/earth topology"
+    },
+    {
+      "id": "FIELD",
+      "ground": "FIELD_GND",
+      "external_ties": "Separate machine field supply; intentionally common within field I/O, not per-channel isolated"
+    },
+    {
+      "id": "ANALOG",
+      "ground": "ANALOG_GND",
+      "external_ties": "Spindle analog reference only; isolated converter and digital controls required"
+    },
+    {
+      "id": "CHASSIS",
+      "ground": "CHASSIS_PE",
+      "external_ties": "Shield bond at enclosure entry; no default logic/field-ground short"
+    }
+  ],
+  "rails": [
+    {
+      "id": "CORE_24V",
+      "domain": "LOGIC",
+      "nominal_v": 24,
+      "min_v": 18,
+      "max_v": 30,
+      "capacity_a": 2,
+      "source": "external controller PSU; display branch excluded"
+    },
+    {
+      "id": "CORE_5V",
+      "domain": "LOGIC",
+      "nominal_v": 5,
+      "min_v": 4.85,
+      "max_v": 5.15,
+      "capacity_a": 6,
+      "source": "required 18-30V input 5V/6A converter; MPN unresolved"
+    },
+    {
+      "id": "IO_3V3",
+      "domain": "LOGIC",
+      "nominal_v": 3.3,
+      "min_v": 3.2,
+      "max_v": 3.4,
+      "capacity_a": 1,
+      "source": "TPS62160 from CORE_5V; sequenced after CORE_1V2"
+    },
+    {
+      "id": "ESP_3V3",
+      "domain": "LOGIC",
+      "nominal_v": 3.3,
+      "min_v": 3.2,
+      "max_v": 3.4,
+      "capacity_a": 1,
+      "source": "separate TPS62160 from protected CORE_5V branch"
+    },
+    {
+      "id": "CORE_1V2",
+      "domain": "LOGIC",
+      "nominal_v": 1.2,
+      "min_v": 1.17,
+      "max_v": 1.23,
+      "capacity_a": 1,
+      "source": "TPS62160 from CORE_5V; estimated load only"
+    },
+    {
+      "id": "FIELD_24V",
+      "domain": "FIELD",
+      "nominal_v": 24,
+      "min_v": 18,
+      "max_v": 30,
+      "capacity_a": 6,
+      "source": "separate machine field supply; external motor/field loads not on controller PSU"
+    },
+    {
+      "id": "FIELD_5V",
+      "domain": "FIELD",
+      "nominal_v": 5,
+      "min_v": 4.85,
+      "max_v": 5.15,
+      "capacity_a": 0.1,
+      "source": "wide-input buck required; do not use unqualified SOT23 LDO dissipation"
+    },
+    {
+      "id": "ANALOG_12V",
+      "domain": "ANALOG",
+      "nominal_v": 12,
+      "min_v": 11.4,
+      "max_v": 12.6,
+      "capacity_a": 0.083,
+      "source": "TMR1-2412 candidate; verify actual regulation/ripple and load range"
+    },
+    {
+      "id": "ANALOG_5V",
+      "domain": "ANALOG",
+      "nominal_v": 5,
+      "min_v": 4.85,
+      "max_v": 5.15,
+      "capacity_a": 0.03,
+      "source": "TLV76050 from ANALOG_12V; current provision not regulator rating"
+    }
+  ],
+  "power_loads": [
+    {
+      "id": "sbc_budget",
+      "rail": "CORE_5V",
+      "budget_a": 3,
+      "basis": "engineering reservation; exact5V delivery/connector and measured SBC peak open"
+    },
+    {
+      "id": "tx_cables",
+      "rail": "CORE_5V",
+      "budget_a": 0.6,
+      "basis": "conservative12drivers+termination reservation, not datasheet quiescent current"
+    },
+    {
+      "id": "encoder_supply",
+      "rail": "CORE_5V",
+      "budget_a": 0.4,
+      "basis": "two independently current-limited5V encoder ports at0.2A each"
+    },
+    {
+      "id": "io3v3_input",
+      "rail": "CORE_5V",
+      "budget_a": 0.37,
+      "basis": "0.4A*3.3V/5V/0.85=0.3106A plus 0.05A reserve, rounded up to 10mA"
+    },
+    {
+      "id": "esp3v3_input",
+      "rail": "CORE_5V",
+      "budget_a": 0.6,
+      "basis": "0.7A*3.3V/5V/0.85=0.5435A plus 0.05A reserve, rounded up to 10mA"
+    },
+    {
+      "id": "core1v2_input",
+      "rail": "CORE_5V",
+      "budget_a": 0.28,
+      "basis": "0.8A*1.2V/5V/0.85=0.2259A plus 0.05A reserve, rounded up to 10mA"
+    },
+    {
+      "id": "misc5v",
+      "rail": "CORE_5V",
+      "budget_a": 0.1,
+      "basis": "supervision/interface reservation"
+    },
+    {
+      "id": "fpga_io_rx_isolators",
+      "rail": "IO_3V3",
+      "budget_a": 0.4,
+      "basis": "reservation; Efinity power estimate and toggle activity open"
+    },
+    {
+      "id": "esp_peak",
+      "rail": "ESP_3V3",
+      "budget_a": 0.7,
+      "basis": "radio and boot margin; measure exact module image"
+    },
+    {
+      "id": "fpga_core",
+      "rail": "CORE_1V2",
+      "budget_a": 0.8,
+      "basis": "reservation; not a measured/estimated T20 netlist consumption"
+    },
+    {
+      "id": "field_outputs",
+      "rail": "FIELD_24V",
+      "budget_a": 4.3,
+      "basis": "8*0.5A +6*0.05A; excludes external motor drive power"
+    },
+    {
+      "id": "field_control",
+      "rail": "FIELD_24V",
+      "budget_a": 0.06,
+      "basis": "switch quiescent, buck and sensing provision; sensors separately verified"
+    },
+    {
+      "id": "field_isolation",
+      "rail": "FIELD_5V",
+      "budget_a": 0.05,
+      "basis": "5isolators/gate/diagnostic reservation"
+    },
+    {
+      "id": "analog_total",
+      "rail": "ANALOG_12V",
+      "budget_a": 0.03,
+      "basis": "DAC/isolator5V input + amplifier/clamp reservation"
+    },
+    {
+      "id": "analog_digital",
+      "rail": "ANALOG_5V",
+      "budget_a": 0.02,
+      "basis": "DAC and ISO7740 reservation"
+    },
+    {
+      "id": "logic_converter_input",
+      "rail": "CORE_24V",
+      "budget_a": 1.75,
+      "basis": "5.35A*5V/0.85/18V=1.7484A at minimum input, rounded up to 10mA"
+    },
+    {
+      "id": "analog_converter_input",
+      "rail": "CORE_24V",
+      "budget_a": 0.06,
+      "basis": "isolated stage input reservation at minimum supply"
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "step_dir",
+      "channels": 12,
+      "domain": "LOGIC",
+      "type": "5 V-supplied differential TX, nonisolated",
+      "target": "250 ksteps/s electrical goal, minimum 2 us STEP high/low and 2 us DIR guard; cable/drive may require slower",
+      "design_goal_steps_per_s": 250000,
+      "reference_rtl_limit_steps_per_s": 195312.5,
+      "rate_evidence": "Design goal unachieved. Current reference RTL accumulator increment cap 0x01000000 at 50 MHz limits rate to 195312.5 steps/s; not a physical measurement.",
+      "reset": "high_Z",
+      "qualification": "remote fail-safe bias, reference common-mode, partial-power and cable EMC open"
+    },
+    {
+      "id": "encoder",
+      "channels": 6,
+      "domain": "LOGIC",
+      "type": "two differential ABZ ports, nonisolated",
+      "target": "5V differential encoder sources; maximum1Medges/s per signal proposed; common-mode acceptance -7..+7V only after protection review",
+      "reset": "counts invalid until initialization/homing policy",
+      "qualification": "termination, differential threshold, open-wire behavior and timestamp bound open"
+    },
+    {
+      "id": "digital_input",
+      "channels": 22,
+      "domain": "FIELD",
+      "type": "sinking input for PNP sources/dry contact to field positive",
+      "operating_min_v": 0,
+      "operating_max_v": 30,
+      "nominal_v": 24,
+      "guaranteed_low_target_v": 5,
+      "guaranteed_high_target_v": 15,
+      "isolation": "FIELD to LOGIC; common FIELD_GND",
+      "qualification": "threshold tolerance/EMC/filter latency to verify; neither NPN mode nor AC input"
+    },
+    {
+      "id": "general_output",
+      "channels": 8,
+      "domain": "FIELD",
+      "type": "protected sourcing DC",
+      "operating_min_v": 18,
+      "operating_max_v": 30,
+      "continuous_target_a": 0.5,
+      "bank_target_a": 2,
+      "reset": "off",
+      "qualification": "load/inrush/inductive energy and continuous thermal tests open; not dry contacts"
+    },
+    {
+      "id": "drive_enable",
+      "channels": 6,
+      "domain": "FIELD",
+      "type": "protected sourcing DC",
+      "operating_min_v": 18,
+      "operating_max_v": 30,
+      "continuous_target_a": 0.05,
+      "reset": "off",
+      "qualification": "drive input must accept24V sourcing; no STO rating"
+    },
+    {
+      "id": "spindle_analog",
+      "channels": 1,
+      "domain": "ANALOG",
+      "type": "isolated0-10V source",
+      "operating_min_v": 0,
+      "operating_max_v": 10,
+      "load_min_ohm": 10000,
+      "reset": "zero_request_and_separate_run_off",
+      "output_swing_budget": {
+        "dac_reference_v": 2.5,
+        "dac_gain": 1,
+        "dac_full_scale_v": 2.5,
+        "dac_rail": "ANALOG_5V",
+        "dac_rail_min_v": 4.85,
+        "dac_headroom_min_v": 2.35,
+        "amp_gain": 4,
+        "amp_gain_network": "30k/10k 0.1%",
+        "amp_rail": "ANALOG_12V",
+        "amp_rail_min_v": 11.4,
+        "amp_output_full_scale_v": 10.0,
+        "amp_headroom_min_v": 1.4,
+        "load_min_ohm": 10000,
+        "basis": "Calculated from ledger rail minima and OPA197 swing-to-rail spec at <=1mA load; a 0-5V DAC range with gain two cannot reach 10V below a 5V rail. Not a measurement."
+      },
+      "qualification": "zero clamp, offset/gain/temperature/load/settling and VFD short protection unresolved"
+    },
+    {
+      "id": "host_spi",
+      "channels": 1,
+      "domain": "LOGIC",
+      "type": "3.3V mode0 exclusive internal SPI",
+      "target": "start<=5MHz; raise only after CDC/timing/SI qualification; no HMI/touch sharing"
+    },
+    {
+      "id": "esp_service",
+      "channels": 1,
+      "domain": "LOGIC",
+      "type": "3.3V UART + PGOOD + DISARMED observation",
+      "target": "UART1152008N1 study; GPIO assignment omitted; powered-off isolation/buffering required",
+      "reset": "ESP has no physical motion, host-reset or inhibit authority"
+    }
+  ],
+  "channels": [
+    {
+      "id": "STEP0",
+      "kind": "step_dir",
+      "component": "TX0",
+      "device_channel": 1,
+      "logic_net": "STEP0_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR0",
+      "kind": "step_dir",
+      "component": "TX0",
+      "device_channel": 2,
+      "logic_net": "DIR0_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "STEP1",
+      "kind": "step_dir",
+      "component": "TX0",
+      "device_channel": 3,
+      "logic_net": "STEP1_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR1",
+      "kind": "step_dir",
+      "component": "TX0",
+      "device_channel": 4,
+      "logic_net": "DIR1_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "STEP2",
+      "kind": "step_dir",
+      "component": "TX1",
+      "device_channel": 1,
+      "logic_net": "STEP2_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR2",
+      "kind": "step_dir",
+      "component": "TX1",
+      "device_channel": 2,
+      "logic_net": "DIR2_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "STEP3",
+      "kind": "step_dir",
+      "component": "TX1",
+      "device_channel": 3,
+      "logic_net": "STEP3_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR3",
+      "kind": "step_dir",
+      "component": "TX1",
+      "device_channel": 4,
+      "logic_net": "DIR3_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "STEP4",
+      "kind": "step_dir",
+      "component": "TX2",
+      "device_channel": 1,
+      "logic_net": "STEP4_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR4",
+      "kind": "step_dir",
+      "component": "TX2",
+      "device_channel": 2,
+      "logic_net": "DIR4_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "STEP5",
+      "kind": "step_dir",
+      "component": "TX2",
+      "device_channel": 3,
+      "logic_net": "STEP5_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DIR5",
+      "kind": "step_dir",
+      "component": "TX2",
+      "device_channel": 4,
+      "logic_net": "DIR5_FPGA",
+      "domain": "LOGIC",
+      "default": "low_input_high_Z_output_when_inhibited",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC0_A",
+      "kind": "encoder",
+      "component": "RX0",
+      "device_channel": 1,
+      "logic_net": "ENC0_A_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC0_B",
+      "kind": "encoder",
+      "component": "RX0",
+      "device_channel": 2,
+      "logic_net": "ENC0_B_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC0_Z",
+      "kind": "encoder",
+      "component": "RX0",
+      "device_channel": 3,
+      "logic_net": "ENC0_Z_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC1_A",
+      "kind": "encoder",
+      "component": "RX0",
+      "device_channel": 4,
+      "logic_net": "ENC1_A_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC1_B",
+      "kind": "encoder",
+      "component": "RX1",
+      "device_channel": 1,
+      "logic_net": "ENC1_B_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "ENC1_Z",
+      "kind": "encoder",
+      "component": "RX1",
+      "device_channel": 2,
+      "logic_net": "ENC1_Z_FPGA",
+      "domain": "LOGIC",
+      "default": "invalid_until_initialized",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI00",
+      "kind": "digital_input",
+      "component": "DI0",
+      "device_channel": 1,
+      "logic_net": "HOME0_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI01",
+      "kind": "digital_input",
+      "component": "DI0",
+      "device_channel": 2,
+      "logic_net": "HOME1_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI02",
+      "kind": "digital_input",
+      "component": "DI1",
+      "device_channel": 1,
+      "logic_net": "HOME2_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI03",
+      "kind": "digital_input",
+      "component": "DI1",
+      "device_channel": 2,
+      "logic_net": "HOME3_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI04",
+      "kind": "digital_input",
+      "component": "DI2",
+      "device_channel": 1,
+      "logic_net": "HOME4_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI05",
+      "kind": "digital_input",
+      "component": "DI2",
+      "device_channel": 2,
+      "logic_net": "HOME5_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI06",
+      "kind": "digital_input",
+      "component": "DI3",
+      "device_channel": 1,
+      "logic_net": "PROBE_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI07",
+      "kind": "digital_input",
+      "component": "DI3",
+      "device_channel": 2,
+      "logic_net": "TOOLSETTER_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI08",
+      "kind": "digital_input",
+      "component": "DI4",
+      "device_channel": 1,
+      "logic_net": "DOOR_STATUS_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI09",
+      "kind": "digital_input",
+      "component": "DI4",
+      "device_channel": 2,
+      "logic_net": "PROTECTIVE_STATUS_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI10",
+      "kind": "digital_input",
+      "component": "DI5",
+      "device_channel": 1,
+      "logic_net": "SPINDLE_FAULT_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI11",
+      "kind": "digital_input",
+      "component": "DI5",
+      "device_channel": 2,
+      "logic_net": "SPINDLE_READY_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI12",
+      "kind": "digital_input",
+      "component": "DI6",
+      "device_channel": 1,
+      "logic_net": "FEED_HOLD_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI13",
+      "kind": "digital_input",
+      "component": "DI6",
+      "device_channel": 2,
+      "logic_net": "CYCLE_START_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI14",
+      "kind": "digital_input",
+      "component": "DI7",
+      "device_channel": 1,
+      "logic_net": "LUBE_STATUS_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI15",
+      "kind": "digital_input",
+      "component": "DI7",
+      "device_channel": 2,
+      "logic_net": "SPARE_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI16",
+      "kind": "digital_input",
+      "component": "DI8",
+      "device_channel": 1,
+      "logic_net": "ALM0_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI17",
+      "kind": "digital_input",
+      "component": "DI8",
+      "device_channel": 2,
+      "logic_net": "ALM1_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI18",
+      "kind": "digital_input",
+      "component": "DI9",
+      "device_channel": 1,
+      "logic_net": "ALM2_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI19",
+      "kind": "digital_input",
+      "component": "DI9",
+      "device_channel": 2,
+      "logic_net": "ALM3_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI20",
+      "kind": "digital_input",
+      "component": "DI10",
+      "device_channel": 1,
+      "logic_net": "ALM4_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DI21",
+      "kind": "digital_input",
+      "component": "DI10",
+      "device_channel": 2,
+      "logic_net": "ALM5_FPGA",
+      "domain": "FIELD",
+      "default": "read_only",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO00",
+      "kind": "general_output",
+      "component": "DO0",
+      "device_channel": 1,
+      "logic_net": "SPINDLE_RUN_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO01",
+      "kind": "general_output",
+      "component": "DO0",
+      "device_channel": 2,
+      "logic_net": "SPINDLE_DIRECTION_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO02",
+      "kind": "general_output",
+      "component": "DO0",
+      "device_channel": 3,
+      "logic_net": "FLOOD_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO03",
+      "kind": "general_output",
+      "component": "DO0",
+      "device_channel": 4,
+      "logic_net": "MIST_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO04",
+      "kind": "general_output",
+      "component": "DO1",
+      "device_channel": 1,
+      "logic_net": "LUBRICATION_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO05",
+      "kind": "general_output",
+      "component": "DO1",
+      "device_channel": 2,
+      "logic_net": "AIR_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO06",
+      "kind": "general_output",
+      "component": "DO1",
+      "device_channel": 3,
+      "logic_net": "SPARE0_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO07",
+      "kind": "general_output",
+      "component": "DO1",
+      "device_channel": 4,
+      "logic_net": "SPARE1_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.5,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO08",
+      "kind": "drive_enable",
+      "component": "DO2",
+      "device_channel": 1,
+      "logic_net": "ENABLE0_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO09",
+      "kind": "drive_enable",
+      "component": "DO2",
+      "device_channel": 2,
+      "logic_net": "ENABLE1_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO10",
+      "kind": "drive_enable",
+      "component": "DO2",
+      "device_channel": 3,
+      "logic_net": "ENABLE2_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO11",
+      "kind": "drive_enable",
+      "component": "DO2",
+      "device_channel": 4,
+      "logic_net": "ENABLE3_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO12",
+      "kind": "drive_enable",
+      "component": "DO3",
+      "device_channel": 1,
+      "logic_net": "ENABLE4_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "DO13",
+      "kind": "drive_enable",
+      "component": "DO3",
+      "device_channel": 2,
+      "logic_net": "ENABLE5_CMD",
+      "domain": "FIELD",
+      "default": "off",
+      "load_target_a": 0.05,
+      "fpga_package_pin": null,
+      "bank": null
+    },
+    {
+      "id": "AO0",
+      "kind": "spindle_analog",
+      "component": "DAC0",
+      "device_channel": 1,
+      "logic_net": "SPINDLE_ANALOG_COMMAND",
+      "domain": "ANALOG",
+      "default": "zero_request_and_separate_run_off",
+      "load_target_a": 0,
+      "fpga_package_pin": null,
+      "bank": null
+    }
+  ],
+  "components": [
+    {
+      "id": "fpga",
+      "mpn": "T20F256C4",
+      "qty": 1,
+      "package": "FBGA25613x13mm0.8mm",
+      "role": "timing reference",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_1V2",
+      "allowed_supply_v": [
+        1.15,
+        1.25
+      ],
+      "supply_ports": [
+        {
+          "rail": "IO_3V3",
+          "allowed_supply_v": [
+            3.14,
+            3.47
+          ]
+        }
+      ]
+    },
+    {
+      "id": "esp",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "qty": 1,
+      "package": "WROOM module PCB antenna",
+      "role": "service helper",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "ESP_3V3",
+      "allowed_supply_v": [
+        3.0,
+        3.6
+      ]
+    },
+    {
+      "id": "tx",
+      "mpn": "AM26C31IPWR",
+      "qty": 3,
+      "package": "TSSOP16 PW",
+      "role": "12differential drivers",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_5V",
+      "allowed_supply_v": [
+        4.5,
+        5.5
+      ]
+    },
+    {
+      "id": "rx",
+      "mpn": "AM26LV32EIPWR",
+      "qty": 2,
+      "package": "TSSOP16 PW",
+      "role": "6of8receiver channels",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "IO_3V3",
+      "allowed_supply_v": [
+        3.0,
+        3.6
+      ]
+    },
+    {
+      "id": "di",
+      "mpn": "ISO1212DBQR",
+      "qty": 11,
+      "package": "SSOP16 DBQ",
+      "role": "22isolated sinking inputs",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "IO_3V3",
+      "allowed_supply_v": [
+        2.25,
+        5.5
+      ]
+    },
+    {
+      "id": "do",
+      "mpn": "TPS4H160BQPWPRQ1",
+      "qty": 4,
+      "package": "HTSSOP28 PWP exposed pad",
+      "role": "14of16sourcing outputs",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "FIELD_24V",
+      "allowed_supply_v": [
+        4,
+        40
+      ]
+    },
+    {
+      "id": "iso_cmd",
+      "mpn": "ISO7740FDBQR",
+      "qty": 4,
+      "package": "SSOP16 DBQ",
+      "role": "16forward channels;14used",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "IO_3V3",
+      "allowed_supply_v": [
+        2.25,
+        5.5
+      ],
+      "supply_ports": [
+        {
+          "rail": "FIELD_5V",
+          "allowed_supply_v": [
+            2.25,
+            5.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iso_fault",
+      "mpn": "ISO7740FDBQR",
+      "qty": 1,
+      "package": "SSOP16 DBQ",
+      "role": "4reverse-oriented bank fault channels",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "FIELD_5V",
+      "allowed_supply_v": [
+        2.25,
+        5.5
+      ],
+      "supply_ports": [
+        {
+          "rail": "IO_3V3",
+          "allowed_supply_v": [
+            2.25,
+            5.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iso_analog",
+      "mpn": "ISO7740FDBQR",
+      "qty": 1,
+      "package": "SSOP16 DBQ",
+      "role": "DACCLK/DIN/CS plus inhibit",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "IO_3V3",
+      "allowed_supply_v": [
+        2.25,
+        5.5
+      ],
+      "supply_ports": [
+        {
+          "rail": "ANALOG_5V",
+          "allowed_supply_v": [
+            2.25,
+            5.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dac",
+      "mpn": "DAC80501ZDQFR",
+      "qty": 1,
+      "package": "WSON8 DQF",
+      "role": "16bit zero-scale reset candidate;internal2.5Vref gain1 (0-2.5V full scale) so output stays>=2.35V below ANALOG_5V minimum",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "ANALOG_5V",
+      "allowed_supply_v": [
+        2.7,
+        5.5
+      ]
+    },
+    {
+      "id": "amp",
+      "mpn": "OPA197IDBVR",
+      "qty": 1,
+      "package": "SOT23-5 DBV",
+      "role": "gain-four analog candidate (0-2.5V DAC to 0-10V);>=1.4V headroom at 11.4V rail minimum",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "ANALOG_12V",
+      "allowed_supply_v": [
+        4.5,
+        36
+      ]
+    },
+    {
+      "id": "analog_iso_power",
+      "mpn": "TMR 1-2412",
+      "qty": 1,
+      "package": "SIP8",
+      "role": "isolated12V83mA reference",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_24V",
+      "allowed_supply_v": [
+        18,
+        36
+      ]
+    },
+    {
+      "id": "analog_ldo",
+      "mpn": "TLV76050DBZR",
+      "qty": 1,
+      "package": "SOT23-3 DBZ",
+      "role": "analog5V only",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "ANALOG_12V",
+      "allowed_supply_v": [
+        7,
+        30
+      ]
+    },
+    {
+      "id": "buck_fpga_core",
+      "mpn": "TPS62160DSGR",
+      "qty": 1,
+      "package": "WSON8 DSG",
+      "role": "1.2V core;inductor/passives required",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_5V",
+      "allowed_supply_v": [
+        3,
+        17
+      ]
+    },
+    {
+      "id": "buck_io",
+      "mpn": "TPS62160DSGR",
+      "qty": 1,
+      "package": "WSON8 DSG",
+      "role": "3.3V I/O;sequenced",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_5V",
+      "allowed_supply_v": [
+        3,
+        17
+      ]
+    },
+    {
+      "id": "buck_esp",
+      "mpn": "TPS62160DSGR",
+      "qty": 1,
+      "package": "WSON8 DSG",
+      "role": "3.3V separately current-limited ESP branch",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "CORE_5V",
+      "allowed_supply_v": [
+        3,
+        17
+      ]
+    },
+    {
+      "id": "watchdog",
+      "mpn": "TPS3431SDRBR",
+      "qty": 1,
+      "package": "VSON8 DRB",
+      "role": "independent timeout",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending",
+      "rail": "IO_3V3",
+      "allowed_supply_v": [
+        1.8,
+        6.5
+      ]
+    },
+    {
+      "id": "input_tvs",
+      "mpn": "SMF36A",
+      "qty": 22,
+      "package": "SOD123F",
+      "role": "historical costing provision;final surge coordination open",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "terminals",
+      "mpn": "TBP01R1-508-08BE",
+      "qty": 12,
+      "package": "8way5.08mm THT",
+      "role": "96positions placeholder allocation, dimensions/current review open",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "mating_plugs",
+      "mpn": "TBP01P1-508-08BE",
+      "qty": 12,
+      "package": "8way5.08mm screw plug",
+      "role": "96mating positions, shipped loose",
+      "status": "candidate",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_series",
+      "mpn": null,
+      "qty": 12,
+      "package": "0603",
+      "role": "33ohm1% initial source damping",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_data_pulldown",
+      "mpn": null,
+      "qty": 12,
+      "package": "0603",
+      "role": "10kohm1% at driver inputs",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_permit_pulldown",
+      "mpn": null,
+      "qty": 3,
+      "package": "0603",
+      "role": "10kohm1% at each driver G",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_decoupling",
+      "mpn": null,
+      "qty": 3,
+      "package": "0603",
+      "role": "100nF25V X7R at VCC/GND",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_bulk",
+      "mpn": null,
+      "qty": 3,
+      "package": "0603",
+      "role": "1uF25V X7R at each driver;bias derating",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "di_rsense",
+      "mpn": null,
+      "qty": 22,
+      "package": "0603_or_larger",
+      "role": "562ohm1% per input",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "di_rthreshold",
+      "mpn": null,
+      "qty": 22,
+      "package": "MELF>=0.25W",
+      "role": "1kohm1% pulse-rated threshold resistor",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "di_filter",
+      "mpn": null,
+      "qty": 22,
+      "package": "0603_or_larger",
+      "role": "CIN value/rating TBD;fast probe channels qualified separately",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "di_decoupling",
+      "mpn": null,
+      "qty": 11,
+      "package": "0603",
+      "role": "100nF25V X7R per ISO1212",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "do_pulldown",
+      "mpn": null,
+      "qty": 16,
+      "package": "0603",
+      "role": "10kohm candidate all16IN pins inclunused",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "do_current_set",
+      "mpn": null,
+      "qty": 4,
+      "package": "0603",
+      "role": "perbank current limit from tolerance/thermal design;value TBD",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "do_diag_support",
+      "mpn": null,
+      "qty": 4,
+      "package": "TBD",
+      "role": "current-sense/diagnostic pull/filter network incl CS/CL/SEL1/SEL2/DIAG_EN/LATCH/FLT;not just floating pins",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "rx_termination",
+      "mpn": null,
+      "qty": 6,
+      "package": ">=0.125W",
+      "role": "120ohm1% selectable at receiver;not blindly at both cable ends",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "iso_decoupling",
+      "mpn": null,
+      "qty": 12,
+      "package": "0603",
+      "role": "one100nF at each supply side of6isolators",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "local_buck_inductor",
+      "mpn": null,
+      "qty": 3,
+      "package": "TBD",
+      "role": "3inductors selected from ripple/saturation/EMI calculation",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "local_buck_caps_feedback",
+      "mpn": null,
+      "qty": 3,
+      "package": "TBD",
+      "role": "3sets Cin/Cout/feedback/enable/PG support sized fromdatasheet",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "analog_gain",
+      "mpn": null,
+      "qty": 2,
+      "package": "0603",
+      "role": "matched30k/10k0.1% gain-four provisional;reference accuracy plus temp drift open",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "analog_support",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "DACreferencecaps/resetstraps;opampbypass/outputisolation/filter/monitor/clamp",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "watchdog_timing",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "capacitor/straps and WDO pull-up;20msstudy needs tolerance budget",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "fpga_decoupling",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "perpin railcaps/bulk/filter network derived frompackage/reference schematic",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "esp_decoupling_boot",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "bulk/bypass/EN/GPIO0 boot/networkantenna clearance",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "tx_rx_line_protection",
+      "mpn": null,
+      "qty": 18,
+      "package": "TBD",
+      "role": "12TX+6RX channel networks;capacitance/commonmode/ESD energy TBD",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "core_24_protection",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "Core entry TVS/EMI support beyond separately listed fuse/eFuse subassemblies; no 24 V directly into TPS62160",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "main_5v_converter",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "18-30V to5V6A regulated stage withPGOOD",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "field_24_protection",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "Field entry TVS/EMI distribution and bank protection beyond separately listed fuse/eFuse subassemblies",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "field_5v_converter",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "18-30V to5V100mA switching stage",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "permission_logic",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "hardwareAND/latch;allpermissives required;14outputANDgates;spindlerun included",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "power_supervisor",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "railsupervision/sequenceT20/reset;CPUbootisnotPGOOD",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "fpga_flash",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "externalserialNOR compatible with T20bootvoltage/commands/capacity;programmedimage",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "fpga_clock",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "50MHz3.3VCMOSoscillator with tolerance/jitter/dutycycle budget",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "fpga_jtag",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "programmingconnector,strapresistors,recoverybutton andtestpoints",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "host_spi_buffer",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "offstateisolation/source damping forSBC-FPGA partialpower;OEdefaultoff",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "esp_uart_buffer",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "Ioff-qualified buffer/isolation for3.3VUARTand2statusinputs",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "esp_branch_limit",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "local branchcurrentlimit;ESPshortcannotcollapseFPGA railwithinbudget",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "encoder_load_switch",
+      "mpn": null,
+      "qty": 2,
+      "package": "TBD",
+      "role": "independent5V200mA currentlimited encoderports;reverse protection",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "analog_zero_clamp",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "defaultdeenergizedzero output independentofDACcode;loadaccuracy retained",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "usb_recovery",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "USB-Cdata/protection/CC/powerrole/backfeed design;noautomaticmachinepower",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "expansion",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "namedkeyedinterface/power/timingclass;unselected,notadvertisedaxisexpansion",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "physical_entry_fuse_core",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "F_CORE: DC-rated physical fuse plus holder; interrupt/time-current/I2t coordination unresolved",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "physical_entry_fuse_field",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "F_FIELD: separately coordinated DC physical fuse plus holder",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "efuse_core",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "TPS2663 family candidate plus external reverse FET and sense/timing/strap components; core threshold unresolved",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    },
+    {
+      "id": "efuse_field",
+      "mpn": null,
+      "qty": 1,
+      "package": "TBD",
+      "role": "TPS2663 family candidate; latch-off; external reverse FET; current margin and connector coordination unresolved",
+      "status": "required_unselected",
+      "unresolved": "Footprint, sourcing and circuit qualification pending"
+    }
+  ],
+  "required_parts": [
+    {
+      "id": "fpga",
+      "minimum_qty": 1
+    },
+    {
+      "id": "esp",
+      "minimum_qty": 1
+    },
+    {
+      "id": "tx",
+      "minimum_qty": 3
+    },
+    {
+      "id": "rx",
+      "minimum_qty": 2
+    },
+    {
+      "id": "di",
+      "minimum_qty": 11
+    },
+    {
+      "id": "do",
+      "minimum_qty": 4
+    },
+    {
+      "id": "iso_cmd",
+      "minimum_qty": 4
+    },
+    {
+      "id": "iso_fault",
+      "minimum_qty": 1
+    },
+    {
+      "id": "iso_analog",
+      "minimum_qty": 1
+    },
+    {
+      "id": "dac",
+      "minimum_qty": 1
+    },
+    {
+      "id": "amp",
+      "minimum_qty": 1
+    },
+    {
+      "id": "analog_iso_power",
+      "minimum_qty": 1
+    },
+    {
+      "id": "analog_ldo",
+      "minimum_qty": 1
+    },
+    {
+      "id": "buck_fpga_core",
+      "minimum_qty": 1
+    },
+    {
+      "id": "buck_io",
+      "minimum_qty": 1
+    },
+    {
+      "id": "buck_esp",
+      "minimum_qty": 1
+    },
+    {
+      "id": "watchdog",
+      "minimum_qty": 1
+    },
+    {
+      "id": "input_tvs",
+      "minimum_qty": 22
+    },
+    {
+      "id": "terminals",
+      "minimum_qty": 12
+    },
+    {
+      "id": "mating_plugs",
+      "minimum_qty": 12
+    },
+    {
+      "id": "tx_series",
+      "minimum_qty": 12
+    },
+    {
+      "id": "tx_data_pulldown",
+      "minimum_qty": 12
+    },
+    {
+      "id": "tx_permit_pulldown",
+      "minimum_qty": 3
+    },
+    {
+      "id": "tx_decoupling",
+      "minimum_qty": 3
+    },
+    {
+      "id": "tx_bulk",
+      "minimum_qty": 3
+    },
+    {
+      "id": "di_rsense",
+      "minimum_qty": 22
+    },
+    {
+      "id": "di_rthreshold",
+      "minimum_qty": 22
+    },
+    {
+      "id": "di_filter",
+      "minimum_qty": 22
+    },
+    {
+      "id": "di_decoupling",
+      "minimum_qty": 11
+    },
+    {
+      "id": "do_pulldown",
+      "minimum_qty": 16
+    },
+    {
+      "id": "do_current_set",
+      "minimum_qty": 4
+    },
+    {
+      "id": "do_diag_support",
+      "minimum_qty": 4
+    },
+    {
+      "id": "rx_termination",
+      "minimum_qty": 6
+    },
+    {
+      "id": "iso_decoupling",
+      "minimum_qty": 12
+    },
+    {
+      "id": "local_buck_inductor",
+      "minimum_qty": 3
+    },
+    {
+      "id": "local_buck_caps_feedback",
+      "minimum_qty": 3
+    },
+    {
+      "id": "analog_gain",
+      "minimum_qty": 2
+    },
+    {
+      "id": "analog_support",
+      "minimum_qty": 1
+    },
+    {
+      "id": "watchdog_timing",
+      "minimum_qty": 1
+    },
+    {
+      "id": "fpga_decoupling",
+      "minimum_qty": 1
+    },
+    {
+      "id": "esp_decoupling_boot",
+      "minimum_qty": 1
+    },
+    {
+      "id": "tx_rx_line_protection",
+      "minimum_qty": 18
+    },
+    {
+      "id": "core_24_protection",
+      "minimum_qty": 1
+    },
+    {
+      "id": "main_5v_converter",
+      "minimum_qty": 1
+    },
+    {
+      "id": "field_24_protection",
+      "minimum_qty": 1
+    },
+    {
+      "id": "field_5v_converter",
+      "minimum_qty": 1
+    },
+    {
+      "id": "permission_logic",
+      "minimum_qty": 1
+    },
+    {
+      "id": "power_supervisor",
+      "minimum_qty": 1
+    },
+    {
+      "id": "fpga_flash",
+      "minimum_qty": 1
+    },
+    {
+      "id": "fpga_clock",
+      "minimum_qty": 1
+    },
+    {
+      "id": "fpga_jtag",
+      "minimum_qty": 1
+    },
+    {
+      "id": "host_spi_buffer",
+      "minimum_qty": 1
+    },
+    {
+      "id": "esp_uart_buffer",
+      "minimum_qty": 1
+    },
+    {
+      "id": "esp_branch_limit",
+      "minimum_qty": 1
+    },
+    {
+      "id": "encoder_load_switch",
+      "minimum_qty": 2
+    },
+    {
+      "id": "analog_zero_clamp",
+      "minimum_qty": 1
+    },
+    {
+      "id": "usb_recovery",
+      "minimum_qty": 1
+    },
+    {
+      "id": "expansion",
+      "minimum_qty": 1
+    },
+    {
+      "id": "physical_entry_fuse_core",
+      "minimum_qty": 1
+    },
+    {
+      "id": "physical_entry_fuse_field",
+      "minimum_qty": 1
+    },
+    {
+      "id": "efuse_core",
+      "minimum_qty": 1
+    },
+    {
+      "id": "efuse_field",
+      "minimum_qty": 1
+    }
+  ],
+  "pin_reservations": [
+    {
+      "id": "host_spi",
+      "count": 4,
+      "purpose": "runtimeCS/SCLK/MOSI/MISO",
+      "package_pins": null
+    },
+    {
+      "id": "analog_spi",
+      "count": 4,
+      "purpose": "DACCS/SCLK/DIN/analogpermit",
+      "package_pins": null
+    },
+    {
+      "id": "output_faults",
+      "count": 4,
+      "purpose": "oneaggregatefaultperTPS4H160bank",
+      "package_pins": null
+    },
+    {
+      "id": "motion_permission",
+      "count": 1,
+      "purpose": "FPGAarmrequest",
+      "package_pins": null
+    },
+    {
+      "id": "external_inhibit",
+      "count": 1,
+      "purpose": "asynchronousassertion/synchronizedrelease",
+      "package_pins": null
+    },
+    {
+      "id": "watchdog_progress",
+      "count": 1,
+      "purpose": "usefulprogressWDI",
+      "package_pins": null
+    },
+    {
+      "id": "motion_disarmed",
+      "count": 1,
+      "purpose": "read-only ESP status",
+      "package_pins": null
+    },
+    {
+      "id": "fault_status",
+      "count": 4,
+      "purpose": "watchdog/link/inhibit/timing fault",
+      "package_pins": null
+    },
+    {
+      "id": "endpoint_ready",
+      "count": 1,
+      "purpose": "endpoint initialized, not useful progress",
+      "package_pins": null
+    },
+    {
+      "id": "reference_clock",
+      "count": 1,
+      "purpose": "50MHzdedicatedclock-capableinput",
+      "package_pins": null
+    },
+    {
+      "id": "logic_reset",
+      "count": 1,
+      "purpose": "resetn",
+      "package_pins": null
+    },
+    {
+      "id": "power_status",
+      "count": 1,
+      "purpose": "PGOODaggregate",
+      "package_pins": null
+    },
+    {
+      "id": "future_expansion",
+      "count": 6,
+      "purpose": "reserveduncommitted;notasupportedinterface",
+      "package_pins": null
+    }
+  ],
+  "logic_links": [
+    {
+      "id": "fpga_tx",
+      "source_domain": "LOGIC",
+      "destination_domain": "LOGIC",
+      "source_rail": "IO_3V3",
+      "destination_supply": "CORE_5V",
+      "source_voh_min": 2.4,
+      "source_vol_max": 0.4,
+      "destination_vih_min": 2.0,
+      "destination_vil_max": 0.8,
+      "destination_input_abs_max": 5.5,
+      "source_max_v": 3.4,
+      "bridge": "direct TTL-compatible input plus33ohm, no5V pull-up"
+    },
+    {
+      "id": "rx_fpga",
+      "source_domain": "LOGIC",
+      "destination_domain": "LOGIC",
+      "source_rail": "IO_3V3",
+      "destination_supply": "IO_3V3",
+      "source_voh_min": 2.4,
+      "source_vol_max": 0.4,
+      "destination_vih_min": 2.0,
+      "destination_vil_max": 0.8,
+      "destination_input_abs_max": 3.6,
+      "source_max_v": 3.4,
+      "bridge": "3.3V receiver; verify load-specific datasheet limits before freeze"
+    },
+    {
+      "id": "output_commands",
+      "source_domain": "LOGIC",
+      "destination_domain": "FIELD",
+      "source_rail": "IO_3V3",
+      "destination_supply": "FIELD_5V",
+      "bridge": "galvanic_isolator",
+      "isolator_mpn": "ISO7740FDBQR"
+    },
+    {
+      "id": "field_faults",
+      "source_domain": "FIELD",
+      "destination_domain": "LOGIC",
+      "source_rail": "FIELD_5V",
+      "destination_supply": "IO_3V3",
+      "bridge": "galvanic_isolator",
+      "isolator_mpn": "ISO7740FDBQR",
+      "direction": "separate reversed chip, not reverse pins on command chips"
+    },
+    {
+      "id": "analog_commands",
+      "source_domain": "LOGIC",
+      "destination_domain": "ANALOG",
+      "source_rail": "IO_3V3",
+      "destination_supply": "ANALOG_5V",
+      "bridge": "galvanic_isolator",
+      "isolator_mpn": "ISO7740FDBQR"
+    }
+  ],
+  "fpga": {
+    "reference_mpn": "T20F256C4",
+    "advertised_gpio": 195,
+    "reserved_bank_voltage": 3.3,
+    "physical_mapping_complete": false,
+    "pin_assignment_rule": "No package balls assigned until package CSV, Efinity IO placement and all bank/config reservations reviewed",
+    "clock_hz": 50000000,
+    "core_voltage_v": 1.2,
+    "clock_and_reset": "external clock; asynchronous inhibit assertion; reset release synchronized independently per clock domain",
+    "sequencing": "VCC/PLL first; then VCCIO; unused MIPI connection per F256 datasheet Table66; hold CRESET_N until all rails stable; exact times unresolved",
+    "temperature": "C4 commercial grade only; industrial environment claim blocked; no silent I4 price substitution"
+  },
+  "permission": {
+    "required_true": [
+      "RAILS_OK",
+      "CONFIG_VALID",
+      "EXTERNAL_PERMIT",
+      "HW_WATCHDOG_OK",
+      "FPGA_ARM_LATCH"
+    ],
+    "esp_in_required_path": false,
+    "hardware_implementation_status": "not_drawn",
+    "watchdog_owner": "FPGA useful accepted control-cycle progress; independent TPS3431 removes hardware permission on progress loss",
+    "watchdog_wdi_rule": "No free-running timer, ESP heartbeat or network activity may service it; bound repetition/accepted sequence in endpoint",
+    "watchdog_wdi_implementation": "Not exposed by current reference RTL; additional gateware/board integration required",
+    "deadline_ms": 20,
+    "deadline_status": "simulation study only; select timing capacitor/tolerance and machine stop contract",
+    "fault": "Latch disarmed; output permission removed; fresh verified state and explicit rearm required",
+    "tx": "drive G low with /G high; field pair high-Z; active STEP0 before permit release; do not claim glitch-free transitions without test",
+    "field": "gate14commands on LOGIC side before isolation; ISO7740F defaults low;14switch-input external pulldowns; no ESP gating",
+    "analog": "DAC zero request; separate spindle run off; physical zero clamp still missing",
+    "safety_boundary": "operational stop only; machine protective circuit/STO/brakes external and machine-specific"
+  },
+  "power_protection": {
+    "topology": "Physical DC-rated entry fuse in each CORE and FIELD supply, then coordinated electronic protection; branch devices where useful. High-side output ICs already provide channel protection.",
+    "entry_fuses": [
+      "F_CORE",
+      "F_FIELD"
+    ],
+    "efuse_family_candidate": "TPS2663; exact ordering variant and MODE configuration unresolved",
+    "efuse_mode": "Latched off for FIELD; recovery does not rearm actuators. Firmware cannot bypass current/voltage limits.",
+    "reverse_polarity": "TPS2663 requires external reverse-polarity FET implementation; not credited as built-in complete reverse protection",
+    "coordination_open": [
+      "PSU current-limit/foldback",
+      "minimum and maximum prospective fault current",
+      "wire and connector ampacity",
+      "DC breaking capacity",
+      "time-current and I-squared-t",
+      "capacitor inrush",
+      "eFuse thermal safe-operating area",
+      "field load inductive return energy"
+    ],
+    "not_claimed": "A generic eFuse is not an emergency-stop or an independently qualified protective circuit; fuse amp rating alone does not prove clearing."
+  },
+  "support_decisions": [
+    "Three local TPS62160 converters are provisioned now: FPGA1.2V, FPGA/I/O3.3V and independent ESP3.3V. Earlier priced two-piece basket is incomplete.",
+    "Keep only one TLV76050 candidate in the analog domain. FIELD5V needs a switching regulator pending thermal design; earlier second LDO is not accepted.",
+    "ISO1212 already integrates input isolation; do not add another22input isolator channels.",
+    "ISO7740 all4channels travel one direction. Four command chips plus one reversed chip provide16commands+4faults; one additional chip serves analogSPI/inhibit.",
+    "T20F256 requires external configuration storage/programming plan; Q100F3 embedded-flash claims do not apply.",
+    "No 90W adapter or monitor supply compatibility conclusion until monitor exactinput/power, startup surge and converter losses are measured. Field outputs use external power."
+  ],
+  "release_blockers": [
+    "Complete schematic and layout absent; TX block is not a complete controller",
+    "Actual drive/sensor/load and first-machine profile compatibility not frozen",
+    "FPGA package/bank/boot pins and SBC/ESP pinmux unassigned",
+    "Efinity synthesis, fitting, timing and power evidence missing",
+    "Output permission latch/gates, transient networks and analog zero clamp incomplete",
+    "Useful-progress WDI absent from current reference RTL",
+    "250 ksteps/s electrical goal exceeds current reference RTL limit; end-to-end rate goal not achieved",
+    "Power sequencing, partial power/backfeed and short-circuit behavior unmeasured",
+    "ROCK3C PREEMPT_RT/SPI host, graphics load and thermal deadlines unqualified",
+    "No PCBWay quote, complete BOM, fabrication release or conducted/radiated EMC evidence"
+  ],
+  "physical_reserved_functions": [
+    "JTAG4",
+    "activeconfigurationSPI4plusstraps",
+    "CRESET_N",
+    "CDONE",
+    "power/groundallballs"
+  ],
+  "terminals": [
+    {
+      "connector": "JTX0",
+      "position": 1,
+      "net": "STEP0_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 2,
+      "net": "STEP0_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 3,
+      "net": "DIR0_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 4,
+      "net": "DIR0_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 5,
+      "net": "STEP1_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 6,
+      "net": "STEP1_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 7,
+      "net": "DIR1_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX0",
+      "position": 8,
+      "net": "DIR1_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 1,
+      "net": "STEP2_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 2,
+      "net": "STEP2_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 3,
+      "net": "DIR2_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 4,
+      "net": "DIR2_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 5,
+      "net": "STEP3_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 6,
+      "net": "STEP3_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 7,
+      "net": "DIR3_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX1",
+      "position": 8,
+      "net": "DIR3_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 1,
+      "net": "STEP4_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 2,
+      "net": "STEP4_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 3,
+      "net": "DIR4_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 4,
+      "net": "DIR4_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 5,
+      "net": "STEP5_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 6,
+      "net": "STEP5_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 7,
+      "net": "DIR5_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JTX2",
+      "position": 8,
+      "net": "DIR5_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 1,
+      "net": "ENC0_A_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 2,
+      "net": "ENC0_A_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 3,
+      "net": "ENC0_B_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 4,
+      "net": "ENC0_B_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 5,
+      "net": "ENC0_Z_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 6,
+      "net": "ENC0_Z_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 7,
+      "net": "ENC0_5V_LIMITED",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC0",
+      "position": 8,
+      "net": "LOGIC_GND",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 1,
+      "net": "ENC1_A_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 2,
+      "net": "ENC1_A_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 3,
+      "net": "ENC1_B_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 4,
+      "net": "ENC1_B_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 5,
+      "net": "ENC1_Z_P",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 6,
+      "net": "ENC1_Z_N",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 7,
+      "net": "ENC1_5V_LIMITED",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JENC1",
+      "position": 8,
+      "net": "LOGIC_GND",
+      "domain": "LOGIC",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 1,
+      "net": "DI00_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 2,
+      "net": "DI01_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 3,
+      "net": "DI02_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 4,
+      "net": "DI03_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 5,
+      "net": "DI04_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 6,
+      "net": "DI05_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 7,
+      "net": "DI06_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI0",
+      "position": 8,
+      "net": "DI07_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 1,
+      "net": "DI08_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 2,
+      "net": "DI09_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 3,
+      "net": "DI10_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 4,
+      "net": "DI11_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 5,
+      "net": "DI12_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 6,
+      "net": "DI13_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 7,
+      "net": "DI14_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI1",
+      "position": 8,
+      "net": "DI15_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 1,
+      "net": "DI16_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 2,
+      "net": "DI17_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 3,
+      "net": "DI18_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 4,
+      "net": "DI19_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 5,
+      "net": "DI20_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 6,
+      "net": "DI21_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 7,
+      "net": "FIELD_GND",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDI2",
+      "position": 8,
+      "net": "FIELD_GND",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 1,
+      "net": "DO00_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 2,
+      "net": "DO01_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 3,
+      "net": "DO02_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 4,
+      "net": "DO03_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 5,
+      "net": "DO04_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 6,
+      "net": "DO05_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 7,
+      "net": "DO06_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO0",
+      "position": 8,
+      "net": "DO07_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 1,
+      "net": "DO08_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 2,
+      "net": "DO09_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 3,
+      "net": "DO10_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 4,
+      "net": "DO11_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 5,
+      "net": "DO12_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 6,
+      "net": "DO13_FIELD",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 7,
+      "net": "FIELD_GND",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JDO1",
+      "position": 8,
+      "net": "FIELD_GND",
+      "domain": "FIELD",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 1,
+      "net": "CORE_24V",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 2,
+      "net": "LOGIC_GND",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 3,
+      "net": "FIELD_24V",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 4,
+      "net": "FIELD_GND",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 5,
+      "net": "TX0_REFERENCE",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 6,
+      "net": "TX1_REFERENCE",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 7,
+      "net": "TX2_REFERENCE",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JPOWER",
+      "position": 8,
+      "net": "CHASSIS_PE",
+      "domain": "MIXED_DOCUMENTED",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 1,
+      "net": "SPINDLE_0_10V",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 2,
+      "net": "ANALOG_GND",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 3,
+      "net": "NC_RESERVED_0",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 4,
+      "net": "NC_RESERVED_1",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 5,
+      "net": "NC_RESERVED_2",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 6,
+      "net": "NC_RESERVED_3",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 7,
+      "net": "NC_RESERVED_4",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    },
+    {
+      "connector": "JANA",
+      "position": 8,
+      "net": "NC_RESERVED_5",
+      "domain": "ANALOG",
+      "physical_footprint_approved": false
+    }
+  ],
+  "connector_warning": "JPOWER mixes separately labelled supplies/reference domains; layout/keying review may split connectors and change pricedMPNs. TX*_REFERENCE bond to LOGIC_GND only. SixreservedJANApositions are physicallyNC; never arbitraryvoltage inputs."
+}

@@ -1,0 +1,69 @@
+Routing restore audit and isolated correction candidate — 11 October 2026
+
+Saved r07 evidence shows 29 completed pad joins and 17 lost pad joins while total
+uncapped unrouted items decreased from 1376 to 1364. All 17 lost nets were covered
+by the original restore pass and explicitly refused because another net's new
+pass-(c) copper occupied their former route. The original tool continued after a
+refusal and saved the board with that old copper absent. The aggregate-count
+integration gate accepted the overall decrease. Failure-only candidate omission
+does not explain those 17 losses.
+
+r07-attribution.json freezes the per-net trace. inputs/r07-restore-r1.json and
+inputs/r07-partition_diff.json preserve the saved reports; source-manifest.json
+records their source paths and hashes. The original source snapshot and shared
+tool both hashed 330f250f2b4763fe62cf91d87f91fdfb0ce68e77407b23932d0eb578a7e2356f
+at completion of the host receipt.
+
+ripup_restore.py is a fixed COPY for review. The shared Z:/ tool was not edited
+or installed. It preflights every net with recorded removed copper and every
+ripped-net declaration, including nets with no jobs or failures. A declaration
+without geometry is rejected. If any candidate cannot restore, the entire step
+returns 3 before adding copper or SaveBoard; the report says saved=false. Invalid
+input/accounting returns 2. A caller must honor these nonzero exits and retain its
+previous accepted board; this candidate does not recover the already saved r07.
+
+Router accounting requires one failure or at least one indexed, nonzero main
+power polyline for each unique input job. Unknown, duplicate, conflicting or
+omitted outcomes fail closed. Indexed auxiliary vias/stubs/padstubs/necks must
+belong to a job with a main route; unindexed auxiliaries require a successful
+main route on their net. This is an accounting check, not proof of pad joins.
+Only the current signal producer's kind=power jobs are supported. Pair jobs are
+rejected rather than inferred as complete. Older router outputs without indexed
+main-route records must not be silently reused.
+
+The source's 0.20 mm same-domain, 0.65 mm cross-domain and 0.25 mm same-net hole
+checks remain. Duplicate via suppression is stricter: a replacement must match
+position, diameter and drill in native units and a matching through via must
+exist on the loaded board. Near-colocated non-equivalent or absent vias refuse.
+The original track/via geometry, net and lock restoration remains; restored
+objects receive new UUIDs as in the original implementation. SaveBoard still
+uses aSkipSettings=True. Destination aliases that could overwrite JSON inputs
+or board copper with a report/report.part are rejected.
+
+Host verification: 26 test methods and 39 subtest executions pass, no skips.
+host-tests.log and host-receipt.json contain the final run and exact hashes.
+Tests cover no-job/no-failure restoration, all-or-nothing refusal before mutation,
+clearance/hole preservation, geometry and lock restoration, project settings,
+failure accounting, duplicate-via equivalence/presence and destination aliases.
+
+The frozen r07 JSON has 416 jobs, 316 failures and 100 indexed main-route jobs.
+Its host geometry replay covers all 130 removed/ripped nets and refuses before
+Add/Save (return 3). Every historical lost net is refused. The replay reports 53
+refused candidates because it conservatively considers all removed nets and the
+mock board has no actual vias. This is deliberately stricter than the original
+59 failure-only candidates/25 refusals; it does not demonstrate retention of
+r07's 29 gains. host-r07-refusal.json is labelled host/mock evidence. Sentinel
+input, output and project bytes remain unchanged in these refusal controls.
+
+No native KiCad board was loaded, no DRC/refill or connectivity job was launched,
+no heavy slot was used, and no shared tool or board was written. The saved native
+r07 reports are historical evidence; the new checks are host/mock evidence only.
+The candidate remains unadopted and has no new native qualification.
+
+Before adopting any future routing candidate, refill its zones, run complete
+native DRC, measure fresh pad partitions, and require a final before/after
+partition diff with lost=0 after all cleanup. The restore preflight cannot replace
+that final guard: job outcomes and aggregate unrouted reductions do not prove
+that every previously connected pad pair stayed connected. Selective rollback
+of conflicting new routes, native recovery of the old losses, and restoring
+round 2 to the queue are separate work and were not performed in this audit.

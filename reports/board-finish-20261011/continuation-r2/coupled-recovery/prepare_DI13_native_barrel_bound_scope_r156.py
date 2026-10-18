@@ -1,0 +1,11 @@
+"""Bind search bounds to actual surviving native barrel poses, preserve R154."""
+from pathlib import Path
+import hashlib,json
+H=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+src=H/'construct_DI15_DI13_actual_barrel_scopes_r154.py';raw=src.read_bytes();s=raw.decode().replace('\r\n','\n').replace('r154','r156').replace('R154','R156')
+old='win=box(117,94,136,115)';new="native_scope_barrels=[ts for ts in h0['vias'] if ts['uuid'] in {'3915d83c-3320-4051-8a79-1c6657b12e83','161402e1-bd66-40c6-a860-82b78474ff0c','5e80f2ce-055a-4438-9082-062589a1bdaf'}];assert len(native_scope_barrels)==3;assert {q['uuid']: [q['x'],q['y']] for q in native_scope_barrels}=={'3915d83c-3320-4051-8a79-1c6657b12e83':[121.85,90.75],'161402e1-bd66-40c6-a860-82b78474ff0c':[131.25,117.15],'5e80f2ce-055a-4438-9082-062589a1bdaf':[129.75,118.85]};win=box(115,85,138,123)"
+assert old in s;s=s.replace(old,new)
+s=s.replace(".intersection(Point(start).buffer(5,quad_segs=128))",".intersection(win)").replace(".intersection(Point(end).buffer(5,quad_segs=128))",".intersection(win)")
+s=s.replace("'source_parent_sha256':C.sha(source)","'source_parent_sha256':C.sha(source),'actual_native_scope_barrels':[{'UUID':q['uuid'],'at_mm':[q['x'],q['y']],'actual_flash_layers':q['flashed']} for q in native_scope_barrels],'new_attachment_scope':'Actual entire surviving source/target In3 component metal inside native-barrel-bound region; no old-tip-radius restriction'")
+dst=H/'construct_DI15_DI13_native_barrel_bound_r156.py';assert not dst.exists();dst.write_text(s,newline='\n');out=H/'prepare-DI13-native-barrel-bound-scope-r156.json';assert not out.exists();out.write_text(json.dumps({'source_file':str(src),'source_sha256':sha(raw),'derived_file':str(dst),'derived_sha256':sha(dst.read_bytes()),'delta':'R154 found no barrels because its saved local window excluded actual source121.85/90.75 and target131.25/117.15,129.75/118.85. R156 explicitly asserts these exact native poses and binds window to them; full surviving In3 metal may nominate real new attachment. Pair, actual raw/native flash, unchanged own disk, full body/contact and ≤3-leg predicates unchanged.'},indent=1)+'\n');print(sha(dst.read_bytes()))

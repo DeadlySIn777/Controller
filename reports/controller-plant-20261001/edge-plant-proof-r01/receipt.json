@@ -1,0 +1,576 @@
+{
+  "status": "PASS",
+  "evidence_type": "COMPILED_DISCONNECTED_IDEAL_MECHANICS_FIXTURE",
+  "input_sha256": {
+    "reports\\controller-plant-20261001\\stage-r01\\edge_plant.hpp": "5bd5795412cac1ae5cd4fab76045ad103e14dd318d8119dc5ad895eb0143ba2f",
+    "reports\\controller-plant-20261001\\stage-r01\\test_edge_plant.cpp": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+    "reports\\controller-plant-20261001\\run_edge_plant_proof_r01.py": "060751ecb96543adae368d9f52d5c965d5b37774c89c55a84f5a51e667e38370"
+  },
+  "source_unchanged": true,
+  "compiler": "Alpine clang version 22.1.3\nTarget: x86_64-alpine-linux-musl\nThread model: posix\nInstalledDir: /usr/lib/llvm22/bin\nConfiguration file: /etc/clang22/x86_64-alpine-linux-musl.cfg",
+  "cases": [
+    {
+      "name": "baseline",
+      "passed": true,
+      "header_sha256": "5bd5795412cac1ae5cd4fab76045ad103e14dd318d8119dc5ad895eb0143ba2f",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/baseline/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/baseline/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "baseline\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 1.5534485999960452
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/baseline/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "baseline\\execute.log",
+        "log_sha256": "35e19b473cd63503c2f00a97480abb8a386e7d58b04efdfe4a5ec5e7653ab0b4",
+        "seconds": 0.14226140000391752
+      },
+      "expected_runtime_failure": null,
+      "output": "EDGE_PLANT_PASS checks=1114 joints=12 encoders=4 actual_FPGA_integration=0 physical_qualification=0"
+    },
+    {
+      "name": "level_instead_of_edge",
+      "passed": true,
+      "header_sha256": "93176c444a9c26b2fd2e2c5b9c869bd9ec9c868c90cd78031c44cd6616309169",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/level_instead_of_edge/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/level_instead_of_edge/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "level_instead_of_edge\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9122471999144182
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/level_instead_of_edge/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "level_instead_of_edge\\execute.log",
+        "log_sha256": "d6c6fb61b904a8c558db5f34946483327a328a43f57427318076b6419f81dc34",
+        "seconds": 0.11987900000531226
+      },
+      "expected_runtime_failure": "high level not extra rising edge",
+      "output": "EDGE_PLANT_FAIL high level not extra rising edge"
+    },
+    {
+      "name": "missing_permission",
+      "passed": true,
+      "header_sha256": "8010b0ccf145154d039db2c69e1407e892d775d2e8a0790383295fea7722dffe",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_permission/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_permission/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "missing_permission\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.8898109999718145
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_permission/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "missing_permission\\execute.log",
+        "log_sha256": "150aa99125c43e9cc1140dcbea8866bf671536412565839a7ca09b8570efb356",
+        "seconds": 0.12125250010285527
+      },
+      "expected_runtime_failure": "inhibit detects emitted rising edges",
+      "output": "EDGE_PLANT_FAIL inhibit detects emitted rising edges"
+    },
+    {
+      "name": "missing_provider",
+      "passed": true,
+      "header_sha256": "4dd56d0f83b80cef2998814cf7b5b3bf766615b157e5855f47e6450a44afe39a",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_provider/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_provider/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "missing_provider\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9504378000274301
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/missing_provider/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "missing_provider\\execute.log",
+        "log_sha256": "dfb54c0fc5f2828aa050beeb65be26f8bb630af9e6067f7acdf271cd9e0e4477",
+        "seconds": 0.11514569993596524
+      },
+      "expected_runtime_failure": "no trusted permission means no physical movement",
+      "output": "EDGE_PLANT_FAIL no trusted permission means no physical movement"
+    },
+    {
+      "name": "ignore_drive_enable",
+      "passed": true,
+      "header_sha256": "c80fac65734331aa354abbf35f8c30ba17963fdabb335c2b4a9b24088196258c",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_drive_enable/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_drive_enable/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_drive_enable\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9248181000584736
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_drive_enable/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_drive_enable\\execute.log",
+        "log_sha256": "585b465b341d4ac2a11bbc5e930ddab5d2f55256462b26e77d2993d89a1951e8",
+        "seconds": 0.1346210999181494
+      },
+      "expected_runtime_failure": "individual drive and power gating",
+      "output": "EDGE_PLANT_FAIL individual drive and power gating"
+    },
+    {
+      "name": "invent_lost_motion",
+      "passed": true,
+      "header_sha256": "6ce35badf86dcaab1d93cc1b75e79f6897fbe74221b0730b42bf01395573a6b3",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/invent_lost_motion/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/invent_lost_motion/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "invent_lost_motion\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9114144999766722
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/invent_lost_motion/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "invent_lost_motion\\execute.log",
+        "log_sha256": "d3f05b484456f8341b120d3f1367a5e5ff99e917d3e78e518bc4007f0b061376",
+        "seconds": 0.12895909999497235
+      },
+      "expected_runtime_failure": "missed steps visible in physical position",
+      "output": "EDGE_PLANT_FAIL missed steps visible in physical position"
+    },
+    {
+      "name": "ignore_reversal",
+      "passed": true,
+      "header_sha256": "dd765ab5731bfbe83dca1b30583ca90cb0a563cc31f291e7daaeae6bca46314d",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_reversal/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_reversal/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_reversal\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.8958287000423297
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_reversal/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_reversal\\execute.log",
+        "log_sha256": "2a69ed919c69e1594f4672478d48d9b5167552f61772534e5db4c7ce468f3abf",
+        "seconds": 0.11256589996628463
+      },
+      "expected_runtime_failure": "reversed motor",
+      "output": "EDGE_PLANT_FAIL reversed motor"
+    },
+    {
+      "name": "ignore_backlash",
+      "passed": true,
+      "header_sha256": "60fe8fa3388998818c2a61030f7aec8d6038895cc6a1d526dd50646deeda9166",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_backlash/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_backlash/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_backlash\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9355336000444368
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_backlash/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_backlash\\execute.log",
+        "log_sha256": "c6056be795504f454dc8f3632a45d14df0d3271837ab9b0b7d3d7d145888218e",
+        "seconds": 0.11972710001282394
+      },
+      "expected_runtime_failure": "initial half gap explicit",
+      "output": "EDGE_PLANT_FAIL initial half gap explicit"
+    },
+    {
+      "name": "fake_encoder_feedback",
+      "passed": true,
+      "header_sha256": "1cb3bdbbaeeaf486bf60046524a1991c0c5fd9427f23e1d4e504727eb63a6f58",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/fake_encoder_feedback/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/fake_encoder_feedback/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "fake_encoder_feedback\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 1.0859973999904469
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/fake_encoder_feedback/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "fake_encoder_feedback\\execute.log",
+        "log_sha256": "0e405eb18420b4eccb8983340f7ba559cb04368b12e0e5bcb8959f33450fc4de",
+        "seconds": 0.17394959996454418
+      },
+      "expected_runtime_failure": "encoder waveform debt explicitly exposed",
+      "output": "EDGE_PLANT_FAIL encoder waveform debt explicitly exposed"
+    },
+    {
+      "name": "ignore_encoder_unplug",
+      "passed": true,
+      "header_sha256": "f37a324d8a0e7ec743070cbf90f78bca88575218d242c85e30a4d2787f052414",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_encoder_unplug/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_encoder_unplug/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_encoder_unplug\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9472779000643641
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_encoder_unplug/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_encoder_unplug\\execute.log",
+        "log_sha256": "05cbf2ccf3c0c0515aa943d2d42921bf15444b3bffcb2f838c8c2ee14d507123",
+        "seconds": 0.11935699998866767
+      },
+      "expected_runtime_failure": "encoder unplugged explicit",
+      "output": "EDGE_PLANT_FAIL encoder unplugged explicit"
+    },
+    {
+      "name": "ignore_missing_cycles",
+      "passed": true,
+      "header_sha256": "c960fa8ec480479e30803f636189837d4694f8a20792f3f71bf2cfe6328d38b9",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_missing_cycles/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_missing_cycles/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_missing_cycles\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9737195000052452
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_missing_cycles/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_missing_cycles\\execute.log",
+        "log_sha256": "b9f9b87db8bc7feed7f376d94b5ea09b7babc4b77218ca985917392b0d2141b5",
+        "seconds": 0.13207489997148514
+      },
+      "expected_runtime_failure": "missing core cycles rejected",
+      "output": "EDGE_PLANT_FAIL missing core cycles rejected"
+    },
+    {
+      "name": "ignore_sensor_power",
+      "passed": true,
+      "header_sha256": "e8dd81302bc065738d4c593062cdf0460e0c435947fdec08907342992ef5c8ab",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_sensor_power/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_sensor_power/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_sensor_power\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.9504687999142334
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_sensor_power/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_sensor_power\\execute.log",
+        "log_sha256": "806ef528ebee7f5a066213da1b278cd09be4d402a364fe65f6d72c63db9317a6",
+        "seconds": 0.13337019993923604
+      },
+      "expected_runtime_failure": "unpowered feedback unavailable",
+      "output": "EDGE_PLANT_FAIL unpowered feedback unavailable"
+    },
+    {
+      "name": "ignore_index_width",
+      "passed": true,
+      "header_sha256": "0cb540382c377fc2e3618b898dcf13ef53422580e831595ff0cf5defc51fd331",
+      "test_sha256": "3df07a8666d24ce298ed967b8acff586766a52a833680ce5f390703e5a0eca49",
+      "compile": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "clang++",
+          "-std=c++17",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O2",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_index_width/test_edge_plant.cpp",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_index_width/edge_plant_test"
+        ],
+        "exit_code": 0,
+        "log": "ignore_index_width\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.8873723999131471
+      },
+      "execute": {
+        "argv": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/controller-plant-20261001/edge-plant-proof-r01/ignore_index_width/edge_plant_test"
+        ],
+        "exit_code": 1,
+        "log": "ignore_index_width\\execute.log",
+        "log_sha256": "e9fdea71e19d7c772287a7752d3dbbf99caadf59ef56a0c7fe1e06d137784b7d",
+        "seconds": 0.11336239997763187
+      },
+      "expected_runtime_failure": "index follows actual encoder phase",
+      "output": "EDGE_PLANT_FAIL index follows actual encoder phase"
+    }
+  ],
+  "failures": [],
+  "baseline_checks": 1114,
+  "compiled_negative_controls": 12,
+  "actual_FPGA_integration": false,
+  "actual_LinuxCNC_integration": false,
+  "complete_nine_machine_suite": false,
+  "physical_qualified": false,
+  "manufacturing_ready": false,
+  "scope": "12 emitted STEP/DIR edges to ideal travel/backlash/hard stops; 4 Gray ABZ sources; explicit external physical permission/power provider; deterministic faults",
+  "missing": [
+    "torque/inertia and acceleration capability",
+    "receiver/cable electrical model",
+    "actual FPGA/HAL/LinuxCNC integration",
+    "full safety and IOL1 providers",
+    "spindle/frequency and complete 9 kinematics fixtures",
+    "physical validation"
+  ]
+}

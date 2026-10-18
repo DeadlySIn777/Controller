@@ -1,0 +1,109 @@
+Yes—that’s a genuinely useful upgrade path. 🔧 Upgrade the plasma cutter, swap the matching interface, and keep the controller, screen, motor wiring, and table configuration.
+
+I would build it around a common module connection, a few electrical interface types, and machine-specific adapter cables—not a completely different circuit board for every plasma brand.
+
+## Match the module to the power supply—not just the torch
+
+The electrical compatibility belongs primarily to the plasma power source and its CNC interface. The torch and consumables belong in the cutting profile. For example, Hypertherm separately lists torch options, CNC control cables with or without divided voltage, and RS-485 communication cables. :chatgpt-content-reference{index="0"}
+
+That gives us three separate things to identify:
+
+| Item | What it determines |
+|---|---|
+| Interface module | Electrical input range, isolation, measurement method, and supported commands |
+| Machine-specific cable | Correct connector and pin mapping for the plasma source |
+| Cutting profile | Power-source model, torch, consumables, material, amperage, heights, delays, and speed |
+
+When the replacement cutter uses the same electrical interface, the customer should only need the appropriate cable and profile. Different electrical requirements would require a different module.
+
+## The module family I would develop
+
+These are proposed product configurations:
+
+| Module | Intended application | What changes inside |
+|---|---|---|
+| Divided-voltage interface | Supported cutters with a documented CNC port | Isolated voltage measurement, torch-start interface, Arc OK input, and calibration |
+| Raw-voltage interface | Supported machines requiring measurement before a suitable divider | A separately rated high-voltage front end, isolation, and installation-specific protection |
+| Existing-THC adapter | Customers keeping a compatible external THC | Conditions Arc OK and up/down signals instead of measuring arc voltage itself |
+| Digital communication add-on | Supported sources offering remote configuration/status | Model-specific communication for available settings and diagnostics; retains the required cutting signals |
+
+LinuxCNC already supports voltage-feedback THC with either measured or external Arc OK, plus a mode accepting an external THC’s up/down signals. We would be packaging those capabilities into identified, preconfigured interfaces. :chatgpt-content-reference{index="1"}
+
+For supported Hypertherm Powermax configurations, its documented RS-485 integration can set cutting mode, current, and gas pressure and report arc-on time. That capability is model/interface-specific—not something every cutter gains by plugging into our module. :chatgpt-content-reference{index="2"}
+
+## Keep the height-control intelligence in the main controller
+
+I would make the module handle electrical interfacing and measurement. LinuxCNC would remain responsible for the cutting sequence and Z-height correction, with the FPGA handling timing and signal capture.
+
+That means:
+
+> Different plasma interface → same controller-side signals → same coordinated Z control.
+
+The module would not connect a second set of step pulses to the Z driver. This keeps one motion authority and lets the controller coordinate height correction with probing, corners, feed reduction, and recovery.
+
+The existing LinuxCNC plasma interface already separates arc voltage, Arc OK, torch-on, probing, and external height-correction requests. We should preserve that separation underneath your interface. :chatgpt-content-reference{index="3"}
+
+For the common module connection, I would reserve:
+
+| Connection group | Proposed purpose |
+|---|---|
+| Protected power and return | Power the module’s controller-side circuitry |
+| Identification/configuration link | Read module type, revision, capabilities, and calibration |
+| Dedicated measurement channel | Deliver arc-voltage frequency feedback directly to FPGA hardware |
+| Dedicated status channels | Arc OK, module ready, and fault |
+| Torch command and hardware inhibit | Keep firing authorization separate from configuration traffic |
+| Presence detection | Prevent arming with a missing or incompletely connected module |
+| Shield/chassis connection | Defined cable-shield termination |
+
+Exact pins come after selecting the connector and isolation arrangement. I would use a keyed, locking connection that cannot be mistaken for ordinary USB or Ethernet.
+
+## What “plug and play” should actually look like
+
+The customer powers down, connects the supported module and harness, and restarts. Your screen would present something like:
+
+```text
+PLASMA INTERFACE DETECTED
+
+Module: Divided-voltage interface
+Calibration: Valid
+Cable profile: Recognized
+Power-source model: Confirm selection
+Divider setting: Confirmation required
+Torch/profile: Select or restore
+
+[ Verify setup ]
+```
+
+The identification record would contain the module’s serial number, hardware/firmware compatibility, measurement range, factory calibration, signal capabilities, and supported interface profiles. An identified adapter cable could tell the controller which harness was fitted.
+
+Then the setup process would preserve axis calibration while checking the changed plasma equipment: sensing states, selected voltage scaling, torch mounting/height references, and the approved cutting profile. A separate operator-confirmed test would verify actual firing and arc feedback.
+
+No firing automatically because a module appeared.
+
+### The important calibration detail
+
+Automatic module identification does not verify a divider switch inside the plasma source. We need the setting read through a supported interface or confirmed during commissioning.
+
+Also, the connected measurement circuit can change the effective division ratio. Mesa documents an example where a nominal 50:1 divider becomes effectively 53:1 because of its output resistance and the THCAD2 input load. :chatgpt-content-reference{index="4"}
+
+So I would store and validate the complete measurement chain—not simply select “50:1” and assume every combination reads correctly.
+
+## Make swapping simple without calling it hot-swappable
+
+For version one, I would specify power-off replacement followed by automatic recognition.
+
+The design requirements should be explicit: module removal, lost power, incompatible firmware, invalid calibration, or stale feedback must prevent continued normal cutting and trigger the defined fault response. Reconnection must never restart the torch automatically.
+
+The raw-voltage side belongs in its own protected compartment or rated external interface—not on the common low-voltage expansion connector. Mesa’s documentation distinguishes hazardous input circuitry from the isolated controller side and warns about loss of isolation. :chatgpt-content-reference{index="5"}
+
+HF-start compatibility also needs separate testing and ratings; it is not another software profile. QtPlasmaC specifically cautions against ohmic sensing with HF-start supplies. :chatgpt-content-reference{index="6"}
+
+## What I would build first
+
+One divided-voltage module, two verified machine-specific harnesses, and the automatic identification/setup workflow.
+
+The acceptance demonstration would be swapping between those two supported sources without rewiring the controller or editing configuration files. Then deliberately try an incorrect profile, missing cable, and failed feedback signal to prove the controller catches them.
+
+That fits your useful-core-plus-rated-expansion approach without making mill and lathe buyers purchase plasma-specific electronics. :chatgpt-content-reference{index="7"}
+
+The selling point is straightforward: “Your plasma equipment can change without replacing your CNC control.” The engineering behind that promise is a stable module interface, verified cables, stored calibration, and a short setup check—not a universal connector that guesses what is attached.

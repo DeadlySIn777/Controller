@@ -1,0 +1,8 @@
+"""Attribute both AO1 residual origins using their already frozen free regions."""
+from pathlib import Path
+import hashlib
+H=Path(__file__).resolve().parent;src=H/'diagnose_AO1_DAC_CS_current_physical_escape_reference_r628.py';dest=H/'diagnose_AO1_two_residual_current_physical_escape_reference_r630.py';assert not dest.exists();text=src.read_text().replace('AO1-DAC-CS-current-physical-escape-versus-source-reference-attribution-r628','AO1-two-residual-current-physical-escape-versus-source-reference-attribution-r630').replace('R628_','R630_')
+old="for uid,ly,rly in[('5bd36a6a-0ece-4d8a-bb54-e362786d2249','F.Cu','In1.Cu'),('6cc6e8f2-29a9-482e-a9b7-c53dea062394','B.Cu','In4.Cu'),('aacc0bdf-0449-4b0f-95b8-cccb718c4d90','B.Cu','In4.Cu')]:"
+new="ef=pin(H/'AO1-ENABLE-current-ordinary-F-In3-B-two-pair-constructor-r626/bounded-current-native-host-source-free-regions-NOMINATION_ONLY.pkl');enable=pickle.loads(ef.read_bytes());cs=ca\n for uid,ly,rly,net,ca in[('5bd36a6a-0ece-4d8a-bb54-e362786d2249','F.Cu','In1.Cu',NET,cs),('6cc6e8f2-29a9-482e-a9b7-c53dea062394','B.Cu','In4.Cu',NET,cs),('aacc0bdf-0449-4b0f-95b8-cccb718c4d90','B.Cu','In4.Cu',NET,cs),('e1c48f25-f337-46ce-9587-4b5f4df4573a','F.Cu','In1.Cu','/motherboard_analog_output/AO1_ENABLE_ISOLATED',enable),('81cec19c-07ad-4052-81d7-07d09940c79e','B.Cu','In4.Cu','/motherboard_analog_output/AO1_ENABLE_ISOLATED',enable)]:"
+assert old in text;text=text.replace(old,new).replace("ca['free'][NET,ly]","ca['free'][net,ly]").replace("ca['via'][NET]","ca['via'][net]").replace("'at_mm':[p['x'],p['y']],'layer':ly","'net':net,'at_mm':[p['x'],p['y']],'layer':ly").replace('CURRENT_AO1_DAC_CS_ESCAPE','CURRENT_AO1_TWO_RESIDUAL_ESCAPE')
+dest.write_text(text);print('R630_SCRIPT',hashlib.sha256(dest.read_bytes()).hexdigest())

@@ -1,0 +1,3613 @@
+[PDF PAGE 1]
+TS3A27518E 6-Channel (qSPI), 1:2 Multiplexer and Demultiplexer with Integrated
+IEC L-4 ESD and 1.8-V Logic Compatible Control Inputs
+1 Features
+•
+1.65 V to 3.6 V single-supply operation
+•
+Isolation in power-down mode, VCC = 0
+•
+Low-capacitance switches, 21.5 pF (typical)
+•
+Bandwidth up to 240 MHz for high-speed
+rail-to-rail signal handling
+•
+Crosstalk and OFF isolation of –62 dB
+•
+1.8 V logic compatible control inputs
+•
+3.6 V tolerant control inputs
+•
+Latch-up performance exceeds 100 mA per JESD 
+78, Class II
+•
+ESD performance tested per JESD 22
+–
+2500-V human-body model (A114-B, Class II)
+–
+1500-V charged-device model (C101)
+•
+ESD performance: NC/NO ports
+–
+±6-kV contact discharge (IEC 61000-4-2)
+•
+24-WQFN (4.00 mm × 4.00 mm) and 24-TSSOP
+(7.90 mm × 6.60 mm) packages
+2 Applications
+•
+SD-SDIO and MMC two-port MUX
+•
+PC VGA video MUX-video systems
+•
+Audio and video signal routing
+3 Description
+The TS3A27518E is a bidirectional, 6-channel,
+1:2 multiplexer-demultiplexer designed to operate 
+from 1.65 V to 3.6 V. This device can handle both 
+digital and analog signals, and can transmit signals 
+up to VCC in either direction. The TS3A27518E has 
+two control pins, each controlling three 1:2 muxes 
+at the same time, and an enable pin that put all 
+outputs in high-impedance mode. The control pins 
+are compatible with 1.8 V logic thresholds and are 
+backward compatible with 2.5 V and 3.3 V logic 
+thresholds.
+The TS3A27518E allows any SD, SDIO, and 
+multimedia card host controllers to expand out to 
+multiple cards or peripherals because the SDIO 
+interface consists of 6-bits: CMD, CLK, and Data[0:3] 
+signals. This device will support other 6-bit interfaces 
+such a qSPI. The TS3A27518E has two control pins 
+that give additional flexibility to the user. For example, 
+the ability to mux two different audio-video signals 
+in equipment such as an LCD television, an LCD 
+monitor, or a notebook docking station.
+Device Information(1) 
+PART NUMBER
+PACKAGE
+BODY SIZE (NOM)
+TS3A27518E
+WQFN (24)
+4.00 mm × 4.00 mm
+TSSOP (24)
+7.90 mm × 6.60 mm
+(1)
+For all available packages, see the orderable addendum at 
+the end of the data sheet.
+Processor
+GND
+VDD
+VDD
+VI/O
+Control 
+logic
+IN2
+GND
+JTAG 
+DEBUG, 
+SPI, GPIO 
+COM1
+RAM
+CPU
+Peripherals
+0.1µF
+EN
+NO1 
+NO2
+NO3
+NO4 
+qSPI 
+Device #1
+SIO0 
+SIO1
+SIO2
+SIO3
+NO5
+NO6 
+SLCK
+CS
+NC1 
+NC2
+NC3
+NC4 
+qSPI 
+Device #2
+SIO0 
+SIO1
+SIO2
+SIO3
+NC5
+NC6 
+SLCK
+CS
+COM2
+COM3
+COM4
+COM5
+COM6
+IN1
+Typical Application
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+
+[PDF PAGE 2]
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Revision History.............................................................. 2
+5 Pin Configuration and Functions...................................3
+6 Specifications.................................................................. 5
+6.1 Absolute Maximum Ratings........................................ 5
+6.2 ESD Ratings............................................................... 5
+6.3 Recommended Operating Conditions.........................5
+6.4 Thermal Information....................................................6
+6.5 Electrical Characteristics for 3.3-V Supply..................6
+6.6 Electrical Characteristics for 2.5-V Supply..................8
+6.7 Electrical Characteristics for 1.8-V Supply..................9
+6.8 Typical Characteristics..............................................12
+7 Parameter Measurement Information..........................15
+8 Detailed Description......................................................18
+8.1 Overview...................................................................18
+8.2 Functional Block Diagram.........................................18
+8.3 Feature Description...................................................18
+8.4 Device Functional Modes..........................................18
+9 Application and Implementation..................................19
+9.1 Application Information............................................. 19
+9.2 Typical Application.................................................... 19
+10 Power Supply Recommendations..............................21
+11 Layout...........................................................................21
+11.1 Layout Guidelines................................................... 21
+11.2 Layout Example...................................................... 21
+12 Device and Documentation Support..........................22
+12.1 Documentation Support.......................................... 22
+12.2 Receiving Notification of Documentation Updates..22
+12.3 Support Resources................................................. 22
+12.4 Trademarks.............................................................22
+12.5 Electrostatic Discharge Caution..............................22
+12.6 Glossary..................................................................22
+13 Mechanical, Packaging, and Orderable 
+Information.................................................................... 22
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision E (May 2019) to Revision F (December 2021)
+Page
+•
+Updated the numbering format for tables, figures, and cross-references throughout the document..................1
+•
+Changed the maximum value for the digital input voltage From: VCC To: 3.6 V ................................................ 5
+•
+Changed the unit for the ron analog switch From: V To: Ω .................................................................................6
+Changes from Revision D (May 2016) to Revision E (March 2019)
+Page
+•
+Removed the BGA MICROSTAR JUNIOR (24) package from the data sheet................................................... 1
+•
+Changed the Typical Application ........................................................................................................................1
+•
+Removed the BGA MICROSTAR JUNIOR (24) package................................................................................... 1
+•
+Changed the Pin Configuration images..............................................................................................................3
+•
+Removed Note: "The input and output voltage ratings..." from the Absolute Maximum Ratings table............... 5
+•
+Removed Note: "This value is limited to 5.5-V maximum" from the Absolute Maximum Ratings table..............5
+•
+Changed the Application Information section................................................................................................... 19
+•
+Added Figure 9-2 .............................................................................................................................................19
+Changes from Revision C (December 2015) to Revision D (May 2016)
+Page
+•
+Updated Pin Functions table...............................................................................................................................1
+Changes from Revision B (May 2009) to Revision C (December 2015)
+Page
+•
+Added ESD Ratings table, Feature Description section, Device Functional Modes, Application and 
+Implementation section, Power Supply Recommendations section, Layout section, Device and 
+Documentation Support section, and Mechanical, Packaging, and Orderable Information section................... 1
+Changes from Revision A (March 2009) to Revision B (May 2009)
+Page
+•
+Changed the data sheet From: Product Preview To: Production data ...............................................................1
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 3]
+5 Pin Configuration and Functions
+24
+N.C.
+7
+COM5
+1
+COM1
+18
+ NC4
+23
+NC1
+8
+NO1
+2
+GND
+17
+ EN
+22
+NC2
+9
+COM6
+3
+COM2
+16
+ NC5
+21
+IN1
+10
+NO2
+4
+COM3
+15
+ NO5
+20
+NC3
+11
+IN2
+5
+VCC 
+14
+ NO4
+19
+NC6
+12
+NO3
+6
+COM4
+13
+ NO6
+Not to scale
+Thermal
+Pad
+Figure 5-1. RTW Package
+24-Pin WQFN
+Top View
+1
+NC2
+24
+ IN1
+2
+NC1
+23
+ NC3
+3
+N.C.
+22
+ NC6
+4
+COM1
+21
+ NC4
+5
+GND
+20
+ EN
+6
+COM2
+19
+ NC5
+7
+COM3
+18
+ NO5
+8
+VCC 
+17
+ NO4
+9
+COM4
+16
+ NO6
+10
+COM5
+15
+ NO3
+11
+NO1
+14
+ IN2
+12
+COM6
+13
+ NO2
+Not to scale
+Figure 5-2. PW Package
+24-Pin TSSOP
+Top View
+1  
+2  
+3  
+4  
+5  
+A  
+B  
+C  
+D  
+E  
+Not to scale
+COM1
+NC2
+N.C.
+NC3
+NC6
+COM2
+NC1
+IN1
+NC4
+COM3
+VCC 
+GND
+EN
+NC5
+COM4
+COM6
+IN2
+NO5
+NO4
+COM5
+NO1
+NO2
+NO3
+NO6
+Figure 5-3. ZQS Package
+24-Pin BGA MICROSTAR JUNIOR
+Top View
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 4]
+Table 5-1. Pin Functions
+PIN
+I/O
+DESCRIPTION
+NAME
+RTW
+ZQS
+PW
+COM1
+1
+A1
+4
+I/O
+Common-signal path
+COM2
+3
+B1
+6
+I/O
+Common-signal path
+COM3
+4
+C1
+7
+I/O
+Common-signal path
+COM4
+6
+D1
+9
+I/O
+Common-signal path
+COM5
+7
+E1
+10
+I/O
+Common-signal path
+COM6
+9
+D2
+12
+I/O
+Common-signal path
+EN
+17
+C4
+20
+I
+Digital control to enable or disable all signal paths
+GND
+2
+C3
+5
+—
+Ground.
+IN1
+21
+B4
+24
+I
+Digital control to connect COM to NC or NO
+IN2
+11
+D3
+14
+I
+Digital control to connect COM to NC or NO
+N.C.
+24
+A3
+3
+—
+Not connected
+NC1
+23
+B3
+2
+I/O
+Normally closed-signal path
+NC2
+22
+A2
+1
+I/O
+Normally closed-signal path
+NC3
+20
+A4
+23
+I/O
+Normally closed-signal path
+NC4
+18
+B5
+21
+I/O
+Normally closed-signal path
+NC5
+16
+C5
+19
+I/O
+Normally closed-signal path
+NC6
+19
+A5
+22
+I/O
+Normally closed-signal path
+NO1
+8
+E2
+11
+I/O
+Normally open-signal path
+NO2
+10
+E3
+13
+I/O
+Normally open-signal path
+NO3
+12
+E4
+15
+I/O
+Normally open-signal path
+NO4
+14
+D5
+17
+I/O
+Normally open-signal path
+NO5
+15
+D4
+18
+I/O
+Normally open-signal path
+NO6
+13
+E5
+16
+I/O
+Normally open-signal path
+VCC
+5
+C2
+8
+—
+Voltage supply
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 5]
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1) (2)
+MIN
+MAX
+UNIT
+VCC
+Supply voltage (3)
+–0.5
+4.6
+V
+VNC
+VNO
+VCOM
+Analog signal voltage (3)
+–0.5
+4.6
+V
+IK
+Analog port diode current (4)
+VCC < VNC, VNO, VCOM < 0
+–50
+mA
+INC
+INO
+ICOM
+ON-state switch current (5)
+VNC, VNO, VCOM = 0 to VCC
+–50
+50
+mA
+VI
+Digital input voltage (3)
+–0.5
+4.6
+V
+IIK
+Digital input clamp current (3)
+VIO < VI < 0
+–50
+mA
+ICC
+Continuous current through VCC
+100
+mA
+IGND
+Continuous current through GND
+–100
+mA
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress 
+ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under 
+Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device 
+reliability.
+(2)
+The algebraic convention, whereby the most negative value is a minimum and the most positive value is a maximum.
+(3)
+All voltages are with respect to ground, unless otherwise specified.
+(4)
+Requires clamp diodes on analog port to VCC.
+(5)
+Pulse at 1-ms duration < 10% duty cycle.
+6.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic discharge
+Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001 (1)
+±2500
+V
+Charged-device model (CDM), per JEDEC specification JESD22-C101 or 
+ANSI/ESDA/JEDEC JS-002 (2)
+±1500
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+Supply voltage
+VCC
+1.65
+3.6
+V
+Analog signal voltage
+VNC
+0
+3.6
+V
+VNO
+VCOM
+Digital input voltage
+VI
+0
+3.6
+V
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 6]
+6.4 Thermal Information
+THERMAL METRIC (1)
+TS3A27518E
+UNIT
+PW
+(TSSOP)
+RTW 
+(WQFN)
+ZQS (BGA 
+MICROSTAR JUNIOR)
+24 PINS
+24 PINS
+24 PINS
+RθJA
+Junction-to-ambient thermal resistance
+104
+40.7
+155.7
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+51.6
+42.9
+69.9
+°C/W
+RθJB
+Junction-to-board thermal resistance
+57.5
+19.2
+94.6
+°C/W
+ψJT
+Junction-to-top characterization parameter
+9.9
+1
+9
+°C/W
+ψJB
+Junction-to-board characterization parameter
+57.1
+19.3
+92.2
+°C/W
+RθJC(bot)
+Junction-to-case (bottom) thermal resistance
+—
+8
+—
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application 
+report.
+6.5 Electrical Characteristics for 3.3-V Supply
+VCC = 3 V to 3.6 V, TA = –40°C to +85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+ANALOG SWITCH
+VCOM,
+VNO, VNC
+Analog signal voltage
+0
+3.6
+V
+ron
+ON-state resistance
+VCC = 3 V
+0 ≤ (VNC or VNO) 
+≤ VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+4.4
+6.2
+Ω
+TA = –40°C to 
++85°C
+7.6
+Δron
+ON-state
+resistance match
+between channels
+VCC = 3 V
+VNC or VNO = 2.1 
+V,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+0.3
+0.7
+Ω
+TA = –40°C to 
++85°C
+0.8
+ron(flat)
+ON-state
+resistance
+flatness
+VCC = 3 V
+0 ≤ (VNC or VNO) 
+≤ VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-2
+TA = 25°C
+0.95
+2.1
+Ω
+TA = –40°C to 
++85°C
+2.3
+INC(OFF),
+INO(OFF)
+NC, NO
+OFF leakage
+current
+VCC = 3.6 V
+VNC or VNO = 1 
+V,
+VCOM = 3 V,
+or
+VNC or VNO = 3 
+V,
+VCOM = 1 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–0.5
+0.05
+0.5
+μA
+TA = –40°C to 
++85°C
+–7
+7
+INC(PWROFF),
+INO(PWROFF)
+VCC = 0 V
+VNC or VNO = 0 
+to 3.6 V,
+VCOM = 3.6 V to 
+0,
+or
+VNC or VNO = 3.6 
+V to 0,
+VCOM = 0 to 3.6 
+V
+TA = 25°C
+–1
+0.05
+1
+TA = –40°C to 
++85°C
+–12
+12
+ICOM(OFF)
+COM
+OFF leakage
+current
+VCC = 3.6 V
+VNC or VNO = 3 
+V,
+VCOM = 1 V,
+or
+VNC or VNO = 1 
+V,
+VCOM = 3 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–1
+0.01
+1
+μA
+TA = –40°C to 
++85°C
+–2
+2
+ICOM(PWROFF)
+VCC = 0 V
+VNC or VNO = 3.6 
+V to 0,
+VCOM = 0 to 3.6 
+V,
+or
+VNC or VNO = 0 
+to 3.6 V,
+VCOM = 3.6 V to 
+0
+TA = 25°C
+–1
+0.02
+1
+TA = –40°C to 
++85°C
+–12
+1
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 7]
+6.5 Electrical Characteristics for 3.3-V Supply (continued)
+VCC = 3 V to 3.6 V, TA = –40°C to +85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+INO(ON),
+INC(ON)
+NC, NO
+ON leakage
+current
+VCC = 3.6 V
+VNC or VNO = 1 
+V,
+VCOM = open,
+or
+VNC or VNO = 3 
+V,
+VCOM = open
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2.5
+0.04
+2.2
+μA
+TA = –40°C to 
++85°C
+–7
+7
+ICOM(ON)
+COM
+ON leakage
+current
+VCC = 3.6 V
+VNC or VNO = 
+open,
+VCOM = 1 V,
+or
+VNC or VNO = 
+open,
+VCOM = 3 V
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2
+0.03
+2
+μA
+TA = –40°C to 
++85°C
+–7
+7
+DIGITAL CONTROL INPUTS (IN1, IN2, EN) (1)
+VIH
+Input logic high
+VCC = 3.6 V
+TA = –40°C to 
++85°C
+1.2
+3.6
+V
+VIL
+Input logic low
+VCC = 3.6 V
+TA = –40°C to 
++85°C
+0
+0.65
+V
+IIH, IIL
+Input leakage current
+VCC = 3.6 V
+VI = VCC or 0
+TA = 25°C
+–0.1
+0.05
+0.1
+μA
+TA = –40°C to 
++85°C
+–2.5
+2.5
+DYNAMIC
+tON
+Turnon time
+VCC = 3.3 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+18.1
+59
+ns
+VCC = 3 V to 
+3.6 V
+TA = –40°C to 
++85°C
+60
+tOFF
+Turnoff time
+VCC = 3.3 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+25.4
+60.6
+ns
+VCC = 3 V to 
+3.6 V
+TA = –40°C to 
++85°C
+61
+tBBM
+Break-before-
+make time
+VCC = 3.3 V
+VNC = VNO = 
+VCC/2,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-6
+TA = 25°C
+4
+11.1
+22.7
+ns
+VCC = 3 V to 
+3.6 V
+TA = –40°C to 
++85°C
+28
+QC
+Charge injection
+VCC = 3.3 V
+VGEN = 0,
+RGEN = 0
+CL = 0.1 nF,
+see Figure 7-10
+TA = 25°C
+0.81
+pC
+CNC(OFF),
+CNO(OFF)
+NC, NO
+OFF capacitance
+VCC = 3.3 V
+VNC or VNO = 
+VCC or GND,
+Switch OFF
+See Figure 7-4
+TA = 25°C
+13
+pF
+CCOM(OFF)
+COM
+OFF capacitance
+VCC = 3.3 V
+VNC or VNO = 
+VCC or GND,
+Switch OFF
+See Figure 7-4
+TA = –40°C to 
++85°C
+8.5
+pF
+CNC(ON),
+CNO(ON)
+NC, NO
+ON capacitance
+VCC = 3.3 V
+VNC or VNO = 
+VCC or GND,
+Switch OFF
+See Figure 7-4
+21.5
+pF
+CCOM(ON)
+COM
+ON capacitance
+VCC = 3.3 V
+VCOM = VCC or 
+GND,
+Switch ON
+See Figure 7-4
+21.5
+pF
+CI
+Digital input 
+capacitance
+VCC = 3.3 V
+VI = VCC or GND
+See Figure 7-4
+2
+pF
+BW
+Bandwidth
+VCC = 3.3 V
+RL = 50 Ω,
+Switch ON,
+see Figure 7-6
+240
+MHz
+OISO
+OFF isolation
+VCC = 3.3 V
+RL = 50 Ω,
+f = 10 MHz
+Switch OFF,
+see Figure 7-8
+–62
+dB
+XTALK
+Crosstalk
+VCC = 3.3 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–62
+dB
+XTALK(ADJ)
+Crosstalk adjacent
+VCC = 3.3 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–71
+dB
+THD
+Total harmonic 
+distortion
+VCC = 3.3 V
+RL = 600 Ω,
+CL = 50 pF
+f = 20 Hz to 20 kHz,
+see Figure 7-11
+0.05%
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 8]
+6.5 Electrical Characteristics for 3.3-V Supply (continued)
+VCC = 3 V to 3.6 V, TA = –40°C to +85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+SUPPLY
+ICC
+Positive
+supply current
+VCC = 3.6 V
+VI = VCC or GND
+Switch ON or OFF
+TA = 25°C
+0.04
+0.3
+μA
+TA = –40°C to 
++85°C
+3
+(1)
+All unused digital inputs of the device must be held at VCC or GND to ensure proper device operation. See the TI application report, 
+Implications of Slow or Floating CMOS Inputs, SCBA004.
+6.6 Electrical Characteristics for 2.5-V Supply
+VCC = 2.3 V to 2.7 V, TA = –40°C to +85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+ANALOG SWITCH
+VCOM,
+VNO, VNC
+Analog signal 
+voltage
+0
+3.6
+V
+ron
+ON-state
+resistance
+VCC = 2.3 V
+0 ≤ (VNC or VNO) ≤ VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+5.5
+9.6
+Ω
+TA = –40°C to 
++85°C
+11.5
+Δron
+ON-state
+resistance 
+match
+between 
+channels
+VCC = 2.3 V
+VNC or VNO = 1.6 V,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+0.3
+0.8
+Ω
+TA = –40°C to 
++85°C
+0.9
+ron(flat)
+ON-state
+resistance
+flatness
+VCC = 2.3 V
+0 ≤ (VNC or VNO) ≤ VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-2
+TA = 25°C
+0.91
+2.2
+Ω
+TA = –40°C to 
++85°C
+2.3
+INC(OFF),
+INO(OFF)
+NC, NO
+OFF leakage
+current
+VCC = 2.7 V
+VNC or VNO = 0.5 V,
+VCOM = 2.3 V,
+or
+VNC or VNO = 2.3 V,
+VCOM = 0.5 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–0.3
+0.04
+0.3
+μA
+TA = –40°C to 
++85°C
+–6
+6
+INC(PWROFF),
+INO(PWROFF)
+VCC = 0 V
+VNC or VNO = 0 to 2.7 V,
+VCOM =2.7 V to 0,
+or
+VNC or VNO = 2.7 V to 0,
+VCOM = 0 to 2.7 V
+TA = 25°C
+–0.6
+0.02
+0.6
+TA = –40°C to 
++85°C
+–10
+10
+ICOM(OFF)
+COM
+OFF leakage
+current
+VCC = 2.7 V
+VNC or VNO = 0.5 V,
+VCOM = 2.3 V,
+or
+VNC or VNO = 2.3 V,
+VCOM = 0.5 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–0.7
+0.02
+0.7
+μA
+TA = –40°C to 
++85°C
+–1
+1
+ICOM(PWROFF
+)
+VCC = 0 V
+VNC or VNO = 2.7 V to 0,
+VCOM = 0 to 2.7 V,
+or
+VNC or VNO = 0 to 2.7 V,
+VCOM = 2.7 V to 0
+TA = 25°C
+–0.7
+0.02
+0.7
+TA = –40°C to 
++85°C
+–7.2
+7.2
+INO(ON)
+INC(ON)
+NC, NO
+ON leakage
+current
+VCC = 2.7 V
+VNC or VNO = 0.5 V or 
+2.3 V,
+VCOM = open
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2.1
+0.03
+2.1
+μA
+TA = –40°C to 
++85°C
+–6
+6
+ICOM(ON)
+COM
+ON leakage
+current
+VCC = 2.7 V
+VNC or VNO = open,
+VCOM = 0.5 V,
+or
+VNC or VNO = open,
+VCOM = 2.3 V
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2
+0.02
+2
+μA
+TA = –40°C to 
++85°C
+–5.7
+5.7
+DIGITAL CONTROL INPUTS (IN1, IN2, EN) (1)
+VIH
+Input logic high
+VCC = 2.7 V
+VI = VCC or GND
+TA = –40°C to 
++85°C
+1.15
+3.6
+V
+VIL
+Input logic low
+VCC = 2.7 V
+0
+0.55
+V
+IIH, IIL
+Input leakage 
+current
+VCC = 2.7 V
+VI = VCC or 0
+TA = 25°C
+–0.1
+0.01
+0.1
+μA
+TA = –40°C to 
++85°C
+–2.1
+2.1
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 9]
+6.6 Electrical Characteristics for 2.5-V Supply (continued)
+VCC = 2.3 V to 2.7 V, TA = –40°C to +85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+DYNAMIC
+tON
+Turnon time
+VCC = 2.5 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+17.2
+36.8
+ns
+VCC = 2.3 V to 
+2.7 V
+TA = –40°C to 
++85°C
+42.5
+tOFF
+Turnoff time
+VCC = 2.5 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+17.1
+29.8
+ns
+VCC = 2.3 V to 
+2.7 V
+TA = –40°C to 
++85°C
+34.4
+tBBM
+Break-before-
+make time
+VCC = 2.5 V
+VNC = VNO = VCC/2,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-6
+TA = 25°C
+4.5
+13
+30
+ns
+VCC = 2.3 V to 
+2.7 V
+TA = –40°C to 
++85°C
+33.3
+QC
+Charge 
+injection
+VCC = 2.5 V
+VGEN = 0,
+RGEN = 0
+CL = 0.1 nF,
+see Figure 7-10
+0.47
+pC
+CNC(OFF),
+CNO(OFF)
+NC, NO
+OFF 
+capacitance
+VCC = 2.5 V
+VNC or VNO = VCC or 
+GND,
+switch OFF
+See Figure 7-4
+13.5
+pF
+CCOM(OFF)
+COM
+OFF 
+capacitance
+VCC = 2.5 V
+VNC or VNO = VCC or 
+GND,
+switch OFF
+See Figure 7-4
+TA = –40°C to 
++85°C
+9
+pF
+CNC(ON),
+CNO(ON)
+NC, NO
+ON 
+capacitance
+VCC = 2.5 V
+VNC or VNO = VCC or 
+GND,
+switch OFF
+See Figure 7-4
+22
+pF
+CCOM(ON)
+COM
+ON 
+capacitance
+VCC = 2.5 V
+VCOM = VCC or GND,
+switch ON
+See Figure 7-4
+22
+pF
+CI
+Digital input 
+capacitance
+VCC = 2.5 V
+VI = VCC or GND
+See Figure 7-4
+2
+pF
+BW
+Bandwidth
+VCC = 2.5 V
+RL = 50 Ω
+Switch ON,
+see Figure 7-6
+240
+MHz
+OISO
+OFF isolation
+VCC = 2.5 V
+RL = 50 Ω,
+f = 10 MHz
+Switch OFF,
+see Figure 7-8
+–62
+dB
+XTALK
+Crosstalk
+VCC = 2.5 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–62
+dB
+XTALK(ADJ)
+Crosstalk 
+adjacent
+VCC = 2.5 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–71
+dB
+THD
+Total harmonic 
+distortion
+VCC = 2.5 V
+RL = 600 Ω,
+CL = 50 pF
+f = 20 Hz to 20 kHz,
+see Figure 7-11
+0.06%
+SUPPLY
+ICC
+Positive
+supply current
+VCC = 2.7 V
+VI = VCC or GND
+Switch ON or OFF
+TA = 25°C
+0.01
+0.1
+μA
+TA = –40°C to 
++85°C
+2
+(1)
+All unused digital inputs of the device must be held at VCC or GND to ensure proper device operation. Refer to the TI application report, 
+Implications of Slow or Floating CMOS Inputs, SCBA004.
+6.7 Electrical Characteristics for 1.8-V Supply
+VCC = 1.65 V to 1.95 V, TA = –40°C to 85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+ANALOG SWITCH
+VCOM,
+VNO, VNC
+Analog 
+signal 
+voltage
+0
+3.6
+V
+ron
+ON-state
+resistance
+VCC = 1.65 V
+0 ≤ (VNC or VNO) ≤ 
+VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+7.1
+14.4
+Ω
+TA = –40°C to +85°C
+16.3
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 10]
+6.7 Electrical Characteristics for 1.8-V Supply (continued)
+VCC = 1.65 V to 1.95 V, TA = –40°C to 85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Δron
+ON-state
+resistance 
+match
+between 
+channels
+VCC = 1.65 V
+VNC or VNO = 1.5 V,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-1
+TA = 25°C
+0.3
+1
+Ω
+TA = –40°C to +85°C
+1.2
+ron(flat)
+ON-state
+resistance
+flatness
+VCC = 1.65 V
+0 ≤ (VNC or VNO) ≤ 
+VCC,
+ICOM = –32 mA
+Switch ON,
+see Figure 7-2
+TA = 25°C
+2.7
+5.5
+Ω
+TA = –40°C to +85°C
+7.3
+INC(OFF),
+INO(OFF)
+NC, NO
+OFF 
+leakage
+current
+VCC = 1.95 V
+VNC or VNO = 0.3 V,
+VCOM = 1.65 V,
+or
+VNC or VNO = 1.65 V,
+VCOM = 0.3 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–0.25
+0.03
+0.25
+μA
+TA = –40°C to +85°C
+–5
+5
+INC(PWROFF),
+INO(PWROFF)
+VCC = 0 V
+VNC or VNO = 1.95 V 
+to 0,
+VCOM = 0 to 1.95 V,
+or
+VNC or VNO = 0 to 
+1.95 V,
+VCOM = 1.95 V to 0
+TA = 25°C
+–0.4
+0.01
+0.4
+μA
+TA = –40°C to +85°C
+–7.2
+7.2
+ICOM(OFF)
+COM
+OFF 
+leakage
+current
+VCC = 1.95 V
+VNC or VNO = 0.3 V,
+VCOM = 1.65 V,
+or
+VNC or VNO = 1.65 V,
+VCOM = 0.3 V
+Switch OFF,
+see Figure 7-2
+TA = 25°C
+–0.4
+0.02
+0.4
+μA
+TA = –40°C to +85°C
+–0.9
+0.9
+ICOM(PWROFF)
+VCC = 0 V
+VNC or VNO = 1.95 V 
+to 0,
+VCOM = 0 to 1.95 V,
+or
+VNC or VNO = 0 to 
+1.95 V,
+VCOM = 1.95 V to 0
+TA = 25°C
+–0.4
+0.02
+0.4
+μA
+TA = –40°C to +85°C
+–5
+5
+INO(ON),
+INC(ON)
+NC, NO
+ON leakage
+current
+VCC = 1.95 V
+VNC or VNO = 0.3 V,
+VCOM = open,
+or
+VNC or VNO = 1.65 V,
+VCOM = open
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2
+0.02
+2
+μA
+TA = –40°C to +85°C
+–5.2
+5.2
+ICOM(ON)
+COM
+ON leakage
+current
+VCC = 1.95 V
+VNC or VNO = open,
+VCOM = 0.3 V,
+or
+VNC or VNO = open,
+VCOM = 1.65 V
+Switch ON,
+see Figure 7-3
+TA = 25°C
+–2
+0.02
+2
+μA
+TA = –40°C to +85°C
+–5.2
+5.2
+DIGITAL CONTROL INPUTS (IN1, IN2, EN) (1)
+VIH
+Input logic 
+high
+VCC = 1.95 V
+VI = VCC or GND
+TA = –40°C to +85°C
+1
+3.6
+V
+VIL
+Input logic 
+low
+VCC = 1.95 V
+TA = –40°C to +85°C
+0
+0.4
+V
+IIH, IIL
+Input 
+leakage 
+current
+VCC = 1.95 V
+VI = VCC or 0
+TA = 25°C
+–0.1
+0.01
+0.1
+μA
+TA = –40°C to +85°C
+–2.1
+2.1
+DYNAMIC
+tON
+Turnon time
+VCC = 1.8 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+14.1
+49.3
+ns
+VCC = 1.65 V 
+to 1.95 V
+TA = –40°C to +85°C
+56.7
+tOFF
+Turnoff time
+VCC = 1.8 V
+VCOM = VCC,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-5
+TA = 25°C
+16.1
+26.5
+ns
+VCC = 1.65 V 
+to 1.95 V
+TA = –40°C to +85°C
+31.2
+tBBM
+Break-
+before-
+make time
+VCC = 1.8 V
+VNC = VNO = VCC/2,
+RL = 50 Ω
+CL = 35 pF,
+see Figure 7-6
+TA = 25°C
+5.3
+18.4
+58
+ns
+VCC = 1.65 V 
+to 1.95 V
+TA = –40°C to +85°C
+58
+QC
+Charge 
+injection
+VCC = 1.8 V
+VGEN = 0,
+RGEN = 0
+CL = 1 nF,
+see Figure 7-10
+0.21
+pC
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 11]
+6.7 Electrical Characteristics for 1.8-V Supply (continued)
+VCC = 1.65 V to 1.95 V, TA = –40°C to 85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+CNC(OFF),
+CNO(OFF)
+NC, NO
+OFF 
+capacitance
+VCC = 1.8 V
+VNC or VNO = VCC or 
+GND,
+switch OFF
+See Figure 7-4
+9
+pF
+CNC(ON),
+CNO(ON)
+NC, NO
+ON 
+capacitance
+VCC = 1.8 V
+VNC or VNO = VCC or 
+GND,
+switch OFF
+See Figure 7-4
+22
+pF
+CCOM(ON)
+COM
+ON 
+capacitance
+VCC = 1.8 V
+VCOM = VCC or GND,
+switch ON
+See Figure 7-4
+22
+pF
+CI
+Digital input 
+capacitance
+VCC = 1.8 V
+VI = VCC or GND
+See Figure 7-4
+2
+pF
+BW
+Bandwidth
+VCC = 1.8 V
+RL = 50 Ω
+Switch ON,
+see Figure 7-6
+240
+MHz
+OISO
+OFF 
+isolation
+VCC = 1.8 V
+RL = 50 Ω,
+f = 10 MHz
+Switch OFF,
+see Figure 7-8
+–60
+dB
+XTALK
+Crosstalk
+VCC = 1.8 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–60
+dB
+XTALK(ADJ)
+Crosstalk 
+adjacent
+VCC = 1.8 V
+RL = 50 Ω,
+f = 10 MHz
+Switch ON,
+see Figure 7-9
+–71
+dB
+THD
+Total 
+harmonic 
+distortion
+VCC = 1.8 V
+RL = 600 Ω,
+CL = 50 pF
+f = 20 Hz to 20 kHz,
+see Figure 7-11
+0.1%
+SUPPLY
+ICC
+Positive
+supply 
+current
+VCC = 1.95 V
+VI = VCC or GND
+Switch ON or OFF
+TA = 25°C
+0.01
+0.1
+μA
+TA = –40°C to +85°C
+1.5
+(1)
+All unused digital inputs of the device must be held at VCC or GND to ensure proper device operation. Refer to the TI application report, 
+Implications of Slow or Floating CMOS Inputs, SCBA004.
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 12]
+6.8 Typical Characteristics
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+COM Voltage, V
+(V)
+COM
+0
+1
+2
+3
+4
+5
+6
+7
+ON-State Resistance, r
+( )
+ON W
+85ºC
+25ºC
+–40ºC
+Figure 6-1. ON-State Resistance vs COM Voltage (VCC = 3 V)
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+COM Voltage, V
+(V)
+COM
+0
+8
+ON-State Resistance, r
+( )
+ON W
+1
+2
+3
+4
+5
+6
+7
+85ºC
+25ºC
+-–40ºC
+Figure 6-2. ON-State Resistance vs COM Voltage (VCC = 2.3 V)
+0.0
+1.8
+COM Voltage, V
+(V)
+COM
+ON-State Resistance, r
+( )
+ON W
+0
+12
+2
+4
+6
+8
+10
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6
+85ºC
+25ºC
+-–40ºC
+Figure 6-3. ON-State Resistance vs COM Voltage (VCC = 1.65 V)
+Temperature, TA (°C)
+Leakage Current, I (nA)
+I
+0
+600
+50
+100
+150
+200
+250
+300
+350
+400
+450
+500
+550
+–40
+25
+85
+COM (OFF)
+COM (ON)
+NO (OFF)
+NO (ON)
+Figure 6-4. Leakage Current vs Temperature (VCC = 3.3 V)
+0.0
+4.0
+Supply Voltage, V+ (V)
+Supply Current, I (nA)
++
+–5
+45
+0
+5
+10
+15
+20
+25
+30
+35
+40
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+INx = High
+INx = Low
+Figure 6-5. Supply Current vs Supply Voltage
+0.0
+2.0
+Input Voltage, VIN (V)
+Output Voltage, V
+(V)
+OUT
+0.0
+4.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.6
+1.4
+1.8
+Figure 6-6. Control Input Thresholds (IN1, TA = 25°C)
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 13]
+6.8 Typical Characteristics (continued)
+Frequency (
+z)
+MH
+Magnitude (dB)
+–100
+–10
+–80
+–90
+–70
+–60
+–50
+–40
+–30
+–20
+0.1
+1
+10
+100
+1000
+NO1TOCOM1-NO2
+NO1TOCOM1-NO3
+NO1TOCOM1-NO4
+NO1TOCOM1-NO5
+NO1TOCOM1-NO6
+Figure 6-7. Crosstalk Adjacent
+Magnitude (dB)
+–100
+–10
+–80
+–90
+–70
+–60
+–50
+–40
+–30
+–20
+1.8 V
+2.5 V
+3.3 V
+Frequency (
+z)
+MH
+0.1
+1
+10
+100
+1000
+Figure 6-8. Crosstalk
+0.1
+1000
+Frequency (Hz)
+Total Harmonic Distortion, THD (%)
+0.05
+0.11
+0.06
+0.07
+0.08
+0.09
+0.10
+1
+10
+100
+1.8 V
+2.5 V
+3.3 V
+Figure 6-9. Total Harmonic Distortion vs Frequency
+Magnitude (dB)
+–100
+–10
+–90
+–80
+–70
+–60
+–50
+–40
+–30
+–20
+1.8 V
+2.5 V
+3.3 V
+Frequency (
+z)
+MH
+0.1
+1
+10
+100
+1000
+Figure 6-10. OFF Isolation
+Magnitude (dB)
+–20
+0
+–18
+–16
+–14
+–12
+–10
+–8
+–6
+–4
+–2
+1.8 V
+2.5 V
+3.3 V
+Frequency (
+z)
+MH
+0.1
+1
+10
+100
+1000
+Figure 6-11. Insertion Loss
+Bias Voltage (V)
+Charge Injection, Q
+(pC)
+C
+–7
+1
+–6
+–5
+–4
+–3
+–2
+–1
+0
+0
+0.3
+0.6
+0.9
+1.2
+1.5
+1.8
+Figure 6-12. Charge Injection vs Bias Voltage (1.8 V)
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 14]
+6.8 Typical Characteristics (continued)
+Bias Voltage (V)
+Charge Injection, Q
+(pC)
+C
+–10
+2
+–8
+–6
+–4
+–2
+0
+0
+0.3
+0.6
+0.9
+1.2
+1.5
+1.8
+2.1
+2.4
+2.5
+Figure 6-13. Charge Injection vs Bias Voltage (2.5 V)
+Bias Voltage (V)
+Charge Injection, Q
+(pC)
+C
+–16
+–14
+–12
+–10
+4
+–8
+–6
+–4
+–2
+0
+0
+0.3
+0.6
+0.9
+1.2
+1.5
+1.8
+2.1
+2.4
+2.4
+2.7
+3.0
+3.3
+2
+Figure 6-14. Charge Injection vs Bias Voltage (3.3 V)
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+14
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 15]
+7 Parameter Measurement Information
+Table 7-1. Parameter Description
+DESCRIPTION
+VCOM
+Voltage at COM.
+VNC
+Voltage at NC.
+VNO
+Voltage at NO.
+ron
+Resistance between COM and NC or NO ports when the channel is ON.
+Δron
+Difference of ron between channels in a specific device.
+ron(flat)
+Difference between the maximum and minimum value of ron in a channel over the specified range of conditions.
+INC(OFF)
+Leakage current measured at the NC port, with the corresponding channel (NC to COM) in the OFF state.
+INC(ON)
+Leakage current measured at the NC port, with the corresponding channel (NC to COM) in the ON state and the output 
+(COM) open.
+INO(OFF)
+Leakage current measured at the NO port, with the corresponding channel (NO to COM) in the OFF state.
+INO(ON)
+Leakage current measured at the NO port, with the corresponding channel (NO to COM) in the ON state and the output 
+(COM) open.
+ICOM(OFF)
+Leakage current measured at the COM port, with the corresponding channel (COM to NC or NO) in the OFF state.
+ICOM(ON)
+Leakage current measured at the COM port, with the corresponding channel (COM to NC or NO) in the ON state and the 
+output (NC or NO) open.
+VIH
+Minimum input voltage for logic high for the control input (IN, EN).
+VIL
+Maximum input voltage for logic low for the control input (IN, EN).
+VI
+Voltage at the control input (IN, EN).
+IIH, IIL
+Leakage current measured at the control input (IN, EN).
+tON
+Turnon time for the switch. This parameter is measured under the specified range of conditions and by the propagation 
+delay between the digital control (IN) signal and analog output (NC or NO) signal when the switch is turning ON.
+tOFF
+Turnoff time for the switch. This parameter is measured under the specified range of conditions and by the propagation 
+delay between the digital control (IN) signal and analog output (NC or NO) signal when the switch is turning OFF.
+QC
+Charge injection is a measurement of unwanted signal coupling from the control (IN) input to the analog (NC or NO) 
+output. This is measured in coulomb (C) and measured by the total charge induced due to switching of the control input. 
+Charge injection, QC = CL × ΔVCOM, CL is the load capacitance, and ΔVCOM is the change in analog output voltage.
+CNC(OFF)
+Capacitance at the NC port when the corresponding channel (NC to COM) is OFF.
+CNC(ON)
+Capacitance at the NC port when the corresponding channel (NC to COM) is ON.
+CNO(OFF)
+Capacitance at the NC port when the corresponding channel (NO to COM) is OFF.
+CNO(ON)
+Capacitance at the NC port when the corresponding channel (NO to COM) is ON.
+CCOM(OFF)
+Capacitance at the COM port when the corresponding channel (COM to NC) is OFF.
+CCOM(ON)
+Capacitance at the COM port when the corresponding channel (COM to NC) is ON.
+CI
+Capacitance of control input (IN, EN).
+OISO
+OFF isolation of the switch is a measurement of OFF-state switch impedance. This is measured in dB in a specific 
+frequency, with the corresponding channel (NC to COM) in the OFF state.
+XTALK
+Crosstalk is a measurement of unwanted signal coupling from an ON channel to an OFF channel (NC1 to NO1). Adjacent 
+crosstalk is a measure of unwanted signal coupling from an ON channel to an adjacent ON channel (NC1 to NC2). This is 
+measured in a specific frequency and in dB.
+BW
+Bandwidth of the switch. This is the frequency in which the gain of an ON channel is –3 dB below the DC gain.
+THD
+Total harmonic distortion describes the signal distortion caused by the analog switch. This is defined as the ratio of 
+root mean square (RMS) value of the second, third, and higher harmonic to the absolute magnitude of the fundamental 
+harmonic.
+ICC
+Static power-supply current with the control (IN) pin at VCC or GND.
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+15
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 16]
+Ω
+IN
++
++
+VCC
+Figure 7-1. ON-State Resistance (rON)
+IN
++
++
++
+OFF-State Leakage Current
+Channel OFF
+VCC
+Figure 7-2. OFF-State Leakage Current (ICOM(OFF), 
+INC(OFF), ICOM(PWROFF), INC(PWROFF))
+ON-State Leakage Current
+Channel ON
+IN
++
++
+VCC
+Figure 7-3. ON-State Leakage Current (ICOM(ON), 
+INC(ON))
+COM
+COM
+NO
+VBIAS
+VNO
+Capacitance
+Meter
+V
+= V
+or GND and
+BIAS
+CC
+V = V
+or V
+I
+IH
+IL
+Capacitance is measured at NO,
+COM, and IN inputs during ON
+and OFF conditions.
+VCC
+Figure 7-4. Capacitance (CI, CCOM(OFF), CCOM(ON), 
+CNC(OFF), CNC(ON))
+50 Ω
+50 Ω
+35 pF
+90%
+90%
+Switch
+Output
+Logic
+Intput
+TEST
+35 pF
+IN
+VCC
+VCC
+All input pulses are supplied by generators having the following 
+characteristics: PRR ≤ 10 MHz, ZO = 50 Ω, tr < 5 ns, tf < 5 ns.
+CL includes probe and jig capacitance.
+Figure 7-5. Turnon (tON) and Turnoff Time (tOFF)
+VOH
+NC or NO
+NC or NO
+V
+or V
+NC
+NO
+V
+or V
+=  V
+NC
+NO
+CC
+R
+=  50
+L
+Ω
+C
+=  35 pF
+L
+VCC
+VCC
+CL includes probe and jig capacitance.
+All input pulses are supplied by generators having the following 
+characteristics: PRR ≤ 10 MHz, ZO = 50 Ω, tr < 5 ns, tf < 5 ns.
+Figure 7-6. Break-Before-Make Time (tBBM)
+Network Analyzer Setup
+Source Power = 0 dBM
+(632-mV P-P at 50-
+load)
+Ω
+DC Bias = 350 mV
+Channel ON: NO to COM
+V = V
+or V
+I
+IH
+IL
+50 Ω
+Ω
+IN
++
+VCC
+Figure 7-7. Bandwidth (BW)
+Network Analyzer Setup
+Source Power = 0 dBM
+(632-mV P-P at 50-
+load)
+Ω
+DC Bias = 350 mV
+Channel OFF: NO to COM
+V = V
+or V
+I
+IH
+IL
+50 Ω
+Ω
+Ω
+IN
++
+VCC
+Figure 7-8. OFF Isolation (OISO)
+Network Analyzer Setup
+Source Power = 0 dBM
+(632-mV P-P at 50-
+load)
+Ω
+DC Bias = 350 mV
+Channel ON: NC to COM
+Channel OFF: NO to COM
+V = V
+or V
+I
+IH
+IL
+50 Ω
+NC
+NO
+Ω
+Ω
+IN
++
+VCC
+Figure 7-9. Crosstalk (XTALK)
+x Δ
+Δ
+IN
+VCC
+VCC
+All input pulses are supplied by generators having the following 
+characteristics: PRR ≤ 10 MHz, ZO = 50 Ω, tr < 5 ns, tf < 5 ns.
+CL includes probe and jig capacitance.
+Figure 7-10. Charge Injection (QC)
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+16
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 17]
+Audio Analyzer
+Channel ON: COM to NO
+V = V
+or V
+R =  600
+I
+IH
+IL
+L
+Ω
+V
+= V
+P-P
+f
+= 20 Hz to 20 kHz
+C =  50 pF
+SOURCE
+CC
+SOURCE
+L
+600 Ω
+600 Ω
+COM
+NO
+VCC
+IN
++
+CL includes probe and jig capacitance.
+Figure 7-11. Total Harmonic Distortion (THD)
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+17
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 18]
+8 Detailed Description
+8.1 Overview
+The TS3A27518E is a bidirectional, 6-channel, 1:2 multiplexer-demultiplexer designed to operate from 1.65 V 
+to 3.6 V. This device can handle both digital and analog signals, and can transmit signals up to VCC in either 
+direction. The TS3A27518E has two control pins, each controlling three 1:2 muxes at the same time, and an 
+enable pin that puts all outputs in high-impedance mode. The control pins are compatible with 1.8-V logic 
+thresholds and are backward compatible with 2.5-V and 3.3-V logic thresholds.
+8.2 Functional Block Diagram
+VCC
+IN2
+GND
+NC1
+NO1
+COM1
+NC2
+NO2
+COM2
+NC3
+NO3
+COM3
+NC4
+NO4
+COM4
+NC5
+NO5
+COM5
+NC6
+NO6
+COM6
+IN1
+EN
+Logic
+Copyright © 2016, Texas Instruments Incorporated
+8.3 Feature Description
+The isolation in power-down mode, VCC = 0 feature places all switch paths in high-impedance state (High-Z) 
+when the supply voltage equals 0 V.
+8.4 Device Functional Modes
+The TS3A27518E is a bidirectional device that has two sets of three single-pole double-throw switches.
+Two digital signals control the 6 channels of the switch; one digital control for each set of three single-pole,
+double-throw switches. Digital input pin IN1 controls switches 1, 2, and 3, while pin IN2 controls switches 4, 5, 
+and 6.
+The TS3A27518 has an EN pin that when set to logic high, it places all channels into a high-impedance or 
+HIGH-Z state. Table 8-1 lists the functions of TS3A27518E.
+Table 8-1. Function Table
+EN
+IN1
+IN2
+NC1/2/3 TO COM1/2/3,
+COM1/2/3 TO NC1/2/3
+NC4/5/6 TO COM4/5/6,
+COM4/5/6 TO NC4/5/6
+NO1/2/3 TO COM1/2/3,
+COM1/2/3 TO NO1/2/3
+NO4/5/6 TO COM4/5/6,
+COM4/5/6 TO NO4/5/6
+H
+X
+X
+OFF
+OFF
+OFF
+OFF
+L
+L
+L
+ON
+ON
+OFF
+OFF
+L
+H
+L
+OFF
+ON
+ON
+OFF
+L
+L
+H
+ON
+OFF
+OFF
+ON
+L
+H
+H
+OFF
+OFF
+ON
+ON
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+18
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 19]
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+9.1 Application Information
+The switches are bidirectional, so the NO, NC, and COM pins can be used as either inputs or outputs. This 
+functionality allows port expansion to support many different types of bidirectional signal inferfaces such as SD, 
+SDIO, GPIO, MMC, and qSPI.
+9.2 Typical Application
+SD/MMC Memory
+Card
+SDIO Peripheral
+(Bluetooth, WLAN,
+DTV, etc)
+Digital Baseband or
+Apps Processor
+COM1
+COM2
+COM3
+COM4
+COM5
+COM6
+IN1, IN2, EN
+NC1
+NO1
+NC2
+NC3
+NC4
+NC5
+NC6
+NO2
+NO3
+NO4
+NO5
+NO6
+TS3A27518
+VCC
+VCC
+VCC
+VCC
+SDIO Port
+Copyright © 2016, Texas Instruments Incorporated
+Figure 9-1. SDIO Expander Application Block Diagram
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+19
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 20]
+Processor
+GND
+VDD
+VDD
+VI/O
+Control 
+logic
+IN2
+GND
+JTAG 
+DEBUG, 
+SPI, GPIO 
+COM1
+RAM
+CPU
+Peripherals
+0.1µF
+EN
+NO1 
+NO2
+NO3
+NO4 
+qSPI 
+Device #1
+SIO0 
+SIO1
+SIO2
+SIO3
+NO5
+NO6 
+SLCK
+CS
+NC1 
+NC2
+NC3
+NC4 
+qSPI 
+Device #2
+SIO0 
+SIO1
+SIO2
+SIO3
+NC5
+NC6 
+SLCK
+CS
+COM2
+COM3
+COM4
+COM5
+COM6
+IN1
+Figure 9-2. qSPI Expander Application Block Diagram
+9.2.1 Design Requirement
+Ensure that all of the signals passing through the switch are within the recommended operating ranges to ensure 
+proper performance, see Section 6.3.
+9.2.2 Detailed Design Procedure
+The TS3A27518E can be properly operated without any external components. However, TI recommends 
+connecting unused pins to the ground through a 50-Ω resistor to prevent signal reflections back into the 
+device. TI also recommends that the digital control pins (INX) be pulled up to VCC or down to GND to avoid 
+undesired switch positions that could result from the floating pin. Refer to the Enabling SPI-Based Flash Memory 
+Expansion by Using Multiplexers application brief for more information on using switches and multiplexers for 
+SPI protocol expansion.
+For the RTW package, connect the thermal pad to ground.
+9.2.3 Application Curve
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+COM Voltage, V
+(V)
+COM
+0
+1
+2
+3
+4
+5
+6
+7
+ON-State Resistance, r
+( )
+ON W
+85ºC
+25ºC
+–40ºC
+Figure 9-3. ON-State Resistance vs COM Voltage (VCC = 3 V)
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+20
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 21]
+10 Power Supply Recommendations
+TI recommends proper power-supply sequencing for all CMOS devices. Do not exceed the absolute maximum 
+ratings, because stresses beyond the listed ratings can cause permanent damage to the device. Always 
+sequence VCC on first, followed by NO, NC, or COM. Although it is not required, power-supply bypassing 
+improves noise margin and prevents switching noise propagation from the VCC supply to other components. A 
+0.1-μF capacitor is adequate for most applications, if connected from VCC to GND.
+11 Layout
+11.1 Layout Guidelines
+To ensure reliability of the device, TI recommends following these common printed-circuit board layout 
+guidelines:
+•
+Bypass capacitors should be used on power supplies, and should be placed as close as possible to the VCC 
+pin
+•
+Short trace-lengths should be used to avoid excessive loading
+•
+For the RTW package, connect the thermal pad to ground
+11.2 Layout Example
+0603 Cap
+= VIA to GND Plane
+NO2
+To System
+You may ground the
+N.C pin or not
+include a trace
+IN2
+NO3
+COM5
+NO1
+COM6
+IN1
+NC3
+NC6
+N.C.
+NC1
+NC2
+COM3
+Vcc
+COM4
+COM1
+GND
+COM2
+NO5
+NO4
+NO6
+NC4
+EN
+NC5
+Figure 11-1. WQFN Layout Recommendation
+www.ti.com
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+Copyright © 2021 Texas Instruments Incorporated
+Submit Document Feedback
+21
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 22]
+12 Device and Documentation Support
+12.1 Documentation Support
+12.1.1 Related Documentation
+For related documentation, see the following:
+•
+Texas Instruments, Enabling SPI-Based Flash Memory Expansion by Using Multiplexers application brief
+12.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For 
+change details, review the revision history included in any revised document.
+12.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+12.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+12.5 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+12.6 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+TS3A27518E
+SCDS260F – MARCH 2009 – REVISED DECEMBER 2021
+www.ti.com
+22
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: TS3A27518E
+
+[PDF PAGE 23]
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+TS3A27518EPWR
+Active
+Production
+TSSOP (PW) | 24
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+YL518E
+TS3A27518EPWR.B
+Active
+Production
+TSSOP (PW) | 24
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+YL518E
+TS3A27518EPWRG4
+Active
+Production
+TSSOP (PW) | 24
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+YL518E
+TS3A27518EPWRG4.B
+Active
+Production
+TSSOP (PW) | 24
+2000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+YL518E
+TS3A27518ERTWR
+Active
+Production
+WQFN (RTW) | 24
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 85
+YL518E
+TS3A27518ERTWR.B
+Active
+Production
+WQFN (RTW) | 24
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 85
+YL518E
+TS3A27518ERTWRG4
+Active
+Production
+WQFN (RTW) | 24
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 85
+YL518E
+TS3A27518ERTWRG4.B
+Active
+Production
+WQFN (RTW) | 24
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 85
+YL518E
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+Addendum-Page 1
+
+[PDF PAGE 24]
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+ OTHER QUALIFIED VERSIONS OF TS3A27518E :
+• Automotive : TS3A27518E-Q1
+ NOTE: Qualified Version Definitions:
+• Automotive - Q100 devices qualified for high-reliability automotive applications targeting zero defects
+Addendum-Page 2
+
+[PDF PAGE 25]
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+9-Oct-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TS3A27518EPWR
+TSSOP
+PW
+24
+2000
+330.0
+16.4
+6.95
+8.3
+1.6
+8.0
+16.0
+Q1
+TS3A27518EPWRG4
+TSSOP
+PW
+24
+2000
+330.0
+16.4
+6.95
+8.3
+1.6
+8.0
+16.0
+Q1
+TS3A27518ERTWR
+WQFN
+RTW
+24
+3000
+330.0
+12.4
+4.25
+4.25
+1.15
+8.0
+12.0
+Q2
+TS3A27518ERTWRG4
+WQFN
+RTW
+24
+3000
+330.0
+12.4
+4.25
+4.25
+1.15
+8.0
+12.0
+Q2
+Pack Materials-Page 1
+
+[PDF PAGE 26]
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+9-Oct-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+TS3A27518EPWR
+TSSOP
+PW
+24
+2000
+353.0
+353.0
+32.0
+TS3A27518EPWRG4
+TSSOP
+PW
+24
+2000
+353.0
+353.0
+32.0
+TS3A27518ERTWR
+WQFN
+RTW
+24
+3000
+353.0
+353.0
+32.0
+TS3A27518ERTWRG4
+WQFN
+RTW
+24
+3000
+353.0
+353.0
+32.0
+Pack Materials-Page 2
+
+[PDF PAGE 27]
+www.ti.com
+PACKAGE OUTLINE
+C
+22X 0.65
+2X
+7.15
+24X 0.30
+0.19
+ TYP
+6.6
+6.2
+1.2 MAX
+0.15
+0.05
+0.25
+GAGE PLANE
+-8
+0
+B
+NOTE 4
+4.5
+4.3
+A
+NOTE 3
+7.9
+7.7
+0.75
+0.50
+(0.15) TYP
+TSSOP - 1.2 mm max height
+PW0024A
+SMALL OUTLINE PACKAGE
+4220208/A   02/2017
+1
+12
+13
+24
+0.1
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-153.
+ 
+SEATING
+PLANE
+A  20
+DETAIL A
+TYPICAL
+SCALE  2.000
+
+[PDF PAGE 28]
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+24X (1.5)
+24X (0.45)
+22X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max height
+PW0024A
+SMALL OUTLINE PACKAGE
+4220208/A   02/2017
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 10X
+SYMM
+SYMM
+1
+12
+13
+24
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+
+[PDF PAGE 29]
+www.ti.com
+EXAMPLE STENCIL DESIGN
+24X (1.5)
+24X (0.45)
+22X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max height
+PW0024A
+SMALL OUTLINE PACKAGE
+4220208/A   02/2017
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 10X
+SYMM
+SYMM
+1
+12
+13
+24
+
+[PDF PAGE 30]
+www.ti.com
+GENERIC PACKAGE VIEW
+This image is a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+WQFN - 0.8 mm max height
+RTW 24
+PLASTIC QUAD FLATPACK - NO LEAD
+4 x 4, 0.5 mm pitch
+4224801/A
+
+[PDF PAGE 31]
+NOTES:
+1.
+All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2.
+This drawing is subject to change without notice.
+PACKAGE OUTLINE
+4219135/B   11/2016
+www.ti.com
+WQFN  - 0.8 mm max height
+PLASTIC QUAD FLATPACK-NO LEAD
+RTW0024B 
+A
+0.08 C
+0.1
+C A B
+0.05
+C
+B
+SYMM
+SYMM
+4.15
+3.85
+4.15
+3.85
+PIN 1 INDEX AREA
+0.8 MAX
+0.05
+0.00
+C
+SEATING PLANE
+PIN 1 ID
+(OPTIONAL)
+2X
+2.5
+20X 0.5
+2X 2.5
+1
+6
+18
+13
+7
+12
+24
+19
+2.45±0.1
+24X 0.3
+0.18
+24X 0.5
+0.3
+(0.2) TYP
+25
+EXPOSED
+THERMAL PAD
+
+[PDF PAGE 32]
+NOTES: (continued)
+3.
+For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+EXAMPLE BOARD LAYOUT
+4219135/B   11/2016
+www.ti.com
+WQFN  - 0.8 mm max height
+RTW0024B 
+PLASTIC QUAD FLATPACK-NO LEAD
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+SCALE: 20X
+(    2.45)
+24X (0.6)
+24X (0.24)
+1
+6
+7
+12
+13
+18
+19
+24
+(3.8)
+(0.97)
+(3.8)
+(0.97)
+25
+(R0.05)
+ TYP
+20X (0.5)
+(Ø0.2) TYP
+VIA
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+METAL
+SOLDER MASK
+OPENING
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK DETAILS
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+
+[PDF PAGE 33]
+NOTES: (continued)
+4.
+Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+EXAMPLE STENCIL DESIGN
+4219135/B   11/2016
+www.ti.com
+WQFN  - 0.8 mm max height
+RTW0024B 
+PLASTIC QUAD FLATPACK-NO LEAD
+SYMM
+SYMM
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+EXPOSED PAD 25:
+78% PRINTED COVERAGE BY AREA UNDER PACKAGE
+SCALE: 20X
+(3.8)
+(0.64) TYP
+1
+6
+7
+12
+13
+18
+19
+24
+25
+(0.64)
+ TYP
+4X(    1.08)
+(R0.05) TYP
+(3.8)
+20X (0.5)
+24X (0.24)
+24X (0.6)
+METAL
+TYP
+
+[PDF PAGE 34]
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2025, Texas Instruments Incorporated
+Last updated 10/2025

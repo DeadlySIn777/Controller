@@ -1,0 +1,3273 @@
+{
+  "schema_version": 1,
+  "revision": "2026-09-28",
+  "status": "planning_only",
+  "purpose": "Preserve 200 supplied proposals; never use as the installed capability manifest.",
+  "sources": [
+    {
+      "path": "research/user-notes/2026-09-28-esp-industrial-direction.txt",
+      "sha256": "cf73da6213bde06e8a2ece1bdaaeda625dd20b2050428ddf5376bf783935dc62"
+    },
+    {
+      "path": "research/user-notes/2026-09-28-feature-platform.txt",
+      "sha256": "f95576260cb92573d9010332883c2fe8d65699e85cdb34203152745fae44cc78"
+    },
+    {
+      "path": "research/user-notes/2026-09-28-integration-priority.txt",
+      "sha256": "4b78c25be578e051cd5fbeb50e7b8c34393fb711edbe741a264535b8ad557b00"
+    },
+    {
+      "path": "research/user-notes/2026-09-28-modbus-expansion.txt",
+      "sha256": "a92652b3bf4aad502be99d183e50b27dd72a9482ce06227749b8c93447c83cbb"
+    },
+    {
+      "path": "research/user-notes/2026-09-28-plasma-upgrades.txt",
+      "sha256": "90d11cbec6b309d0db3d5c3ceabcbf9f8b0b4cd022e1ac2e8bb1bfc9b4cfc194"
+    },
+    {
+      "path": "research/user-notes/2026-09-28-repairability-memory.txt",
+      "sha256": "c7f0c1ae6a17e3f444ace377105712b90acf4ae78380328e5c9c0c8a8841ef78"
+    }
+  ],
+  "evidence_index": "reports/ENGINEERING_STATUS.md",
+  "source_flag_caveat": "Missing H/R marks do not prove hardware-free or easy implementation.",
+  "acceptance_strategy": "docs/PLATFORM_ROADMAP.md",
+  "features": [
+    {
+      "id": "F001",
+      "number": 1,
+      "title": "Component-aware wiring generator",
+      "description_from_supplied_note": "Select the actual drives, switches, spindle, and controller modules; generate terminal-to-terminal diagrams and flag incompatible electrical interfaces before wiring.",
+      "category": "Wiring and commissioning",
+      "source_line": 22,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F002",
+      "number": 2,
+      "title": "Press-to-identify inputs",
+      "description_from_supplied_note": "Enter commissioning mode, activate a switch, and assign the detected input visually. Identify inverted logic, stuck inputs, and multiple switches changing together.",
+      "category": "Wiring and commissioning",
+      "source_line": 24,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F003",
+      "number": 3,
+      "title": "Motor-driver setup translator",
+      "description_from_supplied_note": "Convert screw lead, gearing, microstepping, and driver timing requirements into controller settings, with a physical measurement step to verify the result.",
+      "category": "Wiring and commissioning",
+      "source_line": 26,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F004",
+      "number": 4,
+      "title": "Controlled first-motion wizard",
+      "description_from_supplied_note": "Commission one joint at a time using bounded moves, direction confirmation, scale checks, and verified limits instead of immediately enabling full-speed jogging.",
+      "category": "Wiring and commissioning",
+      "source_line": 28,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F005",
+      "number": 5,
+      "title": "VFD commissioning assistant",
+      "description_from_supplied_note": "Provide model-specific connection and parameter instructions, then verify commanded versus actual spindle behavior using supported feedback.",
+      "category": "Wiring and commissioning",
+      "source_line": 30,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F006",
+      "number": 6,
+      "title": "Independent gantry squaring",
+      "description_from_supplied_note": "Home dual-drive gantries independently, measure repeatability, and warn when the two sides require an unusually large correction.",
+      "category": "Wiring and commissioning",
+      "source_line": 32,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F007",
+      "number": 7,
+      "title": "Visual kinematics configuration",
+      "description_from_supplied_note": "Configure supported Cartesian, CoreXY, dual-gantry, and rotary arrangements through diagrams, while explicitly rejecting unsupported combinations rather than silently accepting them.",
+      "category": "Wiring and commissioning",
+      "source_line": 34,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F008",
+      "number": 8,
+      "title": "Graphical machine-sequence builder",
+      "description_from_supplied_note": "Build operational sequences such as “clamp, confirm pressure, start spindle” with timeouts, simulated inputs, and an explanation of why a sequence cannot advance.",
+      "category": "Wiring and commissioning",
+      "source_line": 36,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F009",
+      "number": 9,
+      "title": "Built-in signal oscilloscope",
+      "description_from_supplied_note": "Display timestamped step commands, encoder feedback, probe transitions, drive alarms, and machine-state changes on one synchronized timeline.",
+      "category": "Wiring and commissioning",
+      "source_line": 38,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F010",
+      "number": 10,
+      "title": "Existing-configuration importer",
+      "description_from_supplied_note": "Import supported settings from Grbl, Klipper, or LinuxCNC configurations, explain the mapping, and flag anything that cannot be translated reliably.",
+      "category": "Wiring and commissioning",
+      "source_line": 40,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F011",
+      "number": 11,
+      "title": "Guided stock probing",
+      "description_from_supplied_note": "Find edges, corners, bore centers, and bosses using illustrated routines that preview the intended probe movements before execution.",
+      "category": "Registration and probing",
+      "source_line": 44,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F012",
+      "number": 12,
+      "title": "Crooked-stock registration",
+      "description_from_supplied_note": "Measure reference features and calculate the stock’s translation and rotation, allowing an awkward blank to remain where it is clamped.",
+      "category": "Registration and probing",
+      "source_line": 46,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F013",
+      "number": 13,
+      "title": "Surface-following machining",
+      "description_from_supplied_note": "Probe a warped board, PCB, or sheet and compensate engraving depth against its measured surface instead of assuming everything is perfectly flat.",
+      "category": "Registration and probing",
+      "source_line": 48,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F014",
+      "number": 14,
+      "title": "Tool measurement with confidence checks",
+      "description_from_supplied_note": "Measure tool length, repeat the measurement when inconsistent, and flag contamination or an implausible change rather than blindly accepting it.",
+      "category": "Registration and probing",
+      "source_line": 50,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F015",
+      "number": 15,
+      "title": "Two-sided machining registration",
+      "description_from_supplied_note": "Guide the flip operation using pins or probed references, calculate the second-side transform, and show whether the two setups agree.",
+      "category": "Registration and probing",
+      "source_line": 52,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F016",
+      "number": 16,
+      "title": "Rotary-axis calibration wizard",
+      "description_from_supplied_note": "Measure the rotary centerline, angular zero, and alignment relative to the linear axes instead of requiring manual coordinate calculations.",
+      "category": "Registration and probing",
+      "source_line": 54,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F017",
+      "number": 17,
+      "title": "Leadscrew-error mapping",
+      "description_from_supplied_note": "Import or measure positioning errors along an axis and generate a calibrated compensation map with a visible valid range.",
+      "category": "Registration and probing",
+      "source_line": 56,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F018",
+      "number": 18,
+      "title": "Backlash characterization",
+      "description_from_supplied_note": "Measure reversal error at several positions, distinguish repeatable backlash from inconsistent motion, and explain when mechanical repair is needed instead of compensation.",
+      "category": "Registration and probing",
+      "source_line": 58,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F019",
+      "number": 19,
+      "title": "Thermal-drift compensation",
+      "description_from_supplied_note": "Use temperature and reference measurements to apply bounded corrections from a validated machine model, with compensation disabled outside the calibrated conditions.",
+      "category": "Registration and probing",
+      "source_line": 60,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F020",
+      "number": 20,
+      "title": "Inspect-and-correct finishing",
+      "description_from_supplied_note": "Measure a feature after a machining pass and propose a bounded wear-offset adjustment or finishing pass, with operator approval before recutting.",
+      "category": "Registration and probing",
+      "source_line": 62,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F021",
+      "number": 21,
+      "title": "Whole-job preflight",
+      "description_from_supplied_note": "Check units, work offsets, required tools, travel, spindle limits, and machine configuration against the actual program before allowing execution.",
+      "category": "Preflight and simulation",
+      "source_line": 66,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F022",
+      "number": 22,
+      "title": "Execution-matched simulation",
+      "description_from_supplied_note": "Preview supported programs through the same interpreter semantics used for machining, including offsets, canned cycles, and declared macro behavior—not just straight-line backplotting.",
+      "category": "Preflight and simulation",
+      "source_line": 68,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F023",
+      "number": 23,
+      "title": "Fixture-aware collision checking",
+      "description_from_supplied_note": "Include clamps, toolholders, spindle bodies, fixtures, and machine limits in the check, and clearly mark unmodeled or unverified regions.",
+      "category": "Preflight and simulation",
+      "source_line": 70,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F024",
+      "number": 24,
+      "title": "Remaining-stock tracking",
+      "description_from_supplied_note": "Estimate what material remains after each operation so subsequent previews can distinguish cutting stock from moving through already-cleared space.",
+      "category": "Preflight and simulation",
+      "source_line": 72,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F025",
+      "number": 25,
+      "title": "“Why is it moving there?” coordinate explanation",
+      "description_from_supplied_note": "Click any destination and see how machine coordinates, work offsets, tool length, rotation, and active modes produced it.",
+      "category": "Preflight and simulation",
+      "source_line": 74,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F026",
+      "number": 26,
+      "title": "Conversational machining with previews",
+      "description_from_supplied_note": "Generate pockets, bolt circles, facing, slots, and turning operations from dimensions, while showing the resulting toolpath and required tools.",
+      "category": "Preflight and simulation",
+      "source_line": 76,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F027",
+      "number": 27,
+      "title": "CAD-feature-to-operation assistant",
+      "description_from_supplied_note": "Recognize supported holes, pockets, and faces; suggest machining operations and setups for review instead of treating imported CAD as merely a picture.",
+      "category": "Preflight and simulation",
+      "source_line": 78,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F028",
+      "number": 28,
+      "title": "Remnant-aware nesting",
+      "description_from_supplied_note": "Arrange parts inside a saved scrap outline, avoiding marked holes, clamps, damaged regions, and unusable edges rather than assuming a rectangular sheet.",
+      "category": "Preflight and simulation",
+      "source_line": 80,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F029",
+      "number": 29,
+      "title": "Automatic setup invalidation",
+      "description_from_supplied_note": "Moving a clamp, changing a toolholder, replacing stock, or editing offsets invalidates the affected collision and setup checks automatically.",
+      "category": "Preflight and simulation",
+      "source_line": 82,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F030",
+      "number": 30,
+      "title": "Machine-specific completion estimates",
+      "description_from_supplied_note": "Estimate time using actual acceleration limits, spindle ramp-up, probing, tool changes, and programmed waits, then refine estimates from recorded jobs.",
+      "category": "Preflight and simulation",
+      "source_line": 84,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F031",
+      "number": 31,
+      "title": "Truly local job execution",
+      "description_from_supplied_note": "Validate and store the complete job on the controller before running, so an interface disconnect does not become a missing-G-code problem.",
+      "category": "Recovery and diagnostics",
+      "source_line": 88,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F032",
+      "number": 32,
+      "title": "Reconnection without duplicate commands",
+      "description_from_supplied_note": "Restore the live controller state after a network interruption, reject stale requests, and prevent two interfaces from simultaneously owning motion control.",
+      "category": "Recovery and diagnostics",
+      "source_line": 90,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F033",
+      "number": 33,
+      "title": "Guided restart from a selected operation",
+      "description_from_supplied_note": "Reconstruct modal state, verify the tool and work registration, and preview a suitable entry path before resuming—not merely jump to a line number.",
+      "category": "Recovery and diagnostics",
+      "source_line": 92,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F034",
+      "number": 34,
+      "title": "Power-loss recovery assessment",
+      "description_from_supplied_note": "Preserve checkpoints and determine what must be rehomed, remeasured, or inspected before restarting. Never equate a saved position with verified physical position.",
+      "category": "Recovery and diagnostics",
+      "source_line": 94,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F035",
+      "number": 35,
+      "title": "Broken-tool recovery workflow",
+      "description_from_supplied_note": "Guide replacement, tool measurement, inspection, and re-entry into the unfinished operation without requiring the operator to manually edit the entire program.",
+      "category": "Recovery and diagnostics",
+      "source_line": 96,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F036",
+      "number": 36,
+      "title": "Process-aware park and return",
+      "description_from_supplied_note": "Pause, move to an approved access position, and return through a checked route, while refusing generic retract behavior during incompatible operations.",
+      "category": "Recovery and diagnostics",
+      "source_line": 98,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F037",
+      "number": 37,
+      "title": "Machine “black box” recorder",
+      "description_from_supplied_note": "Preserve the commands, feedback, alarms, and state transitions immediately before and after a fault, including events too brief to notice on-screen.",
+      "category": "Recovery and diagnostics",
+      "source_line": 100,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F038",
+      "number": 38,
+      "title": "Plain-language fault diagnosis",
+      "description_from_supplied_note": "Explain “clamp pressure dropped before spindle enable disappeared,” distinguish evidence from inference, and identify the next measurement instead of displaying only an alarm number.",
+      "category": "Recovery and diagnostics",
+      "source_line": 102,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F039",
+      "number": 39,
+      "title": "Transactional updates and rollback",
+      "description_from_supplied_note": "Update firmware, gateware, and configuration as a compatible set; retain a known-good version and prohibit updates while the machine is armed.",
+      "category": "Recovery and diagnostics",
+      "source_line": 104,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F040",
+      "number": 40,
+      "title": "ESP32 rescue interface",
+      "description_from_supplied_note": "Keep a separate diagnostic path available when the main Linux system fails, with fault history and controlled recovery—not unverified mid-cut motion takeover.",
+      "category": "Recovery and diagnostics",
+      "source_line": 106,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F041",
+      "number": 41,
+      "title": "Load-aware adaptive feed",
+      "description_from_supplied_note": "Adjust feed within approved limits using spindle-load or cutting-force feedback, while distinguishing normal engagement changes from overload conditions.",
+      "category": "Advanced CNC",
+      "source_line": 112,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F042",
+      "number": 42,
+      "title": "Chatter detection and bounded response",
+      "description_from_supplied_note": "Analyze vibration and propose or apply validated spindle-speed/feed adjustments, rather than simply slowing every noisy cut.",
+      "category": "Advanced CNC",
+      "source_line": 114,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F043",
+      "number": 43,
+      "title": "Commanded-versus-actual position dashboard",
+      "description_from_supplied_note": "Compare commanded position, motor-encoder position, and linear-scale position where available, helping expose lost motion downstream of the motor.",
+      "category": "Advanced CNC",
+      "source_line": 116,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F044",
+      "number": 44,
+      "title": "Actual feed per spindle revolution",
+      "description_from_supplied_note": "Maintain the selected feed per revolution using measured spindle motion instead of assuming the spindle always reaches its commanded speed.",
+      "category": "Advanced CNC",
+      "source_line": 118,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F045",
+      "number": 45,
+      "title": "Encoder-synchronized threading",
+      "description_from_supplied_note": "Coordinate the cutting axis to spindle angle through speed variation, with setup tests for encoder direction, index, scaling, and synchronization.",
+      "category": "Advanced CNC",
+      "source_line": 120,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F046",
+      "number": 46,
+      "title": "Rigid tapping with verified reversal",
+      "description_from_supplied_note": "Coordinate spindle reversal and axial withdrawal, with explicit checks for the drive’s capabilities and synchronization errors.",
+      "category": "Advanced CNC",
+      "source_line": 122,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F047",
+      "number": 47,
+      "title": "Constant-surface-speed turning",
+      "description_from_supplied_note": "Adjust spindle speed as cutting diameter changes, with clear maximum-RPM limits and a preview of the expected speed range.",
+      "category": "Advanced CNC",
+      "source_line": 124,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F048",
+      "number": 48,
+      "title": "Existing-thread pickup",
+      "description_from_supplied_note": "Help locate the phase and pitch of an existing thread so it can be chased or extended without manually guessing alignment.",
+      "category": "Advanced CNC",
+      "source_line": 126,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F049",
+      "number": 49,
+      "title": "Spindle-to-C-axis transitions",
+      "description_from_supplied_note": "Switch a supported spindle between rotation and position control through a verified sequence that prevents conflicting commands or incorrect clamp states.",
+      "category": "Advanced CNC",
+      "source_line": 128,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F050",
+      "number": 50,
+      "title": "Five-axis tool-center-point control",
+      "description_from_supplied_note": "Maintain the programmed tool-tip position while rotary axes move, using calibrated geometry, tool length, and validated machine kinematics.",
+      "category": "Advanced CNC",
+      "source_line": 130,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F051",
+      "number": 51,
+      "title": "ATC teaching wizard",
+      "description_from_supplied_note": "Teach rack or carousel locations visually, then test each movement and sensor transition individually before allowing a complete automatic tool change.",
+      "category": "Tool changing and automation",
+      "source_line": 134,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F052",
+      "number": 52,
+      "title": "Tool-seated verification",
+      "description_from_supplied_note": "Confirm the expected drawbar, tool-present, and changer states; identify the exact failed condition instead of reporting a generic tool-change alarm.",
+      "category": "Tool changing and automation",
+      "source_line": 136,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F053",
+      "number": 53,
+      "title": "Automatic tool-break checks",
+      "description_from_supplied_note": "Compare tool measurements before and after critical operations, or use a suitable break detector, to stop subsequent operations from machining with a missing cutter.",
+      "category": "Tool changing and automation",
+      "source_line": 138,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F054",
+      "number": 54,
+      "title": "Sister-tool substitution",
+      "description_from_supplied_note": "Replace an expired or failed tool with an approved equivalent, revalidate its offsets, and identify which operations can resume with it.",
+      "category": "Tool changing and automation",
+      "source_line": 140,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F055",
+      "number": 55,
+      "title": "Workholding verification",
+      "description_from_supplied_note": "Monitor vacuum, pneumatic, or hydraulic holding conditions against process-specific limits and inhibit the next operation when holding conditions are inadequate.",
+      "category": "Tool changing and automation",
+      "source_line": 142,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F056",
+      "number": 56,
+      "title": "Fixture identity and setup recall",
+      "description_from_supplied_note": "Identify a fixture, load its tools and setup recipe, then verify its physical registration before accepting the saved work offsets.",
+      "category": "Tool changing and automation",
+      "source_line": 144,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F057",
+      "number": 57,
+      "title": "Interchangeable-head recognition",
+      "description_from_supplied_note": "Identify a spindle, laser, extruder, or dispenser and load its offsets and permitted outputs, with process changes allowed only while disarmed.",
+      "category": "Tool changing and automation",
+      "source_line": 146,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F058",
+      "number": 58,
+      "title": "Position-synchronized auxiliary outputs",
+      "description_from_supplied_note": "Trigger dispensing, marking, cameras, or valves at defined path positions rather than depending on a user-interface timer.",
+      "category": "Tool changing and automation",
+      "source_line": 148,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F059",
+      "number": 59,
+      "title": "Discoverable expansion devices",
+      "description_from_supplied_note": "Recognize supported modules, show their capabilities and firmware compatibility, and bind their signals without hand-editing low-level configuration.",
+      "category": "Tool changing and automation",
+      "source_line": 150,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_plasma_module_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F060",
+      "number": 60,
+      "title": "Registered print–probe–mill workflows",
+      "description_from_supplied_note": "Print a part, measure it, and machine selected surfaces within a coordinated setup, with process-specific clearances and tool changes.",
+      "category": "Tool changing and automation",
+      "source_line": 152,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F061",
+      "number": 61,
+      "title": "Guided pressure-advance calibration",
+      "description_from_supplied_note": "Generate a test, help evaluate the result, and save the setting against the actual nozzle, material, temperature, and extrusion configuration.",
+      "category": "Printer calibration and protection",
+      "source_line": 158,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F062",
+      "number": 62,
+      "title": "Automatic resonance characterization",
+      "description_from_supplied_note": "Measure vibration, propose input-shaping settings, and show the associated acceleration and smoothing tradeoffs for each toolhead configuration.",
+      "category": "Printer calibration and protection",
+      "source_line": 160,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F063",
+      "number": 63,
+      "title": "Temperature-aware adaptive bed mapping",
+      "description_from_supplied_note": "Measure only the required print area while tracking whether bed temperature or machine changes make the previous mesh unreliable.",
+      "category": "Printer calibration and protection",
+      "source_line": 162,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F064",
+      "number": 64,
+      "title": "Actual-nozzle Z referencing",
+      "description_from_supplied_note": "Establish nozzle height through a suitable contact system, incorporating nozzle cleaning and repeatability checks instead of trusting a fixed probe offset forever.",
+      "category": "Printer calibration and protection",
+      "source_line": 164,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F065",
+      "number": 65,
+      "title": "Measured filament delivery",
+      "description_from_supplied_note": "Compare requested extrusion with actual filament movement, report persistent discrepancies, and pause when the delivery system is no longer following commands.",
+      "category": "Printer calibration and protection",
+      "source_line": 166,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F066",
+      "number": 66,
+      "title": "Jam-source diagnosis",
+      "description_from_supplied_note": "Combine filament motion, spool tension, and available drive data to distinguish likely tangles, slipping, and nozzle restrictions, while reporting diagnostic uncertainty.",
+      "category": "Printer calibration and protection",
+      "source_line": 168,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F067",
+      "number": 67,
+      "title": "Calibrated volumetric-flow limits",
+      "description_from_supplied_note": "Characterize a material/hotend combination and flag or constrain toolpaths that demand more melt flow than the validated setup can provide.",
+      "category": "Printer calibration and protection",
+      "source_line": 170,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F068",
+      "number": 68,
+      "title": "Verified heater fault handling",
+      "description_from_supplied_note": "Detect implausible temperatures, inadequate heating, and heating while commanded off; use an independent cutoff path where required to interrupt failed power switching.",
+      "category": "Printer calibration and protection",
+      "source_line": 172,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F069",
+      "number": 69,
+      "title": "First-layer inspection",
+      "description_from_supplied_note": "Check deposited lines for missing regions, gross gaps, or excessive buildup and pause for review; allow correction only within a validated adjustment envelope.",
+      "category": "Printer calibration and protection",
+      "source_line": 174,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F070",
+      "number": 70,
+      "title": "Selective failed-object cancellation",
+      "description_from_supplied_note": "Cancel one object in a multi-part print while preserving the others, then reevaluate travel paths around the failed material.",
+      "category": "Printer calibration and protection",
+      "source_line": 176,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F071",
+      "number": 71,
+      "title": "Automatic multi-tool offset calibration",
+      "description_from_supplied_note": "Measure the relative nozzle positions and verify alignment with a test pattern, rather than relying on repeated manual tuning prints.",
+      "category": "Advanced printing",
+      "source_line": 180,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F072",
+      "number": 72,
+      "title": "Measured purge completion",
+      "description_from_supplied_note": "Reduce unnecessary color-change purging by monitoring the extrudate against a validated transition criterion, with conservative fallback behavior.",
+      "category": "Advanced printing",
+      "source_line": 182,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F073",
+      "number": 73,
+      "title": "Independent-carriage collision management",
+      "description_from_supplied_note": "Coordinate multiple moving printheads using their actual envelopes, parked positions, and remaining printed geometry.",
+      "category": "Advanced printing",
+      "source_line": 184,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F074",
+      "number": 74,
+      "title": "Verified spool-change continuation",
+      "description_from_supplied_note": "Switch to an approved replacement material, confirm filament delivery, restore extrusion conditions, and resume from a controlled checkpoint.",
+      "category": "Advanced printing",
+      "source_line": 186,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F075",
+      "number": 75,
+      "title": "Chamber thermal-stability management",
+      "description_from_supplied_note": "Start temperature-sensitive operations only after the chamber meets defined stability criteria, then coordinate cooling rather than abruptly ending heat control.",
+      "category": "Advanced printing",
+      "source_line": 188,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F076",
+      "number": 76,
+      "title": "Zoned-bed temperature control",
+      "description_from_supplied_note": "Heat only needed regions while monitoring boundary temperatures and avoiding uneven thermal conditions across the part.",
+      "category": "Advanced printing",
+      "source_line": 190,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F077",
+      "number": 77,
+      "title": "Force-aware resin peeling",
+      "description_from_supplied_note": "Measure separation loads and adapt supported lift profiles within validated limits, while recognizing abnormal sticking or release behavior.",
+      "category": "Advanced printing",
+      "source_line": 192,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F078",
+      "number": 78,
+      "title": "Resin exposure-uniformity calibration",
+      "description_from_supplied_note": "Use suitable optical measurements to generate supported exposure corrections, while synchronizing the exposure engine and motion system.",
+      "category": "Advanced printing",
+      "source_line": 194,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F079",
+      "number": 79,
+      "title": "Nonplanar printing support",
+      "description_from_supplied_note": "Execute supported curved-layer paths with nozzle-body collision checks and suitable extrusion control, rather than treating every layer as a horizontal plane.",
+      "category": "Advanced printing",
+      "source_line": 196,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F080",
+      "number": 80,
+      "title": "Verified batch changeover",
+      "description_from_supplied_note": "Permit the next print only after the supported removal mechanism completes and bed clearance is confirmed; otherwise stop for operator intervention.",
+      "category": "Advanced printing",
+      "source_line": 198,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F081",
+      "number": 81,
+      "title": "Height-corrected camera placement",
+      "description_from_supplied_note": "Calibrate camera distortion and material height so artwork placement remains meaningful when switching between thin sheet and thicker objects.",
+      "category": "Laser setup and execution",
+      "source_line": 202,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F082",
+      "number": 82,
+      "title": "Fiducial-based print-and-cut registration",
+      "description_from_supplied_note": "Locate reference marks, report registration error, and apply only the approved translation, rotation, or scaling needed for that job.",
+      "category": "Laser setup and execution",
+      "source_line": 204,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F083",
+      "number": 83,
+      "title": "Surface-following focus",
+      "description_from_supplied_note": "Measure a supported surface and adjust focus through the job within the optical system’s validated range.",
+      "category": "Laser setup and execution",
+      "source_line": 206,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F084",
+      "number": 84,
+      "title": "Calibrated energy-per-distance control",
+      "description_from_supplied_note": "Account for actual motion speed and a measured power-response curve when commanding the laser, rather than assuming every power percentage is proportional.",
+      "category": "Laser setup and execution",
+      "source_line": 208,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F085",
+      "number": 85,
+      "title": "Bidirectional engraving calibration",
+      "description_from_supplied_note": "Generate and evaluate alignment patterns to compensate direction-dependent scan offsets at different engraving speeds.",
+      "category": "Laser setup and execution",
+      "source_line": 210,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F086",
+      "number": 86,
+      "title": "Dedicated raster execution",
+      "description_from_supplied_note": "Coordinate pixel timing, motion, and overscan so engraving is not reduced to a huge stream of poorly timed individual G-code movements.",
+      "category": "Laser setup and execution",
+      "source_line": 212,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F087",
+      "number": 87,
+      "title": "Measured kerf and fit calibration",
+      "description_from_supplied_note": "Generate test coupons, record measured results, and apply material/process-specific fit compensation for press-fit and slip-fit parts.",
+      "category": "Laser setup and execution",
+      "source_line": 214,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F088",
+      "number": 88,
+      "title": "Tapered-object rotary engraving",
+      "description_from_supplied_note": "Map artwork onto a supported tapered shape while accounting for changing circumference and focus, instead of treating every object as a cylinder.",
+      "category": "Laser setup and execution",
+      "source_line": 216,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F089",
+      "number": 89,
+      "title": "Cut-through verification",
+      "description_from_supplied_note": "Use a suitable sensing method to assess whether a supported material was fully cut and identify where another pass is justified.",
+      "category": "Laser setup and execution",
+      "source_line": 218,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F090",
+      "number": 90,
+      "title": "Verified laser operating conditions",
+      "description_from_supplied_note": "Require the relevant enclosure, cooling, and extraction conditions before beam enable, with independent hardware inhibition where needed—not just on-screen warnings.",
+      "category": "Laser setup and execution",
+      "source_line": 220,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F091",
+      "number": 91,
+      "title": "Ohmic/float sensing diagnostics",
+      "description_from_supplied_note": "Test material sensing, detect stuck or inconsistent signals, and explain when the machine is using the verified fallback method.",
+      "category": "Plasma and platform services",
+      "source_line": 226,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_plasma_module_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F092",
+      "number": 92,
+      "title": "Context-aware torch-height control",
+      "description_from_supplied_note": "Combine arc feedback with actual speed and path conditions so corner slowdowns and existing gaps do not provoke inappropriate height corrections.",
+      "category": "Plasma and platform services",
+      "source_line": 228,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_plasma_module_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F093",
+      "number": 93,
+      "title": "Guided failed-pierce recovery",
+      "description_from_supplied_note": "Identify the failed pierce, inspect the conditions, and prepare a bounded retry or alternate lead-in rather than restarting the entire sheet blindly.",
+      "category": "Plasma and platform services",
+      "source_line": 230,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F094",
+      "number": 94,
+      "title": "Breakaway-torch recovery",
+      "description_from_supplied_note": "Stop on a breakaway event, guide mechanical reseating, reverify torch registration, and prepare a checked return to the interrupted cut.",
+      "category": "Plasma and platform services",
+      "source_line": 232,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F095",
+      "number": 95,
+      "title": "Small-hole process control",
+      "description_from_supplied_note": "Apply validated hole-specific speed, height-control, and supported power-source settings, with the resulting changes visible in the job preview.",
+      "category": "Plasma and platform services",
+      "source_line": 234,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F096",
+      "number": 96,
+      "title": "Heat-aware cutting sequence",
+      "description_from_supplied_note": "Distribute cuts to reduce concentrated heating and avoid prematurely releasing unstable pieces, while respecting tabs, clamps, and required operation order.",
+      "category": "Plasma and platform services",
+      "source_line": 236,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F097",
+      "number": 97,
+      "title": "Consumable-condition tracking",
+      "description_from_supplied_note": "Combine pierce history, operating data, and observed cut quality to recommend inspection or replacement rather than relying only on an hour counter.",
+      "category": "Plasma and platform services",
+      "source_line": 238,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F098",
+      "number": 98,
+      "title": "Built-in real-time qualification",
+      "description_from_supplied_note": "Test controller timing under representative graphics and I/O loads, record the margin, and flag configuration changes that invalidate the previous qualification.",
+      "category": "Plasma and platform services",
+      "source_line": 240,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F099",
+      "number": 99,
+      "title": "Evidence-based local diagnostic assistant",
+      "description_from_supplied_note": "Answer questions using the installed machine configuration, manuals, and logs; propose reviewed actions rather than directly issuing unverified machine commands.",
+      "category": "Plasma and platform services",
+      "source_line": 242,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F100",
+      "number": 100,
+      "title": "Complete portable machine backup",
+      "description_from_supplied_note": "Export a reproducible package containing configuration, compatible software versions, wiring, tools, calibration, fixtures, and job data, with a guided restore-verification process.",
+      "category": "Plasma and platform services",
+      "source_line": 244,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_core_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F101",
+      "number": 101,
+      "title": "Jerk-limited S-curve motion",
+      "description_from_supplied_note": "Control how quickly acceleration changes, with separate profiles for cutting, rapid travel, and delicate positioning.",
+      "category": "Motion development",
+      "source_line": 263,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F102",
+      "number": 102,
+      "title": "Handwheel-controlled program execution",
+      "description_from_supplied_note": "Turn the handwheel to advance through a programmed toolpath; stop turning to request a controlled hold. LinuxCNC’s external adaptive-feed interface provides a foundation for this integration.",
+      "category": "Motion development",
+      "source_line": 264,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "LinuxCNC",
+          "url": "https://linuxcnc.org/docs/stable/html/gcode/m-code.html",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F103",
+      "number": 103,
+      "title": "Electronic cam profiles",
+      "description_from_supplied_note": "Make an axis follow a programmable displacement-versus-spindle-angle curve for cam grinding, eccentric features, or synchronized repetitive mechanisms.",
+      "category": "Motion development",
+      "source_line": 265,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F104",
+      "number": 104,
+      "title": "Electronic gearing",
+      "description_from_supplied_note": "Maintain a commanded angular ratio between separate rotating axes, with phase-error monitoring for applications such as gear hobbing.",
+      "category": "Motion development",
+      "source_line": 266,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F105",
+      "number": 105,
+      "title": "Automatic rotary unwinding",
+      "description_from_supplied_note": "Plan when and where a rotary axis can unwind without wrapping cables, striking fixtures, or changing the intended tool orientation.",
+      "category": "Motion development",
+      "source_line": 267,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F106",
+      "number": 106,
+      "title": "True dual-loop position control",
+      "description_from_supplied_note": "Use motor feedback for the inner drive loop and a linear scale for an outer correction loop, with stability limits—not merely display both positions.",
+      "category": "Motion development",
+      "source_line": 268,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F107",
+      "number": 107,
+      "title": "Guided servo-loop tuning",
+      "description_from_supplied_note": "Perform bounded identification moves, evaluate following error and oscillation, and propose gains and filters with a reversible comparison test.",
+      "category": "Motion development",
+      "source_line": 269,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F108",
+      "number": 108,
+      "title": "Constant-force machining",
+      "description_from_supplied_note": "Maintain controlled contact force during sanding, polishing, deburring, or surface finishing instead of relying entirely on fixed Z positions.",
+      "category": "Motion development",
+      "source_line": 270,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F109",
+      "number": 109,
+      "title": "Tolerance-bounded toolpath smoothing",
+      "description_from_supplied_note": "Replace suitable chains of tiny segments with smoother trajectories while showing the maximum permitted contour deviation. Look-ahead and smoothing are established methods for managing this tradeoff.",
+      "category": "Motion development",
+      "source_line": 271,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "CHIRON Group SE",
+          "url": "https://chiron-group.com/mediahub/whitepaper-5-axis-machining-part-5",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F110",
+      "number": 110,
+      "title": "Payload-aware acceleration limits",
+      "description_from_supplied_note": "Select a tested motion envelope based on the installed toolhead, fixture, or moving-bed load instead of using one acceleration setting for every configuration.",
+      "category": "Motion development",
+      "source_line": 272,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F111",
+      "number": 111,
+      "title": "Main-spindle/subspindle part transfer",
+      "description_from_supplied_note": "Coordinate spindle speed, phase, approach, and verified clamping before transferring a part between chucks.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 274,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F112",
+      "number": 112,
+      "title": "Live-tool polar interpolation",
+      "description_from_supplied_note": "Convert supported XY-style contours into coordinated linear and C-axis motion for machining features on a lathe’s part face.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 275,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F113",
+      "number": 113,
+      "title": "Coordinated tailstock and steady-rest control",
+      "description_from_supplied_note": "Schedule support engagement around the toolpath, verify position and pressure, and prevent tool approaches through occupied support regions.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 276,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F114",
+      "number": 114,
+      "title": "Intelligent bar-feeder cycles",
+      "description_from_supplied_note": "Track remaining bar length, account for cutoff losses, verify feed movement, and refuse a new part when insufficient usable stock remains.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 277,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F115",
+      "number": 115,
+      "title": "Spindle-locked broaching cycles",
+      "description_from_supplied_note": "Generate incremental keyway or slot-broaching strokes with verified spindle orientation and a suitable locking mechanism. LinuxCNC already provides spindle-orientation interfaces to build around.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 278,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "LinuxCNC",
+          "url": "https://linuxcnc.org/docs/stable/html/gcode/m-code.html",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F116",
+      "number": 116,
+      "title": "Oscillatory chip-breaking motion",
+      "description_from_supplied_note": "Superimpose a validated feed-axis oscillation during supported turning operations to interrupt chip formation without manually programming every oscillation.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 279,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F117",
+      "number": 117,
+      "title": "Automatic grinding-wheel dressing",
+      "description_from_supplied_note": "Execute dressing routines, update the wheel’s effective geometry, and account for the resulting changes in machining position and permitted operating speed.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 280,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F118",
+      "number": 118,
+      "title": "Coolant-aware deep-hole drilling",
+      "description_from_supplied_note": "Coordinate peck depth, full withdrawals, flushing intervals, and verified coolant delivery instead of relying on one fixed canned cycle.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 281,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F119",
+      "number": 119,
+      "title": "Cutting-tool deflection compensation",
+      "description_from_supplied_note": "Use a calibrated tool/stickout/load model to propose bounded finishing-path corrections for tool bending, with the assumptions visible to the operator.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 282,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F120",
+      "number": 120,
+      "title": "Condition-based spindle warmup",
+      "description_from_supplied_note": "Run an approved warmup sequence and evaluate temperature, vibration, and idle history before declaring the spindle ready for precision work.",
+      "category": "Lathe, mill and grinder",
+      "source_line": 283,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F121",
+      "number": 121,
+      "title": "Interactive spindle-tramming assistant",
+      "description_from_supplied_note": "Take indicator or probe measurements and show which mounting adjustment to make, in which direction, and by approximately how much.",
+      "category": "Machine measurement",
+      "source_line": 285,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F122",
+      "number": 122,
+      "title": "Circular-interpolation diagnostic tests",
+      "description_from_supplied_note": "Run controlled circles with a ballbar or other suitable measurement system and separate measured contour error from the commanded path.",
+      "category": "Machine measurement",
+      "source_line": 286,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F123",
+      "number": 123,
+      "title": "Direction-dependent probe calibration",
+      "description_from_supplied_note": "Characterize probe triggering from different approach directions and apply calibrated corrections rather than assuming identical behavior in every direction.",
+      "category": "Machine measurement",
+      "source_line": 287,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F124",
+      "number": 124,
+      "title": "Tool-runout measurement",
+      "description_from_supplied_note": "Measure the rotating tool or holder, record runout against that assembly, and flag an unacceptable setup before a precision operation.",
+      "category": "Machine measurement",
+      "source_line": 288,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F125",
+      "number": 125,
+      "title": "Three-plane squareness calibration",
+      "description_from_supplied_note": "Measure XY, XZ, and YZ skew separately and generate bounded geometry corrections. Klipper’s documented skew correction provides an existing example of this capability.",
+      "category": "Machine measurement",
+      "source_line": 289,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "Klipper",
+          "url": "https://www.klipper3d.org/Skew_Correction.html",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F126",
+      "number": 126,
+      "title": "Best-fit setup for castings and rough blanks",
+      "description_from_supplied_note": "Measure an irregular blank and find a proposed part placement that leaves sufficient machining allowance on all critical surfaces.",
+      "category": "Machine measurement",
+      "source_line": 290,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F127",
+      "number": 127,
+      "title": "Clamp-distortion measurement",
+      "description_from_supplied_note": "Compare selected reference points before and after tightening the workholding to identify where the fixture is bending the part.",
+      "category": "Machine measurement",
+      "source_line": 291,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F128",
+      "number": 128,
+      "title": "Measurement-confidence reporting",
+      "description_from_supplied_note": "Attach repeatability and calibration uncertainty to inspection results, so a screen displaying four decimal places does not imply that accuracy.",
+      "category": "Machine measurement",
+      "source_line": 292,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F129",
+      "number": 129,
+      "title": "Spindle-bearing health trending",
+      "description_from_supplied_note": "Compare controlled no-cut vibration measurements over time and flag developing changes separately from cutting chatter.",
+      "category": "Machine measurement",
+      "source_line": 293,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F130",
+      "number": 130,
+      "title": "Verified lubrication delivery",
+      "description_from_supplied_note": "Confirm lubricant reaches monitored circuits, track consumption against axis travel, and identify failed delivery rather than merely counting pump commands.",
+      "category": "Machine measurement",
+      "source_line": 294,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F131",
+      "number": 131,
+      "title": "Voltage readings at field terminals",
+      "description_from_supplied_note": "Show the measured voltage at supported input and supply terminals, helping distinguish “the switch is off” from “the sensor has no power.”",
+      "category": "Industrial interfaces",
+      "source_line": 296,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F132",
+      "number": 132,
+      "title": "Individually protected output branches",
+      "description_from_supplied_note": "Measure load current, detect overloads, isolate the affected branch, and identify the connected device while initiating the configured machine fault response.",
+      "category": "Industrial interfaces",
+      "source_line": 297,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F133",
+      "number": 133,
+      "title": "Broken-wire and short-circuit detection",
+      "description_from_supplied_note": "Use supported supervised input circuits to distinguish a legitimate switch state from an open cable or shorted pair.",
+      "category": "Industrial interfaces",
+      "source_line": 298,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F134",
+      "number": 134,
+      "title": "Configurable PNP/NPN sensor inputs",
+      "description_from_supplied_note": "Support documented sourcing and sinking sensor configurations through rated interface hardware, with changes restricted to a disarmed setup state.",
+      "category": "Industrial interfaces",
+      "source_line": 299,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F135",
+      "number": 135,
+      "title": "Plug-in wiring-harness tester",
+      "description_from_supplied_note": "Test disconnected harnesses for swapped pins, shorts, continuity, and intermittent connections before attaching expensive drives or sensors.",
+      "category": "Industrial interfaces",
+      "source_line": 300,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F136",
+      "number": 136,
+      "title": "EtherCAT servo integration module",
+      "description_from_supplied_note": "Add a supported digital-drive backend with explicit drive profiles, feedback mapping, timing qualification, and fault handling—not an unexplained Ethernet socket.",
+      "category": "Industrial interfaces",
+      "source_line": 301,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F137",
+      "number": 137,
+      "title": "Absolute-encoder interface modules",
+      "description_from_supplied_note": "Support defined protocols such as SSI or BiSS-C, including encoder status checks and a verified procedure for establishing machine position.",
+      "category": "Industrial interfaces",
+      "source_line": 302,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F138",
+      "number": 138,
+      "title": "Replaceable field-I/O protection cartridges",
+      "description_from_supplied_note": "Put vulnerable interface and protection components on serviceable modules so one damaged field connection does not require replacing the entire controller.",
+      "category": "Industrial interfaces",
+      "source_line": 303,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F139",
+      "number": 139,
+      "title": "Electrical-noise correlation tests",
+      "description_from_supplied_note": "During controlled testing, correlate unexpected input transitions or communication errors with VFD starts, contactor switching, and other electrical events.",
+      "category": "Industrial interfaces",
+      "source_line": 304,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F140",
+      "number": 140,
+      "title": "Vertical-axis brake verification",
+      "description_from_supplied_note": "Test the holding and release sequence under controlled conditions and detect disagreement between brake commands and available feedback. Keep required safety functions in appropriate hardware.",
+      "category": "Industrial interfaces",
+      "source_line": 305,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F141",
+      "number": 141,
+      "title": "Teach-and-repeat programming",
+      "description_from_supplied_note": "Jog through a sequence, capture meaningful points and actions, then edit and preview the generated program before allowing automatic execution.",
+      "category": "Operator tools",
+      "source_line": 307,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F142",
+      "number": 142,
+      "title": "Virtual stops for manual machining",
+      "description_from_supplied_note": "Set temporary approach limits and endpoints for manual facing, drilling, or positioning without rewriting the machine’s permanent travel limits.",
+      "category": "Operator tools",
+      "source_line": 308,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F143",
+      "number": 143,
+      "title": "Augmented camera setup view",
+      "description_from_supplied_note": "Overlay work-coordinate axes, fixture outlines, and selected toolpath features on a calibrated live camera image, with registration uncertainty visible.",
+      "category": "Operator tools",
+      "source_line": 309,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F144",
+      "number": 144,
+      "title": "Dedicated manual-DRO mode",
+      "description_from_supplied_note": "Use installed scales as a digital readout while motion outputs remain positively disabled, allowing the same system to support manual machine operation.",
+      "category": "Operator tools",
+      "source_line": 310,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F145",
+      "number": 145,
+      "title": "Visual program-revision comparison",
+      "description_from_supplied_note": "Highlight changed toolpaths, depths, feeds, tools, and offsets between an approved program and a replacement file before loading it.",
+      "category": "Operator tools",
+      "source_line": 311,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F146",
+      "number": 146,
+      "title": "G-code macro debugger",
+      "description_from_supplied_note": "Step through macros in simulation, inspect variables and branches, set breakpoints, and identify the exact condition causing an unexpected move.",
+      "category": "Operator tools",
+      "source_line": 312,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F147",
+      "number": 147,
+      "title": "Transactional work-offset editing",
+      "description_from_supplied_note": "Preview and approve a group of offset changes together, preserve the previous set, and allow reversal while halted without confusing that with reversing physical motion.",
+      "category": "Operator tools",
+      "source_line": 313,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F148",
+      "number": 148,
+      "title": "Common-tool batching across fixtures",
+      "description_from_supplied_note": "Group proven-independent operations by tool across multiple workpieces while preserving each part’s required operation order.",
+      "category": "Operator tools",
+      "source_line": 314,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F149",
+      "number": 149,
+      "title": "Oversized-tool magazine management",
+      "description_from_supplied_note": "Reserve adjacent pockets around large cutters and check the permitted tool arrangements before a carousel or rack movement.",
+      "category": "Operator tools",
+      "source_line": 315,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F150",
+      "number": 150,
+      "title": "Resource-controlled local graphics",
+      "description_from_supplied_note": "Limit memory and CPU consumption by CAD import, previews, and optional applications; defer heavy work rather than letting it consume unrestricted controller resources.",
+      "category": "Operator tools",
+      "source_line": 316,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F151",
+      "number": 151,
+      "title": "Actual nozzle-pressure feedback",
+      "description_from_supplied_note": "Regulate extrusion using measured melt pressure rather than relying exclusively on a predictive pressure-advance model.",
+      "category": "Specialized printing",
+      "source_line": 318,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F152",
+      "number": 152,
+      "title": "Continuous material-ratio blending",
+      "description_from_supplied_note": "Coordinate multiple material feeds to produce calibrated composition or color gradients within a toolpath, including transport-delay compensation.",
+      "category": "Specialized printing",
+      "source_line": 319,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F153",
+      "number": 153,
+      "title": "Pellet-extruder control",
+      "description_from_supplied_note": "Coordinate auger speed, melt-zone temperatures, pressure, and measured delivery for supported pellet-fed printheads.",
+      "category": "Specialized printing",
+      "source_line": 320,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F154",
+      "number": 154,
+      "title": "Continuous-fiber placement",
+      "description_from_supplied_note": "Synchronize fiber feeding, cutting, and consolidation with the print path, including allowable bend radii and termination locations.",
+      "category": "Specialized printing",
+      "source_line": 321,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F155",
+      "number": 155,
+      "title": "Embedded-insert workflow",
+      "description_from_supplied_note": "Pause at planned cavities, guide insertion of nuts, magnets, or electronics, verify placement, and check nozzle clearance before continuing.",
+      "category": "Specialized printing",
+      "source_line": 322,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F156",
+      "number": 156,
+      "title": "Directional material-shrinkage compensation",
+      "description_from_supplied_note": "Apply a calibrated material/process model to the prepared geometry, distinguishing directional shrinkage from machine squareness or positioning errors.",
+      "category": "Specialized printing",
+      "source_line": 323,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F157",
+      "number": 157,
+      "title": "Layer-by-layer dimensional inspection",
+      "description_from_supplied_note": "Scan the growing part and compare its geometry with the expected layer, then flag accumulated height or shape errors before completion.",
+      "category": "Specialized printing",
+      "source_line": 324,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F158",
+      "number": 158,
+      "title": "Active anti-ooze nozzle control",
+      "description_from_supplied_note": "Coordinate a supported shutoff valve or needle mechanism with extrusion and travel, including verified opening delays and pressure release.",
+      "category": "Specialized printing",
+      "source_line": 325,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F159",
+      "number": 159,
+      "title": "Toolpath-aware part cooling",
+      "description_from_supplied_note": "Adjust cooling and minimum revisit time based on the local feature and deposition schedule rather than using one fan percentage for an entire layer.",
+      "category": "Specialized printing",
+      "source_line": 326,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F160",
+      "number": 160,
+      "title": "Filament-diameter and ovality compensation",
+      "description_from_supplied_note": "Measure filament cross-section upstream and correct the corresponding extrusion volume after accounting for travel delay to the nozzle.",
+      "category": "Specialized printing",
+      "source_line": 327,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F161",
+      "number": 161,
+      "title": "Transactional variable-data marking",
+      "description_from_supplied_note": "Generate names, dates, serial numbers, or CSV-driven text, then record each item as pending, completed, or uncertain. Variable-data generation is established; reliable completion accounting would be your addition.",
+      "category": "Advanced laser processing",
+      "source_line": 329,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "LightBurn User Guide",
+          "url": "https://docs.lightburnsoftware.com/latest/Reference/VariableText/",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F162",
+      "number": 162,
+      "title": "Read-back verification of markings",
+      "description_from_supplied_note": "Scan the finished barcode, QR code, or supported text and compare its contents against what the job requested.",
+      "category": "Advanced laser processing",
+      "source_line": 330,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F163",
+      "number": 163,
+      "title": "Coordinated galvo-and-gantry processing",
+      "description_from_supplied_note": "Combine fast local mirror motion with a larger mechanical stage, maintaining a shared coordinate system through field transitions.",
+      "category": "Advanced laser processing",
+      "source_line": 331,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F164",
+      "number": 164,
+      "title": "Guided galvo-lens correction",
+      "description_from_supplied_note": "Mark and measure a calibration pattern, calculate distortion corrections, and save them against the installed lens. LightBurn documents this general calibration workflow.",
+      "category": "Advanced laser processing",
+      "source_line": 332,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": [
+        {
+          "label": "LightBurn User Guide",
+          "url": "https://docs.lightburnsoftware.com/latest/Reference/CalibrateGalvoLens/",
+          "verification": "not_rechecked_by_catalog_import"
+        }
+      ]
+    },
+    {
+      "id": "F165",
+      "number": 165,
+      "title": "Source-specific pulse control",
+      "description_from_supplied_note": "Expose supported pulse duration, repetition frequency, and power combinations for compatible laser sources, rejecting combinations outside the source’s documented operating envelope.",
+      "category": "Advanced laser processing",
+      "source_line": 333,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F166",
+      "number": 166,
+      "title": "Calibrated depth engraving",
+      "description_from_supplied_note": "Convert a relief model into removal passes using a measured material/process response, instead of assuming grayscale value directly equals engraving depth.",
+      "category": "Advanced laser processing",
+      "source_line": 334,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F167",
+      "number": 167,
+      "title": "Conveyor “marking on the fly”",
+      "description_from_supplied_note": "Track a conveyor encoder and continually transform marking coordinates so supported parts can be marked while moving.",
+      "category": "Advanced laser processing",
+      "source_line": 335,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F168",
+      "number": 168,
+      "title": "Color-marking recipe development",
+      "description_from_supplied_note": "Generate controlled test matrices and record measured results under consistent lighting to help reproduce color effects on suitable materials.",
+      "category": "Advanced laser processing",
+      "source_line": 336,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F169",
+      "number": 169,
+      "title": "Oversized-sheet tiling",
+      "description_from_supplied_note": "Divide a design into reachable sections and guide material repositioning, including overlap checks and explicit registration error at each seam.",
+      "category": "Advanced laser processing",
+      "source_line": 337,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F170",
+      "number": 170,
+      "title": "Markerless batch placement",
+      "description_from_supplied_note": "Locate recognizable blanks scattered across a tray, propose their poses, and place the approved artwork on each without dedicated fiducial marks.",
+      "category": "Advanced laser processing",
+      "source_line": 338,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F171",
+      "number": 171,
+      "title": "Tangential-knife control",
+      "description_from_supplied_note": "Rotate a knife to follow the cutting direction, compensate its geometry, and lift or swivel at corners according to the material.",
+      "category": "Other fabrication processes",
+      "source_line": 340,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F172",
+      "number": 172,
+      "title": "Oscillating-knife process control",
+      "description_from_supplied_note": "Coordinate reciprocation, feed, and corner behavior for supported foam, gasket, or corrugated-material cutting heads.",
+      "category": "Other fabrication processes",
+      "source_line": 341,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F173",
+      "number": 173,
+      "title": "Four-axis hot-wire cutting",
+      "description_from_supplied_note": "Coordinate both ends of a heated wire for tapered shapes, including calibrated kerf, wire-lag, and sag compensation.",
+      "category": "Other fabrication processes",
+      "source_line": 342,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F174",
+      "number": 174,
+      "title": "EDM gap-control mode",
+      "description_from_supplied_note": "Adjust feed and withdrawal from isolated discharge feedback while a dedicated power unit handles pulse generation.",
+      "category": "Other fabrication processes",
+      "source_line": 343,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F175",
+      "number": 175,
+      "title": "Two-component dispensing",
+      "description_from_supplied_note": "Maintain the required resin/hardener delivery ratio, monitor dispensing conditions, and track mixer dwell time and approved purge procedures.",
+      "category": "Other fabrication processes",
+      "source_line": 344,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F176",
+      "number": 176,
+      "title": "Pick-and-place operation",
+      "description_from_supplied_note": "Import component placement data, coordinate feeders and vacuum pickup, and use vision to correct supported component alignment.",
+      "category": "Other fabrication processes",
+      "source_line": 345,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F177",
+      "number": 177,
+      "title": "Verified adhesive or solder-paste deposition",
+      "description_from_supplied_note": "Inspect deposited dots or beads and compare their position and size against the required pattern before proceeding.",
+      "category": "Other fabrication processes",
+      "source_line": 346,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F178",
+      "number": 178,
+      "title": "Welding-seam tracking",
+      "description_from_supplied_note": "Use a suitable sensor to adjust the programmed weld path within a qualified welding-cell configuration, with bounded correction and lost-seam handling.",
+      "category": "Other fabrication processes",
+      "source_line": 347,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F179",
+      "number": 179,
+      "title": "Plasma bevel preparation",
+      "description_from_supplied_note": "Generate supported tilted-torch paths with angle-dependent offsets and process settings for weld-preparation edges.",
+      "category": "Other fabrication processes",
+      "source_line": 348,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F180",
+      "number": 180,
+      "title": "Waterjet taper and trail compensation",
+      "description_from_supplied_note": "Coordinate supported head tilt and feed using a calibrated cutting model, with pressure and abrasive delivery handled by dedicated equipment.",
+      "category": "Other fabrication processes",
+      "source_line": 349,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F181",
+      "number": 181,
+      "title": "Shared-compressor coordination",
+      "description_from_supplied_note": "Request the pressure and airflow needed for the next operation, delay starting until available, and coordinate competing machine demands through a defined shop interface.",
+      "category": "Machine and shop services",
+      "source_line": 351,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F182",
+      "number": 182,
+      "title": "Automatic dust-extraction zoning",
+      "description_from_supplied_note": "Open the appropriate blast gates for the active machine or tool, verify the requested airflow, and close unused branches.",
+      "category": "Machine and shop services",
+      "source_line": 352,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F183",
+      "number": 183,
+      "title": "Coolant-mixture monitoring",
+      "description_from_supplied_note": "Record concentration, temperature, and tank level, then guide or control an approved replenishment process rather than adding water by guesswork.",
+      "category": "Machine and shop services",
+      "source_line": 353,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F184",
+      "number": 184,
+      "title": "Automatically aimed coolant nozzles",
+      "description_from_supplied_note": "Position motorized nozzles according to the selected tool and cutting location, with teachable aim points and collision limits.",
+      "category": "Machine and shop services",
+      "source_line": 354,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F185",
+      "number": 185,
+      "title": "Chip-conveyor jam management",
+      "description_from_supplied_note": "Detect abnormal conveyor load, perform only an approved bounded recovery sequence, and stop before repeated retries damage the mechanism.",
+      "category": "Machine and shop services",
+      "source_line": 355,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F186",
+      "number": 186,
+      "title": "Geometry-aware vacuum zoning",
+      "description_from_supplied_note": "Select workholding zones based on stock placement and the cutting sequence, maintaining verified holding conditions as pieces become separated.",
+      "category": "Machine and shop services",
+      "source_line": 356,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F187",
+      "number": 187,
+      "title": "Shop electrical-load scheduling",
+      "description_from_supplied_note": "Stagger approved heater, compressor, and spindle startup requests within a configured power budget, without unexpectedly interrupting an active process.",
+      "category": "Machine and shop services",
+      "source_line": 357,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F188",
+      "number": 188,
+      "title": "Part genealogy",
+      "description_from_supplied_note": "Link each finished part to its material lot, job revision, machine configuration, tools, calibration state, and recorded inspection results.",
+      "category": "Machine and shop services",
+      "source_line": 358,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F189",
+      "number": 189,
+      "title": "Actual cost-per-good-part reporting",
+      "description_from_supplied_note": "Combine measured cycle time, energy, material use, tool consumption, and scrap using user-entered cost rates rather than reporting only machine hours.",
+      "category": "Machine and shop services",
+      "source_line": 359,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F190",
+      "number": 190,
+      "title": "Cross-machine operation tracking",
+      "description_from_supplied_note": "Carry a part’s production record from printing to milling to engraving, preventing an unfinished or incorrectly revised part from silently advancing to the next operation.",
+      "category": "Machine and shop services",
+      "source_line": 360,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F191",
+      "number": 191,
+      "title": "Sandboxed extensions",
+      "description_from_supplied_note": "Give plugins explicit permissions and resource limits; deny direct access to motion outputs unless commands pass through the controller’s authorized interface.",
+      "category": "Maintainability and extension",
+      "source_line": 362,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F192",
+      "number": 192,
+      "title": "Signed production jobs",
+      "description_from_supplied_note": "Verify who approved a job and whether its toolpaths, settings, or setup requirements changed afterward, without requiring a cloud account.",
+      "category": "Maintainability and extension",
+      "source_line": 363,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F193",
+      "number": 193,
+      "title": "Local operator permissions",
+      "description_from_supplied_note": "Separate setup, operation, maintenance, and development privileges so an operator can run approved work without accidentally changing machine geometry.",
+      "category": "Maintainability and extension",
+      "source_line": 364,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "configuration_foundation",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F194",
+      "number": 194,
+      "title": "Consent-based remote support",
+      "description_from_supplied_note": "Start remote sessions read-only, make access visible and time-limited, and require local authorization for permitted control actions.",
+      "category": "Maintainability and extension",
+      "source_line": 365,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F195",
+      "number": 195,
+      "title": "Controlled configuration experiments",
+      "description_from_supplied_note": "Compare candidate settings through the same bounded test, retain the measured results, and activate a selected configuration only while disarmed.",
+      "category": "Maintainability and extension",
+      "source_line": 366,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "configuration_foundation",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F196",
+      "number": 196,
+      "title": "Visual HAL signal editor",
+      "description_from_supplied_note": "Connect supported control components graphically, display signal types and execution relationships, and flag incompatible connections or problematic dependency loops.",
+      "category": "Maintainability and extension",
+      "source_line": 367,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F197",
+      "number": 197,
+      "title": "Automated hardware regression testing",
+      "description_from_supplied_note": "Use a test fixture to verify supported inputs, outputs, encoder channels, pulse timing, and fault behavior after hardware or firmware changes.",
+      "category": "Maintainability and extension",
+      "source_line": 368,
+      "source_flags": {
+        "additional_hardware_marked_in_source": true,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F198",
+      "number": 198,
+      "title": "Offline fault replay",
+      "description_from_supplied_note": "Feed recorded input events into a simulation to investigate a failure and test a proposed fix without energizing the real machine.",
+      "category": "Maintainability and extension",
+      "source_line": 369,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": true
+      },
+      "delivery_focus": "backlog",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F199",
+      "number": 199,
+      "title": "Expansion-module development kit",
+      "description_from_supplied_note": "Publish interface definitions, example drivers, virtual devices, and conformance tests so third parties can build compatible accessories without reverse-engineering the board.",
+      "category": "Maintainability and extension",
+      "source_line": 370,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "first_plasma_module_demonstration",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    },
+    {
+      "id": "F200",
+      "number": 200,
+      "title": "Capability-based job exchange",
+      "description_from_supplied_note": "Attach explicit machine requirements to a portable job package, explain incompatibilities before transfer, and require validated conversion rather than blindly replaying another machine’s G-code.",
+      "category": "Maintainability and extension",
+      "source_line": 371,
+      "source_flags": {
+        "additional_hardware_marked_in_source": false,
+        "substantial_development_marked_in_source": false
+      },
+      "delivery_focus": "configuration_foundation",
+      "product_status": "proposal",
+      "physical_qualification": "not_established",
+      "references_from_supplied_note": []
+    }
+  ]
+}

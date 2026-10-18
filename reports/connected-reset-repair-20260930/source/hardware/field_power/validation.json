@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [
+    "Review circuit passes bounded checks only; physical qualification is false.",
+    "U1 RPE9 and L1 footprints are not assigned; board layout/release blocked.",
+    "Effective input/output capacitance and 4.85-5.15V PFM accuracy remain unverified.",
+    "Entry R29 must be removed; F_PGOOD is an analog power-control net, not GPIO.",
+    "Unpowered entry PGOOD may release with retained FIELD input; startup is not a safety interlock.",
+    "Negative input, retained-output reverse current, all field loads and holdoff remain system gates."
+  ],
+  "calculations": {
+    "en_released_normal_v": [
+      1.5764104748049834,
+      2.8295456876064358
+    ],
+    "en_released_surge_screen_max_v": 5.657631556880355,
+    "en_asserted_surge_screen_max_v": 0.07848051594596074,
+    "entry_pg_sink_screen_max_a": 0.0006036962765073904,
+    "r1_surge_screen_max_w": 0.03663497157819985,
+    "minimum_l_guideline_h": 8.306451612903227e-06,
+    "selected_l_min_h": 1.76e-05,
+    "ccm_ripple_screen_a": [
+      0.12782086740420073,
+      0.2606254072987944
+    ],
+    "ccm_peak_at_100ma_screen_a": 0.2303127036493972,
+    "input_cap_max_no_bias_f": 1.1936099999999999e-05,
+    "output_cap_max_no_bias_f": 5.57865e-05,
+    "input_charge_at_entry_max_ramp_a": 0.0072684566842098975,
+    "output_charge_equivalent_average_a": 0.13260021923076926,
+    "local_pg_pullup_and_bleed_max_a": 0.0005780022446689114,
+    "output_power_screen_max_w": 0.517976711560045,
+    "input_power_if_70pct_efficiency_w": 0.7399667308000644,
+    "loss_if_70pct_efficiency_w": 0.2219900192400193,
+    "input_current_if_70pct_efficiency_at_18v_a": 0.041109262822225795,
+    "enable_divider_normal_max_a": 0.0002782647410746584,
+    "ideal_unpowered_bleed_to_1v_s": 9.327171141674024,
+    "limitations": [
+      "Resistor corner model: initial tolerance times TCR over +/-100K; long-term drift unbounded.",
+      "EN leakage limit is specified at 3.3V; using it over divider range is an assumption.",
+      "60V is only a voltage stress screen; no surge waveform/clamp/energy qualification.",
+      "CCM ripple does not predict 100mA PFM/DCM waveform, burst ripple or actual current limit.",
+      "Capacitance maxima combine positive initial and temperature tolerances; DC-bias/aging minima remain open.",
+      "Charge current is an equivalent average for a linear ramp, not a switch-current peak bound.",
+      "70% efficiency is a budgeting assumption, not a measured or guaranteed minimum; add EN divider input current separately.",
+      "Bleed estimate assumes no external source and no other loads, not a safe-off deadline."
+    ]
+  },
+  "manufacturing_ready": false
+}

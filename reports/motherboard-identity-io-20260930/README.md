@@ -1,0 +1,9 @@
+# Actual ordinary 5 V identity front end
+
+Frozen source: **14 fitted parts / 38 electrical pads**, native ERC **0 errors / 2 unsuppressed unused-clock-to-ground warnings**, independent full-pin/default/MPN checks and native footprint loading pass. Ten independent vendor copper geometry checks pass. The 31 focused electrical mutation cases and the complete 374-case owned-source cohort pass with frozen input hashes unchanged. This source is not a routed PCB, target build or physical qualification.
+
+The exact TCA9517A A variant places A on the existing protected field 5 V rail and B on actual 3.3 V host PD3. Its actual TPS3700 field UV/OV window qualifies EN. A real 10 kΩ host pull-up, 4.7 kΩ field pull-up, 330 Ω field series resistance and TPD1E10B06 ESD front end connect the existing XF.7 identity terminal. The parent owns the protected field supply/current budget, terminal and shield; no extra connector or daughterboard is introduced.
+
+The exact manufacturer .45 V contention threshold passes the STM32 .4 V VOL corner with bounded route/return resistance. The documented LOW and RC screens include resistor tolerance and 65 K drift; they are not loaded protocol timing proof. Manufacturer output high-impedance wording applies when a supply is zero, with no numeric partial-ramp Ioff guarantee. The two native warnings retain manufacturer bidirectional SCL types; TI expressly instructs grounding both unused pins.
+
+Target readonly identity/CRC/freshness implementation, ordinary ID SKU qualification, missing-module behavior, actual MCU aggregate current, power ramps/leakage and monitor startup, 1-Wire slot/sample/EN timing, cable/ground noise, return/chassis and ESD/fault energy remain gates. The electrical envelope is ordinary 0–5.5 V; no 24 V miswire rating or parasitic write-power capability is claimed. receipt.json records every exact hash, boundary, check and gate. No fabrication output or manufacturing-ready claim is generated.

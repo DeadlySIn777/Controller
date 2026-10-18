@@ -1,0 +1,205 @@
+{
+  "date": "2026-09-30T18:45:18.690696+00:00",
+  "scope": "Source-only package proposal; parent CAD/PCB/RTL untouched",
+  "source_inputs": 16,
+  "source_inputs_unchanged": true,
+  "changed_source_inputs": [],
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "source_only": true,
+    "native_vendor_fit": false,
+    "candidates": {
+      "base_preserve_all_current": {
+        "assigned": 161,
+        "unassigned": 0,
+        "free": 22
+      },
+      "full_preserve_all_current": {
+        "assigned": 183,
+        "unassigned": 5,
+        "free": 0
+      },
+      "full_with_five_legacy_repurposes": {
+        "assigned": 183,
+        "unassigned": 0,
+        "free": 0
+      }
+    },
+    "mutation_tests": [
+      {
+        "name": "duplicate ball",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current duplicate ball",
+          "base_preserve_all_current free-pad accounting",
+          "base_preserve_all_current worksheet mismatch ARM_LAMP_FPGA manufacturer_pin"
+        ]
+      },
+      {
+        "name": "wrong manufacturer bank",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current worksheet mismatch STEP0_FPGA bank",
+          "base_preserve_all_current output-bank count BANK4B"
+        ]
+      },
+      {
+        "name": "5 V logic-bank claim",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current bank voltage/standard STEP0_FPGA"
+        ]
+      },
+      {
+        "name": "missing required frequency input",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current required coverage",
+          "base_preserve_all_current assigned count",
+          "base_preserve_all_current free-pad accounting"
+        ]
+      },
+      {
+        "name": "encoder erroneously classified as enable output",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current wrong direction ENC0_A_FPGA"
+        ]
+      },
+      {
+        "name": "dedicated configuration ball reused",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current consumes dedicated/configuration/power/ground pad",
+          "base_preserve_all_current free-pad accounting",
+          "base_preserve_all_current altered retained current pad STEP0_FPGA"
+        ]
+      },
+      {
+        "name": "retained STEP pad moved",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current duplicate ball",
+          "base_preserve_all_current free-pad accounting",
+          "base_preserve_all_current altered retained current pad STEP0_FPGA"
+        ]
+      },
+      {
+        "name": "unsupported LVDS Schmitt option",
+        "passed": true,
+        "detected_errors": [
+          "base_preserve_all_current unsupported LVDS feature schmitt"
+        ]
+      },
+      {
+        "name": "unsupported vendor-fit claim",
+        "passed": true,
+        "detected_errors": [
+          "Unproved scope flag vendor_fit"
+        ]
+      },
+      {
+        "name": "unimplemented health marked complete",
+        "passed": true,
+        "detected_errors": [
+          "Health circuitry is not implemented"
+        ]
+      }
+    ],
+    "mutation_tests_passed": 10
+  },
+  "historical_fpga_core_tests": {
+    "run": true,
+    "passed": 30,
+    "evidence": "historical-fpga-core-tests.txt",
+    "native_motherboard_ERC_DRC": false
+  },
+  "local_doc_links": [
+    {
+      "label": "fpga-allocation-proposal.json",
+      "target": "../../hardware/motherboard/fpga-allocation-proposal.json",
+      "exists": true
+    },
+    {
+      "label": "Base; preserve all current balls",
+      "target": "base_preserve_all_current.csv",
+      "exists": true
+    },
+    {
+      "label": "All optional resources; preserve all current balls",
+      "target": "full_preserve_all_current.csv",
+      "exists": true
+    },
+    {
+      "label": "All optional resources; five explicit legacy-pad reuses",
+      "target": "full_with_five_legacy_repurposes.csv",
+      "exists": true
+    },
+    {
+      "label": "vendor-tool-probe.json",
+      "target": "vendor-tool-probe.json",
+      "exists": true
+    },
+    {
+      "label": "validation.json",
+      "target": "validation.json",
+      "exists": true
+    },
+    {
+      "label": "historical-fpga-core-tests.txt",
+      "target": "historical-fpga-core-tests.txt",
+      "exists": true
+    },
+    {
+      "label": "input-sha256.json",
+      "target": "input-sha256.json",
+      "exists": true
+    },
+    {
+      "label": "receipt.json",
+      "target": "receipt.json",
+      "exists": true
+    }
+  ],
+  "sha256": {
+    "reports/motherboard-fpga-allocation-20260930/base_preserve_all_current.csv": "f65b56aafb95e4bf8293cefa1ea6479f9565bfafb0e01c9b60c9aeef6860eb38",
+    "reports/motherboard-fpga-allocation-20260930/build_proposal.py": "a12b1b8f38f5b9de97de841447e0b7a76d18da95656479f9845417581aa899ae",
+    "reports/motherboard-fpga-allocation-20260930/full_preserve_all_current.csv": "0ed60f7de065993548a01a768bcb9fcc7e89b68025337e0e5551826e653d5919",
+    "reports/motherboard-fpga-allocation-20260930/full_with_five_legacy_repurposes.csv": "4e1fea58a7739ebb5dc7105a1819aa38492270bab497bfab8b83da4e718e0bd4",
+    "reports/motherboard-fpga-allocation-20260930/historical-fpga-core-tests.txt": "faf56fff38a37a9d6333e57139d54fdbf67df6e355a5536a8b03dca65ecdd600",
+    "reports/motherboard-fpga-allocation-20260930/input-sha256.json": "055bf027039b0b6e9584ef8e8de0c33d84d2b30bdffffd3b79a7a8f2a4c89ad6",
+    "reports/motherboard-fpga-allocation-20260930/README.md": "e6633ebab4322dffb75c8fed8a69a37dc3c4499b4c347c0c71ca9ddb789e0af6",
+    "reports/motherboard-fpga-allocation-20260930/validate_proposal.py": "189a6ce5f1f842d2c7006979de888e799330f6915979d6e69f54cd5ff2d4bb20",
+    "reports/motherboard-fpga-allocation-20260930/validation-run.txt": "2239e68d91978dc2aad9e606b381320452e6525d8490d0c6c38b453c56b25c20",
+    "reports/motherboard-fpga-allocation-20260930/validation.json": "2239e68d91978dc2aad9e606b381320452e6525d8490d0c6c38b453c56b25c20",
+    "reports/motherboard-fpga-allocation-20260930/vendor-tool-probe.json": "27f62653368ded9a49dafc6a2785d70640742cfec0979b92ca008be70246bb14",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf": "78ed824b7c2fc1d7b991a7739db583aec455a8eb6e95f17fe656317a5d4c0519",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p14.png": "62df34d278954845dc590650933c56acd1181511cfe4a3bfcde1f63e53484824",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p21.png": "87fe59af69238836e6d14a6c6d1eb6e6ad9c1dc36b9ea24e0b255713b77890e0",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p5.png": "904005fe2042e3a36c09026b2f551c443e562af67481fae82f0470e1b010920d",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p59.png": "5083452316f74361fe6550acb11fcda138903ce3740cc1e5cb7e02d161733e15",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p81.png": "cd6c4d895e488c991e77e51ed99d1f6b8b6b9d4d96fc462ac1c7c1e1a4811daa",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p82.png": "890d22c99e0b61a92c84b35073c7fd22593c6cbc9017299ff85f31f23c6f6736",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p83.png": "a8b165c79977c1316ad64a57f10b9685b459f72da2e4ae23a4ed676115bc1b4e",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf-p84.png": "4c12c5d5578ec2a72b817bec08d5a9c44060234a3c2f3ccef3f5325747c2dcd5",
+    "reports/motherboard-fpga-allocation-20260930/sources/trion20-ds-v6.0.pdf.txt": "6794143e406949966743b7c08351f474efb5c0b036fbc470de35355620253927",
+    "reports/motherboard-fpga-allocation-20260930/inputs/docs/MOTHERBOARD_IS2.md": "70af4ce615fde0452a01f8fa4d18e5be48c72a46daa0405fd71062d76829e8c7",
+    "reports/motherboard-fpga-allocation-20260930/inputs/docs/STATUS_INDICATORS.md": "d4b6b550dbd18268839a90b2fe4e984a1fa663ab95a2d5eaa5538303b08d36fb",
+    "reports/motherboard-fpga-allocation-20260930/inputs/research/fpga-core/an006.pdf": "fed067f332accdb087e216933114295779418d469b41ef655a4756b2c9950500",
+    "reports/motherboard-fpga-allocation-20260930/inputs/research/fpga-core/pins-official.json": "440a239049e98e102acd0cbf295d7762820a25a20e364465b08348957e2bf256",
+    "reports/motherboard-fpga-allocation-20260930/inputs/research/fpga-core/t20-pinout.xlsx": "bfbdc850656904043631e562ca1d26073ffa0ff3d191b7b1f21c0fd174b6db93",
+    "reports/motherboard-fpga-allocation-20260930/inputs/research/fpga-core/trion20-ds-v6.0.pdf": "78ed824b7c2fc1d7b991a7739db583aec455a8eb6e95f17fe656317a5d4c0519",
+    "reports/motherboard-fpga-allocation-20260930/inputs/reports/motherboard-is2-contract-20260930/inputs/spec/modules.json": "d9bc85530a921e8db26814abf80dca814d09cb7f15eb951b0c163a25cd9c0597",
+    "reports/motherboard-fpga-allocation-20260930/inputs/reports/motherboard-is2-contract-20260930/inputs/docs/interface-spec/01-protocol-and-schedule.md": "2730d33874d0faad2a987b857189fe7fb8ceb8ec4a818fc07a4476953ef75300",
+    "reports/motherboard-fpga-allocation-20260930/inputs/reports/motherboard-is2-contract-20260930/inputs/docs/interface-spec/04-safety-power-timing.md": "6ddd6aba07b5e064dd0d9408cec4717e3128189233f016cfbf530e44d380f830",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/fpga_core/design.json": "a70449cb5e2cea8525b55611011bd599d7fe054f2209a5d7eed9edabd057827f",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/fpga_core/netlist.xml": "4362bbcd540fef71adee19fc5f533c3e59a99b1a405ea916f24621e201ea9cc2",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/fpga_core/pin-allocation.json": "c75d461531b2753f253b4438407f949a9f21ea7498c78fb806ad81bffef27655",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/mc_permission/design.json": "520b0db784548628b6e2cbec9676891952620d172232fefd6015ed6202ee89f9",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/motherboard/requirements.json": "746a2e5b2c165847dc31d3f2d9d4ac0fa38a8f128d11e166d1ec2c6545d3f2e1",
+    "reports/motherboard-fpga-allocation-20260930/inputs/hardware/motion_card/assembly-map.json": "8edb71dfc703eab2ffdec094b24ea1a8a0ba6f375f3b877ca0c6f81ce7716401",
+    "reports/motherboard-fpga-allocation-20260930/inputs/gateware/rtl/cnc_endpoint.v": "80522fdac2fca83b3593889dddb137da34346a07e9c3d31773a30a559c74b392",
+    "hardware/motherboard/fpga-allocation-proposal.json": "178e6bc4b0f25e612be55e9727caea295c746b34d07f701f3bbfe3f80c5f7f05"
+  }
+}

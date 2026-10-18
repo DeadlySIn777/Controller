@@ -1,0 +1,1007 @@
+74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+Rev. 12 — 2 May 2025 Product data sheet
+1.  General description
+The 74LVC125A is a quad buffer/line driver with 3-state outputs controlled by the output enable
+inputs (nOE). A HIGH on nOE causes the outputs to assume a high impedance OFF-state. Inputs
+can be driven from either 3.3 V or 5 V devices. This feature allows the use of these devices as
+translators in mixed 3.3 V and 5 V environments.
+Schmitt-trigger action at all inputs makes the circuit tolerant of slower input rise and fall times.
+This device is fully specified for partial power down applications using IOFF. The IOFF circuitry
+disables the output, preventing the potentially damaging backflow current through the device when
+it is powered down.
+2.  Features and benefits
+• Overvoltage tolerant inputs to 5.5 V
+• Wide supply voltage range from 1.2 V to 3.6 V
+• CMOS low power consumption
+• Direct interface with TTL levels
+• Complies with JEDEC standard:
+• JESD8-7A (1.65 V to 1.95 V)
+• JESD8-5A (2.3 V to 2.7 V)
+• JESD8-C/JESD36 (2.7 V to 3.6 V)
+• IOFF circuitry provides partial Power-down mode operation
+• ESD protection:
+• HBM: ANSI/ESDA/JEDEC JS-001 class 2 exceeds 2000 V
+• CDM: ANSI/ESDA/JEDEC JS-002 class C3 exceeds 1000 V
+• Multiple package options
+• Specified from -40 °C to +85 °C and -40 °C to +125 °C
+3.  Ordering information
+Table 1. Ordering information
+PackageType number
+Temperature range Name Description Version
+74LVC125AD -40 °C to +125 °C SO14 plastic small outline package; 14 leads;
+body width 3.9 mm
+SOT108-1
+74LVC125APW -40 °C to +125 °C TSSOP14 plastic thin shrink small outline package; 14 leads;
+body width 4.4 mm
+SOT402-1
+74LVC125ABQ -40 °C to +125 °C DHVQFN14 plastic dual in-line compatible thermal enhanced
+very thin quad flat package; no leads; 14 terminals;
+body 2.5 × 3 × 0.85 mm
+SOT762-1
+74LVC125ABZ -40 °C to +125 °C DHXQFN14 plastic, leadless dual in-line compatible thermal
+enhanced extreme thin quad flat package;
+no leads; 14 terminals; 0.4 mm pitch;
+body 2 mm × 2 mm × 0.48 mm
+SOT8014-1
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+4.  Functional diagram
+mna228
+1A 1Y2
+1
+3
+1OE
+2A 2Y5
+4
+6
+2OE
+3A 3Y9
+10
+8
+3OE
+4A 4Y12
+13
+11
+4OE
+Fig. 1. Logic symbol
+mna229
+1 EN1
+1 3
+2
+4
+6
+5
+10
+8
+9
+13
+11
+12
+Fig. 2. IEC logic symbol
+mna227
+nOE
+nA nY
+Fig. 3. Logic diagram
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 2 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+5.  Pinning information
+5.1.  Pinning
+1OE VCC
+1A 4OE
+1Y 4A
+2OE 4Y
+2A 3OE
+2Y 3A
+GND 3Y
+aaa-036122
+1
+2
+3
+4
+5
+6
+7 8
+10
+9
+12
+11
+14
+13
+D package
+SOT108-1 (SO14)
+ 
+1OE VCC
+1A 4OE
+1Y 4A
+2OE 4Y
+2A 3OE
+2Y 3A
+GND 3Y
+aaa-036123
+1
+2
+3
+4
+5
+6
+7 8
+10
+9
+12
+11
+14
+13
+PW package
+SOT402-1 (TSSOP14)
+aaa-036121
+Transparent top view
+2Y 3A
+2A 3OE
+2OE 4Y
+1Y 4A
+1A 4OE
+GND
+3Y
+1OE
+VCC
+6 9
+5 10
+4 11
+3 12
+2 13
+7
+8
+1
+14
+terminal 1
+index area
+BQ package
+SOT762-1 (DHVQFN14)
+GND(1)
+ 
+aaa-041313
+Transparent top view
+1A 2
+GND 7
+VCC14
+pin 1
+index area
+3Y 8
+1OE1
+1Y 4A3 12
+2OE 4
+2A 5
+2Y 6
+4OE13
+4Y11
+3OE10
+3A9
+BZ package
+SOT8014-1 (DHXQFN14)
+GND(1)
+(1) This is not a ground pin. There is no electrical or mechanical requirement to solder
+the pad. In case soldered, the solder land should remain floating or connected to GND.
+5.2.  Pin description
+Table 2. Pin description
+Symbol Pin Description
+1OE, 2OE, 3OE, 4OE 1, 4, 10, 13 data enable input (active LOW)
+1A, 2A, 3A, 4A 2, 5, 9, 12 data input
+1Y, 2Y, 3Y, 4Y 3, 6, 8, 11 data output
+GND 7 ground (0 V)
+VCC 14 supply voltage
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 3 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+6.  Functional description
+Table 3. Function selection
+H = HIGH voltage level; L = LOW voltage level; X = don’t care; Z = high-impedance OFF-state
+Inputs Output
+nOE nA nY
+L L L
+L H H
+H X Z
+7.  Limiting values
+Table 4. Limiting values
+In accordance with the Absolute Maximum Rating System (IEC 60134). Voltages are referenced to GND (ground = 0 V).
+Symbol Parameter Conditions Min Max Unit
+VCC supply voltage -0.5 +6.5 V
+IIK input clamping current VI < 0 V -50 - mA
+VI input voltage [1] -0.5 +6.5 V
+IOK output clamping current VO > VCC or VO < 0 V - ±50 mA
+output HIGH or LOW-state [2] -0.5 VCC + 0.5 VVO output voltage
+output 3-state [2] -0.5 +6.5 V
+IO output current VO = 0 V to VCC - ±50 mA
+ICC supply current - 100 mA
+IGND ground current -100 - mA
+Ptot total power dissipation Tamb = -40 °C to +125 °C
+SOT108-1 (SO14)
+SOT402-1 (TSSOP14)
+SOT762-1 (DHVQFN14)
+[3] - 500 mW
+SOT8014-1 (DHXQFN14) [4] - 250 mW
+Tstg storage temperature -65 +150 °C
+[1] The minimum input voltage ratings may be exceeded if the input current ratings are observed.
+[2] The output voltage ratings may be exceeded if the output current ratings are observed.
+[3] For SOT108-1 (SO14) package: Ptot derates linearly with 10.1 mW/K above 100 °C.
+For SOT402-1 (TSSOP14) package: Ptot derates linearly with 7.3 mW/K above 81 °C.
+For SOT762-1 (DHVQFN14) package: Ptot derates linearly with 9.6 mW/K above 98 °C.
+[4] For SOT8014-1 (DHXQFN14) package: Ptot derates linearly with 8.7 mW/K above 121 °C.
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 4 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+8.  Recommended operating conditions
+Table 5. Recommended operating conditions
+Symbol Parameter Conditions Min Typ Max Unit
+1.65 - 3.6 VVCC supply voltage
+functional 1.2 - - V
+VI input voltage 0 - 5.5 V
+output HIGH or LOW state 0 - VCC VVO output voltage
+output 3-state 0 - 5.5 V
+Tamb ambient temperature -40 - +125 °C
+VCC = 2.3 V to 2.7 V 0 - 20 ns/VΔt/ΔV input transition rise and fall rate
+VCC = 2.7 V to 3.6 V 0 - 10 ns/V
+9.  Static characteristics
+Table 6. Static characteristics
+At recommended operating conditions. Voltages are referenced to GND (ground = 0 V).
+-40 °C to +85 °C -40 °C to +125 °CSymbol Parameter Conditions
+Min Typ [1] Max Min Max
+Unit
+VCC = 1.2 V 1.08 - - 1.08 - V
+VCC = 1.65 V to 1.95 V 0.65VCC - - 0.65VCC - V
+VCC = 2.3 V to 2.7 V 1.7 - - 1.7 - V
+VIH HIGH-level input
+voltage
+VCC = 2.7 V to 3.6 V 2.0 - - 2.0 - V
+VCC = 1.2 V - - 0.12 - 0.12 V
+VCC = 1.65 V to 1.95 V - - 0.35VCC - 0.35VCC V
+VCC = 2.3 V to 2.7 V - - 0.7 - 0.7 V
+VIL LOW-level input
+voltage
+VCC = 2.7 V to 3.6 V - - 0.8 - 0.8 V
+VI = VIH or VIL
+IO = -100 μA;
+VCC = 1.65 V to 3.6 V
+VCC - 0.2 - - VCC - 0.3 - V
+IO = -4 mA; VCC = 1.65 V 1.2 - - 1.05 - V
+IO = -8 mA; VCC = 2.3 V 1.8 - - 1.65 - V
+IO = -12 mA; VCC = 2.7 V 2.2 - - 2.05 - V
+IO = -18 mA; VCC = 3.0 V 2.4 - - 2.25 - V
+VOH HIGH-level
+output voltage
+IO = -24 mA; VCC = 3.0 V 2.2 - - 2.0 - V
+VI = VIH or VIL
+IO = 100 μA;
+VCC = 1.65 V to 3.6 V
+- - 0.2 - 0.3 V
+IO = 4 mA; VCC = 1.65 V - - 0.45 - 0.65 V
+IO = 8 mA; VCC = 2.3 V - - 0.6 - 0.8 V
+IO = 12 mA; VCC = 2.7 V - - 0.4 - 0.6 V
+VOL LOW-level
+output voltage
+IO = 24 mA; VCC = 3.0 V - - 0.55 - 0.8 V
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 5 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+-40 °C to +85 °C -40 °C to +125 °CSymbol Parameter Conditions
+Min Typ [1] Max Min Max
+Unit
+II input leakage
+current
+VCC = 3.6 V; VI = 5.5 V or GND - ±0.1 ±5 - ±20 μA
+IOZ OFF-state
+output current
+VI = VIH or VIL; VCC = 3.6 V;
+VO = 5.5 V or GND
+- ±0.1 ±5 - ±20 μA
+IOFF power-off
+leakage current
+VCC = 0.0 V; VI or VO = 5.5 V - ±0.1 ±10 - ±20 μA
+ICC supply current VCC = 3.6 V; VI = VCC or GND;
+IO = 0 A
+- 0.1 10 - 40 μA
+ΔICC additional
+supply current
+per input pin; VI = VCC - 0.6 V;
+IO = 0 A; VCC = 2.7 V to 3.6 V
+- 5 500 - 5000 μA
+CI input
+capacitance
+VCC = 0 V to 3.6 V; VI = GND to VCC - 4.0 - - - pF
+[1] All typical values are measured at VCC = 3.3 V (unless stated otherwise) and Tamb = 25 °C.
+10.  Dynamic characteristics
+Table 7. Dynamic characteristics
+Voltages are referenced to GND (ground = 0 V). For test circuit see Fig. 6.
+-40 °C to +85 °C -40 °C to +125 °CSymbol Parameter Conditions
+Min Typ [1] Max Min Max
+Unit
+nA to nY; see Fig. 4 [2]
+VCC = 1.2 V - 12.0 - - - ns
+VCC = 1.65 V to 1.95 V 1.5 5.4 11.0 1.5 12.8 ns
+VCC = 2.3 V to 2.7 V 1.0 2.9 5.7 1.0 6.7 ns
+VCC = 2.7 V 1.5 2.8 5.5 1.5 7.0 ns
+tpd propagation delay
+VCC = 3.0 V to 3.6 V 1.0 2.5 4.8 1.0 6.0 ns
+nOE to nY; see Fig. 5 [2]
+VCC = 1.2 V - 16.0 - - - ns
+VCC = 1.65 V to 1.95 V 1.0 5.0 12.2 1.0 14.2 ns
+VCC = 2.3 V to 2.7 V 0.5 2.9 6.8 0.5 7.9 ns
+VCC = 2.7 V 1.5 3.1 6.6 1.5 8.5 ns
+ten enable time
+VCC = 3.0 V to 3.6 V 1.0 2.3 5.4 1.0 7.0 ns
+nOE to nY; see Fig. 5 [2]
+VCC = 1.2 V - 7.0 - - - ns
+VCC = 1.65 V to 1.95 V 2.2 4.6 7.5 2.2 8.7 ns
+VCC = 2.3 V to 2.7 V 0.5 2.6 4.2 0.5 5.0 ns
+VCC = 2.7 V 1.5 3.1 5.0 1.5 6.5 ns
+tdis disable time
+VCC = 3.0 V to 3.6 V 1.0 3.2 4.6 1.0 6.0 ns
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 6 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+-40 °C to +85 °C -40 °C to +125 °CSymbol Parameter Conditions
+Min Typ [1] Max Min Max
+Unit
+tsk(o) output skew time VCC = 3.0 V to 3.6 V [3] - - 1.0 - 1.5 ns
+per buffer; VI = GND to VCC [4]
+VCC = 1.65 V to 1.95 V - 6.0 - - - pF
+VCC = 2.3 V to 2.7 V - 9.4 - - - pF
+CPD power dissipation
+capacitance
+VCC = 3.0 V to 3.6 V - 12.4 - - - pF
+[1] Typical values are measured at Tamb = 25 °C and VCC = 1.2 V, 1.8 V, 2.5 V, 2.7 V, and 3.3 V respectively.
+[2] tpd is the same as tPLH and tPHL.
+ten is the same as tPZL and tPZH.
+tdis is the same as tPLZ and tPHZ.
+[3] Skew between any two outputs of the same package switching in the same direction. This parameter is guaranteed by design.
+[4] CPD is used to determine the dynamic power dissipation (PD in μW).
+PD = CPD × VCC 2 × fi × N + Σ(CL × VCC 2 × fo) where:
+fi = input frequency in MHz; fo = output frequency in MHz
+CL = output load capacitance in pF
+VCC = supply voltage in Volts
+N = number of inputs switching
+Σ(CL × VCC 2 × fo) = sum of the outputs.
+10.1.  Waveforms and test circuit
+mna230
+tPHL tPLH
+VM
+VMnA input
+nY output
+GND
+VI
+VOH
+VOL
+Measurement points are given in Table 8.
+VOL and VOH are typical output voltage levels that occur with the output load.
+Fig. 4. The input nA to output nY propagation delays
+mna362
+tPLZ
+tPHZ
+outputs 
+disabled
+outputs 
+enabled
+VY
+VX
+outputs 
+enabled
+output 
+LOW-to-OFF 
+OFF-to-LOW
+output 
+HIGH-to-OFF 
+OFF-to-HIGH
+nOE input
+VI
+VOL
+VOH
+VCC
+VM
+GND
+GND
+tPZL
+tPZH
+VM
+VM
+Measurement points are given in Table 8.
+VOL and VOH are typical output voltage levels that occur with the output load.
+Fig. 5. 3-state enable and disable times
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 7 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+Table 8. Measurement points
+Supply voltage Input Output
+VCC VI VM VM VX VY
+1.2 V VCC 0.5 × VCC 0.5 × VCC VOL + 0.15 V VOH - 0.15 V
+1.65 V to 1.95 V VCC 0.5 × VCC 0.5 × VCC VOL + 0.15 V VOH - 0.15 V
+2.3 V to 2.7 V VCC 0.5 × VCC 0.5 × VCC VOL + 0.15 V VOH - 0.15 V
+2.7 V 2.7 V 1.5 V 1.5 V VOL + 0.3 V VOH - 0.3 V
+3.0 V to 3.6 V 2.7 V 1.5 V 1.5 V VOL + 0.3 V VOH - 0.3 V
+VM VM
+tW
+tW
+10 %
+90 %
+0 V
+VI
+VI
+negative 
+pulse
+positive 
+pulse
+0 V
+VM VM
+90 %
+10 %
+tf
+tr
+tr
+tf
+001aae331
+VEXT
+VCC
+VI VO
+DUT
+CLRT
+RL
+RL
+G
+Test data is given in Table 9.
+Definitions for test circuit:
+RL = Load resistance.
+CL = Load capacitance including jig and probe capacitance.
+RT = Termination resistance should be equal to output impedance Zo of the pulse generator.
+VEXT = External voltage for measuring switching times.
+Fig. 6. Test circuit for measuring switching times
+Table 9. Test data
+Supply voltage Input Load VEXT
+VCC VI tr, tf CL RL tPLH, tPHL tPLZ, tPZL tPHZ, tPZH
+1.2 V VCC ≤ 2 ns 30 pF 1 kΩ open 2 × VCC GND
+1.65 V to 1.95 V VCC ≤ 2 ns 30 pF 1 kΩ open 2 × VCC GND
+2.3 V to 2.7 V VCC ≤ 2 ns 30 pF 500 Ω open 2 × VCC GND
+2.7 V 2.7 V ≤ 2.5 ns 50 pF 500 Ω open 2 × VCC GND
+3.0 V to 3.6 V 2.7 V ≤ 2.5 ns 50 pF 500 Ω open 2 × VCC GND
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 8 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+11.  Package outline
+ReferencesOutline
+version
+European
+projection Issue date
+IEC JEDEC JEITA
+SOT108-1 MS-012
+sot108-1_po
+03-02-19
+23-10-27
+Unit
+mm
+max
+nom
+min
+1.75 0.25 0.51 0.25 8.75
+1.27
+A
+Dimensions (inch dimensions are derived from the original mm dimensions)
+Note
+1. Plastic or metal protrusions of 0.15 mm (0.006 inch) maximum per side are not included. 
+SO14: plastic small outline package; 14 leads; body width 3.9 mm SOT108-1
+A1 A2 A3 bp c D(1)
+8°
+0°
+θE(1) e HE L
+1.05
+Lp v
+0.2
+w y
+0.25 0.25 0.1
+5.8 0.43.80.10 0.31 0.10 8.551.25
+6.2 1.274.0
+inches
+max
+nom
+min
+0.069 0.010 0.020 0.010 0.344
+0.05
+8°
+0°
+0.041 0.0080.01 0.01 0.004
+0.228 0.0160.150.004 0.012 0.004 0.3370.049
+0.244 0.050.16
+X
+w M
+θ
+AA1
+A2
+bp
+D
+HE
+Lp
+detail X
+E
+e
+c
+L
+v M A
+A  3
+A
+7
+8
+1
+14
+y
+pin 1 index
+0 5 mm
+scale
+Fig. 7. Package outline SOT108-1 (SO14)
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 9 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+ReferencesOutline
+version
+European
+projection Issue date
+IEC JEDEC JEITA
+SOT402-1
+sot402-1_po
+03-02-18
+23-10-27
+Unit
+mm
+max
+nom
+min
+1.20 0.15 0.30 0.2 5.1
+0.65
+A
+Dimensions (mm are the original dimensions)
+Note
+1. Plastic or metal protrusions of 0.15 mm maximum per side are not included.
+2. Plastic interlead protrusions of 0.25 mm maximum per side are not included.
+TSSOP14: plastic thin shrink small outline package; 14 leads; body width 4.4 mm SOT402-1
+A1
+1.05
+bp c
+8°
+0°
+e HE L
+1
+Lp v
+0.2
+w y
+0.25 0.1 0.1
+6.2 0.454.30.05 0.19 0.09 4.90.80
+6.6 0.754.5
+0 5 mm
+scale
+w M
+bp
+D
+e
+1 7
+14 8
+θ
+AA1
+A2
+Lp
+detail X
+L
+HE
+E
+c
+v M A
+XA
+y
+pin 1 index
+A2 A3
+MO-153
+θ
+A3
+D(1) E(2)
+Fig. 8. Package outline SOT402-1 (TSSOP14)
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 10 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+ReferencesOutline
+version
+European
+projection Issue date
+IEC JEDEC JEITA
+SOT762-1 MO-241
+sot762-1_po
+15-04-10
+15-05-05
+Unit
+mm
+max
+nom
+min
+1 0.05 3.1 1.65 2.6
+0.5 2 0.4
+A(1)
+Dimensions (mm are the original dimensions)
+Note
+1. Plastic or metal protrusions of 0.075 mm maximum per side are not included. 
+DHVQFN14: plastic dual in-line compatible thermal enhanced very thin quad flat package; no leads;
+14 terminals; body 2.5 x 3 x 0.85 mm  SOT762-1
+A1 b
+0.30
+c D(1) Dh E(1) Eh
+1.00
+e e1 k
+k
+L v
+0.1
+w y
+0.02 0.2 3.0 1.50 2.5 0.10.25 0.05 0.05
+y1
+0.30.85 0.20.00 2.9 1.35 2.40.18
+0.51.15
+0 4 mm2
+scale
+terminal 1
+index area
+A
+A1
+c
+L
+Eh
+Dh
+k
+b
+2 6
+13 9
+8
+71
+14
+D
+E
+terminal 1
+index area
+e1
+e
+e
+C
+yCy1
+AC Bv
+Cw
+detail X
+AB
+X
+Fig. 9. Package outline SOT762-1 (DHVQFN14)
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 11 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+ReferencesOutline
+version
+European
+projection Issue date
+IEC JEDEC JEITA
+SOT8014-1
+sot8014-1_po
+20-09-18
+20-09-22
+Unit
+mm
+max
+nom
+min
+0.48
+0.45
+0.42
+0.23
+0.18
+0.13
+2.0
+1.00
+0.95
+0.90
+0.4
+0.35
+0.30
+0.250.2
+A
+0.05
+0.02
+0.00
+A1 A3
+Dimensions (mm are the original dimensions)
+DHXQFN14: plastic, leadless dual in-line compatible thermal enhanced extreme thin quad flat package;
+no leads; 14 terminals; 0.4 mm pitch; body 2 mm x 2 mm x 0.48 mm SOT8014-1
+b D D1
+0.1
+w
+0.05
+v
+0.1
+u
+0.15
+(typ)
+keE
+2.0
+E1
+1.00
+0.95
+0.90
+L
+A
+A1
+A3
+C
+Cy1 C
+detail X
+seating
+plane
+A B
+y1
+0.05
+y
+0.05
+z
+0.05
+X
+pin 1
+index area
+pin 1
+index area
+y
+pin1
+I.D.
+2 mm0
+scale
+1
+C
+2x
+C
+2x
+E1
+e
+(10x)
+D1
+L
+(14x)
+13 9
+2 6
+1
+14
+7
+8
+AC Bw M
+AC Bu M
+Cv M
+z
+z
+D
+E
+b
+(14x)
+Fig. 10. Package outline SOT8014-1 (DHXQFN14)
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 12 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+12.  Abbreviations
+Table 10. Abbreviations
+Acronym Description
+CDM Charged Device Model
+CMOS Complementary Metal-Oxide Semiconductor
+DUT Device Under Test
+ESD ElectroStatic Discharge
+HBM Human Body Model
+TTL Transistor-Transistor Logic
+13.  Revision history
+Table 11. Revision history
+Document ID Release date Data sheet status Change notice Supersedes
+74LVC125A v.12 20250502 Product data sheet - 74LVC125A v.11
+Modifications: • Type number 74LVC125ABZ (SOT8014-1/DHXQFN14) added.
+74LVC125A v.11 20240212 Product data sheet - 74LVC125A v.10
+Modifications: • Fig. 7, Fig. 8: Aligned SO and TSSOP package outline drawings to JEDEC MS-012 and
+MO-153.
+74LVC125A v.10 20230803 Product data sheet - 74LVC125A v.9
+Modifications: • Section 2: ESD specification updated according to the latest JEDEC standard.
+74LVC125A v.9 20210917 Product data sheet - 74LVC125A v.8
+Modifications: • Type number 74LVC125ADB (SOT337-1/SSOP14) removed.
+• Section 1 and Section 2 updated.
+74LVC125A v.8 20200505 Product data sheet - 74LVC125A v.7
+Modifications: • The format of this data sheet has been redesigned to comply with the identity
+guidelines of Nexperia.
+• Legal texts have been adapted to the new company name where appropriate.
+• Table 4: Derating values for Ptot total power dissipation updated.
+• Table 8: Added measurement points for VX and VY.
+• Fig. 9: Package outline drawing SOT762-1 (DHVQFN14) updated.
+74LVC125A v.7 20130411 Product data sheet - 74LVC125A v.6
+Modifications: • Features list corrected (errata)
+74LVC125A v.6 20130305 Product data sheet - 74LVC125A v.5
+74LVC125A v.5 20120208 Product data sheet - 74LVC125A v.4
+74LVC125A v.4 20030507 Product specification - 74LVC125A v.3
+74LVC125A v.3 20020308 Product specification - 74LVC125A v.2
+74LVC125A v.2 19980428 Product specification - 74LVC125A v.1
+74LVC125A v.1 19970801 Product specification - -
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 13 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+14.  Legal information
+Data sheet status
+Document status
+[1][2]
+Product
+status [3]
+Definition
+Objective [short]
+data sheet
+Development This document contains data from
+the objective specification for
+product development.
+Preliminary [short]
+data sheet
+Qualification This document contains data from
+the preliminary specification.
+Product [short]
+data sheet
+Production This document contains the product
+specification.
+[1] Please consult the most recently issued document before initiating or
+completing a design.
+[2] The term 'short data sheet' is explained in section "Definitions".
+[3] The product status of device(s) described in this document may have
+changed since this document was published and may differ in case of
+multiple devices. The latest product status information is available on
+the internet at https://www.nexperia.com.
+Definitions
+Draft — The document is a draft version only. The content is still under
+internal review and subject to formal approval, which may result in
+modifications or additions. Nexperia does not give any representations or
+warranties as to the accuracy or completeness of information included herein
+and shall have no liability for the consequences of use of such information.
+Short data sheet — A short data sheet is an extract from a full data sheet
+with the same product type number(s) and title. A short data sheet is
+intended for quick reference only and should not be relied upon to contain
+detailed and full information. For detailed and full information see the relevant
+full data sheet, which is available on request via the local Nexperia sales
+office. In case of any inconsistency or conflict with the short data sheet, the
+full data sheet shall prevail.
+Product specification — The information and data provided in a Product
+data sheet shall define the specification of the product as agreed between
+Nexperia and its customer, unless Nexperia and customer have explicitly
+agreed otherwise in writing. In no event however, shall an agreement be
+valid in which the Nexperia product is deemed to offer functions and qualities
+beyond those described in the Product data sheet.
+Disclaimers
+Limited warranty and liability — Information in this document is believed
+to be accurate and reliable. However, Nexperia does not give any
+representations or warranties, expressed or implied, as to the accuracy
+or completeness of such information and shall have no liability for the
+consequences of use of such information. Nexperia takes no responsibility
+for the content in this document if provided by an information source outside
+of Nexperia.
+In no event shall Nexperia be liable for any indirect, incidental, punitive,
+special or consequential damages (including - without limitation - lost
+profits, lost savings, business interruption, costs related to the removal
+or replacement of any products or rework charges) whether or not such
+damages are based on tort (including negligence), warranty, breach of
+contract or any other legal theory.
+Notwithstanding any damages that customer might incur for any reason
+whatsoever, Nexperia’s aggregate and cumulative liability towards customer
+for the products described herein shall be limited in accordance with the
+Terms and conditions of commercial sale of Nexperia.
+Right to make changes — Nexperia reserves the right to make changes
+to information published in this document, including without limitation
+specifications and product descriptions, at any time and without notice. This
+document supersedes and replaces all information supplied prior to the
+publication hereof.
+Suitability for use — Nexperia products are not designed, authorized or
+warranted to be suitable for use in life support, life-critical or safety-critical
+systems or equipment, nor in applications where failure or malfunction
+of an Nexperia product can reasonably be expected to result in personal
+injury, death or severe property or environmental damage. Nexperia and its
+suppliers accept no liability for inclusion and/or use of Nexperia products in
+such equipment or applications and therefore such inclusion and/or use is at
+the customer’s own risk.
+Quick reference data — The Quick reference data is an extract of the
+product data given in the Limiting values and Characteristics sections of this
+document, and as such is not complete, exhaustive or legally binding.
+Applications — Applications that are described herein for any of these
+products are for illustrative purposes only. Nexperia makes no representation
+or warranty that such applications will be suitable for the specified use
+without further testing or modification.
+Customers are responsible for the design and operation of their applications
+and products using Nexperia products, and Nexperia accepts no liability for
+any assistance with applications or customer product design. It is customer’s
+sole responsibility to determine whether the Nexperia product is suitable
+and fit for the customer’s applications and products planned, as well as
+for the planned application and use of customer’s third party customer(s).
+Customers should provide appropriate design and operating safeguards to
+minimize the risks associated with their applications and products.
+Nexperia does not accept any liability related to any default, damage, costs
+or problem which is based on any weakness or default in the customer’s
+applications or products, or the application or use by customer’s third party
+customer(s). Customer is responsible for doing all necessary testing for the
+customer’s applications and products using Nexperia products in order to
+avoid a default of the applications and the products or of the application or
+use by customer’s third party customer(s). Nexperia does not accept any
+liability in this respect.
+Limiting values — Stress above one or more limiting values (as defined in
+the Absolute Maximum Ratings System of IEC 60134) will cause permanent
+damage to the device. Limiting values are stress ratings only and (proper)
+operation of the device at these or any other conditions above those
+given in the Recommended operating conditions section (if present) or the
+Characteristics sections of this document is not warranted. Constant or
+repeated exposure to limiting values will permanently and irreversibly affect
+the quality and reliability of the device.
+Terms and conditions of commercial sale — Nexperia products are
+sold subject to the general terms and conditions of commercial sale, as
+published at http://www.nexperia.com/profile/terms, unless otherwise agreed
+in a valid written individual agreement. In case an individual agreement is
+concluded only the terms and conditions of the respective agreement shall
+apply. Nexperia hereby expressly objects to applying the customer’s general
+terms and conditions with regard to the purchase of Nexperia products by
+customer.
+No offer to sell or license — Nothing in this document may be interpreted
+or construed as an offer to sell products that is open for acceptance or the
+grant, conveyance or implication of any license under any copyrights, patents
+or other industrial or intellectual property rights.
+Export control — This document as well as the item(s) described herein
+may be subject to export control regulations. Export might require a prior
+authorization from competent authorities.
+Non-automotive qualified products — Unless this data sheet expressly
+states that this specific Nexperia product is automotive qualified, the
+product is not suitable for automotive use. It is neither qualified nor tested in
+accordance with automotive testing or application requirements. Nexperia
+accepts no liability for inclusion and/or use of non-automotive qualified
+products in automotive equipment or applications.
+In the event that customer uses the product for design-in and use in
+automotive applications to automotive specifications and standards,
+customer (a) shall use the product without Nexperia’s warranty of the
+product for such automotive applications, use and specifications, and (b)
+whenever customer uses the product for automotive applications beyond
+Nexperia’s specifications such use shall be solely at customer’s own risk,
+and (c) customer fully indemnifies Nexperia for any liability, damages or failed
+product claims resulting from customer design and use of the product for
+automotive applications beyond Nexperia’s standard warranty and Nexperia’s
+product specifications.
+Translations — A non-English (translated) version of a document is for
+reference only. The English version shall prevail in case of any discrepancy
+between the translated and English versions.
+Trademarks
+Notice: All referenced brands, product names, service names and
+trademarks are the property of their respective owners.
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 14 / 15
+Nexperia 74LVC125A
+Quad buffer/line driver with 5 V tolerant input/outputs; 3-state
+Contents
+1.  General description......................................................1
+2.  Features and benefits .................................................. 1
+3.  Ordering information....................................................1
+4.  Functional diagram.......................................................2
+5.  Pinning information......................................................3
+5.1.  Pinning.........................................................................3
+5.2.  Pin description.............................................................3
+6.  Functional description................................................. 4
+7.  Limiting values............................................................. 4
+8.  Recommended operating conditions..........................5
+9.  Static characteristics....................................................5
+10.  Dynamic characteristics............................................ 6
+10.1.  Waveforms and test circuit........................................ 7
+11.  Package outline.......................................................... 9
+12.  Abbreviations............................................................13
+13.  Revision history........................................................13
+14.  Legal information ......................................................14
+© Nexperia B.V. 2025. All rights reserved
+For more information, please visit: http://www.nexperia.com
+For sales office addresses, please send an email to: salesaddresses@nexperia.com
+Date of release: 2 May 2025
+74LVC125A All information provided in this document is subject to legal disclaimers. © Nexperia B.V. 2025. All rights reserved
+Product data sheet Rev. 12 — 2 May 2025 15 / 15

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "kicad-version",
+    "argv": [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "--version"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:37.931283+00:00",
+    "elapsed_s": 0.218,
+    "exit_code": 0
+  },
+  {
+    "name": "builder",
+    "argv": [
+      "C:\\Python314\\python.exe",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_build_fpga_core.py"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:38.149158+00:00",
+    "elapsed_s": 0.094,
+    "exit_code": 0
+  },
+  {
+    "name": "native-netlist",
+    "argv": [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "sch",
+      "export",
+      "netlist",
+      "--format",
+      "kicadxml",
+      "--output",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\netlist.xml",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\fpga_core.kicad_sch"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:38.243433+00:00",
+    "elapsed_s": 0.444,
+    "exit_code": 0
+  },
+  {
+    "name": "native-erc",
+    "argv": [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--severity-error",
+      "--severity-warning",
+      "--output",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\erc.json",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\fpga_core.kicad_sch"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:38.687503+00:00",
+    "elapsed_s": 1.458,
+    "exit_code": 0
+  },
+  {
+    "name": "native-pdf",
+    "argv": [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "sch",
+      "export",
+      "pdf",
+      "--output",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\fpga_core.pdf",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\fpga_core\\fpga_core.kicad_sch"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:40.146144+00:00",
+    "elapsed_s": 0.497,
+    "exit_code": 0
+  },
+  {
+    "name": "validator",
+    "argv": [
+      "C:\\Python314\\python.exe",
+      "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_validate_fpga_core.py"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+    "started_utc": "2026-09-30T09:00:40.643445+00:00",
+    "elapsed_s": 0.137,
+    "exit_code": 0
+  },
+  {
+    "name": "frozen-focused-tests",
+    "argv": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_fpga_core.py",
+      "-v"
+    ],
+    "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\reset-pin-fix-20260930\\after",
+    "started_utc": "2026-09-30T09:00:41.439007+00:00",
+    "elapsed_s": 0.828,
+    "exit_code": 0
+  }
+]

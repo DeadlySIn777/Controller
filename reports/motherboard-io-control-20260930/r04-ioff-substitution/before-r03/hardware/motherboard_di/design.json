@@ -1,0 +1,3213 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-di-r0.1",
+  "parent_reference_index": 8,
+  "status": "source_candidate_not_qualified",
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "channel_count": 24,
+  "general_count": 24,
+  "motor_alarm_count": 0,
+  "probe_count": 0,
+  "device_count": 12,
+  "fitted_component_count": 120,
+  "fitted_pad_count": 408,
+  "logic_supply_v": [
+    3.2,
+    3.4
+  ],
+  "logic_ground": "LOGIC_GND",
+  "field_ground": "FIELD_B_0V",
+  "interface": {
+    "operating_min_v": 0,
+    "operating_max_v": 30,
+    "guaranteed_low_target_v": 5,
+    "guaranteed_high_target_v": 15,
+    "input_style": "fixed_sinking_PNP_or_dry_contact",
+    "NPN_or_auto_mode_implemented": false
+  },
+  "source_spec": {
+    "current_5v_to_falling_a": [
+      0.0019,
+      0.0025
+    ],
+    "current_above_falling_to_30v_a": [
+      0.00205,
+      0.00275
+    ],
+    "current_typical_formula_a": 0.00225,
+    "current_spec_rsense_tolerance": 0.01,
+    "threshold_falling_min_v": 8.7,
+    "threshold_falling_typ_v": 9.2,
+    "threshold_rising_typ_v": 10.4,
+    "threshold_rising_max_v": 10.95,
+    "intrinsic_falling_min_v": 6.5,
+    "intrinsic_rising_max_v": 8.55,
+    "icc_max_per_device_a": 0.0019,
+    "voh_drop_max_v": 0.4,
+    "vol_max_v": 0.4,
+    "propagation_lh_max_s": 1.4e-07,
+    "propagation_hl_max_s": 1.5e-08
+  },
+  "analysis": {
+    "temperature_departure_k": 100,
+    "threshold_corner_result_is_screen_only": true,
+    "filter_corner_result_is_end_to_end_delay": false,
+    "filter_model": "RTHR*CIN only; source/cable impedance and nonlinear input current omitted",
+    "resistor_drift_after_initial_tolerance": "additional TCR allowance; lifetime drift not established"
+  },
+  "output_default": {
+    "powered_open_input": "low",
+    "powered_valid_input": "follows input",
+    "brownout_or_unpowered": "undetermined; weak bias is not a guarantee",
+    "en_connection": "IO_3V3",
+    "validity_requirement": "FPGA must ignore until independent rail/reset readiness; not implemented here"
+  },
+  "isolation": {
+    "type": "component basic isolation FIELD-to-LOGIC; no complete-board rating",
+    "field_returns_common": true,
+    "channel_to_channel_claim": false,
+    "substrates": "24 separate floating copper islands, approximately 2x2mm each; never connect to each other or any ground",
+    "pe_capacitor_fitted": false,
+    "total_field_to_other_ground_capacitance_verified": false
+  },
+  "sensor_supplies": {
+    "implemented": false,
+    "entry": "FIELD_B",
+    "per_group_continuous_a": 0.2,
+    "groups": 3,
+    "total_reserved_continuous_a": 0.6,
+    "shared_supply_contacts": [
+      9,
+      10
+    ],
+    "voltage_fault_telemetry_implemented": false,
+    "source": "frozen IS-1 section03 XDI0/1/2.9/.10 and section04 10.2"
+  },
+  "acquisition": {
+    "implemented": false,
+    "intended": "qualified IOL1 local controller; inputs invalid until independent rails/reset/validated fresh frames",
+    "output_nets": [
+      "DI0_LOGIC",
+      "DI1_LOGIC",
+      "DI2_LOGIC",
+      "DI3_LOGIC",
+      "DI4_LOGIC",
+      "DI5_LOGIC",
+      "DI6_LOGIC",
+      "DI7_LOGIC",
+      "DI8_LOGIC",
+      "DI9_LOGIC",
+      "DI10_LOGIC",
+      "DI11_LOGIC",
+      "DI12_LOGIC",
+      "DI13_LOGIC",
+      "DI14_LOGIC",
+      "DI15_LOGIC",
+      "DI16_LOGIC",
+      "DI17_LOGIC",
+      "DI18_LOGIC",
+      "DI19_LOGIC",
+      "DI20_LOGIC",
+      "DI21_LOGIC",
+      "DI22_LOGIC",
+      "DI23_LOGIC"
+    ]
+  },
+  "channels": [
+    {
+      "id": "DI0",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 1,
+      "schematic_ref": "U8001",
+      "logic_net": "DI0_LOGIC",
+      "field_net": "DI0_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 1,
+        "logical_net": "DI00",
+        "schematic_net": "DI0_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8001",
+      "sense_ref": "R8101",
+      "filter_ref": "C8001",
+      "output_bias_ref": "R8201",
+      "substrate_net": "DI0_SUB_ISLAND"
+    },
+    {
+      "id": "DI1",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 2,
+      "schematic_ref": "U8001",
+      "logic_net": "DI1_LOGIC",
+      "field_net": "DI1_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 2,
+        "logical_net": "DI01",
+        "schematic_net": "DI1_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8002",
+      "sense_ref": "R8102",
+      "filter_ref": "C8002",
+      "output_bias_ref": "R8202",
+      "substrate_net": "DI1_SUB_ISLAND"
+    },
+    {
+      "id": "DI2",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 1,
+      "schematic_ref": "U8002",
+      "logic_net": "DI2_LOGIC",
+      "field_net": "DI2_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 3,
+        "logical_net": "DI02",
+        "schematic_net": "DI2_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8003",
+      "sense_ref": "R8103",
+      "filter_ref": "C8003",
+      "output_bias_ref": "R8203",
+      "substrate_net": "DI2_SUB_ISLAND"
+    },
+    {
+      "id": "DI3",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 2,
+      "schematic_ref": "U8002",
+      "logic_net": "DI3_LOGIC",
+      "field_net": "DI3_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 4,
+        "logical_net": "DI03",
+        "schematic_net": "DI3_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8004",
+      "sense_ref": "R8104",
+      "filter_ref": "C8004",
+      "output_bias_ref": "R8204",
+      "substrate_net": "DI3_SUB_ISLAND"
+    },
+    {
+      "id": "DI4",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 1,
+      "schematic_ref": "U8003",
+      "logic_net": "DI4_LOGIC",
+      "field_net": "DI4_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 5,
+        "logical_net": "DI04",
+        "schematic_net": "DI4_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8005",
+      "sense_ref": "R8105",
+      "filter_ref": "C8005",
+      "output_bias_ref": "R8205",
+      "substrate_net": "DI4_SUB_ISLAND"
+    },
+    {
+      "id": "DI5",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 2,
+      "schematic_ref": "U8003",
+      "logic_net": "DI5_LOGIC",
+      "field_net": "DI5_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 6,
+        "logical_net": "DI05",
+        "schematic_net": "DI5_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8006",
+      "sense_ref": "R8106",
+      "filter_ref": "C8006",
+      "output_bias_ref": "R8206",
+      "substrate_net": "DI5_SUB_ISLAND"
+    },
+    {
+      "id": "DI6",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 1,
+      "schematic_ref": "U8004",
+      "logic_net": "DI6_LOGIC",
+      "field_net": "DI6_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 7,
+        "logical_net": "DI06",
+        "schematic_net": "DI6_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8007",
+      "sense_ref": "R8107",
+      "filter_ref": "C8007",
+      "output_bias_ref": "R8207",
+      "substrate_net": "DI6_SUB_ISLAND"
+    },
+    {
+      "id": "DI7",
+      "kind": "general_digital_input",
+      "group": 0,
+      "device_channel": 2,
+      "schematic_ref": "U8004",
+      "logic_net": "DI7_LOGIC",
+      "field_net": "DI7_FIELD",
+      "terminal": {
+        "connector": "XDI0",
+        "position": 8,
+        "logical_net": "DI07",
+        "schematic_net": "DI7_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8008",
+      "sense_ref": "R8108",
+      "filter_ref": "C8008",
+      "output_bias_ref": "R8208",
+      "substrate_net": "DI7_SUB_ISLAND"
+    },
+    {
+      "id": "DI8",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 1,
+      "schematic_ref": "U8005",
+      "logic_net": "DI8_LOGIC",
+      "field_net": "DI8_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 1,
+        "logical_net": "DI08",
+        "schematic_net": "DI8_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8009",
+      "sense_ref": "R8109",
+      "filter_ref": "C8009",
+      "output_bias_ref": "R8209",
+      "substrate_net": "DI8_SUB_ISLAND"
+    },
+    {
+      "id": "DI9",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 2,
+      "schematic_ref": "U8005",
+      "logic_net": "DI9_LOGIC",
+      "field_net": "DI9_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 2,
+        "logical_net": "DI09",
+        "schematic_net": "DI9_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8010",
+      "sense_ref": "R8110",
+      "filter_ref": "C8010",
+      "output_bias_ref": "R8210",
+      "substrate_net": "DI9_SUB_ISLAND"
+    },
+    {
+      "id": "DI10",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 1,
+      "schematic_ref": "U8006",
+      "logic_net": "DI10_LOGIC",
+      "field_net": "DI10_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 3,
+        "logical_net": "DI10",
+        "schematic_net": "DI10_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8011",
+      "sense_ref": "R8111",
+      "filter_ref": "C8011",
+      "output_bias_ref": "R8211",
+      "substrate_net": "DI10_SUB_ISLAND"
+    },
+    {
+      "id": "DI11",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 2,
+      "schematic_ref": "U8006",
+      "logic_net": "DI11_LOGIC",
+      "field_net": "DI11_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 4,
+        "logical_net": "DI11",
+        "schematic_net": "DI11_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8012",
+      "sense_ref": "R8112",
+      "filter_ref": "C8012",
+      "output_bias_ref": "R8212",
+      "substrate_net": "DI11_SUB_ISLAND"
+    },
+    {
+      "id": "DI12",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 1,
+      "schematic_ref": "U8007",
+      "logic_net": "DI12_LOGIC",
+      "field_net": "DI12_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 5,
+        "logical_net": "DI12",
+        "schematic_net": "DI12_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8013",
+      "sense_ref": "R8113",
+      "filter_ref": "C8013",
+      "output_bias_ref": "R8213",
+      "substrate_net": "DI12_SUB_ISLAND"
+    },
+    {
+      "id": "DI13",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 2,
+      "schematic_ref": "U8007",
+      "logic_net": "DI13_LOGIC",
+      "field_net": "DI13_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 6,
+        "logical_net": "DI13",
+        "schematic_net": "DI13_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8014",
+      "sense_ref": "R8114",
+      "filter_ref": "C8014",
+      "output_bias_ref": "R8214",
+      "substrate_net": "DI13_SUB_ISLAND"
+    },
+    {
+      "id": "DI14",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 1,
+      "schematic_ref": "U8008",
+      "logic_net": "DI14_LOGIC",
+      "field_net": "DI14_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 7,
+        "logical_net": "DI14",
+        "schematic_net": "DI14_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8015",
+      "sense_ref": "R8115",
+      "filter_ref": "C8015",
+      "output_bias_ref": "R8215",
+      "substrate_net": "DI14_SUB_ISLAND"
+    },
+    {
+      "id": "DI15",
+      "kind": "general_digital_input",
+      "group": 1,
+      "device_channel": 2,
+      "schematic_ref": "U8008",
+      "logic_net": "DI15_LOGIC",
+      "field_net": "DI15_FIELD",
+      "terminal": {
+        "connector": "XDI1",
+        "position": 8,
+        "logical_net": "DI15",
+        "schematic_net": "DI15_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8016",
+      "sense_ref": "R8116",
+      "filter_ref": "C8016",
+      "output_bias_ref": "R8216",
+      "substrate_net": "DI15_SUB_ISLAND"
+    },
+    {
+      "id": "DI16",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 1,
+      "schematic_ref": "U8009",
+      "logic_net": "DI16_LOGIC",
+      "field_net": "DI16_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 1,
+        "logical_net": "DI16",
+        "schematic_net": "DI16_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8017",
+      "sense_ref": "R8117",
+      "filter_ref": "C8017",
+      "output_bias_ref": "R8217",
+      "substrate_net": "DI16_SUB_ISLAND"
+    },
+    {
+      "id": "DI17",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 2,
+      "schematic_ref": "U8009",
+      "logic_net": "DI17_LOGIC",
+      "field_net": "DI17_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 2,
+        "logical_net": "DI17",
+        "schematic_net": "DI17_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8018",
+      "sense_ref": "R8118",
+      "filter_ref": "C8018",
+      "output_bias_ref": "R8218",
+      "substrate_net": "DI17_SUB_ISLAND"
+    },
+    {
+      "id": "DI18",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 1,
+      "schematic_ref": "U8010",
+      "logic_net": "DI18_LOGIC",
+      "field_net": "DI18_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 3,
+        "logical_net": "DI18",
+        "schematic_net": "DI18_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8019",
+      "sense_ref": "R8119",
+      "filter_ref": "C8019",
+      "output_bias_ref": "R8219",
+      "substrate_net": "DI18_SUB_ISLAND"
+    },
+    {
+      "id": "DI19",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 2,
+      "schematic_ref": "U8010",
+      "logic_net": "DI19_LOGIC",
+      "field_net": "DI19_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 4,
+        "logical_net": "DI19",
+        "schematic_net": "DI19_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8020",
+      "sense_ref": "R8120",
+      "filter_ref": "C8020",
+      "output_bias_ref": "R8220",
+      "substrate_net": "DI19_SUB_ISLAND"
+    },
+    {
+      "id": "DI20",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 1,
+      "schematic_ref": "U8011",
+      "logic_net": "DI20_LOGIC",
+      "field_net": "DI20_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 5,
+        "logical_net": "DI20",
+        "schematic_net": "DI20_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8021",
+      "sense_ref": "R8121",
+      "filter_ref": "C8021",
+      "output_bias_ref": "R8221",
+      "substrate_net": "DI20_SUB_ISLAND"
+    },
+    {
+      "id": "DI21",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 2,
+      "schematic_ref": "U8011",
+      "logic_net": "DI21_LOGIC",
+      "field_net": "DI21_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 6,
+        "logical_net": "DI21",
+        "schematic_net": "DI21_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8022",
+      "sense_ref": "R8122",
+      "filter_ref": "C8022",
+      "output_bias_ref": "R8222",
+      "substrate_net": "DI21_SUB_ISLAND"
+    },
+    {
+      "id": "DI22",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 1,
+      "schematic_ref": "U8012",
+      "logic_net": "DI22_LOGIC",
+      "field_net": "DI22_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 7,
+        "logical_net": "DI22",
+        "schematic_net": "DI22_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8023",
+      "sense_ref": "R8123",
+      "filter_ref": "C8023",
+      "output_bias_ref": "R8223",
+      "substrate_net": "DI22_SUB_ISLAND"
+    },
+    {
+      "id": "DI23",
+      "kind": "general_digital_input",
+      "group": 2,
+      "device_channel": 2,
+      "schematic_ref": "U8012",
+      "logic_net": "DI23_LOGIC",
+      "field_net": "DI23_FIELD",
+      "terminal": {
+        "connector": "XDI2",
+        "position": 8,
+        "logical_net": "DI23",
+        "schematic_net": "DI23_FIELD",
+        "domain": "FIELD_B"
+      },
+      "threshold_ref": "R8024",
+      "sense_ref": "R8124",
+      "filter_ref": "C8024",
+      "output_bias_ref": "R8224",
+      "substrate_net": "DI23_SUB_ISLAND"
+    }
+  ],
+  "terminals": [
+    {
+      "connector": "XDI0",
+      "position": 1,
+      "logical_net": "DI00",
+      "schematic_net": "DI0_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 2,
+      "logical_net": "DI01",
+      "schematic_net": "DI1_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 3,
+      "logical_net": "DI02",
+      "schematic_net": "DI2_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 4,
+      "logical_net": "DI03",
+      "schematic_net": "DI3_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 5,
+      "logical_net": "DI04",
+      "schematic_net": "DI4_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 6,
+      "logical_net": "DI05",
+      "schematic_net": "DI5_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 7,
+      "logical_net": "DI06",
+      "schematic_net": "DI6_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 8,
+      "logical_net": "DI07",
+      "schematic_net": "DI7_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 9,
+      "logical_net": "SENS24_G0",
+      "schematic_net": "SENS24_G0",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI0",
+      "position": 10,
+      "logical_net": "SENS24_G0b",
+      "schematic_net": "SENS24_G0",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI0",
+      "position": 11,
+      "logical_net": "FIELD_B_0V_DI0_11",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI0",
+      "position": 12,
+      "logical_net": "FIELD_B_0V_DI0_12",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 1,
+      "logical_net": "DI08",
+      "schematic_net": "DI8_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 2,
+      "logical_net": "DI09",
+      "schematic_net": "DI9_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 3,
+      "logical_net": "DI10",
+      "schematic_net": "DI10_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 4,
+      "logical_net": "DI11",
+      "schematic_net": "DI11_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 5,
+      "logical_net": "DI12",
+      "schematic_net": "DI12_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 6,
+      "logical_net": "DI13",
+      "schematic_net": "DI13_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 7,
+      "logical_net": "DI14",
+      "schematic_net": "DI14_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 8,
+      "logical_net": "DI15",
+      "schematic_net": "DI15_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 9,
+      "logical_net": "SENS24_G1",
+      "schematic_net": "SENS24_G1",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI1",
+      "position": 10,
+      "logical_net": "SENS24_G1b",
+      "schematic_net": "SENS24_G1",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI1",
+      "position": 11,
+      "logical_net": "FIELD_B_0V_DI1_11",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI1",
+      "position": 12,
+      "logical_net": "FIELD_B_0V_DI1_12",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 1,
+      "logical_net": "DI16",
+      "schematic_net": "DI16_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 2,
+      "logical_net": "DI17",
+      "schematic_net": "DI17_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 3,
+      "logical_net": "DI18",
+      "schematic_net": "DI18_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 4,
+      "logical_net": "DI19",
+      "schematic_net": "DI19_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 5,
+      "logical_net": "DI20",
+      "schematic_net": "DI20_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 6,
+      "logical_net": "DI21",
+      "schematic_net": "DI21_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 7,
+      "logical_net": "DI22",
+      "schematic_net": "DI22_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 8,
+      "logical_net": "DI23",
+      "schematic_net": "DI23_FIELD",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 9,
+      "logical_net": "SENS24_G2",
+      "schematic_net": "SENS24_G2",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI2",
+      "position": 10,
+      "logical_net": "SENS24_G2b",
+      "schematic_net": "SENS24_G2",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": 0.2
+    },
+    {
+      "connector": "XDI2",
+      "position": 11,
+      "logical_net": "FIELD_B_0V_DI2_11",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    },
+    {
+      "connector": "XDI2",
+      "position": 12,
+      "logical_net": "FIELD_B_0V_DI2_12",
+      "schematic_net": "FIELD_B_0V",
+      "domain": "FIELD_B",
+      "fitted_connector": false,
+      "sensor_supply_current_limit_a": null
+    }
+  ],
+  "components": {
+    "U8001": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI0_LOGIC",
+        "5": "DI1_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI1_IN",
+        "11": "DI1_SENSE",
+        "12": "DI1_SUB_ISLAND",
+        "13": "DI0_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI0_IN",
+        "16": "DI0_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8001": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI0_FIELD",
+        "2": "DI0_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8101": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI0_SENSE",
+        "2": "DI0_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8201": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI0_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8001": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI0_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8002": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI1_FIELD",
+        "2": "DI1_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8102": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI1_SENSE",
+        "2": "DI1_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8202": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI1_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8002": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI1_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8101": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8002": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI2_LOGIC",
+        "5": "DI3_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI3_IN",
+        "11": "DI3_SENSE",
+        "12": "DI3_SUB_ISLAND",
+        "13": "DI2_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI2_IN",
+        "16": "DI2_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8003": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI2_FIELD",
+        "2": "DI2_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8103": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI2_SENSE",
+        "2": "DI2_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8203": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI2_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8003": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI2_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8004": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI3_FIELD",
+        "2": "DI3_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8104": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI3_SENSE",
+        "2": "DI3_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8204": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI3_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8004": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI3_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8102": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8003": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI4_LOGIC",
+        "5": "DI5_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI5_IN",
+        "11": "DI5_SENSE",
+        "12": "DI5_SUB_ISLAND",
+        "13": "DI4_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI4_IN",
+        "16": "DI4_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8005": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI4_FIELD",
+        "2": "DI4_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8105": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI4_SENSE",
+        "2": "DI4_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8205": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI4_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8005": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI4_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8006": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI5_FIELD",
+        "2": "DI5_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8106": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI5_SENSE",
+        "2": "DI5_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8206": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI5_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8006": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI5_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8103": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8004": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI6_LOGIC",
+        "5": "DI7_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI7_IN",
+        "11": "DI7_SENSE",
+        "12": "DI7_SUB_ISLAND",
+        "13": "DI6_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI6_IN",
+        "16": "DI6_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8007": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI6_FIELD",
+        "2": "DI6_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8107": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI6_SENSE",
+        "2": "DI6_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8207": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI6_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8007": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI6_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8008": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI7_FIELD",
+        "2": "DI7_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8108": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI7_SENSE",
+        "2": "DI7_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8208": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI7_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8008": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI7_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8104": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8005": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI8_LOGIC",
+        "5": "DI9_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI9_IN",
+        "11": "DI9_SENSE",
+        "12": "DI9_SUB_ISLAND",
+        "13": "DI8_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI8_IN",
+        "16": "DI8_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8009": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI8_FIELD",
+        "2": "DI8_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8109": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI8_SENSE",
+        "2": "DI8_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8209": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI8_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8009": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI8_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8010": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI9_FIELD",
+        "2": "DI9_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8110": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI9_SENSE",
+        "2": "DI9_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8210": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI9_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8010": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI9_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8105": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8006": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI10_LOGIC",
+        "5": "DI11_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI11_IN",
+        "11": "DI11_SENSE",
+        "12": "DI11_SUB_ISLAND",
+        "13": "DI10_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI10_IN",
+        "16": "DI10_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8011": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI10_FIELD",
+        "2": "DI10_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8111": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI10_SENSE",
+        "2": "DI10_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8211": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI10_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8011": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI10_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8012": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI11_FIELD",
+        "2": "DI11_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8112": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI11_SENSE",
+        "2": "DI11_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8212": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI11_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8012": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI11_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8106": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8007": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI12_LOGIC",
+        "5": "DI13_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI13_IN",
+        "11": "DI13_SENSE",
+        "12": "DI13_SUB_ISLAND",
+        "13": "DI12_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI12_IN",
+        "16": "DI12_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8013": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI12_FIELD",
+        "2": "DI12_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8113": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI12_SENSE",
+        "2": "DI12_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8213": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI12_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8013": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI12_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8014": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI13_FIELD",
+        "2": "DI13_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8114": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI13_SENSE",
+        "2": "DI13_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8214": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI13_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8014": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI13_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8107": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8008": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI14_LOGIC",
+        "5": "DI15_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI15_IN",
+        "11": "DI15_SENSE",
+        "12": "DI15_SUB_ISLAND",
+        "13": "DI14_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI14_IN",
+        "16": "DI14_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8015": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI14_FIELD",
+        "2": "DI14_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8115": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI14_SENSE",
+        "2": "DI14_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8215": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI14_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8015": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI14_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8016": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI15_FIELD",
+        "2": "DI15_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8116": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI15_SENSE",
+        "2": "DI15_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8216": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI15_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8016": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI15_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8108": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8009": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI16_LOGIC",
+        "5": "DI17_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI17_IN",
+        "11": "DI17_SENSE",
+        "12": "DI17_SUB_ISLAND",
+        "13": "DI16_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI16_IN",
+        "16": "DI16_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8017": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI16_FIELD",
+        "2": "DI16_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8117": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI16_SENSE",
+        "2": "DI16_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8217": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI16_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8017": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI16_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8018": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI17_FIELD",
+        "2": "DI17_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8118": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI17_SENSE",
+        "2": "DI17_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8218": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI17_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8018": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI17_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8109": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8010": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI18_LOGIC",
+        "5": "DI19_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI19_IN",
+        "11": "DI19_SENSE",
+        "12": "DI19_SUB_ISLAND",
+        "13": "DI18_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI18_IN",
+        "16": "DI18_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8019": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI18_FIELD",
+        "2": "DI18_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8119": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI18_SENSE",
+        "2": "DI18_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8219": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI18_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8019": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI18_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8020": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI19_FIELD",
+        "2": "DI19_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8120": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI19_SENSE",
+        "2": "DI19_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8220": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI19_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8020": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI19_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8110": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8011": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI20_LOGIC",
+        "5": "DI21_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI21_IN",
+        "11": "DI21_SENSE",
+        "12": "DI21_SUB_ISLAND",
+        "13": "DI20_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI20_IN",
+        "16": "DI20_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8021": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI20_FIELD",
+        "2": "DI20_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8121": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI20_SENSE",
+        "2": "DI20_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8221": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI20_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8021": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI20_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8022": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI21_FIELD",
+        "2": "DI21_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8122": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI21_SENSE",
+        "2": "DI21_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8222": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI21_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8022": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI21_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8111": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    },
+    "U8012": {
+      "mpn": "ISO1212DBQR",
+      "value": "ISO1212DBQR",
+      "footprint": "CNC_MB_DI:ISO1212_DBQ16_TI",
+      "pins": {
+        "1": "LOGIC_GND",
+        "2": "IO_3V3",
+        "3": "IO_3V3",
+        "4": "DI22_LOGIC",
+        "5": "DI23_LOGIC",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DI23_IN",
+        "11": "DI23_SENSE",
+        "12": "DI23_SUB_ISLAND",
+        "13": "DI22_SUB_ISLAND",
+        "14": "FIELD_B_0V",
+        "15": "DI22_IN",
+        "16": "DI22_SENSE",
+        "6": null,
+        "7": null
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "floating_islands": [
+        13,
+        12
+      ],
+      "source": "TI SLLSEY7G Fig4-2 and DBQ0016A example"
+    },
+    "R8023": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI22_FIELD",
+        "2": "DI22_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8123": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI22_SENSE",
+        "2": "DI22_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8223": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI22_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8023": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI22_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "R8024": {
+      "mpn": "SMM02040C1001FB300",
+      "value": "1k MELF 1%",
+      "footprint": "Resistor_SMD:R_MiniMELF_MMA-0204",
+      "pins": {
+        "1": "DI23_FIELD",
+        "2": "DI23_SENSE"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "threshold_pulse",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 50,
+      "power_screen_w": 0.25,
+      "voltage_rating_v": 200
+    },
+    "R8124": {
+      "mpn": "CRCW0603562RFKEA",
+      "value": "562R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI23_SENSE",
+        "2": "DI23_IN"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "sense",
+      "resistance_ohm": 562,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "R8224": {
+      "mpn": "CRCW0603100KFKEA",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DI23_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "output_bias",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "power_screen_w": 0.1,
+      "voltage_rating_v": 75
+    },
+    "C8024": {
+      "mpn": "C2012C0G2A103J125AA",
+      "value": "10nF 100V C0G",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "DI23_SENSE",
+        "2": "FIELD_B_0V"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "field_filter",
+      "capacitance_f": 1e-08,
+      "tolerance": 0.05,
+      "tcr_ppm_k": 30,
+      "voltage_rating_v": 100
+    },
+    "C8112": {
+      "mpn": "06033C104JAT2A",
+      "value": "100nF 25V X7R",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "fitted": true,
+      "status": "source_candidate_not_qualified",
+      "role": "logic_bypass",
+      "capacitance_f": 1e-07,
+      "tolerance": 0.05,
+      "voltage_rating_v": 25
+    }
+  },
+  "boundaries": {
+    "J8001": {
+      "mpn": "",
+      "value": "XDI0 FIELD / SENSOR BOUNDARY",
+      "footprint": "",
+      "pins": {
+        "1": "DI0_FIELD",
+        "2": "DI1_FIELD",
+        "3": "DI2_FIELD",
+        "4": "DI3_FIELD",
+        "5": "DI4_FIELD",
+        "6": "DI5_FIELD",
+        "7": "DI6_FIELD",
+        "8": "DI7_FIELD",
+        "9": "SENS24_G0",
+        "10": "SENS24_G0",
+        "11": "FIELD_B_0V",
+        "12": "FIELD_B_0V"
+      },
+      "fitted": false,
+      "status": "unimplemented_parent_boundary_excluded_from_PCB",
+      "role": "unselected_field_terminal_and_unimplemented_sensor_supply",
+      "logical_connector": "XDI0"
+    },
+    "J8002": {
+      "mpn": "",
+      "value": "XDI1 FIELD / SENSOR BOUNDARY",
+      "footprint": "",
+      "pins": {
+        "1": "DI8_FIELD",
+        "2": "DI9_FIELD",
+        "3": "DI10_FIELD",
+        "4": "DI11_FIELD",
+        "5": "DI12_FIELD",
+        "6": "DI13_FIELD",
+        "7": "DI14_FIELD",
+        "8": "DI15_FIELD",
+        "9": "SENS24_G1",
+        "10": "SENS24_G1",
+        "11": "FIELD_B_0V",
+        "12": "FIELD_B_0V"
+      },
+      "fitted": false,
+      "status": "unimplemented_parent_boundary_excluded_from_PCB",
+      "role": "unselected_field_terminal_and_unimplemented_sensor_supply",
+      "logical_connector": "XDI1"
+    },
+    "J8003": {
+      "mpn": "",
+      "value": "XDI2 FIELD / SENSOR BOUNDARY",
+      "footprint": "",
+      "pins": {
+        "1": "DI16_FIELD",
+        "2": "DI17_FIELD",
+        "3": "DI18_FIELD",
+        "4": "DI19_FIELD",
+        "5": "DI20_FIELD",
+        "6": "DI21_FIELD",
+        "7": "DI22_FIELD",
+        "8": "DI23_FIELD",
+        "9": "SENS24_G2",
+        "10": "SENS24_G2",
+        "11": "FIELD_B_0V",
+        "12": "FIELD_B_0V"
+      },
+      "fitted": false,
+      "status": "unimplemented_parent_boundary_excluded_from_PCB",
+      "role": "unselected_field_terminal_and_unimplemented_sensor_supply",
+      "logical_connector": "XDI2"
+    },
+    "J8004": {
+      "mpn": "",
+      "value": "UNIMPLEMENTED ACQUISITION / LOGIC BOUNDARY",
+      "footprint": "",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "DI0_LOGIC",
+        "4": "DI1_LOGIC",
+        "5": "DI2_LOGIC",
+        "6": "DI3_LOGIC",
+        "7": "DI4_LOGIC",
+        "8": "DI5_LOGIC",
+        "9": "DI6_LOGIC",
+        "10": "DI7_LOGIC",
+        "11": "DI8_LOGIC",
+        "12": "DI9_LOGIC",
+        "13": "DI10_LOGIC",
+        "14": "DI11_LOGIC",
+        "15": "DI12_LOGIC",
+        "16": "DI13_LOGIC",
+        "17": "DI14_LOGIC",
+        "18": "DI15_LOGIC",
+        "19": "DI16_LOGIC",
+        "20": "DI17_LOGIC",
+        "21": "DI18_LOGIC",
+        "22": "DI19_LOGIC",
+        "23": "DI20_LOGIC",
+        "24": "DI21_LOGIC",
+        "25": "DI22_LOGIC",
+        "26": "DI23_LOGIC"
+      },
+      "fitted": false,
+      "status": "unimplemented_parent_boundary_excluded_from_PCB",
+      "role": "local_input_controller_not_drawn"
+    }
+  },
+  "sources": {
+    "baseline_design_sha256": "13975de15f099965179bd119fcb25f2597eabecab84121c83bbaca80224a1acb",
+    "baseline_builder_sha256": "eaa7ef042fa03639b4b1c4de807d067ee9e854c8367341dd7b8180261873c80d",
+    "iso1212_datasheet_sha256": "41e0bc7308dd4e0cc8c7f30efb6a2cd87bcc865d9195095ff849be6036cb2328",
+    "iso1212_datasheet_url": "https://www.ti.com/lit/ds/symlink/iso1212.pdf",
+    "package_drawing": "DBQ0016A, 4214846/A, 03/2014; pads1.6x0.41mm, x-centres +/-2.7mm, pitch0.635mm; prototype process candidate"
+  }
+}

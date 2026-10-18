@@ -1,0 +1,137 @@
+SN74LVC2G74
+SCES203Q – APRIL 1999 – REVISED SEPTEMBER 2021
+SN74LVC2G74 Single Positive-Edge-Triggered D-Type Flip-Flop
+With Clear and Preset
+1 Features 3 Description
+• Available in the Texas Instruments This single positive-edge-triggered D-type flip-flop is
+NanoFree™ package designed for 1.65 V to 5.5 V V operation.
+CC
+• Supports 5 V V operation
+CC NanoFree™ package technology is a major
+• Inputs accept voltages to 5.5 V
+breakthrough in IC packaging concepts, using the die
+• Maximum t of 5.9 ns at 3.3 V
+pd as the package.
+• Low power consumption, 10 μA maximum I
+CC
+• ±24 mA output drive at 3.3 V A low level at the preset (PRE) or clear (CLR) input
+• Typical V (output ground bounce) sets or resets the outputs, regardless of the levels
+OLP
+< 0.8 V at V = 3.3 V, T = 25°C of the other inputs. When PRE and CLR are inactive
+CC A
+• Typical V (output V undershoot) (high), data at the data (D) input meeting the setup
+OHV OH
+> 2 V at V = 3.3 V, T = 25°C time requirements is transferred to the outputs on
+CC A
+• I supports live insertion, partial-power-down the positive-going edge of the clock pulse. Clock
+off
+mode, and back-drive protection triggering occurs at a voltage level and is not related
+• Latch-up performance exceeds 100 mA Per JESD directly to the rise time of the clock pulse. Following
+78, class II the hold-time interval, data at the D input can be
+• ESD protection exceeds JESD 22 changed without affecting the levels at the outputs.
+– 2000 V human-body model
+This device is fully specified for partial-power-down
+– 200 V machine model
+applications using I . The I circuitry disables
+off off
+– 1000 V charged-device model
+the outputs, preventing damaging current backflow
+2 Applications through the device when it is powered down.
+• Servers Device Information(1)
+• LED displays PART NUMBER PACKAGE BODY SIZE
+• Network switch SM8 (8) 2.95 mm × 2.80 mm
+• Telecom infrastructure
+SN74LVC2G74 VSSOP (8) 2.30 mm × 2.00 mm
+• Motor drivers
+DSBGA (8) 1.91 mm × 0.91 mm
+• I/O expanders
+(1) For all available packages, see the orderable addendum at
+the end of the data sheet.
+PRE
+D Q
+CLK Q
+CLR
+Simplified Schematic
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+SN74LVC2G74
+SCES203Q – APRIL 1999 – REVISED SEPTEMBER 2021 www.ti.com
+Table of Contents
+1 Features............................................................................1 8.1 Overview.....................................................................9
+2 Applications.....................................................................1 8.2 Functional Block Diagram...........................................9
+3 Description.......................................................................1 8.3 Feature Description.....................................................9
+4 Revision History..............................................................2 8.4 Device Functional Modes............................................9
+5 Pin Configuration and Functions...................................3 9 Application and Implementation..................................10
+6 Specifications..................................................................4 9.1 Application Information.............................................10
+6.1 Absolute Maximum Ratings........................................4 9.2 Typical Power Button Circuit.....................................10
+6.2 ESD Ratings...............................................................4 10 Power Supply Recommendations..............................11
+6.3 Recommended Operating Conditions.........................5 11 Layout...........................................................................12
+6.4 Thermal Information....................................................5 11.1 Layout Guidelines...................................................12
+6.5 Electrical Characteristics.............................................6 11.2 Layout Example......................................................12
+6.6 Timing Requirements, –40°C to +85°C.......................6 12 Device and Documentation Support..........................13
+6.7 Timing Requirements, –40°C to +125°C.....................6 12.1 Receiving Notification of Documentation Updates..13
+6.8 Switching Characteristics, –40°C to +85°C.................7 12.2 Support Resources.................................................13
+6.9 Switching Characteristics, –40°C to +125°C...............7 12.3 Trademarks.............................................................13
+6.10 Operating Characteristics.........................................7 12.4 Electrostatic Discharge Caution..............................13
+6.11 Typical Characteristics..............................................7 12.5 Glossary..................................................................13
+7 Parameter Measurement Information............................8 13 Mechanical, Packaging, and Orderable
+8 Detailed Description........................................................9 Information....................................................................13
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision P (July 2016) to Revision Q (September 2021) Page
+• Updated the numbering format for tables, figures, and cross-references throughout the document..................1
+• Updated the Application and Information section.............................................................................................10
+• Updated the Device Power Button Circuit figure in the Typical Power Button Circuit section..........................10
+Changes from Revision O (January 2015) to Revision P (July 2016) Page
+• Changed SSOP to SM8 in Device Information table..........................................................................................1
+• Updated pinout images to new format................................................................................................................3
+• Added pin number for DSBGA package in Pin Functions table..........................................................................3
+• Changed 6 PINS to 8 PINS in Thermal Information table...................................................................................5
+• Changed 23 to 2.3 for t data in Timing Requirements, –40°C to +125°C .......................................................6
+su
+Changes from Revision N (July 2013) to Revision O (January 2015) Page
+• Added Applications, Device Information table, Pin Functions table, ESD Ratings table, Thermal Information
+table, Typical Characteristics, Feature Description section, Device Functional Modes, Application and
+Implementation section, Power Supply Recommendations section, Layout section, Device and
+Documentation Support section, and Mechanical, Packaging, and Orderable Information section...................1
+Changes from Revision M (February 2007) to Revision N (July 2013) Page
+• Changed I description in Features...................................................................................................................1
+off
+• Added parameter values for –40 to +125°C temperature ratings in Electrical Characteristics table..................6
+• Changed Timing Requirements, –40°C to +85°C table......................................................................................6
+• Added Timing Requirements, –40°C to +125°C table........................................................................................6
+• Changed Switching Characteristics, –40°C to +85°C table................................................................................7
+• Added Switching Characteristics, –40°C to +125°C table..................................................................................7
+2 Submit Document Feedback Copyright © 2021 Texas Instruments Incorporated
+Product Folder Links: SN74LVC2G74
+SN74LVC2G74
+www.ti.com SCES203Q – APRIL 1999 – REVISED SEPTEMBER 2021
+5 Pin Configuration and Functions
+DCTPACKAGE DCUPACKAGE
+(TOPVIEW) (TOPVIEW)
+CLK 1 8 V CLK 1 8 V CC
+CC
+D 2 7 PRE
+D 2 7 PRE Q 3 6 CLR
+GND 4 5 Q
+Q 3 6 CLR
+GND 4 5 Q
+See mechanical drawingsfor dimensions.
+Figure 5-1. DCT 8-Pin SM8 and DCU 8-Pin VSSOP Package Top View
+See mecahnical drawings for dimensions.
+Figure 5-2. YZP Package 8-Pin DSBGA Bottom View
+Table 5-1. Pin Functions
+PIN
+TYPE DESCRIPTION
+NAME VSSOP, SM8 DSBGA
+CLK 1 A1 I Clock input
+CLR 6 C2 I Clear input – Pull low to set Q output low
+D 2 B1 I Input
+GND 4 D1 — Ground
+PRE 7 B2 I Preset input – Pull low to set Q output high
+Q 5 D2 O Output
+Q 3 C1 O Inverted output
+V 8 A2 — Supply
+CC
+Copyright © 2021 Texas Instruments Incorporated Submit Document Feedback 3
+Product Folder Links: SN74LVC2G74

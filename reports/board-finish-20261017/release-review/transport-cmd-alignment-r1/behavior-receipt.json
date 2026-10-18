@@ -1,0 +1,59 @@
+{
+  "status": "ACTUAL_SPI_OLD_NEW_TRANSPORT_ALIGNMENT_DIFFERENTIAL_PASS",
+  "executions": [
+    {
+      "name": "compile",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "iverilog",
+        "-g2012",
+        "-s",
+        "transport_alignment_diff_tb",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/transport-cmd-alignment-r1/differential.vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/transport-cmd-alignment-r1/original_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/transport-cmd-alignment-r1/candidate_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/transport_alignment_diff_tb.sv"
+      ],
+      "exit": 0,
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "execute",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/transport-cmd-alignment-r1/differential.vvp"
+      ],
+      "exit": 0,
+      "log_SHA256": "65b4b7f9bdcbdac60c5b7e66e657ccdbc94625f739b4a1d8989fdce5520e6258"
+    }
+  ],
+  "elapsed_seconds": 67.77373838424683,
+  "candidate_SHA256": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+  "canonical_sources_unchanged": true,
+  "input_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\qualify_transport_alignment_r1.py": "c31d1094a2e2433f213c4a3877e646aa466ab713d799f2b6f9be770b03a1b1ed",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\original_diff.v": "3ccca0407f9cdb739e970ceb4622652581dc066c3e3d8cd6413f3fab04738e81",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\candidate_diff.v": "cf72e85381bd7e6a977bd121eaec90953d59b009d539776c02f7f8d816b02d5b",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport_alignment_diff_tb.sv": "490324280f18f906446f31a881779ea53f6e3c5275fcb2533930afd1498f82fc"
+  },
+  "scope": "all public outputs including held frames/rejection headers/rate words/MISO/OE; all internal protocol/CRC/timer/snapshot state exact, RX compared under explicit CMD-upper768 normalization; checked before/after core edges and asynchronous reset pulses",
+  "vectors": "32valid CRC16frames including16CMD\u00d712ratewords andFBgood/badinnerCRC; malformedCRC,truncation/header/overrun boundaries,overlap,timing,reset,180000binarywirefuzzcycles,3000fourstatewirefuzzcycles",
+  "formal_equivalence": "NOT_RUN",
+  "physical_fit_timing": "OPEN",
+  "adopted": false,
+  "manufacturing_ready": false
+}

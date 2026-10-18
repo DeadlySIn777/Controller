@@ -1,0 +1,194 @@
+{
+  "date": "2026-09-28",
+  "scope": "Runtime calibration in actual LinuxCNC/RTL simulation, public file-backed recovery CLI and laboratory Linux SPI backend.",
+  "observed_checks": {
+    "python_unittest_discover": {
+      "passed": 234,
+      "exit_code": 0,
+      "output": "..........................................................................................................................................................................................................................................\r\n----------------------------------------------------------------------\r\nRan 234 tests in 14.231s\r\n\r\nOK\r\n"
+    },
+    "recovery_cli_demo": {
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "simulation_only": true,
+        "scope": "public_CLI_subprocess_acceptance",
+        "command_results": [
+          {
+            "command": "profile select",
+            "ok": true
+          },
+          {
+            "command": "cartridge save",
+            "ok": true
+          },
+          {
+            "command": "cartridge save",
+            "ok": true
+          },
+          {
+            "command": "cartridge inspect",
+            "ok": true
+          },
+          {
+            "command": "init",
+            "ok": true
+          },
+          {
+            "command": "recovery inventory",
+            "ok": true
+          },
+          {
+            "command": "recovery bootstrap-preview",
+            "ok": true
+          },
+          {
+            "command": "recovery apply",
+            "ok": true
+          },
+          {
+            "command": "config show",
+            "ok": true
+          },
+          {
+            "command": "recovery inventory",
+            "ok": true
+          },
+          {
+            "command": "recovery replace-preview",
+            "ok": true
+          },
+          {
+            "command": "recovery apply",
+            "refused": "RECOVERY_NO_REPLACEMENT"
+          },
+          {
+            "command": "recovery apply",
+            "ok": true
+          },
+          {
+            "command": "config show",
+            "ok": true
+          }
+        ],
+        "cartridge_generation": 2,
+        "settings_unchanged": true,
+        "source_file_unchanged": true,
+        "old_module": "SIM-IN-001",
+        "new_module": "SIM-IN-002",
+        "new_module_factory_metadata": {
+          "input_filter_clock_correction_ppm": -22,
+          "evidence": "illustrative_fixture_not_measured"
+        },
+        "verification_required": [
+          {
+            "device": "x-home",
+            "resource": "SIM.DI0",
+            "checks": [
+              "wiring",
+              "polarity"
+            ],
+            "status": "pending"
+          },
+          {
+            "device": "y-home",
+            "resource": "SIM.DI1",
+            "checks": [
+              "wiring",
+              "polarity"
+            ],
+            "status": "pending"
+          },
+          {
+            "device": "z-home",
+            "resource": "SIM.DI2",
+            "checks": [
+              "wiring",
+              "polarity"
+            ],
+            "status": "pending"
+          }
+        ],
+        "outputs_inhibited": true,
+        "homed": false,
+        "run_permission": false,
+        "physical_commands": 0,
+        "temporary_files_removed": true
+      }
+    },
+    "actual_linuxcnc": {
+      "passed": 26,
+      "run_id": "fc802fbe-42b8-41fb-9fcc-0aa57cdc4951",
+      "compiled_assertions": 179,
+      "source_evidence_module_hashes_independently_verified": true
+    },
+    "spidev": {
+      "normal_assertions": 892,
+      "asan_ubsan_assertions": 892,
+      "cpp_link_test": "passed",
+      "physical_device_access": false
+    }
+  },
+  "source_sha256": {
+    "cnc1/__init__.py": "241a0afd94ca69a322f28ba6f63c23c25058d04a3f0a8093befd60ff4cde4457",
+    "cnc1/integration.py": "d7617e1f428485a7fa6811b96fffc6039584ed90a2b9cc043374dd1338346e36",
+    "cnc1/profiles/sim/controller.ini": "23740e74e87d6fdbbaa5a8b08c91334dd6346eb082cfd1284333c55ce6abb45d",
+    "cnc1/profiles/sim/display-client": "b8810024b88699f5633e3e956c4b362e0394669415b30fe4b89fe226cce7d286",
+    "cnc1/profiles/sim/simulation.hal": "c0d21aaaad564dd01137d6b6f94bcb292c7afc5c7d4a91d9709b70c236b479b8",
+    "cnc1/profiles/sim/tools.tbl": "e84586dd241db7c3bf3d8553895dfb7721571ef3f253581aca7fa533ed719fba",
+    "cnc1/PROTOCOL_V2.md": "5da98a235262fa3848c21f9de0765c8dac239bcc5bdc45ed5b687f2cf4b0ed9b",
+    "cnc1/README.md": "f3b9d5e64c9b77ab94f92abb3265a89fb1a386a3c1ec119092508faa25f3b294",
+    "cnc1/src/cnc1.c": "1267d5da116bc7f718b457592087b312b01a5c33bb40627f338cec3a37b84496",
+    "cnc1/src/cnc1.h": "e88c22d447d22ecb00901f424f6ade263181413e91d5fe9417a6d2bdbb5b2304",
+    "cnc1/src/hal_cnc1.c": "f9d269c8d31d899c3ba818e38b715b4208d7f5706860c80356d91797aaa7d6b3",
+    "cnc1/src/sim_transport.cpp": "a5ecae83e17b2d0daadded499fcff14d69785711cb6cbf3a148ad0ff95eceda5",
+    "cnc1/tests/test_driver.c": "2876c9fc4d22d5aef3de83a351be19139d7875da312511dbe4e75741202a51b0",
+    "cnc1/tools/build.sh": "3ea69b848757f1b8fe2549a86299e040e8b27cf78800d5fc6b6401b66d68471e",
+    "cnc1/tools/record_evidence.py": "7db2f55fe4ab46094abbab4c6d4ef51ec18f764ac96992968c45c6e425a7833c",
+    "cnc1/tools/run_linuxcnc.sh": "b70b4dd88c69fe139585b793752c826b37c923dfbe69e7dd70f29cdec9a1d36b",
+    "controller_config/__init__.py": "cbdb33699473c16da288879cc42d6142e18b9adb5857ab9d152c53dc7c29a43e",
+    "controller_config/__main__.py": "49fe3695426a5daf5af03caf4830e8d47d172e414c5c74257c049bcb1c752d1c",
+    "controller_config/model.py": "3bcfc8e16e191c1a5855c6187ef9091797d94d8e49042445a72de646ebe6c1ab",
+    "controller_config/recovery.py": "2be492351059c81ee2687de1564c2b6b6dfb245f21bf9f2b79f9393f233511ee",
+    "controller_config/runtime.py": "b495d02828eb30842b0572d16e6fa20c9a24bbe910671d301d370aeb4b2131ba",
+    "controller_config/service.py": "8205be4fa424ce007b323d65c1ae8d3200421afe08f71027033411b389baa87a",
+    "gateware/rtl/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "gateware/rtl/cnc_endpoint.v": "476d78b32d7ad89e512a3c4abd8b906ce922a329fda15a2cc18633bf11768066",
+    "gateware/rtl/cnc_spi_frame.v": "064e95d703a8bdd70b3a2451c254a015632f2620867e5cd52fd84199404e69e5",
+    "gateware/rtl/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "reports/CNC1_INTEGRATION.md": "711802627d215c405b0dca2b6b5c5a25d89670d195c39ac699915c1759939ada",
+    "reports/RUNTIME_CONFIGURATION.md": "110479d52cd3714d38cbad9b40a45664ce3b231f0deff38dddf4e56298f5ac68",
+    "tests/test_runtime_configuration.py": "9edbf963ad206ed185c410389fc4418f68dbace027246e4af6d07501f7450e0a",
+    "cnc1/src/spidev_transport.h": "7002af2a6c5495e1f8b7291298fea80cfd04c499b23a1918c700f28a6a222129",
+    "cnc1/src/spidev_transport.c": "ae97f700c45c52ec2d8c91764eb423e0dccf80599741887fbe8a79eefc1438d3",
+    "cnc1/tests/test_spidev.c": "c7965a746fa4051596c29e48912b5a04af4c96219129a47184b553d21f7e6357",
+    "cnc1/tests/test_spidev_cpp.cpp": "108d16b62a2b12c3401de317f7989c5c228ea73ab941cfd596af2fad8e83843a",
+    "cnc1/tools/test_spidev.sh": "ec2c6afd0fa6ae5dbc9fbc62d509e27e85b4e3fedfde785eef8dfb234f56775d",
+    "reports/SPI_TRANSPORT_IMPLEMENTATION.md": "9941af7ab43a39d5e8b4674dd245fc44d5af127ac7deae0c6e0db9d20d677d5b",
+    "tests/test_recovery_cli.py": "6eace05878cdd1c560caf806b3c3b7744b4b9b473f6a0c0ed1b4472007d6f598",
+    "examples/configuration/recovery_cli_demo.py": "dc6ecaae95a4a5c31c9c9b52f172c359ca456ff02ea89b542614f9c1c94613d2",
+    "reports/RECOVERY_CLI.md": "61620fdbfaa3477a26b2b261b67e6f21cf1569e32704e2378f6cf43d47e9fb10",
+    "examples/configuration/README.md": "d83c29290e7fd099818245ac14e31ba1fc48ea9c6e01705fba34f282f9194274"
+  },
+  "limits": [
+    "Runtime service supports XYZ step scales only and does not persist them across driver restart.",
+    "Complete machine-profile/cartridge authority and active-runtime reconciliation remain unfinished.",
+    "spidev ioctl is synchronous and has no enforced completion deadline; backend is not wired into the default HAL profile.",
+    "No physical device, machine, cartridge or PCB was commissioned; no fabrication package released."
+  ],
+  "review_fixes": [
+    "Compiled stopped inhibit independent of Python state check; active scales read-only.",
+    "Runtime snapshot atomic publication and per-instance stale binding.",
+    "Caller plan mutation isolated before apply.",
+    "Recovery CLI reuses core validation and rejects stale/authored-inventory mismatches.",
+    "SPI frames use single full-duplex ioctl and never replay uncertain transfers."
+  ],
+  "manifest_sha256": {
+    "cnc1/evidence/manifest.json": "e100680b594486bf0743a006b6ff42700e0de4489b502fd6875c76f41af8b1b9",
+    "cnc1/evidence/spidev/manifest.json": "7f4b5610f980cbca8329fa63860707b87c4ee252f6b83430e68f3c4c62c98987"
+  },
+  "local_document_links": {
+    "checked": 164,
+    "missing": []
+  }
+}

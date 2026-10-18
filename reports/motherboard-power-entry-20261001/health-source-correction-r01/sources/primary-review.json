@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-01",
+  "primary_only": true,
+  "ltc2962": {
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC2962-2963-2964.pdf",
+    "revision": "Rev0",
+    "local_pdf_obtained": false,
+    "browser_pdf_pages_reviewed": [
+      3,
+      4
+    ],
+    "RST_VOL_max_v": 0.15,
+    "RST_VOL_conditions": "ISINK3mA,VCC2.25..5.5V/fullspecifiedtemperature; DVCC0 open-drain",
+    "RST_output_leakage_max_a": 1e-07,
+    "leakage_conditions": "Output5.5V,VCC5.5V or0V; no arbitrary intermediate-voltage claim",
+    "internal_RST_pullup_max_a": 1e-05,
+    "internal_RST_pullup_not_credited_for_HIGH": true
+  },
+  "nexperia2G04": {
+    "file": "74lvc2g04.pdf",
+    "revision": "Rev13 15Aug2023",
+    "pin_table_page": 3,
+    "recommended_input_slew_max_ns_per_v_at_2p7_to5p5v": 10,
+    "this_rate_requirement_is_preserved_as_prior_source_gap": true
+  },
+  "nexperia2G14": {
+    "file": "74lvc2g14.pdf",
+    "revision": "Rev14 18Aug2023",
+    "pin_function_map": {
+      "1": "1A",
+      "2": "GND",
+      "3": "2A",
+      "4": "2Y",
+      "5": "VCC",
+      "6": "1Y"
+    },
+    "GW_package": "SOT363-2/TSSOP6",
+    "operating_supply_v": [
+      1.65,
+      5.5
+    ],
+    "temperature_c": [
+      -40,
+      125
+    ],
+    "unlimited_rise_and_fall": true,
+    "VI_max_v": 5.5,
+    "Iinput_max_a": 1e-06,
+    "Iinput_conditions": "VI5.5V orGND,VCC0..5.5V",
+    "Ioff_max_a": 2e-06,
+    "Ioff_conditions": "VCC0,VIorVO5.5V",
+    "VIH_screen_v": 3.8,
+    "VTplus_table_rows": {
+      "4.5V": {
+        "full125C_max_v": 3.3
+      },
+      "5.5V": {
+        "full125C_max_v": 3.8
+      }
+    },
+    "discrete_rows_not_interpolated": true,
+    "full_intermediate_voltage_threshold_requires_vendor_or_loaded_validation": true,
+    "VOH_min": "VCC-.1V atIO=-100uA,VCC1.65..5.5; sink-inputmax1uA fits thisloadcondition",
+    "VOL_max_v": 0.1,
+    "VOL_conditions": "IO100uA,VCC1.65..5.5V",
+    "powered_zero_VCC_input_output_leakage_qualified_only_at_stated_tests": true
+  },
+  "fanout_leakage_screen_a": {
+    "U2006_TI1G17": 5e-06,
+    "U11019_two_Nexperia14_inputs": 2e-06,
+    "U19014_AHCT1G08": 1e-06,
+    "U17013_AHCT08": 1e-06,
+    "U11012_TPS22990_ON": 1e-07,
+    "U2005_RST": 1e-07
+  },
+  "leakage_screen_qualification": "Sumofpublishedendpointtestlimits, not a complete mixedinteriorvoltage/rampguarantee",
+  "resistor": "CRCW06032K20FKEA; sourceVishay20035ordinary0603ordering,1%100ppm/K/.1W. Native pads unchanged.2.5%totalR corner is1%initial+150K100ppm/Kscreen, notnewmanufacturerspecification",
+  "safety_truth": [
+    {
+      "actual_core_health": false,
+      "inv_output": "HIGH",
+      "sink_output": "HI_Z",
+      "CORE_LED": "OFF",
+      "NO_contacts": "OPEN",
+      "bank_latch": "asynchronouslyCLEARED",
+      "motor_gate": "withdrawn"
+    },
+    {
+      "actual_core_health": true,
+      "inv_output": "LOW",
+      "sink_output": "LOW",
+      "CORE_LED": "conditionalIFwindow",
+      "NO_contacts": "conditionalCLOSED",
+      "bank_latch": "remainsCLEAREDuntilfreshphysicalrearmedge",
+      "motor_gate": "also_requires_actual_fieldhealth_andupstreampermission"
+    }
+  ],
+  "missing_soldered_supervisor_detected": false,
+  "missing_supervisor_reason": "AmissingfittedRSTpackagewithexternalpullupcannotbedistinguishedfromreleasedopen-drain; fittedproductiontestisrequired. Thisisnotacommoditymissingmoduledefaultclaim."
+}

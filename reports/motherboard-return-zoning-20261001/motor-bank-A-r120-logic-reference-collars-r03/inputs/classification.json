@@ -1,0 +1,1858 @@
+{
+  "passed": true,
+  "scope": "Exact existing field5-to-two-photorelay-LED-to-open-drain field-return current loop only",
+  "input_sha256": {
+    "reports\\motherboard-return-zoning-20261001\\motor-bank-A-r83-field-collar-screen-r03\\screen.json": "c9fd0528f90a6924e3cd6a483e6d82c7d5395f5b75296fe76ce18de1cf40574a",
+    "reports\\motherboard-return-zoning-20261001\\motor-bank-A-r83-source-collar-screen-r02\\screen.json": "d52219d749517ea2a09faa9115eaf2f5ce4675edb07dcd63c21b08b105b388c5",
+    "hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "reports\\motherboard-power-entry-20260930\\core7a-r04\\validation.json": "651e8444e4332c2e1a20b0140a2d6cf5060005fc578578ce5f7945bbf514534e",
+    "reports\\motherboard-power-entry-20261001\\health-supply-r99\\receipt.json": "f7c2fd0c7d252cbd3dae6a6d2895a1ac46a2468af70576dbd5e288574bd8fc00",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-return-zoning-20261001\\classify-motor-bank-A-field-LED-power-r02.py": "6499f0d300ed700736f593b755348ed7c3041ffd09a1c57ad9b9637bd87a76d4",
+    "tools\\hardware_validate_motherboard_power_entry.py": "3ffa03ba6ff79c3871c45b1368a314dfa5da383c0219e02892ea47c03212c9b9"
+  },
+  "native_source_parts": {
+    "R11071": {
+      "kind": "R",
+      "mpn": "CRCW0603120RFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "value": "120R 1%",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_HEALTH_A_LED_A"
+      },
+      "role": "FIELD two-series NO relay LED resistor",
+      "resistance_ohm": 120,
+      "initial_tolerance": 0.01,
+      "selection_required": false,
+      "tcr_ppm": 100,
+      "rated_power_w": 0.1,
+      "working_voltage_v": 75,
+      "purchasing_source": "Vishay20035 Rev14Apr2026",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "R11071"
+    },
+    "U11027": {
+      "kind": "TLP3640A",
+      "mpn": "TLP3640A(TPL,E",
+      "footprint": "CNC_MB_Entry:TLP3640A_SO4_11-3C1",
+      "value": "TLP3640A(TPL,E",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_HEALTH_A_LED_A",
+        "2": "FIELD_HEALTH_A_LED_MID",
+        "3": "MOTOR_FEED_CLEAR_MID_A",
+        "4": "MOTOR_FEED_CLEAR_N_A"
+      },
+      "role": "FIELD actual-health isolated NO contact; must open on invalid source rail",
+      "bank": "A",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11027"
+    },
+    "U11028": {
+      "kind": "TLP3640A",
+      "mpn": "TLP3640A(TPL,E",
+      "footprint": "CNC_MB_Entry:TLP3640A_SO4_11-3C1",
+      "value": "TLP3640A(TPL,E",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_HEALTH_A_LED_MID",
+        "2": "FIELD_HEALTH_A_LED_K",
+        "3": "MOTOR_TX_GATE_CONTACT_MID_A",
+        "4": "MOTOR_TX_GATE_A"
+      },
+      "role": "FIELD direct gate-authority NO contact; separate receiving-rail cutting",
+      "bank": "A",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11028"
+    },
+    "U11026": {
+      "kind": "LVC2G07",
+      "mpn": "74LVC2G07GW,125",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "value": "74LVC2G07GW,125",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_HEALTH_A_N",
+        "2": "FIELD_GND",
+        "3": "FIELD_HEALTH_B_N",
+        "4": "FIELD_HEALTH_B_LED_K",
+        "5": "FIELD_5V",
+        "6": "FIELD_HEALTH_A_LED_K"
+      },
+      "role": "FIELD independent LED sinks; IOZ2uA/IOFF2uA at datasheet testconditions",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11026"
+    },
+    "U11025": {
+      "kind": "LVC2G04",
+      "mpn": "74LVC2G04GW,125",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "value": "74LVC2G04GW,125",
+      "physical": true,
+      "pins": {
+        "1": "MOTOR_FIELD_HEALTH_A_RAW",
+        "2": "FIELD_GND",
+        "3": "MOTOR_FIELD_HEALTH_B_RAW",
+        "4": "FIELD_HEALTH_B_N",
+        "5": "FIELD_5V",
+        "6": "FIELD_HEALTH_A_N"
+      },
+      "role": "FIELD raw-health inversion for fail-open photocontacts",
+      "source_block": "motherboard_power_entry",
+      "source_reference": "U11025"
+    }
+  },
+  "exact_power_rows": [
+    {
+      "role": "R11071.2_to_U11027.1",
+      "net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_A",
+      "actual_copper_UUIDs": [
+        "540bdcf3-dc93-4583-adab-8ab33048e69d"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.3,
+      "literal_points_mm": [
+        [
+          292.175,
+          229.635
+        ],
+        [
+          289.15,
+          229.635
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "U11027.2_to_U11028.1",
+      "net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_MID",
+      "actual_copper_UUIDs": [
+        "cc5f79b1-f1ce-4eab-81af-cd4fd902ee03",
+        "5bbc100c-f909-4bea-98a7-a26a55710eac",
+        "38cd5923-68a7-4233-8c66-414cbfbd5e9d"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.3,
+      "literal_points_mm": [
+        [
+          289.15,
+          228.365
+        ],
+        [
+          288.15,
+          228.365
+        ],
+        [
+          288.15,
+          234.635
+        ],
+        [
+          289.15,
+          234.635
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false,
+        false,
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_sink_from_escape",
+      "net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_K",
+      "actual_copper_UUIDs": [
+        "e7f6c0cc-7469-4708-a3ed-1f4cb51c7a14"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          289.15,
+          233.365
+        ],
+        [
+          289.9,
+          233.365
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_sink_to_escape",
+      "net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_K",
+      "actual_copper_UUIDs": [
+        "116f8d6e-730f-40f2-8735-43bf146629a4"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          328.3375,
+          190.35
+        ],
+        [
+          329.0875,
+          190.35
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_sink",
+      "net": "/motherboard_power_entry/FIELD_HEALTH_A_LED_K",
+      "actual_copper_UUIDs": [
+        "08f92807-4d45-4507-94e7-bba55af9907f",
+        "9744c3e6-eeea-4c04-8413-9fc38bf0e968",
+        "f2039f8a-3099-4a58-bfef-8d47d8197cca",
+        "adb803e5-dd3d-4bfd-8b76-cc64ca8c1d78",
+        "0b135ebe-6b8f-4920-b359-1128e94ac898",
+        "24c5efbb-f81d-4978-a6b1-a6c04b7208e1",
+        "704aa9dd-33ab-4d7a-a92b-a322c276b463",
+        "8e0d40d3-c7ec-4716-adb6-054430f8bc82",
+        "83c5f2fd-a7f6-477e-874a-3d1f6b4300fe",
+        "ac7c3531-47fd-4441-b311-7f733d709744",
+        "c3ff1473-b9d4-4e8c-bcd9-00eae0313db3",
+        "1b18b271-73b3-46c0-828f-7ae1a3e1eb19",
+        "fea971e9-ad2e-4415-af8e-5c276acbc6ee",
+        "43262b37-9673-4ab4-b8b2-01f601f54a46",
+        "e8eecc87-2805-40c2-b68b-c6a146a7bea4",
+        "d9b343e2-5793-4099-9f34-f0a881b454b3",
+        "a92cddfc-0386-4813-9114-d3790fe7d1d4",
+        "20f63433-ee42-4125-8b3e-6b9ab6252bc6",
+        "fff55e02-c0fc-432f-9cf5-5b0da0237c0b"
+      ],
+      "layer": "B.Cu",
+      "reference_layer": "In4.Cu",
+      "width_mm": 0.3,
+      "literal_points_mm": [
+        [
+          289.9,
+          233.365
+        ],
+        [
+          307.9,
+          233.365
+        ],
+        [
+          310.9,
+          236.365
+        ],
+        [
+          311.4,
+          236.365
+        ],
+        [
+          311.9,
+          236.865
+        ],
+        [
+          312.4,
+          236.365
+        ],
+        [
+          313.4,
+          236.365
+        ],
+        [
+          314.4,
+          235.365
+        ],
+        [
+          315.4,
+          235.365
+        ],
+        [
+          318.4,
+          232.365
+        ],
+        [
+          318.4,
+          222.365
+        ],
+        [
+          326.4,
+          214.365
+        ],
+        [
+          326.4,
+          199.365
+        ],
+        [
+          327.4,
+          198.365
+        ],
+        [
+          327.4,
+          193.865
+        ],
+        [
+          327.9,
+          193.365
+        ],
+        [
+          327.9,
+          192.865
+        ],
+        [
+          329.4,
+          191.365
+        ],
+        [
+          329.4,
+          190.865
+        ],
+        [
+          329.0875,
+          190.35
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [
+        {
+          "segment": [
+            [
+              307.9,
+              233.365
+            ],
+            [
+              310.9,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.2685103777445
+        },
+        {
+          "segment": [
+            [
+              307.9,
+              233.365
+            ],
+            [
+              310.9,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.478609800402
+        },
+        {
+          "segment": [
+            [
+              310.9,
+              236.365
+            ],
+            [
+              311.4,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.9316791
+        },
+        {
+          "segment": [
+            [
+              311.4,
+              236.365
+            ],
+            [
+              311.9,
+              236.865
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.222474170402
+        },
+        {
+          "segment": [
+            [
+              311.9,
+              236.865
+            ],
+            [
+              312.4,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.322474170402
+        },
+        {
+          "segment": [
+            [
+              312.4,
+              236.365
+            ],
+            [
+              313.4,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.1516791
+        },
+        {
+          "segment": [
+            [
+              312.4,
+              236.365
+            ],
+            [
+              313.4,
+              236.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.0787969571805
+        },
+        {
+          "segment": [
+            [
+              313.4,
+              236.365
+            ],
+            [
+              314.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.0936652777445
+        },
+        {
+          "segment": [
+            [
+              313.4,
+              236.365
+            ],
+            [
+              314.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.488540555966
+        },
+        {
+          "segment": [
+            [
+              313.4,
+              236.365
+            ],
+            [
+              314.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.551777095489
+        },
+        {
+          "segment": [
+            [
+              313.4,
+              236.365
+            ],
+            [
+              314.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.322474170402
+        },
+        {
+          "segment": [
+            [
+              314.4,
+              235.365
+            ],
+            [
+              315.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.111
+        },
+        {
+          "segment": [
+            [
+              314.4,
+              235.365
+            ],
+            [
+              315.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.1781931571805
+        },
+        {
+          "segment": [
+            [
+              314.4,
+              235.365
+            ],
+            [
+              315.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.0815
+        },
+        {
+          "segment": [
+            [
+              314.4,
+              235.365
+            ],
+            [
+              315.4,
+              235.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.1516791
+        },
+        {
+          "segment": [
+            [
+              315.4,
+              235.365
+            ],
+            [
+              318.4,
+              232.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.26784171
+        },
+        {
+          "segment": [
+            [
+              315.4,
+              235.365
+            ],
+            [
+              318.4,
+              232.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.26784171
+        },
+        {
+          "segment": [
+            [
+              315.4,
+              235.365
+            ],
+            [
+              318.4,
+              232.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.038136555966
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              232.365
+            ],
+            [
+              318.4,
+              222.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 4.44
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              232.365
+            ],
+            [
+              318.4,
+              222.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.1781931571805
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              232.365
+            ],
+            [
+              318.4,
+              222.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.7203582
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              222.365
+            ],
+            [
+              326.4,
+              214.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.394154185489
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              222.365
+            ],
+            [
+              326.4,
+              214.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.26784171
+        },
+        {
+          "segment": [
+            [
+              318.4,
+              222.365
+            ],
+            [
+              326.4,
+              214.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 2.412126555966
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              214.365
+            ],
+            [
+              326.4,
+              199.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.1781931571805
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              214.365
+            ],
+            [
+              326.4,
+              199.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.5665
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              214.365
+            ],
+            [
+              326.4,
+              199.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 6.44
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              214.365
+            ],
+            [
+              326.4,
+              199.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.7203582
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              199.365
+            ],
+            [
+              327.4,
+              198.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.488540555966
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              199.365
+            ],
+            [
+              327.4,
+              198.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.26784171
+        },
+        {
+          "segment": [
+            [
+              326.4,
+              199.365
+            ],
+            [
+              327.4,
+              198.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.394154185489
+        },
+        {
+          "segment": [
+            [
+              327.4,
+              198.365
+            ],
+            [
+              327.4,
+              193.865
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 1.7203582
+        },
+        {
+          "segment": [
+            [
+              327.4,
+              198.365
+            ],
+            [
+              327.4,
+              193.865
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 2.24
+        },
+        {
+          "segment": [
+            [
+              327.4,
+              193.865
+            ],
+            [
+              327.9,
+              193.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.394154185489
+        },
+        {
+          "segment": [
+            [
+              327.9,
+              192.865
+            ],
+            [
+              329.4,
+              191.365
+            ]
+          ],
+          "foreign_return": "/LOGIC_GND",
+          "exact_intersection_mm2": 0.016337185489
+        }
+      ],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_source_from_escape",
+      "net": "/motherboard_power_entry/FIELD_5V",
+      "actual_copper_UUIDs": [
+        "585f6e1c-54de-4ede-a273-8a1b4667a00e"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          293.825,
+          229.635
+        ],
+        [
+          294.575,
+          229.635
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_source_to_escape",
+      "net": "/motherboard_power_entry/FIELD_5V",
+      "actual_copper_UUIDs": [
+        "87d2e8f6-61c5-46e0-a7a8-535ffe9003b9"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          299.0,
+          197.475
+        ],
+        [
+          299.75,
+          197.475
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    },
+    {
+      "role": "FIELD_LED_A_actual_source",
+      "net": "/motherboard_power_entry/FIELD_5V",
+      "actual_copper_UUIDs": [
+        "e019ea37-f28e-44de-b612-a0af55d57507"
+      ],
+      "layer": "B.Cu",
+      "reference_layer": "In4.Cu",
+      "width_mm": 0.3,
+      "literal_points_mm": [
+        [
+          294.575,
+          229.635
+        ],
+        [
+          299.75,
+          197.475
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false,
+      "classification": "low_current_LED_POWER",
+      "signal_reference_qualification_credit": false,
+      "require_actual_Source_receiving_sink_and_return_continuity": true
+    }
+  ],
+  "exact_retained_logic_control_rows": [
+    {
+      "role": "U11031.4_to_U11032.1",
+      "net": "/motherboard_power_entry/MOTOR_FEED_REARM_A",
+      "actual_copper_UUIDs": [
+        "5d1648da-58d7-4f92-9340-5fbef36f51ec",
+        "23f04b06-a8ef-458c-b246-1cf7dcda8559"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          258.1375,
+          196.95
+        ],
+        [
+          258.1375,
+          196.25
+        ],
+        [
+          262.6,
+          196.25
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        true,
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11031.2_to_U11033.2",
+      "net": "/fpga_core/OPI_REARM_M",
+      "actual_copper_UUIDs": [
+        "55c07741-86b6-4c79-bdaf-600149a0cd43"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          255.8625,
+          196.0
+        ],
+        [
+          250.8625,
+          196.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11031.2_to_R11076.1",
+      "net": "/fpga_core/OPI_REARM_M",
+      "actual_copper_UUIDs": [
+        "14a074aa-efa4-49e4-9afb-17666d5d3c98",
+        "d0736bca-7690-447a-9c1e-981237424617",
+        "4d107159-7523-430b-b8f2-b4b2754438e3"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          255.8625,
+          196.0
+        ],
+        [
+          254.8625,
+          196.0
+        ],
+        [
+          254.8625,
+          201.0
+        ],
+        [
+          256.175,
+          201.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true,
+        true,
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "R11076.1_to_R11080.1",
+      "net": "/fpga_core/OPI_REARM_M",
+      "actual_copper_UUIDs": [
+        "4b714149-f3c8-4a41-ae1b-29c7da14890b",
+        "137a5e76-4d16-4b3c-bc78-1bd1ee6ed8f4",
+        "15d73c17-99f6-4767-975a-4869bfc09b1a"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          256.175,
+          201.0
+        ],
+        [
+          256.175,
+          200.0
+        ],
+        [
+          251.175,
+          200.0
+        ],
+        [
+          251.175,
+          201.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true,
+        true,
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11032.5_to_R11042.1",
+      "net": "/motherboard_power_entry/MOTOR_FEED_ON_A",
+      "actual_copper_UUIDs": [
+        "f3b51377-9782-45d9-bd09-2b2917f147c9",
+        "ac898456-7ee9-4956-bbc6-f027d95c8349",
+        "cf23aad1-587e-4cb5-a5ca-b8946ad6aef5"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          265.4,
+          197.75
+        ],
+        [
+          264.4,
+          197.75
+        ],
+        [
+          264.4,
+          181.5
+        ],
+        [
+          266.175,
+          181.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        true,
+        false,
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_ON_own_receive_escape",
+      "net": "/motherboard_power_entry/MOTOR_FEED_ON_A",
+      "actual_copper_UUIDs": [
+        "8c9a5cc8-ae5b-4c09-992c-674dd77f141d"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          270.85,
+          180.8
+        ],
+        [
+          271.025,
+          180.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_ON_actual_referenced_control_from_escape",
+      "net": "/motherboard_power_entry/MOTOR_FEED_ON_A",
+      "actual_copper_UUIDs": [
+        "7c1d969b-65e0-42ef-aa47-54f70d8ef5c4"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          266.175,
+          181.5
+        ],
+        [
+          266.925,
+          181.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_ON_actual_referenced_control",
+      "net": "/motherboard_power_entry/MOTOR_FEED_ON_A",
+      "actual_copper_UUIDs": [
+        "e2d21749-5502-49d8-b604-9be432969bf1"
+      ],
+      "layer": "B.Cu",
+      "reference_layer": "In4.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          266.925,
+          181.5
+        ],
+        [
+          270.85,
+          180.8
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "R11074.2_to_U11021.3",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_SOURCE_A",
+      "actual_copper_UUIDs": [
+        "7c28ddd3-5676-4dc5-8530-ca7d621d3108",
+        "1bc4c72d-dba1-4366-9257-acdd44840188",
+        "455684ee-32d0-47d4-b6ea-bcf6d1215c66",
+        "e8e0684b-9690-448e-8569-a60b821dd8ba",
+        "0e8be982-e73e-4cee-8cbd-034875d98396",
+        "defdd2dd-6f9f-42a0-855e-fc63abe1471a"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          269.825,
+          220.5
+        ],
+        [
+          275.825,
+          226.5
+        ],
+        [
+          275.825,
+          227.0
+        ],
+        [
+          276.075,
+          227.25
+        ],
+        [
+          276.075,
+          228.75
+        ],
+        [
+          276.825,
+          229.5
+        ],
+        [
+          277.15,
+          229.635
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11021.4_to_U11027.3",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_MID_A",
+      "actual_copper_UUIDs": [
+        "da6ee14f-59ac-4b48-b594-5286ca02e537"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          277.15,
+          228.365
+        ],
+        [
+          282.85,
+          228.365
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11027.4_to_R11075.1",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_A",
+      "actual_copper_UUIDs": [
+        "3aa8b394-2df5-4cfc-b51c-b2b65c081500",
+        "c57a0e2b-e84a-4d1d-9840-a611f3d8a39a",
+        "f5c04ede-72bf-4374-b079-dc890117636b",
+        "18a6184f-e916-473f-83cb-20d92da238af",
+        "0199d56a-5bee-4580-99e8-3c7bbdf7ec4f",
+        "3619a974-6c96-474d-aaa8-6550d9b5a003",
+        "23547a27-704d-4dae-8993-7d4051986a9f",
+        "47f2529f-4b6a-4d90-b304-6931043b5d5a",
+        "fbcfd9e7-5210-4e85-a6a4-f56b1cea343f",
+        "c2838222-92f1-4eff-82c8-905f2c8001ae",
+        "37a569be-285b-4723-923f-e44e6e35f76d",
+        "32c5313c-3606-4931-8a8c-532a605bda10",
+        "8534b6c4-1be7-4789-bed3-7cb3e90bc7b3",
+        "e63c65db-5826-4728-8369-06cf31c619a4",
+        "53cc3334-efb2-4229-874b-a8fc189c13fb",
+        "519d16ce-16dd-46ec-b692-383bc4255861"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          282.85,
+          229.635
+        ],
+        [
+          278.6,
+          229.635
+        ],
+        [
+          277.85,
+          230.385
+        ],
+        [
+          276.35,
+          230.385
+        ],
+        [
+          276.1,
+          230.135
+        ],
+        [
+          276.1,
+          229.385
+        ],
+        [
+          268.1,
+          221.385
+        ],
+        [
+          267.85,
+          221.385
+        ],
+        [
+          267.35,
+          220.885
+        ],
+        [
+          267.35,
+          201.135
+        ],
+        [
+          267.6,
+          200.885
+        ],
+        [
+          267.6,
+          200.635
+        ],
+        [
+          267.85,
+          200.385
+        ],
+        [
+          267.85,
+          200.135
+        ],
+        [
+          268.1,
+          199.885
+        ],
+        [
+          268.1,
+          199.635
+        ],
+        [
+          268.175,
+          199.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "R11075.1_to_C11082.1_to_escape",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_A",
+      "actual_copper_UUIDs": [
+        "72290829-1801-4385-b079-7eb001c07ab5"
+      ],
+      "layer": "B.Cu",
+      "reference_layer": "In4.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          266.725,
+          199.5
+        ],
+        [
+          265.975,
+          199.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "R11075.1_to_C11082.1",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_A",
+      "actual_copper_UUIDs": [
+        "a8575283-8e46-4acd-8377-9e4435c370f9"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          268.175,
+          199.5
+        ],
+        [
+          265.975,
+          199.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "C11082.1_to_U11032.6",
+      "net": "/motherboard_power_entry/MOTOR_FEED_CLEAR_N_A",
+      "actual_copper_UUIDs": [
+        "1e5edf46-94df-46ee-8822-ceb5201dd05a",
+        "83997739-bb91-41fb-989e-fb9e739e4067",
+        "b15e17a6-6c69-441d-8fdb-b69483c87622"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          265.975,
+          199.5
+        ],
+        [
+          266.57500000000005,
+          199.5
+        ],
+        [
+          266.57500000000005,
+          197.25
+        ],
+        [
+          265.4,
+          197.25
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false,
+        false,
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "U11022.4_to_U11028.3",
+      "net": "/motherboard_power_entry/MOTOR_TX_GATE_CONTACT_MID_A",
+      "actual_copper_UUIDs": [
+        "275e6a40-8351-4aab-ad16-881e3ed47ff3"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          277.15,
+          233.365
+        ],
+        [
+          282.85,
+          233.365
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": true,
+      "current_segment_prefilter": [
+        true
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_PG_actual_pullup_from_escape",
+      "net": "/motherboard_power_entry/MOTOR_FEED_PG_A",
+      "actual_copper_UUIDs": [
+        "90565ebb-4701-4797-946a-f6655c93ef4a"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          272.975,
+          179.5
+        ],
+        [
+          273.725,
+          179.5
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_PG_actual_pullup_to_escape",
+      "net": "/motherboard_power_entry/MOTOR_FEED_PG_A",
+      "actual_copper_UUIDs": [
+        "0d21453a-8500-42c6-b27a-5d48c0798a61"
+      ],
+      "layer": "F.Cu",
+      "reference_layer": "In1.Cu",
+      "width_mm": 0.25,
+      "literal_points_mm": [
+        [
+          267.825,
+          193.0
+        ],
+        [
+          267.075,
+          193.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false
+      ],
+      "native_corridor_qualification": false
+    },
+    {
+      "role": "A_PG_actual_pullup",
+      "net": "/motherboard_power_entry/MOTOR_FEED_PG_A",
+      "actual_copper_UUIDs": [
+        "097f8677-9a77-4069-9027-873a5821150d",
+        "c17a76e4-a932-4620-923b-8673dc4fac9c",
+        "15b7d248-a7ef-4ecb-a42d-b43ac1b99a2b",
+        "17bbb558-7d48-45af-a7b4-2bb7cddd3913",
+        "a286548b-7dad-4490-9b88-02c135526345",
+        "c16ead67-45ef-4925-b83a-fa892dc6dad5",
+        "93aabc63-3686-4b3f-90d0-c5b9b87545b8",
+        "50d01242-8b17-49f5-9bae-cf730b1a3079",
+        "b737907c-18ac-4e86-b717-54e6c05b2bc5",
+        "ca05b9d1-ea2a-482f-817c-1b02e23c17cd",
+        "714374ad-b9ba-4b0d-ba03-9213f75dc3fe",
+        "fb658bf3-ecb0-4118-a5b6-f598064103c3",
+        "8b02f7c0-744b-48bc-91fe-798c62df9453"
+      ],
+      "layer": "B.Cu",
+      "reference_layer": "In4.Cu",
+      "width_mm": 0.2,
+      "literal_points_mm": [
+        [
+          273.725,
+          179.5
+        ],
+        [
+          270.225,
+          183.0
+        ],
+        [
+          267.725,
+          183.0
+        ],
+        [
+          266.725,
+          184.0
+        ],
+        [
+          266.475,
+          184.0
+        ],
+        [
+          266.475,
+          184.25
+        ],
+        [
+          266.225,
+          184.5
+        ],
+        [
+          266.225,
+          191.25
+        ],
+        [
+          266.475,
+          191.5
+        ],
+        [
+          266.475,
+          191.75
+        ],
+        [
+          266.725,
+          192.0
+        ],
+        [
+          266.725,
+          192.5
+        ],
+        [
+          266.975,
+          192.75
+        ],
+        [
+          267.075,
+          193.0
+        ]
+      ],
+      "reference_margin_mm": 0.4,
+      "actual_source_projection_conflicts": [],
+      "all_current_filled_segments_prefilter": false,
+      "current_segment_prefilter": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false
+      ],
+      "native_corridor_qualification": false
+    }
+  ],
+  "approved_classification": "Parent accepted the exact eight power-row classification; no clocks/data/STEP/precision row is removed from strict reference scope",
+  "signal_reference_guard_for_all18_logic_controls": {
+    "reference_margin_mm": 0.4,
+    "actual_Source_ground_stitch_required": true
+  },
+  "conditional_inherited_LED_and_default_screen": {
+    "evidence": "Conditional source arithmetic; source rails valid4.8..5.25V, internal ambient0..55C; optical parameters only25C testconditions, no temperature/time interpolation",
+    "series_led_current_a": [
+      0.005347153668970054,
+      0.018996960486322188
+    ],
+    "led_current_bounds_use_monotonic_diode_inference": true,
+    "ordinary_resistor_corner_including_initial_and_0_to55c_tcr": 0.013000000000000001,
+    "led_trigger_max_a_at25c": 0.003,
+    "led_return_min_a_at25c": 0.0001,
+    "powered_ioz_a_max_at_vcc5p5": 2e-06,
+    "vcc0_ioff_a_max": 2e-06,
+    "powered_leakage_at_every_4p8_to5p25v_guaranteed_by_testpoint": false,
+    "nexperia_driver_vcc_recommended_v": [
+      1.65,
+      5.5
+    ],
+    "below1p65_partial_led_driver_state": "unspecified; opto turnoff through every arbitrary source-supply ramp is not guaranteed",
+    "gate_off_v_with_two_contact_leaks": 0.002026,
+    "clear_off_v_with_two_contact_leaks": 0.20259999999999997,
+    "final_gate_high_min_v_at_2p4v_source_testpoint": 2.3985419198055893,
+    "am26c31_vih_v": 2,
+    "logic_receiving_vih_v": 2,
+    "contacts_toff_max_s_at25c_if5ma_rl200_vdd20": 0.0002,
+    "contacts_ton_max_s_at25c_if5ma_rl200_vdd20": 0.0005,
+    "opening_at_actual5p36_to18p94ma_or_alltemperatures_guaranteed": false,
+    "clear_decay_s_to_vil": 0.0001414345144224404,
+    "contact_plus_clear_rc_conditional_withdrawal_s": 0.0003414345144224404,
+    "direct_gate_path_opens_before_rail_removal_is_required": true,
+    "default_low_iso_partial_region_independently_inhibited_at_valid_health_source_rails": true,
+    "whole20ms_watchdog_physical_or_allcondition_proof": false,
+    "field_ldo_per_bank_reservation_a": 0.02,
+    "field_ldo_estimated_w_at30v_3p234v_20ma": 0.53532,
+    "field_ldo_estimated_tj_at55c_66p2kperw": 90.438184,
+    "field_ldo_100ma_at30v_continuous_allowed": false,
+    "aux24_overload_testpoints_a": {
+      "A": [
+        0.237,
+        0.257
+      ],
+      "B": [
+        0.145,
+        0.159
+      ]
+    },
+    "aux24_hardshort_max_guaranteed_at_fittedR": false
+  },
+  "conditional_copper_loss": {
+    "evidence": "Relative arithmetic, not measured/manufacturer guaranteed power capacity",
+    "rho_ohm_m_at85c": 2.1643958e-08,
+    "copper_nominal_outer_um": 70,
+    "conditional_min_outer_um": 63,
+    "conditional_etch_width_ratio": 0.95,
+    "rows": [
+      {
+        "role": "R11071.2_to_U11027.1",
+        "layer": "F.Cu",
+        "length_mm": 3.025000000000034,
+        "nominal_width_mm": 0.3,
+        "conditional_min_width_mm": 0.285,
+        "resistance_ohm_at85c_conditional": 0.003646503645224213
+      },
+      {
+        "role": "U11027.2_to_U11028.1",
+        "layer": "F.Cu",
+        "length_mm": 8.269999999999982,
+        "nominal_width_mm": 0.3,
+        "conditional_min_width_mm": 0.285,
+        "resistance_ohm_at85c_conditional": 0.009969119056530196
+      },
+      {
+        "role": "FIELD_LED_A_actual_sink_from_escape",
+        "layer": "F.Cu",
+        "length_mm": 0.75,
+        "nominal_width_mm": 0.25,
+        "conditional_min_width_mm": 0.2375,
+        "resistance_ohm_at85c_conditional": 0.0010849101754385967
+      },
+      {
+        "role": "FIELD_LED_A_actual_sink_to_escape",
+        "layer": "F.Cu",
+        "length_mm": 0.75,
+        "nominal_width_mm": 0.25,
+        "conditional_min_width_mm": 0.2375,
+        "resistance_ohm_at85c_conditional": 0.0010849101754385967
+      },
+      {
+        "role": "FIELD_LED_A_actual_sink",
+        "layer": "B.Cu",
+        "length_mm": 78.47245394171729,
+        "nominal_width_mm": 0.3,
+        "conditional_min_width_mm": 0.285,
+        "resistance_ohm_at85c_conditional": 0.09459507085889522
+      },
+      {
+        "role": "FIELD_LED_A_actual_source_from_escape",
+        "layer": "F.Cu",
+        "length_mm": 0.75,
+        "nominal_width_mm": 0.25,
+        "conditional_min_width_mm": 0.2375,
+        "resistance_ohm_at85c_conditional": 0.0010849101754385967
+      },
+      {
+        "role": "FIELD_LED_A_actual_source_to_escape",
+        "layer": "F.Cu",
+        "length_mm": 0.75,
+        "nominal_width_mm": 0.25,
+        "conditional_min_width_mm": 0.2375,
+        "resistance_ohm_at85c_conditional": 0.0010849101754385967
+      },
+      {
+        "role": "FIELD_LED_A_actual_source",
+        "layer": "B.Cu",
+        "length_mm": 32.5737045022515,
+        "nominal_width_mm": 0.3,
+        "conditional_min_width_mm": 0.285,
+        "resistance_ohm_at85c_conditional": 0.03926615940691409
+      }
+    ],
+    "total_series_copper_ohm": 0.1518164936693181,
+    "conditional_max_copper_drop_v": 0.0028840519314080183,
+    "conditional_current_min_after_copper_drop_a": 0.0053234283322523175,
+    "LED_trigger_max_a_at25c_only": 0.003,
+    "conditional25c_trigger_margin_a": 0.0023234283322523175,
+    "R11071_conditional_max_power_w": 0.043869120758307845,
+    "R11071_purchased_rated_power_w": 0.1,
+    "whole_board_voltage_delivery_or_temperature_qualification": false
+  },
+  "native_continuity_proof_required": "The frozen motor83 endpoint proof and health-supply99 physical20-endpoint/four-bypass-cut proof remain separate exact prerequisites; classification does not supply missing copper",
+  "default_and_fault_obligations": "No automatic restart; actual valid-health rails and receiving gate logic required; loaded dual-contact turnoff/partial supply ramps and20ms whole-board timing require physical validation",
+  "excluded_LED_reference_zones": "No new field reference pockets are required or credited for these eight POWER rows",
+  "meaningful_classification_mutations": [
+    {
+      "name": "logic_Q_in_power_rows",
+      "rejected": true,
+      "reason": "Other function cannot acquire power classification"
+    },
+    {
+      "name": "unknown_power_row",
+      "rejected": true,
+      "reason": "Other function cannot acquire power classification"
+    },
+    {
+      "name": "missing_actual_UUID",
+      "rejected": true,
+      "reason": "Actual native conductors required"
+    },
+    {
+      "name": "dropped_LOGIC_control",
+      "rejected": true,
+      "reason": "Exact eight power rows and18 control rows required"
+    },
+    {
+      "name": "added_power_row",
+      "rejected": true,
+      "reason": "Exact eight power rows and18 control rows required"
+    }
+  ],
+  "manufacturing_ready": false,
+  "physical20ms_proof": false
+}

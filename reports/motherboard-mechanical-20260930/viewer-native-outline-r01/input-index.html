@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controller • live board CAD</title>
+<style>
+:root{color-scheme:dark;--bg:#0c141d;--panel:#111e2b;--line:#243746;--text:#edf5fc;--muted:#9bb1c2;--green:#70dcb3;--amber:#ffce78;--blue:#7db4ff}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg)}
+button,select,input,a{font:inherit}button,select,input{color:var(--text);background:#192d3d;border:1px solid #365065;border-radius:7px}button{padding:7px 11px;cursor:pointer}button:hover{background:#274354}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:3px}button[aria-pressed="true"]{color:#081b19;background:var(--green);border-color:var(--green)}button:disabled{opacity:.45;cursor:default}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+header{padding:18px 22px 13px;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#172f3b,#101b29)}.eyebrow{color:var(--green);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}.heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:4px}h1{font-size:23px;line-height:1.2;letter-spacing:-.03em;margin:0}h2{font-size:18px;margin:0 0 5px}h3{font-size:13px;letter-spacing:.04em;margin:18px 0 9px;text-transform:uppercase;color:var(--muted)}p{margin:0 0 10px}.subtitle{color:var(--muted);font-size:13px;margin-top:7px;max-width:900px}.live{display:flex;align-items:center;gap:6px;white-space:nowrap;color:var(--muted);font-size:12px}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 10px #70dcb34d}.live.error .dot{background:var(--amber)}
+.topbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 22px;background:#10202d;border-bottom:1px solid var(--line)}select{padding:7px 30px 7px 9px;max-width:270px}.revision{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}.revision label{white-space:nowrap}.tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}.tabs button{font-size:13px}.new-update{color:var(--amber);border-color:#8e6a33}.hidden{display:none!important}
+.workbench{display:grid;grid-template-columns:minmax(0,1fr) 285px;min-height:calc(100vh - 163px)}.stage{min-width:0;display:flex;flex-direction:column}.board-heading{padding:15px 20px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.board-heading p{font-size:12px;color:var(--muted);max-width:620px;margin:0}.badge{border:1px solid #7e6033;color:var(--amber);border-radius:5px;padding:4px 7px;font-size:10px;line-height:1.25;white-space:nowrap;text-transform:uppercase;font-weight:700}.canvas-tools{display:flex;gap:6px;flex-wrap:wrap;padding:0 20px 10px;align-items:center}.canvas-tools button{font-size:12px;padding:5px 9px}.canvas-tools .spacer{flex:1}.hint{color:var(--muted);font-size:11px}.viewport{position:relative;min-height:330px;height:clamp(330px,calc(100vh - 340px),720px);flex:0 0 auto;margin:0 12px;border:1px solid var(--line);border-radius:12px;background:radial-gradient(ellipse at center,#172a37,#0b1720);overflow:hidden}.viewport svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.viewport svg.dragging{cursor:grabbing}.viewport svg .part{cursor:pointer}.viewport .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);padding:25px;text-align:center}.viewport .image-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#d6e0e4}.viewport img{width:100%;height:100%;object-fit:contain}.image-note{position:absolute;bottom:10px;left:12px;right:12px;border-radius:7px;padding:7px 9px;color:#15202a;background:#f4f7f9e6;font-size:11px}.legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;padding:11px 21px;font-size:11px;color:var(--muted)}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.legend .new{background:var(--amber)}.legend .pending{background:transparent;border:1px dashed var(--blue)}.legend .source{background:#e3bc66}.review-note{padding:9px 20px 15px;font-size:12px;color:var(--muted)}.review-note strong{color:var(--amber)}
+aside{background:var(--panel);border-left:1px solid var(--line);padding:16px;min-width:0;overflow-wrap:anywhere}.search{width:100%;padding:9px 10px;margin:8px 0 10px;font-size:12px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{padding:9px;border:1px solid var(--line);border-radius:8px}.stat strong{display:block;color:var(--text);font-size:20px;font-weight:600;line-height:1.1}.stat span{font-size:10px;color:var(--muted);line-height:1.25;display:block;margin-top:4px}.component-list{max-height:180px;overflow:auto;display:flex;flex-direction:column;gap:4px}.component-list button{text-align:left;font-size:11px;display:flex;justify-content:space-between;gap:8px;padding:6px 8px}.component-list button.selected{border-color:var(--green);background:#1e473f}.component-list .ref{font-weight:700;flex-shrink:0}.component-list .value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}.component-list .changed{color:var(--amber)}.inspector{margin-top:14px;border-top:1px solid var(--line);padding-top:13px}.part-title{display:flex;align-items:center;gap:8px;margin-bottom:9px}.part-title h2{font-size:20px}.detail{margin:10px 0}.detail dt{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}.detail dd{margin:0;font-size:12px}.muted{color:var(--muted)}.qualification{border-left:2px solid var(--amber);padding:7px 10px;background:#55422933;font-size:11px;color:#e7cfa1;margin-bottom:10px}.net-list{width:100%;font-size:11px;border-collapse:collapse}.net-list th{text-align:left;color:var(--muted);font-weight:500}.net-list td,.net-list th{padding:4px;border-bottom:1px solid var(--line)}.net-list td:first-child{width:40px;color:var(--green)}.limitations{padding-left:15px;font-size:11px;color:var(--muted);margin:6px 0 0}.limitations li{margin:6px 0}.source-details{margin-top:15px;font-size:11px;color:var(--muted)}.source-details summary{cursor:pointer;color:var(--blue)}.source-details pre{font:10px/1.45 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0}.selection-empty{font-size:12px;color:var(--muted)}.footer{font-size:10px;color:var(--muted);padding:7px 20px 12px}.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;border:1px solid #497766;border-radius:8px;background:#17342d;box-shadow:0 6px 25px #0009;z-index:5;font-size:12px}
+@media(max-width:900px){.workbench{grid-template-columns:minmax(0,1fr) 248px}.board-heading{flex-direction:column;gap:6px}.hint{display:none}}
+@media(max-width:660px){header{padding:13px 14px 10px}h1{font-size:21px}.subtitle{font-size:12px}.topbar{padding:10px 14px;gap:8px}.tabs{flex-basis:100%}.tabs button{flex:1}.revision select{max-width:225px}.workbench{display:flex;flex-direction:column}.viewport{min-height:310px;height:340px}.board-heading{padding:13px 14px 9px}.canvas-tools{padding:0 14px 9px}.legend{padding:10px 15px;gap:10px}.review-note{padding:5px 15px 12px}.badge{font-size:9px}aside{border-left:0;border-top:1px solid var(--line);padding:14px}.stats{grid-template-columns:repeat(4,1fr)}.stat{padding:8px}.stat strong{font-size:18px}.component-list{max-height:140px}.heading{gap:8px}.live{font-size:10px}.live .live-label{max-width:80px}.footer{padding:5px 15px 10px}}
+@media(prefers-reduced-motion:no-preference){.live .dot{animation:glow 3s ease-in-out infinite}@keyframes glow{50%{opacity:.5}}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Editable engineering CAD · disconnected review</div>
+  <div class="heading"><h1>Controller board view</h1><div class="live" id="live"><span class="dot"></span><span class="live-label" id="liveText">Loading source</span></div></div>
+  <p class="subtitle">Real KiCad footprints, visible placement changes, and a native 3D render. This review follows the design as it develops.</p>
+</header>
+<div class="topbar">
+  <nav class="tabs" id="boardTabs" aria-label="Board selection"></nav>
+  <div class="revision"><label for="revisionSelect">Revision</label><select id="revisionSelect" aria-label="Revision"></select></div>
+  <button class="new-update hidden" id="newUpdate">View latest update</button>
+</div>
+<main class="workbench">
+  <section class="stage" aria-label="CAD viewport">
+    <div class="board-heading"><div><h2 id="boardTitle">Loading board CAD…</h2><p id="boardSummary">Waiting for the placement manifest.</p></div><span class="badge" id="statusBadge">Placement study</span></div>
+    <div class="canvas-tools">
+      <button id="topButton" aria-pressed="true">Top CAD</button><button id="imageButton" aria-pressed="false">Native 3D</button>
+      <button id="fitButton">Fit</button><button id="zoomIn" title="Zoom in">+</button><button id="zoomOut" title="Zoom out">−</button>
+      <button id="changesButton" aria-pressed="false">Changes / focus</button><button id="copperButton" aria-pressed="true">Copper</button>
+      <span class="spacer"></span><span class="hint">Drag to pan · scroll to zoom · click a part</span>
+    </div>
+    <div class="viewport" id="viewport"><svg id="cad" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Editable placement study top view"></svg><div class="image-wrap hidden" id="imageWrap"><img id="image3d" alt="Native KiCad 3D render of the selected placement study"><div class="image-note" id="imageNote">KiCad-rendered geometry · model availability varies · placement is provisional.</div></div><div class="empty" id="empty">Loading CAD geometry…</div></div>
+    <div class="legend"><span><i class="source"></i>Native footprint pads</span><span><i class="new"></i>Changes / engineering focus</span><span><i class="pending"></i>Allocation pending</span><span id="dimensions"></span></div>
+    <div class="review-note"><strong id="routeState">Unrouted and unqualified.</strong> This is an engineering candidate. Completed circuits, routing, connector mating, stackup and physical validation are still required before manufacture.</div>
+    <div class="footer" id="updatedAt"></div>
+  </section>
+  <aside aria-label="Board and component details">
+    <div class="stats" id="stats"></div>
+    <input class="search" id="search" type="search" placeholder="Find reference, part or footprint…" aria-label="Find component">
+    <div class="component-list" id="componentList" aria-label="Components"></div>
+    <section class="inspector" id="inspector"><p class="selection-empty">Click a footprint to inspect its source part, pin nets and placement status.</p></section>
+    <h3>Open engineering items</h3><ul class="limitations" id="limitations"></ul>
+    <details class="source-details"><summary>Source record / editable files</summary><div id="sourceRecord"></div></details>
+  </aside>
+</main>
+<div class="toast hidden" id="toast" role="status"></div>
+<script>
+/* Read-only, offline CAD viewer. Electrical authority remains in the source schematic. */
+"use strict";
+const NS="http://www.w3.org/2000/svg";
+const $=id=>document.getElementById(id);
+let manifest=null,shown=null,board=null,revisionId=null,latestId=null,base="",selected=null,selectedNet=null,view=null,mode="top",changes=false,copper=true,refreshing=false,lastFingerprint="",lastImageAttempt=0;
+const number=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
+const text=(element,value)=>{element.textContent=value==null?"":String(value);return element;};
+const node=(tag,attributes={},parent=null)=>{const el=document.createElement(tag);for(const[k,v]of Object.entries(attributes))el.setAttribute(k,String(v));if(parent)parent.append(el);return el;};
+const svgNode=(tag,attributes={},parent=null)=>{const el=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attributes))el.setAttribute(k,String(v));if(parent)parent.append(el);return el;};
+function asset(path){return new URL(path, new URL(base||"./",location.href)).href;}
+function pretty(value){return typeof value==="string"?value:JSON.stringify(value,null,2);}
+function displayValue(value){if(value==null)return"Unspecified";return typeof value==="object"?pretty(value):String(value);}
+function notify(message){text($("toast"),message);$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2400);}
+function liveState(ok,message){$("live").classList.toggle("error",!ok);text($("liveText"),message);}
+async function readJson(path){const response=await fetch(path,{cache:"no-store"});if(!response.ok)throw new Error("CAD manifest not available (HTTP "+response.status+")");const data=await response.json();if(data.schema_version!==1||!Array.isArray(data.boards))throw new Error("Unsupported CAD manifest");return data;}
+async function loadRevision(id,keepView=false){
+  const entry=(manifest.revisions||[]).find(r=>r.id===id);
+  let data=manifest;
+  if(id!==manifest.current_revision&&entry){data=await readJson(new URL(entry.path,location.href));}
+  revisionId=id;shown=data;base=data.asset_base||"./";
+  const previousBoard=board?.id;board=data.boards.find(b=>b.id===previousBoard)||data.boards[0]||null;
+  selected=null;selectedNet=null;if(!keepView)view=null;
+  render();$("revisionSelect").value=id;$("newUpdate").classList.toggle("hidden",id===latestId);
+}
+function fillRevisions(){
+  const select=$("revisionSelect");select.replaceChildren();
+  for(const rev of manifest.revisions||[{id:manifest.current_revision,label:manifest.current_revision}])text(node("option",{value:rev.id},select),rev.label&&rev.label!==rev.id?`${rev.id} · ${rev.label}`:rev.id);
+  select.value=revisionId||manifest.current_revision;
+}
+function render(){
+  const tabs=$("boardTabs");tabs.replaceChildren();
+  for(const b of shown.boards){const button=text(node("button",{"aria-pressed":String(board?.id===b.id)},tabs),b.short_title||b.title);button.addEventListener("click",()=>{board=b;selected=null;view=null;render();});}
+  if(!board){text($("empty"),"No placement boards are present in this revision.");return;}
+  text($("boardTitle"),board.title);text($("boardSummary"),board.summary||"");text($("statusBadge"),board.status||"Unrouted placement study");
+  text($("routeState"),(board.stats?.routed_tracks||0)>0?"Partially routed and unqualified.":"Unrouted and unqualified.");
+  text($("dimensions"),`${number(board.width_mm)} × ${number(board.height_mm)} mm · ${number(board.thickness_mm,1.6)} mm assumed stackup`);
+  text($("updatedAt"),"Source revision "+revisionId+" · "+(shown.generated_at||shown.generated_at_utc||"Live view checks for changes every 3 seconds"));
+  const s=board.stats||{};$("stats").replaceChildren();
+  for(const[label,value]of[["footprints",s.components??s.footprints??board.components.length],["native source",s.source_fitted_footprints??s.source_footprint_assignments??"—"],["review candidates",s.placement_only_candidates??s.placement_only_assignments??"—"],["tracks / vias",s.routed_tracks??0],["unconnected joins (uncapped)",s.uncapped_unconnected_ratsnest_edges??"—"],["filled copper planes",s.filled_copper_zones??0]]){const stat=node("div",{class:"stat"},$("stats"));text(node("strong",{},stat),value);text(node("span",{},stat),label);}
+  $("limitations").replaceChildren();for(const item of [...(board.open_work||[]),...(board.unresolved||[])])text(node("li",{},$("limitations")),typeof item==="string"?item:item.description||item.label||(item.reference&&item.reason?item.reference+": "+item.reason:pretty(item)));
+  const omitted=(board.components||[]).filter(c=>!(c.models||[]).some(m=>m.available)).map(c=>c.reference);
+  text($("imageNote"),`Native KiCad render · ${number(board.stats?.available_3d_models??board.stats?.models_available??board.components.length-omitted.length)} / ${board.components.length} package models available.${omitted.length?" Body models omitted: "+omitted.join(", ")+". Those footprints remain populated in the editable CAD.":""} Placement is provisional.`);
+  $("sourceRecord").replaceChildren();
+  if(board.board_file){const link=text(node("a",{href:asset(board.board_file),download:""},$("sourceRecord")),"Download editable KiCad board candidate");node("p",{},$("sourceRecord")).append(link);}
+  for(const [label,record]of[["Proposed outline",board.outline_status],["Board scope",board.source],["Source files",shown.source_paths||board.source_paths],["Source hashes",shown.source_hashes||board.source_hashes],["Review evidence",board.evidence]])if(record){text(node("p",{},$("sourceRecord")),label);text(node("pre",{},$("sourceRecord")),pretty(record));}
+  draw();renderList();inspect();setMode(mode);liveState(true,revisionId===latestId?"Following latest":"Historic revision");
+}
+function graph(parent,g){
+  const layer=g.layer||"";const courtyard=layer.includes("CrtYd")||layer.includes("Courtyard");const color=courtyard?"#647980":layer.includes("Fab")?"#a5c4c8":"#d3f2d8";
+  const common={fill:"none",stroke:color,"stroke-width":courtyard ? .1 : .15,"pointer-events":"none"};if(courtyard)common["stroke-dasharray"]=".5 .45";
+  const x1=number(g.x1??g.x),y1=number(g.y1??g.y),x2=number(g.x2),y2=number(g.y2);
+  if(g.kind==="line")svgNode("line",{...common,x1,y1,x2,y2},parent);
+  else if(g.kind==="rect")svgNode("rect",{...common,x:Math.min(x1,x2),y:Math.min(y1,y2),width:Math.abs(x2-x1),height:Math.abs(y2-y1)},parent);
+  else if(g.kind==="circle")svgNode("circle",{...common,cx:x1,cy:y1,r:Math.max(.01,number(g.radius,Math.hypot(x2-x1,y2-y1)))},parent);
+}
+function draw(){
+  const svg=$("cad");svg.replaceChildren();const width=number(board.width_mm,220),height=number(board.height_mm,100);
+  const defs=svgNode("defs",{},svg);const pattern=svgNode("pattern",{id:"grid",width:5,height:5,patternUnits:"userSpaceOnUse"},defs);svgNode("path",{d:"M 5 0 L 0 0 0 5",fill:"none",stroke:"#578678","stroke-width":.08,opacity:.45},pattern);
+  svgNode("rect",{x:0,y:0,width,height,rx:.8,fill:"#174a3d",stroke:"#70af96","stroke-width":.3},svg);svgNode("rect",{x:0,y:0,width,height,fill:"url(#grid)","pointer-events":"none"},svg);
+  for(const z of board.zones||[]){const pending=z.kind==="pending";const group=svgNode("g",{"pointer-events":"none"},svg);svgNode("rect",{x:number(z.x),y:number(z.y),width:number(z.width),height:number(z.height),rx:.6,fill:pending?"#172e4470":z.kind==="new"?"#94702530":"#38756025",stroke:pending?"#76adcf":"#70bd96","stroke-width":.22,"stroke-dasharray":pending?"1.2 .8":""},group);text(svgNode("text",{x:number(z.x)+1.5,y:number(z.y)+3.8,fill:pending?"#a7cdea":"#a4d6b6","font-size":Math.min(2.5,Math.max(1.5,number(z.width)/12)),"font-family":"system-ui, sans-serif"},group),z.label);}
+  if(copper)for(const t of board.tracks||[]){
+    const active=selectedNet&&t.net===selectedNet;const muted=selectedNet&&!active;
+    const color=active?"#e4fff5":t.layer==="B.Cu"?"#73aaff":t.layer&&t.layer!=="F.Cu"?"#c8a1ff":"#f5a570";
+    if(t.kind==="via")svgNode("circle",{cx:t.x,cy:t.y,r:t.diameter_mm/2,fill:color,opacity:muted?.12:.85,"pointer-events":"none"},svg);
+    else svgNode("line",{x1:t.x1,y1:t.y1,x2:t.x2,y2:t.y2,stroke:color,"stroke-width":t.width_mm,"stroke-linecap":"round",opacity:muted?.12:.8,"pointer-events":"none"},svg);
+  }
+  for(const c of board.components||[]){
+    const group=svgNode("g",{class:"part","data-reference":c.reference,opacity:changes&&!c.highlight ? .25 : 1},svg);const box=c.bbox||{x:number(c.x_mm)-1,y:number(c.y_mm)-1,width:2,height:2};
+    const bx=number(box.x),by=number(box.y),bw=Math.max(number(box.width),.5),bh=Math.max(number(box.height),.5);
+    svgNode("rect",{x:bx,y:by,width:bw,height:bh,rx:.1,fill:c.placement_only_candidate?"#1e3b45":"#162f2c",opacity:.7,"pointer-events":"none"},group);
+    for(const g of c.graphics||[])graph(group,g);
+    for(const p of c.pads||[]){
+      const w=Math.max(.03,number(p.width)),h=Math.max(.03,number(p.height)),x=number(p.x),y=number(p.y),angle=number(p.angle??p.rotation_deg);const attrs={fill:p.net?"#e6be68":"#b6a06e",stroke:"#745c2e","stroke-width":.04,transform:`rotate(${angle} ${x} ${y})`};
+      const shape=String(p.shape||"").toLowerCase();let pad;
+      if(shape.includes("circle")||shape==="0")pad=svgNode("ellipse",{...attrs,cx:x,cy:y,rx:w/2,ry:h/2},group);
+      else pad=svgNode("rect",{...attrs,x:x-w/2,y:y-h/2,width:w,height:h,rx:shape.includes("oval")?Math.min(w,h)/2:shape.includes("round")?.15:0},group);
+      text(svgNode("title",{},pad),`${c.reference} pad ${p.number}: ${p.net||"unassigned"}`);
+      if(p.drill||p.drill_mm){const drill=typeof p.drill==="object"?number(p.drill.width):number(p.drill||p.drill_mm);if(drill>0)svgNode("circle",{cx:x,cy:y,r:drill/2,fill:"#0c1c23",stroke:"#876d40","stroke-width":.04,"pointer-events":"none"},group);}
+    }
+    if(c.highlight)svgNode("rect",{x:bx-.45,y:by-.45,width:bw+.9,height:bh+.9,rx:.4,fill:"none",stroke:"#ffce78","stroke-width":.23,"stroke-dasharray":".8 .45","pointer-events":"none"},group);
+    if(selected===c.reference)svgNode("rect",{x:bx-.65,y:by-.65,width:bw+1.3,height:bh+1.3,rx:.5,fill:"#7df9d020",stroke:"#b2ffe0","stroke-width":.3,"pointer-events":"none"},group);
+    text(svgNode("text",{x:number(c.x_mm),y:by-.9,fill:selected===c.reference?"#c7ffe8":c.highlight?"#ffce78":"#dfefdb","text-anchor":"middle","font-size":Math.min(2.2,Math.max(1.05,bw/5)),"font-family":"ui-monospace, Consolas, monospace","pointer-events":"none"},group),c.reference);
+    const hit=svgNode("rect",{x:bx-.3,y:by-.3,width:bw+.6,height:bh+.6,fill:"transparent",tabindex:0,role:"button","aria-label":c.reference+": "+c.value},group);text(svgNode("title",{},hit),c.reference+" · "+c.value+" · click to inspect");
+    hit.addEventListener("click",event=>{if(dragMoved)return;event.stopPropagation();selectPart(c.reference);});hit.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();selectPart(c.reference);}});
+  }
+  // Dimensions represent a proposed review outline, not a released mechanical interface.
+  svgNode("line",{x1:0,y1:height+5,x2:width,y2:height+5,stroke:"#b5c9d5","stroke-width":.18},svg);for(const x of[0,width])svgNode("line",{x1:x,y1:height+3.5,x2:x,y2:height+6.5,stroke:"#b5c9d5","stroke-width":.18},svg);
+  text(svgNode("text",{x:width/2,y:height+9.5,"text-anchor":"middle",fill:"#b5c9d5","font-size":2.5,"font-family":"system-ui, sans-serif"},svg),width+" mm · provisional outline");
+  if(!view)view={x:-8,y:-9,width:width+16,height:height+23};applyView();$("empty").classList.add("hidden");
+}
+function applyView(){if(view)$("cad").setAttribute("viewBox",`${view.x} ${view.y} ${view.width} ${view.height}`);}
+function fit(){view=null;if(board)draw();}
+function zoom(factor,point=null){if(!view||mode!=="top")return;const nextWidth=view.width*factor;if(nextWidth<5||nextWidth>number(board.width_mm)*8)return;const cx=point?.x??view.x+view.width/2,cy=point?.y??view.y+view.height/2;view={x:cx-(cx-view.x)*factor,y:cy-(cy-view.y)*factor,width:nextWidth,height:view.height*factor};applyView();}
+function localPoint(event){const svg=$("cad"),pt=svg.createSVGPoint();pt.x=event.clientX;pt.y=event.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse());}
+let drag=null,dragMoved=false;
+$("cad").addEventListener("pointerdown",event=>{if(event.button!==0||mode!=="top")return;drag={clientX:event.clientX,clientY:event.clientY,point:localPoint(event),view:{...view}};dragMoved=false;});
+$("cad").addEventListener("pointermove",event=>{if(!drag)return;if(Math.hypot(event.clientX-drag.clientX,event.clientY-drag.clientY)<4&&!dragMoved)return;dragMoved=true;$("cad").setPointerCapture(event.pointerId);$("cad").classList.add("dragging");const point=localPoint(event);view.x+=drag.point.x-point.x;view.y+=drag.point.y-point.y;applyView();});
+function endDrag(){drag=null;$("cad").classList.remove("dragging");setTimeout(()=>{dragMoved=false;},0);}
+$("cad").addEventListener("pointerup",endDrag);$("cad").addEventListener("pointercancel",endDrag);
+$("cad").addEventListener("pointerleave",()=>{if(drag&&!dragMoved)endDrag();});
+$("cad").addEventListener("wheel",event=>{event.preventDefault();zoom(Math.exp(Math.max(-120,Math.min(120,event.deltaY))*.002),localPoint(event));},{passive:false});
+function selectPart(reference){selected=reference;draw();renderList();inspect();}
+function renderList(){
+  const list=$("componentList");list.replaceChildren();const query=$("search").value.trim().toLowerCase();
+  const items=(board?.components||[]).filter(c=>[c.reference,c.value,c.mpn,c.footprint].join(" ").toLowerCase().includes(query)).sort((a,b)=>a.reference.localeCompare(b.reference,undefined,{numeric:true}));
+  for(const c of items){const button=node("button",{class:(selected===c.reference?"selected ":"")+(c.highlight?"changed":"")},list);text(node("span",{class:"ref"},button),c.reference+(c.highlight?" •":""));text(node("span",{class:"value"},button),c.value);button.addEventListener("click",()=>selectPart(c.reference));}
+  if(!items.length)text(node("p",{class:"muted"},list),"No matching footprint.");
+}
+function inspect(){
+  const panel=$("inspector");panel.replaceChildren();const c=board?.components.find(c=>c.reference===selected);
+  if(!c){text(node("p",{class:"selection-empty"},panel),"Click a footprint to inspect its source part, pin nets and placement status.");return;}
+  const title=node("div",{class:"part-title"},panel);text(node("h2",{},title),c.reference);if(c.highlight)text(node("span",{class:"badge"},title),c.change_status||"Review focus");
+  text(node("p",{class:"qualification"},panel),c.placement_only_candidate?"Package study candidate. This footprint is not yet assigned or qualified in the electrical source.":"Native footprint from current circuit source. Placement and electrical qualification remain open.");
+  for(const[label,value]of[["Circuit value",c.value],["Manufacturer part",c.mpn],["KiCad footprint",c.footprint],["Position / rotation",`${number(c.x_mm).toFixed(2)}, ${number(c.y_mm).toFixed(2)} mm · ${number(c.rotation_deg)}°`],["Change / review context",c.change_reason],["Source / qualification",c.source],["3D body model",(c.models||[]).some(m=>m.available)?"Available in native render":"Unavailable; body omitted from render, footprint retained"]]){if(value==null)continue;const dl=node("dl",{class:"detail"},panel);text(node("dt",{},dl),label);text(node("dd",{},dl),displayValue(value));}
+  if(c.pads?.length){const detail=node("details",{},panel);detail.open=c.pads.length<25;text(node("summary",{},detail),`${c.pads.length} native footprint pads / source nets`);const table=node("table",{class:"net-list"},detail);const tr=node("tr",{},node("thead",{},table));text(node("th",{},tr),"Pad");text(node("th",{},tr),"Source net");const tbody=node("tbody",{},table);for(const p of c.pads){const row=node("tr",{},tbody);text(node("td",{},row),p.number);text(node("td",{},row),p.net||"Unassigned / no net");if(p.net){row.style.cursor="pointer";row.title="Highlight this net's routed copper";row.addEventListener("click",()=>{selectedNet=selectedNet===p.net?null:p.net;draw();});}}}
+}
+function setMode(next){mode=next;const imageMode=mode==="image";$("imageWrap").classList.toggle("hidden",!imageMode);$("cad").classList.toggle("hidden",imageMode);$("topButton").setAttribute("aria-pressed",String(!imageMode));$("imageButton").setAttribute("aria-pressed",String(imageMode));for(const id of["fitButton","zoomIn","zoomOut"])$(id).disabled=imageMode;if(imageMode)loadImage();}
+function loadImage(force=false){if(!board?.image_3d){text($("empty"),"Native 3D render has not been exported for this revision.");$("empty").classList.remove("hidden");return;}const img=$("image3d");const path=asset(board.image_3d);if(!force&&img.dataset.path===path&&img.complete&&img.naturalWidth>0)return;img.dataset.path=path;lastImageAttempt=Date.now();img.onload=()=>{$("empty").classList.add("hidden");};img.onerror=()=>{text($("empty"),"Native KiCad 3D render is still being exported. The top CAD geometry is available now.");$("empty").classList.remove("hidden");};img.src=path+(path.includes("?")?"&":"?")+"revision="+encodeURIComponent(revisionId)+(force?"&retry="+Date.now():"");}
+$("search").addEventListener("input",renderList);$("fitButton").addEventListener("click",fit);$("zoomIn").addEventListener("click",()=>zoom(.75));$("zoomOut").addEventListener("click",()=>zoom(1.3));$("topButton").addEventListener("click",()=>{setMode("top");$("empty").classList.add("hidden");});$("imageButton").addEventListener("click",()=>setMode("image"));$("changesButton").addEventListener("click",()=>{changes=!changes;$("changesButton").setAttribute("aria-pressed",String(changes));draw();});
+$("copperButton").addEventListener("click",()=>{copper=!copper;$("copperButton").setAttribute("aria-pressed",String(copper));draw();});
+$("revisionSelect").addEventListener("change",()=>loadRevision($("revisionSelect").value).catch(error=>liveState(false,error.message)));$("newUpdate").addEventListener("click",()=>loadRevision(latestId).then(()=>notify("Showing the latest CAD revision")));
+async function refresh(){
+  if(refreshing)return;refreshing=true;
+  try{const data=await readJson("board-view.json");const fingerprint=JSON.stringify(data);const oldLatest=latestId;latestId=data.current_revision;manifest=data;
+    if(!shown){lastFingerprint=fingerprint;fillRevisions();await loadRevision(latestId);}
+    else if(fingerprint!==lastFingerprint){const follow=revisionId===oldLatest;lastFingerprint=fingerprint;fillRevisions();if(follow){await loadRevision(latestId,true);notify("CAD updated from the latest source revision");}else{$("newUpdate").classList.remove("hidden");liveState(true,"New revision available");}}
+    else liveState(true,revisionId===latestId?"Following latest":"Historic revision");
+    if(mode==="image"&&!$("image3d").naturalWidth&&Date.now()-lastImageAttempt>10000)loadImage(true);
+  }catch(error){liveState(false,"Source unavailable");if(!shown){text($("empty"),error.message+". This view will load automatically when the CAD export completes.");text($("boardSummary"),"Serve this folder over local HTTP to load the editable CAD manifest.");}}
+  finally{refreshing=false;}
+}
+refresh();setInterval(refresh,3000);
+</script>
+</body>
+</html>

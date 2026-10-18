@@ -1,0 +1,136 @@
+OEA r0.3 — actual COM voltage indication / cost-down research
+Checked 2026-10-06. PLANNING ONLY; no circuit, firmware, PCB or order released.
+
+The current concrete proposal is indicator_spec.json: 11 purchased SMT parts and three unpopulated copper programming/test pads. Its exact parts, pin map and source review supersede the illustrative alternatives below. Native schematic work, if present later, is a separate evidence stage and is not physical qualification.
+
+Recommendation
+
+Use a small ADC microcontroller for three separate LEDs labelled 5V, 12V and 24V. Sense J3 COM_PLUS after the voltage selector and protection. Keep the indicator electrically separate from STEP, DIR and ENABLE. An ATtiny202 in SOIC-8 is a credible low-cost, visible-lead starting point. A direct current-limited divider with a shared, coordinated power source is the preferred simple development path (about 11 added placements before any optional programming/header or supply components). More elaborate isolation is an alternative only if the actual power-sequencing requirements demand it. The input transient and tolerance budget must be finished before adopting this circuit.
+
+The MCU approach is the best fit for the small, single-SMT-face redesign. It introduces a programming/test step, but avoids six comparator channels, precision reference distribution and many threshold resistors. It does not prove that the whole assembled adapter plus finished cable can retail for US$15. Bare PCB cost, other electronics, cable, labour, test, rejects, packaging, fees and profit remain outside the indicator estimate.
+
+Preserve the current r0.2 work as an unreleased candidate. Do not append these parts to its 15.24 x 38.10 mm, 50-part, double-sided four-layer layout and assume they fit. The r0.3 single-face layout and mechanics need a new placement proof.
+
+What the LEDs should mean
+
+The LED identifies a measured nominal voltage class; it is not a power LED or a switch-position lamp. Proposed classification windows are 4.5–5.5 V, 10.8–13.2 V and 21.6–26.4 V. These are proposed UI windows, NOT guaranteed driver input tolerances. A drive's own manual and voltage selector still govern its connection.
+
+After qualification, define a guaranteed illuminated band and an uncertainty band around every boundary. Firmware must keep all three LEDs off outside the accepted windows, during startup, invalid calibration, ADC saturation, brownout and measurement faults. For example, steady 0 V, 8 V and 16 V must produce all-off. Sample/filter around 20 times per second; require stable readings before lighting. Hysteresis must not bridge the gaps. A brief fade/transition through a valid band is possible with any sampled indicator; do not describe the lamps as instantaneous protection or as a substitute for a meter. Mark all-off in the instructions as 'off or outside indicated voltage ranges'.
+
+Option comparison
+
+1. MCU + ADC: preferred development direction.
+   ATtiny202-SSNR offers a 10-bit ADC, internal voltage references and UPDI programming in SOIC-8. Its six I/O pins are sufficient for an ADC input, three LED outputs, UPDI and one spare/control signal. Use low LED current, an RC input filter, adequate ADC acquisition time, disabled ADC-pin digital input/pull-up, watchdog and brownout reset. Firmware must initialise LED outputs off before sampling. The MCU must not process or gate motor control signals. [1]
+   The reference and ADC accuracy tables are characterization data, not an absolute production guarantee. Plan a measured two-point calibration, verify all six boundaries on every board, and qualify temperature/supply error separately. ADC bit count is resolution, not measurement accuracy. [1]
+
+2. LM339B + LM393B + reference: lowest comparator-IC purchase cost, larger circuit.
+   Three disjoint windows need six independent boundaries. A single quad comparator cannot supply all six. A quad plus dual comparator, a stable reference, ladder/divider resistors, three LED networks and bypassing generally needs about 24–30 added placements before noise/hysteresis refinements. SOIC-14 plus SOIC-8 occupies materially more space than SOIC-8 plus one small transistor. Six threshold comparisons can share a sensed divider and reference ladder; complete the input common-mode and offset budget before claiming accuracy. These older comparator families do not have rail-to-rail high-side input range. [2]
+   Observed combined comparator price is only $0.2967 at 100 of each IC. The complete indicator is not $0.2967: reference, LEDs, passives, placement and tests remain. This can be economically credible on a larger board, but conflicts with the requested compact/few-part approach. [3,4]
+
+3. Three TLV6700 window detectors: no firmware but reject for this cost-down.
+   Each part integrates two comparators and a reference. Three ICs plus nine divider resistors, three bypass capacitors and three LED/resistor pairs already total 21 placements, before filtering or other support. This solves the windows directly, but adds more precision ICs and board area than the MCU option. [5]
+
+Do not use a three-threshold bar graph, bare Zener/LED chain or three LEDs attached to the selector. Such arrangements can show an apparently valid voltage at 8 V or tell only the selected source, failing the requested actual-voltage indication.
+
+Sensing and power-off protection — proposed circuit work, not a frozen design
+
+Latest simplification requested by the parent design review:
+
+  COM_PLUS -> 100 kohm -> ADC input -> 3.9 kohm -> GND
+  ADC input -> 100 nF filter -> GND
+  MCU powered from selected COM through the proposed protected V_IND_3V3 rail
+
+The r0.3 direct-FET command interface has no command-logic supply. The proposed indicator rail is therefore dedicated: selected COM -> R26 82ohm -> BAT46W-7-F -> held-up V_IND_IN -> AP7375-33SA-7 -> V_IND_3V3. The power specification owns its capacitors, bleed load and collapse protection. Its reverse-output limit still requires review and physical qualification. The indicator may turn off during selector transitions. Its only control outputs are LEDs.
+
+Calculated at 26.4 V: ADC voltage is 0.991 V, divider load 0.254 mA, and source resistance 3.754 kohm. Using the 1.1 V ADC reference yields a nominal COM step of 0.02865 V. With1% resistors, maximum ADC voltage is about 1.010 V, still below a1.1 V reference reduced by 5% (1.045 V). An RC filter can delay ADC voltage behind logic startup; 100 nF gives about0.375 ms and 1 uF about3.75 ms. The actual maximum COM/transient rating must remain explicit.
+
+Microchip Table 33-1 and its resistor note explicitly specify current-limited I/O injection. For VDD <= 4.9 V and VPIN <= 5.5 V the listed limit is +/-15 mA per pin. A conservative 26.4 V/99 kohm bound is 0.267 mA, before subtracting current through the bottom resistor. This supports studying a controlled startup transient without an analog switch. It is an absolute stress limit, not permission to claim accurate conversions during injection. [1]
+
+Verify the chosen LDO can tolerate the resulting output pre-bias/reverse-current condition; test slow/fast ramps, source removal, charged filter capacitors and any externally held COM. Keep MCU in reset or LEDs off until the rail/reference/readings settle. This solution intentionally permits a bounded startup current; it must not be advertised as zero injection. The concrete proposal selects 100k/3.9k 0.1% resistors and a 100nF ADC filter. Their tolerance-only worst-case ADC value at 26.4V is 0.993V; the startup source-current bound is 0.2643mA. These calculations do not establish regulator protection or physical measurements.
+
+Optional isolated topology if the completed power architecture requires it:
+  COM_PLUS -> upper divider resistor -> N-MOSFET drain
+  N-MOSFET source -> ADC input -> lower divider resistor -> GND
+  N-MOSFET gate -> V_LOGIC, with a defined rail/gate discharge path
+  ADC input -> small filter capacitor -> GND
+
+The body diode must point from ADC/source toward COM/drain. The opposite orientation would defeat power-off isolation. With logic on, select a MOSFET whose on-resistance is specified below the minimum available gate-source voltage. With logic off, its drain leakage flows through the lower resistor rather than forward-biasing the ADC supply clamp. Include leakage, resistor tolerance, contamination, capacitor charge and supply-ramp behavior in the proof. Finite leakage is not zero current.
+
+An illustrative, NOT adopted, calculation uses 590 kohm upper and 10 kohm lower resistors and the MCU's 0.55 V reference. At 26.4 V, ADC is about 0.440 V and sensing draws 44 microamps. The nominal referred-to-COM step is about 0.0323 V; at 5 V there are about 155 ADC counts. The high-value divider needs explicit RC/acquisition/leakage review. A 100 nF capacitor gives about a 1 ms input time constant; wait multiple time constants after enabling or a mode change. This deliberately leaves the source low enough for a 2.5 V-rated MOSFET to have useful gate overdrive from a qualified 3.3 V rail. These are engineering calculations, not physical evidence.
+
+Nexperia BSS138BK,215 is a candidate to review: SOT-23 pins 1=G, 2=S, 3=D; maximum 6.5 ohm at VGS=2.5 V and 25 C; maximum drain leakage 1 microamp at 25 C and 10 microamps at 150 C, tested with VDS = 60 V and VGS = 0. That hot-leakage limit through a 10 kohm lower resistor gives 0.10 V in the unpowered steady-state model. The proposed V_LOGIC minimum must exceed 2.5 V plus maximum ADC source voltage. Full ramp/transient and gate-leakage assessment is still required. Its 2.5 V on-resistance is not specified across the entire temperature range. [6]
+
+This part was out of stock at the reviewed US distributor, so it is not yet an actionable prototype purchase. Do not silently replace it with generic BSS138 or 2N7002 marketplace parts: suffixes and low-gate-voltage guarantees differ. The previous NX6008NBKW is attractive at low gate voltage but its reviewed datasheet only specified drain leakage at 25 C; it does not close a hot-leakage bound for this use. [7,8]
+
+Alternative TS5A3159A ADC switch: NOT approved as a direct replacement.
+TI explicitly specifies signal isolation at VDD=0 and publishes full-temperature off leakage. However, its analog absolute maximum for NONZERO supply remains VDD+0.5 V. TI confirms that VDD=0 is a special case. A divider staying at 2.4 V while logic slowly ramps through 0.5 V can therefore violate the rating. Select-low does not fix an analog-pin overvoltage. It would require additional sequencing/clamping or a different switch whose analog ratings cover the whole ramp. Do not purchase/build the simple switch circuit just because 'power-off isolation' is printed on its front page. [9,10]
+
+A permanent divider inevitably draws sensing current when COM is present. Literal zero loading is not physically achieved by a permanent divider. If MCU power comes from COM, the COM source also supplies its small LED/logic load; include that in the source-current budget. The direct-divider option accepts bounded startup injection; the optional series-FET topology reduces off-state loading to leakage. Verify power-off rail voltage/current with COM held at 5, 12 and 26.4 V and the logic supply deliberately grounded, floating and slowly ramped.
+
+Cost evidence in US dollars — direct seller pages, not a finished quote
+
+Observed on 2026-10-06; price/stock can change. Freight, tax, tariff, waste and assembly/programming are excluded. A 100-board build needs 300 LEDs and multiple quantities of each passive. Using the 100-piece LED/passive price below is conservative compared with assuming unobserved volume discounts.
+
+  Part / evidence                              Unit price used     Per board
+  ATtiny202-SSNR, qty 1 displayed [11]            $0.52000            $0.52000
+  BSS138BK,215, qty 100; OUT OF STOCK [7]         $0.08270            $0.08270
+  LTST-C190KRKT red 0603 LED, qty 100 [12]         $0.06750 x3         $0.20250
+  RC0603FR-0710KL, qty 100 [13]                  $0.01220            benchmark only
+  CL10B104KB8NNNC 100 nF, qty 100 [14]              $0.01850            benchmark only
+
+The MCU page exposes no 100-piece break; do not relabel its 52-cent single-piece price a verified 100-piece price. The exact indicator_spec.json selects 11 SMT parts, six unique MPNs, with an observed material subtotal of $0.9156 per board. This excludes the dedicated regulator/protection parts, freight, procurement premium, programming, calibration, assembly and replacements. The earlier $0.87–$0.97 direct-divider allowance is consistent with that selection; the optional FET is not selected. This is source-price arithmetic, not a purchase cart or delivered quote. Reserving $1.50 leaves some engineering margin, but it does not establish Amazon availability.
+
+For comparison, the rejected-as-drawn TS5A3159ADBVR is $0.42610 at 100 [15], raising the same rough material estimate to about$1.30–$1.40 before the additional ramp protection it needs. LM339BIDR is$0.15910 at 100 [3] and LM393BIDR is$0.13760 at 100 [4]. No complete analog BOM total is asserted without a reference and final network.
+
+Programming and prototype procurement
+
+One reusable Adafruit UPDI Friend, product 5879, was shown at $6.95 on its manufacturer's storefront. It provides selectable 3V/5V power/logic and USB-C; use 3.3V UPDI logic for this circuit. This is tooling, not one programmer per adapter. Although Adafruit discusses 10MHz at 3.3V, this proposal limits the MCU to 5MHz or below: a nominal 2.6V BOD has a 2.4V minimum, which cannot establish the >=2.7V required for 10MHz. Leave UPDI enabled and avoid a bootloader. Provide three accessible pads, a matching jig/cable, released HEX and checksum, exact fuse values and a verification procedure. Program with motor/driver connections removed and the adapter powered through its normal external input after regulator bench qualification. Leave programmer VDD disconnected; TP51 is 3V3 SENSE ONLY, not a power input. [1,16,17]
+
+For the cost-down plan, a small deterministic C firmware can use integer ADC boundaries and calibration coefficients; no runtime Arduino framework is necessary. Test the firmware on the selected physical MCU, including erased/corrupt calibration and watchdog resets. A shared programmer purchase plus calibration/test time must appear in prototype cost, even if the recurring BOM stays near$1.
+
+Amazon.com searches for ATtiny202, UPDI programmer, UPDI Friend and serial-UPDI did not yield a verified exact purchasable listing in this research. Direct Amazon search page reads returned 503. That means availability is UNCONFIRMED, not that these items do not exist. No ASIN, price, delivery, seller identity or cart addition is claimed. Amazon-only electronics sourcing is therefore not established; verify actual listings in the user's browser or seek authorization for a named electronics supplier before changing the procurement plan. Do not buy a vaguely labelled 'AVR USB programmer' and assume it supports UPDI; many ISP programmers do not.
+
+Acceptance work before committing r0.3
+
+1. Prefer the direct-divider/shared-source path if its LDO pre-bias and supply-ramp review passes. Finish any necessary protection part selection with current stock and all-temperature limits; check ADC input and logic back-power at 0–26.4 V.
+2. Freeze exact windows and guard bands from the complete divider/reference/ADC/leakage error budget. Calibrate and sweep all six boundaries plus 0, 5, 8, 12, 16, 24, 26.4 V. Repeat loaded COM measurements and both power-selector modes.
+3. Test actual LED readability at the chosen low current and intended enclosure lighting; three labels must remain visible beside their LEDs.
+4. Prove single-face placement, standard fabrication clearances, host clearance, firmware programming and test access. Preserve the motion interface's independent startup behavior.
+5. Obtain actual bare-board/cable/parts delivered prices, including tooling separately, before asserting the US$15 resale target is met.
+
+Sources
+
+[1] Microchip current ATtiny202/204/402/404/406 datasheet, especially pinout, ADC, VREF and electrical characteristics:
+https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny202-204-402-404-406-DataSheet-DS40002318A.pdf
+[2] TI LM339B datasheet:
+https://www.ti.com/lit/ds/symlink/lm339b.pdf
+[3] DigiKey own selling price, LM339BIDR:
+https://www.digikey.com/en/products/detail/texas-instruments/LM339BIDR/21442039
+[4] DigiKey own selling price, LM393BIDR:
+https://www.digikey.com/en/products/detail/texas-instruments/LM393BIDR/11502345
+[5] TI TLV6700 datasheet:
+https://www.ti.com/lit/ds/symlink/tlv6700.pdf
+[6] Nexperia BSS138BK datasheet:
+https://assets.nexperia.com/documents/data-sheet/BSS138BK.pdf
+[7] DigiKey own selling price/stock, BSS138BK,215:
+https://www.digikey.com/en/products/detail/nexperia-usa-inc/BSS138BK-215/2779825
+[8] Nexperia NX6008NBKW datasheet:
+https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf
+[9] TI TS5A3159A datasheet:
+https://www.ti.com/lit/ds/symlink/ts5a3159a.pdf
+[10] TI support clarification on TS5A3159A power-off ratings:
+https://e2e.ti.com/support/switches-multiplexers-group/switches-multiplexers/f/switches-multiplexers-forum/835338/ts5a3159a-isolation-in-power-down-mode
+[11] DigiKey own selling price/stock, ATtiny202-SSNR:
+https://www.digikey.com/en/products/detail/microchip-technology/ATTINY202-SSNR/9554944
+[12] DigiKey own selling price, LTST-C190KRKT:
+https://www.digikey.com/en/products/detail/liteon/LTST-C190KRKT/386817
+[13] DigiKey own selling price, RC0603FR-0710KL:
+https://www.digikey.com/en/products/detail/yageo/RC0603FR-0710KL/726880
+[14] DigiKey own selling price, CL10B104KB8NNNC:
+https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL10B104KB8NNNC/3886658
+[15] DigiKey own selling price, TS5A3159ADBVR:
+https://www.digikey.com/en/products/detail/texas-instruments/TS5A3159ADBVR/936397
+[16] Adafruit UPDI Friend manufacturer storefront:
+https://www.adafruit.com/product/5879
+[17] Adafruit programming guide:
+https://learn.adafruit.com/adafruit-updi-friend/advanced-reprogramming-with-updi

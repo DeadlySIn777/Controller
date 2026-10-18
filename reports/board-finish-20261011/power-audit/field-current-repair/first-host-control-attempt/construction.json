@@ -1,0 +1,158 @@
+{
+ "verdict": "STAGED_FIELD_CURRENT_SOURCE_PATCH",
+ "input_sha256": {
+  "Z:\\pcb-runs\\claude-finish\\tools\\field_pdn_design.py": "ebc0b7acaf9cd158b995c8b0309818ffdd5174b2a340f21e49571f9a157a68eb",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c06\\four-fag\\ready-r1.json": "19cb5a6344f877b3161ffa413c9b53d4fa76f3ebcbad65d11af927e376174889",
+  "Z:\\pcb-runs\\claude-finish\\tools\\field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+  "Z:\\pcb-runs\\claude-finish\\tools\\power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\1-power_widths.json": "13b014055bc7c66c5dc0479d68f10a8e477f41bae6dd5bebb8d0bbf16c1090e4",
+  "Z:\\pcb-runs\\claude-finish\\tools\\verify\\rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\2-rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6",
+  "Z:\\pcb-runs\\claude-finish\\tools\\fix\\load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\3-load_currents.json": "c0fb5c4c0c5bf516e13feb10ad4c6eff06e4459df402b3ce3f8f311d2d5c200b",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_do\\design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\4-design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard_power_entry\\README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\5-README.md": "a22735dc738494d38f72fe2e5bb3352a1d53840bd7117b260c83a9138005eaff",
+  "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\w\\design\\design.json": "d79f9dbe94457e9c73f59c737b6c487f97cf1ae09828598082ddf81c44207828"
+ },
+ "original_source_sha256": "ebc0b7acaf9cd158b995c8b0309818ffdd5174b2a340f21e49571f9a157a68eb",
+ "patched_source_sha256": "b16ce99a59ccce3585c07ddbd10e0bdf11e9f00b4d9e772c902d123684e67450",
+ "current_guard_sha256": "5ce4382f50cf918203a48936a4fed8c5619d922e992ce45c247dbd597240cbcf",
+ "changes": [
+  {
+   "original": "Segment current = sum of the cluster currents downstream, capped at the rail design current.",
+   "replacement": "Segment current = explicit downstream sum; inconsistent documented loads/design/source limits reject before routing.",
+   "occurrences": 1
+  },
+  {
+   "original": "from collections import defaultdict\n",
+   "replacement": "from collections import defaultdict\nfrom field_current_guard import CurrentModelError, validate_spec, required_vias, array_status, modeled_route_status, route_output\n",
+   "occurrences": 1
+  },
+  {
+   "original": "        self.G, self.PART, self.spec, self.a = G, PART, spec, args",
+   "replacement": "        self.current_preflight = validate_spec(spec, args.only)\n        self.G, self.PART, self.spec, self.a = G, PART, spec, args",
+   "occurrences": 1
+  },
+  {
+   "original": "\"clusters_sum_a\": round(sum(c[\"amps\"] for c in clusters), 3),",
+   "replacement": "\"clusters_sum_a\": math.fsum(c[\"amps\"] for c in clusters),",
+   "occurrences": 1
+  },
+  {
+   "original": "\"share_rule\": \"cluster current = documented maximum (basis/cite); segment current = downstream sum capped at \"\n                            \"the rail design current\", \"islands\": []}",
+   "replacement": "\"share_rule\": \"cluster current = documented maximum (basis/cite); segment current = explicit downstream sum without caps\", \"islands\": []}",
+   "occurrences": 1
+  },
+  {
+   "original": "        self.design[\"nets\"][rid] = des",
+   "replacement": "        des[\"current_model\"] = {\"preflight\": self.current_preflight[\"rails\"][rid],\n            \"source_and_positive_load_pads_resolved\": bool(src_pads) and all(c[\"pad_names\"] for c in clusters if c[\"amps\"] > 0),\n            \"source_local_load_a\": 0.0, \"full_rail_qualified\": False}\n        self.design[\"nets\"][rid] = des",
+   "occurrences": 1
+  },
+  {
+   "original": "            I_C = min(sum(down[J] for J in tg), r[\"design_a\"])",
+   "replacement": "            I_C = math.fsum(down[J] for J in tg)",
+   "occurrences": 1
+  },
+  {
+   "original": "max(1, math.ceil(I_C / self.amps_per_via - 1e-9))",
+   "replacement": "required_vias(I_C, self.amps_per_via)",
+   "occurrences": 1
+  },
+  {
+   "original": "max(1, math.ceil(down[J] / self.amps_per_via - 1e-9))",
+   "replacement": "required_vias(down[J], self.amps_per_via)",
+   "occurrences": 1
+  },
+  {
+   "original": "ipc_width_mm(min(down[J], r[\"design_a\"]))",
+   "replacement": "ipc_width_mm(down[J])",
+   "occurrences": 2
+  },
+  {
+   "original": "ipc_width_mm(min(u[\"amps\"], r[\"design_a\"]))",
+   "replacement": "ipc_width_mm(u[\"amps\"])",
+   "occurrences": 1
+  },
+  {
+   "original": "round(min(down_eff.get(vg[\"island\"], 0.0), r[\"design_a\"]), 3)",
+   "replacement": "down_eff.get(vg[\"island\"], 0.0)",
+   "occurrences": 1
+  },
+  {
+   "original": "max(1, math.ceil(vg[\"amps\"] / self.amps_per_via - 1e-9))",
+   "replacement": "required_vias(vg[\"amps\"], self.amps_per_via)",
+   "occurrences": 1
+  },
+  {
+   "original": "round(min(sum(p[\"amps\"] for p in ct[\"paths\"]), r[\"design_a\"]), 3)",
+   "replacement": "math.fsum(p[\"amps\"] for p in ct[\"paths\"])",
+   "occurrences": 1
+  },
+  {
+   "original": "max(1, math.ceil(ct[\"root\"][\"amps\"] / self.amps_per_via - 1e-9))",
+   "replacement": "required_vias(ct[\"root\"][\"amps\"], self.amps_per_via)",
+   "occurrences": 1
+  },
+  {
+   "original": "round(min(down_eff.get(src_gi, 0.0) - g_amps.get(src_gi, 0.0), r[\"design_a\"]), 3)",
+   "replacement": "down_eff.get(src_gi, 0.0) - g_amps.get(src_gi, 0.0)",
+   "occurrences": 1
+  },
+  {
+   "original": "        self.finalize(r, des, cts, hw, down_eff, reached, src_gi)",
+   "replacement": "        des[\"current_model\"][\"source_local_load_a\"] = g_amps.get(src_gi, 0.0)\n        self.finalize(r, des, cts, hw, down_eff, reached, src_gi)",
+   "occurrences": 1
+  },
+  {
+   "original": "s[\"amps\"] = min(s.get(\"amps_raw\", 0.0), r[\"design_a\"])",
+   "replacement": "s[\"amps\"] = s.get(\"amps_raw\", 0.0)",
+   "occurrences": 1
+  },
+  {
+   "original": "\"width_mm\": w, \"amps\": round(s[\"amps\"], 3),",
+   "replacement": "\"width_mm\": w, \"amps\": s[\"amps\"],",
+   "occurrences": 1
+  },
+  {
+   "original": "\"w_ipc10C_mm\": round(s[\"w_ipc\"], 2), \"w_available_mm\": round(s[\"w_avail\"], 2),",
+   "replacement": "\"w_ipc10C_mm\": round(s[\"w_ipc\"], 2), \"w_ipc10C_mm_raw\": s[\"w_ipc\"], \"w_available_mm\": round(s[\"w_avail\"], 2),",
+   "occurrences": 1
+  },
+  {
+   "original": "        n = len(vg.get(\"vias\", []))\n        return",
+   "replacement": "        n = len(vg.get(\"vias\", []))\n        qualification = array_status(vg.get(\"amps\"), n, self.amps_per_via, vg.get(\"n_req\"))\n        return",
+   "occurrences": 1
+  },
+  {
+   "original": "\"n\": n, \"ok\": n >= (vg.get(\"n_req\") or 0), \"vias\": vg.get(\"vias\", []),",
+   "replacement": "\"n\": n, \"ok\": qualification[\"qualified_for_modeled_current\"], \"current_qualification\": qualification, \"full_rail_qualified\": False, \"vias\": vg.get(\"vias\", []),",
+   "occurrences": 1
+  },
+  {
+   "original": "        routes_name = \"routes.json\"",
+   "replacement": "        qualifications = {rid: modeled_route_status(self.rail[rid], d, self.spec) for rid, d in self.design[\"nets\"].items()}\n        self.design[\"current_qualification\"] = qualifications\n        self.design[\"full_rail_qualified\"] = False\n        route_failures = [{\"net\": rid, \"reason\": reason} for rid, q in qualifications.items() for reason in q[\"reasons\"]]\n        routes_name = route_output(qualifications, bool(self.pool))\n        self.design[\"applicable_routes_emitted\"] = routes_name == \"routes.json\"",
+   "occurrences": 1
+  },
+  {
+   "original": "json.dump({\"tracks\": self.out_tracks + self.out_vias, \"failures\": []},",
+   "replacement": "json.dump({\"tracks\": self.out_tracks + self.out_vias, \"failures\": route_failures,\n                   \"current_qualification\": qualifications, \"full_rail_qualified\": False},",
+   "occurrences": 1
+  },
+  {
+   "original": "    spec = json.load(open(a.spec, encoding=\"utf-8\"))",
+   "replacement": "    if os.path.exists(os.path.join(a.work, \"routes.json\")):\n        raise SystemExit(\"Existing applicable routes.json: use a fresh work directory to avoid stale route reuse\")\n    spec = json.load(open(a.spec, encoding=\"utf-8\"))\n    try:\n        preflight = validate_spec(spec, a.only)\n    except CurrentModelError as error:\n        json.dump(error.report, open(os.path.join(a.work, \"field-current-preflight.json\"), \"w\", encoding=\"utf-8\"), indent=1)\n        log(str(error))\n        raise SystemExit(3)\n    json.dump(preflight, open(os.path.join(a.work, \"field-current-preflight.json\"), \"w\", encoding=\"utf-8\"), indent=1)",
+   "occurrences": 1
+  }
+ ],
+ "active_combined_source_binding": [],
+ "shared_source_modified": false,
+ "installed": false,
+ "heavy_planner_execution": false,
+ "gpu_jobs": 0,
+ "native_jobs": 0,
+ "capacity_constants_changed": false,
+ "geometry_masks_changed": false
+}

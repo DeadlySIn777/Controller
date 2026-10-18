@@ -1,0 +1,1982 @@
+
+-- Executing script file `map.ys' --
+
+1. Executing Verilog-2005 frontend: prior.v
+Parsing SystemVerilog input from `prior.v' to AST representation.
+Generating RTLIL representation for module `\cnc3_stepgen_runtime'.
+Successfully finished Verilog frontend.
+Parameter \TIMER_BITS = 10
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\cnc3_stepgen_runtime'.
+Parameter \TIMER_BITS = 10
+Generating RTLIL representation for module `$paramod\cnc3_stepgen_runtime\TIMER_BITS=32'00000000000000000000000000001010'.
+
+3. Executing SYNTH_EFINIX pass.
+
+3.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_sim.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_sim.v' to AST representation.
+Generating RTLIL representation for module `\EFX_LUT4'.
+Generating RTLIL representation for module `\EFX_ADD'.
+Generating RTLIL representation for module `\EFX_FF'.
+Generating RTLIL representation for module `\EFX_GBUFCE'.
+Generating RTLIL representation for module `\EFX_RAM_5K'.
+Successfully finished Verilog frontend.
+
+3.2. Executing HIERARCHY pass (managing design hierarchy).
+
+3.2.1. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+
+3.2.2. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+Removed 0 unused modules.
+
+3.3. Executing PROC pass (convert processes to netlists).
+
+3.3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 6 switch rules as full_case in process $proc$prior.v:23$57 in module cnc3_stepgen_runtime.
+Removed a total of 0 dead cases.
+
+3.3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 0 assignments to connections.
+
+3.3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+
+3.3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~10 debug messages>
+
+3.3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+     1/8: $0\phase[31:0]
+     2/8: $0\hold_left[9:0]
+     3/8: $0\delay_left[9:0]
+     4/8: $0\delay_kind[1:0]
+     5/8: $0\timing_fault[0:0]
+     6/8: $0\count[31:0]
+     7/8: $0\dir[0:0]
+     8/8: $0\step[0:0]
+
+3.3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\cnc3_stepgen_runtime.\step' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$222' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\dir' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$227' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$232' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\timing_fault' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$237' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\phase' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$242' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\delay_kind' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$247' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\delay_left' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$252' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\hold_left' using process `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+  created $adff cell `$procdff$257' with positive edge clock and positive level reset.
+
+3.3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 10 empty switches in `\cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+Removing empty process `cnc3_stepgen_runtime.$proc$prior.v:23$57'.
+Cleaned up 10 empty switches.
+
+3.3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~36 debug messages>
+
+3.4. Executing FLATTEN pass (flatten design).
+
+3.5. Executing TRIBUF pass.
+
+3.6. Executing DEMINOUT pass (demote inout ports to input or output).
+
+3.7. Executing SYNTH pass.
+
+3.7.1. Executing PROC pass (convert processes to netlists).
+
+3.7.1.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.7.1.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+3.7.1.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+3.7.1.4. Executing PROC_INIT pass (extract init attributes).
+
+3.7.1.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.7.1.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+3.7.1.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+3.7.1.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.7.1.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+3.7.1.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.7.1.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.7.1.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 10 unused cells and 83 unused wires.
+<suppressed ~11 debug messages>
+
+3.7.4. Executing CHECK pass (checking for obvious problems).
+Checking module cnc3_stepgen_runtime...
+Found and reported 0 problems.
+
+3.7.5. Executing OPT pass (performing simple optimizations).
+
+3.7.5.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.5.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~18 debug messages>
+Removed a total of 6 cells.
+
+3.7.5.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+      Replacing known input bits on port A of cell $ternary$prior.v:20$48: \rate -> { 1'0 \rate [30:0] }
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~17 debug messages>
+
+3.7.5.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.5.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.5.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.7.5.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+3.7.5.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.5.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.7.5.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~17 debug messages>
+
+3.7.5.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.5.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.5.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.7.5.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.7.5.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.5.16. Finished OPT passes. (There is nothing left to do.)
+
+3.7.6. Executing FSM pass (extract and optimize FSM).
+
+3.7.6.1. Executing FSM_DETECT pass (finding FSMs in design).
+Found FSM state register cnc3_stepgen_runtime.delay_kind.
+
+3.7.6.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+Extracting FSM `\delay_kind' from module `\cnc3_stepgen_runtime'.
+  found $adff cell for state register: $procdff$247
+  root of input selection tree: $0\delay_kind[1:0]
+  found reset state: 2'00 (from async reset)
+  found ctrl input: \enable
+  found state code: 2'11
+  found ctrl input: $logic_or$prior.v:33$66_Y
+  found ctrl input: $ne$prior.v:34$67_Y
+  found ctrl input: $eq$prior.v:39$73_Y
+  found ctrl input: $eq$prior.v:31$64_Y
+  found state code: 2'10
+  found ctrl input: \sum [32]
+  found ctrl input: $logic_and$prior.v:36$70_Y
+  found state code: 2'01
+  found ctrl input: $logic_and$prior.v:36$72_Y
+  found ctrl output: $eq$prior.v:16$40_Y
+  found ctrl output: $eq$prior.v:17$42_Y
+  found ctrl output: $eq$prior.v:18$44_Y
+  ctrl inputs: { $eq$prior.v:39$73_Y $logic_and$prior.v:36$72_Y $logic_and$prior.v:36$70_Y $ne$prior.v:34$67_Y $logic_or$prior.v:33$66_Y $eq$prior.v:31$64_Y \sum [32] \enable }
+  ctrl outputs: { $eq$prior.v:18$44_Y $eq$prior.v:17$42_Y $eq$prior.v:16$40_Y $0\delay_kind[1:0] }
+  transition:       2'00 8'-------0 ->       2'11 5'00011
+  transition:       2'00 8'---00-01 ->       2'00 5'00000
+  transition:       2'00 8'---00-11 ->       2'01 5'00001
+  transition:       2'00 8'-0-10--1 ->       2'00 5'00000
+  transition:       2'00 8'-1-10--1 ->       2'11 5'00011
+  transition:       2'00 8'----1--1 ->       2'00 5'00000
+  transition:       2'10 8'-------0 ->       2'11 5'01011
+  transition:       2'10 8'---00-01 ->       2'10 5'01010
+  transition:       2'10 8'--000-11 ->       2'10 5'01010
+  transition:       2'10 8'--100-11 ->       2'01 5'01001
+  transition:       2'10 8'-0-10--1 ->       2'10 5'01010
+  transition:       2'10 8'-1-10--1 ->       2'11 5'01011
+  transition:       2'10 8'----1--1 ->       2'10 5'01010
+  transition:       2'01 8'-------0 ->       2'11 5'00111
+  transition:       2'01 8'---00001 ->       2'01 5'00101
+  transition:       2'01 8'---00101 ->       2'10 5'00110
+  transition:       2'01 8'--000011 ->       2'01 5'00101
+  transition:       2'01 8'--000111 ->       2'10 5'00110
+  transition:       2'01 8'--100-11 ->       2'01 5'00101
+  transition:       2'01 8'-0-100-1 ->       2'01 5'00101
+  transition:       2'01 8'-0-101-1 ->       2'10 5'00110
+  transition:       2'01 8'-1-10--1 ->       2'11 5'00111
+  transition:       2'01 8'----10-1 ->       2'01 5'00101
+  transition:       2'01 8'----11-1 ->       2'10 5'00110
+  transition:       2'11 8'-------0 ->       2'11 5'10011
+  transition:       2'11 8'0--00--1 ->       2'11 5'10011
+  transition:       2'11 8'1--00-01 ->       2'11 5'10011
+  transition:       2'11 8'1--00-11 ->       2'01 5'10001
+  transition:       2'11 8'-0-10--1 ->       2'11 5'10011
+  transition:       2'11 8'-1-10--1 ->       2'11 5'10011
+  transition:       2'11 8'----1--1 ->       2'11 5'10011
+
+3.7.6.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\delay_kind$258' from module `\cnc3_stepgen_runtime'.
+  Merging pattern 8'-0-10--1 and 8'-1-10--1 from group (3 3 5'10011).
+  Merging pattern 8'-1-10--1 and 8'-0-10--1 from group (3 3 5'10011).
+
+3.7.6.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 12 unused cells and 12 unused wires.
+<suppressed ~13 debug messages>
+
+3.7.6.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\delay_kind$258' from module `\cnc3_stepgen_runtime'.
+  Removing unused output signal $0\delay_kind[1:0] [0].
+  Removing unused output signal $0\delay_kind[1:0] [1].
+
+3.7.6.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+Recoding FSM `$fsm$\delay_kind$258' from module `\cnc3_stepgen_runtime' using `auto' encoding:
+  mapping auto encoding to `one-hot` for this FSM.
+  00 -> ---1
+  10 -> --1-
+  01 -> -1--
+  11 -> 1---
+
+3.7.6.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+FSM `$fsm$\delay_kind$258' from module `cnc3_stepgen_runtime':
+-------------------------------------
+
+  Information on FSM $fsm$\delay_kind$258 (\delay_kind):
+
+  Number of input signals:    8
+  Number of output signals:   3
+  Number of state bits:       4
+
+  Input signals:
+    0: \enable
+    1: \sum [32]
+    2: $eq$prior.v:31$64_Y
+    3: $logic_or$prior.v:33$66_Y
+    4: $ne$prior.v:34$67_Y
+    5: $logic_and$prior.v:36$70_Y
+    6: $logic_and$prior.v:36$72_Y
+    7: $eq$prior.v:39$73_Y
+
+  Output signals:
+    0: $eq$prior.v:16$40_Y
+    1: $eq$prior.v:17$42_Y
+    2: $eq$prior.v:18$44_Y
+
+  State encoding:
+    0:     4'---1  <RESET STATE>
+    1:     4'--1-
+    2:     4'-1--
+    3:     4'1---
+
+  Transition Table (state_in, ctrl_in, state_out, ctrl_out):
+      0:     0 8'---00-01   ->     0 3'000
+      1:     0 8'-0-10--1   ->     0 3'000
+      2:     0 8'----1--1   ->     0 3'000
+      3:     0 8'---00-11   ->     2 3'000
+      4:     0 8'-------0   ->     3 3'000
+      5:     0 8'-1-10--1   ->     3 3'000
+      6:     1 8'---00-01   ->     1 3'010
+      7:     1 8'--000-11   ->     1 3'010
+      8:     1 8'-0-10--1   ->     1 3'010
+      9:     1 8'----1--1   ->     1 3'010
+     10:     1 8'--100-11   ->     2 3'010
+     11:     1 8'-------0   ->     3 3'010
+     12:     1 8'-1-10--1   ->     3 3'010
+     13:     2 8'---00101   ->     1 3'001
+     14:     2 8'--000111   ->     1 3'001
+     15:     2 8'-0-101-1   ->     1 3'001
+     16:     2 8'----11-1   ->     1 3'001
+     17:     2 8'---00001   ->     2 3'001
+     18:     2 8'--000011   ->     2 3'001
+     19:     2 8'--100-11   ->     2 3'001
+     20:     2 8'-0-100-1   ->     2 3'001
+     21:     2 8'----10-1   ->     2 3'001
+     22:     2 8'-------0   ->     3 3'001
+     23:     2 8'-1-10--1   ->     3 3'001
+     24:     3 8'1--00-11   ->     2 3'100
+     25:     3 8'-------0   ->     3 3'100
+     26:     3 8'1--00-01   ->     3 3'100
+     27:     3 8'0--00--1   ->     3 3'100
+     28:     3 8'---10--1   ->     3 3'100
+     29:     3 8'----1--1   ->     3 3'100
+
+-------------------------------------
+
+3.7.6.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+Mapping FSM `$fsm$\delay_kind$258' from module `\cnc3_stepgen_runtime'.
+
+3.7.7. Executing OPT pass (performing simple optimizations).
+
+3.7.7.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~1 debug messages>
+
+3.7.7.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+3.7.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~15 debug messages>
+
+3.7.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.7.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.7.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$237 ($adff) from module cnc3_stepgen_runtime (D = $0\timing_fault[0:0], Q = \timing_fault).
+Adding EN signal on $procdff$232 ($adff) from module cnc3_stepgen_runtime (D = $add$prior.v:44$78_Y, Q = \count).
+Adding EN signal on $procdff$227 ($adff) from module cnc3_stepgen_runtime (D = $0\dir[0:0], Q = \dir).
+
+3.7.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 6 unused cells and 16 unused wires.
+<suppressed ~7 debug messages>
+
+3.7.7.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.7.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.7.7.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+3.7.7.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.7.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+3.7.7.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.7.7.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+3.7.7.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.7.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.7.7.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+3.7.7.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.7.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.7.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.7.7.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.7.7.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.7.23. Finished OPT passes. (There is nothing left to do.)
+
+3.7.8. Executing WREDUCE pass (reducing word size of cells).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$371 ($ne).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$285 ($eq).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$prior.v:16$41 ($mux).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$prior.v:17$43 ($mux).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$prior.v:18$45 ($mux).
+Removed top 31 bits (of 32) from port B of cell cnc3_stepgen_runtime.$add$prior.v:20$47 ($add).
+Removed top 1 bits (of 33) from port A of cell cnc3_stepgen_runtime.$add$prior.v:21$49 ($add).
+Removed top 1 bits (of 33) from port B of cell cnc3_stepgen_runtime.$add$prior.v:21$49 ($add).
+Removed top 1 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$389 ($ne).
+Removed top 6 bits (of 16) from port A of cell cnc3_stepgen_runtime.$eq$prior.v:31$64 ($eq).
+Removed top 15 bits (of 16) from port B of cell cnc3_stepgen_runtime.$eq$prior.v:31$64 ($eq).
+Removed top 3 bits (of 6) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$289 ($eq).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$351 ($eq).
+Removed top 2 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$281 ($eq).
+Removed top 1 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$336 ($eq).
+Removed top 2 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$332 ($eq).
+Removed top 4 bits (of 6) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$318 ($eq).
+Removed top 4 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$314 ($eq).
+Removed top 2 bits (of 3) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$387 ($ne).
+Removed top 1 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$305 ($eq).
+Removed top 1 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$297 ($eq).
+Removed top 3 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$293 ($eq).
+Removed top 6 bits (of 16) from wire cnc3_stepgen_runtime.high_left.
+Removed top 6 bits (of 16) from wire cnc3_stepgen_runtime.low_left.
+
+3.7.9. Executing PEEPOPT pass (run peephole optimizers).
+
+3.7.10. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+3.7.11. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module cnc3_stepgen_runtime:
+  creating $macc model for $add$prior.v:20$47 ($add).
+  creating $macc model for $add$prior.v:21$49 ($add).
+  creating $macc model for $add$prior.v:44$78 ($add).
+  creating $macc model for $sub$prior.v:29$61 ($sub).
+  creating $macc model for $sub$prior.v:30$63 ($sub).
+  creating $alu model for $macc $sub$prior.v:30$63.
+  creating $alu model for $macc $sub$prior.v:29$61.
+  creating $alu model for $macc $add$prior.v:44$78.
+  creating $alu model for $macc $add$prior.v:21$49.
+  creating $alu model for $macc $add$prior.v:20$47.
+  creating $alu cell for $add$prior.v:20$47: $auto$alumacc.cc:495:replace_alu$396
+  creating $alu cell for $add$prior.v:21$49: $auto$alumacc.cc:495:replace_alu$399
+  creating $alu cell for $add$prior.v:44$78: $auto$alumacc.cc:495:replace_alu$402
+  creating $alu cell for $sub$prior.v:29$61: $auto$alumacc.cc:495:replace_alu$405
+  creating $alu cell for $sub$prior.v:30$63: $auto$alumacc.cc:495:replace_alu$408
+  created 5 $alu and 0 $macc cells.
+
+3.7.12. Executing SHARE pass (SAT-based resource sharing).
+
+3.7.13. Executing OPT pass (performing simple optimizations).
+
+3.7.13.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.13.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.13.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+3.7.13.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.7.13.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.7.13.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.7.13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.7.13.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.7.13.9. Finished OPT passes. (There is nothing left to do.)
+
+3.7.14. Executing MEMORY pass.
+
+3.7.14.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+3.7.14.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+3.7.14.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+3.7.14.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+3.7.14.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+3.7.14.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.7.14.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+3.7.14.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+3.7.14.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.7.14.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+3.7.15. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.8. Executing MEMORY_LIBMAP pass (mapping memories to cells).
+
+3.9. Executing TECHMAP pass (map to technology primitives).
+
+3.9.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/brams_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/brams_map.v' to AST representation.
+Generating RTLIL representation for module `\$__EFINIX_5K_'.
+Successfully finished Verilog frontend.
+
+3.9.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+3.10. Executing OPT pass (performing simple optimizations).
+
+3.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~11 debug messages>
+
+3.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.10.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.10.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 8 unused wires.
+<suppressed ~1 debug messages>
+
+3.10.5. Finished fast OPT passes.
+
+3.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+3.12. Executing OPT pass (performing simple optimizations).
+
+3.12.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.12.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.12.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+3.12.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+    Consolidated identical input bits for $mux cell $ternary$prior.v:44$77:
+      Old ports: A=1, B=32'11111111111111111111111111111111, Y=$ternary$prior.v:44$77_Y
+      New ports: A=1'0, B=1'1, Y=$ternary$prior.v:44$77_Y [1]
+      New connections: { $ternary$prior.v:44$77_Y [31:2] $ternary$prior.v:44$77_Y [0] } = { $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] $ternary$prior.v:44$77_Y [1] 1'1 }
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 1 changes.
+
+3.12.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.12.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.12.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.12.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.12.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.12.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+3.12.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+3.12.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+3.12.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.12.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+3.12.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.12.16. Finished OPT passes. (There is nothing left to do.)
+
+3.13. Executing TECHMAP pass (map to technology primitives).
+
+3.13.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+3.13.2. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/arith_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/arith_map.v' to AST representation.
+Generating RTLIL representation for module `\_80_efinix_alu'.
+Successfully finished Verilog frontend.
+
+3.13.3. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $not.
+Using template $paramod$857150d3a9b7fb38b73bbaa31ff652415e553f98\_80_efinix_alu for cells of type $alu.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_80_efinix_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using template $paramod$1eb759649286d7485bd82f4dfc30385bade4b4b3\_80_efinix_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $logic_or.
+Using extmapper simplemap for cells of type $adff.
+Using extmapper simplemap for cells of type $adffe.
+Using template $paramod$6a42b6fefed750f8a1c58eab59479d960557103c\_80_efinix_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $pos.
+No more expansions possible.
+<suppressed ~299 debug messages>
+
+3.14. Executing OPT pass (performing simple optimizations).
+
+3.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~420 debug messages>
+
+3.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~393 debug messages>
+Removed a total of 131 cells.
+
+3.14.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.14.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 232 unused cells and 258 unused wires.
+<suppressed ~233 debug messages>
+
+3.14.5. Finished fast OPT passes.
+
+3.15. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+
+3.16. Executing TECHMAP pass (map to technology primitives).
+
+3.16.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFCE_xxxx_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Successfully finished Verilog frontend.
+
+3.16.2. Continuing TECHMAP pass.
+Using template $paramod$17d85764cba1d0687037e7d6f74bfececd401709\$_DFFE_xxxx_ for cells of type $_DFFE_PN1P_.
+Using template $paramod$77ebc8e70eef7b19cc829dcd1c7d54db125f104d\$_DFFE_xxxx_ for cells of type $_DFFE_PN0P_.
+No more expansions possible.
+<suppressed ~165 debug messages>
+
+3.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+3.18. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+3.19. Executing ABC pass (technology mapping using ABC).
+
+3.19.1. Extracting gate netlist of module `\cnc3_stepgen_runtime' to `<abc-temp-dir>/input.blif'..
+Extracted 605 gates and 792 wires to a netlist network with 185 inputs and 126 outputs.
+
+3.19.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lut <abc-temp-dir>/lutdefs.txt 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + dch -f 
+ABC: + if 
+ABC: + mfs2 
+ABC: + lutpack -S 1 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+3.19.1.2. Re-integrating ABC results.
+ABC RESULTS:              $lut cells:      208
+ABC RESULTS:        internal signals:      481
+ABC RESULTS:           input signals:      185
+ABC RESULTS:          output signals:      126
+Removing temp directory.
+Removed 0 unused cells and 1019 unused wires.
+
+3.20. Executing TECHMAP pass (map to technology primitives).
+
+3.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFCE_xxxx_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Generating RTLIL representation for module `\$lut'.
+Successfully finished Verilog frontend.
+
+3.20.2. Continuing TECHMAP pass.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0001 for cells of type $lut.
+Using template $paramod$658b9ed803f0d3d335616d3858b53e0a2522f1e8\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000001 for cells of type $lut.
+Using template $paramod$6d6beead1425af15cf78b27fd9b11b41b5d4bce8\$lut for cells of type $lut.
+Using template $paramod$b4d0f4738a5ce50c7f36c2aa2ecc09cfb874f2b6\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1001 for cells of type $lut.
+Using template $paramod$571404c0889eaf57f492cb5e37f8acb5df5852f9\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000111 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10000000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0111 for cells of type $lut.
+Using template $paramod$272652f6c6fbe9a75eff76e45cc7e2788835518b\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11100000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01000000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01111100 for cells of type $lut.
+Using template $paramod$243c00f5eb9faa1d5ce3478fdc389a56070781f8\$lut for cells of type $lut.
+Using template $paramod$6e238df02989b317f10820a22773676e71120644\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1000 for cells of type $lut.
+Using template $paramod$a3cdc1eb771a2c6a16f64da161e11100ac409d2b\$lut for cells of type $lut.
+Using template $paramod$59ec461f6f07e2257bba3c91787278d6be59c407\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11001010 for cells of type $lut.
+Using template $paramod$64b542623c90988571507ab8fe6892dd7691eb51\$lut for cells of type $lut.
+Using template $paramod$f63fe32f78d5f3c5de711945c592c8c5ec2303ae\$lut for cells of type $lut.
+Using template $paramod$b9c83f08934879fc508650c6e743584efbf61467\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000001\LUT=2'01 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10101100 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0100 for cells of type $lut.
+Using template $paramod$e49f6e3576ef1a6d2f58c54414dbb786af8cc869\$lut for cells of type $lut.
+Using template $paramod$608f40069c27841a5b3bdf03643a34bdc8974072\$lut for cells of type $lut.
+Using template $paramod$d6cf0a4b6f6ccd87588da28c41b5b6c258da2509\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1011 for cells of type $lut.
+Using template $paramod$933f4f3e373a784da64d137def3625bdd36d1695\$lut for cells of type $lut.
+Using template $paramod$5a621b016c894274d07edef48c49b401a15fd796\$lut for cells of type $lut.
+Using template $paramod$965f8f2fa1a796a6c51222eabb50fbd26e97d98b\$lut for cells of type $lut.
+Using template $paramod$52b0f43ae6cb52b5e726dd3244952f6f33bb5f19\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01110000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00010000 for cells of type $lut.
+Using template $paramod$43779580bfffd5d5a9f321249a174febf1dac288\$lut for cells of type $lut.
+No more expansions possible.
+<suppressed ~742 debug messages>
+Removed 0 unused cells and 447 unused wires.
+
+3.21. Executing CLKBUFMAP pass (inserting clock buffers).
+Inserting $__EFX_GBUF on cnc3_stepgen_runtime.clk[0].
+
+3.22. Executing TECHMAP pass (map to technology primitives).
+
+3.22.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/gbuf_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/gbuf_map.v' to AST representation.
+Generating RTLIL representation for module `\$__EFX_GBUF'.
+Successfully finished Verilog frontend.
+
+3.22.2. Continuing TECHMAP pass.
+Using template \$__EFX_GBUF for cells of type $__EFX_GBUF.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+3.23. Executing EFINIX_FIXCARRY pass (fix invalid carry chain).
+Removed 0 unused cells and 3 unused wires.
+
+3.24. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `cnc3_stepgen_runtime'. Setting top module to cnc3_stepgen_runtime.
+
+3.24.1. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+
+3.24.2. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+Removed 0 unused modules.
+
+3.25. Printing statistics.
+
+=== cnc3_stepgen_runtime ===
+
+   Number of wires:                101
+   Number of wire bits:            841
+   Number of public wires:          22
+   Number of public wire bits:     274
+   Number of ports:                 14
+   Number of port bits:            136
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                422
+     EFX_ADD                       122
+     EFX_FF                         91
+     EFX_GBUFCE                      1
+     EFX_LUT4                      208
+
+3.26. Executing CHECK pass (checking for obvious problems).
+Checking module cnc3_stepgen_runtime...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+   "invocation": "stat -json ",
+   "modules": {
+      "\\cnc3_stepgen_runtime": {
+         "num_wires":         101,
+         "num_wire_bits":     841,
+         "num_pub_wires":     22,
+         "num_pub_wire_bits": 274,
+         "num_ports":         14,
+         "num_port_bits":     136,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         422,
+         "num_cells_by_type": {
+            "EFX_ADD": 122,
+            "EFX_FF": 91,
+            "EFX_GBUFCE": 1,
+            "EFX_LUT4": 208
+         }
+      }
+   },
+      "design": {
+         "num_wires":         101,
+         "num_wire_bits":     841,
+         "num_pub_wires":     22,
+         "num_pub_wire_bits": 274,
+         "num_ports":         14,
+         "num_port_bits":     136,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         422,
+         "num_cells_by_type": {
+            "EFX_ADD": 122,
+            "EFX_FF": 91,
+            "EFX_GBUFCE": 1,
+            "EFX_LUT4": 208
+         }
+      }
+}
+
+4. Executing Verilog-2005 frontend: cnc3_stepgen_runtime.v
+Parsing SystemVerilog input from `cnc3_stepgen_runtime.v' to AST representation.
+Generating RTLIL representation for module `\cnc3_stepgen_runtime'.
+Successfully finished Verilog frontend.
+Parameter \TIMER_BITS = 10
+
+5. Executing AST frontend in derive mode using pre-parsed AST for module `\cnc3_stepgen_runtime'.
+Parameter \TIMER_BITS = 10
+Generating RTLIL representation for module `$paramod\cnc3_stepgen_runtime\TIMER_BITS=32'00000000000000000000000000001010'.
+
+6. Executing SYNTH_EFINIX pass.
+
+6.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_sim.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_sim.v' to AST representation.
+Generating RTLIL representation for module `\EFX_LUT4'.
+Generating RTLIL representation for module `\EFX_ADD'.
+Generating RTLIL representation for module `\EFX_FF'.
+Generating RTLIL representation for module `\EFX_GBUFCE'.
+Generating RTLIL representation for module `\EFX_RAM_5K'.
+Successfully finished Verilog frontend.
+
+6.2. Executing HIERARCHY pass (managing design hierarchy).
+
+6.2.1. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+
+6.2.2. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+Removed 0 unused modules.
+
+6.3. Executing PROC pass (convert processes to netlists).
+
+6.3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 7 switch rules as full_case in process $proc$cnc3_stepgen_runtime.v:31$2949 in module cnc3_stepgen_runtime.
+Removed a total of 0 dead cases.
+
+6.3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 41 assignments to connections.
+
+6.3.4. Executing PROC_INIT pass (extract init attributes).
+
+6.3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+
+6.3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~10 debug messages>
+
+6.3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+     1/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [31]
+     2/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$3007
+     3/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [30]
+     4/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [29]
+     5/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [28]
+     6/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [27]
+     7/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [26]
+     8/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [25]
+     9/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [24]
+    10/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [23]
+    11/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [22]
+    12/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [21]
+    13/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [20]
+    14/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [19]
+    15/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [18]
+    16/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [17]
+    17/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [16]
+    18/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [15]
+    19/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [14]
+    20/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [13]
+    21/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [12]
+    22/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [11]
+    23/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [10]
+    24/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [9]
+    25/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [8]
+    26/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [7]
+    27/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [6]
+    28/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [5]
+    29/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [4]
+    30/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [3]
+    31/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [2]
+    32/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [1]
+    33/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$3005 [0]
+    34/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$3006
+    35/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$3008
+    36/74: $7\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$3004
+    37/74: $6\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$3000
+    38/74: $6\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2999
+    39/74: $6\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2998
+    40/74: $6\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2997
+    41/74: $6\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2996
+    42/74: $5\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$2995
+    43/74: $5\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2994
+    44/74: $5\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2993
+    45/74: $5\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2992
+    46/74: $5\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2991
+    47/74: $4\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$2984
+    48/74: $4\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2983
+    49/74: $4\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2982
+    50/74: $4\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2981
+    51/74: $4\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2980
+    52/74: $3\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$2978
+    53/74: $3\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2977
+    54/74: $3\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2976
+    55/74: $3\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2975
+    56/74: $3\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2974
+    57/74: $0\phase[31:0]
+    58/74: $2\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$2966
+    59/74: $2\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2965
+    60/74: $2\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2964
+    61/74: $2\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2963
+    62/74: $2\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2962
+    63/74: $1\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse[0:0]$2960
+    64/74: $1\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry[0:0]$2959
+    65/74: $1\count_next$func$cnc3_stepgen_runtime.v:52$2933.k[31:0]$2958
+    66/74: $1\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result[31:0]$2957
+    67/74: $1\count_next$func$cnc3_stepgen_runtime.v:52$2933.c[31:0]$2956
+    68/74: $0\step[0:0]
+    69/74: $0\dir[0:0]
+    70/74: $0\timing_fault[0:0]
+    71/74: $0\count[31:0]
+    72/74: $0\hold_left[9:0]
+    73/74: $0\delay_left[9:0]
+    74/74: $0\delay_kind[1:0]
+Creating decoders for process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+
+6.3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\cnc3_stepgen_runtime.\magnitude_next$func$cnc3_stepgen_runtime.v:28$2932.$result' from process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+No latch inferred for signal `\cnc3_stepgen_runtime.\magnitude_next$func$cnc3_stepgen_runtime.v:28$2934.r' from process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+No latch inferred for signal `\cnc3_stepgen_runtime.\magnitude_next$func$cnc3_stepgen_runtime.v:28$2934.$result' from process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+No latch inferred for signal `\cnc3_stepgen_runtime.\magnitude_next$func$cnc3_stepgen_runtime.v:28$2934.seen' from process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+No latch inferred for signal `\cnc3_stepgen_runtime.\magnitude_next$func$cnc3_stepgen_runtime.v:28$2934.k' from process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+
+6.3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\cnc3_stepgen_runtime.\count_next$func$cnc3_stepgen_runtime.v:52$2933.c' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4229' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count_next$func$cnc3_stepgen_runtime.v:52$2933.$result' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4234' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count_next$func$cnc3_stepgen_runtime.v:52$2933.k' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4239' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count_next$func$cnc3_stepgen_runtime.v:52$2933.carry' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4244' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count_next$func$cnc3_stepgen_runtime.v:52$2933.reverse' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4249' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\phase' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4254' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\delay_kind' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4259' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\delay_left' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4264' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\hold_left' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4269' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\count' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4274' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\timing_fault' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4279' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\dir' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4284' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime.\step' using process `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+  created $adff cell `$procdff$4289' with positive edge clock and positive level reset.
+
+6.3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+6.3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 10 empty switches in `\cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+Removing empty process `cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:31$2949'.
+Removing empty process `cnc3_stepgen_runtime.$proc$cnc3_stepgen_runtime.v:0$3105'.
+Cleaned up 10 empty switches.
+
+6.3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~112 debug messages>
+
+6.4. Executing FLATTEN pass (flatten design).
+
+6.5. Executing TRIBUF pass.
+
+6.6. Executing DEMINOUT pass (demote inout ports to input or output).
+
+6.7. Executing SYNTH pass.
+
+6.7.1. Executing PROC pass (convert processes to netlists).
+
+6.7.1.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.7.1.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+6.7.1.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+6.7.1.4. Executing PROC_INIT pass (extract init attributes).
+
+6.7.1.5. Executing PROC_ARST pass (detect async resets in processes).
+
+6.7.1.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+6.7.1.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+6.7.1.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+6.7.1.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+6.7.1.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+6.7.1.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.7.1.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 314 unused cells and 765 unused wires.
+<suppressed ~319 debug messages>
+
+6.7.4. Executing CHECK pass (checking for obvious problems).
+Checking module cnc3_stepgen_runtime...
+Found and reported 0 problems.
+
+6.7.5. Executing OPT pass (performing simple optimizations).
+
+6.7.5.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.5.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~18 debug messages>
+Removed a total of 6 cells.
+
+6.7.5.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~15 debug messages>
+
+6.7.5.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.5.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.5.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7.5.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+6.7.5.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.5.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+6.7.5.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~15 debug messages>
+
+6.7.5.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.5.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.5.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7.5.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.7.5.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.5.16. Finished OPT passes. (There is nothing left to do.)
+
+6.7.6. Executing FSM pass (extract and optimize FSM).
+
+6.7.6.1. Executing FSM_DETECT pass (finding FSMs in design).
+Found FSM state register cnc3_stepgen_runtime.delay_kind.
+
+6.7.6.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+Extracting FSM `\delay_kind' from module `\cnc3_stepgen_runtime'.
+  found $adff cell for state register: $procdff$4259
+  root of input selection tree: $0\delay_kind[1:0]
+  found reset state: 2'00 (from async reset)
+  found ctrl input: \enable
+  found state code: 2'11
+  found ctrl input: $logic_or$cnc3_stepgen_runtime.v:41$2973_Y
+  found ctrl input: $ne$cnc3_stepgen_runtime.v:42$2979_Y
+  found ctrl input: $eq$cnc3_stepgen_runtime.v:47$2990_Y
+  found ctrl input: $eq$cnc3_stepgen_runtime.v:39$2971_Y
+  found state code: 2'10
+  found ctrl input: \sum [32]
+  found ctrl input: $logic_and$cnc3_stepgen_runtime.v:44$2987_Y
+  found state code: 2'01
+  found ctrl input: $logic_and$cnc3_stepgen_runtime.v:44$2989_Y
+  found ctrl output: $eq$cnc3_stepgen_runtime.v:16$2935_Y
+  found ctrl output: $eq$cnc3_stepgen_runtime.v:17$2937_Y
+  found ctrl output: $eq$cnc3_stepgen_runtime.v:18$2939_Y
+  ctrl inputs: { \sum [32] $ne$cnc3_stepgen_runtime.v:42$2979_Y $logic_and$cnc3_stepgen_runtime.v:44$2987_Y $eq$cnc3_stepgen_runtime.v:47$2990_Y $eq$cnc3_stepgen_runtime.v:39$2971_Y $logic_or$cnc3_stepgen_runtime.v:41$2973_Y $logic_and$cnc3_stepgen_runtime.v:44$2989_Y \enable }
+  ctrl outputs: { $0\delay_kind[1:0] $eq$cnc3_stepgen_runtime.v:18$2939_Y $eq$cnc3_stepgen_runtime.v:17$2937_Y $eq$cnc3_stepgen_runtime.v:16$2935_Y }
+  transition:       2'00 8'-------0 ->       2'11 5'11000
+  transition:       2'00 8'00---0-1 ->       2'00 5'00000
+  transition:       2'00 8'10---0-1 ->       2'01 5'01000
+  transition:       2'00 8'-1---001 ->       2'00 5'00000
+  transition:       2'00 8'-1---011 ->       2'11 5'11000
+  transition:       2'00 8'-----1-1 ->       2'00 5'00000
+  transition:       2'10 8'-------0 ->       2'11 5'11010
+  transition:       2'10 8'00---0-1 ->       2'10 5'10010
+  transition:       2'10 8'100--0-1 ->       2'10 5'10010
+  transition:       2'10 8'101--0-1 ->       2'01 5'01010
+  transition:       2'10 8'-1---001 ->       2'10 5'10010
+  transition:       2'10 8'-1---011 ->       2'11 5'11010
+  transition:       2'10 8'-----1-1 ->       2'10 5'10010
+  transition:       2'01 8'-------0 ->       2'11 5'11001
+  transition:       2'01 8'00--00-1 ->       2'01 5'01001
+  transition:       2'01 8'00--10-1 ->       2'10 5'10001
+  transition:       2'01 8'100-00-1 ->       2'01 5'01001
+  transition:       2'01 8'100-10-1 ->       2'10 5'10001
+  transition:       2'01 8'101--0-1 ->       2'01 5'01001
+  transition:       2'01 8'-1--0001 ->       2'01 5'01001
+  transition:       2'01 8'-1--1001 ->       2'10 5'10001
+  transition:       2'01 8'-1---011 ->       2'11 5'11001
+  transition:       2'01 8'----01-1 ->       2'01 5'01001
+  transition:       2'01 8'----11-1 ->       2'10 5'10001
+  transition:       2'11 8'-------0 ->       2'11 5'11100
+  transition:       2'11 8'-0-0-0-1 ->       2'11 5'11100
+  transition:       2'11 8'00-1-0-1 ->       2'11 5'11100
+  transition:       2'11 8'10-1-0-1 ->       2'01 5'01100
+  transition:       2'11 8'-1---001 ->       2'11 5'11100
+  transition:       2'11 8'-1---011 ->       2'11 5'11100
+  transition:       2'11 8'-----1-1 ->       2'11 5'11100
+
+6.7.6.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\delay_kind$4292' from module `\cnc3_stepgen_runtime'.
+  Merging pattern 8'-1---001 and 8'-1---011 from group (3 3 5'11100).
+  Merging pattern 8'-1---011 and 8'-1---001 from group (3 3 5'11100).
+
+6.7.6.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 12 unused cells and 12 unused wires.
+<suppressed ~13 debug messages>
+
+6.7.6.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\delay_kind$4292' from module `\cnc3_stepgen_runtime'.
+  Removing unused output signal $0\delay_kind[1:0] [0].
+  Removing unused output signal $0\delay_kind[1:0] [1].
+
+6.7.6.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+Recoding FSM `$fsm$\delay_kind$4292' from module `\cnc3_stepgen_runtime' using `auto' encoding:
+  mapping auto encoding to `one-hot` for this FSM.
+  00 -> ---1
+  10 -> --1-
+  01 -> -1--
+  11 -> 1---
+
+6.7.6.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+FSM `$fsm$\delay_kind$4292' from module `cnc3_stepgen_runtime':
+-------------------------------------
+
+  Information on FSM $fsm$\delay_kind$4292 (\delay_kind):
+
+  Number of input signals:    8
+  Number of output signals:   3
+  Number of state bits:       4
+
+  Input signals:
+    0: \enable
+    1: $logic_and$cnc3_stepgen_runtime.v:44$2989_Y
+    2: $logic_or$cnc3_stepgen_runtime.v:41$2973_Y
+    3: $eq$cnc3_stepgen_runtime.v:39$2971_Y
+    4: $eq$cnc3_stepgen_runtime.v:47$2990_Y
+    5: $logic_and$cnc3_stepgen_runtime.v:44$2987_Y
+    6: $ne$cnc3_stepgen_runtime.v:42$2979_Y
+    7: \sum [32]
+
+  Output signals:
+    0: $eq$cnc3_stepgen_runtime.v:16$2935_Y
+    1: $eq$cnc3_stepgen_runtime.v:17$2937_Y
+    2: $eq$cnc3_stepgen_runtime.v:18$2939_Y
+
+  State encoding:
+    0:     4'---1  <RESET STATE>
+    1:     4'--1-
+    2:     4'-1--
+    3:     4'1---
+
+  Transition Table (state_in, ctrl_in, state_out, ctrl_out):
+      0:     0 8'-1---001   ->     0 3'000
+      1:     0 8'00---0-1   ->     0 3'000
+      2:     0 8'-----1-1   ->     0 3'000
+      3:     0 8'10---0-1   ->     2 3'000
+      4:     0 8'-------0   ->     3 3'000
+      5:     0 8'-1---011   ->     3 3'000
+      6:     1 8'-1---001   ->     1 3'010
+      7:     1 8'100--0-1   ->     1 3'010
+      8:     1 8'00---0-1   ->     1 3'010
+      9:     1 8'-----1-1   ->     1 3'010
+     10:     1 8'101--0-1   ->     2 3'010
+     11:     1 8'-------0   ->     3 3'010
+     12:     1 8'-1---011   ->     3 3'010
+     13:     2 8'-1--1001   ->     1 3'001
+     14:     2 8'100-10-1   ->     1 3'001
+     15:     2 8'00--10-1   ->     1 3'001
+     16:     2 8'----11-1   ->     1 3'001
+     17:     2 8'-1--0001   ->     2 3'001
+     18:     2 8'100-00-1   ->     2 3'001
+     19:     2 8'00--00-1   ->     2 3'001
+     20:     2 8'101--0-1   ->     2 3'001
+     21:     2 8'----01-1   ->     2 3'001
+     22:     2 8'-------0   ->     3 3'001
+     23:     2 8'-1---011   ->     3 3'001
+     24:     3 8'10-1-0-1   ->     2 3'100
+     25:     3 8'-------0   ->     3 3'100
+     26:     3 8'-0-0-0-1   ->     3 3'100
+     27:     3 8'00-1-0-1   ->     3 3'100
+     28:     3 8'-1---0-1   ->     3 3'100
+     29:     3 8'-----1-1   ->     3 3'100
+
+-------------------------------------
+
+6.7.6.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+Mapping FSM `$fsm$\delay_kind$4292' from module `\cnc3_stepgen_runtime'.
+
+6.7.7. Executing OPT pass (performing simple optimizations).
+
+6.7.7.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~1 debug messages>
+
+6.7.7.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+6.7.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~13 debug messages>
+
+6.7.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.7.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.7.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$4284 ($adff) from module cnc3_stepgen_runtime (D = $0\dir[0:0], Q = \dir).
+Adding EN signal on $procdff$4279 ($adff) from module cnc3_stepgen_runtime (D = $0\timing_fault[0:0], Q = \timing_fault).
+Adding EN signal on $procdff$4274 ($adff) from module cnc3_stepgen_runtime (D = { $xor$cnc3_stepgen_runtime.v:21$3102_Y $xor$cnc3_stepgen_runtime.v:21$3099_Y $xor$cnc3_stepgen_runtime.v:21$3096_Y $xor$cnc3_stepgen_runtime.v:21$3093_Y $xor$cnc3_stepgen_runtime.v:21$3090_Y $xor$cnc3_stepgen_runtime.v:21$3087_Y $xor$cnc3_stepgen_runtime.v:21$3084_Y $xor$cnc3_stepgen_runtime.v:21$3081_Y $xor$cnc3_stepgen_runtime.v:21$3078_Y $xor$cnc3_stepgen_runtime.v:21$3075_Y $xor$cnc3_stepgen_runtime.v:21$3072_Y $xor$cnc3_stepgen_runtime.v:21$3069_Y $xor$cnc3_stepgen_runtime.v:21$3066_Y $xor$cnc3_stepgen_runtime.v:21$3063_Y $xor$cnc3_stepgen_runtime.v:21$3060_Y $xor$cnc3_stepgen_runtime.v:21$3057_Y $xor$cnc3_stepgen_runtime.v:21$3054_Y $xor$cnc3_stepgen_runtime.v:21$3051_Y $xor$cnc3_stepgen_runtime.v:21$3048_Y $xor$cnc3_stepgen_runtime.v:21$3045_Y $xor$cnc3_stepgen_runtime.v:21$3042_Y $xor$cnc3_stepgen_runtime.v:21$3039_Y $xor$cnc3_stepgen_runtime.v:21$3036_Y $xor$cnc3_stepgen_runtime.v:21$3033_Y $xor$cnc3_stepgen_runtime.v:21$3030_Y $xor$cnc3_stepgen_runtime.v:21$3027_Y $xor$cnc3_stepgen_runtime.v:21$3024_Y $xor$cnc3_stepgen_runtime.v:21$3021_Y $xor$cnc3_stepgen_runtime.v:21$3018_Y $xor$cnc3_stepgen_runtime.v:21$3015_Y $xor$cnc3_stepgen_runtime.v:21$3012_Y $auto$rtlil.cc:2779:Not$4291 }, Q = \count).
+
+6.7.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 6 unused cells and 16 unused wires.
+<suppressed ~7 debug messages>
+
+6.7.7.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.7.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+6.7.7.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+6.7.7.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.7.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+6.7.7.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7.7.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+6.7.7.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.7.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+6.7.7.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+6.7.7.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.7.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.7.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7.7.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.7.7.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.7.23. Finished OPT passes. (There is nothing left to do.)
+
+6.7.8. Executing WREDUCE pass (reducing word size of cells).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$cnc3_stepgen_runtime.v:16$2936 ($mux).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$cnc3_stepgen_runtime.v:17$2938 ($mux).
+Removed top 6 bits (of 16) from mux cell cnc3_stepgen_runtime.$ternary$cnc3_stepgen_runtime.v:18$2940 ($mux).
+Removed top 1 bits (of 33) from port A of cell cnc3_stepgen_runtime.$add$cnc3_stepgen_runtime.v:29$2941 ($add).
+Removed top 1 bits (of 33) from port B of cell cnc3_stepgen_runtime.$add$cnc3_stepgen_runtime.v:29$2941 ($add).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4335 ($eq).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$4410 ($ne).
+Removed top 2 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$4414 ($ne).
+Removed top 2 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4387 ($eq).
+Removed top 4 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4356 ($eq).
+Removed top 2 bits (of 3) from port B of cell cnc3_stepgen_runtime.$auto$opt_dff.cc:195:make_patterns_logic$4403 ($ne).
+Removed top 6 bits (of 16) from port A of cell cnc3_stepgen_runtime.$eq$cnc3_stepgen_runtime.v:39$2971 ($eq).
+Removed top 15 bits (of 16) from port B of cell cnc3_stepgen_runtime.$eq$cnc3_stepgen_runtime.v:39$2971 ($eq).
+Removed top 1 bits (of 3) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4374 ($eq).
+Removed top 2 bits (of 5) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4327 ($eq).
+Removed top 3 bits (of 4) from port B of cell cnc3_stepgen_runtime.$auto$fsm_map.cc:77:implement_pattern_cache$4383 ($eq).
+Removed top 6 bits (of 16) from wire cnc3_stepgen_runtime.high_left.
+Removed top 6 bits (of 16) from wire cnc3_stepgen_runtime.low_left.
+Removed top 6 bits (of 16) from wire cnc3_stepgen_runtime.setup_left.
+
+6.7.9. Executing PEEPOPT pass (run peephole optimizers).
+
+6.7.10. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+6.7.11. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module cnc3_stepgen_runtime:
+  creating $macc model for $add$cnc3_stepgen_runtime.v:29$2941 ($add).
+  creating $macc model for $sub$cnc3_stepgen_runtime.v:37$2968 ($sub).
+  creating $macc model for $sub$cnc3_stepgen_runtime.v:38$2970 ($sub).
+  creating $alu model for $macc $sub$cnc3_stepgen_runtime.v:38$2970.
+  creating $alu model for $macc $sub$cnc3_stepgen_runtime.v:37$2968.
+  creating $alu model for $macc $add$cnc3_stepgen_runtime.v:29$2941.
+  creating $alu cell for $add$cnc3_stepgen_runtime.v:29$2941: $auto$alumacc.cc:495:replace_alu$4431
+  creating $alu cell for $sub$cnc3_stepgen_runtime.v:37$2968: $auto$alumacc.cc:495:replace_alu$4434
+  creating $alu cell for $sub$cnc3_stepgen_runtime.v:38$2970: $auto$alumacc.cc:495:replace_alu$4437
+  created 3 $alu and 0 $macc cells.
+
+6.7.12. Executing SHARE pass (SAT-based resource sharing).
+
+6.7.13. Executing OPT pass (performing simple optimizations).
+
+6.7.13.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.13.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.13.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+6.7.13.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.7.13.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.7.13.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7.13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.7.13.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.7.13.9. Finished OPT passes. (There is nothing left to do.)
+
+6.7.14. Executing MEMORY pass.
+
+6.7.14.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+6.7.14.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+6.7.14.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+6.7.14.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+6.7.14.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+6.7.14.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.7.14.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+6.7.14.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+6.7.14.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.7.14.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+6.7.15. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.8. Executing MEMORY_LIBMAP pass (mapping memories to cells).
+
+6.9. Executing TECHMAP pass (map to technology primitives).
+
+6.9.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/brams_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/brams_map.v' to AST representation.
+Generating RTLIL representation for module `\$__EFINIX_5K_'.
+Successfully finished Verilog frontend.
+
+6.9.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+6.10. Executing OPT pass (performing simple optimizations).
+
+6.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~11 debug messages>
+
+6.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.10.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.10.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 0 unused cells and 8 unused wires.
+<suppressed ~1 debug messages>
+
+6.10.5. Finished fast OPT passes.
+
+6.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+6.12. Executing OPT pass (performing simple optimizations).
+
+6.12.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.12.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.12.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \cnc3_stepgen_runtime..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+6.12.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \cnc3_stepgen_runtime.
+Performed a total of 0 changes.
+
+6.12.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+Removed a total of 0 cells.
+
+6.12.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.12.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+
+6.12.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.12.9. Finished OPT passes. (There is nothing left to do.)
+
+6.13. Executing TECHMAP pass (map to technology primitives).
+
+6.13.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+6.13.2. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/arith_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/arith_map.v' to AST representation.
+Generating RTLIL representation for module `\_80_efinix_alu'.
+Successfully finished Verilog frontend.
+
+6.13.3. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $mux.
+Using template $paramod$1eb759649286d7485bd82f4dfc30385bade4b4b3\_80_efinix_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $adffe.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$857150d3a9b7fb38b73bbaa31ff652415e553f98\_80_efinix_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $adff.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $logic_or.
+Using extmapper simplemap for cells of type $pos.
+No more expansions possible.
+<suppressed ~431 debug messages>
+
+6.14. Executing OPT pass (performing simple optimizations).
+
+6.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+<suppressed ~288 debug messages>
+
+6.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\cnc3_stepgen_runtime'.
+<suppressed ~285 debug messages>
+Removed a total of 95 cells.
+
+6.14.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.14.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \cnc3_stepgen_runtime..
+Removed 135 unused cells and 215 unused wires.
+<suppressed ~136 debug messages>
+
+6.14.5. Finished fast OPT passes.
+
+6.15. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+
+6.16. Executing TECHMAP pass (map to technology primitives).
+
+6.16.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFCE_xxxx_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Successfully finished Verilog frontend.
+
+6.16.2. Continuing TECHMAP pass.
+Using template $paramod$77ebc8e70eef7b19cc829dcd1c7d54db125f104d\$_DFFE_xxxx_ for cells of type $_DFFE_PN0P_.
+Using template $paramod$17d85764cba1d0687037e7d6f74bfececd401709\$_DFFE_xxxx_ for cells of type $_DFFE_PN1P_.
+No more expansions possible.
+<suppressed ~165 debug messages>
+
+6.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module cnc3_stepgen_runtime.
+
+6.18. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+6.19. Executing ABC pass (technology mapping using ABC).
+
+6.19.1. Extracting gate netlist of module `\cnc3_stepgen_runtime' to `<abc-temp-dir>/input.blif'..
+Extracted 732 gates and 919 wires to a netlist network with 185 inputs and 125 outputs.
+
+6.19.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lut <abc-temp-dir>/lutdefs.txt 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + dch -f 
+ABC: + if 
+ABC: + mfs2 
+ABC: + lutpack -S 1 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+6.19.1.2. Re-integrating ABC results.
+ABC RESULTS:              $lut cells:      262
+ABC RESULTS:        internal signals:      609
+ABC RESULTS:           input signals:      185
+ABC RESULTS:          output signals:      125
+Removing temp directory.
+Removed 0 unused cells and 1145 unused wires.
+
+6.20. Executing TECHMAP pass (map to technology primitives).
+
+6.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/cells_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/cells_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFE_xxxx_'.
+Generating RTLIL representation for module `\$_SDFFCE_xxxx_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Generating RTLIL representation for module `\$lut'.
+Successfully finished Verilog frontend.
+
+6.20.2. Continuing TECHMAP pass.
+Using template $paramod$6e238df02989b317f10820a22773676e71120644\$lut for cells of type $lut.
+Using template $paramod$658b9ed803f0d3d335616d3858b53e0a2522f1e8\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00010000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10000000 for cells of type $lut.
+Using template $paramod$272652f6c6fbe9a75eff76e45cc7e2788835518b\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00001110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0100 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1001 for cells of type $lut.
+Using template $paramod$cde3aa23c1efa60a470cf0f0281347d6ba585afa\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0001 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000001 for cells of type $lut.
+Using template $paramod$6d6beead1425af15cf78b27fd9b11b41b5d4bce8\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11100000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01000000 for cells of type $lut.
+Using template $paramod$fb5ee0bdef1c4e74aaf1fd8efae98b46a2f5e564\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000001\LUT=2'01 for cells of type $lut.
+Using template $paramod$4256c04bb9e86f873ba2a112f005a99a8ed41d05\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10110100 for cells of type $lut.
+Using template $paramod$e9c77024ca501b890c641f9c0b10e27242db8730\$lut for cells of type $lut.
+Using template $paramod$59ad7643a6592a7af331878e9c90559a0d5892f1\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10111101 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0110 for cells of type $lut.
+Using template $paramod$53a931967d4390280138fe919abce921b83af282\$lut for cells of type $lut.
+Using template $paramod$5858bd6d78d6f4fef506811d9419710ec77e5fb5\$lut for cells of type $lut.
+Using template $paramod$332a399730bfc61adea04021a76b1c4e4030f37d\$lut for cells of type $lut.
+Using template $paramod$ab8bb87959c5d7cfa27886cee1355b38e054a61a\$lut for cells of type $lut.
+Using template $paramod$aa569d89e9c8462354297a37f09bc519483c7133\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000111 for cells of type $lut.
+Using template $paramod$c4a97cf0b46779df8741d618ac94cb76d112af85\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01001011 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10010110 for cells of type $lut.
+Using template $paramod$c5ee66eb2a490feb211407baec4a64d121f5aead\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01000010 for cells of type $lut.
+Using template $paramod$571404c0889eaf57f492cb5e37f8acb5df5852f9\$lut for cells of type $lut.
+Using template $paramod$c600b4b1adc22857e1c1ba3b6aeb516fabe09da0\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01111000 for cells of type $lut.
+Using template $paramod$6ad1063397984b2b09aa574378f44b9f2ae1c5b3\$lut for cells of type $lut.
+Using template $paramod$e49f6e3576ef1a6d2f58c54414dbb786af8cc869\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10110000 for cells of type $lut.
+Using template $paramod$aabc38448f9289a9f09f7f433eb20ae11e3f6ed9\$lut for cells of type $lut.
+Using template $paramod$b4d0f4738a5ce50c7f36c2aa2ecc09cfb874f2b6\$lut for cells of type $lut.
+Using template $paramod$a3cdc1eb771a2c6a16f64da161e11100ac409d2b\$lut for cells of type $lut.
+Using template $paramod$bf60f6ec407ee294958b6566514fc3125ec42258\$lut for cells of type $lut.
+Using template $paramod$8b24407096beec47292ddeb1567a058197a320b9\$lut for cells of type $lut.
+Using template $paramod$5c32c59025c0b98f20e63f249d83e7ebb4b085e3\$lut for cells of type $lut.
+Using template $paramod$4972722c284f07fee673f7cb99e6a36ce4a244f0\$lut for cells of type $lut.
+Using template $paramod$703a13a751e631ef123f38f7d2125aeabec0f94c\$lut for cells of type $lut.
+Using template $paramod$43779580bfffd5d5a9f321249a174febf1dac288\$lut for cells of type $lut.
+Using template $paramod$baa939b0bd5b3e0c8760492528669bd58f640542\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00001101 for cells of type $lut.
+Using template $paramod$19ec49f31a8d230a567aa44ce3ea81a03c101e2b\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01001111 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01110000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11110100 for cells of type $lut.
+No more expansions possible.
+<suppressed ~1030 debug messages>
+Removed 0 unused cells and 570 unused wires.
+
+6.21. Executing CLKBUFMAP pass (inserting clock buffers).
+Inserting $__EFX_GBUF on cnc3_stepgen_runtime.clk[0].
+
+6.22. Executing TECHMAP pass (map to technology primitives).
+
+6.22.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/efinix/gbuf_map.v
+Parsing Verilog input from `/usr/bin/../share/yosys/efinix/gbuf_map.v' to AST representation.
+Generating RTLIL representation for module `\$__EFX_GBUF'.
+Successfully finished Verilog frontend.
+
+6.22.2. Continuing TECHMAP pass.
+Using template \$__EFX_GBUF for cells of type $__EFX_GBUF.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+6.23. Executing EFINIX_FIXCARRY pass (fix invalid carry chain).
+Removed 0 unused cells and 3 unused wires.
+
+6.24. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `cnc3_stepgen_runtime'. Setting top module to cnc3_stepgen_runtime.
+
+6.24.1. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+
+6.24.2. Analyzing design hierarchy..
+Top module:  \cnc3_stepgen_runtime
+Removed 0 unused modules.
+
+6.25. Printing statistics.
+
+=== cnc3_stepgen_runtime ===
+
+   Number of wires:                168
+   Number of wire bits:            841
+   Number of public wires:          24
+   Number of public wire bits:     323
+   Number of ports:                 14
+   Number of port bits:            136
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                410
+     EFX_ADD                        56
+     EFX_FF                         91
+     EFX_GBUFCE                      1
+     EFX_LUT4                      262
+
+6.26. Executing CHECK pass (checking for obvious problems).
+Checking module cnc3_stepgen_runtime...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+   "invocation": "stat -json ",
+   "modules": {
+      "\\cnc3_stepgen_runtime": {
+         "num_wires":         168,
+         "num_wire_bits":     841,
+         "num_pub_wires":     24,
+         "num_pub_wire_bits": 323,
+         "num_ports":         14,
+         "num_port_bits":     136,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         410,
+         "num_cells_by_type": {
+            "EFX_ADD": 56,
+            "EFX_FF": 91,
+            "EFX_GBUFCE": 1,
+            "EFX_LUT4": 262
+         }
+      }
+   },
+      "design": {
+         "num_wires":         168,
+         "num_wire_bits":     841,
+         "num_pub_wires":     24,
+         "num_pub_wire_bits": 323,
+         "num_ports":         14,
+         "num_port_bits":     136,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         410,
+         "num_cells_by_type": {
+            "EFX_ADD": 56,
+            "EFX_FF": 91,
+            "EFX_GBUFCE": 1,
+            "EFX_LUT4": 262
+         }
+      }
+}
+

@@ -1,0 +1,11 @@
+Continue routing this existing CNC motherboard from ROOT104 / CAD30. Read START_HERE.md, baseline.json, the native KiCad project/rules and source schematic before editing. The PCB SHA-256 must start at 70b71c36778e49600b77f382cf84df81ef3ac6dce442cc0e576b494d307979cc. Work on a copy; preserve the original.
+
+The baseline has 2688 footprints, 11807 tracks/vias and 3508 required unconnected joins. Keep the single motherboard, all twelve motor interfaces, required I/O and commodity replaceable module sockets. Do not redesign the architecture or delete features to obtain a clean connectivity result.
+
+Begin with additive routing and protect existing copper, placements, pad nets, zone definitions and rules. Use only the explicitly reviewed low-speed subset for unattended autorouting. Route power, FPGA escapes, clocks/SPI, motion/encoders, analog and watchdog/permission paths under their actual controlled constraints. Preserve return paths and isolation domains. Do not globally rip up or move parts. If a necessary repair requires changing protected geometry, save it as a separate candidate and enumerate the exact change and verification instead of silently treating old proofs as valid.
+
+Use the actual project rules. New ordinary signal tracks are at least 0.20 mm and new ordinary vias are 0.60/0.30 mm. Existing narrow escapes/small vias have specific exceptions that must not be generalized. Never suppress DRC or mark required signals NC simply to close routing. Check actual filled copper and return stitching, not only zone outlines.
+
+Read the included Source27 rebinding note: reset/health corrections are staged and not merged. Avoid finalizing that region as if Source26 were fabrication-frozen. The known 277 paste-land/drill overlaps across 274 inherited vias also remain an assembly gate.
+
+Return native KiCad PCB/project/rule files with a change ledger, native ERC/DRC results and uncapped connectivity counts. Preserve all required endpoints. Do not overwrite the source project or claim manufacturing readiness based on routing or DRC alone. The returned candidate must pass the retained return/drill/source checks and existing regression suite before adoption.

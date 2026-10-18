@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-06",
+  "revision": "OEA r0.1",
+  "claim": "Not universally compatible with SKR, BIGTREETECH or similar boards",
+  "physical_validation": false,
+  "qualified_host_models": [],
+  "findings": [
+    {
+      "models": [
+        "SKR V1.3",
+        "SKR V1.4",
+        "SKR 2",
+        "SKR 3"
+      ],
+      "finding": "Official schematics show a 3.3 V driver logic socket supply (SKR 3 labelled M3.3V). Current adapter uses this rail directly for the external driver's common-positive supply, so it does not create the required 5 V common.",
+      "evidence": "Official BTT schematics inspected by compatibility reviewer; representative sources below."
+    },
+    {
+      "models": [
+        "Any 3.3 V control host with adapter supplied at 5 V"
+      ],
+      "finding": "SN74LVC3G06 minimum VIH is 0.7 x VCC for VCC 4.5-5.5 V: 3.5 V at nominal 5 V. A 3.3 V signal is not guaranteed to register high."
+    },
+    {
+      "models": [
+        "SKR Mini E3 V3.0"
+      ],
+      "finding": "On-board TMC2209 drivers; no interchangeable StepStick socket for this plug-in adapter."
+    },
+    {
+      "models": [
+        "Octopus Pro V1.0 F429/F446"
+      ],
+      "finding": "Engineering reference for current r0.1; no physical compatibility qualification yet."
+    },
+    {
+      "models": [
+        "SKR 3 EZ"
+      ],
+      "finding": "BTT documents converted 5 V stepper signals, but connector footprint, socket supply, orientation, clearances and behaviour still require separate qualification."
+    }
+  ],
+  "recommended_future_design_scope": "For broader removable-driver-board support, review an adapter with guaranteed 3.3 V/5 V logic acceptance and a defined 5 V common supply independent of whether the host socket rail is 3.3 V or 5 V. Preserve pin/fit and startup qualification per model. This is a proposed revision, not implemented.",
+  "sources": [
+    "https://www.ti.com/lit/gpn/SN74LVC3G06",
+    "https://raw.githubusercontent.com/bigtreetech/BIGTREETECH-SKR-V1.3/master/BTT%20SKR%20V1.3/hardware/SKR-V1.3-SCH.pdf",
+    "https://raw.githubusercontent.com/bigtreetech/BIGTREETECH-SKR-V1.3/master/BTT%20SKR%20V1.4/Hardware/BTT%20SKR%20V1.4-SCH.pdf",
+    "https://github.com/bigtreetech/SKR-3",
+    "https://global.bttwiki.com/SKR%20MINI%20E3.html"
+  ],
+  "existing_design_modified": false
+}

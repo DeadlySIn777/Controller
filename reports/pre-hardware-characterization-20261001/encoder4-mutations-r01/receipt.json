@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\rtl\\cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\tb_encoder4_limits_r01.sv": "45d0900e289201353e17270cbff80bbc768b8a5569d11e8d76e55628ba095fd0",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\check_encoder4_mutations_r01.py": "b30985ee86a3706e0129fb1e0ed4b65c924adf8b2b85d4669cd88ec59b65d65f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\characterize_stepgen12.py": "b8c057a9a180ac24c529163e9c4a01fe23b2fe19db686f03f7c6b05fd3ac5d35"
+  },
+  "results": [
+    {
+      "name": "double-increment",
+      "passed": true,
+      "expected_runtime_fatal": "Ideal sampled encoder failed at or below one edge/corecycle",
+      "original": "next_count = count + 1'b1;",
+      "replacement": "next_count = count + 2'd2;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_encoder4_limits",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/double-increment/mutant.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/double-increment/cnc_encoder.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/double-increment/tb_encoder4_limits_r01.sv"
+        ],
+        "started_utc": "2026-10-01T23:14:54.439055+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\double-increment\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/double-increment/mutant.vvp"
+        ],
+        "started_utc": "2026-10-01T23:14:54.814629+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\double-increment\\simulation.log",
+        "log_sha256": "c4643067c2a4096b98c244fc03a7c245bd3bd83933edc89228b6a1e0a2335a66"
+      },
+      "mutated_source_sha256": "8d89fc50a8aefd7cfc70201f541cc776ebd801036ea22bf5eade707a9c7b43b4",
+      "fixture_sha256": "45d0900e289201353e17270cbff80bbc768b8a5569d11e8d76e55628ba095fd0",
+      "binary_sha256": "9c79833237704a0250b6ef31bc34eb1bcaacbf9c5a863d4e174c59ed1646a857"
+    },
+    {
+      "name": "lost-illegal-flag",
+      "passed": true,
+      "expected_runtime_fatal": "Illegal two-bit transition was not latched",
+      "original": "invalid_transition <= 1;",
+      "replacement": "invalid_transition <= 0;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_encoder4_limits",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-illegal-flag/mutant.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-illegal-flag/cnc_encoder.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-illegal-flag/tb_encoder4_limits_r01.sv"
+        ],
+        "started_utc": "2026-10-01T23:14:54.995039+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\lost-illegal-flag\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-illegal-flag/mutant.vvp"
+        ],
+        "started_utc": "2026-10-01T23:14:55.104023+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\lost-illegal-flag\\simulation.log",
+        "log_sha256": "ee5e88300372952539952ba2ca73ebfd01efe31ebc93cf12913198939838ef02"
+      },
+      "mutated_source_sha256": "d5328bc85f3a0454455c4cce4da6b35125ef88c279a5ca5d30eb99bcec304155",
+      "fixture_sha256": "45d0900e289201353e17270cbff80bbc768b8a5569d11e8d76e55628ba095fd0",
+      "binary_sha256": "e8300b39fd808fa86b8996537fc1f7a01247dd390d54df1c0efe9e5a6c4bec7f"
+    },
+    {
+      "name": "lost-index-valid",
+      "passed": true,
+      "expected_runtime_fatal": "Stationary index snapshot mismatch",
+      "original": "index_seen <= 1;",
+      "replacement": "index_seen <= 0;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_encoder4_limits",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-index-valid/mutant.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-index-valid/cnc_encoder.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-index-valid/tb_encoder4_limits_r01.sv"
+        ],
+        "started_utc": "2026-10-01T23:14:56.354858+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\lost-index-valid\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/encoder4-mutations-r01/lost-index-valid/mutant.vvp"
+        ],
+        "started_utc": "2026-10-01T23:14:56.465240+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\encoder4-mutations-r01\\lost-index-valid\\simulation.log",
+        "log_sha256": "a20acc38079b1200166c408f0e2f14c5a8cb4869f0ec015f77eed27a2ef00ddf"
+      },
+      "mutated_source_sha256": "746e4214837de0b466caff403f31746b262fddc99d243759cbd2939980d5c785",
+      "fixture_sha256": "45d0900e289201353e17270cbff80bbc768b8a5569d11e8d76e55628ba095fd0",
+      "binary_sha256": "8d65dce0680aadc429679b559cfb6e02ca86f7f17ee1593225f2f28bb5dcc4f4"
+    }
+  ],
+  "production_source_unchanged": true,
+  "physical_qualification": false
+}

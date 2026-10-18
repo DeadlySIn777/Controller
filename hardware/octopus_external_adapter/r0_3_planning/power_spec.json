@@ -1,0 +1,896 @@
+{
+  "schema_version": 1,
+  "revision": "r0.3-power-proposal-3",
+  "date": "2026-10-06",
+  "status": "UNRELEASED PROPOSED POWER CIRCUIT - SOURCE REVIEW ONLY",
+  "manufacturing_ready": false,
+  "native_erc_performed": false,
+  "physical_measurements_performed": false,
+  "shared_nets": [
+    "EXT_RAW",
+    "V_EXT_PROT",
+    "V5_REG",
+    "V5_SELECT",
+    "COM_PLUS",
+    "V_IND_3V3",
+    "GND"
+  ],
+  "ownership": "Power input/protection/buck/indicator LDO and COM bleeder. J4/SW1/header/output/sinks owned by logic_spec; MCU/LEDs/ADC/programming owned by indicator_spec.",
+  "operating_contract": {
+    "terminal_range_v": [
+      4.75,
+      26.4
+    ],
+    "nominal_inputs_v": [
+      5,
+      12,
+      24
+    ],
+    "five_volt_external_requires_EXT": true,
+    "regulated_buck_requires_nominal_12_or_24_input": true,
+    "buck_output_design_load_ma": 90,
+    "signal_common_max_ma": 60,
+    "indicator_total_budget_ma": 5,
+    "nominal_ambient_target_c": [
+      0,
+      50
+    ],
+    "selector_change_only_power_off_and_discharged": true,
+    "no_48v_input": true,
+    "not_universal_driver_interface": true
+  },
+  "topology": [
+    "EXT_RAW -> F20 -> V_EXT_FUSED; D20 bidirectional TVS from fused node toGND.",
+    "Q20 reverse-polarity P-FET: drain=fused input, source=V_EXT_PROT,12V source-to-gate clamp and100k gate pull-down.",
+    "V_EXT_PROT -> D22 -> BUCK_VIN -> MP2459/L20 -> V5_REG -> D25 -> V5_SELECT; R28 discharges V5_REG in both selector positions.",
+    "SW1 selects V5_SELECT or V_EXT_PROT to COM_PLUS.",
+    "COM_PLUS ->82ohm R26 -> BAT46W D26 -> C25/V_IND_IN -> AP7375 -> V_IND_3V3."
+  ],
+  "voltage_screen": {
+    "buck_nominal_v": 5.060438818565401,
+    "buck_25c_ref_resistor_min_v": 4.927518152733343,
+    "buck_25c_ref_resistor_max_v": 5.1937950439891365,
+    "selected_buck_voltage_drop_allowance_25c_v": 0.4,
+    "selected_buck_low_25c_screen_v": 4.527518152733343,
+    "warning": "FB bias current has typical value only; regulator temperature, diode cold behavior, cable losses and switching ripple need measured corners. D25 has no minimum forward-voltage guarantee, so do not claim COM<=5.0V across all corners. These are arithmetic screens, not guaranteed total output bounds."
+  },
+  "reverse_collapse_basis": {
+    "strategy": "Series diode isolates indicator input reservoir; input capacitance near critical3.3V exceeds worst nominal/tolerance/temperature output capacitance plus100n MCUdecap. R27 ensures output discharge even while MCU/BOD off.",
+    "input_screen_uf_near_3v3": 3.51,
+    "output_nominal_tolerance_temperature_upper_uf_including_100nf": 2.9095000000000004,
+    "constraints": [
+      "No external power into V_IND_3V3/UPDI. Programmer voltage is target-powered reference only.",
+      "No added rail bulk capacitance without review.",
+      "ADC filter connected to ADC, not directly to VDD; its bounded injection is included by indicator reviewer.",
+      "AP7375 VOUT\u2212VIN<=0.3V must be scoped through abrupt COM short, ramp-down, selector dead interval and repeated brownout.",
+      "An input capacitor does not qualify arbitrary regulator reverse-current behavior; retain this explicit prototype gate."
+    ]
+  },
+  "buck_collapse_basis": {
+    "strategy": "D22 isolates input capacitor, and330ohm R28 continuously discharges output including when EXT is selected.",
+    "input_capacitance_screen_near_critical_voltage_uf": 3.4,
+    "output_capacitance_upper_screen_uf": 27.83,
+    "input_decay_current_allowance_ma_at_2v65": 0.9713511775180392,
+    "estimated_25c_input_drain_screen_ma": 0.927,
+    "qualification": "MP2459 SW absolute maximum is VIN+0.3V. IQ is specified at12V/25C, not across/below UVLO; scope SW,VIN,VOUT on shutdown in both selector modes. Screens are not manufacturer guarantees."
+  },
+  "release_gates": [
+    "Cross-check all part pinouts and footprint lands against current primary drawings.",
+    "Capture manufacturer capacitor curves and final pulse-energy/current screening.",
+    "ERC/DRC/native netlist parity and one-sided mechanical packing still not performed.",
+    "Bench90mA buck startup/regulation/ripple/thermal,0..50C target and12/24V nominal input corners.",
+    "Scope buck SW versus VIN through abrupt input collapse and shutdown with EXT selected.",
+    "Input reverse polarity, current-limited shorts, TVS/fuse pulse coordination and ringing below absolute ratings.",
+    "Indicator input-collapse and ADC prebias behavior; no programmer backfeed.",
+    "Exact procurement and complete landed cost inclPCB,harness,labor,yield,shipping/taxes."
+  ],
+  "parts": [
+    {
+      "reference": "F20",
+      "value": "0.5A 63V fast fuse",
+      "mpn": "SF-1206F050-2",
+      "manufacturer": "Bourns",
+      "footprint": "Adapter:Bourns_SF-1206F_3.1x1.55mm",
+      "kind": "fuse",
+      "pins": {
+        "1": "EXT_RAW",
+        "2": "V_EXT_FUSED"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.bourns.com/docs/product-datasheets/sf-1206f.pdf",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "source": "https://www.bourns.com/docs/product-datasheets/sf-1206f.pdf",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D20",
+      "value": "28V bidirectional TVS",
+      "mpn": "SMAJ28CA-13-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SMA",
+      "kind": "tvs_bidirectional",
+      "pins": {
+        "1": "V_EXT_FUSED",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/SMAJ5.0A.pdf",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "source": "https://www.diodes.com/datasheet/download/SMAJ5.0A.pdf",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "Q20",
+      "value": "60V reverse-polarity P-MOSFET",
+      "mpn": "PMV100EPAR",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "kind": "pmos",
+      "pins": {
+        "1": "REV_GATE",
+        "2": "V_EXT_PROT",
+        "3": "V_EXT_FUSED"
+      },
+      "pin_names": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf",
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "source": "https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D21",
+      "value": "12V gate clamp",
+      "mpn": "BZT52C12-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "kind": "zener",
+      "pins": {
+        "1": "V_EXT_PROT",
+        "2": "REV_GATE"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "notes": "Exact BZT52C12-7-F remains the recommended active replacement in Diodes PCN2780; discontinued BZT52C12-7-F-79 is a different suffix. Cathode pad1 at V_EXT_PROT, anode pad2 at REV_GATE.",
+      "source": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R20",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "REV_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D22",
+      "value": "60V Schottky",
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "kind": "diode",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "V_EXT_PROT"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "source": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "notes": "Isolates buck input reservoir from external-input collapse; buck output reverse-energy behavior remains a test gate.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "U20",
+      "value": "MP2459 adjustable buck ~5.06V",
+      "mpn": "MP2459GJ-Z",
+      "manufacturer": "Monolithic Power Systems",
+      "footprint": "Package_TO_SOT_SMD:TSOT-23-6",
+      "kind": "ic",
+      "pins": {
+        "1": "BUCK_BST",
+        "2": "GND",
+        "3": "BUCK_FB",
+        "4": "BUCK_EN",
+        "5": "BUCK_VIN",
+        "6": "BUCK_SW"
+      },
+      "pin_names": {
+        "1": "BST",
+        "2": "GND",
+        "3": "FB",
+        "4": "EN",
+        "5": "IN",
+        "6": "SW"
+      },
+      "pin_labels": {
+        "1": "BST",
+        "2": "GND",
+        "3": "FB",
+        "4": "EN",
+        "5": "IN",
+        "6": "SW"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "power_in",
+        "3": "input",
+        "4": "input",
+        "5": "power_in",
+        "6": "power_out"
+      },
+      "datasheet": "https://www.monolithicpower.com/media/document/MP2459_r1.01.pdf",
+      "source": "https://www.monolithicpower.com/media/document/MP2459_r1.01.pdf",
+      "notes": "Regulated 5V mode is limited to nominal12/24V external power. At nominal5V, select EXT; the unselected buck can be below its4.5V specified operating input.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "L20",
+      "value": "15uH 20% Isat2.0A",
+      "mpn": "SRN5040-150M",
+      "manufacturer": "Bourns",
+      "footprint": "Adapter_R03:L_Bourns_SRN5040",
+      "kind": "inductor",
+      "pins": {
+        "1": "BUCK_SW",
+        "2": "V5_REG"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.bourns.com/docs/product-datasheets/srn5040.pdf",
+      "source": "https://www.bourns.com/docs/product-datasheets/srn5040.pdf",
+      "notes": "Custom footprint required: two1.5x4.0mm rectangular pads at x=+/-1.8mm. Manufacturer recommended overall pad span5.1mm. Body5.0+/-0.2mm square, height4.0mm maximum. DCRmax0.096ohm; Irms1.8A; Isat2.0A at30% inductance drop,25C. Not a claim that the complete converter supplies these currents.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D23",
+      "value": "60V Schottky",
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "kind": "diode",
+      "pins": {
+        "1": "BUCK_SW",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "source": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "notes": "Asynchronous buck catch diode. Native footprint K=pad1, A=pad2.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C20",
+      "value": "4.7uF 50V X7R 10%",
+      "mpn": "CL31B475KBHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL31B475KBHNNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL31B475KBHNNN.do",
+      "notes": "Datasheet example uses4.7uF nominal input. Typical biased capacitance ~2.03uF at26.4V; screen ~1.55uF after10% tolerance and15% temperature. Not a guaranteed minimum; validate input ripple/source impedance and surge.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C21",
+      "value": "100nF 50V X7R 10%",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL10B104KB8NNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNN.do",
+      "notes": "Place immediately at U20 IN/GND hot loop.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C22",
+      "value": "100nF 50V X7R 10%",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_BST",
+        "2": "BUCK_SW"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL10B104KB8NNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNN.do",
+      "notes": "Bootstrap capacitor; differential working voltage ~5V. Both pads switch at input common mode.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C23",
+      "value": "22uF 25V X5R 10%",
+      "mpn": "CL31A226KAHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V5_REG",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL31A226KAHNNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL31A226KAHNNN.do",
+      "notes": "Manufacturer buck application recommends22uF nominal output. Samsung typical curve13.19uF at5.2344V; screening10.09uF with tolerance/temperature. Loop/load-transient validation pending.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R21",
+      "value": "124k 0.1%",
+      "mpn": "RT0603BRD07124KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "V5_REG",
+        "2": "BUCK_FB"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1_to_0.01_RoHS_L_17.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1_to_0.01_RoHS_L_17.pdf",
+      "notes": "Use manufacturer5V feedback values, preserving its suggested feedback impedance;0.1% reduces arithmetic output spread.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R22",
+      "value": "23.7k 0.1%",
+      "mpn": "RT0603BRD0723K7L",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "BUCK_FB",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1_to_0.01_RoHS_L_17.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RT_1_to_0.01_RoHS_L_17.pdf",
+      "notes": "",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R23",
+      "value": "10k 1% 0.125W",
+      "mpn": "RC0805FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "BUCK_EN"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "notes": "Pull-up to5.1V external clamp; at26.4V dissipation~46mW.45.4V transient dissipates~0.16W briefly; pulse qualification required.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D24",
+      "value": "5.1V EN clamp",
+      "mpn": "BZT52C5V1-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "kind": "zener",
+      "pins": {
+        "1": "BUCK_EN",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+      "source": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+      "notes": "EN absolute maximum6V. Clamp specified4.8..5.4V at5mA, temperature coefficient-2.7..+1.2mV/C. Available current remains below5mA within45.4V transient envelope. This avoids an unprotected100k pull-up to high VIN; do not use5.6V substitute. Startup EN-threshold/current are typical-only in MP2459, requiring measurement.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R24",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "BUCK_EN",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "notes": "Discharges EN and provides defined state after reservoir decay.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D25",
+      "value": "60V Schottky",
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "kind": "diode",
+      "pins": {
+        "1": "V5_SELECT",
+        "2": "V5_REG"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "source": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "notes": "Reverse block from selected external12/24V or residual COM charge into buck output. 5V label is nominal; actual output includes diode drop.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R25",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "notes": "Selected-output discharge.26.4V ->2.64mA/~69.7mW; use0.1W0603 with ambient\u226450C target, temperature verification. This bleeder does not make powered selector operation approved.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R26",
+      "value": "82ohm 1% 0.66W pulse-tolerant",
+      "mpn": "ERJ-P08F82R0V",
+      "manufacturer": "Panasonic",
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "IND_FEED_R"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://industrial.panasonic.com/ww/products/pt/small-and-high-power-chip-resistors/models/ERJP08F82R0V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/small-and-high-power-chip-resistors/models/ERJP08F82R0V",
+      "notes": "Limits indicator reservoir inrush. At26.4V/81.18ohm, ideal initial maximum0.3252A before diode drop, below BAT46W350mA repetitive-pulse limit.45.4V transient yields0.5593A, below750mA/10ms single-surge rating. Pulse-energy and repetition qualification remain open. At5mA DC, drop<=0.4141V. Manufacturer format ERJP08F82R0V; distributor format ERJ-P08F82R0V.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "D26",
+      "value": "100V indicator input isolation",
+      "mpn": "BAT46W-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "kind": "diode",
+      "pins": {
+        "1": "V_IND_IN",
+        "2": "IND_FEED_R"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/BAT46W.pdf",
+      "source": "https://www.diodes.com/datasheet/download/BAT46W.pdf",
+      "notes": "Input-isolation diode, not output reverse-clamp. VFmax0.45V at10mA25C. Reverse leakage max7.5uA at10V60C and15uA at50V60C. Cold drop and reservoir decay to be measured.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C25",
+      "value": "4.7uF 50V X7R 10%",
+      "mpn": "CL31B475KBHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V_IND_IN",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL31B475KBHNNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL31B475KBHNNN.do",
+      "notes": "Dedicated input hold-up for AP7375 collapse protection. Near3.3V typical4.59uF, screen3.51uF. Do not substitute a smaller/poorer-bias capacitor without repeating decay analysis.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "U21",
+      "value": "AP7375 3.3V indicator LDO",
+      "mpn": "AP7375-33SA-7",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "kind": "ic",
+      "pins": {
+        "1": "V_IND_IN",
+        "2": "V_IND_3V3",
+        "3": "GND"
+      },
+      "pin_names": {
+        "1": "IN",
+        "2": "OUT",
+        "3": "GND"
+      },
+      "pin_labels": {
+        "1": "IN",
+        "2": "OUT",
+        "3": "GND"
+      },
+      "pin_types": {
+        "1": "power_in",
+        "2": "power_out",
+        "3": "power_in"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/AP7375.pdf",
+      "source": "https://www.diodes.com/datasheet/download/AP7375.pdf",
+      "notes": "3..45V operating,55V input absolute. VOUT\u2212VIN<=0.3V absolute; not reverse-protected. D26/C25/R27 mitigate input collapse but are not a tested guarantee. No externally powered programmer or other V_IND_3V3 source allowed. Input\u22483.65V minimum screen at5mA low buck corner; dropmax50mV at10mA25C. Indicator circuit uses internal ADC reference and\u22645MHz CPU.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "C26",
+      "value": "2.2uF 25V X7R 10%",
+      "mpn": "CL21B225KAFNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V_IND_3V3",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL21B225KAFNNN.do",
+      "source": "https://product.samsungsem.com/mlcc/CL21B225KAFNNN.do",
+      "notes": "AP7375 minimum effective output1uF. Typical2.056uF at3.3V; tolerance/temperature screening1.573uF. Only100nF MCU rail decoupling additional. Total output capacitance must remain bounded for input-collapse analysis.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R27",
+      "value": "4.7k 1%",
+      "mpn": "RC0603FR-074K7L",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "V_IND_3V3",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "notes": "Bleeds indicator rail (~0.70mA) and dominates input diode/LDO leakage during collapse. Included in5mA total indicator budget.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    },
+    {
+      "reference": "R28",
+      "value": "330ohm 1% 0.125W",
+      "mpn": "RC0805FR-07330RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "V5_REG",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "source": "https://www.yageo.com/upload/media/product/productsearch/datasheet/rchip/PYu-RC_Group_51_RoHS_L.pdf",
+      "notes": "Buck output bleed even when EXT is selected. Draws<=15.90mA and dissipates<=82.6mW at5.1938V with1% resistance tolerance. Near2.65V UVLO, output discharge7.9508mA with Cin3.4uF/Cout27.83uF allows input drain0.9714mA, exceeding25C IQ+EN+diode screen~0.927mA. Actual IC current below UVLO and SW<=VIN+0.3V must be measured; not a universal reverse-safe claim.",
+      "unit_price_usd_100": null,
+      "procurement_status": "Not ordered; price/stock and Amazon exact-MPN availability not confirmed."
+    }
+  ],
+  "cost_status": {
+    "complete_bom_cost_known": false,
+    "landed_target_usd": 6,
+    "retail_ceiling_usd": 15,
+    "pcb_parent_browser_estimate_100_hasl_usd_each": 0.9876,
+    "pcb_parent_browser_estimate_100_enig_usd_each": 1.221,
+    "pcb_note": "Parent read provisionalPCBWay calculator for50x15.24mm,purple,two layers; includesDHL beforetax/duties. NofinalCADupload ororder. Earlier0.65\u20131.10PCB+harness+freight allowance is withdrawn."
+  }
+}

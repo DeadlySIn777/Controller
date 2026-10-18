@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/Source27-control-reference-screen-r598.py');t=p.read_text().replace('r598','r602').replace('Source27-paired-current-native-proof-r596','Source27-closer-bypass-native-proof-r596');Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/Source27-control-reference-screen-r602.py').write_text(t)

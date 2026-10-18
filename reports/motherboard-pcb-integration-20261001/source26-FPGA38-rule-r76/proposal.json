@@ -1,0 +1,29 @@
+{
+  "base_sha256": "eaf6c4d2ee9cccf83bf6020ec5dca8dec91b890dd94d9679cff9fa2c0e402863",
+  "source_design_sha256": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+  "candidate_sha256": "4cf6578e94ab7bbf3f6006df19bd1c6b997e504e7c71bd6dfba1ad36fdcc3b70",
+  "frozen_rule_review": {
+    "path": "reports\\motherboard-critical-routing-20261001\\source26-root71-BGA-neck-rule-r06\\review.json",
+    "sha256": "fcc65003040953fd2e25b2afe333c8f692fac4a099e29e193a78282bcd01a2b9"
+  },
+  "frozen_proposal": {
+    "path": "reports\\motherboard-critical-routing-20261001\\source26-root71-BGA-neck-rule-r06\\proposal.json",
+    "sha256": "9d15b8b9f8c304d6df944df7fae2b3b517c5beab1f4bae442df86327d1199196"
+  },
+  "exact_project_schema_diff": [
+    {
+      "path": "board.design_settings.rules.min_track_width",
+      "before": 0.2,
+      "after": 0.15
+    }
+  ],
+  "appended_DRC_rules": "\n# Maintain the previous effective .20 minimum everywhere outside exact necks.\n(rule \"Effective general track minimum remains .20\" (condition \"A.Type == 'Track' || A.Type == 'Arc'\") (constraint track_width (min 0.20mm)))\n(rule \"U1001 exact assigned F signal necks only\" (layer \"F.Cu\")\n (condition \"A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core/FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core/HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core/HOST_SPI_CS_N' || A.NetName == '/fpga_core/HOST_SPI_MISO' || A.NetName == '/fpga_core/HOST_SPI_MOSI' || A.NetName == '/fpga_core/HOST_SPI_SCLK' || A.NetName == '/fpga_core/IOL1_L0_CS_N' || A.NetName == '/fpga_core/IOL1_L0_MISO' || A.NetName == '/fpga_core/IOL1_L0_MOSI' || A.NetName == '/fpga_core/IOL1_L0_SCLK' || A.NetName == '/fpga_core/IOL1_L1_CS_N' || A.NetName == '/fpga_core/IOL1_L1_MISO' || A.NetName == '/fpga_core/IOL1_L1_MOSI' || A.NetName == '/fpga_core/IOL1_L1_SCLK' || A.NetName == '/fpga_core/IOL1_L2_CS_N' || A.NetName == '/fpga_core/IOL1_L2_MISO' || A.NetName == '/fpga_core/IOL1_L2_MOSI' || A.NetName == '/fpga_core/IOL1_L2_SCLK' || A.NetName == '/fpga_core/IOL1_L3_CS_N' || A.NetName == '/fpga_core/IOL1_L3_MISO' || A.NetName == '/fpga_core/IOL1_L3_MOSI' || A.NetName == '/fpga_core/IOL1_L3_SCLK')\")\n (constraint track_width (min 0.15mm) (max 0.15mm))\n (constraint track_segment_length (max 1.0mm)))\n",
+  "new_F_rule_area_uuid": "0b5c310c-09b8-49fc-bd26-31eb0c4e47a6",
+  "existing_copper_or_source_or_planes_changed": false,
+  "narrow_signal_nets": 38,
+  "maximum_aggregate_per_net_mm": 1.0,
+  "all_other_effective_track_minimum_mm": 0.2,
+  "factory_exact_2oz_process_confirmation_outstanding": true,
+  "native_validation_pending": true,
+  "manufacturing_ready": false
+}

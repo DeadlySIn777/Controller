@@ -1,0 +1,265 @@
+{
+  "passed": true,
+  "scope": "Test-sensitivity controls on compiled isolated copies only; no production RTL mutation",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\rtl\\cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\tests\\tb_stepgen12_characterization.sv": "b2af130b67983bdc869f7dcf603e8fdf855a0087d7bbfac5e19c1917fd81757f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\characterize_stepgen12.py": "b8c057a9a180ac24c529163e9c4a01fe23b2fe19db686f03f7c6b05fd3ac5d35",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\check_stepgen12_mutations_r02.py": "870ba7fbe247de8c6571da20075c5c7686789a59416f7b4a7b2aa062cfedeb11"
+  },
+  "cases": [
+    {
+      "name": "unchanged-positive",
+      "passed": true,
+      "expected_fatal": null,
+      "actual_runtime_returncode": 0,
+      "mutation_target": null,
+      "original": null,
+      "replacement": null,
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_stepgen12_characterization",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/unchanged-positive/compiled.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/unchanged-positive/cnc_stepgen.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/unchanged-positive/tb_stepgen12_characterization.sv"
+        ],
+        "started_utc": "2026-10-01T22:54:34.990320+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\unchanged-positive\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/unchanged-positive/compiled.vvp",
+          "+cycles=4096"
+        ],
+        "started_utc": "2026-10-01T22:54:35.574732+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\unchanged-positive\\simulation.log",
+        "log_sha256": "1b78e57aef2ea97a0880d6c1226aada7585d09523fb334f5b4f4ccff3df389bc"
+      },
+      "copied_inputs": {
+        "cnc_stepgen.v": "68eab8da8434f89d55f4749fed3802fb415cbe31bc43af60115cb818d0519456",
+        "tb_stepgen12_characterization.sv": "9c36af3570af678576ece822dc5cdcd8cd9baa9774d319133fca7c8ff1f3d922"
+      },
+      "compiled_binary_sha256": "33a2f3059038d3431019e27131085ddf94728a0eeb0976663e5fe3e57ca67d0e"
+    },
+    {
+      "name": "stuck-counter",
+      "passed": true,
+      "expected_fatal": "Actual emitted-edge/count mismatch",
+      "actual_runtime_returncode": 1,
+      "mutation_target": "rtl",
+      "original": "count <= dir ? count - 1'b1 : count + 1'b1;",
+      "replacement": "count <= count;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_stepgen12_characterization",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/stuck-counter/compiled.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/stuck-counter/cnc_stepgen.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/stuck-counter/tb_stepgen12_characterization.sv"
+        ],
+        "started_utc": "2026-10-01T22:54:43.933673+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\stuck-counter\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/stuck-counter/compiled.vvp",
+          "+cycles=4096"
+        ],
+        "started_utc": "2026-10-01T22:54:44.087967+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\stuck-counter\\simulation.log",
+        "log_sha256": "d3a2214c6820d0b2177d0f69554af1f7923266576731acde81d19a4e7a14f9f1"
+      },
+      "copied_inputs": {
+        "cnc_stepgen.v": "168d96f34624c8815326639c928c9990a4b7ba501723d20c826dce7c79cbff9e",
+        "tb_stepgen12_characterization.sv": "9c36af3570af678576ece822dc5cdcd8cd9baa9774d319133fca7c8ff1f3d922"
+      },
+      "compiled_binary_sha256": "8be52409f55205f9a57972709f124cb224a4da9c553a80278bde7ec29177005e"
+    },
+    {
+      "name": "suppressed-timing-fault",
+      "passed": true,
+      "expected_fatal": "Worst reachable phase failed to expose all twelve timing faults",
+      "actual_runtime_returncode": 1,
+      "mutation_target": "rtl",
+      "original": "end else timing_fault <= 1;",
+      "replacement": "end else timing_fault <= 0;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_stepgen12_characterization",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/suppressed-timing-fault/compiled.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/suppressed-timing-fault/cnc_stepgen.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/suppressed-timing-fault/tb_stepgen12_characterization.sv"
+        ],
+        "started_utc": "2026-10-01T22:54:44.234902+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\suppressed-timing-fault\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/suppressed-timing-fault/compiled.vvp",
+          "+cycles=4096"
+        ],
+        "started_utc": "2026-10-01T22:54:44.391430+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\suppressed-timing-fault\\simulation.log",
+        "log_sha256": "79e4624ca7e5068e29ca3b0ee2599d58ad4de451d09f0b8bbcfacc88e1c90965"
+      },
+      "copied_inputs": {
+        "cnc_stepgen.v": "6e5ab52f1e28bed48c616352ba3dc4100a10dad3acfc44818eb512a291a7989f",
+        "tb_stepgen12_characterization.sv": "df5306971869f52cebe0cf2462262d547c59105af10ac7b5750ff3e89714ee5e"
+      },
+      "compiled_binary_sha256": "16c6b84d8733329fb87c3cb0c1ab823378c8f01fd62a14025ecb1be95a2ffa1f"
+    },
+    {
+      "name": "shortened-step-high",
+      "passed": true,
+      "expected_fatal": "STEP-high violation",
+      "actual_runtime_returncode": 1,
+      "mutation_target": "rtl",
+      "original": "step <= 1; high_left <= PULSE_CYCLES;",
+      "replacement": "step <= 1; high_left <= PULSE_CYCLES - 1;",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_stepgen12_characterization",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/shortened-step-high/compiled.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/shortened-step-high/cnc_stepgen.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/shortened-step-high/tb_stepgen12_characterization.sv"
+        ],
+        "started_utc": "2026-10-01T22:54:46.122666+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\shortened-step-high\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/shortened-step-high/compiled.vvp",
+          "+cycles=4096"
+        ],
+        "started_utc": "2026-10-01T22:54:46.252498+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\shortened-step-high\\simulation.log",
+        "log_sha256": "75962f2c09ff7df09b08bfbca170f6b89dae39b11eeb4826041a672ef0dd19ca"
+      },
+      "copied_inputs": {
+        "cnc_stepgen.v": "eb6299f55e5b05f9975dab27b75d6aad5e40de7ed0b4ea2e9325d50271ae15ef",
+        "tb_stepgen12_characterization.sv": "9c36af3570af678576ece822dc5cdcd8cd9baa9774d319133fca7c8ff1f3d922"
+      },
+      "compiled_binary_sha256": "989d6966c5b3ea3e2d3dcef2a30e10cce1bb6952c2f961f1286cc9833fd812cb"
+    },
+    {
+      "name": "silent-channel-eleven",
+      "passed": true,
+      "expected_fatal": "DDS requested/emitted pulse mismatch",
+      "actual_runtime_returncode": 1,
+      "mutation_target": "bench",
+      "original": ".rate(rate)",
+      "replacement": ".rate(g == 11 ? 32'sd0 : rate)",
+      "compile": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "iverilog",
+          "-g2012",
+          "-Wall",
+          "-s",
+          "tb_stepgen12_characterization",
+          "-o",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/silent-channel-eleven/compiled.vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/silent-channel-eleven/cnc_stepgen.v",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/silent-channel-eleven/tb_stepgen12_characterization.sv"
+        ],
+        "started_utc": "2026-10-01T22:54:46.358907+00:00",
+        "returncode": 0,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\silent-channel-eleven\\compile.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "simulation": {
+        "command": [
+          "wsl.exe",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "vvp",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-mutation-controls-r02/silent-channel-eleven/compiled.vvp",
+          "+cycles=4096"
+        ],
+        "started_utc": "2026-10-01T22:54:46.484954+00:00",
+        "returncode": 1,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\silent-channel-eleven\\simulation.log",
+        "log_sha256": "328ed0693f41b42a9af6007dbe44a788d5357b139bc22b0c4f1b34ba6b0e3aa5"
+      },
+      "copied_inputs": {
+        "cnc_stepgen.v": "68eab8da8434f89d55f4749fed3802fb415cbe31bc43af60115cb818d0519456",
+        "tb_stepgen12_characterization.sv": "94076d92c4f66554a8ab55e8bb3b353396faafd79d9957f89a64e9ed52676851"
+      },
+      "compiled_binary_sha256": "2c45f583e964161194253ca0c5943f705e86b2ab5ce19548baa50549d72884e5"
+    }
+  ],
+  "real_machine_interfaces_opened": false,
+  "production_RTL_changed": false,
+  "physical_validation_required": true
+}

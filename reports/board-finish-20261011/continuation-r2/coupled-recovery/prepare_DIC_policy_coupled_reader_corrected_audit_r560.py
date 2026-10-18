@@ -1,0 +1,6 @@
+"""Preserve the pad/graphic reader failure and derive a direct audit."""
+from pathlib import Path
+import json,hashlib
+H=Path(__file__).resolve().parent;old=H/'audit_DIC_policy_coupled_actual_current_r558.py';out=H/'DIC-policy-coupled-actual-current-independent-r558';f=out/'failure.json';assert not f.exists()
+f.write_text(json.dumps({'status':'INDEPENDENT_PAD_GRAPHIC_RECORD_READER_SCHEMA_FAILURE_AFTER_EXACT_REPLAY','helper_SHA256':hashlib.sha256(old.read_bytes()).hexdigest(),'actual_error':'KeyError source: pad/graphic records carry exact shape, not track/via source objects','exact_replay_complete':True,'six_raw_extra_negative_scope_failures_preserved':True,'no_geometry_model_masks_source_reference_or_native_change':True,'successor_only_reader_change':"s=r['source'] -> s=r.get('source')"},indent=1)+'\n')
+s=old.read_text();assert s.count("s=r['source']")==1;s=s.replace("s=r['source']","s=r.get('source')").replace('DIC-policy-coupled-actual-current-independent-r558','DIC-policy-coupled-actual-current-independent-r560').replace('R558_','R560_');new=H/'audit_DIC_policy_coupled_actual_current_r560.py';assert not new.exists();new.write_text(s);print(str(new),hashlib.sha256(new.read_bytes()).hexdigest())

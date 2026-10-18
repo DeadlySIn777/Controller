@@ -1,0 +1,5 @@
+"""Correct the R234 emitter's misplaced outer indentation; preserve failure."""
+import hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent;source=H/'freeze_R10007_HOST_native_discrete_pose_r234.py';code=source.read_text();lines=code.splitlines(keepends=True);start=next(i for i,x in enumerate(lines)if x.startswith(" port=n['ordinary_HOST_port']"));code=''.join(lines[:start])+''.join(x[1:]if x.startswith(' ')else x for x in lines[start:]);code=code.replace('r234','r235').replace('R234','R235');compile(code,str(source),'exec')
+receipt=H/'R10007-native-emitter-r235-derivation.json';assert not receipt.exists();receipt.write_text(json.dumps({'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'executed_script_sha256':hashlib.sha256(code.encode()).hexdigest(),'correction':'R234 via/FP emission wrongly inside first-track loop; dedent once after completing all6tracks','R234_IndexError_failed_before_any_native_or_model_emission_preserved':True,'route_geometry_and_source_bytes_unchanged':True,'native_jobs':0},indent=1)+'\n');exec(compile(code,str(source),'exec'))

@@ -1,0 +1,53 @@
+c04 four-net E1 extension: source candidate, not adopted
+
+Candidate: c04-four-net-e1-dfm.kicad_pcb
+SHA256: abed2445e14ce438464a5e2f8d073eb71dc329a66fc5b882a97b6b5be6b12af7
+Construction receipt: construction.json
+SHA256: a010c516c28e2df0cc0f17c26aacbecdab99d4a3e83ed49abfe139d37699bc14
+Read-only reconstruction checker: compose_c04.py
+SHA256: e811e0ad4cdbee4cd8d2b7bc643c2a08166d77ea29e23c28e8fada1b4724d0c8
+Separate native main-slot runner: measure_c04.py
+SHA256: 04bf55abfa69307839c8ff01712851ac6ab980be4c3e8ca47c5dd05f94ed695b
+
+The candidate replays frozen c03 recovery 5383 + In3 + FAG to its exact pre-DFM
+stage, appends the reviewed four-net E1 source subset, then reapplies the
+existing hardened DFM recipe. All pre-DFM target native chunks are retained
+byte-for-byte. The existing recovery may legitimately replace old r06 copper;
+its native qualification remains 16 completed joins, zero lost, DRC errors 0.
+This does not imply the new composite has passed native checks.
+
+E1 adds 201 ordinary native items: 178 segments 0.2 mm and 23 through vias 0.6/0.3 mm.
+Selected whole nets: OBS27_K, OBS34_K, OUT5_R_MID and RGB_DRIVER_19 under
+/motherboard_status. Six original one-based jobs are fully accounted: five
+successes and failed OBS34_K job 1679. The checkpoint processed 2147 jobs;
+1347 indexed main successes + 791 explicit failures cover 2138. Nine remaining
+original jobs have no explicit outcome and are recorded/withheld. No global
+complete-outcome claim is made. Three whole E1 groups are excluded:
+OBS24_K already joined in native recovery, and RGB_DRIVER_3/RGB_NETWORK_B_K
+have unreviewed router ground-pour flags. All original E1 donor files remain
+immutable. The four selected nets have zero claimed ground-pour crossings;
+OBS34_K has five cross-side records. These flags do not prove return continuity.
+
+Source construction check PASS: exact native bytes reconstruct, genuine 201
+subset additions match the reviewed donor, and hardened DFM guard v2 passes.
+The E1 donor originally used ripped obstacle geometry, so retained target
+copper may obstruct these routes. Potential four additional joins remain
+unqualified until a fresh native refill and DRC. On conflict, reject whole new
+E1 net groups; never remove target copper to make them fit.
+
+The new runner uses the existing reserved main KiCad slot and CPU governor.
+It captures exact saved inputs.json bytes and verifies their digest after the
+run. It separately hashes kicad-cli.exe, native Python, pcbnew.py and _pcbnew.pyd.
+It freezes source/construction/project/rule/netlist/library identities, checks
+all-severity raw DRC against its summary, and uses the hardened uncapped
+partition guard against unchanged r06. A new raw native errors 0 + lost 0 result
+is required. CLI parity remains explicit and separate matching-board API
+netlist parity is required. Root owns the native launch; no new native or GPU
+job was started by this subagent for c04.
+
+Host tests are source/accounting and mocked manifest/binary controls only.
+Their definitive result and evidence digests are in host-receipt.json once
+the run completes; host-tests.log preserves actual output. No manufacturing,
+electrical/current/thermal/SI, protected return/domain, or physical qualification
+is asserted. c03 frozen files and live queue/integration/shared tools are
+unchanged by this work.

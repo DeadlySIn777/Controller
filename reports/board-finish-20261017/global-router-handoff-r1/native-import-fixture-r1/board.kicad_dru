@@ -1,0 +1,23 @@
+(version 1)
+# Nominal 0.8mm-pitch diagonal pad/via clearance = 0.140685mm.
+# Only FPGA pad / conventional via pairs use this dimensional rule.
+(rule "T20 conventional BGA pad-via clearance"
+  (condition "(A.memberOfFootprint('U1001') && B.Type == 'Via') || (B.memberOfFootprint('U1001') && A.Type == 'Via')")
+  (constraint clearance (min 0.125mm)))
+(rule "BGA conventional via dimensions"
+  (condition "A.Type == 'Via'")
+  (constraint hole_size (min 0.20mm))
+  (constraint annular_width (min 0.15mm)))
+
+# PCBWay six-layer normal-process inner-hole isolation >=8mil.
+(rule "Six-layer inner drill to copper separation"
+  (layer inner)
+  (constraint hole_clearance (min 0.205mm)))
+
+# Exact GCT USB4105-GF-A recommended land: own .65mm locating holes
+# to adjacent own outer GND lands have nominal .1944mm copper separation.
+# PCBWay published special minimum NP-hole/copper .15mm; required .18mm
+# applies ONLY to these own-pad pairs. All other .25mm rules remain.
+(rule "GCT USB4105 own locating hole to outer ground lands"
+  (condition "A.memberOfFootprint('J15006') && B.memberOfFootprint('J15006') && ((A.Pad_Type == 'NPTH, mechanical' && A.Hole_Size_X == 0.65mm && (B.Pad_Number == 'A1' || B.Pad_Number == 'A12' || B.Pad_Number == 'B1' || B.Pad_Number == 'B12')) || (B.Pad_Type == 'NPTH, mechanical' && B.Hole_Size_X == 0.65mm && (A.Pad_Number == 'A1' || A.Pad_Number == 'A12' || A.Pad_Number == 'B1' || A.Pad_Number == 'B12')))")
+  (constraint hole_clearance (min 0.18mm)))

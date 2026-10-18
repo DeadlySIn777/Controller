@@ -1,0 +1,403 @@
+{
+  "evidence_class": "Frozen source/native pin census plus official TI CT rating requirement; no electrical measurements",
+  "board_sha256": "95874c4275f10851f03c2f7953fdf4cf4e7e8a0c39bbe399f8aaec642bd7c77d",
+  "source_native_switch_pin_parity": "PASS",
+  "instances": [
+    {
+      "ref": "U11010",
+      "value": "TPS22990DMLR",
+      "footprint_uuid": "57c2011e-b193-4e88-bf86-d0e2ce8d7e8e",
+      "footprint_chunk_sha256": "8f9dca573d0a3791460164b4d05b39b25e64cd44cc23a68d8d53b847a8be7042",
+      "CT_pin1_net": "unconnected-(U11010-CT-Pad1)",
+      "VBIAS_pin4_net": "/motherboard_power_entry/MOTION_5V_RAW",
+      "VIN_pin3_and_thermal11_nets": [
+        "/motherboard_power_entry/MOTION_5V_RAW",
+        "/motherboard_power_entry/MOTION_5V_RAW"
+      ],
+      "ON_pin5_net": "/motherboard_power_entry/MOTOR_FEED_ON_A",
+      "PG_pin7_net": "/motherboard_power_entry/MOTOR_FEED_PG_A",
+      "VOUT_pin8_9_10_nets": [
+        "/motherboard_motors/MOTOR_5V_A",
+        "/motherboard_motors/MOTOR_5V_A",
+        "/motherboard_motors/MOTOR_5V_A"
+      ],
+      "CT_cap_refs": [],
+      "intent": "Preserve intentionally unconnected CT, fastest inherent switch slew and motor feed controls",
+      "rail_model": {
+        "nominal_v": 5.0,
+        "sources": [
+          {
+            "ref": "U11010",
+            "pins": [
+              "8",
+              "9",
+              "10"
+            ]
+          }
+        ],
+        "loads": [
+          {
+            "ref": "U6001",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6002",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6003",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6004",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6033",
+            "pins": [
+              "1"
+            ],
+            "w": 0.5,
+            "note": "TPS22918 load switch"
+          },
+          {
+            "ref": "U6041",
+            "pins": [
+              "5"
+            ],
+            "w": 0.005
+          },
+          {
+            "ref": "U6051",
+            "pins": [
+              "5"
+            ],
+            "w": 0.005
+          }
+        ],
+        "cases": {
+          "feed_normal": {
+            "note": "motor-feed chain case at the PE_MF normal load 0.8976 A",
+            "total_a": 0.8976
+          }
+        },
+        "budget_mv": 10,
+        "budget_basis": "DRAFT: half of the 20.36 mV motor-feed switch+distribution budget (PE_MF); the chain record checks the whole path",
+        "cite": [
+          "PW",
+          "PE_MF",
+          "PB",
+          "LC"
+        ]
+      }
+    },
+    {
+      "ref": "U11011",
+      "value": "TPS22990DMLR",
+      "footprint_uuid": "7b730500-f65c-4735-a789-d7594b6db993",
+      "footprint_chunk_sha256": "c1992ec23a8a6f795b4960b32865d61e129ecfc4a90fb7ea75058b601eb439f7",
+      "CT_pin1_net": "unconnected-(U11011-CT-Pad1)",
+      "VBIAS_pin4_net": "/motherboard_power_entry/MOTION_5V_RAW",
+      "VIN_pin3_and_thermal11_nets": [
+        "/motherboard_power_entry/MOTION_5V_RAW",
+        "/motherboard_power_entry/MOTION_5V_RAW"
+      ],
+      "ON_pin5_net": "/motherboard_power_entry/MOTOR_FEED_ON_B",
+      "PG_pin7_net": "/motherboard_power_entry/MOTOR_FEED_PG_B",
+      "VOUT_pin8_9_10_nets": [
+        "/motherboard_motors/MOTOR_5V_B",
+        "/motherboard_motors/MOTOR_5V_B",
+        "/motherboard_motors/MOTOR_5V_B"
+      ],
+      "CT_cap_refs": [],
+      "intent": "Preserve intentionally unconnected CT, fastest inherent switch slew and motor feed controls",
+      "rail_model": {
+        "nominal_v": 5.0,
+        "sources": [
+          {
+            "ref": "U11011",
+            "pins": [
+              "8",
+              "9",
+              "10"
+            ]
+          }
+        ],
+        "loads": [
+          {
+            "ref": "U6005",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6006",
+            "pins": [
+              "16"
+            ],
+            "w": 0.2
+          },
+          {
+            "ref": "U6034",
+            "pins": [
+              "1"
+            ],
+            "w": 0.5
+          },
+          {
+            "ref": "U6045",
+            "pins": [
+              "5"
+            ],
+            "w": 0.005
+          },
+          {
+            "ref": "U6052",
+            "pins": [
+              "5"
+            ],
+            "w": 0.005
+          }
+        ],
+        "cases": {
+          "feed_normal": {
+            "note": "motor-feed chain case at the PE_MF normal load 0.4488 A",
+            "total_a": 0.4488
+          }
+        },
+        "budget_mv": 10,
+        "budget_basis": "DRAFT: half of the 20.36 mV motor-feed budget (PE_MF)",
+        "cite": [
+          "PW",
+          "PE_MF",
+          "LC"
+        ]
+      }
+    },
+    {
+      "ref": "U11012",
+      "value": "TPS22990DMLR",
+      "footprint_uuid": "d028ffaa-712f-4e0f-8d41-52beb0ca9713",
+      "footprint_chunk_sha256": "d18a732cef87dca34c4c119a597d4f95402cc567b5c47fb0aa9d682bdb33b507",
+      "CT_pin1_net": "/motherboard_power_entry/SBC_RAMP_CT",
+      "VBIAS_pin4_net": "/mc_local_power/CORE_5V",
+      "VIN_pin3_and_thermal11_nets": [
+        "/mc_local_power/CORE_5V",
+        "/mc_local_power/CORE_5V"
+      ],
+      "ON_pin5_net": "/mc_local_power/MC_RAILS_OK_5V",
+      "PG_pin7_net": "/motherboard_power_entry/SBC_SWITCH_PG",
+      "VOUT_pin8_9_10_nets": [
+        "/motherboard_power_entry/SBC_5V",
+        "/motherboard_power_entry/SBC_5V",
+        "/motherboard_power_entry/SBC_5V"
+      ],
+      "CT_cap_refs": [
+        "C11061"
+      ],
+      "intent": "Preserve CT ramp, capacitance effective bounds, input/output caps, SBC current and supervisor sequencing",
+      "rail_model": {
+        "nominal_v": 5.0,
+        "sources": [
+          {
+            "ref": "U11012",
+            "pins": [
+              "8",
+              "9",
+              "10"
+            ],
+            "note": "TPS22990 VOUT pins"
+          }
+        ],
+        "loads": [
+          {
+            "ref": "J15001",
+            "pins": [
+              "77",
+              "79",
+              "81",
+              "83",
+              "85",
+              "87"
+            ],
+            "w": 3.0,
+            "note": "CM 5 V pins, SBC running current 3.0 A (SBCENV)"
+          },
+          {
+            "ref": "U15026",
+            "pins": [
+              "1"
+            ],
+            "w": 0.5,
+            "note": "TPS2553 USB port switch input (0.5 A USB 2.0 port class)"
+          },
+          {
+            "ref": "U15018",
+            "pins": [
+              "11"
+            ],
+            "w": 0.05,
+            "note": "TPD12S016 HDMI 5 V"
+          }
+        ],
+        "cases": {
+          "operator_3p6": {
+            "note": "operator DRAFT budget case: 3.6 A delivered to J15001's SBC pins (OPD_SBC), other loads off",
+            "only": {
+              "J15001": 3.6
+            },
+            "absolute": true,
+            "budget_mv": 100,
+            "budget_class": "DRAFT (operator decision 2026-10-04 B-PWRB-01)"
+          }
+        },
+        "budget_mv": 100,
+        "budget_class": "DRAFT (operator decision 2026-10-04 B-PWRB-01)",
+        "budget_basis": "Operator/coordinator DRAFT: <= 100 mV from U11012 output to J15001 SBC pins at 3.6 A (OPD_SBC); older envelope allowed 15 mOhm trace+contact (SBCENV)",
+        "cite": [
+          "PW",
+          "OPD_SBC",
+          "SBCENV",
+          "PEREADME",
+          "LC"
+        ]
+      },
+      "capacitor": {
+        "ref": "C11061",
+        "source_properties": {
+          "value": "4.7uF 16V X7R",
+          "footprint": "Capacitor_SMD:C_0805_2012Metric"
+        },
+        "pins": {
+          "2": "/LOGIC_GND",
+          "1": "/motherboard_power_entry/SBC_RAMP_CT"
+        },
+        "native_uuid": "73b53c88-a7dc-4167-881c-5246eb125d8a",
+        "native_chunk_sha256": "4d17bc1517de4b38ef500d1a1542fbcb57a83507a27055f154c9dc2195e0dac1"
+      }
+    }
+  ],
+  "instance_count": 3,
+  "external_CT_cap_count": 1,
+  "official_datasheet": "https://www.ti.com/lit/ds/symlink/tps22990.pdf",
+  "revision": "SLVSDK1C Rev.C section9.3.2 and12.1",
+  "electrical_issue": {
+    "ref": "C11061",
+    "source_voltage_rating_v": 16,
+    "minimum_TPS22990_CT_rating_v": 25,
+    "CT_may_reach_v": 15,
+    "status": "OPEN_ISOLATED_BOM_SOURCE_CORRECTION_REQUIRED"
+  },
+  "preserve_SBC_bounds": {
+    "input_v": [
+      4.85,
+      5.15
+    ],
+    "sbc_running_current_a": 3.0,
+    "sbc_charge_cap_max_f": 0.001,
+    "switch_resistance_screening_ohm": 0.008,
+    "trace_contact_resistance_max_ohm": 0.015,
+    "switch_ct_effective_f": [
+      4.7e-07,
+      1.32e-06
+    ],
+    "switch_rise_time_typical_equation_screening_fast_factor": 0.5,
+    "supervisor_delay_cap_effective_f": [
+      1.2e-06,
+      3.2e-06
+    ],
+    "sense_top_ohm": 31600,
+    "sense_bottom_ohm": 10000,
+    "sense_resistor_total_fraction": 0.002,
+    "sense_threshold_negative_v": 1.15,
+    "sense_threshold_positive_v": 1.157,
+    "sense_threshold_fraction": 0.01,
+    "sense_leakage_a": 1e-07,
+    "supervisor_delay_current_a": [
+      9e-07,
+      1.35e-06
+    ],
+    "supervisor_delay_threshold_v": [
+      1.17,
+      1.29
+    ],
+    "supervisor_delay_cap_initial_v_assumed": [
+      0,
+      0
+    ],
+    "power_aux_reservation_a": 0.003,
+    "qod_resistance_max_ohm": 253,
+    "fully_discharged_target_v": 0.3
+  },
+  "preserve_delivery_case": {
+    "J15001_current_a": 3.6,
+    "source_output_copper_budget_mv": 100,
+    "CORE_input_budget_mv": 70,
+    "unchanged_motor_interfaces": 12
+  },
+  "limits": [
+    "Only U11012 has external CT; do not invent motor CT components or silently change motor feed timings",
+    "A same-nominal higher-voltage CT capacitor has different DC-bias capacitance; effective .47\u20131.32uF timing/inrush envelope must be checked or recomputed on an isolated corrected source",
+    "Historical circuit envelope and drafted rail model are source assumptions, not full-board or physical proof",
+    "Placement proposals remain pinned to original geometry, with rating issue explicitly open"
+  ],
+  "overlay": {
+    "moved_native_footprints_mm": {
+      "C14814": [
+        -0.30000000000001137,
+        0.0
+      ],
+      "C14825": [
+        -0.09999999999999432,
+        -0.30000000000001137
+      ],
+      "C14829": [
+        0.0,
+        0.30000000000001137
+      ],
+      "FIDF1": [
+        2.3000000000000007,
+        -0.5500000000000114
+      ],
+      "C14818": [
+        0.30000000000001137,
+        0.0
+      ],
+      "FIDB1": [
+        2.3000000000000007,
+        -0.5500000000000114
+      ]
+    },
+    "actual_tracks": 85548,
+    "actual_vias": 7818,
+    "pad_definitions_unchanged": true,
+    "no_new_or_changed_arc": true,
+    "fill_policy": "Conservative pinned r06 native foreign fills retained; c05 tracks/vias and exact translated pads overlaid. No c05 fresh fill claimed"
+  },
+  "read_set_sha256": {
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\netlist.json": "88f33371a7fb807f59cfcb0c450e459844af86f8dab3c240574c4a8cd642d510",
+    "Z:\\pcb-runs\\claude-finish\\tools\\verify\\rail_model.json": "50ba1016200f1127b5103f69de2616a3c43ce92ce54ee93ea9e6393c48958bb6",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\sbc_power\\design-envelope.json": "8e0784540b4c05c3909a867829a791e6280008e64278c40277e856617788bd65",
+    "Z:\\pcb-runs\\claude-finish\\integrate\\revs\\r06-stitch-plane-pads-2.kicad_pcb": "0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\recovery-composite\\c05\\c05-fag-e1-rollback-dfm.kicad_pcb": "95874c4275f10851f03c2f7953fdf4cf4e7e8a0c39bbe399f8aaec642bd7c77d",
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\w\\geom.json": "890544e995ee122702538db4e114710ddf0769fbe9d1a2bfee749f03acde49fa",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\audit_tps22990_census.py": "64007ac10312c633e0c62d4e9af4acde8bdccc4efcbc71290c4cd8edae06a2b6",
+    "Z:\\pcb-runs\\claude-finish\\review\\schematic\\ds\\tps22990.pdf": "ea198776524544eb3e4a130f1f6a6e5c8e80ca8164eebf387a8fd6b4b7dde2a3",
+    "Z:\\pcb-runs\\claude-finish\\review\\schematic\\ds\\tps22990.txt": "3048073453763336a3c8e52ac08885e3e723833063251be38f98300f628ca8db"
+  },
+  "implemented": false,
+  "native_launched": false
+}

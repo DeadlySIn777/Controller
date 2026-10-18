@@ -1,0 +1,514 @@
+﻿[
+    {
+        "id":  "R001",
+        "requirement":  "Investigate Acorn, Mesa, Octopus Pro and how they work",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`CNC_CONTROLLER_INVESTIGATION.md`, `research/FIRMWARE_FEASIBILITY.md`, `research/MARKET_LANDSCAPE.md`, `PROJECT_BRIEFING.md`",
+        "accounting_and_implementation_boundary":  "Architectural comparisons retained; later market research is separate from proof of superiority",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R002",
+        "requirement":  "Build our own controller; Mesa/Acorn-style capability with an ESP helper",
+        "source_authority":  "Chat; later working architecture",
+        "accounting_artifacts":  "`docs/BUILD_PLAN.md`, `docs/ARCHITECTURE_DECISIONS.md`, memory",
+        "accounting_and_implementation_boundary":  "Local Linux/LinuxCNC + FPGA + ESP; earlier H7/grblHAL alternatives explicitly superseded",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R003",
+        "requirement":  "Dependable low-level/kernel control without requiring a Linux workstation",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`docs/HARDWARE_BASELINE.md`, `docs/BUILD_PLAN.md`, investigation",
+        "accounting_and_implementation_boundary":  "PREEMPT_RT local controller proposed; target host timing not physically qualified",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R004",
+        "requirement":  "Ethernet connection; modern laptop/tablet, USB-C and wireless convenience",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Investigation, ADR-002/006/021, `docs/HARDWARE_PRE_DESIGN.md`",
+        "accounting_and_implementation_boundary":  "External service/HMI networking separate from dedicated internal motion link; no production Ethernet/Wi-Fi/Bluetooth product path yet",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R005",
+        "requirement":  "Consider cheap integrated ESP/FluidNC and newer hardware",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Investigation, firmware feasibility/source records",
+        "accounting_and_implementation_boundary":  "Alternatives studied; present main CNC engine is LinuxCNC, not a FluidNC image substituted onto unsupported silicon",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R006",
+        "requirement":  "Investigate technology news over the last four years",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`CNC_CONTROLLER_INVESTIGATION.md:13`",
+        "accounting_and_implementation_boundary":  "Dated 27 Sep 2022â€“27 Sep 2026 table and primary links retained; this audit verifies presence, not refreshes those facts",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R007",
+        "requirement":  "Extensive engineering before buying anything",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "ADR-001, build stages, manufacturing checklist, memory",
+        "accounting_and_implementation_boundary":  "Explicitly retained; no purchase authorized by this audit",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R008",
+        "requirement":  "Extremely advanced capabilities and broad relay/control voltage support",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Hardware pre-design, expanded target, rated module taxonomy",
+        "accounting_and_implementation_boundary":  "Converted to explicitly rated interfaces/external relays/contactors; arbitrary-voltage universal terminals are not promised",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R009",
+        "requirement":  "Beat the benchmark controller, clarified as MASSO",
+        "source_authority":  "Chat correction chain",
+        "accounting_artifacts":  "`docs/REQUIREMENTS_AND_EVIDENCE.md`, market study",
+        "accounting_and_implementation_boundary":  "Benchmark clarification preserved; no claim that prototype already outperforms it",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R010",
+        "requirement":  "Preserve the preferred Octopus/MR-1 UI",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`research/UI_REFERENCE_AUDIT.md`, product experience, UX-01",
+        "accounting_and_implementation_boundary":  "Candidate was inspected read-only; exact source reference and visual acceptance remain unconfirmed",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R011",
+        "requirement":  "Drop machine, plate, vise, stock and tool models into a seamless setup",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`docs/PRODUCT_EXPERIENCE.md`, UX-02/03/05/06",
+        "accounting_and_implementation_boundary":  "Units/placement/registration/dependency contracts recorded; finished CAD conversion/placement application absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R012",
+        "requirement":  "Ordinary users should need little coding or CAD knowledge",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Product experience, configuration/CLI plan",
+        "accounting_and_implementation_boundary":  "Guided machine profiles, touch/file-picker workflows and no-CAD path specified; novice trial outstanding",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R013",
+        "requirement":  "Firmware should be the appropriate whole stack",
+        "source_authority":  "Chat question; advisor/source findings",
+        "accounting_artifacts":  "Briefing firmware section, build plan, firmware feasibility",
+        "accounting_and_implementation_boundary":  "LinuxCNC, compiled driver, FPGA gateware, ESP-IDF and product application are distinct; original machine firmware not inferred from UI/board name",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R014",
+        "requirement":  "Low affordable price; avoid an unsellable $1,200 board",
+        "source_authority":  "Chat; later commercial decisions",
+        "accounting_artifacts":  "Build cost studies, memory, commercial policy",
+        "accounting_and_implementation_boundary":  "Historical Mesa bundle goal retained, later $400 controller reference supersedes the fixed complete-package ceiling; current docs conflict (C03)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R015",
+        "requirement":  "$190 refers to dollars; supplied 21.5-inch capacitive monitor is a reference",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Display cost study, display tiers, original Amazon ASIN reference",
+        "accounting_and_implementation_boundary":  "Dollar meaning preserved; no requirement that every package use this panel",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R016",
+        "requirement":  "Offer 7/10/12/14/18/21-inch classes and other qualified sizes",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`docs/DISPLAY_TIERS.md`, compute/display matrix, memory",
+        "accounting_and_implementation_boundary":  "All six classes preserved; screen size independent of I/O; exact qualified SKUs and physical touch trials absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R017",
+        "requirement":  "Include complete compute/display/power/mounting/testing economics at quantities 1/10/100/1,000",
+        "source_authority":  "Supplied cost critique; adopted planning",
+        "accounting_artifacts":  "Build plan, cost comparison and matrix",
+        "accounting_and_implementation_boundary":  "Unknowns retained; no completed cost or PCBWay quote; historic six/two/21.5-inch worksheets cannot price confirmed full I/O",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R018",
+        "requirement":  "Manufacture designed boards through PCBWay turnkey",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Build plan, `manufacturing/PCBWAY_SUBMISSION_CHECKLIST.md`",
+        "accounting_and_implementation_boundary":  "Route recorded; exact BOM/fab/placement/programming/test/quote/release incomplete",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R019",
+        "requirement":  "Add optional AI compute capability",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`research/AI_ADDON_PLAN.md`, memory",
+        "accounting_and_implementation_boundary":  "Separate Ethernet compute/power companion proposal; normal operation remains usable without AI",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R020",
+        "requirement":  "Highly optimizable/modifiable hardware and firmware; complete CLI for chat setup",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "`docs/CONFIGURATION_AND_CLI.md`, memory, commercial policy",
+        "accounting_and_implementation_boundary":  "Editable engineering inputs/versioned APIs remain required; public CLI prototype incomplete and original commercial app is not promised open source",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R021",
+        "requirement":  "One UI/CLI/assistant service contract with structured validation, preview/diff and reversible changes",
+        "source_authority":  "Chat plus AGENTS instruction",
+        "accounting_artifacts":  "CLI plan, service prototypes, runtime configuration reports",
+        "accounting_and_implementation_boundary":  "Disconnected full-profile service and bounded runtime XYZ service exist separately; production common contract still incomplete",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R022",
+        "requirement":  "Extremely simple wiring and first use",
+        "source_authority":  "Chat",
+        "accounting_artifacts":  "Wiring/profile/commissioning contracts, feature F001â€“004, product experience",
+        "accounting_and_implementation_boundary":  "Generated illustrative wiring exists in simulation; exact production terminals/harnesses/profiles not qualified",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R023",
+        "requirement":  "Evaluate eFuses versus real fuses",
+        "source_authority":  "Chat question; engineering recommendation",
+        "accounting_artifacts":  "`docs/POWER_PROTECTION.md`, power reports",
+        "accounting_and_implementation_boundary":  "Coordinated physical entry fuse plus branch electronic protection recorded; fuse/clamp exact choices and full containment not completed",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R024",
+        "requirement":  "Preserve 200 feature ideas without losing any scope",
+        "source_authority":  "Supplied feature/platform note",
+        "accounting_artifacts":  "`docs/FEATURE_CATALOG.md`, `research/feature-roadmap.json`, roadmap",
+        "accounting_and_implementation_boundary":  "All 200 exact titles/descriptions preserved and explicitly proposals; individual feature implementation/evidence rows remain absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R025",
+        "requirement":  "Modular plasma upgrade retains controller, screen, motor wiring and unaffected setup",
+        "source_authority":  "Supplied plasma note",
+        "accounting_artifacts":  "`docs/PLASMA_MODULE_SYSTEM.md`, memory",
+        "accounting_and_implementation_boundary":  "Separate source/torch/harness/module identities, selective retest and one Z-motion owner specified; no qualified module",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R026",
+        "requirement":  "Support divided-voltage, external THC and possible later raw/digital plasma interfaces",
+        "source_authority":  "Supplied plasma/feature notes",
+        "accounting_artifacts":  "Plasma contract and roadmap",
+        "accounting_and_implementation_boundary":  "First proposed divided-voltage interface with two named future harness/source combinations; raw/HF hardware separately rated, not automatic compatibility",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R027",
+        "requirement":  "Off-the-shelf Modbus USB/RS-485, RTU/TCP and serial VFD accessories from other retailers",
+        "source_authority":  "Chat via supplied note; latest direct commercial message",
+        "accounting_artifacts":  "`docs/THIRD_PARTY_MODBUS.md`, commercial policy",
+        "accounting_and_implementation_boundary":  "Tested exact profiles and fault behavior required; no mandatory proprietary ordinary VFD adapter; no qualified retail device list yet",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R028",
+        "requirement":  "Investigate cheap BTT CB1/CB2 and compute alternatives",
+        "source_authority":  "Chat and user module table",
+        "accounting_artifacts":  "`research/BTT_COMPUTE_REVIEW.md`, compute matrix",
+        "accounting_and_implementation_boundary":  "User-estimated prices kept separate from observed listings; CB2 active candidate, CB1 comparison",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R029",
+        "requirement":  "CM4/CM5 mechanical family, exact electrical/software compatibility",
+        "source_authority":  "Chat question; engineering recommendation",
+        "accounting_artifacts":  "`docs/COMPUTE_CARRIER_STRATEGY.md`, integration note",
+        "accounting_and_implementation_boundary":  "Shared two-100-pin shape is not a compatibility guarantee; exact part/carrier selection remains open",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R030",
+        "requirement":  "Correct supplied compute table rather than treating it as verified",
+        "source_authority":  "User table; source review",
+        "accounting_artifacts":  "BTT review, carrier strategy, integration note",
+        "accounting_and_implementation_boundary":  "SOEdge 204-pin correction recorded; no blanket 200/260/300-pin interchangeability claim",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R031",
+        "requirement":  "Connect existing six/two LinuxCNC/FPGA implementation before expansion",
+        "source_authority":  "Supplied integration priority",
+        "accounting_artifacts":  "`docs/INTEGRATION_MILESTONE.md`, CNC1 reports",
+        "accounting_and_implementation_boundary":  "Actual LinuxCNC/RTL simulation connection reported; historical six/two proof remains distinct from product capacity",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R032",
+        "requirement":  "ESP should automate qualified supporting services and directly observe conditions",
+        "source_authority":  "Supplied ESP/industrial note; memory",
+        "accounting_artifacts":  "`docs/ESP_ACCESSORY_AUTOMATION.md`, service hardware/firmware reports",
+        "accounting_and_implementation_boundary":  "Fans/coolant/air/lube/lights/extraction sequences planned; current firmware diagnostic-only",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R033",
+        "requirement":  "One owner per output; measured service readiness; essential-service failure matters",
+        "source_authority":  "Supplied ESP note",
+        "accounting_artifacts":  "ESP accessory contract, supervisory plan",
+        "accounting_and_implementation_boundary":  "No motion/torch/drawbar/toolchanger autonomy granted to ESP; accessory sequence/fault integration unfinished",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R034",
+        "requirement":  "Industrial reliability; engineered HDPE enclosure and independent machine protection",
+        "source_authority":  "Supplied note; memory",
+        "accounting_artifacts":  "`docs/INDUSTRIAL_QUALIFICATION.md`, protection plan",
+        "accounting_and_implementation_boundary":  "Whole-unit power/EMC/environment/factory/service gates retained; no certification or assembled-unit rating claimed",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R035",
+        "requirement":  "Later five-to-ten-unit pilot only after qualification",
+        "source_authority":  "Supplied note",
+        "accounting_artifacts":  "Qualification plan",
+        "accounting_and_implementation_boundary":  "Proposal retained as future trial, not purchase instruction or demand proof",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R036",
+        "requirement":  "Replace failed section without individual wire disturbance, setup loss or manual programming",
+        "source_authority":  "Supplied repair note; memory-confirmed exact architecture",
+        "accounting_artifacts":  "`docs/MODULAR_REPAIR_AND_MEMORY.md`, replacement/recovery demos",
+        "accounting_and_implementation_boundary":  "Power-off and preprogrammed spares specified; file-backed virtual replacement only; fixed-base decision is inconsistently carried (C02)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R037",
+        "requirement":  "Settings cartridge holds actual versioned configuration, mirror and offline export",
+        "source_authority":  "Supplied repair note",
+        "accounting_artifacts":  "Repair/memory contract, cartridge demo",
+        "accounting_and_implementation_boundary":  "Two bounded host-file records demonstrated; physical memory interface/part/brownout/connector protection absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R038",
+        "requirement":  "Separate machine settings, module identity/factory calibration and firmware/Linux images",
+        "source_authority":  "Supplied repair note",
+        "accounting_artifacts":  "Repair contract, plasma/recovery contracts",
+        "accounting_and_implementation_boundary":  "Replacement\u0027s own factory calibration retained; configuration restore never restores homing/run authority",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R039",
+        "requirement":  "Interrupted saves/conflicting records preserve a valid copy and refuse ambiguous authority",
+        "source_authority":  "Supplied repair note; refined engineering",
+        "accounting_artifacts":  "Repair contract and file-backed tests",
+        "accounting_and_implementation_boundary":  "Partial software proof; physical EEPROM/flash write atomicity, mirror authority and full payload remain open",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R040",
+        "requirement":  "Eight motors minimum; individual enables and alarms; expand to twelve",
+        "source_authority":  "AGENTS plus memory-confirmed decision",
+        "accounting_artifacts":  "Memory, expanded target, `docs/MOTION_EXPANSION_8_TO_12.md`",
+        "accounting_and_implementation_boundary":  "Current runtime six; twelve drawn STEP/DIR pairs do not satisfy complete eight/twelve channels; target wrongly called candidate in several docs (C01)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R041",
+        "requirement":  "Channels 9â€“12 plug-in module; twelve-motor SKU factory fitted",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory and motion expansion option D1",
+        "accounting_and_implementation_boundary":  "Some docs still present full population versus plug-in as open (C01/C06); no production expansion circuit/layout",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R042",
+        "requirement":  "FPGA/clock/flash/supervision on replaceable motion card behind a fixed wiring base",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory, motion-expansion Â§14 concept",
+        "accounting_and_implementation_boundary":  "Requirement recorded but still called alternative/open decision elsewhere (C02); actual module boundaries/connectors not designed",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R043",
+        "requirement":  "Preserve 24 additional general inputs and 16 additional outputs",
+        "source_authority":  "Memory-confirmed decision; supplied expanded table",
+        "accounting_artifacts":  "Expanded target, memory, motion expansion",
+        "accounting_and_implementation_boundary":  "Required groups not to be consumed by alarms/probes/enable; drawn 22-input historical circuit is not complete product I/O",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R044",
+        "requirement":  "Serial general-I/O transport only with identity, freshness/sequence and CRC before changes",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory, motion-expansion serialization discussion",
+        "accounting_and_implementation_boundary":  "General transport/frame/driver/circuit implementation and qualification missing",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R045",
+        "requirement":  "Keep 20 ms fault-to-inhibit requirement",
+        "source_authority":  "Memory-confirmed decision",
+        "accounting_artifacts":  "Memory, supervisor model, motion expansion",
+        "accounting_and_implementation_boundary":  "Existing TPS3431 drawn roughly72-ms path fails this requirement; replacement watchdog is still an open design item (C04), not a permissible silent relaxation",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R046",
+        "requirement":  "Codex hardware / Claude logic-protocol-service ownership; agreed interface and controlled merges",
+        "source_authority":  "Memory decision; observed Git history",
+        "accounting_artifacts":  "Memory; separate Claude worktree\u0027s frozen IS-1 master",
+        "accounting_and_implementation_boundary":  "Baseline commit `e994311` exists; Claude branch/worktree and IS-1 commit `0d879b2` exist; adoption into the main hardware sources and a controlled integration merge remain unverified here (C09)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R047",
+        "requirement":  "Hardware-backed per-output protection/diagnostics and field/module/temperature health",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory, F131/132/133, protection/qualification plans",
+        "accounting_and_implementation_boundary":  "Full measured acquisition/isolation/channel-selection path and exact output driver unfinished",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R048",
+        "requirement":  "Every measurement carries validity and age; unavailable/stale cannot masquerade as zero",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory, product-state/CLI stale rules",
+        "accounting_and_implementation_boundary":  "Strong user acceptance rule preserved; unified deployed telemetry contract and accuracy tests absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R049",
+        "requirement":  "Power-loss-tolerant local fault-history ring, facts separated from AI diagnoses",
+        "source_authority":  "Memory decision; feature F037/038/099",
+        "accounting_artifacts":  "Memory and catalogue",
+        "accounting_and_implementation_boundary":  "Full physical persistent acquisition/history/replay unimplemented",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R050",
+        "requirement":  "Reliable full 1 kHz exchange, 700 Î¼s worst-load target, no silent interruption",
+        "source_authority":  "Memory decision; supplied timing notes",
+        "accounting_artifacts":  "Memory, expanded timing/link plans",
+        "accounting_and_implementation_boundary":  "Analytical/simulation evidence only; complete fitted target-cycle timing not measured",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R051",
+        "requirement":  "72-hour simultaneous-load trial plus fault injection; motor and encoder expansion concurrently",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory and wider qualification plans",
+        "accounting_and_implementation_boundary":  "No completed trial; exact combined-load acceptance procedure should be a named release artifact (C08)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R052",
+        "requirement":  "CAD and no-CAD routes; verified drive/sensor/spindle profiles; AI proposes, validator decides",
+        "source_authority":  "Memory decision; direct user ease-of-use",
+        "accounting_artifacts":  "Memory and product/service contracts",
+        "accounting_and_implementation_boundary":  "Workflows not completed; no verified physical profile catalogue yet",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R053",
+        "requirement":  "8 of 10 novice users verified low-speed jog within15 minutes",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory only for exact latest numeric acceptance",
+        "accounting_and_implementation_boundary":  "Older UX trial targets remain and are not a substitution; add exact latest reference-machine/user-study gate (C08)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R054",
+        "requirement":  "Card replacement under5 minutes; publish affordable spare-card prices",
+        "source_authority":  "Memory decision; repair note",
+        "accounting_artifacts":  "Memory, repair policy",
+        "accounting_and_implementation_boundary":  "No physical trial, spare price/cost/availability evidence; exact numeric criterion should be registered (C08)",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R055",
+        "requirement":  "Full operation/diagnostics/recovery/replacement offline without AI credit",
+        "source_authority":  "Memory decision; direct latest licensing message",
+        "accounting_artifacts":  "Memory, commercial policy, repair/CLI/AI plans",
+        "accounting_and_implementation_boundary":  "Offline design retained; no full production entitlement/replacement/kit test",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R056",
+        "requirement":  "$400 is controller-assembly reference, screens/PSUs/enclosures/harness/help separately costed",
+        "source_authority":  "Memory-recorded supersession",
+        "accounting_artifacts":  "Memory and commercial product forms",
+        "accounting_and_implementation_boundary":  "Stale bundled ceilings across build/display/industrial docs must be marked historical (C03); no final sale price assumed",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R057",
+        "requirement":  "Engineering choices show cost delta, capability gained and replacement-card cost",
+        "source_authority":  "Memory decision",
+        "accounting_artifacts":  "Memory; cost studies partially",
+        "accounting_and_implementation_boundary":  "Historical merchandise comparisons are not exact complete implemented choice/replacement costing; required review table absent",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R058",
+        "requirement":  "Sell controller, paid licences, expansion modules and tested kits",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "`docs/COMMERCIAL_MODEL_AND_LICENSING.md`, `reports/COMMERCIAL_DIRECTION.md`, memory, README/briefing",
+        "accounting_and_implementation_boundary":  "Correctly accounted as commercial offer; no sale-ready kit claim",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R059",
+        "requirement":  "Ordinary proven peripheral components remain sourceable elsewhere; publish tested compatibility",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "Commercial policy, Modbus plan, memory",
+        "accounting_and_implementation_boundary":  "Correct policy; no exact qualified compatibility publication yet",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R060",
+        "requirement":  "Original software is commercial; no freeware or promised open-source release",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "Commercial policy and affected docs",
+        "accounting_and_implementation_boundary":  "Correct wording found; editability/API access distinguished from redistribution rights",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R061",
+        "requirement":  "Preserve third-party licensing obligations and review commercial application boundary",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "Commercial policy/SBOM requirement",
+        "accounting_and_implementation_boundary":  "Requirement recorded; actual dependency inventory/distribution-boundary review incomplete; this audit makes no legal determination",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R062",
+        "requirement":  "Licence works offline and survives legitimate same-capability module replacement without repurchase",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "Commercial policy and repair plan",
+        "accounting_and_implementation_boundary":  "Defined with machine/controller entitlement rather than failed module serial; actual licence system/transfer/recovery implementation missing",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R063",
+        "requirement":  "Kits sell convenience/support, expansions capability; no ordinary-component purchase lock",
+        "source_authority":  "Latest direct visible commercial clarification",
+        "accounting_artifacts":  "Commercial policy product table",
+        "accounting_and_implementation_boundary":  "Correctly recorded; selling/support scope and pricing still to finish",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    },
+    {
+        "id":  "R064",
+        "requirement":  "Audit everything in chat and artifacts; give0â€“100 rating without losing summaries",
+        "source_authority":  "Latest direct audit request",
+        "accounting_artifacts":  "This report, source/features JSON and broader audit",
+        "accounting_and_implementation_boundary":  "Visible scope traced; hidden earlier messages explicitly unverified; score excludes production completion",
+        "audited_evidence_class":  "source/document inspection; not a test execution"
+    }
+]

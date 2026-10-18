@@ -1,0 +1,12 @@
+# Archive note: baseline v1 evidence identity
+
+This directory preserves the pre-extension v1 identity: the prior `manifest.json`, the original changed `cnc_endpoint.v`, `PROTOCOL.md`, `record_evidence.py` and the `GATEWARE_VALIDATION.md` report. Archived source hashes are verifiable against the files here (`cnc_endpoint.v` 6a94ece0…, `PROTOCOL.md` 823113c3…, `record_evidence.py` 5a9cd93d…).
+
+**Superseded evidence files.** The archived `manifest.json` also records `evidence_sha256` for two files that were *not* copied here:
+
+- `simulation.log` (f2fea4e8c2e7ad1c…): the original 180-check regression output. It was overwritten in `gateware/build/` and `gateware/validation/` by the re-run recorded in `gateware/validation/manifest.json` (now eb58070e32f5e001…). Only its hash is retained; the original log text cannot be reproduced from this archive. The `../gateware/validation/...` links in the archived `GATEWARE_VALIDATION.md` (lines 48-50) were written relative to `reports/` and are dangling from this directory; the archived report is kept byte-identical rather than re-linked. The live files are `../../../gateware/validation/simulation.log` (the newer eb58070e… log, not the one this manifest hashes), `status_encoder.hex` and `manifest.json` in that same directory. `evidence_retained` for `simulation.log`: **no**; only its SHA-256 is retained. `gateware/PROTOCOL.md` line 7 ("source/evidence identity is preserved") means source bytes plus evidence hashes, not a retained copy of the original log.
+- `status_encoder.hex` (9f625d4cef0dd87a…): unchanged; the current `gateware/validation/status_encoder.hex` still matches this hash.
+
+The current regression re-run against the unchanged v1 RTL (`cnc_encoder.v`, `cnc_spi_frame.v`, `cnc_stepgen.v`, testbench and vectors share identical hashes in both manifests) also reports `ALL 180 CHECKS PASSED`. That is the live v1 regression evidence; this archive vouches for source identity, not for a reproducible copy of the original log.
+
+**Addendum (2026-09-28 audit-fix pass).** The previous paragraph described the tree before the audit fixes. The gateware owner has since changed `cnc_endpoint.v` and `cnc_spi_frame.v`: MISO turnaround, `progress_wdi`, capability-page consumption on rejected frames, and the inhibit synchronizer. The live default-v1 regression now reports `ALL 252 CHECKS PASSED` plus `ALL 27 V2 CHECKS PASSED` (`gateware/validation/manifest.json`; rerun into `cnc1/evidence/baseline-regression.log`). The 180-check result is historical, and this archive's files and hashes are unchanged.

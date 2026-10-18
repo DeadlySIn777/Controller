@@ -1,0 +1,98 @@
+{
+  "status": "TWO_FILE_RAM_AND_LITERAL_CAPTURE_OVERLAY_BEHAVIOR_QUALIFIED_NATIVE_MAP_PASS_OVER_CAPACITY",
+  "selected_for_review_only": true,
+  "canonical_source_adoption": false,
+  "exact_overlays": [
+    {
+      "destination": "gateware/v3/runtime/cnc3_event_bank.v",
+      "candidate": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-memory-inference-r1\\registered-bypass\\cnc3_event_bank.v",
+      "candidate_SHA256": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+      "canonical_SHA256": "65fa79532ac564c58d878b7e2b804de11e5af7e85b1157638d7823645aa92659",
+      "change": "unconditional registered RAM read plus registered write-first bypass; no array reset or latency change"
+    },
+    {
+      "destination": "gateware/v3/runtime/cnc3_runtime_events.v",
+      "candidate": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\cnc3_runtime_events.v",
+      "candidate_SHA256": "4a42ebe2f669d1854da0d19477a375279201da171b9fa82ebea43b15e0fb1da9",
+      "canonical_SHA256": "ddb1cf8325d3cb89a441d6fa878d7ffe40e82835504289cbe76e0da9b0590c51",
+      "change": "only capture function: sixteen literal selector cases replace guarded arithmetic variable part-selects"
+    }
+  ],
+  "features_unchanged": [
+    "256records",
+    "160bits/record",
+    "eightbanks",
+    "sevenproducers/clock",
+    "producer ordering",
+    "capture cycle",
+    "sequence255to1wrap",
+    "same-cycle ACK admission",
+    "head masking/prefetch",
+    "overflow",
+    "clear/reset",
+    "invalid and unknown selectors return0",
+    "selected X/Z payload bits"
+  ],
+  "strict_boundary_cases": 55296,
+  "strict_differential_cycles": 363328,
+  "strict_bus_scope": "all1280write_data bits plus addresses/enables equal, public outputs and queue state equal",
+  "independent_selector_tests": {
+    "full_four_state_patterns": 65536,
+    "distinct_channel_payload_profiles": 3,
+    "function_checks": 196608,
+    "unknown_selector_checks": 195840
+  },
+  "full_unchanged_regression": {
+    "runtime_SPI_checks": 1190,
+    "events_checks": 9,
+    "event_storage_checks": 11,
+    "provider_checks": 7,
+    "default_deny_cycles": 10000,
+    "physical_authority": false
+  },
+  "native_mapping_scope": "disconnected functional SIM2 top, TrionT20F256/I4 map only, insert-ios0; not physical controller wrapper",
+  "native_speed_resources": {
+    "EFX_ADD": 2107,
+    "EFX_LUT4": 20134,
+    "EFX_MULT": 1,
+    "EFX_FF": 11044,
+    "EFX_RAM_5K": 64,
+    "EFX_GBUFCE": 1
+  },
+  "coarse_LUT4_plus_ADD": 22241,
+  "T20_equivalent_LE_screen": 19728,
+  "over_screen": 2513,
+  "RAM5K_used_available": [
+    64,
+    204
+  ],
+  "other_experiments_not_included": [
+    "r1fixedproducerdispatcher",
+    "r3helddisabledbuses",
+    "r4prefixadmission"
+  ],
+  "remaining": [
+    "resource fit",
+    "complete physical wrapper and135port integration",
+    "I4place/route/static timing and external delays",
+    "drive/slew/load and unused I/O defaults",
+    "CDC/reset release",
+    "full production provider/qualification",
+    "bitstream/hardware measurements"
+  ],
+  "formal_equivalence": "NOT_RUN",
+  "manufacturing_ready": false,
+  "input_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\finalize_capture_candidate_r2.py": "ebe0b83916b69710de7c5613f24f080f8f883e73977f21bdc892b8d72069ec37",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\v3\\runtime\\cnc3_runtime_events.v": "ddb1cf8325d3cb89a441d6fa878d7ffe40e82835504289cbe76e0da9b0590c51",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\cnc3_runtime_events.v": "4a42ebe2f669d1854da0d19477a375279201da171b9fa82ebea43b15e0fb1da9",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-memory-inference-r1\\registered-bypass\\cnc3_event_bank.v": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\candidate.patch": "2971161acb6b953835ffaedb5947be10f563b9f284659856e5bb2deb7c6f0054",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\preparation-receipt.json": "9ba4ac61074eb766a38aa1f0c3eae950c9dc065d11b558118a49a57bbf85e990",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\behavior-receipt.json": "475d90f9947d021ff0ebd96ee4ad60268db2632d53d3fa0646c6220bdfe73c4a",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\unique-selector-receipt.json": "edfbff22c163c59e19e88aa6499752d23176c5e9dcd37d9b03f1b8acf8364b34",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\full-runtime\\receipt.json": "363fe4f55913a6f6ba75702bce23d6ccf9b1a62aef300bb94b019be89315c3a7",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\event-capture-select-r2\\native-full-map\\receipt.json": "df45c27aa198777b76d6725d3d0e37d9a0f0d2eb12858f28cdad12b699cd9e14",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-bram-behavior-r1\\receipt.json": "e1e366b7899fd645c24b6e34ec785d4abd344b57baebef69a268c6bac016b40d"
+  }
+}
