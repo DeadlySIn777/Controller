@@ -30,4 +30,4 @@ Read-only catalogue verification: python tools/build_feature_catalog.py --check 
 
 The [17 October finishing report](../board-finish-20261017/README.md) remains the source for the exact current continuation. Its pending process statements are reported as that document's recorded state, not as a new live-process observation. No physical hardware, adopted board, calibration, firmware, fabrication output, upload to a manufacturer or purchasing action is performed by this documentation review.
 
-The later GitHub publication requested by the user is a separate documentation-only copy. Its publication receipt records the destination and exact content, preserving the existing board-review package.
+The user subsequently requested the full project upload, then explicitly chose source, CAD and readable evidence with raw caches kept local. The GitHub publication preserves the original board-review package and publishes canonical source/design plus the selected small report records. Its publication receipt records exact destination, commits, scope and exclusions. No raw cache release is uploaded.
