@@ -4,7 +4,7 @@ Actual editable KiCad 10 motherboard source and Specctra routing interchange, pu
 
 ## Router interchange update
 
-[New measured failures and setup corrections](review/router-interchange-findings.md): the corrected native reference is **1,193 joins / 1,210 API items**. The early R6 cached round trip loses five connections and is rejected. The R8 partial-retrace correction passes exact segment preservation and router load/export; native round-trip verification remains pending. Historical blanket locks and lossy coordinate/via-mask import are also being corrected. Treat the earlier R6 DSN as a preserved diagnostic input.
+[New measured failures and setup corrections](review/router-interchange-findings.md): the corrected native reference is **1,193 joins / 1,210 API items**. The early R6 cached round trip loses five connections and is rejected. The R8 partial-retrace correction passes exact segment preservation and router load/export; native cached round-trip verification now passes at the identical 1,193 joins / 1,210 API items, with all 8,001 via records and actual flashed layers unchanged. Full refill/DRC remains open. Historical blanket locks and lossy coordinate/via-mask import are also being corrected. Treat the earlier R6 DSN as a preserved diagnostic input.
 
 ## Open the actual files
 
