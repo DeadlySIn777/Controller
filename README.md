@@ -21,3 +21,10 @@ The board is 450 × 235 mm, six copper layers, 2,723 footprints and 9,971 pads. 
 One active motherboard retains the soldered FPGA, all twelve fitted motor interfaces with individual enable/alarm, four ABZ encoders, 24 DI and 16 smart DO plus the other required interfaces. Existing machine settings, electrical limits, galvanic domains and fault/recovery behavior remain requirements. No channel removal, domain merge or blanket clearance reduction is authorized by this snapshot.
 
 This repository is a bounded engineering-review snapshot, including actual native sources and selected evidence. It does not include vendor installers, machine configurations, the historical report/cache tree or manufacturing outputs. No new software or hardware license grant is added here.
+
+
+## Controller documentation
+
+The [complete documentation index](documentation/docs/README.md), [current project briefing](documentation/PROJECT_BRIEFING.md) and [engineering status](documentation/reports/ENGINEERING_STATUS.md) were reconciled on 18 October 2026. They cover the motherboard, software/CLI/UI, compute, displays, service/recovery, costing and qualification requirements.
+
+The [publication scope and source hashes](documentation/PUBLICATION.md) distinguish active guidance, historical evidence and workspace-only references. This documentation addition preserves the board-review files, their measured status and the manufacturing limitations above.
