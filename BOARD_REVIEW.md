@@ -2,6 +2,10 @@
 
 Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
 
+## Actual bulk result rejected; pre-route contact mismatch measured
+
+[Read the source-bound failure evidence](review/router-contact-model-failure-20261018/README.md). The first Rust routed result is HELD: cached native joins worsen **1,693 → 2,192** with 502 old groups split. A separate original-engine experiment with no routing already misses **631 ordinary native joins** in its optimistic normal-contact graph; tail cleanup loses more source relationships. An actual inactive-layer copper violation is independently proved. These are routing-model/setup failures under diagnosis; no new routing gain or accepted board is claimed.
+
 ## Completed cached DRC diagnostic - 18 October
 
 The older R7 additive candidate now has [actual cached native DRC](evidence/R7-cached-native-drc.json): **61 clearance errors and 46 hole-clearance errors**, plus **499 unconnected diagnostic rows**, with zero schematic parity issues. Every one of the 107 clearance errors involves saved zone copper (13 track/zone, 48 via/zone and 46 via-hole/zone); there are no discrete-copper/discrete-copper error pairs in this report. This is not a clean DRC result or evidence that a refill will automatically fix every error. Actual filled apertures and retained plane connectivity/current/return paths still need verification. [Scope receipt](evidence/R7-cached-native-drc-scope.json) confirms unchanged inputs and no refill. This older candidate differs from the current a693 global input.
