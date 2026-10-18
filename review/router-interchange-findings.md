@@ -13,3 +13,12 @@ KiCad 10.0.4's SPECCTRA exporter prints via coordinates and padstack dimensions 
 Use the native project, source rules and exact cached archives for review. Full native refill/DRC, source/return continuity, actual current/voltage/thermal/SI, target implementation and physical manufacturing qualification remain open.
 
 The next separate R9 native diagnostic permits ordinary signal reorganization while retaining the 233 protected net scopes. Its 110 ordinary-via retirements are inventoried and remain subject to native pad/source/annulus retention checks. No new global routing or native gain follows from its parser-only normalization counts.
+
+
+## Measured bulk candidate and global-routing setup
+
+The stopped R7 run supplied 330 genuinely new ordinary-net copper items (313 tracks and 17 vias across 146 nets). An additive import preserves every original copper record. Cached native validation measures **1,193 → 1,181 required joins**, zero existing pad groups split, twelve merged, and all 8,001 original via records and actual layer flashes unchanged. [Measured result](../evidence/R7-bulk-cached-native-result.json), [native measurement](../evidence/R7-bulk-cached-native-measurement.json), and [independent additive review](../evidence/R7-bulk-additive-independent-review.json) are included. The [exact editable candidate project archive](../archives/R7-bulk-additive-cached-candidate.zip) retains its inherited fill cache. This is a twelve-join cached improvement, not a completed full-refill/DRC result, and it is not adopted or ready for manufacture.
+
+The ordinary-unlocked R9 parser-only round trip failed: **1,221 joins**, 28 existing groups split. [Native rejection](../evidence/rejected-R9-native-roundtrip.json). Loading already-unlocked tracks lets parser normalization discard some overlapping branches before any routing. The R10 control instead loads retained geometry as fixed, then calls the public fixed-state setter on ordinary nets before scheduling. Original-parser/writer geometry preservation passes; native validation is running. No actual R10 global-route result is claimed.
+
+A separate joint power/ground and placement candidate is undergoing a genuine all-zone native refill. Its result, current/return qualification, ordinary DRC and remaining signal routing are pending. CPU monitors recorded brief readings above the requested 80% ceiling despite throttling; continuous compliance is not established.
