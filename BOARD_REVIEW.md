@@ -2,6 +2,10 @@
 
 Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
 
+## Completed cached DRC diagnostic - 18 October
+
+The older R7 additive candidate now has [actual cached native DRC](evidence/R7-cached-native-drc.json): **61 clearance errors and 46 hole-clearance errors**, plus **499 unconnected diagnostic rows**, with zero schematic parity issues. Every one of the 107 clearance errors involves saved zone copper (13 track/zone, 48 via/zone and 46 via-hole/zone); there are no discrete-copper/discrete-copper error pairs in this report. This is not a clean DRC result or evidence that a refill will automatically fix every error. Actual filled apertures and retained plane connectivity/current/return paths still need verification. [Scope receipt](evidence/R7-cached-native-drc-scope.json) confirms unchanged inputs and no refill. This older candidate differs from the current a693 global input.
+
 ## Latest global experiment input
 
 [Current exact joint PCB project, DSN, rules and limitations](current-global-R3/README.md). This is the actual input of the new global routing experiment; acceptance and full native AFTER checks are pending. Earlier snapshots below retain their own source and measurement scope.
