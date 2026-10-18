@@ -1,0 +1,257 @@
+"""Bounded arithmetic for the proposed core converter; no device access or simulation.
+
+All design assumptions come from requirements, not stored result fields. Manufacturer
+numbers used below are identified by datasheet section in the accompanying review.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT = ROOT / "hardware/core_converter/requirements.json"
+
+
+def number(obj, name, lo=0.0, hi=1e9, *, positive=False):
+    value = obj[name]
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"{name}: finite number required")
+    try:
+        value = float(value)
+    except OverflowError as exc:
+        raise ValueError(f"{name}: out of range") from exc
+    if not math.isfinite(value) or value < lo or value > hi or (positive and value <= 0):
+        raise ValueError(f"{name}: outside allowed range")
+    return value
+
+
+def pair(obj, name, lo=0.0, hi=1e9):
+    values = obj[name]
+    if not isinstance(values, list) or len(values) != 2:
+        raise ValueError(f"{name}: ordered two-value range required")
+    a, b = [number({name: v}, name, lo, hi) for v in values]
+    if a > b:
+        raise ValueError(f"{name}: reversed range")
+    return a, b
+
+
+def input_current(v, r, output_power, efficiency, aux):
+    """Low-current root of I=P/[eta*(V-R*I)]+aux, stable for small R."""
+    if not all(math.isfinite(x) for x in (v, r, output_power, efficiency, aux)):
+        raise ValueError("nonfinite input-current operand")
+    if v <= 0 or r < 0 or output_power < 0 or not 0 < efficiency <= 1 or aux < 0:
+        raise ValueError("invalid input-current operand")
+    b = v + r * aux
+    c = v * aux + output_power / efficiency
+    discriminant = b * b - 4 * r * c
+    if discriminant < 0:
+        raise ValueError("no static operating point with given resistance and power")
+    current = 2 * c / (b + math.sqrt(discriminant))
+    if v - r * current <= 0:
+        raise ValueError("no positive protected-input voltage")
+    return current
+
+
+def analyze(req):
+    if req["converter"]["mpn"] != "LM70660RRXR":
+        raise ValueError("this analysis requires exact6A LM70660RRXR, not10A LM706A0")
+    expected = {"L1": "XAL7070-472MEC", "RS1": "KRL3216D-C-R006-F-T1"}
+    passives = {p["id"]: p for p in req["passives"]}
+    for ref, mpn in expected.items():
+        if passives[ref]["mpn"] != mpn:
+            raise ValueError(f"{ref}: unsupported part for fixed manufacturer constants")
+    e = req["design_envelope"]
+    vin_min, vin_max = pair(e, "whole_controller_input_v_proposed", 4.5, 60)
+    vout_min, vout_max = pair(req["converter"], "fixed_output_v", 4.5, 5.5)
+    current_rating = number(req["converter"], "rated_output_current_a", 6, 6)
+    normal = number(e, "normal_current_with_encoder_overhead_a", 0, 20)
+    fault = number(e, "simultaneous_encoder_limited_fault_current_a", normal, 20)
+    efficiency = number(e, "efficiency_screening_floor", 0.1, 1)
+    aux = number(e, "analog_input_reservation_a", 0, 1) + number(e, "entry_and_auxiliary_input_reservation_a", 0, 1)
+    path = number(e, "series_path_resistance_budget_ohm", 0, 5)
+    rilim = number(e, "proposed_entry_rilim_ohm", 3000, 30000)
+    itol = number(e, "entry_ilim_screening_ic_fraction", 0, 0.5)
+    rtol = number(e, "entry_ilim_screening_resistor_fraction", 0, 0.1)
+    ilim_low = 18000 * (1 - itol) / (rilim * (1 + rtol))
+    ilim_high = 18000 * (1 + itol) / (rilim * (1 - rtol))
+    source_rating = number(e, "proposed_core_source_wiring_capacity_a", 0, 20, positive=True)
+    soft = e["soft_start_time_s"]
+    if not isinstance(soft, list) or len(soft) != 3:
+        raise ValueError("three softstart corners required")
+    soft = [number({"soft": x}, "soft", 0.0001, 1) for x in soft]
+    if sorted(soft) != soft:
+        raise ValueError("softstart corners must be ordered")
+    sequence=e.get('sequenced_sbc')
+    sequence_results={}
+    if sequence:
+        s=sequence
+        host=number(s,'host_current_a',0,6)
+        bulk_count=number(s,'bulk_count',1,10)
+        ceramic_count=number(s,'ceramic_count',1,20)
+        bulk_nom=bulk_count*number(s,'bulk_nominal_each_f',1e-9,.01)
+        bulk_tol=number(s,'bulk_initial_tolerance',0,.5)
+        bulk_life=number(s,'bulk_extra_life_capacitance_fraction',0,.5)
+        bulk_min=bulk_nom*(1-bulk_tol)*(1-bulk_life)
+        bulk_max=bulk_nom*(1+bulk_tol)*(1+bulk_life)
+        ceramic_min=ceramic_count*number(s,'ceramic_effective_each_f_assumed',1e-9,.01)
+        ceramic_max=ceramic_count*number(s,'ceramic_nominal_each_f',1e-9,.01)*(1+number(s,'ceramic_tolerance',0,.5))*(1+number(s,'ceramic_temperature_fraction',0,.5))
+        other=number(s,'existing_other_main_cap_max_f_assumed',0,.01)+number(s,'new_sbc_input_cap_max_f_assumed',0,.01)
+        cap_start=bulk_max+ceramic_max+other
+        logic_off=number(s,'logic_operating_reservation_off_during_main_charge_a',0,6)
+        disabled=number(s,'logic_disabled_current_reservation_a_assumed',0,1)
+        load_start=fault-host-logic_off+disabled
+        if load_start<0:raise ValueError('host reservation exceeds complete fault load')
+        host_cap=number(s,'host_cap_max_f',1e-9,.01)
+        ct_min=number(s,'switch_ct_min_f_assumed',1e-12,.000022)
+        fast=number(s,'switch_ct_fast_factor_assumed',.01,1)
+        # TI TPS22990 Eq1: microseconds; CT in pF;10%-90% only.
+        host_tr=((.011*5.15+.002)*ct_min*1e12+4.7*5.15+7.8)*1e-6*fast
+        host_charge=host_cap*.8*5.15/host_tr
+        logic_charge=number(s,'logic_output_cap_charge_core5_reservation_a_assumed',0,1)
+        sequence_results={'bulk_effective_min_f_assumed':bulk_min,'bulk_charge_max_f':bulk_max,
+                          'ceramic_effective_min_f_assumed':ceramic_min,'ceramic_charge_max_f':ceramic_max,
+                          'other_main_charge_max_f_assumed':other,'host_branch_cap_max_f':host_cap,
+                          'host_switch_10to90_rise_min_s_assumed':host_tr,'host_cap_charge_max_a_assumed':host_charge,
+                          'host_start_total_output_current_a':fault+host_charge,
+                          'host_start_fits6a':fault+host_charge<=current_rating,
+                          'logic_operating_reservation_removed_only_during_main_charge_a':logic_off,
+                          'disabled_logic_current_a_assumed':disabled,
+                          'logic_output_cap_charge_core5_reservation_a_assumed':logic_charge,
+                          'valid_only_for_qualified_cold_start':True,
+                          'slew_is_guaranteed_bound':False}
+    else:
+        cap_start = number(e, "startup_total_output_capacitance_screening_max_f", 1e-9, 0.1)
+        load_start = number(e, "startup_load_before_encoder_enable_max_a", 0, 20)
+    cap_current = cap_start * vout_max / soft[0]
+    startup = load_start + cap_current
+    startup_fault = fault + cap_current
+    lmin = number(e, "inductor_screening_min_h", 1e-9, 1)
+    lmax = number(e, "inductor_screening_max_h", lmin, 1)
+    fmin, fmax = pair(e, "switching_frequency_hz_with_extra_screening_drift", 100000, 3000000)
+    cout = number(e, "output_effective_capacitance_f_assumed", 1e-9, 0.1)
+    esr = number(e, "output_esr_ohm_assumed", 0, 1)
+    ripple_cout=cout
+    ripple_esr=esr
+    if sequence:
+        cout=bulk_min+ceramic_min
+        esr=number(s,'bulk_esr_each_ohm_catalog',0,1)*number(s,'bulk_esr_multiplier_assumed',1,10)/bulk_count+number(s,'capacitor_interconnect_esr_ohm_max',0,1)
+        ripple_cout=ceramic_min
+        ripple_esr=number(s,'ceramic_hf_esr_ohm_assumed',0,1)
+    # Output ESR must never silently enter the independent input-cap ripple budget.
+    input_esr=.002
+    if .5-esr*current_rating<=0 or .5-input_esr*current_rating<=0:
+        raise ValueError('ESR consumes the entire ripple voltage budget')
+    shunt_tol = number(e, "shunt_total_tolerance_fraction_assumed", 0, 0.1)
+    shunt_min, shunt_max = 0.006 * (1 - shunt_tol), 0.006 * (1 + shunt_tol)
+    threshold_min, threshold_max = 0.050 / shunt_max, 0.062 / shunt_min
+    transient = number(e, "protected_positive_transient_v_reference", vin_max, 65)
+    ripple = vout_max * (1 - vout_max / vin_max) / (lmin * fmin)
+    ripple_transient = vout_max * (1 - vout_max / transient) / (lmin * fmin)
+    peak = current_rating + ripple / 2
+    peak_transient = current_rating + ripple_transient / 2
+    rms = math.sqrt(current_rating ** 2 + ripple ** 2 / 12)
+    output_high = pair(e, "output_steady_state_target_v", 4.5, 5.5)[1]
+    ripple_v=ripple/(8*fmin*ripple_cout)+ripple_esr*ripple
+    unload_cases={}
+    # L*(I+k/L)^2 is convex for positive L, so maximum energy is at an endpoint.
+    # Bound ESR with the largest phase current independently. Combining different
+    # L corners deliberately overestimates their joint instantaneous waveform.
+    for name,source_v in [('normal_input',vin_max),('reference_transient',transient)]:
+        corner_ripple=vout_max*(1-vout_max/source_v)/(lmin*fmin)
+        initial=vout_max+(corner_ripple/(8*fmin*ripple_cout)+ripple_esr*corner_ripple)/2 if sequence else vout_max
+        corners=[]
+        for inductance in [lmin,lmax]:
+            phase_peak=current_rating+vout_max*(1-vout_max/source_v)/(2*inductance*fmin)
+            corners.append({'inductance_h':inductance,'phase_peak_a':phase_peak,'twice_stored_energy_j':inductance*phase_peak**2})
+        energy=max(c['twice_stored_energy_j'] for c in corners)
+        esr_step=max(c['phase_peak_a'] for c in corners)*esr if sequence else 0
+        ceiling=output_high-esr_step
+        if ceiling<=initial:raise ValueError('output target leaves no positive overshoot allowance')
+        voltage=math.sqrt(initial**2+energy/cout)+esr_step
+        unload_cases[name]={'input_v':source_v,'corners':corners,'initial_v_including_ripple':initial,
+                            'independent_corner_esr_step_v':esr_step,'voltage_v':voltage,
+                            'required_effective_cap_f':energy/(ceiling**2-initial**2),'pass':voltage<=output_high}
+    worst=max(unload_cases.values(),key=lambda row:row['voltage_v'])
+    start_v=worst['initial_v_including_ripple']
+    worst_esr=worst['independent_corner_esr_step_v']
+    unload_v=worst['voltage_v']
+    required_cout=worst['required_effective_cap_f']
+    rcomp = 9530.0 if sequence else 4990.0
+    fc = rcomp / (2 * math.pi * (5 / 0.8) * (0.006 * 10 / 0.0012) * cout)
+    rows = {}
+    cases=[("normal",normal),("encoder_fault",fault),("rated6a",current_rating)]
+    cases+=([('main_charge_host_and_logic_off_encoder_faults',startup),('logic_start_host_off',fault-host+logic_charge),('host_start_after_main_and_logic_charge',fault+host_charge),('unqualified_simultaneous_logic_and_host_start',fault+host_charge+logic_charge),('unsequenced_all_loads_start',startup_fault)] if sequence else [('startup_encoders_off',startup),('startup_with_encoder_fault',startup_fault)])
+    for name, amps in cases:
+        iin = input_current(vin_min, path, vout_max * amps, efficiency, aux)
+        rows[name] = {"output_current_a": amps, "input_current_a": iin,
+                      "protected_input_v": vin_min - path * iin,
+                      "screened_ilim_margin_a": ilim_low - iin,
+                      "fits6a": amps <= current_rating,
+                      "fits_screened_entry_minimum": iin <= ilim_low}
+    output = {
+        "evidence": "bounded arithmetic only; assumptions are not manufacturer guarantees or physical measurements",
+        "entry": {"nominal_limit_a": 18000 / rilim, "screening_min_a": ilim_low,
+                  "screening_max_a": ilim_high, "source_capacity_margin_a": source_rating - ilim_high,
+                  "minimum_efficiency_for6a_with_screened_limit": vout_max * current_rating / ((ilim_low - aux) * (vin_min - path * ilim_low)),
+                  "operating_cases": rows},
+        "startup": {"capacitor_charge_current_a": cap_current, "total_cap_budget_f": cap_start,
+                    "local_caps_temperature_tolerance_max_f": ceramic_max if sequence else 4 * 47e-6 * 1.2 * 1.22,
+                    "max_capacitance_at_startup_load_and6a_f": (current_rating - load_start) * soft[0] / vout_max,
+                    "sequencing":sequence_results},
+        "switching": {"ripple_current_normal_a_pp": ripple, "peak_current6a_normal_a": peak,
+                      "ripple_current_transient_a_pp": ripple_transient, "peak_current6a_transient_a": peak_transient,
+                      "inductor_rms6a_a": rms, "ocp_threshold_min_a": threshold_min, "ocp_threshold_max_a": threshold_max,
+                      "normal_ocp_margin_a": threshold_min - peak, "transient_ocp_margin_a": threshold_min - peak_transient,
+                      "short_peak_at_reference_clamp_using_typ75ns_delay_a": threshold_max + transient * 75e-9 / lmin,
+                      "short_peak_is_guaranteed_bound": False,
+                      "shunt6a_loss_w": rms ** 2 * shunt_max,
+                      "inductor_copper_loss125c_using_linear_tcr_w": rms ** 2 * 0.01426 * (1 + 0.00393 * 100),
+                      "output_ripple_linear_upper_estimate_v_pp": ripple_v,
+                      "input_cap_rms_conservative50pct_a": current_rating / 2,
+                      "input_cap_min_for0p5v_pp_at50pct_f": 0.25 * current_rating / (fmin * (0.5 - input_esr * current_rating))},
+        "transient_regulation": {"full6a_unload_energy_screen_output_v": unload_v,
+                                 "target_max_v": output_high, "full6a_unload_pass": unload_v <= output_high,
+                                 "initial_voltage_including_half_ripple_v":start_v,
+                                 "esr_step_voltage_v":worst_esr,
+                                 "conditional_margin_v":output_high-unload_v,
+                                 "effective_cap_needed_full6a_unload_f": required_cout,
+                                 "phase_corner_cases":unload_cases,
+                                 "warning": "Conditional phase-peak energy/ripple/ESR screen; independent worst corners combined. Control delay, impedance and transient stability remain unproven."},
+        "compensation": {"typical_crossover_hz": fc, "zero_hz": 1 / (2 * math.pi * rcomp * (22e-9 if sequence else 10e-9)),
+                         "hf_pole_hz_with38pf_internal": 1 / (2 * math.pi * rcomp * ((330e-12 if sequence else 47e-12) + 38e-12)),
+                         "phase_margin_proven": False},
+        "enable": {"open_node_at19v_v": 19 / 11, "open_node_at30v_v": 30 / 11,
+                   "open_node_at48p4v_v": transient / 11,
+                   "pgood_low_at48p4v_using130ohm_v": transient * (10000 * 130 / (10000 + 130)) / (100000 + 10000 * 130 / (10000 + 130)),
+                   "partial_power_function_proven": False},
+        "thermal": {"total_converter_loss_at6a_assumed_efficiency_w": vout_max * current_rating * (1 / efficiency - 1),
+                    "measured_thermal_pass": False},
+        "production_qualified": False,
+    }
+    json.dumps(output, allow_nan=False)
+    return output
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--requirements", type=Path, default=DEFAULT)
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    try:
+        raw = args.requirements.read_bytes()
+        results = analyze(json.loads(raw))
+        results["requirements_sha256"] = hashlib.sha256(raw).hexdigest()
+        results["calculator_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        text = json.dumps(results, indent=2, allow_nan=False) + "\n"
+        if args.output:
+            args.output.write_text(text, encoding="utf-8")
+        else:
+            print(text, end="")
+    except (ValueError, KeyError, TypeError, OSError, OverflowError) as exc:
+        parser.exit(2, f"invalid core converter input: {exc}\n")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,122 @@
+#ifndef CNC1_H
+#define CNC1_H
+#include <stdint.h>
+#include <stddef.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+#define CNC1_FRAME 64
+#define CNC1_AXES 6
+#define CNC1_ENCODERS 2
+#define CNC1_VERSION 2
+enum cnc1_state { CNC1_DISCOVER, CNC1_WAIT_CAPS, CNC1_OFF, CNC1_WAIT_SYNC,
+                  CNC1_READY, CNC1_WAIT_ARM, CNC1_ACTIVE, CNC1_WAIT_DISARM, CNC1_FAULT };
+enum cnc1_fault { CNC1_OK, CNC1_TRANSPORT, CNC1_BAD_FRAME, CNC1_BAD_CAPS,
+                  CNC1_ACK, CNC1_TIME, CNC1_ENDPOINT, CNC1_RANGE, CNC1_SEQUENCE, CNC1_COUNT, CNC1_CONFIG };
+struct cnc1_caps {
+    uint8_t version, steps, encoders, frequencies;
+    uint32_t features, core_hz, max_rate, watchdog_ticks;
+    uint16_t pulse_ticks, space_ticks, setup_ticks, hold_ticks;
+};
+struct cnc1_status {
+    uint8_t enabled, ready, mask, faults, encoder_flags;
+    uint32_t session, sequence, timestamp;
+    uint32_t steps[6], encoders[2], indexes[2];
+};
+/* Replacement transports exchange one fixed frame and own no motion policy.
+ * The HAL build links only the RTL simulation transport; spidev_transport.c is an
+ * unqualified laboratory backend, not linked there. A production implementation must meet
+ * measured deterministic deadlines and must not allocate or block unboundedly. */
+struct cnc1_transport {
+    void *context;
+    int (*exchange)(void *, const uint8_t tx[64], uint8_t rx[64]);
+};
+struct cnc1_driver {
+    struct cnc1_transport transport;
+    struct cnc1_caps caps;
+    struct cnc1_status status;
+    enum cnc1_state state;
+    enum cnc1_fault fault;
+    uint32_t session, sequence, previous_time;
+    uint32_t previous_steps[6], previous_encoders[2];
+    int64_t steps[6], encoders[2], indexes[2];
+    uint64_t sampled_ns, max_age_ns, samples, writes;
+    uint8_t have_sample, discovered, last_enable, last_reset, enable, reset;
+    uint8_t axis_mask, sent_opcode;
+    uint8_t config_frozen, frozen_mask, feedback_valid;
+    uint8_t config_locked;
+    uint8_t persistence_required, persistence_pending;
+    uint32_t persistence_generation, persistence_hash[8];
+    uint32_t config_revision, runtime_epoch;
+    /* config_revision when the persistent gate was last staged (op 4 or HAL load).
+     * cnc1_persistence_commit requires config_revision to have advanced past it. */
+    uint32_t persistence_base_revision;
+    /* Derived at discovery: caps.watchdog_ticks converted with caps.core_hz. The
+     * servo period must satisfy 2*period <= watchdog_ns and the host sample age is
+     * limited to watchdog_ns unless simulation_age_override is explicitly set. */
+    uint64_t watchdog_ns;
+    uint8_t simulation_age_override; /* Verilator HAL build only; never a target setting. */
+    double position_cmd[6], scale[6], position_fb[6];
+    double encoder_scale[2], encoder_position[2], index_position[2];
+    double frozen_scale[6], frozen_encoder_scale[2];
+};
+uint16_t cnc1_crc(const uint8_t *, size_t);
+void cnc1_command(uint8_t out[64], uint8_t opcode, uint8_t mask, uint32_t session,
+                  uint32_t sequence, const int32_t rates[6]);
+int cnc1_decode_status(const uint8_t in[64], struct cnc1_status *);
+int cnc1_decode_caps(const uint8_t in[64], struct cnc1_caps *);
+int64_t cnc1_counter_delta(uint32_t current, uint32_t previous);
+int64_t cnc1_unwrap_index(int64_t continuous_count, uint32_t raw_count, uint32_t raw_index);
+int cnc1_rate(double steps_per_second, const struct cnc1_caps *, int32_t *out);
+void cnc1_init(struct cnc1_driver *, struct cnc1_transport, uint32_t session_seed);
+void cnc1_read(struct cnc1_driver *, uint64_t now_ns);
+void cnc1_write(struct cnc1_driver *, uint64_t now_ns, uint64_t period_ns);
+/* Stopped calibration transaction. Operations: 1 = acquire configuration inhibit;
+ * 2 = commit six step scales (inhibit held); 3 = release inhibit; 4 = stage/acquire
+ * the persistent-pending inhibit (persistence_required only; records the current
+ * config_revision as persistence_base_revision).
+ * Caller also verifies authoritative interpreter-idle and unhomes LinuxCNC.
+ * Results (2, then 1, are checked first; then the per-operation checks):
+ *   2 stale binding (session, revision or runtime epoch differs);
+ *   1 unsafe state (undiscovered, feedback invalid, not READY, enable/reset/last
+ *     enable, endpoint enabled or mask, inhibit already held (op 1) or not held
+ *     (any other op, including an unknown one));
+ *   5 persistent-authority gate (op 3 while persistence is pending; op 2 while
+ *     persistence is required but not staged);
+ *   3 invalid operation or scales (op not 1-4 while the inhibit is held, null
+ *     scales, revision exhausted, non-finite or out-of-range scale, op 4 without
+ *     persistence_required);
+ *   0 success. Non-zero leaves the driver unchanged.
+ * The HAL wrapper publishes these codes on cnc1.config-result, routes HAL
+ * config-op 5 to cnc1_persistence_commit, and adds two HAL-only codes raised
+ * before any driver call: 4 = request sequence zero or not greater than the last
+ * accepted request; 6 = request deadline zero or already expired. */
+int cnc1_configure(struct cnc1_driver *, unsigned operation, uint32_t session,
+                   uint32_t revision, uint32_t epoch, const double scales[6]);
+/* Persistent acknowledgement (HAL config-op 5). Records generation/hash, clears
+ * persistence_pending and keeps the configuration lock. Results in order:
+ *   2 stale binding; 1 unsafe state or not persistent-pending/locked;
+ *   5 no stopped scale commit since the gate was staged (config_revision equals
+ *     persistence_base_revision), so compile-time defaults cannot be acknowledged;
+ *   3 null hash, zero or regressed generation, or same generation with a different
+ *     hash; 0 success. The hash is opaque here: equality between the committed
+ *     scales and the durable record is verified by the persistent service. */
+int cnc1_persistence_commit(struct cnc1_driver *, uint32_t session, uint32_t revision,
+                            uint32_t epoch, uint32_t generation, const uint32_t hash[8]);
+
+/* Compiled, actual-Verilator-RTL simulation transport. No device paths. */
+void *cnc1_sim_create(void);
+void cnc1_sim_destroy(void *);
+int cnc1_sim_exchange(void *, const uint8_t tx[64], uint8_t rx[64]);
+void cnc1_sim_cycle(void *, uint64_t period_ns);
+void cnc1_sim_advance(void *, uint32_t ticks);
+void cnc1_sim_reset(void *);
+void cnc1_sim_inject(void *, unsigned mode);
+void cnc1_sim_spindle(void *, unsigned enabled, unsigned edge_ticks);
+uint64_t cnc1_sim_ticks(void *);
+unsigned cnc1_sim_permission(void *);
+unsigned cnc1_sim_progress(void *); /* RTL progress_wdi output level. */
+#ifdef __cplusplus
+}
+#endif
+#endif

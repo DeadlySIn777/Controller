@@ -1,0 +1,18 @@
+# Motion-card local power sources
+
+Primary manufacturer sources read 30 September 2026. Existing local sources are reused and hashed; current lifecycle/availability/price observations are not production quotes. New circuit is a review candidate.
+
+- [TI TPS62901 Rev. A](https://www.ti.com/lit/ds/symlink/tps62901.pdf): physical RPJ9 pinout, VSET choices, mode settings 10/14, LC recommendations, effective-capacitance ceilings, soft-start equations and package drawing. Reused local `research/logic-power/tps62901.pdf`.
+- [Coilcraft XGL4020](https://www.coilcraft.com/en-us/products/power/shielded-inductors/molded-inductor/xgl/xgl4020/): exact 1 µH and 2.2 µH family, ±20% inductance, termination E and machine-ready reel C, dimensional land pattern. Reused local `research/logic-power/xgl4020.pdf`; 25°C ratings are not hot assembled qualification.
+- [ADI LTC2962/2963/2964 Rev. 0](https://www.analog.com/media/en/technical-documentation/data-sheets/LTC2962-2963-2964.pdf): order table, UD16 top-view pin functions, adjustable ±ADJ window configuration, reference/bias limits, open-drain mode, MR cascade, RT and RDIS connections, reset conditions and land pattern. Product [LTC2962](https://www.analog.com/en/products/ltc2962.html) identifies the H-grade exact ordering family. No price/stock claim.
+- [TI TPS386000 Rev. F](https://www.ti.com/lit/ds/symlink/tps386000.pdf): independent earlier precision rejection is retained in `research/power-sequence/SOURCES.md` and `reports/POWER_SEQUENCE.md`. The local implementation explicitly records its component deviation from frozen IS-1.
+- [TI SN74LVC1G17 Rev. Y](https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf): DBV5 physical pinout, input tolerance, Schmitt behavior, destination-rail output and Ioff. New local PDF retained if transfer succeeds; no source was modified.
+- [Vishay PLT document 60030, 11 May 2026](https://www.vishay.com/docs/60030/plt.pdf): 0603 range, 0.01%/5ppm choice, ordering syntax, L tolerance only above 250Ω and aging/stress limits. Exact catalog-format order codes are populated; supplier stocking, pricing and lifetime suitability remain open.
+- TDK input/output capacitor and Murata C0G ramp-cap selections reuse [the logic-power primary-source record](../logic-power/SOURCES.md). Exact MPNs retain their actual package sizes. DC-bias minima remain unqualified.
+- Murata `GRM188R71E104KA01D` bypass capacitors reuse the exact [watchdog candidate](../../hardware/is1_watchdogs/design.json) primary-source selection. 10% initial and 15% X7R temperature bounds are charged to the power screen.
+- FPGA package decoupling inventory is read from [the current FPGA core source](../../hardware/fpga_core/design.json). Its original manufacturer order codes, capacitance, initial tolerance and temperature fields feed the new whole-card arithmetic.
+- [Efinix Trion T20 datasheet v6.0](https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf): actual core operating range 1.15–1.25 V and startup order, separate from the historically tightened 1.17–1.23 V ledger. Existing local copies in the FPGA/logic-power research are unchanged.
+
+The new TI buffer and Vishay precision PDFs are saved in this directory. The direct ADI PDF transfer failed with a connection reset; its complete primary PDF was read through the browser tool, so no local ADI PDF hash is claimed. This is a transfer limitation, not evidence of missing manufacturer specifications.
+
+Copper patterns are source-backed review candidates, not approved PCBWay solder stencil, solder-mask, assembly, routing or thermal designs. The circuit does not change or claim compliance of unmeasured machine safety functions.

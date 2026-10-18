@@ -1,0 +1,206 @@
+OEA r0.2 logic, selector and connector review
+2026-10-06. Engineering source candidate; not a manufacturing release.
+
+Decision and limits
+The adapter accepts host STEP/DIR/EN commands nominally 3.3 V or 5 V, powered
+independently from a protected external supply. Its output topology is three
+common-positive, nonisolated, open-drain current sinks. It is not a differential
+line driver and cannot represent all external motor-driver input types.
+
+logic_spec.json is the exact part/pad/net authority for the 30 parts owned here.
+Power parts are separately defined in power_spec.json by the power-design agent.
+Shared names: V_LOGIC = local nominal 3.3 V-class logic rail (3.3428 V nominal
+with the selected LT3014B divider, not a precision 3.300 V rail); V5_REG = buck output;
+V_EXT_PROT = protected external input; EXT_RAW = screw-terminal positive;
+COM_PLUS = switched cable common; GND is permanently shared.
+
+External input 5 V, switch EXT: drive common follows protected external 5 V.
+External input 12/24 V, switch 5V: drive common uses the 5 V buck through D1.
+External input 12/24 V, switch EXT: drive common follows protected external rail.
+External 5 V is NOT a qualified input for the buck's regulated-5 V mode.
+The input must be a regulated DC source within the separately declared power
+limits. No 48 V signal-reference or universal-driver claim is authorized.
+
+Logic and startup
+U1 SN74LVC2G126DCUR controls STEP and DIR. U2 SN74LVC1G126DCKR controls EN.
+Both use V_LOGIC and accept input voltages up to 5.5 V, including when VCC is zero;
+their specified Ioff function supports partial-power-down operation.
+They are standard CMOS buffers, not Schmitt triggers. Host edge quality must
+meet the selected IC's input-transition specification. Their short local paths
+must not be treated as long unconditioned field-signal inputs.
+
+Each host input has 220 ohm series resistance. STEP and DIR have 100k pulldowns.
+EN has a 10k pullup to HOST_VIO and a 100k pulldown. HOST_VIO is only the host's
+3.3/5 V logic reference: it never supplies the buck, LDO, output optocouplers or
+local-rail pullups. This avoids an intentional external-rail backfeed into an
+unpowered host. Input leakage and actual off-power host behavior still require
+qualification; no literal zero-current guarantee is implied.
+
+U3 TPS3839G33DBZR monitors V_LOGIC, using a nominal 3.08 V threshold and a
+200 ms typical reset-release delay. Its push-pull RESET_N drives LOGIC_READY,
+which enables all three active-high OE pins. R14 holds OE low if undriven.
+The supervisor has a specified valid reset for VDD above 0.6 V. The falling
+threshold is3.003-3.126 V over its specified temperature range; hysteresis31 mV
+is typical. Reset release delay is120-350 ms. Falling response20 us is typical,
+not a maximum bound for an arbitrarily fast brownout. Under specified loads,
+RESET low is<=0.4 V and high is>=VDD-0.4 V, suitable for the OE logic thresholds.
+These values do not constitute measured assembly startup behavior. It is independent
+of the regulator's PG pin, whose valid range alone was not adequate evidence
+for the intended brownout behavior. All three ICs have local 100nF bypassing.
+
+Each buffer drives a MOSFET gate through 220 ohms. Each gate has a 10k pulldown.
+The latter limits a specified 10 uA off-state buffer leakage contribution to
+approximately 0.1 V rather than relying on a weak floating MOSFET gate.
+NX6008NBKW is 60 V-rated; its actual G/S/D mapping is 1/2/3. Sources go to GND,
+drains go directly to PUL_MINUS, DIR_MINUS and ENA_MINUS respectively.
+Proposed load limit is 20 mA/channel, 60 mA aggregate, pending actual validation.
+
+Logic high turns the associated sink on (asserts optocoupler current); logic low
+turns it off. Host signal polarity, especially EN, must match the driver profile.
+This hardware establishes a power-qualification mechanism; it does not prove
+zero false pulses during every power sequence. If STEP is held high when OE is
+released, the sink asserts. Firmware must initialize STEP low before enable.
+Power-order, slow ramps, brownout, cable connect/disconnect and host reset require
+oscilloscope testing with the actual driver load.
+
+Drive-disabled state is distinct from sinks-off. A CL57T whose ENA input is open
+may remain enabled. Host-powered EN pullup can establish one reset default, but
+host-power loss cannot guarantee motor disable. This is not an emergency stop,
+STO, watchdog or safety controller. Do not replace an independent inhibit chain.
+
+Selector and reverse flow
+SW1 is E-Switch EG1218, manufacturer drawing P040040 revision C. It specifies
+SPDT, non-shorting timing and 0.2 A at 30 VDC. Pad 2 is common; pad 1 selects
+V5_SELECT and pad 3 selects V_EXT_PROT. Ground is never switched.
+The manufacturer drawing shows the actuator toward the pad-1 end and a separate
+schematic common connected to pad1, but does not explicitly cross-reference
+mechanical and electrical states. Actuator direction is therefore UNCONFIRMED.
+Terminals are
+reference-numbered and the package is mechanically symmetric. The assembly
+fixture must therefore verify both actual slide positions against the finished
+5V/EXT silkscreen; do not infer final left/right labels from a rotated 3D view.
+
+D1 PMEG6010CEH,115 has anode pad 2 on V5_REG and cathode pad 1 on V5_SELECT.
+It blocks the transient return path from a previously charged 24 V COM node into
+the 5 V buck when the selector changes. Break-before-make alone would not do so.
+No large local capacitor is fitted to COM_PLUS; R15 provides a 10k discharge
+load. Switch only with BOTH controller and external supplies off and discharged.
+This is not a hot-switching feature; the selected voltage must also match the
+external driver's own voltage selector or resistor arrangement.
+
+D1 reduces the regulated common voltage. At 25 C the manufacturer's pulsed
+100 mA test specifies 0.4 V maximum forward drop, but this is not a complete
+temperature/load qualification for this assembly. Treat 5V as a nominal signal
+mode; calculate and measure the delivered voltage, MOSFET drop and resulting
+input current. Combining a 4.9 V buck lower limit with a 0.4 V diode drop
+leaves 4.5 V before sink and cable losses at the stated diode test conditions;
+this does not guarantee >=4.5 V at the driver over temperature. Direct regulated
+5 V in EXT mode avoids D1. CL57T V4.1 specifies 3.5-5 V or 24 V pulse/direction inputs and
+7-16 mA logic input current. This does not establish compatibility for every
+nominal-5 V driver. Its own S3 selector must match the applied signal voltage.
+12 V signalling is not automatically qualified for CL57T merely because EXT
+can pass 12 V.
+
+R15 dissipation at the proposed maximum 26.4 V steady common is 69.7 mW. The
+selected 0805 0.125 W resistor needs actual board-temperature derating reviewed.
+SW1's 0.2 A contact rating exceeds the proposed 60 mA aggregate signal load.
+It does not replace short-circuit protection or protect the sink channels from
+incorrect direct connections to a power supply.
+
+Connectors and mechanical drawing evidence
+J1 is Wurth 61300811121, underside 1x8 at 2.54 mm. Pin1 EN; pin7 STEP; pin8 DIR;
+pins2-6 NC. J2 is Wurth 61300711121, underside 1x7, beginning one pitch below the
+VM position. Pin1 GND, pins2-5 NC, pin6 HOST_VIO, pin7 GND. There is no VM metal,
+pad or hole. These are the existing r0.1 header footprints reused without change.
+
+J3 is JST B4B-XH-A(LF)(SN), whose keyed shroud accepts XHP-4 female cable housing
+with SXH-001T-P0.6 contacts. Pin1 COM_PLUS;2 PUL_MINUS;3 DIR_MINUS;4 ENA_MINUS.
+The PCB part has male contacts inside a keyed shroud; the mating cable contacts
+are female. The factory harness splits COM+ to three driver-positive terminals.
+
+J4 is Phoenix Contact 1725656, MPT0.5/2-2.54. Pin1 EXT_RAW;pin2 GND. Manufacturer
+body dimensions are 5.54 x 6.2 mm, height8.5 mm; electrical pins3.5 mm long,
+0.5 x0.9 mm, requiring1.1 mm holes. The stock KiCad footprint also includes the
+two1.1 mm nonplated locating holes at2.54 mm offset; preserve these.
+The selected footprint is now Adapter:Phoenix_1725656_MPT_0p5_2_2p54_SilkClearance,
+an attributed KiCad library derivative. Its sole geometric edit moves the upper
+horizontal outline segment from F.SilkS to Dwgs.User so terminal polarity labels
+remain legible. Its pad, drill, Fab, courtyard and model definitions are unchanged.
+See j4-footprint-derivative-review.json and Adapter.pretty/KICAD-J4-ATTRIBUTION.txt.
+
+SW1 custom footprint transcribes the manufacturer's three0.90 mm holes at2.50
+mm pitch. Pad centers are(-2.5,0),(0,0),(2.5,0). The1.8 mm copper pads provide
+0.45 mm nominal annuli. Body11.6 x4.0 mm, bodyheight5.4 mm, actuator2.0 mm above
+body; untrimmed pins extend4.7 mm below body. On a1.6 mm PCB they can extend
+about3.1 mm below it. The fabrication assembly specification must address these
+tails and actual clearance to the host board. Footprint F.CrtYd includes body
+tolerance and assembly clearance, not just the nominal body outline.
+
+The15.24 mm board width is plausible, but header solder tails constrain usable
+top space. A DIR-end length extension around30 mm total board length is the
+current placement candidate, not universal host-fit evidence. Keep the switch
+beyond the populated header rows and verify access to the selector and terminal.
+Low-height logic/60 V MOSFETs may be placed on the underside within the rows;
+their actual maximum heights, component overlaps, insertion depth and required
+clearance need mechanical review. Never erase courtyard collisions to claim fit.
+
+Independent LDO review
+The initial TPS7A1633 candidate was replaced because its OUT<=IN+0.3 V
+absolute-maximum constraint needed an independently verified reverse-discharge
+solution. LT3014BES5#TRMPBF explicitly provides reverse-output protection,
+including IN grounded while OUT is held above ground. It requires no external
+reverse-output diode. Its ThinSOT-23-5 pad mapping is 1 IN, 2 GND, 3 NC,
+4 ADJ, 5 OUT. The power specification owns this part and its passives.
+
+The selected 174k/100k divider uses 0.1% resistors: nominal output is 3.3428 V.
+Combining the E-grade full-temperature 1.18-1.26 V ADJ-reference limits with
+resistor tolerance gives approximately 3.229-3.457 V before ADJ bias current.
+ADJ bias is 4 nA typical, 10 nA maximum at 25 C; 10 nA adds 1.74 mV through
+174k. No full-temperature maximum is asserted from that 25 C table entry.
+The 22k bleeder alone draws at least 145 uA at the calculated low corner,
+meeting the >=100 uA load condition of the reference accuracy specification.
+The low output corner has about 72 mV margin above the supervisor's maximum
+negative-going threshold plus typical hysteresis. Hysteresis is not assigned
+an invented maximum; startup and ramp qualification remain required.
+
+Output capacitance must stay >=0.47 uF effective with ESR<=3 ohms. Input
+bypass guidance allows 0.1-10 uF; a nominal 220 nF/100 V part is suitable
+only if voltage, temperature and tolerance leave at least 0.1 uF effective.
+At a conservative 10 mA logic load and 26.4 V input, LDO dissipation is about
+0.243 W when including the 450 uA worst listed ground current at that load.
+The reference 150 C/W thermal metric implies a 36.5 C rise, not a thermal
+measurement of this small assembled board. Typical expected logic current is
+lower; actual worst-case gate activity and board temperature must be checked.
+
+Primary sources inspected
+Analog Devices LT3014B, reverse-output behavior, exact S5 pin table,
+reference limits, capacitor requirements and thermal guidance:
+https://www.analog.com/media/en/technical-documentation/data-sheets/3014bfb.pdf
+TI SN74LVC2G126, pin table and Ioff:
+https://www.ti.com/lit/ds/symlink/sn74lvc2g126.pdf
+TI SN74LVC1G126, pin table and Ioff:
+https://www.ti.com/lit/ds/symlink/sn74lvc1g126.pdf
+TI TPS3839, variant/pin table, reset valid range and delay:
+https://www.ti.com/lit/ds/symlink/tps3839.pdf
+Nexperia NX6008NBKW, pin table and rating:
+https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf
+Nexperia PMEG6010CEH, K/A pin table and forward-drop table:
+https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf
+E-Switch original drawing URL (unavailable to the web fetcher in this session):
+https://spec_sheets.e-switch.com/specs/P040040.pdf
+Same manufacturer's drawing inspected through distributor mirror:
+https://assets.rs-online.com/image/upload/v1760392285/Datasheets/2c2f50e74acdd061328cc429d96b63ce.pdf
+Phoenix1725656 datasheet:
+https://www.phoenixcontact.com/en-us/products/printed-circuit-board-terminal-mpt-05-2-254-1725656?type=pdf
+JST XH series:
+https://www.jst-mfg.com/product/pdf/eng/eXH.pdf
+CL57T V4.1:
+https://www.omc-stepperonline.com/download/CL57T-V41_user_manual.pdf
+
+Verification boundaries
+This review records datasheet inspection, pad/net specification and dimensions.
+Native schematic ERC, board DRC, independent net correspondence, regulator
+layout review and exact assembled-board mechanical checks must be reported by
+their respective runs. None are substitutes for physical electrical testing.
+The reference PDF/render stored locally is a source-inspection aid; link the
+manufacturer's document rather than treating it as original project artwork.

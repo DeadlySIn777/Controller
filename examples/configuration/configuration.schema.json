@@ -1,0 +1,388 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "const": "disconnected_simulation_configuration"
+    },
+    "board_identity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "const": "virtual-baseline-6j-2enc"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "const": "virtual-r1"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "const": "built_in_virtual_fixture"
+        },
+        "simulation_only": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "evidence",
+        "simulation_only"
+      ],
+      "additionalProperties": false
+    },
+    "machine": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "enum": [
+            "sim-mill-3axis",
+            "sim-lathe-2axis"
+          ]
+        },
+        "units": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "const": "mm"
+        },
+        "simulation_only": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "name",
+        "profile_id",
+        "units",
+        "simulation_only"
+      ],
+      "additionalProperties": false
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "type": "object",
+            "properties": {
+              "instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "^[a-z][a-z0-9_-]{0,39}$"
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "enum": [
+                  "virtual-step-drive",
+                  "virtual-home-switch"
+                ]
+              },
+              "hardware_revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "const": "virtual-r1"
+              },
+              "firmware_revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "const": "virtual-1.0"
+              },
+              "evidence": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "const": "selected_virtual_fixture"
+              },
+              "simulation_only": {
+                "type": "boolean",
+                "const": true
+              }
+            },
+            "required": [
+              "instance_id",
+              "model",
+              "hardware_revision",
+              "firmware_revision",
+              "evidence",
+              "simulation_only"
+            ],
+            "additionalProperties": false
+          },
+          "electrical_capabilities": {
+            "type": "object",
+            "properties": {
+              "signal_type": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              "nominal_voltage_v": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 60
+              },
+              "maximum_current_a": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "maximum_rate_hz": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10000000
+              }
+            },
+            "required": [
+              "signal_type",
+              "nominal_voltage_v",
+              "maximum_current_a",
+              "maximum_rate_hz"
+            ],
+            "additionalProperties": false
+          },
+          "available_functions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "minItems": 1,
+            "maxItems": 4
+          },
+          "required_connections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                "resource": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                "voltage_v": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 60
+                },
+                "current_a": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "rate_hz": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10000000
+                },
+                "signal_type": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                }
+              },
+              "required": [
+                "role",
+                "resource",
+                "voltage_v",
+                "current_a",
+                "rate_hz",
+                "signal_type"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 4
+          },
+          "calibration": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "steps_per_unit": {
+                  "type": "number",
+                  "minimum": 0.001,
+                  "maximum": 1000000
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "enum": [
+                    "mm"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "const": "unverified"
+                }
+              },
+              "required": [
+                "steps_per_unit",
+                "unit",
+                "status"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 1
+          },
+          "compatible_profiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "minItems": 1,
+            "maxItems": 2
+          },
+          "permitted_commands": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "minItems": 1,
+            "maxItems": 3
+          },
+          "startup_behavior": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "const": "outputs_disabled"
+          },
+          "communication_loss_behavior": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "const": "latch_fault_no_restart"
+          },
+          "output_owner": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "const": "none_simulation_only"
+          },
+          "readiness": {
+            "type": "object",
+            "properties": {
+              "requested": {
+                "type": "boolean",
+                "const": false
+              },
+              "observed": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "const": "unverified"
+              }
+            },
+            "required": [
+              "requested",
+              "observed"
+            ],
+            "additionalProperties": false
+          },
+          "commissioning_checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                "status": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "const": "pending"
+                },
+                "evidence": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120,
+                  "const": "simulation_fixture_only"
+                }
+              },
+              "required": [
+                "id",
+                "status",
+                "evidence"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 4
+          }
+        },
+        "required": [
+          "identity",
+          "electrical_capabilities",
+          "available_functions",
+          "required_connections",
+          "calibration",
+          "compatible_profiles",
+          "permitted_commands",
+          "startup_behavior",
+          "communication_loss_behavior",
+          "output_owner",
+          "readiness",
+          "commissioning_checks"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 16
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "board_identity",
+    "machine",
+    "devices"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:controller:disconnected-config:1",
+  "title": "Disconnected virtual controller configuration v1"
+}

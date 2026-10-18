@@ -1,0 +1,103 @@
+OEA r0.3 independent circuit proposal review — 2026-10-06
+
+Scope: independent primary-source pin/polarity review and arithmetic screening.
+This is not SPICE, native ERC/DRC, physical validation or fabrication release.
+The accompanying receipt identifies the exact source snapshots. The controller
+motherboard and previous adapter revisions were not edited by this review.
+
+Interface and indicator
+
+The three proposed direct sinks retain the A4988-style STEP/DIR/EN positions,
+continuous shared ground and physical omission of VM. HOST_VIO is not connected.
+NX6008NBKR pin1=gate,2=source,3=drain matches the standard SOT-23 assignment.
+J3 remains common-positive, pulse-minus, direction-minus, enable-minus. A high
+host signal turns its sink on. A high-impedance host releases the sink after
+gate discharge; this does not guarantee that the external driver is disabled.
+
+The ATtiny202 SOIC pin assignments and AP7375-SA / MP2459 pin assignments are
+consistent with their manufacturer drawings. Indicator GPIOs do not share
+motion, ADC or UPDI signals. The LED cathodes are grounded and each anode has
+its own 1k series resistor. Keep all LEDs off until settled, calibrated reads.
+The <=5MHz CPU choice is consistent with the possible low end of the selected
+brownout threshold; a nominal 2.6V BOD would not prove the >=2.7V needed at10MHz.
+
+The 100k/3.9k,0.1% ADC divider reaches 0.992862V at26.4V in its maximum-ratio
+resistor corner. This leaves approximately52mV beneath the 1.045V reference
+screen. The reference's characterization tolerance is not complete ADC system
+accuracy. Two-point calibration and measured LED boundaries remain necessary.
+The source resistance is3.754k and100nF gives approximately0.375ms nominal RC.
+The conservative startup injection limit is26.4/99.9k=0.2643mA, below the MCU's
+stated15mA conditional absolute injection limit. This permits bounded injection;
+it does not promise accurate ADC results or functional operation during it.
+No programmer power may be applied to V_IND_3V3; power through the normal input.
+
+Regulated5V mode and CL57T
+
+Using124k/23.7k feedback resistors at0.1%, the MP2459 reference-and-resistor
+screen is4.92752–5.19380V before D25. The diode's0.4V maximum at100mA/25C gives
+a4.52752V lower COM screen. Its datasheet specifies no minimum forward drop,
+so an exact5.0V upper limit at the driver is not established by these data.
+Feedback bias, temperature, ripple and cable drop remain outside that screen.
+At20mA, the direct FET's3.9ohm/1.8V-gate/25C maximum contributes78mV drop.
+The proposed4.5–5.5V LED class covers the arithmetic COM screen, but has only
+27.5mV lower-bound margin before measurement error/ripple. Measure the loaded
+boundary; revise calibrated UI guard bands if needed without calling a weak
+signal healthy. The LED denotes nominal voltage class, not driver approval.
+
+The CL57T V4.1 manual specifies3.5–5V pulse/direction high levels in5V mode,
+and7–16mA logic current. Its5V figure is not labelled an absolute damage limit;
+slightly above5V at no load is neither proof of damage nor a guaranteed accepted
+corner. Verify each active input at the driver through the actual cable, with
+one and all three channels loaded. Direct12V use is a different CL57T profile:
+its manual requires5V selector mode plus series resistance for PUL/DIR. ENA is
+separately5–24V compatible. Never put one shared current-setting resistor in
+COM. Initial generic12V support must not imply direct12V CL57T compatibility.
+
+Power-down and inrush corrections
+
+The AP7375 has a VOUT−VIN absolute limit of0.3V and no reverse-protection claim.
+The isolated input reservoir plus output bleed is a coherent normal-collapse
+mitigation. With Cin=3.51uF,Cout=2.9095uF and4.7k+1% bleed, the minimum output
+bleed at a0.3V boundary is63.2uA. This permits about76.2uA of input-only drain
+in the simplified boundary calculation, versus12.5uA used in the proposal.
+However, its5uA input-current maximum is specified at12V/25C, not throughout
+undervoltage. Therefore the arithmetic is a prototype screen, not a guaranteed
+shutdown proof. Scope VOUT−VIN through input removal/short and repeated ramps.
+Input and output capacitors must retain their controlled values; do not add
+output bulk or externally driven programming power. Scope the ADC node too.
+
+The original68ohm indicator feed allowed a conservative392mA normal26.4V
+startup bound.82ohm reduces that to325mA, below BAT46W's350mA repetitive pulse
+rating under its stated pulse conditions. With0.1% feedback and5mA load, the
+25C low-input screen is4.52752−0.45−(82.82*0.005)=3.66342V at the LDO input.
+Transient energy, cold forward drop and actual cap charging remain bench cases.
+
+An unselected buck originally had only its feedback divider as output load.
+Its input quiescent draw and much larger output reservoir could make VIN fall
+below the charged output; D22 alone does not prove SW<=VIN+0.3V. A330ohm0805
+V5_REG bleeder corrects that decay mismatch. At2.65V and333.3ohm it discharges
+7.9508mA. Cin3.4uF/Cout27.83uF then permits about971uA input drain, versus an
+approximately927uA screen including input IQ, EN divider and diode leakage.
+The330ohm resistor dissipates82.6mW at the high output/resistance corner, within
+its125mW rating for the proposed0–50C ambient. Below-UVLO current is not fully
+specified, so test this exact unselected-buck shutdown case. A90mA design load
+allows the driver, indicator and added bleed under the stated normal budgets.
+
+Result
+
+The corrected proposal is suitable to continue into prototype CAD. There is
+no manufactured-board acceptance implied. Current waveform, startup/shutdown,
+regulation and actual host fit must be checked on the prototype. This review
+does not require complete product environmental certification before CAD.
+Keep costs provisional: the50x15.24mm two-layer calculator dimensions are a
+packing target; the $15 retail target includes more than bare PCB and parts.
+
+Primary sources
+
+https://assets.nexperia.com/documents/data-sheet/NX6008NBK.pdf
+https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny202-204-402-404-406-DataSheet-DS40002318A.pdf
+https://www.diodes.com/datasheet/download/AP7375.pdf
+https://www.diodes.com/datasheet/download/BAT46W.pdf
+https://www.monolithicpower.com/media/document/MP2459_r1.01.pdf
+https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf
+https://www.omc-stepperonline.com/download/CL57T-V41_user_manual.pdf

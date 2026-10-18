@@ -1,0 +1,587 @@
+{
+  "schema_version": 1,
+  "revision": "r0.3-indicator-proposal-1",
+  "date": "2026-10-06",
+  "status": "SOURCE-REVIEWED PROPOSAL ONLY - NOT CAD OR ORDER RELEASE",
+  "implemented_firmware": false,
+  "hdl_or_circuit_simulation_performed": false,
+  "native_erc_performed": false,
+  "physical_measurements_performed": false,
+  "shared_nets": [
+    "V_IND_3V3",
+    "COM_PLUS",
+    "GND"
+  ],
+  "scope": "Three labelled LEDs indicating measured selected COM voltage; no connection to motion command nets.",
+  "supply": {
+    "net": "V_IND_3V3",
+    "nominal_v": 3.3,
+    "owner": "adapter_power_options",
+    "source": "COM_PLUS -> R26 82ohm -> BAT46W-7-F -> V_IND_IN -> AP7375-33SA-7 -> V_IND_3V3; input hold-up and collapse qualification pending.",
+    "normal_current_budget_ma": 5,
+    "current_budget_status": "5 mA target includes the power agent's 4.7k rail bleeder (~0.70 mA). At most one LED on; MCU duty-cycled. Actual current and transient margin require measurement.",
+    "additional_regulator_in_this_spec": false
+  },
+  "adc": {
+    "net": "IND_ADC",
+    "physical_pin": "U50.4",
+    "port": "PA1",
+    "channel": "AIN1",
+    "reference": "Internal1.1V",
+    "reference_nominal_v": 1.1,
+    "reference_characterization_tolerance_percent": 5,
+    "reference_limit_note": "The manufacturer gives characterization limits, not production-test guarantees. Include ADC gain/offset/leakage and temperature in calibration/qualification; do not claim +/-5% total system accuracy.",
+    "upper_resistor_ohm": 100000,
+    "lower_resistor_ohm": 3900,
+    "resistor_tolerance_percent": 0.1,
+    "tcr_ppm_per_c": 25,
+    "filter_cap_f": 1e-07,
+    "input_range_under_review_v": [
+      0,
+      26.4
+    ],
+    "nominal_ratio": 0.03753609239653513,
+    "adc_at_26_4_v": 0.9909528392685274,
+    "adc_max_at_26_4_v_from_resistor_tolerance_only": 0.9928621178973044,
+    "internal_reference_minus5percent_v": 1.045,
+    "nominal_com_volts_per_adc_step": 0.0286462641301351,
+    "nominal_source_resistance_ohm": 3753.609239653513,
+    "nominal_rc_ms": 0.3753609239653513,
+    "startup_injection": {
+      "source_current_conservative_bound_ma": 0.26426426426426425,
+      "retained_earlier_1percent_bound_ma": 0.2666666666666666,
+      "manufacturer_ic2_abs_limit_ma": 15,
+      "manufacturer_condition": "VDD<=4.9V and VPIN<=5.5V, Table33-1 and current-limiting resistor note",
+      "rationale": "The100k top resistor limits startup source current even before subtracting lower-resistor current; normal unloaded divider voltage is below1.0V. This accepts bounded injection, not zero injection.",
+      "limitations": [
+        "Absolute injection limits do not establish ADC accuracy while clamping.",
+        "Review selected LDO output pre-bias/reverse-current tolerance, all power ramps and charged C51.",
+        "If COM is held externally while indicator supply is absent, measure rail current/voltage; never infer a functioning MCU from a partially back-powered rail."
+      ]
+    },
+    "configuration_requirements": [
+      "Keep PA1 pull-up disabled and digital input buffer disabled.",
+      "Use valid ADC clock and acquisition duration; allow reference and RC settling before accepting results.",
+      "Declare saturated/invalid readings outside all voltage classes."
+    ]
+  },
+  "voltage_classes": {
+    "status": "PROPOSED NOMINAL UI WINDOWS - physical boundary accuracy not qualified",
+    "units": "V measured at COM_PLUS",
+    "windows": [
+      {
+        "label": "5V",
+        "minimum": 4.5,
+        "maximum": 5.5,
+        "led": "D50"
+      },
+      {
+        "label": "12V",
+        "minimum": 10.8,
+        "maximum": 13.2,
+        "led": "D51"
+      },
+      {
+        "label": "24V",
+        "minimum": 21.6,
+        "maximum": 26.4,
+        "led": "D52"
+      }
+    ],
+    "outside_behavior": "All LEDs off; 0V,8V,16V are explicit all-off test points.",
+    "semantics": "Nominal voltage class, not proof of driver compatibility or a protection function.",
+    "guard_bands": "Final guard bands require calibrated error budget and temperature validation. Never allow hysteresis to cross excluded gaps."
+  },
+  "firmware_requirements": {
+    "implementation_status": "NOT IMPLEMENTED",
+    "maximum_cpu_clock_hz": 5000000,
+    "nominal_measurement_updates_hz": 20,
+    "startup": "All LEDs off until calibrated, stable readings after reset/reference/RC settling.",
+    "reset_basis": {
+      "source": "https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny202-204-402-404-406-DataSheet-DS40002318A.pdf",
+      "sections": [
+        "16.5.1 DIR reset0x00/output driver disabled",
+        "16.5.5 OUT reset0x00",
+        "16.5.11 PINnCTRL reset0x00/pull-up disabled",
+        "33.7 BODLEVEL2 minimum2.4V",
+        "33.3 <=5MHz allowed from1.8V"
+      ]
+    },
+    "requirements": [
+      "Clear PA6/PA7/PA2 output latches before enabling their output drivers.",
+      "Do not enable peripheral pin overrides on indicator GPIOs.",
+      "Enable suitable brownout reset and watchdog; qualify repeated slow ramps and power interruptions.",
+      "At most one LED may be on, including self-test; do not flash all three simultaneously.",
+      "Retain PA0 as UPDI. PA3 is unused and should be configured without a floating digital input after startup.",
+      "On missing/corrupt calibration, keep all LEDs off; verify calibration integrity and source version.",
+      "Keep motion interface independent of MCU execution and programming."
+    ]
+  },
+  "calibration": {
+    "required": true,
+    "status": "NOT PERFORMED",
+    "proposal": "Measure at two traceable COM voltages spanning the range (for example5.000V and24.000V), store integer gain/offset with version/CRC, then sweep and record all six actual LED boundaries.",
+    "release_checks": [
+      "Confirm 5/12/24 classification under loaded COM in both selector modes.",
+      "Check0,8,16V all-off; test overrange within safe input rating.",
+      "Validate temperature and supply variation, LED readability, ADC settling and startup/power-down behavior."
+    ]
+  },
+  "programming": {
+    "interface": "UPDI",
+    "target_pin": "U50.6",
+    "supply_net": "V_IND_3V3",
+    "ground": "GND",
+    "tool_candidate": "Adafruit UPDI Friend5879, reusable fixture,3.3V setting",
+    "procedure_status": "Fixture and exact fuse/HEX procedure not yet released",
+    "requirements": [
+      "Program a disconnected adapter through its normal external-power path only after regulator and protection bench tests.",
+      "Use 3.3 V UPDI logic and common GND. Leave programmer VDD/power output disconnected; TP51 is measurement/sense only.",
+      "Do not parallel programmer power with the board supply or inject target power directly into V_IND_3V3.",
+      "Keep UPDI enabled; no bootloader required.",
+      "Programming pads require a matching pogo fixture or documented cable adapter."
+    ]
+  },
+  "parts": {
+    "U50": {
+      "reference": "U50",
+      "value": "ATtiny202 voltage indicator",
+      "mpn": "ATTINY202-SSNR",
+      "manufacturer": "Microchip Technology",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "pins": {
+        "1": "V_IND_3V3",
+        "2": "IND_LED_5V",
+        "3": "IND_LED_12V",
+        "4": "IND_ADC",
+        "5": "IND_LED_24V",
+        "6": "IND_UPDI",
+        "7": null,
+        "8": "GND"
+      },
+      "pin_labels": {
+        "1": "VDD",
+        "2": "PA6_LED5",
+        "3": "PA7_LED12",
+        "4": "PA1_AIN1",
+        "5": "PA2_LED24",
+        "6": "PA0_UPDI",
+        "7": "PA3_EXTCLK_NC",
+        "8": "GND"
+      },
+      "pin_types": {
+        "1": "power_in",
+        "2": "bidirectional",
+        "3": "bidirectional",
+        "4": "bidirectional",
+        "5": "bidirectional",
+        "6": "bidirectional",
+        "7": "bidirectional",
+        "8": "power_in"
+      },
+      "kind": "microcontroller",
+      "source": "https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny202-204-402-404-406-DataSheet-DS40002318A.pdf",
+      "notes": [
+        "SOIC-8 pin mapping verified from manufacturer section4.1, printed page13. UPDI is physical pin6; PA3/EXTCLK is physical pin7.",
+        "LED GPIOs source current through individual resistors into LEDs to GND. They do not share UPDI or ADC.",
+        "DIR, OUT and PINnCTRL reset to zero: GPIO outputs disabled and pull-ups off. Firmware must clear LED output latches before setting DIR, then keep all LEDs off until valid settled/calibrated readings.",
+        "Use CPU clock <=5MHz. Nominal2.6V BODLEVEL2 spans2.4–2.9V and cannot establish the>=2.7V supply needed for10MHz.",
+        "Firmware, fuse image, calibration and physical operation have not been implemented or verified by this proposal."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "R50": {
+      "reference": "R50",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "YAGEO",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IND_LED_5V",
+        "2": "IND_LED5_A"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "0603 0.1W. Active-high LED source current; 1k requested."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "D50": {
+      "reference": "D50",
+      "value": "5V red LED",
+      "mpn": "LTST-C190KRKT",
+      "manufacturer": "LITE-ON Technology",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "pins": {
+        "1": "GND",
+        "2": "IND_LED5_A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "led",
+      "source": "https://optoelectronics.liteon.com/upload/download/DS-22-99-0151/LTST-C190KRKT.PDF",
+      "notes": [
+        "Place readable 5V legend next to this LED. KiCad pad1 is cathode; verify manufacturer cathode mark against placement/reel orientation before assembly.",
+        "No guaranteed brightness at proposed low current is claimed; physically verify readability."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "R51": {
+      "reference": "R51",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "YAGEO",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IND_LED_12V",
+        "2": "IND_LED12_A"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "0603 0.1W. Active-high LED source current; 1k requested."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "D51": {
+      "reference": "D51",
+      "value": "12V red LED",
+      "mpn": "LTST-C190KRKT",
+      "manufacturer": "LITE-ON Technology",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "pins": {
+        "1": "GND",
+        "2": "IND_LED12_A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "led",
+      "source": "https://optoelectronics.liteon.com/upload/download/DS-22-99-0151/LTST-C190KRKT.PDF",
+      "notes": [
+        "Place readable 12V legend next to this LED. KiCad pad1 is cathode; verify manufacturer cathode mark against placement/reel orientation before assembly.",
+        "No guaranteed brightness at proposed low current is claimed; physically verify readability."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "R52": {
+      "reference": "R52",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "YAGEO",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IND_LED_24V",
+        "2": "IND_LED24_A"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "0603 0.1W. Active-high LED source current; 1k requested."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "D52": {
+      "reference": "D52",
+      "value": "24V red LED",
+      "mpn": "LTST-C190KRKT",
+      "manufacturer": "LITE-ON Technology",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "pins": {
+        "1": "GND",
+        "2": "IND_LED24_A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "led",
+      "source": "https://optoelectronics.liteon.com/upload/download/DS-22-99-0151/LTST-C190KRKT.PDF",
+      "notes": [
+        "Place readable 24V legend next to this LED. KiCad pad1 is cathode; verify manufacturer cathode mark against placement/reel orientation before assembly.",
+        "No guaranteed brightness at proposed low current is claimed; physically verify readability."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "R53": {
+      "reference": "R53",
+      "value": "100k 0.1% 25ppm/C",
+      "mpn": "RT0603BRD07100KL",
+      "manufacturer": "YAGEO",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "IND_ADC"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://yageogroup.com/content/datasheet/asset/file/PYU-RT_1-TO-0-01_ROHS_L",
+      "notes": [
+        "Upper ADC divider resistor. 0603,0.1W,75V maximum working voltage before power/temperature derating."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "R54": {
+      "reference": "R54",
+      "value": "3.9k 0.1% 25ppm/C",
+      "mpn": "RT0603BRD073K9L",
+      "manufacturer": "YAGEO",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IND_ADC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://yageogroup.com/content/datasheet/asset/file/PYU-RT_1-TO-0-01_ROHS_L",
+      "notes": [
+        "Lower ADC divider resistor; same tolerance and TCR class as R53."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "C50": {
+      "reference": "C50",
+      "value": "100nF 50V X7R",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "V_IND_3V3",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "capacitor",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNNC.do",
+      "notes": [
+        "MCU local bypass directly between U50 pins1 and8; separate from regulator output capacitor."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    },
+    "C51": {
+      "reference": "C51",
+      "value": "100nF 50V X7R",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IND_ADC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "capacitor",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNNC.do",
+      "notes": [
+        "ADC filter to GND; place near U50 pin4. Nominal RC approximately375us. Its stored charge must be included in power-down injection testing."
+      ],
+      "functional_block": "Measured COM voltage indicator"
+    }
+  },
+  "pcb_features": {
+    "TP50": {
+      "reference": "TP50",
+      "value": "UPDI",
+      "kind": "pcb_test_pad",
+      "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+      "pins": {
+        "1": "IND_UPDI"
+      },
+      "pin_labels": {
+        "1": "UPDI"
+      },
+      "pin_types": {
+        "1": "passive"
+      },
+      "mpn": null,
+      "manufacturer": null,
+      "in_bom": false,
+      "in_position_files": false,
+      "source": "Installed KiCad10 TestPoint footprint library",
+      "notes": [
+        "Exposed1.0mm copper contact, no paste, no purchased component; keep separate from fitted-parts BOM.",
+        "Place all3 test contacts accessible to a labelled jig; proposed2.54mm pitch if mechanical placement permits."
+      ]
+    },
+    "TP51": {
+      "reference": "TP51",
+      "value": "3V3 SENSE ONLY",
+      "kind": "pcb_test_pad",
+      "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+      "pins": {
+        "1": "V_IND_3V3"
+      },
+      "pin_labels": {
+        "1": "3V3"
+      },
+      "pin_types": {
+        "1": "passive"
+      },
+      "mpn": null,
+      "manufacturer": null,
+      "in_bom": false,
+      "in_position_files": false,
+      "source": "Installed KiCad10 TestPoint footprint library",
+      "notes": [
+        "Exposed1.0mm copper contact, no paste, no purchased component; keep separate from fitted-parts BOM.",
+        "Place all3 test contacts accessible to a labelled jig; proposed2.54mm pitch if mechanical placement permits."
+      ]
+    },
+    "TP52": {
+      "reference": "TP52",
+      "value": "GND",
+      "kind": "pcb_test_pad",
+      "footprint": "TestPoint:TestPoint_Pad_D1.0mm",
+      "pins": {
+        "1": "GND"
+      },
+      "pin_labels": {
+        "1": "GND"
+      },
+      "pin_types": {
+        "1": "passive"
+      },
+      "mpn": null,
+      "manufacturer": null,
+      "in_bom": false,
+      "in_position_files": false,
+      "source": "Installed KiCad10 TestPoint footprint library",
+      "notes": [
+        "Exposed1.0mm copper contact, no paste, no purchased component; keep separate from fitted-parts BOM.",
+        "Place all3 test contacts accessible to a labelled jig; proposed2.54mm pitch if mechanical placement permits."
+      ]
+    }
+  },
+  "counts": {
+    "purchased_components": 11,
+    "unique_purchased_mpns": 6,
+    "smt_components": 11,
+    "through_hole_components": 0,
+    "pcb_test_pads": 3
+  },
+  "cost_evidence": {
+    "checked": "2026-10-06",
+    "currency": "USD",
+    "seller": "DigiKey direct published selling pages",
+    "lines": [
+      {
+        "mpn": "ATTINY202-SSNR",
+        "quantity_per_board": 1,
+        "observed_price_break_quantity": 1,
+        "unit_price_usd": 0.52,
+        "source": "https://www.digikey.com/en/products/detail/microchip-technology/ATTINY202-SSNR/9554944",
+        "note": "No100-piece break displayed; use observed qty1 price, not an invented volume price."
+      },
+      {
+        "mpn": "LTST-C190KRKT",
+        "quantity_per_board": 3,
+        "observed_price_break_quantity": 100,
+        "unit_price_usd": 0.0675,
+        "source": "https://www.digikey.com/en/products/detail/liteon/LTST-C190KRKT/386817"
+      },
+      {
+        "mpn": "RC0603FR-071KL",
+        "quantity_per_board": 3,
+        "observed_price_break_quantity": 100,
+        "unit_price_usd": 0.0122,
+        "source": "https://www.digikey.com/en/products/detail/yageo/RC0603FR-071KL/726843"
+      },
+      {
+        "mpn": "RT0603BRD07100KL",
+        "quantity_per_board": 1,
+        "observed_price_break_quantity": 100,
+        "unit_price_usd": 0.0615,
+        "source": "https://www.digikey.com/en/products/detail/yageo/RT0603BRD07100KL/1072187"
+      },
+      {
+        "mpn": "RT0603BRD073K9L",
+        "quantity_per_board": 1,
+        "observed_price_break_quantity": 100,
+        "unit_price_usd": 0.058,
+        "source": "https://www.digikey.com/en/products/detail/yageo/RT0603BRD073K9L/5139104"
+      },
+      {
+        "mpn": "CL10B104KB8NNNC",
+        "quantity_per_board": 2,
+        "observed_price_break_quantity": 100,
+        "unit_price_usd": 0.0185,
+        "source": "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL10B104KB8NNNC/3886658"
+      }
+    ],
+    "computed_material_usd_per_board": 0.9156,
+    "note": "Planning price at100-board scale using the shown breaks; not a cart quote. Excludes regulator/protection, board, programming, calibration, fixture, labour, rejects, freight, tariffs and tax. Exact Amazon sourcing remains unconfirmed."
+  },
+  "release_gates": [
+    "Adopt reviewed COM-powered regulator and collapse/pre-bias protection.",
+    "Finish firmware, exact fuse settings, calibration and physical acceptance.",
+    "Check actual native footprint/pin mapping and single-face mechanical fit.",
+    "Pass new native ERC/DRC and current-source verification before any fabrication export.",
+    "This proposal does not authorize manufacturing or claim physical compatibility."
+  ]
+}

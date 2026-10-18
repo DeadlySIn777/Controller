@@ -1,0 +1,711 @@
+{
+  "schema_version": 1,
+  "revision": "r0.3-planning",
+  "status": "PROPOSED DIRECT-SINK INTERFACE ONLY - NOT CAD OR MANUFACTURING RELEASE",
+  "shared_nets": [
+    "EXT_RAW",
+    "V_EXT_PROT",
+    "V5_REG",
+    "V5_SELECT",
+    "COM_PLUS",
+    "GND"
+  ],
+  "host_input_nominal_v": [
+    3.3,
+    5.0
+  ],
+  "input_abs_operating_max_v": 5.5,
+  "proposed_output_channel_max_ma": 20,
+  "proposed_output_aggregate_max_ma": 60,
+  "logic_supply_v": null,
+  "power_ownership": {
+    "owner": "power specification",
+    "refs": "U20+, Q20+, R20+, C20+, D20+, L20+, F20+",
+    "reverse_block": "Power owner must provide V5_REG -> reverse block -> V5_SELECT.",
+    "indicator_rail": "V_IND_3V3 is independent of all host command gates."
+  },
+  "selectors": {
+    "SW1": {
+      "common": "2",
+      "5V": [
+        "1",
+        "2"
+      ],
+      "EXT": [
+        "2",
+        "3"
+      ],
+      "ground_switched": false,
+      "actuator_direction_verified": false,
+      "actuator_direction_release_gate": "Physical continuity test against final silkscreen"
+    }
+  },
+  "socket_contract": {
+    "view": "TOP/component-side view; +Y from EN/VM end toward DIR/GND end",
+    "board_width_mm": 15.24,
+    "header_row_spacing_mm": 12.7,
+    "pin_pitch_mm": 2.54,
+    "vm_absent_xy_mm": [
+      13.97,
+      1.27
+    ],
+    "original_body_length_mm": 20.32,
+    "final_board_length_mm": null,
+    "rows": [
+      {
+        "row_position": 1,
+        "y_mm": 1.27,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "EN",
+          "reference": "J1",
+          "pad": "1",
+          "net": "EN"
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "VMOT",
+          "reference": null,
+          "pad": null,
+          "net": null,
+          "physically_absent": true
+        }
+      },
+      {
+        "row_position": 2,
+        "y_mm": 3.81,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "MS1",
+          "reference": "J1",
+          "pad": "2",
+          "net": null
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "GND_MOTOR",
+          "reference": "J2",
+          "pad": "1",
+          "net": "GND",
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 3,
+        "y_mm": 6.35,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "MS2",
+          "reference": "J1",
+          "pad": "3",
+          "net": null
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "2B",
+          "reference": "J2",
+          "pad": "2",
+          "net": null,
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 4,
+        "y_mm": 8.89,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "MS3",
+          "reference": "J1",
+          "pad": "4",
+          "net": null
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "2A",
+          "reference": "J2",
+          "pad": "3",
+          "net": null,
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 5,
+        "y_mm": 11.43,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "RESET",
+          "reference": "J1",
+          "pad": "5",
+          "net": null
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "1A",
+          "reference": "J2",
+          "pad": "4",
+          "net": null,
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 6,
+        "y_mm": 13.97,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "SLEEP",
+          "reference": "J1",
+          "pad": "6",
+          "net": null
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "1B",
+          "reference": "J2",
+          "pad": "5",
+          "net": null,
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 7,
+        "y_mm": 16.51,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "STEP",
+          "reference": "J1",
+          "pad": "7",
+          "net": "STEP"
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "VDD",
+          "reference": "J2",
+          "pad": "6",
+          "net": null,
+          "physically_absent": false
+        }
+      },
+      {
+        "row_position": 8,
+        "y_mm": 19.05,
+        "logic_row": {
+          "x_mm": 1.27,
+          "original_a4988": "DIR",
+          "reference": "J1",
+          "pad": "8",
+          "net": "DIR"
+        },
+        "power_row": {
+          "x_mm": 13.97,
+          "original_a4988": "GND_LOGIC",
+          "reference": "J2",
+          "pad": "7",
+          "net": "GND",
+          "physically_absent": false
+        }
+      }
+    ],
+    "source": "https://www.pololu.com/product/1182",
+    "warning": "This is the A4988-compatible footprint contract, not evidence that every BTT/SKR socket matches."
+  },
+  "input_contract": {
+    "target_voh_min_v": 2.1,
+    "target_vol_max_v": 0.2,
+    "qualifications": "Targets at adapter header referenced to adapter GND; exact host output specification and loaded waveform must be checked.",
+    "resistor_tolerance_percent": 1,
+    "minimum_divider_ratio": 0.9074243813015582,
+    "maximum_divider_ratio": 0.9107303877366997,
+    "nominal_high_input_current_ma": {
+      "3.3V": 0.3,
+      "5V": 0.45454545454545453
+    },
+    "max_resistive_static_input_current_ma_at_5p5v": 0.505050505050505,
+    "illustrative_total_static_input_current_ma_at_5p5v": 0.515050505050505,
+    "max_initial_charge_current_ma_at_5p5v": 5.555555555555555,
+    "illustrative_gate_leakage_budget_ua": 10,
+    "leakage_budget_limit": "Conservative calculation using the 25 C +/-8 V gate-leakage stress point; not a full-temperature leakage guarantee.",
+    "minimum_gate_high_v_at_2p1v": 1.896409382551454,
+    "maximum_gate_low_v_at_0p2v": 0.19132789572915812,
+    "fet_resistance_anchor": "3.9 ohm maximum at VGS=1.8 V, ID=50 mA, Tj=25 C; not a full-temperature 3.3 V interface guarantee.",
+    "proposed_sink_drop_at_20ma_25c_v": 0.078,
+    "qualified_min_pulse_width_us": null,
+    "qualified_max_step_frequency_hz": null
+  },
+  "signal_truth_table": [
+    {
+      "host": "HIGH within contract",
+      "gate": "ON",
+      "drain": "sinks toward GND",
+      "driver_input_current": "flows from COM+ through a compatible driver input"
+    },
+    {
+      "host": "LOW within contract",
+      "gate": "OFF target",
+      "drain": "high impedance except leakage",
+      "driver_input_current": "off target; must verify loaded and temperature behavior"
+    },
+    {
+      "host": "high impedance / unpowered",
+      "gate": "10k pull-down discharges gate",
+      "drain": "released after discharge",
+      "driver_input_current": "off target; driver may still be enabled when ENA input current is off"
+    }
+  ],
+  "startup_contract": [
+    "No powered buffer or supervisor gates STEP/DIR/EN in this proposal.",
+    "Pulldowns prevent a deliberately floating command from holding a MOSFET gate high; they do not guarantee zero spurious edges during power transitions.",
+    "External drivers that enable with ENA open can be enabled during host reset, power loss, unplugging, or firmware startup. Do not call this fail-safe or drive-disabled startup.",
+    "Host firmware must initialize STEP low and establish DIR/EN before motion is allowed; select input polarity from the actual driver manual and verify on the bench.",
+    "Motor power and external-driver configuration control real enable semantics. This adapter is not an E-stop or STO circuit.",
+    "Power off before changing SW1 or attaching/removing board, signal cable, or power wiring."
+  ],
+  "harness_contract": {
+    "board_socket": "JST B4B-XH-A(LF)(SN)",
+    "cable_housing": "JST XHP-4",
+    "crimp_contact": "JST SXH-001T-P0.6",
+    "pitch_mm": 2.5,
+    "pin1": "COM_PLUS splits to PUL+, DIR+, ENA+ at the driver",
+    "pin2": "PUL_MINUS to driver PUL-",
+    "pin3": "DIR_MINUS to driver DIR-",
+    "pin4": "ENA_MINUS to driver ENA-",
+    "ground_return": "J4 pin2/GND joins host grounds through J2. J3 has no dedicated GND wire.",
+    "applies_to": "Drivers with compatible common-positive optoisolated/current-input STEP/DIR/ENA interface and selected COM voltage.",
+    "excludes": "Not differential signaling; not common-cathode-only inputs; not a universal interface; drive input resistors/selector/current must be verified.",
+    "mapping_check": "Check numbered cavities from JST drawing and continuity fixture; do not infer from wire colors or apparent front/back orientation."
+  },
+  "fabrication_target": {
+    "copper_layers": 2,
+    "min_track_mm": 0.1524,
+    "min_copper_gap_mm": 0.1524,
+    "min_drill_mm": 0.3,
+    "min_via_diameter_mm": 0.6,
+    "smt_side": "TOP ONLY",
+    "note": "Candidate footprint pad geometry checked separately; completed PCB routing and mask review still required."
+  },
+  "footprint_resolution": {
+    "custom_library_relative": "../r0_2/Adapter.pretty",
+    "standard_libraries": "Installed KiCad 10 footprints; native geometry verified by check_logic_proposal.py.",
+    "release_requirement": "Copy qualified custom footprints and attribution into final r0.3 project before release; planning references do not constitute a package."
+  },
+  "parts": {
+    "J1": {
+      "reference": "J1",
+      "value": "StepStick logic row",
+      "mpn": "61300811121",
+      "manufacturer": "Wurth Elektronik",
+      "footprint": "Adapter:Wurth_61300811121_1x08_P2.54mm",
+      "pins": {
+        "1": "EN",
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": "STEP",
+        "8": "DIR"
+      },
+      "pin_labels": {
+        "1": "EN",
+        "2": "MS1_NC",
+        "3": "MS2_NC",
+        "4": "MS3_NC",
+        "5": "RST_NC",
+        "6": "SLP_NC",
+        "7": "STEP",
+        "8": "DIR"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive",
+        "5": "passive",
+        "6": "passive",
+        "7": "passive",
+        "8": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.we-online.com/components/products/datasheet/61300811121.pdf",
+      "notes": [
+        "Underside male header. Local pad1 at original EN end. Pitch2.54mm.",
+        "Top-view coordinates are defined in socket_contract; do not mirror the socket pinout when installing underside headers."
+      ]
+    },
+    "J2": {
+      "reference": "J2",
+      "value": "StepStick power row; VM physically omitted",
+      "mpn": "61300711121",
+      "manufacturer": "Wurth Elektronik",
+      "footprint": "Adapter:Wurth_61300711121_1x07_P2.54mm",
+      "pins": {
+        "1": "GND",
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": "GND"
+      },
+      "pin_labels": {
+        "1": "GND_VM",
+        "2": "MOTOR_NC1",
+        "3": "MOTOR_NC2",
+        "4": "MOTOR_NC3",
+        "5": "MOTOR_NC4",
+        "6": "HOST_VIO_NC",
+        "7": "GND"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive",
+        "5": "passive",
+        "6": "passive",
+        "7": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.we-online.com/components/products/datasheet/61300711121.pdf",
+      "notes": [
+        "Underside seven-position header begins one 2.54 mm pitch beyond the absent VM location.",
+        "No VM pin, pad, plated hole, copper or testpoint.",
+        "Host VIO/VDD contact exists mechanically but its pad is electrically NC. No connection to a local supply or gate pull-up.",
+        "Ground contacts are joined to external-supply negative; this interface is not galvanically isolated."
+      ]
+    },
+    "J3": {
+      "reference": "J3",
+      "value": "Keyed driver signal output",
+      "mpn": "B4B-XH-A(LF)(SN)",
+      "manufacturer": "JST",
+      "footprint": "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "PUL_MINUS",
+        "3": "DIR_MINUS",
+        "4": "ENA_MINUS"
+      },
+      "pin_labels": {
+        "1": "COM+",
+        "2": "PUL-",
+        "3": "DIR-",
+        "4": "ENA-"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf",
+      "notes": [
+        "Female XHP-4 cable housing and SXH-001T-P0.6 crimp contacts mate with shrouded male PCB header.",
+        "Factory harness splits COM+ to the three driver-positive terminals.",
+        "Pin 1 is positive COM, NOT ground. The other three conductors are individual open-drain sinks.",
+        "Host motor-output socket contacts remain NC; signals leave only through this adapter J3."
+      ]
+    },
+    "J4": {
+      "reference": "J4",
+      "value": "External reference/power 5/12/24V",
+      "mpn": "1725656",
+      "manufacturer": "Phoenix Contact",
+      "footprint": "Adapter:Phoenix_1725656_MPT_0p5_2_2p54_SilkClearance",
+      "pins": {
+        "1": "EXT_RAW",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "EXT+",
+        "2": "0V"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.phoenixcontact.com/en-us/products/printed-circuit-board-terminal-mpt-05-2-254-1725656?type=pdf",
+      "notes": [
+        "MPT0.5/2-2.54, body5.54x6.2mm, height8.5mm, pinlength3.5mm, drill1.1mm.",
+        "Polarity defined by PCB labels; maintain permanent shared ground.",
+        "Use regulated5V only in EXT; 12/24V may use5V or EXT as appropriate to drive.",
+        "KiCad library derivative: upper outline segment moved to Dwgs.User for polarity-label clearance; lands/Fab/courtyard unchanged. See Adapter.pretty/KICAD-J4-ATTRIBUTION.txt.",
+        "Final supported voltage range and input protection are owned by the r0.3 power specification; no host VM supply is used."
+      ]
+    },
+    "SW1": {
+      "reference": "SW1",
+      "value": "5V / EXT",
+      "mpn": "EG1218",
+      "manufacturer": "E-Switch",
+      "footprint": "Adapter:E-Switch_EG1218_P040040",
+      "pins": {
+        "1": "V5_SELECT",
+        "2": "COM_PLUS",
+        "3": "V_EXT_PROT"
+      },
+      "pin_labels": {
+        "1": "5V",
+        "2": "COM",
+        "3": "EXT"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "switch_spdt",
+      "source": "https://spec_sheets.e-switch.com/specs/P040040.pdf",
+      "notes": [
+        "Manufacturer drawingP040040revC:0.2A30VDC,SPDT,NONSHORTING,three0.90mmdrills2.50mmpitch.",
+        "Drawing depicts actuator-left and schematic1-2 closed but does not explicitly cross-reference mechanical state; physical direction remains unconfirmed.",
+        "Continuity fixture must verify actual production slide position versus5V/EXTsilkscreen before use.",
+        "Power off both host and external supply before selecting; ground is never switched.",
+        "Body11.6x4.0mm,height5.4mm plus2mm actuator; pins4.7mm below body."
+      ]
+    },
+    "Q1": {
+      "reference": "Q1",
+      "value": "NX6008NBK",
+      "mpn": "NX6008NBKR",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pins": {
+        "1": "STEP_GATE",
+        "2": "GND",
+        "3": "PUL_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBK.pdf",
+      "ordering_source": "https://www.nexperia.com/chemical-content/NX6008NBK.html",
+      "notes": [
+        "SOT-23 version, not the old SOT-323 NX6008NBKW.",
+        "High host signal turns on the sink. Low or high-impedance host signal releases it after gate discharge.",
+        "20 mA/channel is a proposed qualification load, not a measured rating.",
+        "No direct connection between drain/COM supply and host VIO. Parasitic coupling and gate leakage are nonzero; this is not isolation."
+      ]
+    },
+    "R1": {
+      "reference": "R1",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP",
+        "2": "STEP_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    },
+    "R4": {
+      "reference": "R4",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    },
+    "Q2": {
+      "reference": "Q2",
+      "value": "NX6008NBK",
+      "mpn": "NX6008NBKR",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pins": {
+        "1": "DIR_GATE",
+        "2": "GND",
+        "3": "DIR_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBK.pdf",
+      "ordering_source": "https://www.nexperia.com/chemical-content/NX6008NBK.html",
+      "notes": [
+        "SOT-23 version, not the old SOT-323 NX6008NBKW.",
+        "High host signal turns on the sink. Low or high-impedance host signal releases it after gate discharge.",
+        "20 mA/channel is a proposed qualification load, not a measured rating.",
+        "No direct connection between drain/COM supply and host VIO. Parasitic coupling and gate leakage are nonzero; this is not isolation."
+      ]
+    },
+    "R2": {
+      "reference": "R2",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR",
+        "2": "DIR_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    },
+    "R5": {
+      "reference": "R5",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    },
+    "Q3": {
+      "reference": "Q3",
+      "value": "NX6008NBK",
+      "mpn": "NX6008NBKR",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pins": {
+        "1": "EN_GATE",
+        "2": "GND",
+        "3": "ENA_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBK.pdf",
+      "ordering_source": "https://www.nexperia.com/chemical-content/NX6008NBK.html",
+      "notes": [
+        "SOT-23 version, not the old SOT-323 NX6008NBKW.",
+        "High host signal turns on the sink. Low or high-impedance host signal releases it after gate discharge.",
+        "20 mA/channel is a proposed qualification load, not a measured rating.",
+        "No direct connection between drain/COM supply and host VIO. Parasitic coupling and gate leakage are nonzero; this is not isolation."
+      ]
+    },
+    "R3": {
+      "reference": "R3",
+      "value": "1k 1%",
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN",
+        "2": "EN_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    },
+    "R6": {
+      "reference": "R6",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": [
+        "Exact 1% resistor; 0603 metric 1608. No Amazon availability established."
+      ]
+    }
+  },
+  "evidence_boundaries": [
+    "Source inspection, calculations and isolated native footprint checks only.",
+    "No final schematic/ERC, PCB/DRC, host fit, cable continuity, loaded waveform, thermal or startup evidence.",
+    "No Amazon exact-part availability, retail target achievement, or manufacturing readiness claimed."
+  ]
+}

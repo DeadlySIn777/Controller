@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "scope": "SIM2 disconnected runtime derivative",
+  "production_adopted": false,
+  "inputs": [
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_stepgen_runtime.v",
+      "copy": "cnc3_stepgen_runtime.v",
+      "sha256": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3",
+      "modified": false
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_encoder_runtime.v",
+      "copy": "cnc3_encoder_runtime.v",
+      "sha256": "f92a47bc75e7f3b51f8ab445ffa34c91b43a2baf2152e638c7aa8d257908da7b",
+      "modified": false
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_alarm_filter.v",
+      "copy": "cnc3_alarm_filter.v",
+      "sha256": "c02ff736f523f44c79940471fbb43f05e0a5d8e1a417a2f3bf2e031f6cc2c39d",
+      "modified": false
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_spi_transport_stateful.v",
+      "copy": "cnc3_spi_transport_stateful.v",
+      "sha256": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+      "modified": false
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_rate_admission_serial.v",
+      "copy": "cnc3_rate_admission_serial.v",
+      "sha256": "209326f95eb8f92f3629d9149147ced49d750eec2edb489552f3e42264e2bc7b",
+      "modified": false
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_motion_state.v",
+      "copy": "cnc3_runtime_state.v",
+      "before_sha256": "4c47c362afc7c4a419b52540e7337fd1b851044e439ad1e78cef98a93421b998",
+      "modified": true
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_command_validate.v",
+      "copy": "cnc3_runtime_validate.v",
+      "before_sha256": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af",
+      "modified": true
+    },
+    {
+      "source": "reports/cnc3-is2-profile-20261002/profile-candidate-r02/rtl/cnc3_motion_spi.v",
+      "copy": "cnc3_runtime_sim.v",
+      "before_sha256": "5930664319e2059762debfd5c2ae2a4d34a13ade0880706f8ae315a5b41daf96",
+      "modified": true
+    }
+  ],
+  "implementation_updates": [
+    {
+      "id": "2026-10-18-verified-sim2-resource-corrections",
+      "utc": "2026-10-18T04:22:00.515283+00:00",
+      "scope": "disconnected_SIM2_functional_implementation_only",
+      "production_adopted": false,
+      "behavior": "unchanged256event_capacity_all7producers_protocol_buffers_ACK_reset_capture_and_public_limits",
+      "physical_authority": false,
+      "physical_wrapper_fit_timing": "OPEN",
+      "native_map": {
+        "LUT4": 15805,
+        "ADD": 2107,
+        "FF": 10441,
+        "RAM5K": 63,
+        "MULT": 1,
+        "coarse_LUT_ADD_total": 17912,
+        "T20_coarse_limit": 19728,
+        "coarse_headroom": 1816
+      },
+      "files": [
+        {
+          "copy": "cnc3_event_bank.v",
+          "before_sha256": "65fa79532ac564c58d878b7e2b804de11e5af7e85b1157638d7823645aa92659",
+          "sha256": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+          "verified_source": "reports/board-finish-20261017/efinity-memory-inference-r1/registered-bypass/cnc3_event_bank.v"
+        },
+        {
+          "copy": "cnc3_runtime_events.v",
+          "before_sha256": "ddb1cf8325d3cb89a441d6fa878d7ffe40e82835504289cbe76e0da9b0590c51",
+          "sha256": "4d21b8af4ca2decc10d872361fb033fcaecb939b14ff4d62d959609cdc2f30d6",
+          "verified_source": "reports/board-finish-20261017/event-producer-fifo-r1/cnc3_runtime_events.v"
+        },
+        {
+          "copy": "cnc3_spi_transport_stateful.v",
+          "before_sha256": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+          "sha256": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+          "verified_source": "reports/board-finish-20261017/release-review/transport-cmd-alignment-r1/cnc3_spi_transport_stateful.v"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "reports/board-finish-20261017/event-producer-fifo-r1/behavior-receipt.json",
+          "sha256": "5395a6ce469061ec96721aa604a5e4a457c201b79446aaa7b6aed7384ed31cff"
+        },
+        {
+          "path": "reports/board-finish-20261017/event-producer-fifo-r1/native-full-map/receipt.json",
+          "sha256": "376165e78e23295d0369b5b60f239d6ba53a144f8e6b099a7578c30f40ce9dd3"
+        },
+        {
+          "path": "reports/board-finish-20261017/event-producer-fifo-r1/full-runtime-independent-r1/receipt.json",
+          "sha256": "2b514edb45372e6546a0d73f1debcfc0fa6f2f3b4b45a47442f42906d030f2d8"
+        },
+        {
+          "path": "reports/board-finish-20261017/event-producer-fifo-r1/postmap-behavior-r3/receipt.json",
+          "sha256": "4c10ea6769b551af478c1af8a9ecfcafa6c9cd4c5f7c7e6934937cab366fb230"
+        },
+        {
+          "path": "reports/board-finish-20261017/event-producer-fifo-r1/linuxcnc-pair-r1/receipt.json",
+          "sha256": "9d3afdb32e62b29303e5c1789b7381ecbb28594f5f9dfce09ef17d8c59f6171b"
+        },
+        {
+          "path": "reports/board-finish-20261017/release-review/producer-full-native-map-independent-r1/receipt.json",
+          "sha256": "fff99920e92249a92ca86647af4abfbd526e3ad679ca800f8632cffbe6271896"
+        },
+        {
+          "path": "reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/independent-reviewed-overlay-packet.json",
+          "sha256": "eff2e54f973fbac6b5445bacc82ff840012522e6e6ee1a544fa1fc0b793d1fcc"
+        }
+      ],
+      "postmap_scope": "actual vendor primitive models inVerilog2005; initialized binary functional execution, not postroute timing; failedSystemVerilogmode startup runs retained"
+    }
+  ]
+}

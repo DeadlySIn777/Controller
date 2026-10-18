@@ -1,0 +1,74 @@
+OEA r0.3 Amazon connector and programmer recheck — 2026-10-06
+
+Scope: five prototype adapters; Amazon.com only for this pass. This is sourcing
+evidence, not a design release, fit qualification or purchase confirmation.
+This agent made no cart changes: CUA repeatedly returned apps=[] and browsers=[].
+The parent agent controls the live signed-in Amazon browser and cart.
+
+UPDI programmer — promising exact candidate, live verification required
+  https://www.amazon.com/dp/B0DXV2B2HK
+  ASIN B0DXV2B2HK was discovered on a secondary reseller page identifying
+  Adafruit model/MPN 5879. Amazon's primary page returned HTTP 500 to the web
+  reader, so brand, model, seller, USD price, availability and pack remain
+  unverified here. Parent was asked to inspect it in the signed-in browser.
+  Discovery only: https://prom.ua/p3206983898-adafruit-updi-friend.html
+  Target quantity: one genuine Adafruit 5879 UPDI Friend or independently
+  qualified equivalent. Use its 3 V setting; red power lead disconnected and
+  insulated; target powered through J4. TP51 is sense only, not a target-power
+  injection point. UPDI/GND are TP50/TP52. USB-C data cable and a temporary
+  test-pad connection are separately needed. Firmware remains unfinished.
+
+J4 2-pin terminal — primary Amazon specification, dimensions not qualified
+  https://www.amazon.com/dp/B0D29QD1WB
+  Brand Minidodoca. One kit provides twenty 2-pin, twenty 3-pin, ten 4-pin,
+  two 5-pin PCB terminals and a screwdriver. Listing declares 2.54 mm pitch,
+  150 V / 6 A, accepting 18–26 AWG. Five 2-pin pieces are needed.
+  Primary text does not give pin section, body envelope or pin-row offset.
+  Existing Phoenix 1725656 footprint: 2.54 mm pitch, 1.1 mm holes, body
+  5.54 x 6.2 mm, pin row centered in body depth, courtyard 6.54 x 7.2 mm.
+  The listing's product images must establish these dimensions before a
+  substitution is qualified. Web snapshot showed no featured offer; live
+  account price/seller were not available. No cart recommendation yet.
+
+J1/J2 male headers — primary Amazon candidate, full dimensions unresolved
+  https://www.amazon.com/dp/B01GY36RJY
+  Brand Glarks. Forty-piece mixed header assortment; primary listing confirms
+  2.54 mm pitch and cuttable strips. Ordinary straight single-row male pieces
+  may cover five 8-pin and five 7-pin headers. Pin section, exposed mating
+  length and exact count of usable single-row male strips were not established
+  in this pass. Existing holes are 1.1 mm with a 2.54 mm-wide body target.
+  Web snapshot showed no featured offer; no verified USD price/seller.
+  Alternative https://www.amazon.com/dp/B00U8OCENY (Gikfun EK1530, ten strips)
+  explicitly has a 17 mm needle and approximately 7.6 mm exposed on each side.
+  This longer geometry is not a direct standard-header replacement; do not
+  treat its 2.54 mm pitch alone as completed host clearance qualification.
+
+J3 4-pin JST XH header — primary Amazon candidate has conflicting pitch
+  https://www.amazon.com/dp/B0B2RB524Y
+  Brand CQRobot; pack contains fifty 4-pin shrouded headers, fifty housings
+  and two hundred contacts. Listing names B4B-XH-A but repeatedly says
+  2.54 mm. The approved JST B4B-XH-A(LF)(SN) is 2.50 mm pitch. No dimensional
+  drawing was found that resolves this conflict, so not approved as an exact
+  replacement here. No cable included. No live USD price/seller verified.
+
+Finished 500 mm 4-wire harness — no qualifying Amazon offer established
+  https://www.amazon.com/dp/B096Q81JBB (Keszoox) was checked and rejected:
+  its precrimped wire is only 165 mm, and it also advertises 2.54 mm XH.
+  Do not substitute an unlabeled 2.0 mm PH cable, 2.54 mm Dupont cable,
+  short precrimp wire kit or a motor harness with an unverified housing.
+  Need five 500 mm 4-wire cables mating the genuine 2.50 mm XH header,
+  flying leads at the driver end. r0.3 mapping is 1 COM+, 2 PUL-, 3 DIR-,
+  4 ENA-. Wire color alone never establishes function.
+
+SW1 slide switch — no Amazon.com ASIN qualified
+  Target EG1218 nonshorting SPDT ON-ON, 0.2 A at 30 VDC; three pins in one
+  row at 2.5 mm pitch, 0.9 mm holes, body 11.6 x 4.0 mm. Five required.
+  A secondary Desertcart page advertises EG1218 as a five-pack sourced from
+  Amazon India, but exposes no Amazon.com ASIN. This is not US availability
+  proof. Generic SS12/SS13 variants must not be selected merely for three
+  pins: hole pattern, body, voltage/current and nonshorting action must match.
+
+Result: this pass establishes candidates and specific unresolved dimensions;
+it does not establish that all connector, harness and programmer requirements
+are in Amazon's cart. Parent live-browser evidence may supersede web-reader
+offer/availability failures and should be recorded with final cart evidence.

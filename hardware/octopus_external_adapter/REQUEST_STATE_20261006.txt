@@ -1,0 +1,105 @@
+Adapter request state — 6 October 2026
+
+Latest user decisions
+- Purple PCB solder mask and white readable legend.
+- Labelled 5 V / 12 V / 24 V LEDs sensing the selected driver common voltage.
+- Target resale price no more than US$15 for one assembled adapter; working
+  costing assumption includes one finished matching cable, customer shipping extra.
+- Prepare bare PCB purchase and Amazon.com (United States) parts / reflow
+  equipment cart for prototype self-assembly instead of current turnkey quote.
+- Keep 3.3 V / 5 V host input support, external screw-terminal power, onboard
+  nominal 5 V buck, and power-off 5V / EXT selector with keyed four-pin output.
+
+Current evidence and transaction state
+- r0_1 remains an untouched historical review candidate.
+- r0_2 remains an UNRELEASED, INCOMPLETE engineering candidate. It has no voltage
+  indicator circuitry. Its latest native board DRC is routing-pass-7-drc.json:
+  3 warnings, 9 unconnected items, zero schematic parity issues. No production
+  package has been generated or submitted from this candidate.
+- PCBWay's unsubmitted r0_2 online estimate showed $336.24 PCB fabrication plus
+  $29 assembly after purple was selected. Components and finished harnesses
+  have not received a reviewed quotation. This is not a final order total.
+- No new PCB purchase, payment, or public sales listing has been completed.
+- Amazon.com sign-in is VERIFIED in the existing Codex in-app browser as Luis.
+  Chrome was not exposed to browser tools, but the user subsequently signed in
+  to this accessible Amazon session. Do not ask for another login/connection.
+- Latest sourcing instruction is Amazon.com, with price comparisons before
+  finalizing the cart. Amazon's own search found many exact-MPN listings that
+  the external search index missed, including MP2459GJ-Z and ATtiny202.
+- Amazon cart now has 28 product lines / 30 pack units: component packs,
+  a generic 3 V / 5 V UPDI programmer two-pack, Chip Quik SMD291SNL paste,
+  and the user-selected $55.59 Soiiw hotplate. The user explicitly selected
+  Soiiw over WEP; the $28.79 WEP was removed. No paid order or subscription.
+- Amazon item subtotal $289.94. Read-only checkout preview showed $46.39
+  shipping + $23.53 estimated tax = $359.86 estimated total. Returned to cart
+  without pressing Place your order. This is an incomplete prototype basket,
+  not an all-parts kit or a per-board production cost.
+- Cart covers 26 of 33 BOM types, with PMEG6010CEH quantity only 12 of 15.
+  Seven missing types: NX6008NBKR, AP7375-33SA-7, RT0603BRD0723K7L,
+  RT0603BRD073K9L, ERJ-P08F82R0V, SF-1206F050-2, SRN5040-150M.
+  The exact inductor was found only in a $161.36 / 250-piece pack and not added.
+  Five finished 500 mm matching harnesses remain unresolved on Amazon.
+- Price comparisons retained exact parts where cheaper generic specifications
+  were incomplete. Selected BZT52C5V1-13-F is a manufacturer-confirmed reel-only
+  equivalent of -7-F; selected standard cuttable headers still need physical
+  fit qualification, and the generic UPDI programmer needs bench verification.
+  Amazon marketplace MPN claims are listing evidence, not authentication.
+  See purchase_review/amazon-cart-final-20261006.json/.png and
+  purchase_review/amazon-price-review-20261006.txt for the complete audit.
+- DigiKey guest cart Web ID 377560312 now contains ALL 33 exact board MPNs
+  for five adapters, five Cosel H-OU-8 finished 500 mm JST XH harnesses, and
+  one Adafruit 5879 UPDI Friend. Actual browser reconciliation: 35 cart lines,
+  260 required board pieces plus 20 extra resistors selected only where the
+  larger quantity reduced total cost. No missing required MPN or quantity.
+  Subtotal $90.57; displayed shipping estimate $8.49 and tariff estimate $12.96
+  give $112.02 before any additional checkout tax/charges. No checkout/order.
+  Exact cart rows and screenshot: purchase_review/digikey-cart-20261006.*.
+- Nine DigiKey cart lines have full or partial backorders: PMEG6010CEH,115,
+  AP7375-33SA-7, BAT46W-7-F, BZT52C12-7-F, BZT52C5V1-7-F, CL10B104KB8NNNC,
+  CL31A226KAHNNNE, PMV100EPAR (2 of 5), and H-OU-8 cables. The PMEG date shown
+  is 18 October 2027. This cart is NOT an immediately purchasable complete kit.
+  Source alternatives or qualified substitutions remain necessary before buying.
+  DigiKey accepted five H-OU-8 cables at $4.69 each, available to order with
+  an eight-week standard lead time. Mouser browser access was denied; no bypass.
+- The r0_3 native schematic now exists: 52 fitted components (47 SMT + 5 THT),
+  33 purchased MPNs, and 3 bare programming/measurement pads. KiCad ERC reports
+  zero violations with errors/warnings/exclusions included; only SPICE-model
+  checks are ignored. This is NOT a routed board or fabrication release.
+- r0_3/build_pcb.py is an adapted, unexecuted board generator. There is no
+  final r0_3 placement, routed PCB, board DRC, Gerber package or firmware yet.
+- All SMT on one face is the home-hotplate assembly target. A 50 x 15.24 mm
+  outline was used for BUDGET pricing only; the component packing and required
+  overhang are still under review. The exact host board remains unconfirmed.
+- The bounded mechanical study fits all 55 actual footprints geometrically
+  on 60 x 15.24 mm, with 39.68 mm overhang beyond the standard StepStick body.
+  This is capacity evidence only: functional placement is not done, and the
+  automatic packing must not be routed as-is. Its native check still has
+  5 silkscreen warnings and 92 unconnected items. The 50 mm trial is too
+  cramped to adopt without further evidence. No final outline was selected.
+- Complete catalogue costing covers 52 purchased parts / 33 MPNs at $7.2310
+  per adapter at conservative 100-board tiers. With the earlier 50 mm PCB
+  budget it totals $8.2186 before harness, labour, programming/testing,
+  component freight/tax, losses and sales costs. This is not a purchasable
+  basket or proof of the $15 retail target. Stock/lifecycle issues remain;
+  refresh the PCB estimate for the final outline. See full-bom-cost.txt.
+- PCBWay budget scenarios are recorded in purchase_review/pcbway-budget-
+  20261006.json. Purple two-layer 6/6 mil, provisional 50 x 15.24 mm: five
+  lead-free HASL boards $43.62 + $26.55 DHL = $70.17; 100 boards $72.21 +
+  $26.55 DHL = $98.76. Taxes/duty/stencil/parts/cable/assembly excluded.
+  No files uploaded, no submission, and no final supplier-reviewed quotation.
+- Pending user clarification: exact Octopus/SKR model/revision needed to
+  check the longer adapter's physical clearance. Supplier sourcing permission
+  is resolved by the latest instruction; do not ask it again.
+
+Next work
+- Cost-constrained revision research is in r0_3_planning. Prefer standard
+  two-layer manufacturing without the old buck footprint's 0.10 mm gaps.
+- Establish a feasible per-unit BOM/assembly/harness cost before committing
+  to the proposed US$15 retail target; prototype setup/tool costs are separate.
+- Complete the actual circuitry, layout, ERC/DRC and assembly data before
+  ordering bare boards or buying design-dependent parts. Do not substitute
+  an unverified Amazon listing for an exact electrical specification.
+- Reuse r0_3 native schematic and source-hashed review evidence; do not restart
+  the already completed electrical/footprint reviews. Resolve actual stock and
+  lifecycle alternatives before treating the proposed BOM as a purchasable kit.
+- Obtain a concrete final payable amount/spending approval before checkout.

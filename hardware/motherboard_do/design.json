@@ -1,0 +1,2379 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-do-r0.1",
+  "parent_reference_index": 10,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "status": "source_candidate_not_qualified",
+  "channel_count": 16,
+  "banks": 2,
+  "quad_count": 4,
+  "source_driver_mpn": "TPS274C65ASRHAR",
+  "continuous_limit_a_per_channel": 0.5,
+  "continuous_limit_a_per_quad": 2.0,
+  "paired_current_limits": true,
+  "limits_enforced_by_firmware": false,
+  "driver_por_current_limit_a": 1.25,
+  "driver_commission_current_limit_a": [
+    0.62,
+    0.72,
+    0.82
+  ],
+  "driver_commission_current_limit_code": 6,
+  "hardware_disable_equation": "OUT_PERMIT_k AND OUT_EN_LATCH_Q AND CARD_EN; latch CLR_N = OUT_PERMIT_k AND CONTROLLER_RESET_N",
+  "no_automatic_reenable": true,
+  "hardware_gate_is_complete": true,
+  "whole_permission_path_complete": false,
+  "measurement": {
+    "path": "ISNS RC -> internal TPS 10-bit ADC -> addressed CRC SPI -> ISO7762F -> local IOL1 controller boundary",
+    "host_measurement_implemented": false,
+    "adc_reference_v": [
+      2.72,
+      2.85
+    ],
+    "conversion_s": 0.000128,
+    "sample_current_valid_only_while_on": true,
+    "calibration_implemented": false
+  },
+  "register_requirements": {
+    "SW_STATE": 0,
+    "FS_SW_STATE": 0,
+    "DEV_CONFIG1": 6,
+    "DEV_CONFIG2": 6,
+    "DEV_CONFIG3": 64,
+    "CRC_EN": true,
+    "ADC_EN": true,
+    "WD_EN": true,
+    "WD_TO": 0,
+    "watchdog_nominal_s": 0.0004,
+    "AUTO_RETRY_DIS": true,
+    "SW_STATE_zero_readback_before_CARD_EN": true,
+    "per_chip_configuration_readback_before_enable": true,
+    "IOL1_crc_epoch_sequence_freshness_validate_before_commit": true,
+    "inrush_boost_allowed": false,
+    "parallel_channels_allowed": false,
+    "off_state_open_load_excitation_default_allowed": false
+  },
+  "unimplemented_parent_obligations": [
+    "Two field-derived VDD supplies, power-good and safe sequencing; never parallel TPS internal VDD regulators.",
+    "Local IOL1 controllers, 1ms accepted-frame timeout / <=2ms independent IWDG, reset, epoch enable and physical qualification; no constant CARD_EN/identity.",
+    "SPI/ADC CRC driver, configuration/readback limits/calibration, fault latching, bank current/thermal/load qualification and CLI/UI integration.",
+    "Protected field entry/bank bulk/surge clamp and output cable inductive-energy/EMC protection; TVS placeholder is deliberately not fitted.",
+    "Final connectors, return current/copper/thermal vias, clearance/isolation/stencil and PCB layout.",
+    "Actual output observations/status LEDs; unused LEDOUT pins do not prove observed output state."
+  ],
+  "domains": [
+    {
+      "id": "DOA",
+      "bank": "A",
+      "channels": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "driver_refs": [
+        "U10004",
+        "U10009"
+      ],
+      "isolator_ref": "U10003",
+      "latch_ref": "U10001",
+      "gate_ref": "U10002",
+      "field_supply": "FIELD_A_24V",
+      "field_logic_supply": "DOA_FIELD_3V3",
+      "field_return": "FIELD_A_0V",
+      "logic_return": "LOGIC_GND",
+      "field_logic_supply_implemented": false,
+      "controller_implemented": false,
+      "serial_watchdog_implemented": false,
+      "physical_connector_implemented": false
+    },
+    {
+      "id": "DOB",
+      "bank": "B",
+      "channels": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "driver_refs": [
+        "U10017",
+        "U10022"
+      ],
+      "isolator_ref": "U10016",
+      "latch_ref": "U10014",
+      "gate_ref": "U10015",
+      "field_supply": "FIELD_B_24V",
+      "field_logic_supply": "DOB_FIELD_3V3",
+      "field_return": "FIELD_B_0V",
+      "logic_return": "LOGIC_GND",
+      "field_logic_supply_implemented": false,
+      "controller_implemented": false,
+      "serial_watchdog_implemented": false,
+      "physical_connector_implemented": false
+    }
+  ],
+  "channels": [
+    {
+      "id": "DO0",
+      "logical_net": "DO00",
+      "bank": "A",
+      "driver": "U10004",
+      "chip_channel": 1,
+      "rcb_fet": "U10005",
+      "output_filter": "C10010",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 0,
+      "paired_ilim_resource": "U10004_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO1",
+      "logical_net": "DO01",
+      "bank": "A",
+      "driver": "U10004",
+      "chip_channel": 2,
+      "rcb_fet": "U10006",
+      "output_filter": "C10011",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 0,
+      "paired_ilim_resource": "U10004_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO2",
+      "logical_net": "DO02",
+      "bank": "A",
+      "driver": "U10004",
+      "chip_channel": 3,
+      "rcb_fet": "U10007",
+      "output_filter": "C10012",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 0,
+      "paired_ilim_resource": "U10004_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO3",
+      "logical_net": "DO03",
+      "bank": "A",
+      "driver": "U10004",
+      "chip_channel": 4,
+      "rcb_fet": "U10008",
+      "output_filter": "C10013",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 0,
+      "paired_ilim_resource": "U10004_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO4",
+      "logical_net": "DO04",
+      "bank": "A",
+      "driver": "U10009",
+      "chip_channel": 1,
+      "rcb_fet": "U10010",
+      "output_filter": "C10019",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 4,
+      "paired_ilim_resource": "U10009_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO5",
+      "logical_net": "DO05",
+      "bank": "A",
+      "driver": "U10009",
+      "chip_channel": 2,
+      "rcb_fet": "U10011",
+      "output_filter": "C10020",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 4,
+      "paired_ilim_resource": "U10009_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO6",
+      "logical_net": "DO06",
+      "bank": "A",
+      "driver": "U10009",
+      "chip_channel": 3,
+      "rcb_fet": "U10012",
+      "output_filter": "C10021",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 4,
+      "paired_ilim_resource": "U10009_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO7",
+      "logical_net": "DO07",
+      "bank": "A",
+      "driver": "U10009",
+      "chip_channel": 4,
+      "rcb_fet": "U10013",
+      "output_filter": "C10022",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 4,
+      "paired_ilim_resource": "U10009_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO8",
+      "logical_net": "DO08",
+      "bank": "B",
+      "driver": "U10017",
+      "chip_channel": 1,
+      "rcb_fet": "U10018",
+      "output_filter": "C10032",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 8,
+      "paired_ilim_resource": "U10017_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO9",
+      "logical_net": "DO09",
+      "bank": "B",
+      "driver": "U10017",
+      "chip_channel": 2,
+      "rcb_fet": "U10019",
+      "output_filter": "C10033",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 8,
+      "paired_ilim_resource": "U10017_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO10",
+      "logical_net": "DO10",
+      "bank": "B",
+      "driver": "U10017",
+      "chip_channel": 3,
+      "rcb_fet": "U10020",
+      "output_filter": "C10034",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 8,
+      "paired_ilim_resource": "U10017_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO11",
+      "logical_net": "DO11",
+      "bank": "B",
+      "driver": "U10017",
+      "chip_channel": 4,
+      "rcb_fet": "U10021",
+      "output_filter": "C10035",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 8,
+      "paired_ilim_resource": "U10017_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO12",
+      "logical_net": "DO12",
+      "bank": "B",
+      "driver": "U10022",
+      "chip_channel": 1,
+      "rcb_fet": "U10023",
+      "output_filter": "C10041",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 12,
+      "paired_ilim_resource": "U10022_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO13",
+      "logical_net": "DO13",
+      "bank": "B",
+      "driver": "U10022",
+      "chip_channel": 2,
+      "rcb_fet": "U10024",
+      "output_filter": "C10042",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 12,
+      "paired_ilim_resource": "U10022_ILIM_12",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO14",
+      "logical_net": "DO14",
+      "bank": "B",
+      "driver": "U10022",
+      "chip_channel": 3,
+      "rcb_fet": "U10025",
+      "output_filter": "C10043",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 12,
+      "paired_ilim_resource": "U10022_ILIM_34",
+      "default_current_limit_code": 6
+    },
+    {
+      "id": "DO15",
+      "logical_net": "DO15",
+      "bank": "B",
+      "driver": "U10022",
+      "chip_channel": 4,
+      "rcb_fet": "U10026",
+      "output_filter": "C10044",
+      "continuous_limit_a": 0.5,
+      "group_continuous_limit_a": 2.0,
+      "group": 12,
+      "paired_ilim_resource": "U10022_ILIM_34",
+      "default_current_limit_code": 6
+    }
+  ],
+  "components": {
+    "U10001": {
+      "kind": "DFF",
+      "mpn": "SN74LVC1G74DCUR",
+      "value": "SN74LVC1G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "physical": true,
+      "pins": {
+        "1": "DOA_IO_ENABLE_STROBE",
+        "2": "IO_3V3",
+        "3": null,
+        "4": "LOGIC_GND",
+        "5": "DOA_OUT_EN_LATCH",
+        "6": "DOA_CLR_N",
+        "7": "IO_3V3",
+        "8": "IO_3V3"
+      },
+      "role": "permission drop/reset requires a new enable edge"
+    },
+    "U10002": {
+      "kind": "AND4",
+      "mpn": "SN74LVC08APWR",
+      "value": "SN74LVC08APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_A",
+        "2": "DOA_CONTROLLER_RESET_N",
+        "3": "DOA_CLR_N",
+        "4": "OUT_PERMIT_A",
+        "5": "DOA_OUT_EN_LATCH",
+        "6": "DOA_PERMIT_LATCHED",
+        "7": "LOGIC_GND",
+        "8": "DOA_DO_EN_LOGIC",
+        "9": "DOA_PERMIT_LATCHED",
+        "10": "DOA_CARD_EN",
+        "11": null,
+        "12": "LOGIC_GND",
+        "13": "LOGIC_GND",
+        "14": "IO_3V3"
+      },
+      "role": "hardwired permit/latch/local-controller AND; unused gate grounded"
+    },
+    "U10003": {
+      "kind": "ISO",
+      "mpn": "ISO7762FDBQR",
+      "value": "ISO7762FDBQR",
+      "footprint": "CNC_MB_DO:ISO7762_DBQ16_TI",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "DOA_SCLK_HOST",
+        "3": "DOA_SDI_HOST",
+        "4": "DOA_CS_N_HOST",
+        "5": "DOA_DO_EN_LOGIC",
+        "6": "DOA_SDO_HOST",
+        "7": "DOA_FLT_N_HOST",
+        "8": "LOGIC_GND",
+        "9": "FIELD_A_0V",
+        "10": "DOA_FLT_N_FIELD",
+        "11": "DOA_SDO_FIELD",
+        "12": "DOA_DO_EN_FIELD",
+        "13": "DOA_CS_N_FIELD",
+        "14": "DOA_SDI_FIELD",
+        "15": "DOA_SCLK_FIELD",
+        "16": "DOA_FIELD_3V3"
+      },
+      "role": "F variant: all missing-input outputs default LOW"
+    },
+    "C10001": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10001 logic decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10002": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10002 logic decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10003": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10003 logic-side decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10004": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FIELD_3V3",
+        "2": "FIELD_A_0V"
+      },
+      "role": "U10003 field-side decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "R10001": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_A",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10002": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_CONTROLLER_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10003": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_IO_ENABLE_STROBE",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10004": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_CARD_EN",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10005": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_DO_EN_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10006": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_SCLK_HOST",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10007": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_SDI_HOST",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10008": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_CS_N_HOST",
+        "2": "IO_3V3"
+      },
+      "role": "host SPI default deselected",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10009": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_DO_EN_FIELD",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local DO_EN external pull-off",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10010": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_SCLK_FIELD",
+        "2": "FIELD_A_0V"
+      },
+      "role": "field SPI idle LOW",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10011": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_SDI_FIELD",
+        "2": "FIELD_A_0V"
+      },
+      "role": "field SPI idle LOW",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10012": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_CS_N_FIELD",
+        "2": "DOA_FIELD_3V3"
+      },
+      "role": "field SPI pull-up; F isolator overrides LOW with missing host",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10013": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_SDO_FIELD",
+        "2": "FIELD_A_0V"
+      },
+      "role": "inactive SDO has bounded local state",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10014": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FLT_N_FIELD",
+        "2": "DOA_FIELD_3V3"
+      },
+      "role": "wired OR fault pull-up",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "U10004": {
+      "kind": "TPS",
+      "mpn": "TPS274C65ASRHAR",
+      "value": "TPS274C65ASRHAR",
+      "footprint": "CNC_MB_DO:TPS274C65_RHA40_TI",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q0_READY_N",
+        "2": "DOA_FLT_N_FIELD",
+        "3": "DOA_DO_EN_FIELD",
+        "4": "DOA_FIELD_3V3",
+        "5": "FIELD_A_0V",
+        "6": "DOA_Q0_ISNS",
+        "7": "DOA_SDO_FIELD",
+        "8": "DOA_SDI_FIELD",
+        "9": "DOA_SCLK_FIELD",
+        "10": "DOA_CS_N_FIELD",
+        "11": "DO02_RCB_GATE",
+        "12": "DO02_SW",
+        "13": "DO02_SW",
+        "18": "DO03_SW",
+        "19": "DO03_SW",
+        "20": "DO03_RCB_GATE",
+        "21": "FIELD_A_0V",
+        "22": null,
+        "23": null,
+        "24": null,
+        "25": null,
+        "26": null,
+        "27": null,
+        "28": "FIELD_A_0V",
+        "29": "FIELD_A_0V",
+        "30": "DOA_Q0_ADDRESS",
+        "31": "DO01_RCB_GATE",
+        "32": "DO01_SW",
+        "33": "DO01_SW",
+        "38": "DO00_SW",
+        "39": "DO00_SW",
+        "40": "DO00_RCB_GATE",
+        "41": "FIELD_A_0V",
+        "14": "FIELD_A_24V",
+        "15": "FIELD_A_24V",
+        "16": "FIELD_A_24V",
+        "17": "FIELD_A_24V",
+        "34": "FIELD_A_24V",
+        "35": "FIELD_A_24V",
+        "36": "FIELD_A_24V",
+        "37": "FIELD_A_24V"
+      },
+      "role": "quad sourcing output / internal ADC / RCB gate driver",
+      "spi_address": 0,
+      "channel_ids": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "internal_regulator_enabled": false
+    },
+    "R10015": {
+      "kind": "R",
+      "mpn": "TNPW060313K3BEEA",
+      "value": "13300R 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q0_ADDRESS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "addressed SPI identity resistor",
+      "resistance_ohm": 13300,
+      "tolerance": 0.001
+    },
+    "R10016": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q0_READY_N",
+        "2": "FIELD_A_0V"
+      },
+      "role": "datasheet READY pin resistor to GND",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10017": {
+      "kind": "R",
+      "mpn": "CRCW06031K00FKEA",
+      "value": "1000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q0_ISNS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "sense current to internal ADC voltage",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01
+    },
+    "C10005": {
+      "kind": "C",
+      "mpn": "GRM1885C1H101JA01D",
+      "value": "0.1nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q0_ISNS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "SNS ADC low-pass filter",
+      "capacitance_f": 1.0000000000000002e-10,
+      "voltage_rating_v": 50,
+      "tolerance": 0.05
+    },
+    "C10006": {
+      "kind": "C",
+      "mpn": "GRM21BR71C225KA12L",
+      "value": "2200nF 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FIELD_3V3",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI recommended VDD stabilizer",
+      "capacitance_f": 2.2e-06,
+      "voltage_rating_v": 16,
+      "tolerance": 0.1
+    },
+    "C10007": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FIELD_3V3",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VDD HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10008": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_A_24V",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VS HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10009": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_A_24V",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VS MLCC; external bank bulk remains required",
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "tolerance": 0.1
+    },
+    "U10005": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO00_SW",
+        "2": "DO00_SW",
+        "3": "DO00_SW",
+        "4": "DO00_RCB_GATE",
+        "5": "DO00",
+        "6": "DO00",
+        "7": "DO00",
+        "8": "DO00",
+        "9": "DO00"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10010": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO00",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10006": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO01_SW",
+        "2": "DO01_SW",
+        "3": "DO01_SW",
+        "4": "DO01_RCB_GATE",
+        "5": "DO01",
+        "6": "DO01",
+        "7": "DO01",
+        "8": "DO01",
+        "9": "DO01"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10011": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO01",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10007": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO02_SW",
+        "2": "DO02_SW",
+        "3": "DO02_SW",
+        "4": "DO02_RCB_GATE",
+        "5": "DO02",
+        "6": "DO02",
+        "7": "DO02",
+        "8": "DO02",
+        "9": "DO02"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10012": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO02",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10008": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO03_SW",
+        "2": "DO03_SW",
+        "3": "DO03_SW",
+        "4": "DO03_RCB_GATE",
+        "5": "DO03",
+        "6": "DO03",
+        "7": "DO03",
+        "8": "DO03",
+        "9": "DO03"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10013": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO03",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10009": {
+      "kind": "TPS",
+      "mpn": "TPS274C65ASRHAR",
+      "value": "TPS274C65ASRHAR",
+      "footprint": "CNC_MB_DO:TPS274C65_RHA40_TI",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q1_READY_N",
+        "2": "DOA_FLT_N_FIELD",
+        "3": "DOA_DO_EN_FIELD",
+        "4": "DOA_FIELD_3V3",
+        "5": "FIELD_A_0V",
+        "6": "DOA_Q1_ISNS",
+        "7": "DOA_SDO_FIELD",
+        "8": "DOA_SDI_FIELD",
+        "9": "DOA_SCLK_FIELD",
+        "10": "DOA_CS_N_FIELD",
+        "11": "DO06_RCB_GATE",
+        "12": "DO06_SW",
+        "13": "DO06_SW",
+        "18": "DO07_SW",
+        "19": "DO07_SW",
+        "20": "DO07_RCB_GATE",
+        "21": "FIELD_A_0V",
+        "22": null,
+        "23": null,
+        "24": null,
+        "25": null,
+        "26": null,
+        "27": null,
+        "28": "FIELD_A_0V",
+        "29": "FIELD_A_0V",
+        "30": "DOA_Q1_ADDRESS",
+        "31": "DO05_RCB_GATE",
+        "32": "DO05_SW",
+        "33": "DO05_SW",
+        "38": "DO04_SW",
+        "39": "DO04_SW",
+        "40": "DO04_RCB_GATE",
+        "41": "FIELD_A_0V",
+        "14": "FIELD_A_24V",
+        "15": "FIELD_A_24V",
+        "16": "FIELD_A_24V",
+        "17": "FIELD_A_24V",
+        "34": "FIELD_A_24V",
+        "35": "FIELD_A_24V",
+        "36": "FIELD_A_24V",
+        "37": "FIELD_A_24V"
+      },
+      "role": "quad sourcing output / internal ADC / RCB gate driver",
+      "spi_address": 1,
+      "channel_ids": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "internal_regulator_enabled": false
+    },
+    "R10018": {
+      "kind": "R",
+      "mpn": "TNPW060317K8BEEA",
+      "value": "17800R 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q1_ADDRESS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "addressed SPI identity resistor",
+      "resistance_ohm": 17800,
+      "tolerance": 0.001
+    },
+    "R10019": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q1_READY_N",
+        "2": "FIELD_A_0V"
+      },
+      "role": "datasheet READY pin resistor to GND",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10020": {
+      "kind": "R",
+      "mpn": "CRCW06031K00FKEA",
+      "value": "1000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q1_ISNS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "sense current to internal ADC voltage",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01
+    },
+    "C10014": {
+      "kind": "C",
+      "mpn": "GRM1885C1H101JA01D",
+      "value": "0.1nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_Q1_ISNS",
+        "2": "FIELD_A_0V"
+      },
+      "role": "SNS ADC low-pass filter",
+      "capacitance_f": 1.0000000000000002e-10,
+      "voltage_rating_v": 50,
+      "tolerance": 0.05
+    },
+    "C10015": {
+      "kind": "C",
+      "mpn": "GRM21BR71C225KA12L",
+      "value": "2200nF 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FIELD_3V3",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI recommended VDD stabilizer",
+      "capacitance_f": 2.2e-06,
+      "voltage_rating_v": 16,
+      "tolerance": 0.1
+    },
+    "C10016": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOA_FIELD_3V3",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VDD HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10017": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_A_24V",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VS HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10018": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_A_24V",
+        "2": "FIELD_A_0V"
+      },
+      "role": "local VS MLCC; external bank bulk remains required",
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "tolerance": 0.1
+    },
+    "U10010": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO04_SW",
+        "2": "DO04_SW",
+        "3": "DO04_SW",
+        "4": "DO04_RCB_GATE",
+        "5": "DO04",
+        "6": "DO04",
+        "7": "DO04",
+        "8": "DO04",
+        "9": "DO04"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10019": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO04",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10011": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO05_SW",
+        "2": "DO05_SW",
+        "3": "DO05_SW",
+        "4": "DO05_RCB_GATE",
+        "5": "DO05",
+        "6": "DO05",
+        "7": "DO05",
+        "8": "DO05",
+        "9": "DO05"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10020": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO05",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10012": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO06_SW",
+        "2": "DO06_SW",
+        "3": "DO06_SW",
+        "4": "DO06_RCB_GATE",
+        "5": "DO06",
+        "6": "DO06",
+        "7": "DO06",
+        "8": "DO06",
+        "9": "DO06"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10021": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO06",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10013": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO07_SW",
+        "2": "DO07_SW",
+        "3": "DO07_SW",
+        "4": "DO07_RCB_GATE",
+        "5": "DO07",
+        "6": "DO07",
+        "7": "DO07",
+        "8": "DO07",
+        "9": "DO07"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10022": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO07",
+        "2": "FIELD_A_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10014": {
+      "kind": "DFF",
+      "mpn": "SN74LVC1G74DCUR",
+      "value": "SN74LVC1G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "physical": true,
+      "pins": {
+        "1": "DOB_IO_ENABLE_STROBE",
+        "2": "IO_3V3",
+        "3": null,
+        "4": "LOGIC_GND",
+        "5": "DOB_OUT_EN_LATCH",
+        "6": "DOB_CLR_N",
+        "7": "IO_3V3",
+        "8": "IO_3V3"
+      },
+      "role": "permission drop/reset requires a new enable edge"
+    },
+    "U10015": {
+      "kind": "AND4",
+      "mpn": "SN74LVC08APWR",
+      "value": "SN74LVC08APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_B",
+        "2": "DOB_CONTROLLER_RESET_N",
+        "3": "DOB_CLR_N",
+        "4": "OUT_PERMIT_B",
+        "5": "DOB_OUT_EN_LATCH",
+        "6": "DOB_PERMIT_LATCHED",
+        "7": "LOGIC_GND",
+        "8": "DOB_DO_EN_LOGIC",
+        "9": "DOB_PERMIT_LATCHED",
+        "10": "DOB_CARD_EN",
+        "11": null,
+        "12": "LOGIC_GND",
+        "13": "LOGIC_GND",
+        "14": "IO_3V3"
+      },
+      "role": "hardwired permit/latch/local-controller AND; unused gate grounded"
+    },
+    "U10016": {
+      "kind": "ISO",
+      "mpn": "ISO7762FDBQR",
+      "value": "ISO7762FDBQR",
+      "footprint": "CNC_MB_DO:ISO7762_DBQ16_TI",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "DOB_SCLK_HOST",
+        "3": "DOB_SDI_HOST",
+        "4": "DOB_CS_N_HOST",
+        "5": "DOB_DO_EN_LOGIC",
+        "6": "DOB_SDO_HOST",
+        "7": "DOB_FLT_N_HOST",
+        "8": "LOGIC_GND",
+        "9": "FIELD_B_0V",
+        "10": "DOB_FLT_N_FIELD",
+        "11": "DOB_SDO_FIELD",
+        "12": "DOB_DO_EN_FIELD",
+        "13": "DOB_CS_N_FIELD",
+        "14": "DOB_SDI_FIELD",
+        "15": "DOB_SCLK_FIELD",
+        "16": "DOB_FIELD_3V3"
+      },
+      "role": "F variant: all missing-input outputs default LOW"
+    },
+    "C10023": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10014 logic decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10024": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10015 logic decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10025": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10016 logic-side decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10026": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FIELD_3V3",
+        "2": "FIELD_B_0V"
+      },
+      "role": "U10016 field-side decoupling",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "R10021": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "OUT_PERMIT_B",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10022": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_CONTROLLER_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10023": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_IO_ENABLE_STROBE",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10024": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_CARD_EN",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10025": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_DO_EN_LOGIC",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10026": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_SCLK_HOST",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10027": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_SDI_HOST",
+        "2": "LOGIC_GND"
+      },
+      "role": "logic fail-off/default bias",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10028": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_CS_N_HOST",
+        "2": "IO_3V3"
+      },
+      "role": "host SPI default deselected",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10029": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_DO_EN_FIELD",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local DO_EN external pull-off",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10030": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_SCLK_FIELD",
+        "2": "FIELD_B_0V"
+      },
+      "role": "field SPI idle LOW",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10031": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_SDI_FIELD",
+        "2": "FIELD_B_0V"
+      },
+      "role": "field SPI idle LOW",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10032": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_CS_N_FIELD",
+        "2": "DOB_FIELD_3V3"
+      },
+      "role": "field SPI pull-up; F isolator overrides LOW with missing host",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10033": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_SDO_FIELD",
+        "2": "FIELD_B_0V"
+      },
+      "role": "inactive SDO has bounded local state",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10034": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FLT_N_FIELD",
+        "2": "DOB_FIELD_3V3"
+      },
+      "role": "wired OR fault pull-up",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "U10017": {
+      "kind": "TPS",
+      "mpn": "TPS274C65ASRHAR",
+      "value": "TPS274C65ASRHAR",
+      "footprint": "CNC_MB_DO:TPS274C65_RHA40_TI",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q0_READY_N",
+        "2": "DOB_FLT_N_FIELD",
+        "3": "DOB_DO_EN_FIELD",
+        "4": "DOB_FIELD_3V3",
+        "5": "FIELD_B_0V",
+        "6": "DOB_Q0_ISNS",
+        "7": "DOB_SDO_FIELD",
+        "8": "DOB_SDI_FIELD",
+        "9": "DOB_SCLK_FIELD",
+        "10": "DOB_CS_N_FIELD",
+        "11": "DO10_RCB_GATE",
+        "12": "DO10_SW",
+        "13": "DO10_SW",
+        "18": "DO11_SW",
+        "19": "DO11_SW",
+        "20": "DO11_RCB_GATE",
+        "21": "FIELD_B_0V",
+        "22": null,
+        "23": null,
+        "24": null,
+        "25": null,
+        "26": null,
+        "27": null,
+        "28": "FIELD_B_0V",
+        "29": "FIELD_B_0V",
+        "30": "DOB_Q0_ADDRESS",
+        "31": "DO09_RCB_GATE",
+        "32": "DO09_SW",
+        "33": "DO09_SW",
+        "38": "DO08_SW",
+        "39": "DO08_SW",
+        "40": "DO08_RCB_GATE",
+        "41": "FIELD_B_0V",
+        "14": "FIELD_B_24V",
+        "15": "FIELD_B_24V",
+        "16": "FIELD_B_24V",
+        "17": "FIELD_B_24V",
+        "34": "FIELD_B_24V",
+        "35": "FIELD_B_24V",
+        "36": "FIELD_B_24V",
+        "37": "FIELD_B_24V"
+      },
+      "role": "quad sourcing output / internal ADC / RCB gate driver",
+      "spi_address": 0,
+      "channel_ids": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "internal_regulator_enabled": false
+    },
+    "R10035": {
+      "kind": "R",
+      "mpn": "TNPW060313K3BEEA",
+      "value": "13300R 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q0_ADDRESS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "addressed SPI identity resistor",
+      "resistance_ohm": 13300,
+      "tolerance": 0.001
+    },
+    "R10036": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q0_READY_N",
+        "2": "FIELD_B_0V"
+      },
+      "role": "datasheet READY pin resistor to GND",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10037": {
+      "kind": "R",
+      "mpn": "CRCW06031K00FKEA",
+      "value": "1000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q0_ISNS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "sense current to internal ADC voltage",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01
+    },
+    "C10027": {
+      "kind": "C",
+      "mpn": "GRM1885C1H101JA01D",
+      "value": "0.1nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q0_ISNS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "SNS ADC low-pass filter",
+      "capacitance_f": 1.0000000000000002e-10,
+      "voltage_rating_v": 50,
+      "tolerance": 0.05
+    },
+    "C10028": {
+      "kind": "C",
+      "mpn": "GRM21BR71C225KA12L",
+      "value": "2200nF 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FIELD_3V3",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI recommended VDD stabilizer",
+      "capacitance_f": 2.2e-06,
+      "voltage_rating_v": 16,
+      "tolerance": 0.1
+    },
+    "C10029": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FIELD_3V3",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VDD HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10030": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_B_24V",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VS HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10031": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_B_24V",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VS MLCC; external bank bulk remains required",
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "tolerance": 0.1
+    },
+    "U10018": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO08_SW",
+        "2": "DO08_SW",
+        "3": "DO08_SW",
+        "4": "DO08_RCB_GATE",
+        "5": "DO08",
+        "6": "DO08",
+        "7": "DO08",
+        "8": "DO08",
+        "9": "DO08"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10032": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO08",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10019": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO09_SW",
+        "2": "DO09_SW",
+        "3": "DO09_SW",
+        "4": "DO09_RCB_GATE",
+        "5": "DO09",
+        "6": "DO09",
+        "7": "DO09",
+        "8": "DO09",
+        "9": "DO09"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10033": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO09",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10020": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO10_SW",
+        "2": "DO10_SW",
+        "3": "DO10_SW",
+        "4": "DO10_RCB_GATE",
+        "5": "DO10",
+        "6": "DO10",
+        "7": "DO10",
+        "8": "DO10",
+        "9": "DO10"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10034": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO10",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10021": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO11_SW",
+        "2": "DO11_SW",
+        "3": "DO11_SW",
+        "4": "DO11_RCB_GATE",
+        "5": "DO11",
+        "6": "DO11",
+        "7": "DO11",
+        "8": "DO11",
+        "9": "DO11"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10035": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO11",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10022": {
+      "kind": "TPS",
+      "mpn": "TPS274C65ASRHAR",
+      "value": "TPS274C65ASRHAR",
+      "footprint": "CNC_MB_DO:TPS274C65_RHA40_TI",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q1_READY_N",
+        "2": "DOB_FLT_N_FIELD",
+        "3": "DOB_DO_EN_FIELD",
+        "4": "DOB_FIELD_3V3",
+        "5": "FIELD_B_0V",
+        "6": "DOB_Q1_ISNS",
+        "7": "DOB_SDO_FIELD",
+        "8": "DOB_SDI_FIELD",
+        "9": "DOB_SCLK_FIELD",
+        "10": "DOB_CS_N_FIELD",
+        "11": "DO14_RCB_GATE",
+        "12": "DO14_SW",
+        "13": "DO14_SW",
+        "18": "DO15_SW",
+        "19": "DO15_SW",
+        "20": "DO15_RCB_GATE",
+        "21": "FIELD_B_0V",
+        "22": null,
+        "23": null,
+        "24": null,
+        "25": null,
+        "26": null,
+        "27": null,
+        "28": "FIELD_B_0V",
+        "29": "FIELD_B_0V",
+        "30": "DOB_Q1_ADDRESS",
+        "31": "DO13_RCB_GATE",
+        "32": "DO13_SW",
+        "33": "DO13_SW",
+        "38": "DO12_SW",
+        "39": "DO12_SW",
+        "40": "DO12_RCB_GATE",
+        "41": "FIELD_B_0V",
+        "14": "FIELD_B_24V",
+        "15": "FIELD_B_24V",
+        "16": "FIELD_B_24V",
+        "17": "FIELD_B_24V",
+        "34": "FIELD_B_24V",
+        "35": "FIELD_B_24V",
+        "36": "FIELD_B_24V",
+        "37": "FIELD_B_24V"
+      },
+      "role": "quad sourcing output / internal ADC / RCB gate driver",
+      "spi_address": 1,
+      "channel_ids": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "internal_regulator_enabled": false
+    },
+    "R10038": {
+      "kind": "R",
+      "mpn": "TNPW060317K8BEEA",
+      "value": "17800R 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q1_ADDRESS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "addressed SPI identity resistor",
+      "resistance_ohm": 17800,
+      "tolerance": 0.001
+    },
+    "R10039": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q1_READY_N",
+        "2": "FIELD_B_0V"
+      },
+      "role": "datasheet READY pin resistor to GND",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R10040": {
+      "kind": "R",
+      "mpn": "CRCW06031K00FKEA",
+      "value": "1000R 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q1_ISNS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "sense current to internal ADC voltage",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01
+    },
+    "C10036": {
+      "kind": "C",
+      "mpn": "GRM1885C1H101JA01D",
+      "value": "0.1nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_Q1_ISNS",
+        "2": "FIELD_B_0V"
+      },
+      "role": "SNS ADC low-pass filter",
+      "capacitance_f": 1.0000000000000002e-10,
+      "voltage_rating_v": 50,
+      "tolerance": 0.05
+    },
+    "C10037": {
+      "kind": "C",
+      "mpn": "GRM21BR71C225KA12L",
+      "value": "2200nF 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FIELD_3V3",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI recommended VDD stabilizer",
+      "capacitance_f": 2.2e-06,
+      "voltage_rating_v": 16,
+      "tolerance": 0.1
+    },
+    "C10038": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "DOB_FIELD_3V3",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VDD HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10039": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF 100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_B_24V",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VS HF bypass",
+      "capacitance_f": 1.0000000000000001e-07,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "C10040": {
+      "kind": "C",
+      "mpn": "GRM188R71H105KA12D",
+      "value": "1000nF 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FIELD_B_24V",
+        "2": "FIELD_B_0V"
+      },
+      "role": "local VS MLCC; external bank bulk remains required",
+      "capacitance_f": 1.0000000000000002e-06,
+      "voltage_rating_v": 50,
+      "tolerance": 0.1
+    },
+    "U10023": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO12_SW",
+        "2": "DO12_SW",
+        "3": "DO12_SW",
+        "4": "DO12_RCB_GATE",
+        "5": "DO12",
+        "6": "DO12",
+        "7": "DO12",
+        "8": "DO12",
+        "9": "DO12"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10041": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO12",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10024": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO13_SW",
+        "2": "DO13_SW",
+        "3": "DO13_SW",
+        "4": "DO13_RCB_GATE",
+        "5": "DO13",
+        "6": "DO13",
+        "7": "DO13",
+        "8": "DO13",
+        "9": "DO13"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10042": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO13",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10025": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO14_SW",
+        "2": "DO14_SW",
+        "3": "DO14_SW",
+        "4": "DO14_RCB_GATE",
+        "5": "DO14",
+        "6": "DO14",
+        "7": "DO14",
+        "8": "DO14",
+        "9": "DO14"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10043": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO14",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    },
+    "U10026": {
+      "kind": "NMOS",
+      "mpn": "CSD19538Q3AT",
+      "value": "CSD19538Q3AT",
+      "footprint": "CNC_MB_DO:CSD19538_DNH8_TI",
+      "physical": true,
+      "pins": {
+        "1": "DO15_SW",
+        "2": "DO15_SW",
+        "3": "DO15_SW",
+        "4": "DO15_RCB_GATE",
+        "5": "DO15",
+        "6": "DO15",
+        "7": "DO15",
+        "8": "DO15",
+        "9": "DO15"
+      },
+      "role": "reverse blocking: body diode from switch output/source toward terminal/drain"
+    },
+    "C10044": {
+      "kind": "C",
+      "mpn": "C0805C223K1RACTU",
+      "value": "22nF 100V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "DO15",
+        "2": "FIELD_B_0V"
+      },
+      "role": "TI output RF/transient filter after RCB FET",
+      "capacitance_f": 2.2000000000000002e-08,
+      "voltage_rating_v": 100,
+      "tolerance": 0.1
+    }
+  },
+  "boundaries": {
+    "J10001": {
+      "kind": "Boundary12",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: XDO0 field connector not selected",
+      "pins": {
+        "1": "DO00",
+        "2": "DO01",
+        "3": "DO02",
+        "4": "DO03",
+        "5": "DO04",
+        "6": "DO05",
+        "7": "DO06",
+        "8": "DO07",
+        "9": "FIELD_A_0V",
+        "10": "FIELD_A_0V",
+        "11": "FIELD_A_0V",
+        "12": "FIELD_A_0V"
+      },
+      "role": "XDO0 field connector not selected",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    },
+    "J10003": {
+      "kind": "Boundary3",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: protected field entry and same-VS-derived 3V3 supply not drawn",
+      "pins": {
+        "1": "FIELD_A_24V",
+        "2": "FIELD_A_0V",
+        "3": "DOA_FIELD_3V3"
+      },
+      "role": "protected field entry and same-VS-derived 3V3 supply not drawn",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    },
+    "J10005": {
+      "kind": "Boundary11",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "OUT_PERMIT_A",
+        "4": "DOA_CONTROLLER_RESET_N",
+        "5": "DOA_IO_ENABLE_STROBE",
+        "6": "DOA_CARD_EN",
+        "7": "DOA_SCLK_HOST",
+        "8": "DOA_SDI_HOST",
+        "9": "DOA_CS_N_HOST",
+        "10": "DOA_SDO_HOST",
+        "11": "DOA_FLT_N_HOST"
+      },
+      "role": "local IOL1 controller/watchdog/reset/readout not drawn",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    },
+    "J10002": {
+      "kind": "Boundary12",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: XDO1 field connector not selected",
+      "pins": {
+        "1": "DO08",
+        "2": "DO09",
+        "3": "DO10",
+        "4": "DO11",
+        "5": "DO12",
+        "6": "DO13",
+        "7": "DO14",
+        "8": "DO15",
+        "9": "FIELD_B_0V",
+        "10": "FIELD_B_0V",
+        "11": "FIELD_B_0V",
+        "12": "FIELD_B_0V"
+      },
+      "role": "XDO1 field connector not selected",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    },
+    "J10004": {
+      "kind": "Boundary3",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: protected field entry and same-VS-derived 3V3 supply not drawn",
+      "pins": {
+        "1": "FIELD_B_24V",
+        "2": "FIELD_B_0V",
+        "3": "DOB_FIELD_3V3"
+      },
+      "role": "protected field entry and same-VS-derived 3V3 supply not drawn",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    },
+    "J10006": {
+      "kind": "Boundary11",
+      "physical": false,
+      "mpn": "",
+      "footprint": "",
+      "value": "UNIMPLEMENTED PARENT: local IOL1 controller/watchdog/reset/readout not drawn",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "OUT_PERMIT_B",
+        "4": "DOB_CONTROLLER_RESET_N",
+        "5": "DOB_IO_ENABLE_STROBE",
+        "6": "DOB_CARD_EN",
+        "7": "DOB_SCLK_HOST",
+        "8": "DOB_SDI_HOST",
+        "9": "DOB_CS_N_HOST",
+        "10": "DOB_SDO_HOST",
+        "11": "DOB_FLT_N_HOST"
+      },
+      "role": "local IOL1 controller/watchdog/reset/readout not drawn",
+      "status": "unimplemented_parent_boundary_excluded_from_PCB"
+    }
+  },
+  "fitted_component_count": 110,
+  "fitted_pad_count": 552,
+  "sources": {
+    "csd19538q3a.pdf": "17deeae3d6d52e197e2301fa4bae0a848e9d42d76ba1f2e2cdc1fe5286425625",
+    "iso7760.pdf": "fc874e117ffefc489c82677a76580002a55c9dfd0bec7c800af8300dbbf8ff22",
+    "sn74lvc08a.pdf": "e5af3b29e61782a243d18a2e0a24e0f8bbda23a4c46cdea98b01dae91a96e97d",
+    "sn74lvc1g74.pdf": "e46a5a867fec742290000dca5ed3b291535f3c4418ef2ae267acc4ab51b26d8a",
+    "tnpw.pdf": "6f0508c568cb355aaf2accdd33fe3a780d3ea5ef207c4c9a71839a8acadc33a5",
+    "tps274c65.pdf": "44b8df8d0cdc7f8497690bb97e652697251f5e7c2802a9551602e31c29bb0ac8"
+  }
+}

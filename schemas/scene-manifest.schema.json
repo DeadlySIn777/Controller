@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:controller-lab:scene-manifest:v1",
+  "title": "Offline scene metadata, including unregistered drafts",
+  "description": "Structural validity does not authorize motion. Missing role, source units, digest or machine profile are permitted for a draft and reported as registration blockers by the Python validator. The validator additionally checks unique IDs, parent existence, one root, acyclic frames, normalized quaternions, verified geometry bytes, active profile linkage and external commissioning bindings. No URI is fetched automatically.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "frames", "assets"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "title": {"$ref": "#/$defs/text"},
+    "notes": {"$ref": "#/$defs/text"},
+    "machine_profile": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/profile"}]},
+    "frames": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/frame"}},
+    "assets": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/asset"}}
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "sha256"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "version": {"$ref": "#/$defs/text"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "transform": {
+      "type": "object", "additionalProperties": false,
+      "description": "Pose relative to the parent frame. Translation is always in mm, independently of source mesh units. Quaternion is [x,y,z,w], unit length within 1e-6; the runtime checks finiteness and normalization. No scale, shear or implicit unit inference is allowed.",
+      "required": ["translation_mm", "quaternion_xyzw"],
+      "properties": {
+        "translation_mm": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+        "quaternion_xyzw": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}}
+      }
+    },
+    "frame": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "parent_frame", "transform"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "parent_frame": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/text"}]},
+        "transform": {"$ref": "#/$defs/transform"}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_kind"],
+      "properties": {
+        "source_kind": {"enum": ["synthetic", "user_import", "vendor_download", "cad_export"]},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "notes": {"$ref": "#/$defs/text"}
+      }
+    },
+    "asset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "asset_uri", "provenance", "parent_frame", "transform", "trust_level"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "label": {"$ref": "#/$defs/text"},
+        "asset_uri": {"$ref": "#/$defs/text"},
+        "role": {"enum": ["machine", "plate", "vise", "fixture", "stock", "tool", "reference"]},
+        "source_units": {"enum": ["mm", "in"]},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "parent_frame": {"$ref": "#/$defs/text"},
+        "transform": {"$ref": "#/$defs/transform"},
+        "trust_level": {"enum": ["visual_only", "registered"], "description": "Requested metadata trust only. Registered requires an external active profile, verified bytes and matching external commissioning record. It never grants motion authority."}
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+OEA r0.3 cable and programmer sourcing
+Checked 2026-10-06. Read-only research; no cart changes or orders by this agent.
+
+FINISHED OUTPUT HARNESSES
+Recommended exact manufacturer part: Cosel H-OU-8.
+Quantity: 5 (one per adapter).
+Supplier: Mouser 436-H-OU-8.
+US product entry: https://www.mouser.com/ProductDetail/Cosel/H-OU-8
+USD price evidence: https://www.mouser.vn/en/ProductDetail/Cosel/H-OU-8?qs=sGAEpiMZZMv0DJfhVcWlK9qS5a%252Bq%2FDmyVy7gn3VpRhUa9stywYxQGA%3D%3D
+Observed: 74 in stock; USD 5.46 each at quantity 1, USD 27.30 for 5 before tax/freight. US product web reader failed; final US cart must confirm price and available quantity. This is supplier USD pricing, not a currency conversion.
+Cosel manufacturer drawing: https://en.cosel.co.jp/tool/tag/pdf/e-optionparts-sna.pdf (page 2, H-OU-8).
+Manufacturer specifies JST XHP-4 housing with SXH-001T-P0.6 contacts, four UL1007 22 AWG leads, 500 mm nominal length (+50/-0 mm). This is an assembled four-position pigtail with open other ends, not a housing/contact kit.
+JST series drawing: https://www.jst-mfg.com/product/pdf/eng/eXH.pdf
+XHP-4 is the intended XH 2.50 mm mating housing for the r0.3 B4B-XH-A header. Do not replace with unspecified 2.54 mm connectors.
+Wire colors from Cosel are black, black, red, red at positions 1, 2, 3, 4. Label by actual connector pin number and continuity, not color: r0.3 pin 1 COM+, pin 2 PUL-, pin 3 DIR-, pin 4 ENA-. In particular the first black wire is COM+, not ground. None of these four wires is adapter ground. The driver-end common needs an appropriate bridge to its three positive control terminals according to the qualified driver profile.
+DigiKey H-OU-8-ND ACTUAL BROWSER/CART OVERRIDE, supplied by parent on 2026-10-06:
+https://www.digikey.com/en/products/detail/cosel-usa-inc/H-OU-8/7055133
+The live product page displayed Box packaging, minimum 1, quantity-1 price USD 4.69, Available To Order, and standard lead time 8 weeks. Parent confirmed Add To Cart for quantity 5, USD 23.45. These cables are staged in the DigiKey cart; no purchase is asserted. Final cart screenshot evidence is pending.
+The earlier web-reader quantity tier beginning at 749 was stale/not applicable to the live purchase option and is superseded. Available To Order does not mean immediately in stock.
+Mouser US browser returned Access Denied; parent did not attempt a bypass. The Mouser stock/price observations above remain secondary source information, not the selected cart offer.
+
+UPDI PROGRAMMER
+Recommended exact product: Adafruit 5879 UPDI Friend (standard 3 V/5 V version, not high-voltage version).
+Quantity: 1 shared tool for all adapters.
+Preferred consolidated source: DigiKey 1528-5879-ND.
+https://www.digikey.com/en/products/detail/adafruit-industries-llc/5879/22596413
+Observed: 112 in stock, USD 6.95 at quantity 1.
+Mouser alternative: 485-5879; source https://www.mouser.com/es/ProductDetail/Adafruit/5879?qs=ZcfC38r4PovNAVhT%252B2hQ2A%3D%3D showed 22 stock and USD 6.95.
+Manufacturer product: https://www.adafruit.com/product/5879
+Pinout/operation reference: https://learn.adafruit.com/adafruit-updi-friend/pinouts
+The included JST-SH lead ends in individual male pins. Select the programmer's 3 V setting. For this adapter connect white UPDI to TP50 and black GND to TP52; leave its red PWR wire disconnected/insulated. TP51 is voltage-sense-only on the adapter and must not receive power from this programmer. Power the adapter through J4 during programming.
+The current PCB has bare test pads, so the included male-pin lead does not plug straight into the adapter. Temporary soldered leads or a properly designed pogo fixture are still required; the programmer is not evidence that programming setup/firmware is complete. A USB-C data cable to the computer is required and is not listed as included by Adafruit.
+
+REJECTED AS EXACT 500 MM FOUR-WIRE REPLACEMENTS
+Adafruit 5497 is 500 mm but only 2 wires.
+Adafruit 4874 is four-position XH-compatible but only about 200 mm per pigtail.
+Neither meets the requested finished 500 mm four-wire harness scope.
+
+PURCHASE/ENGINEERING BOUNDARY
+These parts can be staged in carts, but the r0.3 PCB remains an untested prototype candidate; final routing, physical host fit, voltage-indicator firmware, calibrated thresholds and prototype qualification are not complete. This sourcing report does not release a board for manufacture or establish a $15 retail price.

@@ -1,0 +1,15 @@
+(version 1)
+# Nominal 0.8mm-pitch diagonal pad/via clearance = 0.140685mm.
+# Only FPGA pad / conventional via pairs use this dimensional rule.
+(rule "T20 conventional BGA pad-via clearance"
+  (condition "(A.memberOfFootprint('U1001') && B.Type == 'Via') || (B.memberOfFootprint('U1001') && A.Type == 'Via')")
+  (constraint clearance (min 0.125mm)))
+(rule "BGA conventional via dimensions"
+  (condition "A.Type == 'Via'")
+  (constraint hole_size (min 0.20mm))
+  (constraint annular_width (min 0.15mm)))
+
+# PCBWay six-layer normal-process inner-hole isolation >=8mil.
+(rule "Six-layer inner drill to copper separation"
+  (layer inner)
+  (constraint hole_clearance (min 0.205mm)))

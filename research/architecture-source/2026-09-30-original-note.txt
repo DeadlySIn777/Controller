@@ -1,0 +1,85 @@
+Yes—this is the direction I’d pursue. It replaces my earlier H7/grblHAL proposal rather than adding another processor on top of it.
+You’re now designing a self-contained CNC controller: the CM5 performs the job normally assigned to the LinuxCNC computer, your FPGA handles time-critical machine signals, and the ESP32 provides supervision and recovery. The customer’s computer is the interface, not the machine’s real-time brain.
+I checked the hardware/software references. Here are the decisions I would make next.
+1. Keep the architecture, but investigate SPI before internal Ethernet
+My proposed division is:
+Component	Responsibility
+CM5, initially 2 GB with eMMC	LinuxCNC, trajectory planning, machine sequencing, local job storage, and the interface backend
+Custom FPGA circuitry	Step generation, encoder counting, synchronized feedback capture, fast I/O, and command watchdog
+ESP32-S3	Independent diagnostics, boot/fault reporting, service interface, and controlled recovery
+Customer’s browser	3D rendering, visual setup, operator controls, and suitable client-side CAD processing
+
+
+LinuxCNC currently publishes a Raspberry Pi 4/5 image and ARM64 packages. It explicitly requires a real-time kernel for controlling machinery; a standard-kernel installation is suitable for simulation, not hardware qualification. That gives us a supported software starting point, but does not validate our custom CM5 carrier. LinuxCNC
+The useful finding is that LinuxCNC’s hm2_spix driver documents dedicated Raspberry Pi 5 support, and the driver exists in the v2.9.10 source. We therefore have an existing SPI transport implementation to investigate—not an automatic need to build an Ethernet endpoint into the FPGA. LinuxCNC
+For the first costed design, I would investigate:
+Customer network → CM5 Ethernet
+                       |
+                 Dedicated SPI
+                       |
+                  Custom FPGA
+                       |
+              Protected machine I/O
+
+ESP32-S3 → Separate service connection to CM5
+         → Hardware fault/status monitoring
+
+That could avoid an additional internal Ethernet implementation while leaving the CM5’s Ethernet available to the customer. CM5 already provides a Gigabit Ethernet PHY and SPI peripherals. Raspberry Pi
+The gate is compatibility and measured timing: CM5 detection, pin configuration, the FPGA’s register interface, and the complete read/write cycle must work with the pinned LinuxCNC build. A working Pi 5 driver does not automatically support arbitrary FPGA firmware.
+For a candidate 1 kHz servo loop, the total cycle budget is 1 millisecond. Measure scheduling delay, FPGA reads, motion computation, and FPGA writes together—not just SPI bandwidth.
+2. The three prices check out—but the complete cost still depends on the carrier
+The current quantity-one listings match your figures:
+Component	Verified USD price	Important qualification
+CM5102016 / SC1588, wireless CM5	$97.50	Listing shows zero stock, estimated replenishment March 29, 2027. DigiKey
+T20F256C4 FPGA	$12.75	Chip only; package, temperature grade, and implementation still need selection. DigiKey
+ESP32-S3-WROOM-1-N8	$5.66	Module only; excludes surrounding service/power/interface circuitry. DigiKey
+Three-part subtotal	$115.91	Not a complete controller cost.
+
+
+There is also a directly comparable non-wireless CM5, CM5002016 / SC1558, listed at $92.50. That saves $5, but the checked listing has the same zero-stock/replenishment issue. DigiKey
+I would price both variants. I would not spend substantial development effort creating an ESP32 network bridge merely to save that $5. Giving the ESP32 its own diagnostic access point is a different function from making it the CM5’s primary network connection.
+One correction to how the cost gate should be interpreted: 60% gross margin is a business choice, not an architectural requirement.
+Using your formula, these are maximum manufacturing-cost allowances—not manufacturing estimates:
+Illustrative net selling revenue	At 50% manufacturing gross margin	At 60% manufacturing gross margin
+$399	$199.50	$159.60
+$499	$249.50	$199.60
+$599	$299.50	$239.60
+
+
+At $499, a $250 manufactured board produces approximately 49.9% manufacturing gross margin. That does not establish profitability, but it also does not automatically force a $1,200 selling price.
+The useful next cost calculation is therefore not another three-chip subtotal. It is a costed set of schematic blocks covering power, machine interfaces, connectors, PCB, assembly, programming, and test—with unknowns still visibly marked.
+3. Freeze the terminal-level interfaces before choosing the FPGA package
+“Six joints with protected I/O” is not yet specific enough to price. I would use this as a proposed core configuration for the first costing exercise:
+Function	Candidate scope to cost
+Motion	Six independent step/direction channels; external motor drives
+Drive management	Six individual enable commands and six alarm inputs
+Encoder resources	One dedicated spindle A/B/index interface; one additional encoder/MPG interface
+General inputs	Sixteen protected 24 V inputs, additional to the six drive alarms
+General outputs	Eight protected outputs, additional to the six drive-enable commands
+Spindle	One defined 0–10 V interface, with run/direction assignments explicitly reserved
+Expansion	One specified expansion interface, not just unused FPGA pins
+
+
+These are proposed quantities, not settled requirements.
+The counting details matter. Six differential step/direction channels require twelve differential transmitter channels. Two differential A/B/index encoder interfaces require six receiver channels. Probe, toolsetter, home switches, interlocks, and operator buttons also need named input assignments before we claim that the remaining general I/O is sufficient.
+Likewise, “protected output” needs an actual definition: sourcing or sinking, voltage range, continuous current, inductive-load handling, short-circuit behavior, and default state.
+For the FPGA, the quoted T20F256C4 is listed as a 256-ball BGA with 195 I/O and a 0–85°C junction-temperature range. Those are not equivalent to 195 freely assignable pins at arbitrary voltages or an industrial ambient-temperature rating. DigiKey
+Efinix also offers T20-family LQFP options, including some packages with integrated configuration flash. Those deserve comparison against the BGA implementation’s total PCB and assembly cost—not just its chip price. Efinix
+My package-selection gate would be an actual pin assignment, voltage-bank review, synthesized gateware, and timing report. No package choice based solely on the $12.75 listing.
+4. Define backup behavior now, and move one hardware test earlier
+With LinuxCNC on the CM5, I would design for these outcomes:
+Failure	Intended behavior
+Browser closes	An already accepted local job remains under controller ownership; browser closure does not kill LinuxCNC
+Customer network disconnects	Apply the selected operating policy locally; reconnect reads current state without replaying commands
+ESP32 crashes	Main machining control remains operational
+LinuxCNC or CM5 fails	Watchdog/fault circuitry initiates the defined machine fault response; no claimed seamless ESP32 takeover
+Controller loses power	Recovery requires an explicit position/state assessment; no automatic restart
+
+
+The FPGA is not a second LinuxCNC planner. In the HostMot2 arrangement, LinuxCNC reads feedback and updates step-generator rates and outputs. Its documented watchdog disconnects outputs when communication servicing stops; that is not a guaranteed coordinated deceleration. LinuxCNC
+Accordingly, I would give the ESP32 a separately controlled power branch and service connection, while keeping motion authorization and the physical safety path independent of its application firmware. “Still available when the CM5 crashes” should be a tested requirement, not a label.
+The one sequencing change I would make to your plan is moving a minimal CM5–FPGA link prototype ahead of the complete custom PCB.
+Do the substantial pre-order work first. Then, before finishing the production-layout effort, prove the highest-risk interface using a bounded development setup: LinuxCNC reads a real encoder counter, commands a real step generator, and handles a deliberately broken link correctly. That is a more valuable early hardware milestone than a nearly finished carrier whose central interface remains untested.
+Keep the UI intact while building its LinuxCNC adapter, but do not let completing CAD import delay that electrical feasibility test.
+The public references support this development direction. I did not locate the referenced reports/VALIDATION.md in the Library searches, so I have not independently verified the 72-test result or the exact UI implementation.
+My recommendation is to advance CM5 + custom FPGA + ESP32-S3, investigate SPI first, and price the complete six-joint interface above before expanding features. The architecture does not establish a $1,200 price—but we still need the complete manufacturing cost to establish the price it can support.

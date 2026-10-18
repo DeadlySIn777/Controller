@@ -1,0 +1,51 @@
+POWER DESIGN REVIEW - r0.2
+2026-10-06 | Source circuit and land-pattern review; not a manufacturing release
+
+Implemented source circuit
+External terminal EXT_RAW feeds the 0.5A fuse F20. D20 is a 28V bidirectional TVS on the fused rail. Q20 is a 60V P-channel reverse-polarity stage: drain at the fused input, source at V_EXT_PROT, gate pulled down by R20 and clamped to its source by D21. This orientation permits body-diode startup in correct polarity. It is not an ideal-diode controller and does not isolate a second supply.
+
+V_EXT_PROT feeds the logic LDO and the EXT selector leg. A separate 60V Schottky D22 feeds BUCK_VIN; U20 VIN, R21, C20 and C21 all use this isolated buck input. Its purpose is to prevent a collapsed external input from directly discharging the buck's output capacitor through the buck to the source. The separate selector-leg diode D1, owned by logic_spec.json, blocks external/charged COM from the 5V regulator.
+
+The final LDO is LT3014BES5#TRMPBF, using the standard TSOT-23-5 footprint. Its reverse-output protection resolves the rejected TPS7A16A's VOUT<=VIN+0.3V issue during input collapse. R23=174k and R24=100k, both 0.1%, set about 3.343V; R25=22k provides minimum load. U21 pins are 1 IN, 2 GND, 3 NC, 4 ADJ, 5 OUT. Worst reference/ratio endpoints are approximately 3.229-3.457V before ADJ bias. The specified 10nA maximum bias is a 25C value, adding 1.74mV; it is not a full-temperature guarantee. The 3.08V supervisor remains a separate logic part.
+
+The TPSM365R6V5RDNR buck has its inductor and bootstrap capacitor inside the package. SW pads 5/6 and BOOT pad7 remain unconnected. BIAS pad9 connects to V5_REG. MODE/SYNC pad11 is grounded for Auto mode; it is not an AGND pin. R21/R22=127k/20k makes the buck unavailable on nominal5V input. Calculated startup is approximately8.38-10.17V at BUCK_VIN; terminal startup includes D22, fuse and Q20 losses. Nominal12/24V supplies use either selector position; nominal5V must use EXT.
+
+Capacitor basis
+C20=2.2uF/100V and C21=100nF/100V are the TI reference input parts. C22=1uF/16V only bypasses internal VCC. C23/C24 are two exact TI-reference C3225X7R1E226M250AB 22uF/25V parts; the reference gives approximately42uF effective at5V against25uF minimum. An illustrative tolerance/temperature screen gives28.56uF; ageing and physical transient/ripple behavior remain release checks.
+
+C26=Samsung CL21B475KAFNNNE 4.7uF/25V X7R0805. Its manufacturer typical25C DC-bias curve gives -15.0524% at3.5044V, about3.993uF. Applying10% tolerance and15% temperature screening gives3.054uF, well above the LDO's0.47uF requirement. This typical curve is not a guaranteed production minimum.
+
+C25=TDK C2012X7S2A224K085AE 220nF/100V X7S0805, maximum1.0mm height. Its value/package/production status are verified. Effective capacitance must remain at least100nF at26.4V including bias, tolerance, temperature and ageing. Zero-bias tolerance/temperature screening gives154.4nF, allowing35.25% further loss. The DC-bias curve download was unavailable; this is explicitly OPEN before manufacturing, not an asserted verified minimum.
+
+Protection and thermal limits
+The proposed terminal range is4.75-26.4V with nominal5/12/24V supplies. The 28V TVS's stated45.4V clamp at8.8A is below the60V P-FET/diode,65V buck and80V LDO ratings. This does not establish actual surge immunity; parasitic overshoot, temperature, pulse energy and fuse clearing are unmeasured. The fuse is gross-fault protection, not a60mA limiter. The design budget is60mA driver common plus10mA logic, not the buck's600mA silicon rating. At26.4V and10mA logic plus450uA ground current, estimated LDO dissipation is0.243W. Reference150C/W implies36.5C rise; board temperature is not measured.
+
+Custom lands
+Adapter:TI_RDN0011A_TPSM365R6 follows TI RDN0011A drawing4226623/F09-2025. It has11 copper pads, comb mask geometry and23 paste openings for the manufacturer's0.125mm stencil example. Copper gap is0.120mm at the GND stem to pads4/5 and0.125mm near top pins; use an explicit local clearance rule, not suppressed DRC. Independent agent review found no source mismatch. No via-in-pad was introduced.
+Adapter:Bourns_SF-1206F_3.1x1.55mm follows the Bourns land drawing: two1.25x1.65mm lands, center spacing3.45mm, total span4.7mm, gap2.2mm.
+The earlier TI_DGN0008C_TPS7A16A footprint is unused after the LDO replacement and is not a BOM part.
+All current power footprints load with KiCad10 pcbnew; native ERC/netlist, full layout DRC and assembly placement are separate checks owned by the other agents.
+
+Outstanding release checks
+- C25 effective input capacitance over qualified voltage/temperature/ageing.
+- DC output and loaded COM margins, including D1 forward drop, harness/contact resistance and each driver's input-current requirement.
+- Supply startup/ramp, input collapse/short, reverse input, driver-common faults, all three signals simultaneously, and hot/cold behavior.
+- Buck input ringing with the actual cable/source; add appropriate damping if needed. The TVS/fuse alone do not prove cable-inductance immunity.
+- Output ripple, LDO and buck temperature, switching-node layout/EMI and analog waveform timing under actual optocoupler loads.
+- Mechanical host clearances, header engagement, cable access and full PCBWay DFM review.
+No universal-driver,48V-input,IEC immunity,STO,fail-safe enable or hot-selector claim is supported. Change the selector only with power off.
+
+Primary sources
+TI buck datasheet, RevC: https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf
+TI selected orderable part: https://www.ti.com/product/TPSM365R6/part-details/TPSM365R6V5RDNR
+Analog Devices LDO: https://www.analog.com/media/en/technical-documentation/data-sheets/3014bfb.pdf
+Analog Devices product/order options: https://www.analog.com/en/products/lt3014b.html
+Nexperia P-FET: https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf
+Nexperia Schottky: https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf
+Diodes TVS: https://www.diodes.com/datasheet/download/SMAJ5.0A.pdf
+Diodes gate Zener: https://www.diodes.com/datasheet/download/BZT52Cxx.pdf
+Bourns fuse: https://www.bourns.com/docs/product-datasheets/sf-1206f.pdf
+Samsung C26/typical graph: https://product.samsungsem.com/mlcc/CL21B475KAFNNN.do
+TDK C25: https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C2012X7S2A224K085AE
+
+Lifecycle check: Diodes PCN2780 discontinues BZT52C12-7-F-79 and recommends the selected BZT52C12-7-F. The exact chosen MPN is not the discontinued suffix. Source: https://www.diodes.com/assets/PCN-Files/Diodes_PCN_2780_EOL.pdf

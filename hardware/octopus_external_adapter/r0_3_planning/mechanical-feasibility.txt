@@ -1,0 +1,38 @@
+OEA r0.3 mechanical feasibility — bounded packing study,6October2026
+
+The60mm candidate geometrically fits all55actual footprints with all47SMT on
+top. This is NOT an engineered placement: power-loop, decoupling and gate
+components are too far apart in the automatic packing. Do not route or order
+this candidate as-is. It preserves exactlibrarycourtyards; no footprints were
+shrunk. The parent r0.3 PCB and placement were not modified.
+
+Actual topcourtyard area:645.605mm². Headerpitch2.54mm;rowspacing12.70mm;
+J1=(1.27,1.27) andJ2=(13.97,3.81) onunderside;VM absent. Topheader service
+strips use1.70mm solderpad envelopes plus0.25mm clearance, with no components
+between soldertails. Both board candidates retain0.25mm courtyard-edge margin.
+
+50x15.24mm:650.4692mm² available after those margins/strips;4.8642mm² spare,
+only0.748% of usable area.100bounded packing attempts left12parts unplaced.
+This is evidence of a poor target, not a proof no possible arrangement exists.
+
+60x15.24mm:797.8692mm² available;152.2642mm² spare,19.083%. The first bounded
+packing attempt placed everyfootprint. Native transformedcourtyard/service-
+strip checks found zero overlaps. NativeKiCadDRC found zero courtyard or
+copper-clearance violations, but5unsuppressed silkscreen violations and92
+unconnected items remain. This is not a clean complete-board DRC result.
+
+The60mm outline extends39.68mm beyond the20.32mm referencebody. Exact host
+model and adjacentobstructions remain unknown. The screwterminal faces the
+end,with selector inward; actualmating/latchaccess and topheight remain open.
+The4mm-inductor height and connector bodies require actualhost/enclosurefit.
+A100x50mm hotplate can cover this length along its longaxis; that does not
+qualify the solderprofile. SingleSMTface permitsreflowbeforeTHTconnectors.
+
+Saved placement-packing-50mm.json is incomplete. placement-packing-60mm.json
+is a full geometriccandidate only. packing60-validation contains a native
+mechanicaltestfixtureboard and unsuppressed DRC output; no fabricationfiles
+were generated. Repack functionalclusters after hostclearance is known.
+The exact sourcehashes, nativeboxes, area arithmetic and diagnosticdistances
+are preserved in placement-geometry.json, packing60-native-geometry.json and
+mechanical-feasibility.json. No finaloutline or procurement is authorized by
+these checks.

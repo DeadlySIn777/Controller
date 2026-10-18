@@ -1,0 +1,788 @@
+{
+  "schema_version": 1,
+  "researched_date": "2026-09-28",
+  "currency": "USD",
+  "scope": "Representative common six-joint FPGA/ESP motion and I/O core only. Reference component pricing, not a qualified circuit, production BOM, distributor quote or complete product cost.",
+  "quantity_semantics": "All offer breaks are COMPONENT PIECES, not completed controllers. Procurement demand = quantity_per_controller times controller build quantity. Aggregate repeated MPNs (ISO7740FDBQR totals six per controller) before applying tiers. Full-reel prices require listed packaging/MOQ/multiples; excluded packaging/setup fees must be added if used. Missing breaks are not invented.",
+  "requested_controller_build_quantities": [
+    1,
+    10,
+    100,
+    1000
+  ],
+  "circuit_assumptions": [
+    "Six STEP/DIR joints using12 differential TX channels; two A/B/index feedback ports using6 RX channels.",
+    "22 isolated nominal24 V field inputs;14 nominal24 V sourcing protected outputs (8general +6enables). Four quad power devices fit16channels but only14are allocated.",
+    "Output isolation and fault returns are budgeted explicitly; STEP/DIR and encoder interfaces are NOT galvanically isolated in this reference.",
+    "Input ISO1212 devices already include isolation and do not require an isolated field-side supply for the input receiver itself.",
+    "Separate isolated spindle analog domain uses DAC plus gain amplifier and dedicated12 V isolated DC/DC. This is a relatively complete, higher-accuracy reference approach; filteredPWM could differ in cost and performance.",
+    "96field positions and96matching plug contacts are budgeted using12eight-way connector pairs.22positions above the74signal/reference minimum are a provisional allowance, not a final wiring map.",
+    "Low-voltage buck/LDO ICs are provisional onboard rail references. Parent costing adds controller/display PSU, common input conversion/protection, cooling, assembly, tariffs and finished product hardware.",
+    "System isolation depends on final power and ground architecture. Common return or external cables must not bypass intended barriers. This file does not include a proven isolated core power tree."
+  ],
+  "scope_expansions_not_original_requirements": [
+    "Five dedicated digital isolators for14output commands and four aggregate bank fault returns.",
+    "One-per-input TVS component provision; final clamping arrangement and count are unresolved.",
+    "16-bit DAC with isolated supply rather than cheaper unqualified PWM spindle conversion.",
+    "All six enable channels costed using the same smart high-side switch family as general outputs."
+  ],
+  "component_lines": [
+    {
+      "id": "fpga",
+      "block": "FPGA silicon",
+      "manufacturer_part_number": "T20F256C4",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "T20 reference FPGA in 256-ball package only; no package-fit, bank-voltage, gateware timing or temperature qualification.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/efinix-inc/T20F256C4/10654496",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "tray",
+          "published_unit_price_breaks_usd": {
+            "1": 12.75
+          },
+          "availability_snapshot": "6863 shown; 30-week manufacturer lead-time indication",
+          "missing_requested_breaks": [
+            10,
+            100,
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Separate rail/clock/configuration-storage/debug support remains incomplete.",
+        "Do not assume package-integrated configuration flash.",
+        "Any higher-volume use of $12.75 is a flat reference assumption, not a quoted volume price."
+      ]
+    },
+    {
+      "id": "esp_service",
+      "block": "Service processor",
+      "manufacturer_part_number": "ESP32-S3-WROOM-1-N8",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "PCB-antenna module with 8 MB flash; auxiliary services, not CAD application compute.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-1-N8/15200089",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 5.66,
+            "10": 4.897,
+            "25": 4.6324,
+            "100": 4.2691,
+            "250": 4.05136
+          },
+          "reel_breaks_usd": {
+            "650": 3.84178,
+            "1300": 3.70019,
+            "1950": 3.62121
+          },
+          "reel_multiple": 650,
+          "availability_snapshot": "1929 shown; 8-week manufacturer lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Power switching, decoupling, boot/reset, service connector and antenna-enclosure clearance not included.",
+        "Do not price additional flash already supplied by this module."
+      ]
+    },
+    {
+      "id": "step_dir_tx",
+      "block": "Differential outputs",
+      "manufacturer_part_number": "AM26C31IPWR",
+      "quantity_per_controller": 3,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Four 5 V-supply differential drivers per IC; three ICs provide 12 STEP/DIR transmit channels. TTL-compatible control-level suitability must be checked against final FPGA bank.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/AM26C31IPWR/1689912",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 1.24,
+            "10": 0.899,
+            "25": 0.8136,
+            "100": 0.7194,
+            "250": 0.67452,
+            "500": 0.64742,
+            "1000": 0.63495
+          },
+          "reel_breaks_usd": {
+            "2000": 0.60677,
+            "4000": 0.59167,
+            "6000": 0.58411
+          },
+          "reel_multiple": 2000,
+          "availability_snapshot": "2213 shown; 16-week lead-time indication"
+        }
+      ],
+      "unknowns": [
+        "This line has no galvanic isolation for STEP/DIR.",
+        "Termination/output protection, connector reference paths, enable defaults and timing skew require design."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/AM26C31",
+      "functional_channels": 12,
+      "fitted_channels": 12
+    },
+    {
+      "id": "encoder_rx",
+      "block": "Differential inputs",
+      "manufacturer_part_number": "AM26LV32EIPWR",
+      "quantity_per_controller": 2,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Quad 3.3 V differential receiver; two ICs provide eight receivers, of which six implement two A/B/index encoders.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/AM26LV32EIPWR/1896013",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 2.31,
+            "10": 1.711,
+            "25": 1.5616,
+            "100": 1.3967,
+            "250": 1.31812,
+            "500": 1.27908
+          },
+          "reel_breaks_usd": {
+            "2000": 1.27165,
+            "4000": 1.24364,
+            "6000": 1.22962
+          },
+          "reel_multiple": 2000,
+          "availability_snapshot": "42011 shown; 9-week lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Two fitted receiver channels are spare, not six extra encoder axes.",
+        "No galvanic isolation on encoder signals in this reference.",
+        "Termination, surge/ESD network and supplied encoder power/filter/protection remain unpriced."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/AM26LV32E",
+      "functional_channels": 6,
+      "fitted_channels": 8
+    },
+    {
+      "id": "field_inputs",
+      "block": "22 protected nominal-24-V inputs",
+      "manufacturer_part_number": "ISO1212DBQR",
+      "quantity_per_controller": 11,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Dual isolated industrial digital-input receiver; 11 ICs provide 16 general plus six drive-alarm inputs. Reference is 24 V field sensing with correctly sized external threshold/current-setting resistors.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/ISO1212DBQR/7931888",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 1.33,
+            "10": 0.963,
+            "25": 0.8716,
+            "100": 0.7717,
+            "250": 0.72408,
+            "500": 0.69532,
+            "1000": 0.68391
+          },
+          "reel_breaks_usd": {
+            "2500": 0.68549,
+            "5000": 0.66953,
+            "7500": 0.66155,
+            "12500": 0.6527
+          },
+          "reel_multiple": 2500,
+          "availability_snapshot": "27832 shown on canonical result; 9-week lead-time indication"
+        },
+        {
+          "supplier": "LCSC",
+          "source_url": "https://www.lcsc.com/product-detail/C2859667.html",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "piece / standard full reel 2500",
+          "published_unit_price_breaks_usd": {
+            "1": 1.1243,
+            "10": 0.9325,
+            "30": 0.8358,
+            "100": 0.7408,
+            "500": 0.6834,
+            "1000": 0.6539
+          },
+          "availability_snapshot": "2128 shown",
+          "evidence_note": "Canonical page opened on research date; stale search/image URLs showed lower different prices and were not used."
+        }
+      ],
+      "unknowns": [
+        "Do not add 22 optocouplers or another 22-channel digital-isolation line: the receiver already contains isolation.",
+        "Input threshold/series resistors, RC filters, capacitors and actual surge topology remain unpriced.",
+        "Probe/toolsetter filter and timestamp latency need separate validation.",
+        "No field-side isolated DC/DC is required just for these input receivers; system grounding must still preserve the intended barrier."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/ISO1212",
+      "functional_channels": 22,
+      "fitted_channels": 22,
+      "includes_signal_isolation": true
+    },
+    {
+      "id": "input_tvs_provision",
+      "block": "Field input protection allowance",
+      "manufacturer_part_number": "SMF36A",
+      "quantity_per_controller": 22,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Littelfuse TVS reference provision: budget one per input as a conservative component-count assumption, not a validated final clamp topology. Part appears in TI ISO1212 EVM BOM; final network/count may differ.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/littelfuse-inc/SMF36A/3672408",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 0.57,
+            "10": 0.349,
+            "50": 0.2524,
+            "100": 0.2211,
+            "500": 0.1658
+          },
+          "reel_breaks_usd": {
+            "3000": 0.10436,
+            "9000": 0.08995
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "35926 shown; 20-week lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Clamping residual voltage/current, resistor energy, reverse-input behavior and surge target must be calculated.",
+        "This 36 V standoff part is not proposed for 5 V signal ports or 40 V output-IC supply protection.",
+        "One-per-input is an expanded budget provision; the selected EVM uses a different shared arrangement and does not validate this quantity."
+      ],
+      "manufacturer": "Littelfuse",
+      "reference_design_source_url": "https://www.ti.com/lit/ug/sllu254a/sllu254a.pdf"
+    },
+    {
+      "id": "field_outputs",
+      "block": "14 protected DC outputs",
+      "manufacturer_part_number": "TPS4H160BQPWPRQ1",
+      "quantity_per_controller": 4,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Quad smart high-side switch; four ICs provide 16 fitted channels, 14 used for eight general outputs and six individual enables. Nominal 24 V sourcing only; not arbitrary-voltage dry contacts. Includes current limiting, thermal protection and internal inductive clamp functions within datasheet limits.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS4H160BQPWPRQ1/6100239",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 3.76,
+            "10": 2.829,
+            "25": 2.596,
+            "100": 2.3395,
+            "250": 2.2172,
+            "500": 2.19268
+          },
+          "digireel_breaks_usd": {
+            "1000": 2.06856
+          },
+          "digireel_setup_fee_usd": 7,
+          "reel_breaks_usd": {
+            "2000": 2.03288,
+            "4000": 1.99179
+          },
+          "reel_multiple": 2000,
+          "availability_snapshot": "10225 shown; 16-week manufacturer lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        },
+        {
+          "supplier": "LCSC",
+          "source_url": "https://www.lcsc.com/product-detail/C471053.html",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "piece / standard full reel 2000",
+          "published_unit_price_breaks_usd": {
+            "1": 2.7731,
+            "10": 2.4614,
+            "30": 2.2661,
+            "100": 2.0676,
+            "500": 1.9773,
+            "1000": 1.9379
+          },
+          "availability_snapshot": "9060 shown",
+          "evidence_note": "Canonical page opened; older SEO/image-page prices were materially lower and not used."
+        }
+      ],
+      "unknowns": [
+        "14 enable/output loads are not defined; per-channel current and total-bank thermal limits remain unknown.",
+        "External current-limit resistors, supply transient/reverse protection and load-dependent clamps remain unpriced.",
+        "B version has bank fault indication and multiplexed current sense; detailed ADC current telemetry and channel selection circuitry are not included.",
+        "This is a robust costing choice; a low-current enable channel need not ultimately use the same power IC as a general load."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/TPS4H160-Q1",
+      "functional_channels": 14,
+      "fitted_channels": 16
+    },
+    {
+      "id": "field_output_isolation",
+      "block": "Output control and bank-status isolation",
+      "manufacturer_part_number": "ISO7740FDBQR",
+      "quantity_per_controller": 5,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Five quad one-direction isolators: four oriented logic-to-field for 16 command channels (14 used), one oriented field-to-logic for four aggregate bank-fault signals. F default-low behavior is useful for command inhibits, subject to complete reset design.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/ISO7740FDBQR/8105904",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 2.86,
+            "10": 2.126,
+            "25": 1.944,
+            "100": 1.7437,
+            "250": 1.64812,
+            "500": 1.61044,
+            "1000": 1.51929
+          },
+          "reel_breaks_usd": {
+            "2500": 1.49302,
+            "5000": 1.46284
+          },
+          "reel_multiple": 2500,
+          "availability_snapshot": "4852 shown; alternate result snapshots vary"
+        }
+      ],
+      "unknowns": [
+        "Requires field-side logic supply and a power/ground architecture that does not bridge this isolation.",
+        "Separate from the ISO1212 inputs; not another charge for input isolation.",
+        "Bank-fault receiver polarity/logic and inhibit gating need final verification.",
+        "Detailed current telemetry is not carried by these four fault-return channels."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/ISO7740",
+      "expanded_costing_scope": true
+    },
+    {
+      "id": "spindle_dac",
+      "block": "0-10 V spindle stage",
+      "manufacturer_part_number": "DAC80501ZDQFR",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "16-bit single-channel voltage DAC with integrated reference; zero-scale-reset variant. Configured for internal 2.5 V reference at gain 1 (0-2.5 V range) followed by a gain-four amplifier; a 0-5 V range cannot reach full scale below the 5 V analog rail minimum.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/DAC80501ZDQFR/10445351",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 8.06,
+            "10": 6.239,
+            "25": 5.7836,
+            "100": 5.2821,
+            "250": 5.15
+          },
+          "reel_breaks_usd": {
+            "3000": 4.63414
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "4677 shown; 26-week lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Do not also add a separate voltage reference unless actual accuracy/noise design calls for one.",
+        "SPI chosen for reference; interface, analog output accuracy/settling/load and update rate not qualified.",
+        "DAC alone does not produce 0-10 V."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/DAC80501"
+    },
+    {
+      "id": "spindle_amplifier",
+      "block": "0-10 V spindle stage",
+      "manufacturer_part_number": "OPA197IDBVR",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Rail-to-rail op amp provision for gain-four 0-2.5 V to nominal 0-10 V stage on isolated 12 V rail (>=1.4 V headroom at 11.4 V rail minimum).",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/OPA197IDBVR/5962128",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 2.1,
+            "10": 1.548,
+            "25": 1.4112,
+            "100": 1.2599,
+            "250": 1.18784,
+            "500": 1.1475
+          },
+          "reel_breaks_usd": {
+            "3000": 1.12835,
+            "6000": 1.10544,
+            "9000": 1.09396
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "28267 shown; 16-week lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Precision gain resistors, filter, output protection, forced-zero circuitry and calibration remain unpriced.",
+        "Exact zero-volt accuracy and source/sink behavior need verification with VFD input."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/OPA197"
+    },
+    {
+      "id": "spindle_serial_isolation",
+      "block": "0-10 V spindle isolation",
+      "manufacturer_part_number": "ISO7740FDBQR",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "One additional quad isolator for SPI clock/data/chip-select plus an inhibit/control provision crossing to the separate spindle analog domain.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/ISO7740FDBQR/8105904",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 2.86,
+            "10": 2.126,
+            "25": 1.944,
+            "100": 1.7437,
+            "250": 1.64812,
+            "500": 1.61044,
+            "1000": 1.51929
+          },
+          "reel_breaks_usd": {
+            "2500": 1.49302,
+            "5000": 1.46284
+          },
+          "reel_multiple": 2500
+        }
+      ],
+      "unknowns": [
+        "Same MPN as output isolators: aggregate all six per board for procurement breaks; do not count the analog isolator twice.",
+        "No analog-output readback ADC included."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/ISO7740"
+    },
+    {
+      "id": "spindle_isolated_supply",
+      "block": "0-10 V spindle supply",
+      "manufacturer_part_number": "TMR 1-2412",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Traco isolated module reference: 18-36 V input, 12 V/83 mA output, approximately 1 W. Dedicated analog-domain supply, not the controller/display PSU.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/traco-power/TMR-1-2412/9383377",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "tube",
+          "published_unit_price_breaks_usd": {
+            "1": 10.14,
+            "5": 9.76,
+            "10": 9.602,
+            "30": 9.35667,
+            "50": 9.2446,
+            "100": 9.0943,
+            "250": 8.89912,
+            "500": 8.75402
+          },
+          "availability_snapshot": "56 distributor +70 factory shown; 12-week lead-time indication",
+          "missing_requested_breaks": [
+            1000
+          ]
+        }
+      ],
+      "unknowns": [
+        "Separate local 5 V regulator included below for DAC/isolator side.",
+        "EMI filtering, capacitors, thermal/current margin and isolation layout remain unpriced.",
+        "Do not double-count with any later selected module already providing complete isolated spindle power."
+      ]
+    },
+    {
+      "id": "local_5v_ldo",
+      "block": "Field and analog local regulators",
+      "manufacturer_part_number": "TLV76050DBZR",
+      "quantity_per_controller": 2,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Two 5 V LDO reference provisions: one isolated-spindle 12-to-5 V rail; one low-current field-side 5 V isolator rail from nominal24 V. These do not power the embedded computer/display.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/TLV76050DBZR/7402852",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 0.23,
+            "10": 0.154,
+            "25": 0.1356,
+            "100": 0.1158,
+            "250": 0.1064,
+            "500": 0.10068,
+            "1000": 0.09598
+          },
+          "reel_breaks_usd": {
+            "3000": 0.09018,
+            "6000": 0.08734,
+            "9000": 0.08592
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "41888 shown"
+        }
+      ],
+      "unknowns": [
+        "Field-rail transient limit must respect regulator maximum input; nominal24 V does not imply unlimited input.",
+        "LDO dissipation/quiescent current can make the field branch unsuitable; replace with a switching solution if power budget fails.",
+        "Input/output capacitors and supply protection are unpriced."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/TLV760"
+    },
+    {
+      "id": "fpga_logic_bucks",
+      "block": "Onboard low-voltage regulators",
+      "manufacturer_part_number": "TPS62160DSGR",
+      "quantity_per_controller": 2,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Two buck-controller IC references for provisional 5-to-3.3 V and 5-to-1.2 V local rails; not a completed FPGA/ESP power tree or 24-to-5 V input converter.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS62160DSGR/2782701",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 1.76,
+            "10": 1.288,
+            "25": 1.1708,
+            "100": 1.0422,
+            "250": 0.98072,
+            "500": 0.9437,
+            "1000": 0.93942
+          },
+          "reel_breaks_usd": {
+            "3000": 0.87558,
+            "6000": 0.85715,
+            "9000": 0.84792
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "0 shown; 3000 expected 7-Dec-2026; price is not immediate supply"
+        }
+      ],
+      "unknowns": [
+        "Inductors, capacitors, feedback resistors, startup sequence, load/thermal sizing and any additional FPGA rails remain unpriced.",
+        "Input range does not accept24 V directly.",
+        "Main controller/display PSU and common upstream input conversion belong to parent costing; not included here."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/TPS62160"
+    },
+    {
+      "id": "external_watchdog",
+      "block": "Fault supervision",
+      "manufacturer_part_number": "TPS3431SDRBR",
+      "quantity_per_controller": 1,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Standalone programmable watchdog IC reference; actual useful-progress signal and output inhibit/reset arrangement remain design work.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS3431SDRBR/9597847",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "cut tape",
+          "published_unit_price_breaks_usd": {
+            "1": 2.08,
+            "10": 1.534,
+            "25": 1.3972,
+            "100": 1.247,
+            "250": 1.17532,
+            "500": 1.13212,
+            "1000": 1.11958
+          },
+          "reel_breaks_usd": {
+            "3000": 1.05263,
+            "6000": 1.03114,
+            "9000": 1.02038
+          },
+          "reel_multiple": 3000,
+          "availability_snapshot": "0 shown; incoming544 26-Oct-2026 and2456 11-Jan-2027"
+        }
+      ],
+      "unknowns": [
+        "Voltage supervisor, latch/inhibit gates, timing capacitor, reset pullups, service power switch and status indication remain unpriced.",
+        "An ordinary watchdog is not a complete safety circuit."
+      ],
+      "manufacturer_source_url": "https://www.ti.com/product/TPS3431"
+    },
+    {
+      "id": "field_headers",
+      "block": "96-position field connector allowance",
+      "manufacturer_part_number": "TBP01R1-508-08BE",
+      "quantity_per_controller": 12,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Twelve eight-position Same Sky 5.08 mm right-angle PCB headers. Together with matching plugs this budgets96 positions:74 required signal/reference plus22 provisional commons/power/spare positions.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TBP01R1-508-08BE/10238389",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "bag",
+          "published_unit_price_breaks_usd": {
+            "1": 0.98,
+            "10": 0.718,
+            "25": 0.6248,
+            "50": 0.5634,
+            "100": 0.5102,
+            "300": 0.4428,
+            "500": 0.41798,
+            "1000": 0.39005,
+            "5000": 0.34554
+          },
+          "availability_snapshot": "2029 shown; 12-week lead-time indication"
+        }
+      ],
+      "unknowns": [
+        "Exact group sizes/keying, commons/power currents, board-edge length and shield contacts not yet allocated.",
+        "The96 allowance is not proof every power/shield/service connector fits.",
+        "USB, Ethernet, display, expansion, compute-module sockets and internal harnesses excluded."
+      ],
+      "manufacturer_source_url": "https://www.sameskydevices.com/product/interconnect/connectors/terminal-blocks/tbp01r1-508-series",
+      "positions_each": 8,
+      "positions_total": 96
+    },
+    {
+      "id": "field_mating_plugs",
+      "block": "96-position field connector allowance",
+      "manufacturer_part_number": "TBP01P1-508-08BE",
+      "quantity_per_controller": 12,
+      "status": "costing_reference_not_selected_for_production",
+      "electrical_scope": "Twelve matching eight-position Same Sky plug connectors with screw terminals. Cost includes supplied mating plugs, not just board headers.",
+      "offers": [
+        {
+          "supplier": "DigiKey",
+          "source_url": "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TBP01P1-508-08BE/10238373",
+          "accessed_date": "2026-09-28",
+          "currency": "USD",
+          "packaging": "bag",
+          "published_unit_price_breaks_usd": {
+            "1": 2.39,
+            "10": 1.714,
+            "25": 1.4944,
+            "50": 1.3542,
+            "100": 1.2363,
+            "300": 1.0911,
+            "500": 1.03878,
+            "1000": 0.98061,
+            "5000": 0.88945
+          },
+          "availability_snapshot": "1028 shown; 12-week lead-time indication"
+        }
+      ],
+      "unknowns": [
+        "Wire, ferrules, labels, strain relief, enclosure connector access and labor excluded.",
+        "Use selected family mating guide and drawings before release; electrical connector rating is not board voltage rating."
+      ],
+      "manufacturer_source_url": "https://www.sameskydevices.com/product/interconnect/connectors/terminal-blocks/tbp01p1-508-series",
+      "positions_each": 8,
+      "positions_total": 96
+    }
+  ],
+  "unpriced_required_support": [
+    {
+      "id": "input_passives",
+      "scope": "22-channel resistor thresholds/current limits, filter/decoupling capacitors and trace/protection design",
+      "cost_usd": null
+    },
+    {
+      "id": "diff_front_end_support",
+      "scope": "TX/RX termination/bias where required, low-capacitance surge/ESD networks, encoder supply switching/protection",
+      "cost_usd": null
+    },
+    {
+      "id": "output_support",
+      "scope": "Supply/reverse/transient protection, current-limit resistors, load-dependent external clamps, bank thermal/layout capacity",
+      "cost_usd": null
+    },
+    {
+      "id": "spindle_support",
+      "scope": "Precision gain resistors, filter/protection, forced-zero and independent run/inhibit behavior, any measurement readback",
+      "cost_usd": null
+    },
+    {
+      "id": "regulator_support",
+      "scope": "Buck inductors/capacitors/feedback, LDO capacitors, extra FPGA rails and sequencing",
+      "cost_usd": null
+    },
+    {
+      "id": "fpga_configuration_clock_debug",
+      "scope": "Compatible oscillator/configuration flash if needed, debug/programming and relevant connectors",
+      "cost_usd": null
+    },
+    {
+      "id": "supervision_support",
+      "scope": "Voltage supervisor, inhibit/latch gates, service power switch, status/LEDs and useful-progress circuit",
+      "cost_usd": null
+    },
+    {
+      "id": "other_connectors",
+      "scope": "Host/module, USB, Ethernet/magnetics if needed, display, expansion, shields and wiring",
+      "cost_usd": null
+    }
+  ],
+  "excluded_parent_cost_blocks": [
+    "Linux compute/carrier",
+    "complete display/touchscreen",
+    "main control/display power supply",
+    "common upstream power conversion/protection",
+    "PCB fabrication/assembly/test/yield",
+    "enclosure/cooling",
+    "freight/tax/tariff",
+    "packaging/fulfillment",
+    "warranty/support",
+    "engineering/tooling/compliance"
+  ],
+  "price_evidence_limits": [
+    "Prices are public seller listings observed through web retrieval on the research date; they can change and are not binding quotes.",
+    "Availability snapshots may be indexed and differ among URL variants; recheck before procurement.",
+    "Use canonical current LCSC pages: stale search snippets showed materially lower old prices and were deliberately excluded.",
+    "DigiKey full reel and cut-tape tiers sometimes are nonmonotonic; do not assume the largest quantity always yields the best effective delivered cost.",
+    "No supplier contacted, cart created, quote requested or purchase made."
+  ]
+}

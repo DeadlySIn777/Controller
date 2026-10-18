@@ -1,0 +1,81 @@
+OEA r0.3 manufacturing-cost and home-assembly research
+Checked 2026-10-06. Research/planning only; no order, cart mutation, or new fabrication release.
+
+Decision supported by the evidence
+
+The current r0.2 quote cannot support a US$15 retail assembled adapter plus cable. The parent-reported PCBWay quote is $336.24 for five bare boards plus $29 assembly: ($336.24 + $29) / 5 = $73.05 each before components, cable, freight, tax, testing, packaging, and selling costs. This research did not independently re-open the user's quote or change its browser state.
+
+For r0.3, target two copper layers, all SMT on ONE face, 1 oz copper, 1.6 mm FR-4, >=0.1524 mm (6 mil) track width AND copper spacing, and >=0.30 mm drill with >=0.60 mm via diameter. Preserve purple, keyed cable output, power selector, and the requested 5/12/24 V indication. Recheck the actual Gerbers and component lands before selecting these quote options. The parent captured actual calculator scenarios below; they are budget estimates for provisional dimensions, not a reviewed fabrication quote.
+
+Actual calculator scenarios captured by the parent on 2026-10-06
+
+Source evidence: ../purchase_review/pcbway-budget-20261006.json
+Public calculator: https://www.pcbway.com/orderonline.aspx
+Provisional board: 50 x 15.24 mm; two layers; purple mask; white silk; 1 oz copper; 1.6 mm FR-4; 6/6 mil; >=0.3 mm drill; tented vias. The 50 mm length DOES NOT have a completed placement/routing proof. No Gerbers were uploaded and no order was submitted. Shipping selected United States/DHL, not necessarily the user's final delivery address. No assembly or stencil included.
+
+Quantity / finish       Bare PCB total    DHL       PCB + DHL      Per board incl. DHL
+5 / ENIG 1 microinch        $68.14        $26.55       $94.69              $18.938
+5 / lead-free HASL         $43.62        $26.55       $70.17              $14.034
+100 / ENIG 1 microinch      $95.55        $26.55      $122.10               $1.2210
+100 / lead-free HASL        $72.21        $26.55       $98.76               $0.9876
+
+Calculator standard build times: 3-4 days at quantity 5 and 5-6 days at quantity 100. These exclude shipping time and are subject to review. Duty/tax, stencil, parts, cables, assembly, programming, testing, scrap and selling costs are excluded. The ENIG/HASL difference at 100 is $23.34 per batch, or $0.2334 per board. Five-board procurement is already above or nearly at the US$15 retail ceiling before any electronics; the 100-board fabrication budget is materially more compatible with that target, but the complete assembled product cost is still unproven. Do not purchase 100 just to spread shipping until the prototype is validated. HASL remains a comparison pending footprint/assembly review.
+
+Why the old quote is expensive
+
+1. Fine copper geometry: PCBWay advertises standard minimum trace and spacing as 0.1 mm/4 mil. Its order form offers 3/3, 4/4, 5/5, and 6/6 mil options. The actual r0.2 custom U20 land has 0.100 mm gaps at pin 1 to pin 11 and pin 8 to pin 9, plus 0.120/0.125 mm gaps elsewhere. 4 mil is 0.1016 mm and 6 mil is 0.1524 mm. Therefore even choosing 4/4 mil for the existing 0.100 mm geometry is inaccurate. The replacement power package and footprint must truly meet the new rules. Do not alter manufacturer lands solely to lower the displayed quote.
+   Source: https://www.pcbway.com/capabilities.html
+   Quote options: https://www.pcbway.com/orderonline.aspx
+   Geometry: parent/root source review of r0.2 U20; not a website claim.
+
+2. Four layers and inner copper add fabrication steps (engineering observation). PCBWay's price-composition explanation names material, board/copper thickness, finish, hole sizes, linewidth and process difficulty as price factors. This identifies plausible contributors; it does not apportion the $336.24 quote among them. A valid comparison changes one option at a time on otherwise identical specifications, then obtains a final quote for the completed two-layer Gerbers.
+   Source: https://www.pcbway.com/pcb_prototype/Talking_about_the_Composition_of_PCB_Price.html
+
+3. Purple remains required. PCBWay's solder-mask page explicitly lists purple among colors attracting extra cost, but states no 3x multiplier. A separately dated promotion waived purple's premium during September/October 2025; that is not evidence of an October 2026 waiver. Retain purple in every budget quote. Do not substitute the advertised green-board price or assert that purple always triples the cost. The same page calls for >=0.19 mm IC pad spacing to retain a solder-mask bridge with purple at 1 oz; otherwise the fab may remove the bridge. Prefer footprints with comfortable mask spacing for hand assembly.
+   Sources: https://www.pcbway.com/pcb_prototype/PCB_Solder_mask.html
+   Historical promotion only: https://www.pcbway.com/blog/News/New_Promotional_Events_in_September_cf04c2df.html
+
+4. ENIG adds cost relative to HASL in PCBWay's published comparison. Keep ENIG as the current quote baseline if fine or exposed-pad parts need its flat surface. A lead-free HASL comparison is useful only after component-footprint and solderability review; this research does not authorize a silent finish change.
+   Source: https://www.pcbway.com/pcb_prototype/Comparison_of_several_PCB_surface_finish_types.html
+
+5. The public $5/10-board offer covers a basic 1-2-layer prototype <=100 x 100 mm. It is not a quote for this purple ENIG design and excludes the full delivered assembled product. The actual purple calculator scenarios above supersede the earlier unverified $10-$40 hope: five ENIG boards are $68.14 before shipping. PCBWay's assembly panel guidance gives 50 x 50 mm as its minimum panel and says panelization can improve efficiency. Ask for a repeated-board panel for production rather than assuming the tiny single-board area automatically creates low assembly cost. A supplier assembly panel may be larger than a hobby hotplate; bare individual boards are the simpler home-reflow starting point.
+   Sources: https://m.pcbway.com/activitypcb.aspx
+   https://www.pcbway.com/pcb_prototype/Panel_Requirements_for_Assembly.html
+
+Practical home-assembly layout gate (engineering recommendation)
+
+Two copper layers and two populated faces are different choices. A two-layer board can have every SMT part on top and an empty bottom solder-mask surface. That permits flat bottom contact with a hotplate before fitting through-hole parts. Reflow all SMT first; inspect and test the power section; then hand-solder StepStick headers, JST output, selector and power terminal. Connector plastics and projecting pins must not be sandwiched against the heating surface.
+
+The current r0.2 double-sided SMT board is not suited to straightforward direct-contact hotplate assembly: once one face is populated, flipping it puts parts against the plate and removes flat contact. It would require a qualified fixture/preheater/hot-air or oven process, with a thermal profile for both sides and component-retention checks. A hotplate alone does not make that process proven. A single-SMT-face redesign avoids this extra tooling and process development.
+
+Preserve the known StepStick mating geometry: 15.24 mm board width, 12.70 mm between header rows, 2.54 mm pin pitch, and physical omission of the VM pin. Width alone does not prove compatibility. Keep the top solder-tail envelopes clear, ensure the JST latch can be operated, and point power-terminal wires outward. Existing r0.2 is 38.10 mm long with 17.78 mm extension beyond the old 20.32 mm body. Any longer single-face redesign must be checked on the exact host board, against adjacent drivers, connectors, fans and enclosure walls. Do not widen over neighboring slots or promise all BTT/SKR hosts.
+
+Use a provisional <=50 mm length packing target to fit the whole bare board on the common 50 x 50 mm plate, but do not freeze dimensions before a real single-face placement/routing proof. A 55 x 55 mm plate gives modest margin. If the part count cannot fit while preserving electrical and mechanical clearances, simplify the circuit or revise the mechanical plan; do not shrink clearances or invent a finished layout. Top/bottom ground copper still needs a short buck input loop, short switching loop, adequate return paths and thermal checks.
+
+Prefer visible-lead packages such as SOIC/TSSOP/SOT-23 and 0603/0805 passives over tiny leadless packages when compatible with size and budget. A stencil helps repeatability and should be included in prototype tooling cost. A magnifier, fine tweezers, flux, soldering iron, and paste with a real manufacturer thermal profile are still needed. Temperature shown by a plate is its sensor temperature, not proof of solder-joint temperature; verify the paste's profile on a sacrificial assembly. These are assembly-process requirements, not a claim that any model has been tested with this board.
+
+Hotplate candidates: manufacturer specifications and Amazon status
+
+A. SEQURE T55: lowest-cost sourced candidate.
+   Manufacturer: 55 x 55 mm heating area; 50-280 C; 95 W maximum; recommended 19-25 V; USB-C PD 20 V >=3 A; timed constant-temperature heating. Bare-host and regional bundles differ: the regional bundle includes a 65 W PD supply and a 100 W/5 A cable. The bare host does not. Manufacturer page displayed $22.50 for the bare-host selection when researched; shipping is additional.
+   Manufacturer source: https://sequremall.com/products/sequre-t55-smart-mini-constant-temperature-adjustable-soldering-hot-plate-pcb-preheating-plate-led-desoldering-support-pd-qc-dc-power-supply-repair-tools-for-mobile-phone
+   Amazon.com listing: https://www.amazon.com/dp/B0CJQSHQ79
+   Amazon's indexed page identifies the T55, SEQURE seller, and Amazon fulfillment. It displayed $35.99 and the 'Only T55 Controller' selection, but the retrieved page was crawled about two weeks earlier and contained September delivery dates. Therefore $35.99 is an observed cached price, not a current cart total or delivery commitment. Recheck live price, seller, included heater, supply and cable in the user's browser before adding. No cart was changed here. This is a manually managed temperature/timer tool; do not advertise it as automatically executing a multi-stage paste profile.
+
+B. FNIRSI HT-P1A / HT-P1B: better process control, higher tool cost.
+   Manufacturer: 50 x 50 mm, 100-350 C, DC 12-28 V, constant-temperature and configurable reflow modes. DC permits up to 150 W; the A model supports USB-C PD up to 100 W, B up to 140 W with an appropriate PD3.1 source. Manufacturer standard-set page displayed US$54.99 without charger; its Pro set includes a 100 W PD charger and cable. That bundle does not provide the full DC 150 W rating. No Amazon.com listing with a verified live offer was found in this pass, so no Amazon ASIN is proposed.
+   Sources: https://www.fnirsi.com/products/ht-p1
+   https://fnirsi.com.cn/product/118.html
+
+C. MINIWARE MHP50: profile-capable alternative, Amazon offer unverified.
+   Manufacturer-authored introduction: 50 x 50 mm, segmented heating curve, DC input up to 150 W and PD 20 V up to 100 W. This is a manufacturer document hosted by Adafruit. A MINIWARE MHP50 AL50 Amazon identifier B0CWRFP65B was discovered, but the Amazon page could not be read successfully; price, seller, availability and supplied power adapter are NOT verified. Do not add it based only on an indexed/manual link.
+   Manufacturer document: https://cdn-shop.adafruit.com/product-files/5903/MHP50_Introduction.pdf
+   Unverified Amazon candidate: https://www.amazon.com/dp/B0CWRFP65B
+
+Retail target and purchase gate
+
+US$15 is a retail target for one tested assembled adapter plus its matching cable, not a five-unit prototype budget. Recurring delivered PCB + BOM + cable + assembly + test/yield + packing + selling costs + margin must fit within $15. Reusable hotplate and tools are separate initial expenditure; small Amazon multipacks create upfront cash cost and leftover inventory even when per-used-part cost looks small. A target cost calculation must keep both totals.
+
+Before a new bare-board order: complete the revised circuit and true two-layer layout, verify all footprints at >=6/6 mil including pad-to-pad gaps, verify ERC/DRC and the original socket pinout, prove top-side assembly access, price the exact purple/finish/quantity Gerbers plus stencil/freight, and source every actual MPN with sufficient voltage ratings. The requested 5/12/24 V indication must be in the BOM and power budget, and must identify measured voltage or explicitly label a selected setting; LEDs alone do not prove compatibility with every external driver. No substitutions or an Amazon-only BOM should be claimed complete until each electrical part is actually available and matches the qualified package/specification.
+
+Recommended next commercial comparison: same completed design, purple throughout, quantities 5/10/25/100, standard lead time, no special stackup/impedance/via fill, and explicit bare PCB versus assembly/parts/cable costs. Record ENIG and a separately reviewed HASL alternative as distinct quotes. The final decision should use delivered cost, not the banner price or bare-board area.

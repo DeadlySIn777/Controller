@@ -1,0 +1,40 @@
+OEA r0.2 TPSM365R6 footprint independent source review
+2026-10-06. This is source inspection, not fabrication or physical proof.
+
+Inspected the official TPSM365R6 Rev C PDF, manufacturer drawing 4226623/F
+09/2025, pages 51 and 52, as rendered images independently of the footprint
+author's generator. Compared the resulting KiCad land geometry and net map.
+Source: https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf
+
+No pin-map or dimensional error was found in
+Adapter.pretty/TI_RDN0011A_TPSM365R6.kicad_mod at review time.
+Pin 4 is VOUT, pin 5 is SW. Their rectangular copper lands with comb-shaped
+mask openings correctly implement the manufacturer's solder-mask-defined
+pattern. The comb need not be cut out of the underlying copper rectangle.
+Pin 10 is GND. Pin 11 is MODE/SYNC for the fixed-5 V variant; grounding it
+selects automatic PFM/PWM. It is not an AGND pin. Pin 9 is BIAS.
+
+Measured generated geometry:
+- Eleven separate mask openings and 23 separate paste apertures.
+- Pads 4/5 each have four 0.40 x 0.25 mm outer finger paste apertures, and
+  three 0.90 mm wide inner windows with heights 0.515, 0.620, 0.515 mm.
+- Pin 10's exposed top land and paste opening are 0.30 x 1.55 mm.
+- Pins 9 and 11 have 0.25 x 0.80 mm mask/paste openings.
+- Pad 1/8 mask and paste openings are 1.125 x 0.375 mm.
+- Pad 2/3/6/7 mask and paste openings are 1.10 x 0.25 mm.
+- Copper extends at least 0.05 mm beyond the corresponding mask boundary.
+- Minimum nominal copper gap from pad 4/5 to the GND stem is 0.120 mm.
+  Top pin 9/11 to pin 10 has 0.125 mm nominal gap. A local 0.10 mm copper
+  clearance is consistent with this manufacturer's fine-pitch land pattern.
+
+The source stencil example uses 0.125 mm thickness. The custom footprint
+uses explicit F.Mask/F.Paste graphics over copper-only numbered pads; these
+layers must be included in Gerber/stencil export and visually checked. Do not
+mistake the lack of automatic per-pad paste for a paste-free component.
+No under-pad vias are present; optional manufacturer via guidance therefore
+does not require filled vias for this footprint as currently drawn.
+
+This review does not establish actual PCB fabrication tolerances, solder-mask
+registration, stencil fabrication acceptance, reflow yield, thermal behavior,
+layout quality or electrical operation. Board-level DRC and exported layer
+inspection remain distinct checks.

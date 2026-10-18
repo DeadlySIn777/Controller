@@ -1,0 +1,66 @@
+{
+  "status": "PASS - INDEPENDENT SOURCE/PIN/CONNECTION REVIEW, NOT PHYSICAL QUALIFICATION",
+  "review_date": "2026-10-06",
+  "reviewed_parts_pin_functions": [
+    "U1",
+    "U2",
+    "U3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q20",
+    "U20",
+    "U21",
+    "D1",
+    "D21",
+    "D22"
+  ],
+  "reviewed_pin_function_count": 50,
+  "logic_rail_component_screen": {
+    "nominal_V": 3.3428,
+    "minimum_V": 3.2290977022977025,
+    "maximum_V_including_100nA_ADJ_allowance": 3.4742065891891882,
+    "minimum_bleed_current_uA": 145.32392899629625,
+    "screen_scope": "Reference, initial resistor tolerance and stated ADJ allowance only; no temperature-coefficient, ripple or transient qualification. Supervisor hysteresis is typical, so first-article startup measurement remains required."
+  },
+  "correction_identified": "TPS7A16A-Q1 limits OUT-to-IN to +0.3 V; the old output reservoir could exceed this on input collapse. Replaced with LT3014B, whose reverse-current protection and differential rating cover that condition without relying on an unspecified diode drop.",
+  "D21_lifecycle_check": "Diodes PCN 2780 discontinues BZT52C12-7-F-79; it explicitly recommends the selected BZT52C12-7-F as an active replacement. The family-page EOL link does not make this selected order code obsolete.",
+  "checks": [
+    "TI DCU/DCK buffer pinouts and TPS3839 DBZ pinout match package drawings.",
+    "The two logic buffers accept 5.5 V inputs while powered in the reviewed 3.0-3.6 V band; active-high OE is connected to active-low-reset supervisor output.",
+    "Nexperia N- and P-MOSFET pin functions match G1/S2/D3; Q20 body-diode orientation allows positive-input startup while blocking reversed DC input.",
+    "Fixed-5V module BIAS is connected to VOUT, MODE/SYNC is grounded, SW/BOOT have no external wiring, VCC has its dedicated bypass, and external load is not placed on VCC.",
+    "D22 isolates the buck input reservoir from sudden external-rail collapse; U20 VIN, UVLO divider and input bypass all connect on the protected side of that diode.",
+    "Selected 5 V leg has correctly oriented reverse-blocking diode; non-shorting switch selects COM only and never switches ground or logic supply.",
+    "Host VIO supplies only the EN bias reference and is not wired to an adapter power rail; VM contact remains physically omitted."
+  ],
+  "limits": [
+    "Exact host board/socket fit remains to be qualified; there is no universal BTT/SKR claim.",
+    "Supervisor delay does not prove no spurious pulse: STEP already high on output-enable release can create an active edge. Firmware idle state and driver disable/startup sequence must be verified.",
+    "CL57T-type ENA behavior is not a safety function and may enable a drive when its enable input is unpowered. Each exact driver profile requires verification.",
+    "TVS/fuse/FET component ratings do not establish surge immunity or short-circuit behavior of the assembled board.",
+    "Loaded 5 V common voltage after selector-diode, cable and sink losses, and 24 V input currents, require exact driver profile and measurements.",
+    "Power sequencing, loaded edges, temperature, EMI and mechanical clearance need physical first-article measurements."
+  ],
+  "primary_sources": {
+    "U1": "https://www.ti.com/lit/ds/symlink/sn74lvc2g126.pdf",
+    "U2": "https://www.ti.com/lit/ds/symlink/sn74lvc1g126.pdf",
+    "U3": "https://www.ti.com/lit/ds/symlink/tps3839.pdf",
+    "Q1_Q2_Q3": "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+    "Q20": "https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf",
+    "U20": "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+    "U21": "https://www.analog.com/media/en/technical-documentation/data-sheets/3014bfb.pdf",
+    "D1_D22": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+    "D21": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+    "D21_lifecycle": "https://www.diodes.com/assets/PCN-Files/Diodes_PCN_2780_EOL.pdf",
+    "rejected_LDO": "https://www.ti.com/lit/ds/symlink/tps7a16a-q1.pdf"
+  },
+  "sha256": {
+    "parts.json": "5c7f21b26ba3f51624ae0dbb271f5357dde8dd01bc5537c12788372570f3f8ac",
+    "power_spec.json": "1b8d02093b6687de90eeef4718d54dbc24e8f8de94e8f96c4db647cca05be9dd",
+    "logic_spec.json": "9dcd58dca50c59dec4ebc61c4140ed449e327efb03976dd031564f8901f2c305",
+    "adapter.kicad_sch": "a5379c5a1102bf150c709459cb9753d5964318c043fc18a1a009b1c821e942ff",
+    "adapter.net.xml": "47af1b17397dfe6a3285eff85b676668d468e19192dce539cfd2839ac3166874"
+  },
+  "manufacturing_ready": false
+}

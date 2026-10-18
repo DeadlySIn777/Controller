@@ -1,0 +1,13 @@
+menu "CNC diagnostic service"
+config CNC_SERVICE_HOST_RX_GPIO
+    int "Read-only host UART RX GPIO (-1 disables hardware link)"
+    range -1 48
+    default -1
+    help
+        Assign only after the ESP32-S3 module pin map is reviewed. No UART TX
+        or machine-control GPIO is configured by this firmware. Kconfig cannot
+        express holes in the range, so service_main.c rejects at compile time:
+        19 and 20 (USB Serial/JTAG console), 22-25 (do not exist on ESP32-S3)
+        and 26-32 (module SPI flash bus). Modules with octal PSRAM also use
+        33-37; check the module datasheet before choosing those.
+endmenu

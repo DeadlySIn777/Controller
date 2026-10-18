@@ -1,0 +1,31 @@
+# Structural inhibit clock-domain-crossing check on the unmapped, flattened RTL.
+# Parsed as plain Verilog-2005 (no -sv) with the synthesized ENABLE_DISCOVERY=1 parameter.
+# The raw inhibit_n pin and the flops it clears asynchronously (inhibit_sync,
+# inhibit_authorized) may reach a flip-flop D/EN input only in those capture
+# flops themselves and in the first stage of the two-flop synchronizers
+# (inhibit_ok_ff, authorized_ff). Their reset (ARST) use is the intended
+# asynchronous capture. Combinational pad gating of outputs is allowed.
+# This is a structural netlist check, not a metastability/MTBF analysis.
+read_verilog rtl/cnc_endpoint.v rtl/cnc_spi_frame.v rtl/cnc_stepgen.v rtl/cnc_encoder.v
+chparam -set ENABLE_DISCOVERY 1 cnc_endpoint
+hierarchy -check -top cnc_endpoint
+rename -top cnc_endpoint
+proc
+flatten
+memory
+# Every sequential element must be an asynchronously reset $adff so the check covers all state.
+select -assert-none t:$dff t:$dffe t:$adffe t:$sdff t:$sdffe t:$sdffce t:$aldff t:$aldffe t:$dffsr t:$dffsre t:$ff t:$dlatch t:$adlatch t:$dlatchsr t:$mem_v2 t:$memrd_v2 t:$memwr_v2
+select -assert-min 1 t:$adff
+select -set async_src w:inhibit_n w:inhibit_sync w:inhibit_authorized %u %u
+select -set async_cone @async_src %coe*
+select -set captured @async_cone %co:+[D,EN] t:$adff %i
+select -set allowed w:inhibit_sync w:inhibit_authorized w:inhibit_ok_ff w:authorized_ff %u %u %u %ci:+[Q] t:$adff %i
+log -header "Combinational cone of inhibit_n, inhibit_sync and inhibit_authorized"
+select -list @async_cone
+log -header "Flip-flops whose D/EN input is in that cone"
+select -list @captured
+log -header "Permitted capture and first-stage synchronizer flip-flops"
+select -list @allowed
+select -assert-count 4 @allowed
+select -assert-none @captured @allowed %d
+log CDC_STRUCTURAL_CHECK_PASSED: no clocked consumer outside the inhibit capture and synchronizer first stages sees inhibit_n, inhibit_sync or inhibit_authorized

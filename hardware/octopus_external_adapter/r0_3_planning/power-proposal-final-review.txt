@@ -1,0 +1,88 @@
+R0.3 POWER PROPOSAL3 — SOURCE REVIEW HANDOFF, 2026-10-06
+Status: concrete prototype candidate; not released for manufacture or sale.
+
+The authoritative circuit snapshot is power_spec.json, revision3,27 parts.
+Every part has exactMPN, footprint, pin/net map and source. Sibling independent
+review accepted the maps and the two new discharge/inrush changes. Native
+schematic generation is a separate result owned by the schematic agent.
+
+Nominal5/12/24V external supplies connect at J4. VM and host VIO supply no
+adapter power. Regulated5V mode uses MP2459 only with nominal12/24V input;
+nominal5V must use EXT. The selector diode prevents selected12/24V backfeed
+into the buck output. Switch only with input off and output discharged.
+Actual5V-mode COM is load-dependent and includes diode loss; it is not a
+guaranteed exact5.000V or a universal driver-voltage qualification.
+
+The0.1%124k/23.7k divider keeps the manufacturer's chosen impedance and gives
+nominal5.0604V before diode. Reference/resistor-only25C screen is4.9275–5.1938V.
+Using D25's0.4Vmax at100mA25C gives4.5275V selected-low arithmetic screen.
+Feedbackbias has no full bounding specification, diode minimumVF is absent,
+and ripple,coldVF,wiring loss and regulator temperature remain measured gates.
+
+Critical load:60mA driver common +5mA indicator +15.9mA buck bleed +approximately
+0.53mA COM bleed +0.04mA feedback =about81.5mA.90mA is the design test load.
+The15uH Bourns inductor has2.0AIsat at30%drop25C, above MP2459's1.5A maximum
+current-limit specification. Its1.8Arms rating is not a converter-output claim.
+
+R28=330ohm0805 discharges buck output when EXT is selected. At2.65VUVLO,
+its minimum discharge7.95mA with Cin3.4uF/Cout27.83uF allows0.971mA input
+drain, versus0.927mA screen for25C IQ+ENdivider+conservative diode leakage.
+R28 worst dissipation82.6mW is below125mW in the0–50C prototype target.
+MP2459 SW absolute upper limit is VIN+0.3V. IC current through/belowUVLO
+is not specified by its12V25C IQ entry, so scope VIN,SW,VOUT during input
+collapse/short and both selector positions; the arithmetic is not a guarantee.
+
+AP7375 is NOT reverse-output protected and requires VOUT<=VIN+0.3V.
+D26/C25 retain input energy; R27 bleeds output, even with MCU inBOD/reset.
+C25 screen near3.3V=3.515uF; output2.2u+MCU100n upper tolerance/temp screen
+=2.9095uF. The independent decay screen has positive margin using cited
+diode leakage and nominal-condition LDO IQ, but undervoltage LDO drain is
+unspecified. Scope actual collapse, ramp-down and brownouts. No external
+programmer power may drive3.3V or UPDI; target-powered reference only.
+No extra3.3V capacitance may be added without repeating decay analysis.
+
+R26=82ohm1% anti-surge1206 limits26.4V cold-start peak to325.2mA before diode
+drop, below BAT46W350mA repetitive-pulse rating;45.4V peak bound559.3mA is
+below its750mA10ms single-surge rating. Using C25 nominal/tolerance/temp upper
+5.9455uF, resistor startup charge-energy upper screens are2.072mJ at26.4V
+and6.127mJ at45.4V. This is not completed pulse qualification. Panasonic's
+single-pulse graph is explicitly reference data, with10s minimum period and
+1000cycles; repeated cycling and real source pulses remain prototype tests.
+At low selected-COM4.5275V,5mA rail budget,D26max0.45V and R26max82.82ohm,
+LDOinput screens3.6634V, above3.3V+50mV dropout at10mA25C.
+
+Capacitor curve receipts are in capacitor-bias-source-data.json. Manufacturer
+typical curves times tolerance/temperature are engineering screens, not
+guaranteed combined worst-case capacitance. Input4.7uF at26.4V screens1.558uF;
+output22uF at5.2V screens10.139uF. Ripple and stability must be measured.
+
+Inductor custom lands were copied from the primary manufacturer's recommended
+layout:two1.5x4.0mm pads atx±1.8mm. Body5.0±0.2mm,height4.0mmmaximum.
+Silk is top/bottom only, outside solder lands. Native footprint load/coordinate
+checks are not equivalent to completedboardDRC or successfulreflow/hostfit.
+
+Primary source URL updates for source readers:
+YAGEO RC:https://yageogroup.com/content/datasheet/asset/file/PYU-RC_GROUP_51_ROHS_L
+YAGEO RT:https://yageogroup.com/content/datasheet/asset/file/PYU-RT_1-TO-0-01_ROHS_L
+The oldwww.yageo.com RT link in the circuit metadata did not load during
+finalcheck; DigiKey's exact-part link resolves to the RTURL above, which timed
+out during retrieval. Exact124k/23.7k0.1% part identity was checked on seller
+pages; an unread primaryPDF is not represented as inspected.
+Panasonicpulse:https://industrial.panasonic.com/cdbs/www-data/pdf/RDO0000/ast-ind-161285.pdf
+MP2459:https://www.monolithicpower.com/media/document/MP2459_r1.01.pdf
+AP7375:https://www.diodes.com/datasheet/download/AP7375.pdf
+BAT46W:https://www.diodes.com/datasheet/download/BAT46W.pdf
+PMEG6010CEH:https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf
+Bourns:https://www.bourns.com/docs/product-datasheets/srn5040.pdf
+The attempted localMP2459 download returned blockedHTML, now explicitly named
+mp2459-download-blocked.html/.png. It is not a local datasheet copy. The
+15page primaryMP2459 document was read with the web tool.
+
+Cost:power subsystem only$3.8067 at observed100piece tiers. Plus provisional
+HASLPCB$0.9876=$4.7943 before otherparts,harness,assembly,test,freight/tax.
+All sources,availability cautions and exclusions are in power-cost-observations.
+Several parts show backorder, C26NRND. The complete$6 landedtarget is unproven.
+No componentpurchase, finalupload, manufacturing release or public listing
+was done by this subtask.
+
+Price revision2: directly opened US/USD exact-MPN seller offers supersede the initial mixed-seller power subtotal$4.3945. Current power subtotal$3.8067 at100-piece tiers; quantity1-tier consumed subtotal$8.79. Neither is an order-ready basket; several exactparts are backordered and PMV100EPAR displayed only3pieces. Circuit snapshot unchanged.

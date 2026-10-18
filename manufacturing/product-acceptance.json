@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "product_revision": "engineering-r0",
+  "board_revision": "full-controller-not-frozen",
+  "requirements_path": "docs/CURRENT_ACCEPTANCE_GATES.md",
+  "package": {
+    "package_id": "is2-base-controller-candidate",
+    "package_revision": "unqualified-r0",
+    "scope": "Single active motherboard engineering candidate. No offered production package has been qualified; screen size, licence or optional AI cannot remove fitted motor/I/O requirements. Each eventual offered package needs its own acceptance record.",
+    "configuration": "Source26/ROOT104/CAD30 baseline with all twelve motor interfaces, four base ABZ, 24 general DI and 16 smart DO plus required interfaces. Source27 is staged. Exact qualified compute/ESP/storage/display/harness/enclosure SKUs and software revisions are not frozen."
+  },
+  "note": "All gates remain incomplete. Historical or bounded source/host/RTL evidence is not a complete product acceptance. Empty evidence lists intentionally contain no invented passes.",
+  "gates": [
+    {
+      "id": "G01",
+      "requirement": "All twelve complete motor interfaces fitted on one motherboard, at least eight usable motors, individual enable and alarm on every channel",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Source26 represents all twelve STEP/DIR, enable and alarm interfaces; 3,508 required board joins remain in the last verified ROOT104 baseline. Complete CNC3/RTL/HAL and vendor/physical qualification remain unfinished. Historical runtime is six/two.",
+      "evidence": []
+    },
+    {
+      "id": "G02",
+      "requirement": "24 general DI and 16 smart general DO remain available with all twelve motor interfaces",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Source26 represents 24 general DI and 16 smart DO with acquisition/control circuitry. Full routing, actual concurrent I/O runtime and electrical/thermal qualification remain unfinished.",
+      "evidence": []
+    },
+    {
+      "id": "G03",
+      "requirement": "Serially communicated local I/O/real accessories validate versioned board/region or actual-module identity, sequence/freshness and CRC before outputs change",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Marker bits/readback alone are insufficient.",
+      "evidence": []
+    },
+    {
+      "id": "G04",
+      "requirement": "Independent fault-to-inhibit bound no greater than 20 ms for declared covered faults",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open for current dual TPS3851 candidate integrated in MC r0.4. Historical TPS3431 screened approximately 64–72 ms and failed. Current [numerical review](../reports/next-implementation-20260930/WATCHDOG_NUMERICAL_REVIEW.md) retains conditional leakage/setup assumptions, open guaranteed SET1 timing and unqualified full-path/self-test bounds; no physical 20 ms acceptance is established. A clocked FPGA timer alone does not cover clock stall.",
+      "evidence": []
+    },
+    {
+      "id": "G05",
+      "requirement": "Reliable full exchange at 1 kHz, completion target 700 microseconds under defined worst-case load",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Mock SPI and simulation wire arithmetic do not qualify a physical cycle.",
+      "evidence": []
+    },
+    {
+      "id": "G06",
+      "requirement": "72-hour combined-load run plus fault injection with all twelve motors and any offered encoder/process expansion operating together",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. No such physical trial.",
+      "evidence": []
+    },
+    {
+      "id": "G07",
+      "requirement": "Power/protection works at the declared voltage/load/environment limits across all populations",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Historical expanded central-power arithmetic exceeded its 6 A budget in required cases. The historical reset physical-pin defect was repaired and propagated; MC r0.4 has local rail generation/window supervision with native ERC zero. Complete product loads, protection, PDN/routing, sequencing/partial-power, transient/thermal and physical tests remain unqualified.",
+      "evidence": []
+    },
+    {
+      "id": "G08",
+      "requirement": "Every displayed measurement has validity and age; stale/disconnected never appears as plausible zero",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Source26 represents output current/fault acquisition paths. Complete routing, calibration, actual firmware/transport and deployed validity/age UI remain unqualified.",
+      "evidence": []
+    },
+    {
+      "id": "G09",
+      "requirement": "Hardware-backed output/supply/module/temperature diagnostics and power-loss-tolerant local fault history",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. IC or GPIO reservations are not complete diagnostics.",
+      "evidence": []
+    },
+    {
+      "id": "G10",
+      "requirement": "Eight of ten first-time users reach a verified low-speed jog within 15 minutes on the reference machine",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Older app-interaction timing exercises are separate metrics.",
+      "evidence": []
+    },
+    {
+      "id": "G11",
+      "requirement": "Replace approved purchased compute/ESP/settings modules with power off; separately exchange a motherboard through retained terminal/harness groups without conductor retermination, ordinary customer soldering/programming or lost configuration",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Historical file-only virtual-card replacement evidence does not qualify current module or whole-board service.",
+      "evidence": []
+    },
+    {
+      "id": "G12",
+      "requirement": "Machine configuration survives interrupted writes and compatible compute/module replacement",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Host file/journal models do not qualify physical storage.",
+      "evidence": []
+    },
+    {
+      "id": "G13",
+      "requirement": "No automatic motion resume after a fault, power loss or service replacement",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Partly demonstrated in six/two simulation; expanded physical product open.",
+      "evidence": []
+    },
+    {
+      "id": "G14",
+      "requirement": "One service contract for UI, CLI and assistants; discover, validate, preview/diff, reversible configuration within real limits",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Partial disconnected profiles plus separate bounded runtime XYZ service. Production unification open.",
+      "evidence": []
+    },
+    {
+      "id": "G15",
+      "requirement": "Preserve the intended Octopus/MR-1 experience and provide CAD/model and no-CAD setup routes",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Scene metadata validation is not the requested renderer or CAD workflow.",
+      "evidence": []
+    },
+    {
+      "id": "G16",
+      "requirement": "Qualify every offered screen/host package independently of I/O tier",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open for all screen classes. Connector shape is not compute compatibility.",
+      "evidence": []
+    },
+    {
+      "id": "G17",
+      "requirement": "ESP supports qualified accessory sequences with one output owner and measured readiness",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Present target-compiled firmware is diagnostic-only.",
+      "evidence": []
+    },
+    {
+      "id": "G18",
+      "requirement": "AI stays optional; operation, diagnostics, commissioning and recovery work without internet or AI credit",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Architecture recorded; installed integration open.",
+      "evidence": []
+    },
+    {
+      "id": "G19",
+      "requirement": "Paid software works offline and survives legitimate module replacement without repurchase",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Policy recorded; implementation/distribution review open.",
+      "evidence": []
+    },
+    {
+      "id": "G20",
+      "requirement": "Customers can buy ordinary proven compatible peripherals elsewhere",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Policy recorded; qualified physical compatibility list open.",
+      "evidence": []
+    },
+    {
+      "id": "G21",
+      "requirement": "Plasma upgrades retain unaffected setup and support the first divided-voltage module with two qualified source/harness profiles",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Planning only. Raw/HF interfaces are separate future qualifications.",
+      "evidence": []
+    },
+    {
+      "id": "G22",
+      "requirement": "PCBWay turnkey and complete product economics are reviewable before ordering",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. The last verified Source26/ROOT104 baseline has 1,101 incomplete multi-pad nets and 3,508 required joins. [Current partial BOM](../reports/motherboard-cost-20260930/source-r26-2688-complete-cost-v11/README.md) leaves 185 MPNs/720 purchased pieces unpriced; complete assembly/module/screen cost and manufacturer quotes remain missing. No Gerber/drill/final assembly release or manufacturing-ready claim.",
+      "evidence": []
+    },
+    {
+      "id": "G23",
+      "requirement": "Twelve simultaneous STEP/DIR channels at up to 2 MHz/channel with individually enforced STEP-high/low, DIR-setup/hold, polarity and maximum-rate profiles; atomic twelve-channel updates in a deterministic 1 kHz LinuxCNC servo cycle",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. New isolated twelve-generator HDL sweep passes 144 cases and exact DDS boundary checks; experimental 12/12 ticks has effectively no margin at 2 MHz. Complete twelve-channel CNC3 endpoint, dynamic timing profiles, actual driver/cable timing, target load and hardware qualification remain unfinished. Historical six-channel 195,312.5 pulses/s runtime limit is unchanged.",
+      "evidence": []
+    },
+    {
+      "id": "G24",
+      "requirement": "Four base ABZ encoder paths plus qualified expansion toward twelve ABZ channels, simultaneously with all twelve motor interfaces and preserved I/O/process functions",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open expansion target. Four base receiving paths are represented in current source; source representation is distinct from four- or twelve-encoder runtime and physical qualification. No custom motor daughterboard is introduced.",
+      "evidence": []
+    },
+    {
+      "id": "G25",
+      "requirement": "Pre-fabrication performance limits and one-command virtual bench, with simulated/design/datasheet/physical evidence kept separate",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Partial actual component evidence:144 steady twelve-generator cases plus dynamic/reversal and four-encoder sweeps pass; CNC3 structural SPI/codec/family mapping and selected passive/buffer SPICE pass. Stateful CNC3/HAL,complete analog chain,full-load machine,vendor fit and physical qualification remain unfinished.",
+      "evidence": []
+    },
+    {
+      "id": "G26",
+      "requirement": "AI acts as a grounded CNC setup specialist, produces a validated supported setup efficiently and protects the roughly US$15 API allowance",
+      "status": "open",
+      "scope": "Not accepted for this engineering package.",
+      "reason": "Open. Controller has simulated profiles and bounded separate runtime services; no integrated setup expert, customer frontend, approved physical profile catalog or cost enforcement. External candidate keyword assistant fails negation/intent tests and is not adopted.",
+      "evidence": []
+    }
+  ]
+}

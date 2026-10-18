@@ -1,30 +1,63 @@
-# Controller motherboard — public routing review
+# Visual CNC controller — engineering workspace
 
-Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
+Documentation reconciled **18 October 2026** against recorded decisions and evidence. The controller has working disconnected software, LinuxCNC/RTL integration and substantial native electrical/PCB work. Routing, complete electrical qualification, FPGA physical implementation and physical machine qualification remain unfinished. **There is no manufacturing release.**
 
-## Open the actual files
+## Start here
 
-- [Verified baseline project](board/baseline/board.kicad_pro), [PCB](board/baseline/board.kicad_pcb), [custom rules](board/baseline/board.kicad_dru), and the adjacent complete schematic/local libraries.
-- [Latest staged project](board/staged/board.kicad_pro), [PCB](board/staged/board.kicad_pcb), and [custom rules](board/staged/board.kicad_dru). This contains unqualified routing/power-zone changes and has no completed current native refill/DRC.
-- [Baseline six-layer Specctra DSN](routing/corrected-R299-baseline-native-raw.dsn), and [raw staged six-layer Specctra DSN](routing/stage4-native-raw.dsn). Native export alone does **not** translate every custom DRU isolation/return/current requirement; inspect the KiCad rules before routing.
-- [Exact baseline project with its saved fill cache](archives/baseline-full-cached-project.zip) and [exact staged project with its saved fill cache](archives/staged-full-cached-project.zip). Extract into separate directories and open `board.kicad_pro`.
-- [Measured whole-board review and figure](review/REVIEW.md), [setup findings](SETUP_REVIEW.md), [power/stackup review](review/power-and-stackup-review.txt), [native baseline DRC](evidence/baseline-drc.json), and [file hashes/provenance](MANIFEST.json).
+| Document | Purpose |
+| --- | --- |
+| [Complete documentation index](docs/README.md) | All topic guides, component documentation and historical evidence |
+| [Project briefing](PROJECT_BRIEFING.md) | Product, architecture, implemented work and remaining work |
+| [Project memory](PROJECT_MEMORY.md) | User decisions and constraints to preserve |
+| [Engineering status](reports/ENGINEERING_STATUS.md) | Latest recorded results, exact sources and limitations |
+| [Current acceptance gates](docs/CURRENT_ACCEPTANCE_GATES.md) | Requirements still needed for release |
+| [Build plan](docs/BUILD_PLAN.md) and [platform roadmap](docs/PLATFORM_ROADMAP.md) | Execution order and proposed capabilities |
 
-The loose `.kicad_pcb` files omit only derived `(filled_polygon ...)` cache nodes to fit normal GitHub file limits. All other bytes are retained. Their source zones, tracks, vias, pads and placement are unchanged. A refill is required before judging filled copper or current connectivity. ZIP archives retain the complete original cached board bytes, verified against the source SHA-256; use those to inspect the measured baseline without refilling. The staged cache is inherited evidence and does not validate its edited zones.
+## Current product contract
 
-## Measured status
+[IS-2](docs/MOTHERBOARD_IS2.md) requires **one active custom motherboard with a soldered FPGA and all twelve motor interfaces fitted**, individual enable/alarm on all twelve, at least eight usable motors, four base ABZ encoders, 24 general DI and 16 smart general DO, plus the specified fast inputs, process/analog interfaces, communications, protection and watchdog/permission circuitry. Purchased compute, ESP and storage/settings modules remain replaceable. The older passive base, removable custom motion/I/O cards and motors-9–12 expansion card are superseded.
 
-The corrected baseline has **1,172 required pad-island joins**, **1,183 API unconnected items**, and **499 CLI unconnected diagnostic rows**. These are different counters for the same incomplete board. Cached native DRC reports zero other errors, 332 warnings and zero schematic parity issues. This is not a zero-error completed board. Latest staged changes have no new measured full native AFTER count.
+Local LinuxCNC owns motion planning; the FPGA supplies deterministic timing/capture and the ESP has a bounded diagnostic/service role. Accessory automation is a separately qualified extension. The touchscreen, CLI and optional AI proposals share validation and reversible configuration transactions. Normal operation and recovery remain available offline without AI credits. See [setup](docs/SETUP_WORKBENCH.md), [configuration](docs/CONFIGURATION_AND_CLI.md), [diagnostics](docs/DIAGNOSTICS_AND_PACKAGES.md) and [OS experience](docs/CONTROLLER_OS.md).
 
-The board is 450 × 235 mm, six copper layers, 2,723 footprints and 9,971 pads. Current staged source contains 86,456 track segments and 8,014 vias. Signal routing occupies mainly F.Cu, In3.Cu and B.Cu; the remaining inner layers largely carry split power/reference zones. Raw export census reports 82,946 locked copper objects out of 94,470 tracks/vias. Historical locks must be reviewed for coordinated global routing rather than assumed electrical requirements.
+Screen options cover the **7-, 10-, 12-, 14-, 18- and 21-inch classes and further qualified sizes**. Screen size and software licensing do not remove fitted motor channels or required I/O. Every package must include and cost its stated display, compute, supplies, enclosure, harnesses and setup scope. See [display tiers](docs/DISPLAY_TIERS.md) and [commercial policy](docs/COMMERCIAL_MODEL_AND_LICENSING.md).
 
-One active motherboard retains the soldered FPGA, all twelve fitted motor interfaces with individual enable/alarm, four ABZ encoders, 24 DI and 16 smart DO plus the other required interfaces. Existing machine settings, electrical limits, galvanic domains and fault/recovery behavior remain requirements. No channel removal, domain merge or blanket clearance reduction is authorized by this snapshot.
+Power-off service exchanges an approved commodity module or the whole motherboard using keyed pluggable terminal/harness groups. Preserve protected machine settings, mirror/export recovery, offline entitlement and deliberate inhibited restart. Whole-board service has its own verification and cost requirements; no five-minute replacement guarantee is established. See [repair and machine memory](docs/MODULAR_REPAIR_AND_MEMORY.md).
 
-This repository is a bounded engineering-review snapshot, including actual native sources and selected evidence. It does not include vendor installers, machine configurations, the historical report/cache tree or manufacturing outputs. No new software or hardware license grant is added here.
+## Evidence to read in context
 
+| Scope | Recorded result | Boundary |
+| --- | --- | --- |
+| Adopted Source26/ROOT104, published CAD30 | 3,508 required joins remain; native ordinary DRC 0 errors/0 warnings; Source26 ERC 0 errors/70 warnings | Dated adopted source, distinct from later isolated finishing work |
+| [17 October finishing continuation](reports/board-finish-20261017/README.md) | Recovered R299 full native result: 1,172 required joins / 1,183 API items, 0 ordinary errors/333 warnings/0 parity issues | Unfinished continuation; no adoption or manufacturing promotion |
+| Isolated corrected baseline in that continuation | Same 1,172 joins; cached-fill DRC 0 ordinary errors/332 warnings/0 parity issues | Duplicate-via/BOM correction; no fresh refill in that check |
+| Composed routing stages 1–4 | Native input/source/geometry checks recorded; full refill/AFTER qualification remains open in the cited report | Stale cached fills cannot establish new connectivity or ratings |
+| Canonical disconnected SIM2 correction | Actual full-core mapping: 15,805 LUT4 + 2,107 ADD = 17,912; 63 RAM5K; fresh eight-/twelve-joint LinuxCNC/C/SPI/RTL/virtual-feedback checks | Functional mapping and simulation; physical wrapper, vendor place/route and timing remain open |
+| Historical CNC1 baseline | [Six-joint/two-encoder integration](reports/CNC1_INTEGRATION.md), [synthesis](reports/FPGA_SYNTHESIS.md) and [recovery](reports/PERSISTENT_RUNTIME.md) | Preserve the original tested source, date, limits and profile |
 
-## Controller documentation
+Use the source-bound [engineering status](reports/ENGINEERING_STATUS.md) and continuation receipts before quoting a count. Source inspection, host tests, target compilation, HDL simulation, FPGA mapping, circuit ERC, board DRC and physical measurements establish different things. No physical commissioning or complete machine rating follows from the table.
 
-The [complete documentation index](documentation/docs/README.md), [current project briefing](documentation/PROJECT_BRIEFING.md) and [engineering status](documentation/reports/ENGINEERING_STATUS.md) were reconciled on 18 October 2026. They cover the motherboard, software/CLI/UI, compute, displays, service/recovery, costing and qualification requirements.
+The immutable [Source26 cost audit v11](reports/motherboard-cost-20260930/source-r26-2688-complete-cost-v11/README.md) is a dated partial basket: 105 exact MPNs priced, 185 MPNs/720 fitted pieces unpriced. Known-priced consumed parts at 1/10/100 controllers are US$1,091.51/$877.37/$796.51 per board. Modules, displays, fabrication, assembly, programming/test and packaging remain additional unknowns. US$400 is a preliminary assembly reference; a complete product cost or PCBWay quote is not established.
 
-The [publication scope and source hashes](documentation/PUBLICATION.md) distinguish active guidance, historical evidence and workspace-only references. This documentation addition preserves the board-review files, their measured status and the manufacturing limitations above.
+## Use the disconnected workbench
+
+From this directory, with the required Python dependencies available:
+
+```powershell
+python -B -m controller_config setup --directory .controller-setup-demo serve --port 8766
+```
+
+Open `http://127.0.0.1:8766/`. This starts the local simulation setup UI and shared service. It does not commission or authorize a physical machine. The [workbench guide](docs/SETUP_WORKBENCH.md) describes intake, readiness, reviewed saves, backup recovery and optional AI budgets. Use a separate demonstration directory to preserve existing machine configurations.
+
+To inspect the engineering bench before choosing checks:
+
+```powershell
+python -X utf8 tools/validate_controller.py --inventory
+```
+
+The documented full disconnected bench is `./validate_controller.ps1 --full` or `python -X utf8 tools/validate_controller.py --full`. It creates a new evidence directory. Missing tools and unfinished stages remain explicitly blocked; physical tests remain unrun. See [Rev A qualification](docs/REV_A_QUALIFICATION.md) and the [PCBWay submission checklist](manufacturing/PCBWAY_SUBMISSION_CHECKLIST.md).
+
+The [200-feature catalogue](docs/FEATURE_CATALOG.md) preserves proposals and stable IDs. Dated research, component READMEs and report snapshots keep their original evidence scope; use the [documentation index](docs/README.md) to find current guidance before interpreting them as product capabilities.
+
+## Published native board snapshot
+
+The existing [board-review package](BOARD_REVIEW.md), its native baseline/staged files and original provenance remain available alongside the complete engineering source. See [GitHub publication scope](GITHUB_PUBLICATION.md) for the source/evidence inventory.

@@ -1,0 +1,53 @@
+{
+  "recorded_utc": "2026-09-28T20:59:48.595768+00:00",
+  "scope": "RTL functional simulation (default ABI1 and ENABLE_DISCOVERY=1 ABI2 testbenches), default-top and Verilog-2005 elaboration, independent codec check, strict lint only",
+  "tools": {
+    "iverilog": "13.0",
+    "verilator": "5.048",
+    "python": "3.14.7",
+    "environment": "WSL GarciaMechBuilder / Alpine Linux 3.24.2"
+  },
+  "rtl_checks": 252,
+  "rtl_v2_checks": 27,
+  "uncounted_fatal_monitors": [
+    "STEP high = PULSE_CYCLES",
+    "STEP low >= SPACE_CYCLES",
+    "DIR setup >= DIR_SETUP_CYCLES",
+    "DIR hold >= DIR_HOLD_CYCLES",
+    "no STEP while disabled"
+  ],
+  "rate_bound": {
+    "PULSE_CYCLES": 100,
+    "SPACE_CYCLES": 100,
+    "MAX_RATE": "0x01000000",
+    "fault_free_bound": "0x01460CBC",
+    "rule": "MAX_RATE <= floor(2^32/(PULSE_CYCLES+SPACE_CYCLES+1))"
+  },
+  "source_sha256": {
+    "PROTOCOL.md": "5dca7f61c9fa14aaca2618e874d547bc5c4d525fcf7b5fb15b5491b824b72b6b",
+    "rtl/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "rtl/cnc_endpoint.v": "80522fdac2fca83b3593889dddb137da34346a07e9c3d31773a30a559c74b392",
+    "rtl/cnc_spi_frame.v": "5bf27f0cbae0e34c91e3387fe0e0f0f464e85ef6f7f183f00d67ac1c4ce776cd",
+    "rtl/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "tests/tb_cnc_endpoint.sv": "f27c4a4fb8d8fea8c10940b6385e234260c7bed809779b25b870a95c7c080d53",
+    "tests/tb_cnc_endpoint_v2.sv": "2495c8f6f3b125d6d0d7cebaf2070bec9abf8b08280e59b9bfa4645ec9842d2c",
+    "tests/vectors.hex": "2a5d7b002866d944a867628b3ef35d025e476394c097dee25068bc1142f21527",
+    "tests/vectors.json": "60b94fb316ad593a8d1ce4bb78327b2c46f7e7825b2d563782e4a80320bd8001",
+    "tools/protocol.py": "674f0c0f5d2190ce09d5f5f7ad400d58bde367161e336a3313e9636509373571",
+    "tools/record_evidence.py": "80c7bc841117f4a1bb3897c2dc03ec93e348c58a1c09048c40d55e708134918f",
+    "tools/run_tests.sh": "b4fe1bcdcf974fb40faa7eca023a6d1463b8726ac0ab4708f650f44dcc12c3f4"
+  },
+  "evidence_sha256": {
+    "simulation.log": "842b04ded1ba0c6b2a52e2f126cdb825ba16e6e16128a6b83ab98ee646f80526",
+    "status_encoder.hex": "c98f2d935148a11b4d54b1d21bb85bddbc38ef822054e4baf6386c120909ecc1"
+  },
+  "not_proven": [
+    "T20 synthesis/resource fit",
+    "place and route/timing closure",
+    "board pin/bank assignment",
+    "CDC metastability/MTBF and minimum capturable inhibit pulse",
+    "physical SPI/encoder/STEP integrity",
+    "physical LinuxCNC realtime SPI transport/target deadlines",
+    "machine safety"
+  ]
+}

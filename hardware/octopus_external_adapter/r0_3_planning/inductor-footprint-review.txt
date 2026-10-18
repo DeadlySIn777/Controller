@@ -1,0 +1,20 @@
+Bourns SRN5040-150M custom footprint source review, 2026-10-06
+UNRELEASED: footprint source inspection only, no assembled or host-fit evidence.
+
+Source: https://www.bourns.com/docs/product-datasheets/srn5040.pdf
+Page1 recommended layout visually inspected from the primary PDF downloaded
+with an ordinary browser User-Agent. Source PDF and page render retained under
+r0_3_planning/sources/srn5040.pdf and srn5040.png.
+
+Drawing: two rectangular lands1.5mm in X by4.0mm in Y; their outside X span5.1mm.
+Thus pad-center pitch=5.1-1.5=3.6mm, centers(-1.8,0)and(+1.8,0).
+Gap between copper lands=2.1mm. Inductor is non-polar; pad1=SW,pad2=V5_REG.
+Body5.0+/-0.2mm square; maximum height4.0mm. Max plan-view body5.2mm.
+Courtyard5.7mm square includes0.25mm beyond maximum body on each side.
+F.Fab is nominal5.0mm body. No guessed3D model supplied.
+
+Native KiCad footprint load and pad-coordinate verification are separate from
+board DRC and final reflow/fit validation. Wider switch-node copper must remain
+short and must not run underneath sensitive FB/ADC routing.
+
+Final silk uses only top and bottom segments at y=+/-2.65mm, removing side segments adjacent to the copper lands. Copper/paste geometry unchanged.

@@ -1,0 +1,573 @@
+{
+  "revision": "r0.2-power-2",
+  "date": "2026-10-06",
+  "status": "selected source-level circuit; physical qualification and manufacturing release pending",
+  "manufacturing_ready": false,
+  "shared_nets": [
+    "EXT_RAW",
+    "V_EXT_PROT",
+    "V5_REG",
+    "V_LOGIC",
+    "GND"
+  ],
+  "ownership": "Power input protection, buck and LDO only. J4 terminal, selector, selector-leg reverse-blocking diode, COM discharge, supervisor and signal circuitry belong to logic_spec.json.",
+  "operating_contract": {
+    "nominal_external_voltages_V": [
+      5,
+      12,
+      24
+    ],
+    "proposed_terminal_range_V": [
+      4.75,
+      26.4
+    ],
+    "five_volt_terminal_requires_EXT_position": true,
+    "five_volt_buck_mode_requires_nominal_12_or_24V_terminal": true,
+    "initial_driver_common_load_limit_mA": 60,
+    "initial_logic_budget_mA": 10,
+    "initial_ambient_target_C": [
+      0,
+      50
+    ],
+    "not_claimed": [
+      "48 V input",
+      "sustained input overvoltage survival",
+      "hot selector switching",
+      "IEC surge qualification",
+      "0.6 A external output capability",
+      "universal driver compatibility",
+      "host or driver startup inhibition"
+    ],
+    "host_power": "No connection from external supply, V5_REG or V_LOGIC to host VIO or VM. Common ground only; separate logic specification may weakly sense VIO."
+  },
+  "parts": [
+    {
+      "reference": "F20",
+      "value": "0.5A 63V fast fuse",
+      "mpn": "SF-1206F050-2",
+      "manufacturer": "Bourns",
+      "footprint": "Adapter:Bourns_SF-1206F_3.1x1.55mm",
+      "kind": "fuse",
+      "pins": {
+        "1": "EXT_RAW",
+        "2": "V_EXT_FUSED"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.bourns.com/docs/product-datasheets/sf-1206f.pdf",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      }
+    },
+    {
+      "reference": "D20",
+      "value": "28V bidirectional TVS",
+      "mpn": "SMAJ28CA-13-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SMA",
+      "kind": "tvs_bidirectional",
+      "pins": {
+        "1": "V_EXT_FUSED",
+        "2": "GND"
+      },
+      "pin_names": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/SMAJ5.0A.pdf",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      }
+    },
+    {
+      "reference": "Q20",
+      "value": "60V reverse-polarity P-MOSFET",
+      "mpn": "PMV100EPAR",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "kind": "pmos",
+      "pins": {
+        "1": "REV_GATE",
+        "2": "V_EXT_PROT",
+        "3": "V_EXT_FUSED"
+      },
+      "pin_names": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf",
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      }
+    },
+    {
+      "reference": "D21",
+      "value": "12V gate clamp",
+      "mpn": "BZT52C12-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "kind": "zener",
+      "pins": {
+        "1": "V_EXT_PROT",
+        "2": "REV_GATE"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "notes": "Exact BZT52C12-7-F remains the recommended active replacement in Diodes PCN2780; discontinued BZT52C12-7-F-79 is a different suffix. Cathode pad1 at V_EXT_PROT, anode pad2 at REV_GATE."
+    },
+    {
+      "reference": "R20",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "REV_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "U20",
+      "value": "TPSM365R6V5RDNR fixed 5V buck",
+      "mpn": "TPSM365R6V5RDNR",
+      "manufacturer": "Texas Instruments",
+      "footprint": "Adapter:TI_RDN0011A_TPSM365R6",
+      "kind": "buck_module",
+      "pins": {
+        "1": null,
+        "2": "BUCK_EN",
+        "3": "BUCK_VIN",
+        "4": "V5_REG",
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": "BUCK_VCC",
+        "9": "V5_REG",
+        "10": "GND",
+        "11": "GND"
+      },
+      "pin_names": {
+        "1": "PGOOD",
+        "2": "EN",
+        "3": "VIN",
+        "4": "VOUT",
+        "5": "SW",
+        "6": "SW",
+        "7": "BOOT",
+        "8": "VCC",
+        "9": "BIAS",
+        "10": "GND",
+        "11": "MODE/SYNC"
+      },
+      "pin_types": {
+        "1": "open_collector",
+        "2": "input",
+        "3": "power_in",
+        "4": "power_out",
+        "5": "passive",
+        "6": "passive",
+        "7": "passive",
+        "8": "power_out",
+        "9": "input",
+        "10": "power_in",
+        "11": "input"
+      },
+      "datasheet": "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+      "notes": "Fixed 5V variant, 1MHz; MODE/SYNC grounded for auto PFM/PWM. SW pins5/6 and BOOT7 require no external wiring; internal inductor and bootstrap capacitor already present. PGOOD unused.",
+      "pin_labels": {
+        "1": "PGOOD",
+        "2": "EN",
+        "3": "VIN",
+        "4": "VOUT",
+        "5": "SW",
+        "6": "SW",
+        "7": "BOOT",
+        "8": "VCC",
+        "9": "BIAS",
+        "10": "GND",
+        "11": "MODE/SYNC"
+      }
+    },
+    {
+      "reference": "R21",
+      "value": "127k 1%",
+      "mpn": "RC0603FR-07127KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "BUCK_EN"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "R22",
+      "value": "20k 1%",
+      "mpn": "RC0603FR-0720KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "BUCK_EN",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "C20",
+      "value": "2.2uF 100V X7R 10%",
+      "mpn": "C3225X7R2A225K230AB",
+      "manufacturer": "TDK",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "GND"
+      },
+      "notes": "Buck input bulk, TI reference BOM exact part; immediately beside U20 VIN/GND.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "C21",
+      "value": "100nF 100V X7R 10%",
+      "mpn": "GRM188R72A104KA35J",
+      "manufacturer": "Murata",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "GND"
+      },
+      "notes": "Buck high-frequency input bypass, TI reference BOM exact part; shortest possible loop U20 VIN/GND.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "C22",
+      "value": "1uF 16V X7R 10%",
+      "mpn": "C1608X7R1C105K080AC",
+      "manufacturer": "TDK",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "BUCK_VCC",
+        "2": "GND"
+      },
+      "notes": "U20 internal VCC bypass only; BUCK_VCC must not power external circuitry.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "C23",
+      "value": "22uF 25V X7R 20%",
+      "mpn": "C3225X7R1E226M250AB",
+      "manufacturer": "TDK",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V5_REG",
+        "2": "GND"
+      },
+      "notes": "First of two buck output capacitors from TI reference BOM; both mandatory.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "C24",
+      "value": "22uF 25V X7R 20%",
+      "mpn": "C3225X7R1E226M250AB",
+      "manufacturer": "TDK",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V5_REG",
+        "2": "GND"
+      },
+      "notes": "Second of two buck output capacitors from TI reference BOM; both mandatory.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "U21",
+      "value": "LT3014BES5#TRMPBF ~3.34V LDO",
+      "mpn": "LT3014BES5#TRMPBF",
+      "manufacturer": "Analog Devices",
+      "footprint": "Package_TO_SOT_SMD:TSOT-23-5",
+      "kind": "ldo",
+      "pins": {
+        "1": "V_EXT_PROT",
+        "2": "GND",
+        "3": null,
+        "4": "LDO_ADJ",
+        "5": "V_LOGIC"
+      },
+      "pin_names": {
+        "1": "IN",
+        "2": "GND",
+        "3": "NC",
+        "4": "ADJ",
+        "5": "OUT"
+      },
+      "pin_types": {
+        "1": "power_in",
+        "2": "power_in",
+        "3": "no_connect",
+        "4": "input",
+        "5": "power_out"
+      },
+      "datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/3014bfb.pdf",
+      "notes": "Adjustable wide-input LDO with reverse-output protection. R23/R24 set approximately3.343V nominal. NC pin3 deliberately open. ThinSOT S5 package max1mm height. Dedicated logic supervisor belongs to logic_spec.",
+      "pin_labels": {
+        "1": "IN",
+        "2": "GND",
+        "3": "NC",
+        "4": "ADJ",
+        "5": "OUT"
+      }
+    },
+    {
+      "reference": "C25",
+      "value": "220nF 100V X7S 10%",
+      "mpn": "C2012X7S2A224K085AE",
+      "manufacturer": "TDK",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V_EXT_PROT",
+        "2": "GND"
+      },
+      "notes": "Dedicated LDO input bypass, maximum thickness1.0mm. LT3014B permits0.1-10uF. Requires retained effective capacitance>=0.1uF at26.4V incl10% tolerance/22% X7S temperature/ageing; DC-bias curve remains release gate, not yet a guaranteed minimum. AtzeroDC worsttol/temp154.4nF allows35.25% additional loss.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C2012X7S2A224K085AE"
+    },
+    {
+      "reference": "C26",
+      "value": "4.7uF 25V X7R 10%",
+      "mpn": "CL21B475KAFNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "kind": "capacitor",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "GND"
+      },
+      "notes": "Manufacturer typical DC-bias curve at3.5044V is -15.0524%, giving3.993uF; illustrative10% tolerance and15% temperature screen gives3.054uF, above0.47uF effective minimum. Curve is typical, not guaranteed; ageing/transient qualification remains. Max thickness1.35mm.",
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://product.samsungsem.com/mlcc/CL21B475KAFNNN.do"
+    },
+    {
+      "reference": "R23",
+      "value": "174k 0.1%",
+      "mpn": "RT0603BRD07174KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "LDO_ADJ"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "R24",
+      "value": "100k 0.1%",
+      "mpn": "RT0603BRD07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "LDO_ADJ",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "R25",
+      "value": "22k 1%",
+      "mpn": "RC0603FR-0722KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "kind": "resistor",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      }
+    },
+    {
+      "reference": "D22",
+      "value": "60V buck input reverse-current block",
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "kind": "schottky",
+      "pins": {
+        "1": "BUCK_VIN",
+        "2": "V_EXT_PROT"
+      },
+      "pin_names": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "datasheet": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "notes": "Anode protected external rail, cathode dedicated buck input. Isolates local buck input capacitance on external-input collapse/short. Component-level measure, not qualified fault immunity. Typical/max VF at100mA25C=.35/.4V; leakage/temp tests pending."
+    }
+  ],
+  "circuit_review": {
+    "input_order": "EXT_RAW -> F20 -> V_EXT_FUSED. D20 clamps V_EXT_FUSED to GND bidirectionally. Q20 drain on fused input and source on V_EXT_PROT gives body-diode startup in correct polarity and blocks reversed DC input. D21 cathode at source limits negative gate-to-source voltage; R20 pulls gate toward GND.",
+    "buck_uvlo": "R21=127k and R22=20k give nominal divider gain 7.35. Datasheet EN high limits 1.16-1.36V and hysteresis 0.3-0.4V, including 1% resistor endpoints: startup approximately 8.38-10.17V, minimum turnoff approximately 5.49V, measured at BUCK_VIN after D22. Therefore 5V input cannot sustain the buck. Nominal 12V/24V supply tolerance and D22 drop must leave BUCK_VIN above the worst startup threshold. Terminal startup limits over temperature require prototype measurements.",
+    "output_capacitance_basis": "TPSM365R6 RevC Table8-2 exact parts and section8.2.1.2.5: two C3225X7R1E226M250AB22uF25V X7R1210 parts yield approximately42uF effective at5V in TI example. Minimum required effective output capacitance is25uF. Approximate tolerance/temperature screen42*0.8*0.85=28.56uF; independent vendor ageing/DC-bias verification and physical ripple/load testing remain release gates.",
+    "transient_coordination": "TVS 28V stand-off exceeds the 26.4V proposed operating ceiling. Its stated 45.4V clamp at 8.8A is below 60V P-FET/diode, 65V buck and 80V LDO limits; input ceramics are rated 100V. This is component-level coordination only. Temperature, parasitic overshoot, pulse energy, fuse clearing and source impedance remain unqualified. No sustained overvoltage or IEC immunity claim.",
+    "current_protection": "F20 is0.5A63V fast fuse,50A interrupt rating; it protects against gross input faults, not a precise60mA limiter. Typical resistance0.517ohm (+/-25% at stated test condition). No automatic short/restart guarantee; burnt fuse means service/replacement. Use current-limited source during qualification.",
+    "thermal": "At 26.4V, 10mA logic load and 450uA GND current, U21 dissipates approximately 0.243W. Reference 150C/W gives 36.5C temperature rise, not a qualified board temperature. No exposed pad; heat spreading uses pins and board. Initial 0-50C ambient target, 20mA LDO silicon rating and 600mA buck silicon rating are not measured assembly ratings.",
+    "input_cable": "Start with short supply leads. TI recommends47-100uF electrolytic with0.1-0.4ohm ESR near module when long leads create input resonance. Local TVS and fuse resistance do not establish cable-inductance immunity; supplied lead configuration must pass ringing/startup tests, or damping must be added before release.",
+    "backfeed": "Q20 is reverse-polarity protection, not an ideal diode; it does not block reverse current from a separately energised protected rail. No second power source is permitted on V_EXT_PROT. Selector-leg diode is separately owned and mandatory. U21 output must not be externally powered. No host-power connection is allowed.",
+    "ldo": "U21 LT3014B has explicit reverse-output protection, resolving the former TPS7A16A VOUT<=VIN+0.3V input-collapse concern. R23=174k and R24=100k, both 0.1%, target 1.22*(1+1.74)=3.3428V before ADJ bias. R25=22k 1% ensures >100uA load. Full-temperature reference and resistor endpoints give approximately 3.229-3.457V before ADJ bias; the specified 25C maximum 10nA contributes 1.74mV. Full-temperature ADJ bias and actual low/high rail remain qualification gates.",
+    "buck_reverse": "D22 isolates BUCK_VIN input bulk from a collapsed or shorted external rail. U20 VIN, R21 top, C20 and C21 connect to BUCK_VIN. Auto-mode diode emulation alone is not credited as off-state reverse protection. The selector diode separately blocks external or charged COM from V5_REG. Power-down and input-hard-short waveforms remain required."
+  },
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+    "https://www.ti.com/product/TPSM365R6/part-details/TPSM365R6V5RDNR",
+    "https://www.ti.com/product/TPS7A16A-Q1/part-details/TPS7A1633AQDGNRQ1",
+    "https://assets.nexperia.com/documents/data-sheet/PMV100EPA.pdf",
+    "https://www.nexperia.com/chemical-content/PMV100EPA.html",
+    "https://www.diodes.com/datasheet/download/SMAJ5.0A.pdf",
+    "https://www.diodes.com/datasheet/download/BZT52Cxx.pdf",
+    "https://www.bourns.com/docs/product-datasheets/sf-1206f.pdf",
+    "https://www.analog.com/media/en/technical-documentation/data-sheets/3014bfb.pdf",
+    "https://www.analog.com/en/products/lt3014b.html",
+    "https://product.samsungsem.com/mlcc/CL21B475KAFNNN.do",
+    "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C2012X7S2A224K085AE",
+    "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+    "https://www.diodes.com/assets/PCN-Files/Diodes_PCN_2780_EOL.pdf"
+  ]
+}

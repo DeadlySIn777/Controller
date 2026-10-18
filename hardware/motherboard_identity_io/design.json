@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-identity-io-r0.1",
+  "status": "actual_source_candidate",
+  "components": {
+    "U21001": {
+      "kind": "REPEATER",
+      "mpn": "TCA9517ADGKR",
+      "value": "TCA9517ADGKR",
+      "footprint": "CNC_MB_Identity:TCA9517A_DGK8_TI",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_5V_LIMITED",
+        "2": "LOGIC_GND",
+        "3": "FREQ_ID_A_PROTECTED",
+        "4": "LOGIC_GND",
+        "5": "FREQ_ID_POWER_GOOD_LOCAL",
+        "6": "FREQ_1WIRE_DATA_HOST",
+        "7": "LOGIC_GND",
+        "8": "IO_3V3"
+      },
+      "role": "exact A variant .45V B contention threshold; A is field5V/B is host3.3V; both unused SCL pins grounded per TI Table4-1"
+    },
+    "C21001": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_5V_LIMITED",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-07,
+      "voltage_rating_v": 100,
+      "role": "repeater field-reference bypass"
+    },
+    "C21002": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-07,
+      "voltage_rating_v": 100,
+      "role": "repeater own B logic supply bypass"
+    },
+    "R21001": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_1WIRE_DATA_HOST",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual3.3V open-drain host bias, no added series resistance in narrow .45V VILC path"
+    },
+    "R21002": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_MOD_ID_TO_FRONTEND",
+        "2": "FREQ_5V_LIMITED"
+      },
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual5V ordinary ID pull-up; no strong/parasitic write-power function"
+    },
+    "R21003": {
+      "kind": "R",
+      "mpn": "CRCW0603330RFKEA",
+      "value": "330R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_MOD_ID_TO_FRONTEND",
+        "2": "FREQ_ID_A_PROTECTED"
+      },
+      "resistance_ohm": 330,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "bounded series current/ESD energy resistance; source low/rise screens include actual voltage drop"
+    },
+    "D21002": {
+      "kind": "TVS",
+      "mpn": "TPD1E10B06DPYR",
+      "value": "TPD1E10B06DPYR",
+      "footprint": "CNC_MB_Identity:TPD1E10B06_DPY2_TI",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_MOD_ID_TO_FRONTEND",
+        "2": "LOGIC_GND"
+      },
+      "role": "actual5.5V stand-off bidirectional ESD at existing terminal;10Vmax@1A is not arbitrary24V static protection"
+    },
+    "U21003": {
+      "kind": "WINDOW",
+      "mpn": "TPS3700DDCR",
+      "value": "TPS3700DDCR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_ID_POWER_GOOD_LOCAL",
+        "2": "LOGIC_GND",
+        "3": "FREQ_ID_FIELD_UV",
+        "4": "FREQ_ID_FIELD_OV",
+        "5": "IO_3V3",
+        "6": "FREQ_ID_POWER_GOOD_LOCAL"
+      },
+      "role": "real IO3-powered window sees field5V missing even before field rail rises; actual open-drain outputs wireAND drive repeater EN"
+    },
+    "C21003": {
+      "kind": "C",
+      "mpn": "GRM188R72A104KA35D",
+      "value": "100nF100V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "capacitance_f": 1e-07,
+      "voltage_rating_v": 100,
+      "role": "actual fieldrail window bypass"
+    },
+    "R21004": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_ID_POWER_GOOD_LOCAL",
+        "2": "IO_3V3"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_K": 100,
+      "power_rating_w": 0.1,
+      "role": "actual monitored rail good, not synthetic GPIO; TPS3700 sinks actual low on undervoltage/overvoltage"
+    },
+    "R21005": {
+      "kind": "R",
+      "mpn": "TNPW0603107KBEEA",
+      "value": "107000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_5V_LIMITED",
+        "2": "FREQ_ID_FIELD_UV"
+      },
+      "resistance_ohm": 107000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm rail-window divider, nominal4.68/5.32V"
+    },
+    "R21006": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_ID_FIELD_UV",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm rail-window divider, nominal4.68/5.32V"
+    },
+    "R21007": {
+      "kind": "R",
+      "mpn": "TNPW0603123KBEEA",
+      "value": "123000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_5V_LIMITED",
+        "2": "FREQ_ID_FIELD_OV"
+      },
+      "resistance_ohm": 123000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm rail-window divider, nominal4.68/5.32V"
+    },
+    "R21008": {
+      "kind": "R",
+      "mpn": "TNPW060310K0BEEA",
+      "value": "10000R0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FREQ_ID_FIELD_OV",
+        "2": "LOGIC_GND"
+      },
+      "resistance_ohm": 10000,
+      "tolerance": 0.001,
+      "tcr_ppm_K": 25,
+      "power_rating_w": 0.1,
+      "role": "actual .1%25ppm rail-window divider, nominal4.68/5.32V"
+    }
+  },
+  "boundaries": {
+    "J21001": {
+      "kind": "Boundary3",
+      "mpn": "",
+      "value": "PARENT: actual parent protectedfrequency supply, sharedlogicreturn and IO3",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "FREQ_5V_LIMITED"
+      },
+      "role": "actual parent protectedfrequency supply, sharedlogicreturn and IO3"
+    },
+    "J21002": {
+      "kind": "Boundary2",
+      "mpn": "",
+      "value": "PARENT: ACC PD3 singleGPIO to existing XF.7 identity terminal; no new external connector",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "FREQ_1WIRE_DATA_HOST",
+        "2": "FREQ_MOD_ID_TO_FRONTEND"
+      },
+      "role": "ACC PD3 singleGPIO to existing XF.7 identity terminal; no new external connector"
+    }
+  },
+  "blocks": {
+    "repeater": "U21001",
+    "host_pullup": "R21001",
+    "field_pullup": "R21002",
+    "field_series": "R21003",
+    "tvs": "D21002",
+    "window": "U21003",
+    "window_pullup": "R21004"
+  },
+  "fitted_component_count": 14,
+  "fitted_pad_count": 38,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "firmware_implemented": false,
+  "target_image_compiled": false,
+  "limits": {
+    "temperature_c": [
+      -40,
+      85
+    ],
+    "field_terminal_operating_v": [
+      0,
+      5.5
+    ],
+    "IO_3V3_min_for_threshold_screen_v": 2.7,
+    "IO_3V3_max_v": 3.6,
+    "ordinary_ID_VIL_max_v": 0.8,
+    "ordinary_ID_VOL_max_v": 0.4,
+    "TCA_B_VILC_max_v": 0.45,
+    "TCA_B_VOL_max_v": 0.6,
+    "TCA_A_VOL_max_at6mA_v": 0.2,
+    "STM32_PD3_VOL_max_at8mA_v": 0.4,
+    "host_trace_plus_return_resistance_max_ohm": 10,
+    "host_total_capacitance_candidate_pf": 50,
+    "field_total_capacitance_candidate_pf": 400,
+    "standard_speed_only": true,
+    "parasitic_write_power_supported": false,
+    "arbitrary24V_miswire_claim": false,
+    "numeric_Ioff_guarantee_available": false
+  },
+  "power_budget": {
+    "IO_3V3_bypass_nominal_uf": 0.2,
+    "FREQ_5V_LIMITED_bypass_nominal_uf": 0.1,
+    "TCA_B_max_quiescent_datasheet5V5_a": 0.005,
+    "TCA_A_max_quiescent_a": 0.001,
+    "TPS3700_IDD_max_table_at5V_a": 1.3e-05,
+    "TPS3700_IO3_reservation_a": 1.8e-05,
+    "host_pullup_max_screen_a": 0.00038603965429588204,
+    "field_pullup_max_screen_a": 0.0011898452119546994,
+    "field_window_dividers_max_screen_a": 8.85944910060846e-05,
+    "no_total_dynamic_qualification": true
+  },
+  "threshold_screens": {
+    "host_LOW_max_v": 0.40386039654295885,
+    "host_receiver_LOW_limit_v": 0.45,
+    "host_receive_LOW_max_v": 0.6,
+    "host_receive_LOW_limit_v": 0.81,
+    "field_receive_LOW_max_v": 0.5991276271241441,
+    "field_receive_LOW_limit_v": 0.8,
+    "host_rise_to70percent_rc_s": 6.11919177798657e-07,
+    "field_rise_to70percent_rc_s": 2.30081610852295e-06,
+    "rise_screens_are_not_loaded_latency_proof": true
+  },
+  "defaults": {
+    "real_field_window_qualifies_EN": true,
+    "field_unpowered_disabled": true,
+    "either_repeater_supply_zero_high_impedance_primary_claim": true,
+    "unused_SCL_channels_grounded": true,
+    "no_strong_pullup": true,
+    "automatic_motion_rearm": false
+  },
+  "open_gates": [
+    "ACC PD3 open-drain one-wire firmware, readonly identity/CRC/freshness and disconnect/reconnect handling remain target uncompiled. No supported ordinary ID SKU has been qualified; parasitic write power is absent.",
+    "TI specifies highimpedance IO when either supply0 and5.5Vtolerance unpowered; no numeric fulltemperature Ioff limit is provided. Leakage, partial ramps, TPS3700 power-off input injection, its450usmaximumstartup/undefinedPG interval and rail enable/disable transitions require nativeboard/physical proof. No safe health is inferred from a disconnected ID.",
+    "Guaranteed .45V VILC uses exact TCA9517A and STM32G031 .4V VOL@8mA/VDD>=2.7, with10ohm total PCB/return allocation and actual low pullupcurrent. MCU aggregate80mAIO/100mAVSS absolute limits are not allowable normal targets; groundnoise, route resistance, clock/OS mode and temperature must be qualified; do not substitute a .4V-contention repeater or extra hostseries resistor.",
+    "The existing field terminal is bounded ordinary0..5.5V only. TPD10Vmaxclamp@1A and330ohm do not qualify arbitrary24V miswire, boardESD or allsurge. Fastclamp overshoot, faultenergy and return/chassis geometry require tests.",
+    "400pFfield/50pFhost are candidate totalcapacitance ceilings including cable/device/PCB. RC screens exclude loaded repeater delay; actualstandard-speed slot/sample/presence timing and pullup/loading require target+physical proof. EN mustchange only idle for accepted IDs; faults duringtraffic mustinvalidate/restart discovery.",
+    "One custom motherboard only: parent owns existing protectedFREQ5 power/currentcap, actualXF.7terminal and shield. This source does not introduce another external terminal, daughterboard or fieldpower converter."
+  ]
+}

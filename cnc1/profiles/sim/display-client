@@ -1,0 +1,5 @@
+#!/bin/sh
+if test -n "${CNC1_PERSISTENCE_SCENARIO:-}"; then
+    exec python3 -m cnc1.persistent_integration "$@"
+fi
+exec python3 -m cnc1.integration "$@"

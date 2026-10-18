@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "document_revision": "expanded-target-r0.1",
+  "recorded_date": "2026-09-28",
+  "purpose": "Candidate requirements and next costing scope; not an electrical ledger, fitted BOM, approved pinout or manufacturing release.",
+  "source_notes": {
+    "path": "research/user-notes/2026-09-28-feature-platform.txt",
+    "sha256": "f95576260cb92573d9010332883c2fe8d65699e85cdb34203152745fae44cc78",
+    "line_start": 372,
+    "line_end": 750,
+    "status": "User-supplied architecture notes translated into proposed requirements"
+  },
+  "primary_candidate_id": "expanded-8j-4enc",
+  "baseline_candidate_id": "baseline-6j-2enc",
+  "production_selection_frozen": false,
+  "baseline": {
+    "status": "Existing six-joint study retained as a separate comparison",
+    "direct_digital_signals": 54,
+    "analog_outputs": 1,
+    "drive_enable_topology": "Six nominal-24-V sourcing outputs; proposed 50 mA per output",
+    "existing_gpio_uses_including_support_reservations": 84,
+    "existing_terminal_study_positions": 96,
+    "electrical_ledger": "hardware/electrical-design.json",
+    "electrical_document": "docs/ELECTRICAL_DESIGN.md",
+    "costing_scope_document": "docs/CORE_INTERFACE_COSTING.md",
+    "reference_protocol": "gateware/PROTOCOL.md",
+    "artifacts_changed_by_this_target": false
+  },
+  "expanded_candidate": {
+    "status": "Preferred next design and costing candidate; unimplemented and unqualified expansion",
+    "implemented_capability_claim": false,
+    "complete_cost_usd": null,
+    "complete_bom_available": false,
+    "physical_pin_map_approved": false,
+    "direct_digital_resources": [
+      {"id": "motor_step_dir", "groups": 8, "signals_per_group": 2, "signals": 16, "baseline_groups": 6, "labels": "M0-M7", "electrical_intent": "5-V-supplied differential transmitters; 3.3 V logic; nonisolated signal reference unless design explicitly changes"},
+      {"id": "drive_enable", "groups": 8, "signals_per_group": 1, "signals": 8, "baseline_groups": 6, "electrical_intent": "Isolated floating two-terminal switching output per drive; voltage/current/polarity/leakage/timing unresolved"},
+      {"id": "drive_alarm", "groups": 8, "signals_per_group": 1, "signals": 8, "baseline_groups": 6, "electrical_intent": "Protected nominal-24-V input; separate from general DI"},
+      {"id": "encoder_abz", "groups": 4, "signals_per_group": 3, "signals": 12, "baseline_groups": 2, "labels": "ENC0-ENC3", "electrical_intent": "Differential A/B/index with individually protected 5 V sensor supply; current rating unresolved"},
+      {"id": "general_di", "groups": 24, "signals_per_group": 1, "signals": 24, "baseline_groups": 16, "electrical_intent": "Additional protected nominal-24-V DC inputs"},
+      {"id": "general_do", "groups": 16, "signals_per_group": 1, "signals": 16, "baseline_groups": 8, "electrical_intent": "Additional protected sourcing outputs; 0.5 A/channel target with unresolved concurrent total and bank limits"},
+      {"id": "probe", "groups": 2, "signals_per_group": 1, "signals": 2, "baseline_groups": 0, "electrical_intent": "Additional typed fast input and protected sensor supply; hardware event capture"},
+      {"id": "frequency", "groups": 2, "signals_per_group": 1, "signals": 2, "baseline_groups": 0, "electrical_intent": "Additional differential frequency inputs; separately conditioned measurement source"},
+      {"id": "pwm", "groups": 2, "signals_per_group": 1, "signals": 2, "baseline_groups": 0, "electrical_intent": "Buffered logic commands; voltage, frequency/resolution and load unresolved"},
+      {"id": "process_enable", "groups": 2, "signals_per_group": 1, "signals": 2, "baseline_groups": 0, "electrical_intent": "Independently inhibited commands through process-specific switching interfaces"}
+    ],
+    "direct_digital_signals": 92,
+    "direct_digital_signal_delta_from_baseline": 38,
+    "digital_count_exclusions": ["ADC/DAC control and readback", "RS-485/CAN controllers and control pins", "Host link", "Clocks/configuration/reset", "Independent watchdog useful-progress path", "Permission gates", "Power/fault telemetry", "Timing expansion"],
+    "other_interfaces": [
+      {"id": "analog_output", "quantity": 2, "target": "Isolated 0-10 V; complete accuracy/load/settling/clamp/isolation specification required"},
+      {"id": "analog_input", "quantity": 4, "target": "Protected low-voltage measurement; actual ranges unresolved; conditioned 4-20 mA option"},
+      {"id": "rs485", "quantity": 1, "target": "Isolated physical interface plus explicit supported controller/protocol"},
+      {"id": "can", "quantity": 1, "target": "Isolated physical interface plus explicit supported controller/protocol"},
+      {"id": "timing_expansion", "quantity": 1, "target": "Defined short internal synchronized backplane; no assumed hot-plug support"}
+    ],
+    "input_envelope_proposal": {
+      "applies_to": ["drive_alarm", "general_di"],
+      "nominal_voltage_v_dc": 24,
+      "operating_input_v": [0, 30],
+      "logic_low_v": [0, 5],
+      "logic_high_v": [15, 30],
+      "between_thresholds": "Undefined",
+      "starting_wiring": "PNP sourcing sensor or contact switching field positive into sinking input",
+      "status": "Baseline comparison envelope for recalculation; not a product rating or NPN/AC/universal input claim"
+    },
+    "output_envelope_proposal": {
+      "field_supply_v_dc": [18, 30],
+      "general_output_current_a_each": 0.5,
+      "general_output_count": 16,
+      "all_on_load_current_a_arithmetic": 8,
+      "all_on_load_power_w_at_24v_arithmetic": 192,
+      "all_on_rating_qualified": false,
+      "bank_current_a": null,
+      "entry_current_a": null,
+      "baseline_entry_capacity_proposal_a": 6,
+      "required_resolution": "Redesign field distribution/protection or explicitly publish a concurrent load limit; baseline entry cannot supply all 16 target loads",
+      "exclusions_from_arithmetic": ["Sensor loads", "Other field loads", "Conversion loss", "Inrush"]
+    }
+  },
+  "timing": {
+    "reference_core_clock_hz": 50000000,
+    "reference_clock_physically_qualified": false,
+    "current_rtl": {
+      "motor_channels": 6,
+      "encoder_ports": 2,
+      "max_rate_increment_hex": "0x01000000",
+      "step_rate_cap_hz": 195312.5,
+      "default_step_high_ticks": 100,
+      "default_step_low_ticks": 100,
+      "default_direction_setup_ticks": 100,
+      "default_direction_hold_ticks": 100,
+      "individually_programmable_runtime_drive_timing": false,
+      "physical_rate_qualified": false
+    },
+    "baseline_electrical_step_goal_hz": 250000,
+    "baseline_electrical_goal_achieved": false,
+    "expanded_goals": {
+      "step_rate_per_channel_hz": 2000000,
+      "simultaneous_step_channels": 8,
+      "step_period_ns_at_goal": 500,
+      "step_period_ticks_at_reference_clock": 25,
+      "independent_timing_parameters": ["STEP high", "STEP low", "DIR setup", "DIR hold", "Enable sequencing delay"],
+      "encoder_quadrature_transitions_per_second_each": 10000000,
+      "simultaneous_encoder_ports": 4,
+      "encoder_goal_is_a_b_waveform_hz": false,
+      "frequency_input_hz_minimum_goal": 1000000,
+      "frequency_margin_defined": false,
+      "host_servo_hz_initial_goal": 1000,
+      "probe_event_capture": "Coherent hardware event timestamp and relevant position counters with freshness/overrun semantics",
+      "pwm_frequency_resolution_pairs": null,
+      "status": "Unimplemented complete-path qualification goals, not current capabilities"
+    },
+    "required_rate_rule": "Minimum of validated board, gateware, configured timing, drive, cable and machine limits",
+    "abi_migration_required": true,
+    "abi_changes_implemented": false
+  },
+  "connector_concepts": {
+    "status": "Tentative notes; not approved connector, vendor pinout or physical wiring instructions",
+    "motor": {"quantity": 8, "contacts_each": 10, "tentative_order": ["STEP+", "STEP-", "DIR+", "DIR-", "ENABLE_SW1", "ENABLE_SW2", "ALARM_IN", "ALARM_COM", "SIGNAL_0V", "SHIELD/CHASSIS"]},
+    "encoder": {"quantity": 4, "contacts_each": 8, "tentative_order": ["Protected +5 V", "Encoder 0 V", "A+", "A-", "B+", "B-", "INDEX+", "INDEX-"], "shield": "Separate adjacent termination"},
+    "frequency": {"quantity": 1, "contacts_each": 6, "tentative_order": ["Protected +5 V", "Signal 0 V", "FREQ0+", "FREQ0-", "FREQ1+", "FREQ1-"]},
+    "motor_plus_encoder_contacts_arithmetic": 112,
+    "complete_terminal_count": null,
+    "complete_connector_and_mating_plug_cost_usd": null
+  },
+  "costing_circuit_references": [
+    {"block": "STEP/DIR", "reference_family": "AM26C31", "channels_required": 16, "channels_per_ic": 4, "ic_quantity_if_retained": 4, "status": "Circuit-count reference only; timing/load/protection qualification required", "source_id": "ti-am26c31"},
+    {"block": "ABZ plus frequency", "reference_family": "AM26LV32E", "channels_required": 14, "channels_per_ic": 4, "ic_quantity_if_retained": 4, "status": "Only if same receiver family serves both; probe circuits separate", "source_id": "ti-am26lv32e"},
+    {"block": "General DI plus drive alarms", "reference_family": "ISO1212", "channels_required": 32, "channels_per_ic": 2, "ic_quantity_if_retained": 16, "status": "Support resistors/filters/protection needed; do not double-count logic-boundary isolators", "source_id": "ti-iso1212"},
+    {"block": "General DO", "reference_family": null, "channels_required": 16, "channels_per_ic_assumption": 4, "ic_quantity_if_quad_topology_retained": 4, "status": "Excludes eight isolated drive-enable and two process-interface circuits"},
+    {"block": "Drive enable and process switching", "reference_family": null, "drive_enable_circuits": 8, "process_interface_circuits": 2, "status": "Technology, package, ratings, support parts and prices unresolved"}
+  ],
+  "optional_modules": [
+    {"id": "encoder_expansion", "proposed_additional_ports": 8, "proposed_platform_total_when_fitted": 12},
+    {"id": "synchronized_motion_expansion"},
+    {"id": "analog_servo_plus_minus_10v"},
+    {"id": "printer_thermal_driver", "proposed_scope": {"hotends": 2, "bed_stages_or_external_interfaces": 1, "fans": 4, "typed_temperature_inputs": 4, "filament_inputs": 2}, "required_local_protection": "Control timeout, sensor validation and independent thermal cutoff appropriate to power stage"},
+    {"id": "plasma_isolation"},
+    {"id": "galvo_source_specific"},
+    {"id": "industrial_io"},
+    {"id": "specialty_measurement"}
+  ],
+  "optional_module_status": "Proposals only; no implemented capability, cost or compatibility claim",
+  "safety_and_ownership_requirements": [
+    "Local LinuxCNC owns motion planning and the dedicated real-time host link; ordinary workstation and browser remain outside hard-real-time control",
+    "FPGA owns bounded timing and coherent capture; complete implementation remains required",
+    "ESP observes diagnostic UART, PGOOD and MOTION_DISARMED; no STEP, drive enable, host reset or watchdog-service authority",
+    "Independent hardware permission/watchdog covers new outputs and expansion; useful control progress is not a heartbeat",
+    "Floating enable switch off state must be checked against actual remote-drive polarity and power-loss behavior",
+    "Physical entry fuses and electronic protection must coordinate with source, cables, connectors and load energy",
+    "Machine-level stop/STO/brakes and stored-energy controls remain separate from ordinary controller I/O",
+    "CLI/UI/AI configuration cannot increase component ratings or substitute for commissioning evidence"
+  ],
+  "gates": [
+    {"id": "E1", "title": "Candidate requirements", "status": "open", "deliverable": "Profiles, interfaces, timing, simultaneous load, default/fault behavior and included/optional scope"},
+    {"id": "E2", "title": "Architecture allocation", "status": "open", "deliverable": "Full power/domain/clock/signal allocation, ownership and versioned ABI/configuration"},
+    {"id": "E3", "title": "Circuit feasibility", "status": "open", "deliverable": "Exact circuits/support parts, levels, timing, thermal, connector and isolation calculations"},
+    {"id": "E4", "title": "Digital feasibility", "status": "open", "deliverable": "Expanded RTL and independent tests, target fit/placement and timing closure"},
+    {"id": "E5", "title": "Complete cost comparison", "status": "open", "deliverable": "Separate candidate BOMs and actual quantity 1/10/100/1000 source or quote evidence including finished product"},
+    {"id": "E6", "title": "Design review", "status": "open", "prerequisite": "Bounded physical LinuxCNC/FPGA link prototype before final production layout, as required by BUILD_PLAN stage 5", "deliverable": "Incorporate link evidence, then complete schematic/ERC, layout/DRC, electrical/mechanical reviews and manufacturing/test package"},
+    {"id": "E7", "title": "Later physical qualification", "status": "open", "deliverable": "Loaded timing, fault injection, electrical/thermal/EMC and machine-profile measurements"}
+  ],
+  "primary_sources": [
+    {"id": "ti-am26c31", "title": "TI AM26C31 data sheet Rev. P", "url": "https://www.ti.com/lit/ds/symlink/am26c31.pdf", "checked": "2026-09-28", "use": "Quad driver count and 5 V/TTL logic distinction; not complete board performance"},
+    {"id": "ti-am26lv32e", "title": "TI AM26LV32E data sheet Rev. E", "url": "https://www.ti.com/lit/ds/symlink/am26lv32e.pdf", "checked": "2026-09-28", "use": "Quad receiver count and output-level check; not complete cable/encoder qualification"},
+    {"id": "ti-iso1212", "title": "TI ISO1212 data sheet Rev. G", "url": "https://www.ti.com/lit/ds/symlink/iso1212.pdf", "checked": "2026-09-28", "use": "Dual isolated input counting reference and required application circuit; no universal terminal rating"},
+    {"id": "efinix-t20", "title": "Efinix T20 data sheet v6.0", "url": "https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf", "checked": "2026-09-28", "use": "Reference package GPIO resources; no actual pin assignment, fit or timing claim"},
+    {"id": "stepperonline-dm542t-v4", "title": "STEPPERONLINE DM542T V4.0 manual", "url": "https://omc-stepperonline.com/download/DM542T_V4.0.pdf", "checked": "2026-09-28", "use": "Example drive timing and enable-polarity constraints; no direct compatibility approval"}
+  ]
+}

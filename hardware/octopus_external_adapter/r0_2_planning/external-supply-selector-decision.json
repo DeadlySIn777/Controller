@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-06",
+  "status": "revised_architecture_specified; schematic_and_PCB_not_yet_revised",
+  "user_decision": "Provide a screw terminal for an external or separate signal supply and a 5V / EXT selector. User confirms their drivers can use5 V and have5 V /24 V input selection.",
+  "clarification_resolved": "External driver-control supply selection is requested, in addition to3.3 V/5 V controller input compatibility.",
+  "selected_architecture": {
+    "J4": "Two-pole screw terminal, labelled EXT+ and GND; proposed nominal external supply5 V,12 V or24 V.",
+    "supply_requirement": "External terminal powers the adapter in both modes; may come from the machine's existing appropriately regulated supply or a separate PSU.",
+    "S1": "Non-shorting 5V / EXT selector changes driver COM+ only. It does not disconnect the logic supply or switch ground. Change only with power off.",
+    "five_volt_mode": "Use12 V or24 V terminal input; onboard buck supplies nominal5 V to driver COM+ through reverse-current protection.",
+    "external_mode": "COM+ follows the protected terminal voltage, less protection losses; for a regulated5 V terminal source use EXT.",
+    "local_logic": "Independent wide-input3.3 V regulator remains powered in either selector position.",
+    "logic_interface": "3.3 V powered,5.5 V tolerant triple buffer accepts reviewed3.3 V or5 V controller signals; buffered60 V MOSFET sinks drive PUL-,DIR-,ENA-.",
+    "host_connection": "Host and adapter share ground; no external power connects to host VIO. Host VIO may serve only as a weak enable-bias reference.",
+    "output_cable": "Existing keyed four-wire concept retained: COM+, PUL-,DIR-,ENA-. Matching finished harness provides driver positive fanout.",
+    "motor_voltage_contact": "VM contact and plated hole remain omitted; no implicit use of socket motor supply.",
+    "limits": "5/12/24 V are proposed nominal external-control supplies, not motor supply ratings. No48 V claim and no universal driver compatibility.",
+    "backfeed_protection": "5 V selector leg requires reverse-current blocking so residual higher COM voltage cannot feed the buck. Terminal reverse-polarity/transient protection and COM discharge path require final component coordination."
+  },
+  "operating_matrix": [
+    {
+      "terminal_supply": "12 V or24 V",
+      "selector": "5V",
+      "driver_common": "Nominal regulated5 V, including specified protection losses",
+      "driver_setting": "5 V input setting if supported by the exact driver"
+    },
+    {
+      "terminal_supply": "Regulated5 V",
+      "selector": "EXT",
+      "driver_common": "External5 V, including specified protection losses",
+      "driver_setting": "5 V input setting if supported by the exact driver"
+    },
+    {
+      "terminal_supply": "Regulated24 V",
+      "selector": "EXT",
+      "driver_common": "External24 V, including specified protection losses",
+      "driver_setting": "24 V input setting if supported by the exact driver"
+    },
+    {
+      "terminal_supply": "12 V",
+      "selector": "EXT",
+      "driver_common": "External12 V",
+      "driver_setting": "Only if exact driver manual and required input resistors/settings permit12 V"
+    }
+  ],
+  "provisional_components": {
+    "wide_input_ldo": "AP7375-33W5-7 (3–45 V, SOT25) or TPS7A1633 (60 V with power-good); final protection/startup review pending.",
+    "buck": "Fixed5 V LM5165XDRCR reference circuit or integrated-inductor TPSM365R6V5RDNR; final thermal/placement choice pending.",
+    "buffer": "SN74LVC3G17DCUR; output enable/supervisor alternative remains under startup review.",
+    "output_switches": "Three NX6008NBKW60 V MOSFETs with gate resistors and gate-source pulldowns.",
+    "selector": "Exact part pending; must be non-shorting and rated at least30 V DC for reviewed total control-input current."
+  },
+  "release_gates": [
+    "Native schematic revision",
+    "Exact parts and footprints",
+    "Physical fit with terminal and switch",
+    "Routing and native ERC/DRC",
+    "Source/net/assembly parity",
+    "Supply overlap/reverse/transient checks",
+    "Host-off/reset/backfeed tests",
+    "Driver-specific current, timing and enable tests",
+    "PCBWay DFM and complete assembly quote",
+    "Physical first-article verification"
+  ],
+  "public_claim": "Compatible only with separately qualified common-positive STEP/DIR/ENABLE input profiles; no differential, analog, fieldbus or safety/STO claim.",
+  "prior_r0_1_modified": false,
+  "prior_PCBWay_files_replaced": false,
+  "manufacturing_ready": false,
+  "sources": [
+    "https://www.diodes.com/datasheet/download/AP7375.pdf",
+    "https://www.ti.com/lit/ds/symlink/tps7a16.pdf",
+    "https://www.ti.com/lit/ds/symlink/lm5165.pdf",
+    "https://www.ti.com/lit/ds/symlink/tpsm365r6.pdf",
+    "https://www.ti.com/lit/ds/symlink/sn74lvc3g17.pdf",
+    "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+    "https://www.omc-stepperonline.com/download/CL57T-V41_user_manual.pdf"
+  ]
+}

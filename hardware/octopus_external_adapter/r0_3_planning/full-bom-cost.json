@@ -1,0 +1,1193 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-06",
+  "currency": "USD",
+  "status": "COSTING OBSERVATIONS ONLY - NOT A PROCUREMENT OR MANUFACTURING RELEASE",
+  "source_basis": "Actual r0.3 native parts.json reconciled with direct US distributor catalogue observations",
+  "native_counts": {
+    "purchased_components": 52,
+    "unique_mpns": 33,
+    "smt": 47,
+    "through_hole": 5,
+    "pcb_features_excluded_from_bom": 3
+  },
+  "quantity_basis": {
+    "production_scenario_adapters": 100,
+    "method": "Multiply actual fitted quantities by observed conservative catalogue tiers; shared MPNs consolidated once. No inferred discounts.",
+    "tier_exceptions": "Phoenix 1725656 uses its observed 10-piece tier; ATTINY202-SSNR uses its observed 1-piece tier. Other rows use observed 100-piece tiers even when 100 adapters consume more pieces.",
+    "prototype_method": "Qty-1 unit price multiplied by exact board consumption; every listed offer has displayed minimum order 1. This is not a completed checkout, not optimized pack buying, and not a promise of stock."
+  },
+  "subsystem_subtotals": {
+    "power": {
+      "fitted_parts": 27,
+      "consumed_parts_usd_per_adapter_at_100_scale": 3.8067,
+      "consumed_parts_usd_at_qty1_unit_tiers": 8.79
+    },
+    "logic_and_connectors": {
+      "fitted_parts": 14,
+      "consumed_parts_usd_per_adapter_at_100_scale": 2.5087,
+      "consumed_parts_usd_at_qty1_unit_tiers": 4.26
+    },
+    "indicator": {
+      "fitted_parts": 11,
+      "consumed_parts_usd_per_adapter_at_100_scale": 0.9156,
+      "consumed_parts_usd_at_qty1_unit_tiers": 1.65
+    }
+  },
+  "consumed_bom_usd_per_adapter_at_100_scale": 7.231,
+  "consumed_bom_usd_for_100_adapters": 723.1,
+  "consumed_bom_usd_at_qty1_unit_tiers_for_one_adapter": 14.7,
+  "pcb_scenario": {
+    "source": "Parent's observed PCBWay website calculator; not an accepted manufacturing quote",
+    "quantity": 100,
+    "width_mm": 15.24,
+    "length_mm": 50,
+    "layers": 2,
+    "solder_mask": "purple",
+    "finish": "HASL",
+    "usd_per_adapter": 0.9876,
+    "includes": "Prior calculator scenario included DHL; before tax",
+    "status": "Earlier provisional outline scenario; refresh against the final routed outline and manufacturing selections"
+  },
+  "consumed_bom_plus_prior_pcb_scenario_usd_per_adapter": 8.2186,
+  "usd_15_resale_target": {
+    "status": "NOT ESTABLISHED",
+    "unallocated_usd_after_bom_and_prior_pcb_scenario": 6.7814,
+    "note": "The unallocated amount must cover all remaining costs and profit. A sub-$15 materials sum does not establish a $15 assembled adapter plus cable selling price."
+  },
+  "excluded_unquoted_costs": [
+    "One finished, tested 500 mm mating four-wire harness per adapter",
+    "Component freight, tax, tariffs, spares and manufacturing losses",
+    "Solder paste, stencil, reflow equipment, hand soldering and inspection",
+    "UPDI programmer, programming/calibration fixture, firmware loading and per-unit testing",
+    "Physical prototype qualification, rework and rejected boards",
+    "Packaging, marketplace/payment fees, outbound delivery, warranty/returns and profit"
+  ],
+  "procurement_ready": false,
+  "amazon_basket_verified": false,
+  "known_procurement_constraints": [
+    "Several exact offers showed no stock: BZT52C12-7-F, PMEG6010CEH,115, CL10B104KB8NNNC, CL31A226KAHNNNE, BZT52C5V1-7-F, BAT46W-7-F and AP7375-33SA-7.",
+    "PMV100EPAR displayed only 3 pieces, insufficient for 100 adapters.",
+    "NX6008NBKR direct and cached results conflicted; refresh availability at checkout.",
+    "CL21B225KAFNNNE was flagged NRND in the catalogue; review lifecycle or qualify a replacement before production.",
+    "No generic diode, MOSFET, capacitor or connector substitute has been approved by this cost calculation."
+  ],
+  "rows": [
+    {
+      "mpn": "1725656",
+      "manufacturer": "Phoenix Contact",
+      "references": [
+        "J4"
+      ],
+      "values": [
+        "External reference/power 5/12/24V"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 1.44,
+      "prototype_consumed_usd_at_qty1_unit_tier": 1.44,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Bulk; observed ordering starts at1piece",
+      "unit_usd_for_100_board_scale": 1.183,
+      "observed_tier_used_pieces": 10,
+      "consumed_usd_per_adapter_at_100_scale": 1.183,
+      "consumed_usd_for_100_adapters": 118.3,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/phoenix-contact/1725656/267462"
+      ],
+      "availability_notes": [
+        "Observed page displayed17727 in stock; stock not reserved"
+      ],
+      "tier_notes": [
+        "Only1-piece and10-piece prices displayed. Use10-piece price for conservative100-board arithmetic; no100-piece discount is asserted."
+      ],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 1.44,
+        "10": 1.183
+      }
+    },
+    {
+      "mpn": "61300711121",
+      "manufacturer": "Wurth Elektronik",
+      "references": [
+        "J2"
+      ],
+      "values": [
+        "StepStick power row; VM physically omitted"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.38,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.38,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Bag; observed ordering starts at1piece",
+      "unit_usd_for_100_board_scale": 0.2016,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2016,
+      "consumed_usd_for_100_adapters": 20.16,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/w%C3%BCrth-elektronik/61300711121/4846837"
+      ],
+      "availability_notes": [
+        "Observed page displayed17445 in stock; stock not reserved"
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.38,
+        "10": 0.319,
+        "25": 0.266,
+        "50": 0.2224,
+        "100": 0.2016
+      }
+    },
+    {
+      "mpn": "61300811121",
+      "manufacturer": "Wurth Elektronik",
+      "references": [
+        "J1"
+      ],
+      "values": [
+        "StepStick logic row"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.38,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.38,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Bag; observed ordering starts at1piece",
+      "unit_usd_for_100_board_scale": 0.2016,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2016,
+      "consumed_usd_for_100_adapters": 20.16,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/w%C3%BCrth-elektronik/61300811121/4846839"
+      ],
+      "availability_notes": [
+        "Observed page displayed30498 in stock; stock not reserved"
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.38,
+        "10": 0.319,
+        "25": 0.266,
+        "50": 0.2224,
+        "100": 0.2016
+      }
+    },
+    {
+      "mpn": "AP7375-33SA-7",
+      "manufacturer": "Diodes Incorporated",
+      "references": [
+        "U21"
+      ],
+      "values": [
+        "AP7375 3.3V indicator LDO"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.37,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.37,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.1935,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.1935,
+      "consumed_usd_for_100_adapters": 19.35,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/diodes-incorporated/AP7375-33SA-7/16400213"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed zero stock/future delivery"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "ATTINY202-SSNR",
+      "manufacturer": "Microchip Technology",
+      "references": [
+        "U50"
+      ],
+      "values": [
+        "ATtiny202 voltage indicator"
+      ],
+      "subsystems": [
+        "indicator"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.52,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.52,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; minimum displayed order 1 piece; no Digi-Reel service assumed",
+      "unit_usd_for_100_board_scale": 0.52,
+      "observed_tier_used_pieces": 1,
+      "consumed_usd_per_adapter_at_100_scale": 0.52,
+      "consumed_usd_for_100_adapters": 52.0,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/microchip-technology/ATTINY202-SSNR/9554944"
+      ],
+      "availability_notes": [
+        "Page displayed 19,237 in stock. The 4,000-piece reel price is not used."
+      ],
+      "tier_notes": [
+        "Only qty-1 cut-tape pricing was displayed; no 100-piece discount is asserted."
+      ],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.52
+      }
+    },
+    {
+      "mpn": "B4B-XH-A(LF)(SN)",
+      "manufacturer": "JST",
+      "references": [
+        "J3"
+      ],
+      "values": [
+        "Keyed driver signal output"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.17,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.17,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Bulk; observed ordering starts at1piece",
+      "unit_usd_for_100_board_scale": 0.1226,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.1226,
+      "consumed_usd_for_100_adapters": 12.26,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/jst-sales-america-inc/B4B-XH-A/1651047"
+      ],
+      "availability_notes": [
+        "Observed page displayed97273 in stock; stock not reserved"
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.17,
+        "10": 0.144,
+        "100": 0.1226,
+        "500": 0.10938
+      },
+      "catalogue_name": "B4B-XH-A",
+      "mpn_mapping_note": "JST's own XH model search lists B4B-XH-A and states this product displays(LF)(SN)on the label. This is the RoHS label notation for the selected connector, not a different connector adopted from a photograph.",
+      "manufacturer_mapping_source": "https://www.jst-mfg.com/product/index.php?lang=2&search_product=B4B-XH-A&type=1"
+    },
+    {
+      "mpn": "BAT46W-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "references": [
+        "D26"
+      ],
+      "values": [
+        "100V indicator input isolation"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.34,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.34,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.131,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.131,
+      "consumed_usd_for_100_adapters": 13.1,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/diodes-incorporated/BAT46W-7-F/1934440"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed zero stock/date unavailable"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "BZT52C12-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "references": [
+        "D21"
+      ],
+      "values": [
+        "12V gate clamp"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.21,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.21,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.079,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.079,
+      "consumed_usd_for_100_adapters": 7.9,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/diodes-incorporated/BZT52C12-7-F/717847"
+      ],
+      "availability_notes": [
+        "Page displayed out of stock; future delivery. Exact -7-F active, distinct from EOL -7-F-79"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "BZT52C5V1-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "references": [
+        "D24"
+      ],
+      "values": [
+        "5.1V EN clamp"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.21,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.21,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.079,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.079,
+      "consumed_usd_for_100_adapters": 7.9,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/diodes-incorporated/BZT52C5V1-7-F/717736"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed zero stock/past-due delivery"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "references": [
+        "C21",
+        "C22",
+        "C50",
+        "C51"
+      ],
+      "values": [
+        "100nF 50V X7R",
+        "100nF 50V X7R 10%"
+      ],
+      "subsystems": [
+        "power",
+        "indicator"
+      ],
+      "quantity_per_adapter": 4,
+      "pieces_for_100_adapters_without_spares": 400,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.4,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0185,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.074,
+      "consumed_usd_for_100_adapters": 7.4,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL10B104KB8NNNC/3886658"
+      ],
+      "availability_notes": [
+        "Page displayed zero stock/future delivery",
+        "The refreshed power-cost observation for the same MPN shows zero stock / future delivery."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.1,
+        "100": 0.0185
+      }
+    },
+    {
+      "mpn": "CL21B225KAFNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "references": [
+        "C26"
+      ],
+      "values": [
+        "2.2uF 25V X7R 10%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.15,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.15,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0527,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0527,
+      "consumed_usd_for_100_adapters": 5.27,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B225KAFNNNE/3891040"
+      ],
+      "availability_notes": [
+        "Page displayed stock but NRND. Keep prototype candidate; refresh manufacturer lifecycle/qualified replacement before production"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "CL31A226KAHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "references": [
+        "C23"
+      ],
+      "values": [
+        "22uF 25V X5R 10%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.45,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.45,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.182,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.182,
+      "consumed_usd_for_100_adapters": 18.2,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL31A226KAHNNNE/3891133"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed zero stock/future delivery"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "CL31B475KBHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "references": [
+        "C20",
+        "C25"
+      ],
+      "values": [
+        "4.7uF 50V X7R 10%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 2,
+      "pieces_for_100_adapters_without_spares": 200,
+      "prototype_qty1_unit_usd": 0.37,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.74,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.1417,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2834,
+      "consumed_usd_for_100_adapters": 28.34,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL31B475KBHNNNE/3888447"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed29723stock; not reserved"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "EG1218",
+      "manufacturer": "E-Switch",
+      "references": [
+        "SW1"
+      ],
+      "values": [
+        "5V / EXT"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.72,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.72,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Bulk; observed ordering starts at1piece",
+      "unit_usd_for_100_board_scale": 0.5128,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.5128,
+      "consumed_usd_for_100_adapters": 51.28,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/e-switch/EG1218/101726"
+      ],
+      "availability_notes": [
+        "Observed page displayed16348 distributor stock and90000 factory stock; neither reserved"
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.72,
+        "10": 0.617,
+        "25": 0.5748,
+        "100": 0.5128,
+        "250": 0.475
+      }
+    },
+    {
+      "mpn": "ERJ-P08F82R0V",
+      "manufacturer": "Panasonic",
+      "references": [
+        "R26"
+      ],
+      "values": [
+        "82ohm 1% 0.66W pulse-tolerant"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.23,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.23,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0689,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0689,
+      "consumed_usd_for_100_adapters": 6.89,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-P08F82R0V/21282245"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed3748stock; not reserved"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "LTST-C190KRKT",
+      "manufacturer": "LITE-ON Technology",
+      "references": [
+        "D50",
+        "D51",
+        "D52"
+      ],
+      "values": [
+        "12V red LED",
+        "24V red LED",
+        "5V red LED"
+      ],
+      "subsystems": [
+        "indicator"
+      ],
+      "quantity_per_adapter": 3,
+      "pieces_for_100_adapters_without_spares": 300,
+      "prototype_qty1_unit_usd": 0.14,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.42,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; minimum displayed order 1 piece; no Digi-Reel service assumed",
+      "unit_usd_for_100_board_scale": 0.0675,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2025,
+      "consumed_usd_for_100_adapters": 20.25,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/liteon/LTST-C190KRKT/386817"
+      ],
+      "availability_notes": [
+        "Page displayed 949,554 in stock; stock is not reserved."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.14,
+        "10": 0.098,
+        "100": 0.0675,
+        "500": 0.0534
+      }
+    },
+    {
+      "mpn": "MP2459GJ-Z",
+      "manufacturer": "Monolithic Power Systems",
+      "references": [
+        "U20"
+      ],
+      "values": [
+        "MP2459 adjustable buck ~5.06V"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 1.23,
+      "prototype_consumed_usd_at_qty1_unit_tier": 1.23,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.7112,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.7112,
+      "consumed_usd_for_100_adapters": 71.12,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/monolithic-power-systems-inc/MP2459GJ-Z/5292061"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed23190stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "NX6008NBKR",
+      "manufacturer": "Nexperia",
+      "references": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "values": [
+        "NX6008NBK"
+      ],
+      "subsystems": [
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 3,
+      "pieces_for_100_adapters_without_spares": 300,
+      "prototype_qty1_unit_usd": 0.19,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.57,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; observed ordering starts at1piece; noDigi-Reel fee assumed",
+      "unit_usd_for_100_board_scale": 0.0713,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2139,
+      "consumed_usd_for_100_adapters": 21.39,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/nexperia-usa-inc/NX6008NBKR/15777929"
+      ],
+      "availability_notes": [
+        "Direct product page returned50010 in stock, while an older cached search result showed0. Treat availability as requiring checkout refresh; do not substitute genericMOSFETs."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.19,
+        "10": 0.116,
+        "50": 0.0822,
+        "100": 0.0713,
+        "500": 0.05184
+      }
+    },
+    {
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "references": [
+        "D22",
+        "D23",
+        "D25"
+      ],
+      "values": [
+        "60V Schottky"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 3,
+      "pieces_for_100_adapters_without_spares": 300,
+      "prototype_qty1_unit_usd": 0.46,
+      "prototype_consumed_usd_at_qty1_unit_tier": 1.38,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.179,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.537,
+      "consumed_usd_for_100_adapters": 53.7,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/nexperia-usa-inc/PMEG6010CEH-115/1589917"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed zero stock/future delivery"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "PMV100EPAR",
+      "manufacturer": "Nexperia",
+      "references": [
+        "Q20"
+      ],
+      "values": [
+        "60V reverse-polarity P-MOSFET"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.6,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.6,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.2357,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2357,
+      "consumed_usd_for_100_adapters": 23.57,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/nexperia-usa-inc/PMV100EPAR/12325038"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed only3stock;100-piece tier is not immediately available"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "references": [
+        "R20",
+        "R24"
+      ],
+      "values": [
+        "100k 1%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 2,
+      "pieces_for_100_adapters_without_spares": 200,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.2,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0122,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0244,
+      "consumed_usd_for_100_adapters": 2.44,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/729836"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "references": [
+        "R4",
+        "R5",
+        "R6",
+        "R25"
+      ],
+      "values": [
+        "10k 1%"
+      ],
+      "subsystems": [
+        "power",
+        "logic_and_connectors"
+      ],
+      "quantity_per_adapter": 4,
+      "pieces_for_100_adapters_without_spares": 400,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.4,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0122,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0488,
+      "consumed_usd_for_100_adapters": 4.88,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0603FR-0710KL/726880"
+      ],
+      "availability_notes": [
+        "Page displayed stock",
+        "Observed page displayed3745 in stock; stock not reserved"
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.1,
+        "10": 0.025,
+        "25": 0.0188,
+        "50": 0.015,
+        "100": 0.0122,
+        "250": 0.0094,
+        "500": 0.00782
+      }
+    },
+    {
+      "mpn": "RC0603FR-071KL",
+      "manufacturer": "YAGEO",
+      "references": [
+        "R1",
+        "R2",
+        "R3",
+        "R50",
+        "R51",
+        "R52"
+      ],
+      "values": [
+        "1k 1%"
+      ],
+      "subsystems": [
+        "logic_and_connectors",
+        "indicator"
+      ],
+      "quantity_per_adapter": 6,
+      "pieces_for_100_adapters_without_spares": 600,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.6,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; observed ordering starts at1piece; noDigi-Reel fee assumed",
+      "unit_usd_for_100_board_scale": 0.0122,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0732,
+      "consumed_usd_for_100_adapters": 7.32,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0603FR-071KL/726843"
+      ],
+      "availability_notes": [
+        "Observed page displayed3179272 in stock; stock not reserved",
+        "Page displayed 3,179,272 in stock; stock is not reserved."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.1,
+        "10": 0.025,
+        "25": 0.0188,
+        "50": 0.015,
+        "100": 0.0122,
+        "250": 0.0094,
+        "500": 0.00782
+      }
+    },
+    {
+      "mpn": "RC0603FR-074K7L",
+      "manufacturer": "Yageo",
+      "references": [
+        "R27"
+      ],
+      "values": [
+        "4.7k 1%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.1,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0122,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0122,
+      "consumed_usd_for_100_adapters": 1.22,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0603FR-074K7L/730159"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RC0805FR-0710KL",
+      "manufacturer": "Yageo",
+      "references": [
+        "R23"
+      ],
+      "values": [
+        "10k 1% 0.125W"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.1,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0171,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0171,
+      "consumed_usd_for_100_adapters": 1.71,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0710KL/730482"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RC0805FR-07330RL",
+      "manufacturer": "Yageo",
+      "references": [
+        "R28"
+      ],
+      "values": [
+        "330ohm 1% 0.125W"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.1,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0171,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0171,
+      "consumed_usd_for_100_adapters": 1.71,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07330RL/727866"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RT0603BRD07100KL",
+      "manufacturer": "YAGEO",
+      "references": [
+        "R53"
+      ],
+      "values": [
+        "100k 0.1% 25ppm/C"
+      ],
+      "subsystems": [
+        "indicator"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.11,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.11,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; minimum displayed order 1 piece; no Digi-Reel service assumed",
+      "unit_usd_for_100_board_scale": 0.0615,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0615,
+      "consumed_usd_for_100_adapters": 6.15,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RT0603BRD07100KL/1072187"
+      ],
+      "availability_notes": [
+        "Page displayed 113,496 in stock; stock is not reserved."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.11,
+        "10": 0.074,
+        "50": 0.0652,
+        "100": 0.0615,
+        "500": 0.05402
+      }
+    },
+    {
+      "mpn": "RT0603BRD07124KL",
+      "manufacturer": "Yageo",
+      "references": [
+        "R21"
+      ],
+      "values": [
+        "124k 0.1%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.11,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.11,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.0615,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.0615,
+      "consumed_usd_for_100_adapters": 6.15,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RT0603BRD07124KL/5138963"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RT0603BRD0723K7L",
+      "manufacturer": "Yageo",
+      "references": [
+        "R22"
+      ],
+      "values": [
+        "23.7k 0.1%"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.1,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.058,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.058,
+      "consumed_usd_for_100_adapters": 5.8,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RT0603BRD0723K7L/6616664"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "RT0603BRD073K9L",
+      "manufacturer": "YAGEO",
+      "references": [
+        "R54"
+      ],
+      "values": [
+        "3.9k 0.1% 25ppm/C"
+      ],
+      "subsystems": [
+        "indicator"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.1,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.1,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape; minimum displayed order 1 piece; no Digi-Reel service assumed",
+      "unit_usd_for_100_board_scale": 0.058,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.058,
+      "consumed_usd_for_100_adapters": 5.8,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/yageo/RT0603BRD073K9L/5139104"
+      ],
+      "availability_notes": [
+        "Page displayed 22,751 in stock; stock is not reserved."
+      ],
+      "tier_notes": [],
+      "additional_displayed_unit_price_tiers_usd": {
+        "1": 0.1,
+        "10": 0.07,
+        "50": 0.0614,
+        "100": 0.058,
+        "500": 0.05096
+      }
+    },
+    {
+      "mpn": "SF-1206F050-2",
+      "manufacturer": "Bourns",
+      "references": [
+        "F20"
+      ],
+      "values": [
+        "0.5A 63V fast fuse"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.89,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.89,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.5204,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.5204,
+      "consumed_usd_for_100_adapters": 52.04,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/bourns-inc/SF-1206F050-2/1948200"
+      ],
+      "availability_notes": [
+        "Stock not reserved"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "SMAJ28CA-13-F",
+      "manufacturer": "Diodes Incorporated",
+      "references": [
+        "D20"
+      ],
+      "values": [
+        "28V bidirectional TVS"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.59,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.59,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.23,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.23,
+      "consumed_usd_for_100_adapters": 23.0,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/diodes-incorporated/SMAJ28CA-13-F/765424"
+      ],
+      "availability_notes": [
+        "Page displayed stock"
+      ],
+      "tier_notes": []
+    },
+    {
+      "mpn": "SRN5040-150M",
+      "manufacturer": "Bourns",
+      "references": [
+        "L20"
+      ],
+      "values": [
+        "15uH 20% Isat2.0A"
+      ],
+      "subsystems": [
+        "power"
+      ],
+      "quantity_per_adapter": 1,
+      "pieces_for_100_adapters_without_spares": 100,
+      "prototype_qty1_unit_usd": 0.39,
+      "prototype_consumed_usd_at_qty1_unit_tier": 0.39,
+      "prototype_minimum_displayed_order_quantity": 1,
+      "prototype_package": "Cut tape (not Digi-Reel); no reeling fee assumed",
+      "unit_usd_for_100_board_scale": 0.2634,
+      "observed_tier_used_pieces": 100,
+      "consumed_usd_per_adapter_at_100_scale": 0.2634,
+      "consumed_usd_for_100_adapters": 26.34,
+      "sources": [
+        "https://www.digikey.com/en/products/detail/bourns-inc/SRN5040-150M/4867716"
+      ],
+      "availability_notes": [
+        "DirectUS page displayed6560stock"
+      ],
+      "tier_notes": []
+    }
+  ],
+  "input_sha256": {
+    "r0_3/parts.json": "32e046cf5f37e8a843b44149d0997b8c2d27e636484942ab3a547d77cee4f20f",
+    "r0_3/evidence/schematic-review.json": "8b7e006ab8f129f83766d384f11cc35879c7839ce54dfd5681fdf6cd44bccba4",
+    "r0_3_planning/power-cost-observations.json": "dfb7fa03577ac0f21f127e27c569204859fa389cdf150f5aaf8ed56b94f5b1f4",
+    "r0_3_planning/logic-cost-observations.json": "d08c93f17cfa108b42a71da6eade86de3605afdaef75ece0e2954f8ce4f4a80c",
+    "r0_3_planning/indicator-cost-observations.json": "eac4b73919af066f67ea5bc70cefdc55929362d2674b35edbfed93428ef0524c",
+    "r0_3_planning/indicator_spec.json": "29f0e2578f99d9684ec6dd2994d7a900a0d25244dabe8f88b42770b49c5e274e"
+  }
+}

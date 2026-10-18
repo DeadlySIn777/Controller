@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-28T19:22:22.492973+00:00",
+  "scope": "Actual Yosys Efinix-family mapping; no vendor place/route, package fit, static timing or bitstream",
+  "environment": "WSL GarciaMechBuilder; isolated Debian 13 rootfs; Yosys/yosys-abc 0.52-2",
+  "tool_version": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+  "summary": {
+    "top": "cnc_endpoint",
+    "configuration": "six-step/two-ABZ CNC1 ABI2",
+    "parameters": {
+      "CORE_HZ": 50000000,
+      "DIR_HOLD_CYCLES": 100,
+      "DIR_SETUP_CYCLES": 100,
+      "ENABLE_DISCOVERY": 1,
+      "MAX_RATE": 16777216,
+      "PULSE_CYCLES": 100,
+      "SPACE_CYCLES": 100,
+      "WATCHDOG_CYCLES": 250000
+    },
+    "mapped_cells": {
+      "EFX_ADD": 2132,
+      "EFX_FF": 3221,
+      "EFX_GBUFCE": 1,
+      "EFX_LUT4": 4072
+    },
+    "mapped_cell_total": 9426,
+    "top_ports": {
+      "clk": {
+        "direction": "input",
+        "bits": 1
+      },
+      "reset_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "inhibit_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_cs_n": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_sclk": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_mosi": {
+        "direction": "input",
+        "bits": 1
+      },
+      "spi_miso": {
+        "direction": "output",
+        "bits": 1
+      },
+      "spi_miso_oe": {
+        "direction": "output",
+        "bits": 1
+      },
+      "enc_a": {
+        "direction": "input",
+        "bits": 2
+      },
+      "enc_b": {
+        "direction": "input",
+        "bits": 2
+      },
+      "enc_z": {
+        "direction": "input",
+        "bits": 2
+      },
+      "step_out": {
+        "direction": "output",
+        "bits": 6
+      },
+      "dir_out": {
+        "direction": "output",
+        "bits": 6
+      },
+      "motion_enable": {
+        "direction": "output",
+        "bits": 1
+      },
+      "endpoint_ready": {
+        "direction": "output",
+        "bits": 1
+      },
+      "link_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "watchdog_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "inhibit_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "timing_fault": {
+        "direction": "output",
+        "bits": 1
+      },
+      "progress_wdi": {
+        "direction": "output",
+        "bits": 1
+      }
+    },
+    "top_port_bits": 33,
+    "latches": 0,
+    "structural_check_problems": 0,
+    "reference_device": "T20 / T20F256C4 candidate; package not fitted",
+    "reference_equivalent_logic_elements": 19728,
+    "primitive_counts_are_occupied_LE_or_fit_percentage": false,
+    "scope_metadata_removed": 9,
+    "inhibit_cdc_structural_check": "passed: Verilog-2005 parse; only inhibit capture and first-stage synchronizer flip-flops see inhibit_n/inhibit_sync/inhibit_authorized at D/EN"
+  },
+  "files_sha256": {
+    "gateware/synthesis/run.sh": "a99dd43e0194779824eee46bb97ddd3cb95c8a95b053c097011ddbd6c2b0fc65",
+    "gateware/synthesis/synth.ys": "d933254e58747aeae722da352e8804e4c72f0a24db2a81468a0e840b35c892a8",
+    "gateware/synthesis/cdc_check.ys": "727f7b8eb9ce09900e4211818448c2f91fbd9c8ba4e136b9d15380c220c15ebd",
+    "gateware/synthesis/record_results.py": "e6b302a3b28e133c8d204c98f7353cd7f749da7da1106f4276a079ba989d3554",
+    "gateware/synthesis/input/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "gateware/synthesis/input/cnc_endpoint.v": "80522fdac2fca83b3593889dddb137da34346a07e9c3d31773a30a559c74b392",
+    "gateware/synthesis/input/cnc_spi_frame.v": "5bf27f0cbae0e34c91e3387fe0e0f0f464e85ef6f7f183f00d67ac1c4ce776cd",
+    "gateware/synthesis/input/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "gateware/rtl/cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+    "gateware/rtl/cnc_endpoint.v": "80522fdac2fca83b3593889dddb137da34346a07e9c3d31773a30a559c74b392",
+    "gateware/rtl/cnc_spi_frame.v": "5bf27f0cbae0e34c91e3387fe0e0f0f464e85ef6f7f183f00d67ac1c4ce776cd",
+    "gateware/rtl/cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "gateware/synthesis/results/backend-help.txt": "3732d7e294ac5484d24131fa0538ec8b59c5676871cf2b1995f2a6455dbb7180",
+    "gateware/synthesis/results/cdc-check.log": "b7da0cfc1ea4727edb589d892866ff1af2eaf105aab2b1466fe3118303544c75",
+    "gateware/synthesis/results/cnc_endpoint_efinix.edif": "381da5b6e4b56952496343d60459a4d1cde748caeac6612fb2fc2266bb718a28",
+    "gateware/synthesis/results/cnc_endpoint_efinix.json": "ac9cc8421c58f320d6f90f76a7f3829d6632e80def29f4540d869bfc47760395",
+    "gateware/synthesis/results/exit-status.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "gateware/synthesis/results/mapped-stat.json": "693204f1a0278c827b67be5637949ad02f5a8ec350bc438b22e6c93096e124a2",
+    "gateware/synthesis/results/package-sizes.tsv": "629e75b95f438b7e1d4db11d11063c1ec3e4103fbe547698cc50d706dfb9b12f",
+    "gateware/synthesis/results/packages.tsv": "080dfeeb2fa7410c61f44fffd2552d6503f15c6de09001dffb1389f75f684bce",
+    "gateware/synthesis/results/structural-stat.json": "36fee539de919abf2c28465498bc3a5848b8724c06e7199575b763841d4742c8",
+    "gateware/synthesis/results/synthesis.log": "91ec46b3a76d00b0f6d315a6937015df009b1d946150736400d6f33f5eaf0a59",
+    "gateware/synthesis/results/tool-files.sha256": "88491f113a7497236602932f2355e5c2885bc466e7cff47b5ac06c72b47e69be",
+    "gateware/synthesis/results/verilator-version.txt": "c1477a918362bb8f0bfe4c74962f5187f75900e29c3363f3119c80698e548e1b",
+    "gateware/synthesis/results/verilator.log": "fff3b1a2ecf5cc1a3daf9aca8796fb39360febd86c692960dad9a874c54e8329",
+    "gateware/synthesis/results/yosys-version.txt": "239d92e36e753a9dff4e79d97878ed5d55304b675d411895ec57508bc134e28e"
+  },
+  "not_proven": [
+    "T20F256C4 package pin/bank fit",
+    "vendor mapper interoperability",
+    "routed utilization",
+    "50 MHz timing closure",
+    "CDC metastability/MTBF or minimum asynchronous pulse capture (only a structural inhibit CDC check is run)",
+    "bitstream/configuration boot",
+    "complete field I/O",
+    "eight-step/four-encoder scope",
+    "physical electrical or motion behavior"
+  ]
+}

@@ -1,0 +1,826 @@
+{
+  "schema_version": 1,
+  "revision": "r0.2",
+  "status": "ENGINEERING CANDIDATE - NOT RELEASED",
+  "shared_nets": [
+    "V_LOGIC",
+    "V5_REG",
+    "V_EXT_PROT",
+    "GND",
+    "COM_PLUS",
+    "EXT_RAW"
+  ],
+  "logic_supply_v": 3.3428,
+  "host_input_nominal_v": [
+    3.3,
+    5.0
+  ],
+  "input_abs_operating_max_v": 5.5,
+  "proposed_output_channel_max_ma": 20,
+  "proposed_output_aggregate_max_ma": 60,
+  "selectors": {
+    "SW1": {
+      "common": "2",
+      "5V": [
+        "1",
+        "2"
+      ],
+      "EXT": [
+        "2",
+        "3"
+      ],
+      "ground_switched": false,
+      "actuator_direction_verified": false,
+      "actuator_direction_release_gate": "Physical continuity test against final silkscreen"
+    }
+  },
+  "parts": {
+    "J1": {
+      "reference": "J1",
+      "value": "StepStick logic row",
+      "mpn": "61300811121",
+      "manufacturer": "Wurth Elektronik",
+      "footprint": "Adapter:Wurth_61300811121_1x08_P2.54mm",
+      "pins": {
+        "1": "EN",
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": "STEP",
+        "8": "DIR"
+      },
+      "pin_labels": {
+        "1": "EN",
+        "2": "MS1_NC",
+        "3": "MS2_NC",
+        "4": "MS3_NC",
+        "5": "RST_NC",
+        "6": "SLP_NC",
+        "7": "STEP",
+        "8": "DIR"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive",
+        "5": "passive",
+        "6": "passive",
+        "7": "passive",
+        "8": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.we-online.com/components/products/datasheet/61300811121.pdf",
+      "notes": [
+        "Underside male header. Local pad1 at original EN end. Pitch2.54mm."
+      ]
+    },
+    "J2": {
+      "reference": "J2",
+      "value": "StepStick power row; VM physically omitted",
+      "mpn": "61300711121",
+      "manufacturer": "Wurth Elektronik",
+      "footprint": "Adapter:Wurth_61300711121_1x07_P2.54mm",
+      "pins": {
+        "1": "GND",
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": "HOST_VIO",
+        "7": "GND"
+      },
+      "pin_labels": {
+        "1": "GND_VM",
+        "2": "MOTOR_NC1",
+        "3": "MOTOR_NC2",
+        "4": "MOTOR_NC3",
+        "5": "MOTOR_NC4",
+        "6": "HOST_VIO",
+        "7": "GND"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive",
+        "5": "passive",
+        "6": "passive",
+        "7": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.we-online.com/components/products/datasheet/61300711121.pdf",
+      "notes": [
+        "Underside seven-position header begins one2.54mm pitch below VM location.",
+        "No VM pin, pad, plated hole, copper or testpoint.",
+        "HOST_VIO is only a weak EN input reference; never powers adapter or driver."
+      ]
+    },
+    "J3": {
+      "reference": "J3",
+      "value": "Keyed driver signal output",
+      "mpn": "B4B-XH-A(LF)(SN)",
+      "manufacturer": "JST",
+      "footprint": "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "PUL_MINUS",
+        "3": "DIR_MINUS",
+        "4": "ENA_MINUS"
+      },
+      "pin_labels": {
+        "1": "COM+",
+        "2": "PUL-",
+        "3": "DIR-",
+        "4": "ENA-"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive",
+        "4": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.jst-mfg.com/product/pdf/eng/eXH.pdf",
+      "notes": [
+        "Female XHP-4 cable housing and SXH-001T-P0.6 crimp contacts mate with shrouded male PCB header.",
+        "Factory harness splits COM+ to the three driver-positive terminals."
+      ]
+    },
+    "J4": {
+      "reference": "J4",
+      "value": "External reference/power 5/12/24V",
+      "mpn": "1725656",
+      "manufacturer": "Phoenix Contact",
+      "footprint": "Adapter:Phoenix_1725656_MPT_0p5_2_2p54_SilkClearance",
+      "pins": {
+        "1": "EXT_RAW",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "EXT+",
+        "2": "0V"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "connector",
+      "source": "https://www.phoenixcontact.com/en-us/products/printed-circuit-board-terminal-mpt-05-2-254-1725656?type=pdf",
+      "notes": [
+        "MPT0.5/2-2.54, body5.54x6.2mm, height8.5mm, pinlength3.5mm, drill1.1mm.",
+        "Polarity defined by PCB labels; maintain permanent shared ground.",
+        "Use regulated5V only in EXT; 12/24V may use5V or EXT as appropriate to drive.",
+        "KiCad library derivative: upper outline segment moved to Dwgs.User for polarity-label clearance; lands/Fab/courtyard unchanged. See Adapter.pretty/KICAD-J4-ATTRIBUTION.txt."
+      ]
+    },
+    "U1": {
+      "reference": "U1",
+      "value": "SN74LVC2G126DCUR",
+      "mpn": "SN74LVC2G126DCUR",
+      "manufacturer": "Texas Instruments",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "1": "LOGIC_READY",
+        "2": "STEP_IN",
+        "3": "DIR_BUF",
+        "4": "GND",
+        "5": "DIR_IN",
+        "6": "STEP_BUF",
+        "7": "LOGIC_READY",
+        "8": "V_LOGIC"
+      },
+      "pin_labels": {
+        "1": "1OE",
+        "2": "1A",
+        "3": "2Y",
+        "4": "GND",
+        "5": "2A",
+        "6": "1Y",
+        "7": "2OE",
+        "8": "VCC"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "input",
+        "3": "tri_state",
+        "4": "power_in",
+        "5": "input",
+        "6": "tri_state",
+        "7": "input",
+        "8": "power_in"
+      },
+      "kind": "buffer",
+      "source": "https://www.ti.com/lit/ds/symlink/sn74lvc2g126.pdf",
+      "notes": []
+    },
+    "U2": {
+      "reference": "U2",
+      "value": "SN74LVC1G126DCKR",
+      "mpn": "SN74LVC1G126DCKR",
+      "manufacturer": "Texas Instruments",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "pins": {
+        "1": "LOGIC_READY",
+        "2": "EN_IN",
+        "3": "GND",
+        "4": "EN_BUF",
+        "5": "V_LOGIC"
+      },
+      "pin_labels": {
+        "1": "OE",
+        "2": "A",
+        "3": "GND",
+        "4": "Y",
+        "5": "VCC"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "input",
+        "3": "power_in",
+        "4": "tri_state",
+        "5": "power_in"
+      },
+      "kind": "buffer",
+      "source": "https://www.ti.com/lit/ds/symlink/sn74lvc1g126.pdf",
+      "notes": []
+    },
+    "U3": {
+      "reference": "U3",
+      "value": "TPS3839G33DBZR",
+      "mpn": "TPS3839G33DBZR",
+      "manufacturer": "Texas Instruments",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pins": {
+        "1": "GND",
+        "2": "LOGIC_READY",
+        "3": "V_LOGIC"
+      },
+      "pin_labels": {
+        "1": "GND",
+        "2": "RESET_N",
+        "3": "VDD"
+      },
+      "pin_types": {
+        "1": "power_in",
+        "2": "output",
+        "3": "power_in"
+      },
+      "kind": "supervisor",
+      "source": "https://www.ti.com/lit/ds/symlink/tps3839.pdf",
+      "notes": [
+        "3.08V nominal reset threshold, push-pull active-low output,200ms typical release delay.",
+        "RESET_N high permits active-high OE; low tri-states buffers; gate pulldowns turn sinks off.",
+        "Valid reset specified above0.6V. This is power qualification, not machine safety or no-pulse proof."
+      ]
+    },
+    "Q1": {
+      "reference": "Q1",
+      "value": "NX6008NBKW",
+      "mpn": "NX6008NBKW,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-323_SC-70",
+      "pins": {
+        "1": "STEP_GATE",
+        "2": "GND",
+        "3": "PUL_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+      "notes": [
+        "60V open-drain sink; not differential driver and not isolated.",
+        "Normal proposed load20mA max/channel; physical levels/timing not qualified."
+      ]
+    },
+    "Q2": {
+      "reference": "Q2",
+      "value": "NX6008NBKW",
+      "mpn": "NX6008NBKW,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-323_SC-70",
+      "pins": {
+        "1": "DIR_GATE",
+        "2": "GND",
+        "3": "DIR_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+      "notes": [
+        "60V open-drain sink; not differential driver and not isolated.",
+        "Normal proposed load20mA max/channel; physical levels/timing not qualified."
+      ]
+    },
+    "Q3": {
+      "reference": "Q3",
+      "value": "NX6008NBKW",
+      "mpn": "NX6008NBKW,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Package_TO_SOT_SMD:SOT-323_SC-70",
+      "pins": {
+        "1": "EN_GATE",
+        "2": "GND",
+        "3": "ENA_MINUS"
+      },
+      "pin_labels": {
+        "1": "G",
+        "2": "S",
+        "3": "D"
+      },
+      "pin_types": {
+        "1": "input",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "nmos",
+      "source": "https://assets.nexperia.com/documents/data-sheet/NX6008NBKW.pdf",
+      "notes": [
+        "60V open-drain sink; not differential driver and not isolated.",
+        "Normal proposed load20mA max/channel; physical levels/timing not qualified."
+      ]
+    },
+    "R1": {
+      "reference": "R1",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP",
+        "2": "STEP_IN"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R2": {
+      "reference": "R2",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR",
+        "2": "DIR_IN"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R3": {
+      "reference": "R3",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN",
+        "2": "EN_IN"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R4": {
+      "reference": "R4",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP_IN",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R5": {
+      "reference": "R5",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR_IN",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R6": {
+      "reference": "R6",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "HOST_VIO",
+        "2": "EN_IN"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R7": {
+      "reference": "R7",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN_IN",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R8": {
+      "reference": "R8",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP_BUF",
+        "2": "STEP_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R9": {
+      "reference": "R9",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR_BUF",
+        "2": "DIR_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R10": {
+      "reference": "R10",
+      "value": "220R 1%",
+      "mpn": "RC0603FR-07220RL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN_BUF",
+        "2": "EN_GATE"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R11": {
+      "reference": "R11",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "STEP_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R12": {
+      "reference": "R12",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIR_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R13": {
+      "reference": "R13",
+      "value": "10k 1%",
+      "mpn": "RC0603FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EN_GATE",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R14": {
+      "reference": "R14",
+      "value": "100k 1%",
+      "mpn": "RC0603FR-07100KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "LOGIC_READY",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "R15": {
+      "reference": "R15",
+      "value": "10k 1% 0.125W",
+      "mpn": "RC0805FR-0710KL",
+      "manufacturer": "Yageo",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "pins": {
+        "1": "COM_PLUS",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "resistor",
+      "source": "https://www.yageo.com/en/ProductSearch/PartNumberSearch",
+      "notes": []
+    },
+    "C1": {
+      "reference": "C1",
+      "value": "100nF 50V X7R",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "capacitor",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNNC.do",
+      "notes": []
+    },
+    "C2": {
+      "reference": "C2",
+      "value": "100nF 50V X7R",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "capacitor",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNNC.do",
+      "notes": []
+    },
+    "C3": {
+      "reference": "C3",
+      "value": "100nF 50V X7R",
+      "mpn": "CL10B104KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "V_LOGIC",
+        "2": "GND"
+      },
+      "pin_labels": {
+        "1": "1",
+        "2": "2"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "capacitor",
+      "source": "https://product.samsungsem.com/mlcc/CL10B104KB8NNNC.do",
+      "notes": []
+    },
+    "D1": {
+      "reference": "D1",
+      "value": "PMEG6010CEH",
+      "mpn": "PMEG6010CEH,115",
+      "manufacturer": "Nexperia",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "pins": {
+        "1": "V5_SELECT",
+        "2": "V5_REG"
+      },
+      "pin_labels": {
+        "1": "K",
+        "2": "A"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive"
+      },
+      "kind": "schottky",
+      "source": "https://assets.nexperia.com/documents/data-sheet/PMEG6010CEH.pdf",
+      "notes": [
+        "Anode on5Vbuck; cathode onselector5Vthrow. Blocks chargedCOM returning to5Vbuck.",
+        "Forward drop means cable5V mode is nominal5V signalling; calculate actual minimum loaded COM."
+      ]
+    },
+    "SW1": {
+      "reference": "SW1",
+      "value": "5V / EXT",
+      "mpn": "EG1218",
+      "manufacturer": "E-Switch",
+      "footprint": "Adapter:E-Switch_EG1218_P040040",
+      "pins": {
+        "1": "V5_SELECT",
+        "2": "COM_PLUS",
+        "3": "V_EXT_PROT"
+      },
+      "pin_labels": {
+        "1": "5V",
+        "2": "COM",
+        "3": "EXT"
+      },
+      "pin_types": {
+        "1": "passive",
+        "2": "passive",
+        "3": "passive"
+      },
+      "kind": "switch_spdt",
+      "source": "https://spec_sheets.e-switch.com/specs/P040040.pdf",
+      "notes": [
+        "Manufacturer drawingP040040revC:0.2A30VDC,SPDT,NONSHORTING,three0.90mmdrills2.50mmpitch.",
+        "Drawing depicts actuator-left and schematic1-2 closed but does not explicitly cross-reference mechanical state; physical direction remains unconfirmed.",
+        "Continuity fixture must verify actual production slide position versus5V/EXTsilkscreen before use.",
+        "Power off both host and external supply before selecting; ground is never switched.",
+        "Body11.6x4.0mm,height5.4mm plus2mm actuator; pins4.7mm below body."
+      ]
+    }
+  },
+  "physical_limitations": [
+    "15.24mm width retained; original20.32mm length not proven feasible.",
+    "EG1218 body must clear host-header solder tails; likely needs DIR-end length extension.",
+    "Bottom SMT maxheight and throughholetail-to-hostcomponent clearances require actual host geometry.",
+    "No current host-revision qualification; no universalBTT/SKRfit claim."
+  ],
+  "evidence_boundaries": [
+    "Manufacturer source inspection and exact schematic pin mapping only.",
+    "No loaded timing,current,thermal,startup,EMC,physical assembly or safety validation."
+  ]
+}

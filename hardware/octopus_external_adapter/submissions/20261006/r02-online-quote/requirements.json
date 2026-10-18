@@ -1,0 +1,134 @@
+{
+  "project": "OEA",
+  "revision": "r0.2",
+  "date": "2026-10-06",
+  "status": "preliminary_scope_only",
+  "manufacturing_ready": false,
+  "production_authorized": false,
+  "quote_channel": "PCBWay website account; no email",
+  "quote_assumptions": {
+    "assembled_boards": 5,
+    "finished_harnesses": 5,
+    "harness_length_mm": 500
+  },
+  "turnkey": [
+    "PCB fabrication",
+    "component procurement",
+    "SMT assembly",
+    "through-hole assembly",
+    "fitted underside host pins",
+    "fitted terminal and selector",
+    "fully finished harness with positive fanout and labelled driver ends",
+    "inspection",
+    "agreed testing",
+    "depaneling",
+    "protective packaging"
+  ],
+  "host_inputs_nominal_V": [
+    3.3,
+    5
+  ],
+  "external_terminal": {
+    "poles": 2,
+    "labels": [
+      "EXT+",
+      "GND"
+    ],
+    "nominal_V": [
+      5,
+      12,
+      24
+    ]
+  },
+  "selector": {
+    "positions": [
+      "5V",
+      "EXT"
+    ],
+    "type": "non-shorting",
+    "changes": "driver COM+ only",
+    "power_off_operation": true
+  },
+  "matrix": [
+    {
+      "input_V": 5,
+      "position": "EXT",
+      "COM": "protected external 5 V; 5V buck mode not supported"
+    },
+    {
+      "input_V": [
+        12,
+        24
+      ],
+      "position": "5V",
+      "COM": "regulated nominal 5 V"
+    },
+    {
+      "input_V": 24,
+      "position": "EXT",
+      "COM": "protected external 24 V; exact driver must support 24 V setting"
+    },
+    {
+      "input_V": 12,
+      "position": "EXT",
+      "COM": "protected external 12 V; only with exact driver approval and required settings/resistors"
+    }
+  ],
+  "logic_supply": "independent wide-input 3.3 V regulator from external terminal; powered in either selector position",
+  "outputs": "buffered sinking outputs for separately reviewed 24 V control-input operation; final ratings pending",
+  "grounds": "shared controller/adapter ground, not galvanically isolated",
+  "host_VIO_power_backfeed": "prohibited",
+  "socket_VM_contact_and_hole": "omitted",
+  "protection_requirements": [
+    "reverse polarity",
+    "reviewed supply transients",
+    "reverse current into buck selector leg",
+    "coordinated COM discharge",
+    "startup and host-off behavior"
+  ],
+  "output_pins": {
+    "1": "COM+",
+    "2": "PUL-",
+    "3": "DIR-",
+    "4": "ENA-"
+  },
+  "harness_driver_ends": [
+    "PUL+",
+    "PUL-",
+    "DIR+",
+    "DIR-",
+    "ENA+",
+    "ENA-"
+  ],
+  "compatible_profiles": "separately qualified common-positive STEP/DIR/ENABLE only",
+  "universal_compatibility_claim": false,
+  "historical_r01_outline_mm": [
+    15.24,
+    20.32
+  ],
+  "r02_final_outline_mm": null,
+  "preliminary_fabrication_basis": {
+    "layers": 2,
+    "thickness_mm": 1.6,
+    "material": "FR-4",
+    "copper_oz": 1,
+    "mask": "green",
+    "legend": "white",
+    "finish": "ENIG"
+  },
+  "included_native_CAD_BOM_CPL_Gerbers_drills": false,
+  "r01_must_not_be_used_as_r02": true,
+  "release_dependencies": [
+    "native schematic",
+    "exact components and footprints",
+    "mechanical fit",
+    "routing and native ERC/DRC",
+    "source/net/assembly parity",
+    "power and transient review",
+    "host-off/reset tests",
+    "driver-specific current/timing/enable tests",
+    "PCBWay DFM",
+    "complete quote",
+    "first-article verification"
+  ]
+}
