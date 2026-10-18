@@ -1,0 +1,118 @@
+Hugging Face's logo
+Hugging Face
+Models
+Datasets
+Spaces
+Docs
+Pricing
+
+
+Hugging Face is way more fun with friends and colleagues! 🤗 Join an organization
+Datasets:
+Deadlysin777
+/
+controller-is3-revision 
+private
+Dataset card
+Files
+xet
+Community
+Settings
+controller-is3-revision
+/
+is3
+/
+is3-delta-summary.json 
+Deadlysin777's picture
+Deadlysin777
+Machine-readable IS-3 delta summary: provenance, connector delta, counts, 4 open gates
+a40c14c
+verified
+6 minutes ago
+
+Download
+Raw
+History
+Blame
+Edit
+Delete
+5.07 kB
+{
+  "is3_provenance": {
+    "date": "2026-10-18",
+    "basis": "user decisions 18 Oct 2026 (IS-3 delta decisions)",
+    "supersedes": [
+      "IS-2 motor-channel fit section only (12 fitted -> 8 fitted + 4 expansion)",
+      "IS-2 ABZ encoder-port fit section only (4 fitted -> 6 fitted + ENC6-11 reserved logical)",
+      "IS-2 smart-DO section only (16 -> 24, gated by ND-6)",
+      "IS-2 analog-AI section only (4 fixed-range -> 8 switchable-range, gated by ND-5)"
+    ],
+    "note": "All other IS-2 sections are inherited unchanged. IS-2 data is never deleted; the complete IS-2 revision is preserved verbatim under is2_baseline."
+  },
+  "is2_baseline_note": "Verbatim deep copy of the IS-2 revision (MOTHERBOARD-IS2-20260930, 2026-09-30), preserved unmodified; nothing in this document deletes IS-2 data. Removed from this delta-only copy to keep it portable; the full document is reproducible via build_is3.py.",
+  "is3_connector_delta_summary": {
+    "motor_channels_fitted": 8,
+    "motor_expansion": "XM9-XM12, one 4x14 connector (56 positions), not counted",
+    "abz_encoder_ports_fitted": 6,
+    "abz_encoder_ports_reserved_logical": "ENC6-ENC11 (XE6-XE11), 6 x 10 = 60 positions",
+    "general_di": 24,
+    "smart_do": 24,
+    "analog_ai": "8 switchable-range channels, 8 x 3 = 24 positions",
+    "analog_ao": 2,
+    "rs485": "2 transceivers fitted (1 in service + 1 spare)",
+    "field_supply": "per-bank selectable fused 5/12/24 V"
+  },
+  "counts": {
+    "source_field_terminal_rows": 451,
+    "motherboard_logical_terminal_positions": 371,
+    "optional_encoder_reference_positions": 80,
+    "source_connectors": 45,
+    "motherboard_logical_field_connectors": 37,
+    "optional_encoder_reference_connectors": 8,
+    "base_direct_field_signal_names": 77,
+    "optional_encoder_direct_signal_names": 24,
+    "base_IOL1_and_fast_status_signal_count_reference": 19,
+    "complete_FPGA_pin_budget_qualified": false,
+    "is3_fitted_positions": 359,
+    "is3_reserved_logical_positions": 60,
+    "is3_future_expansion_positions_not_counted": 56,
+    "is3_superseded_is2_motor_positions_not_fitted": 56,
+    "is3_map_total_counted": 419,
+    "is3_fitted_connectors": 36,
+    "is3_connector_entries_total": 47
+  },
+  "open_gates": [
+    {
+      "id": "ND-1",
+      "title": "XP1 power-entry current arithmetic not recalculated for IS-3 loads",
+      "blocking_condition": "The IS-2 quote (3.011 A @ 18 V) was computed for IS-2 loads. IS-3 changes the load set (8 motor channels, per-bank selectable fused 5/12/24 V field supply, 8 switchable-range AI, DO24); no IS-3 load numbers exist yet, so the power-entry arithmetic cannot be closed.",
+      "required_evidence": "Recalculated XP1 power-entry current arithmetic for the IS-3 load set, at the selected field-supply settings, with derating and per-bank fuse sizing; reviewed and signed by the power design owner."
+    },
+    {
+      "id": "ND-5",
+      "title": "Switchable-range AI: E3 envelope review of the 8x3 position pattern",
+      "blocking_condition": "The 3-pos/AI position pattern is retained (8 x 3 = 24 positions on XAI), but the per-channel contacts and switching scheme must fit the E3 part envelope; the E3 review has not been done.",
+      "required_evidence": "E3 envelope review record confirming the 3-position per-channel pattern (24 positions total) fits, including contact ratings for switchable ranges; post-E3 only."
+    },
+    {
+      "id": "ND-6",
+      "title": "DO16 -> 24 touches the unqualified FPGA pin budget",
+      "blocking_condition": "complete_FPGA_pin_budget_qualified is false in IS-2; adding XDO2 (DO16-DO23, 12 positions) claims FPGA resources that have not been qualified. No DO24 claim may be made before the recheck.",
+      "required_evidence": "Vendor FPGA pin/bank recheck covering the +12 DO positions (and the IS-3 AI/encoder changes), with updated bank utilization; complete_FPGA_pin_budget_qualified flips to true only after this evidence exists."
+    },
+    {
+      "id": "ND-7",
+      "title": "Supplies and shields on added DO/AI positions not derivable",
+      "blocking_condition": "The added DO positions (XDO2) and added AI positions (XAI 12 -> 24) require 15 shields and per-bank AUX loop supplies that cannot be derived from the current documents; the power design pass has not run.",
+      "required_evidence": "Power design pass producing the supply/shield plan for the added DO/AI positions: 15 shields, per-bank AUX loop supplies, fuse selection, and updated XP1 entry arithmetic (feeds ND-1)."
+    }
+  ],
+  "regeneration_note": "Run build_is3.py against the main-branch hardware/motherboard/requirements.json to regenerate the full IS-3 requirements document (all 23 IS-2 keys + IS-3 deltas + verbatim IS-2 baseline).",
+  "scope_classes_added": {
+    "reserved_logical": "XE6-XE11 (60 positions)",
+    "reserved_future_expansion": "XM9 motor expansion connector (56 positions, not counted)",
+    "superseded_not_fitted": "XM8-XM11 IS-2 motor positions retained but not fitted"
+  },
+  "connector_entries": "47 total (45 IS-2 + XM9 + XDO2)"
+}
+

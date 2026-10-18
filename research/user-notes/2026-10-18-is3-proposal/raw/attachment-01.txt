@@ -1,0 +1,78 @@
+Hugging Face's logo
+Hugging Face
+Models
+Datasets
+Spaces
+Docs
+Pricing
+
+
+Hugging Face is way more fun with friends and colleagues! 🤗 Join an organization
+Datasets:
+Deadlysin777
+/
+controller-is3-revision 
+private
+Dataset card
+Files
+xet
+Community
+Settings
+controller-is3-revision
+/
+is3-motor-architecture-draft.md 
+Deadlysin777's picture
+Deadlysin777
+IS-3 draft: decisions D1-D9, expansion interface requirements, consequences
+8b6185e
+verified
+5 minutes ago
+preview
+code
+|
+
+Download
+Raw
+History
+Blame
+Edit
+Delete
+8.66 kB
+Motherboard interface revision IS-3 (DRAFT — pending user authorization)
+Proposed 18 October 2026. This draft records the user's design decision and its consequences. It supersedes only the motor-capacity and encoder-port sections of IS-2 (docs/MOTHERBOARD_IS2.md); every other IS-2 boundary (I/O counts except as revised below, permission/health semantics, 20 ms inhibit bound, compute/storage/service, qualification obligations) is retained unchanged. No recorded evidence, schematic, board, ledger or gateware artifact is modified by this draft. The 8-plus-custom-card path from the 28 September study is still not what this proposes — the expansion below is a pluggable accessory interface, not the old rack/card family.
+
+Decisions taken (user, 18 Oct 2026)
+#	Decision	Effect
+D1	8 motor channels fitted (XM0–XM7), drivers expandable via a qualified expansion interface	Reverses IS-2's "all twelve fitted"; shrinks field terminals and driver circuitry; machine needing >8 axes later depends on the expansion interface being built and qualified
+D2	6 ABZ encoder ports fitted (XE0–XE5), 6 reserved logical (ENC6–ENC11), spare receiver channels in the quad budget	Covers today's 2-port demand (spindle + handwheel/MPG) plus ~4 more for scales/rotary; going to 8 was declined to keep board size down — scale-heavy machines are a future revision or the accessory interface
+D3	2 isolated RS-485 transceivers fitted, 1 in service + 1 spare	One multidrop bus addresses many devices (Modbus/VFD); the spare covers transceiver failure. CAN boundary retained unchanged
+D4	Per-connector-group selectable field supply (jumpered/fused 5/12/24 V per bank), not per-pin selection	Per-pin voltage selection is rejected as a wiring-mistake generator; encoders keep the contracted protected 5 V sensor supply per port
+D5	Retain three protected DC entries + eFuse branch protection; field-voltage banks individually fused	Matches the existing power-protection strategy; a bank fuse trip must not restart outputs
+D6	Output limits retained: TPS274C65ASRHAR at 0.5 A/channel continuous, 2 A per four-output group, with per-channel current/fault/temperature/supply diagnostics	Higher per-channel current is a future option via separately eFused outputs — it is not claimed here
+D7	24 general DI / 24 smart DO fitted	Raised from IS-2's 16 DO: the user's live Mesa requirement is ~20 outputs (lights, relays, pneumatics); 24 DO = exactly 6 quad smart-driver ICs, symmetric with 24 DI, 4 spare channels
+D8	Analog block: 2 isolated 0–10 V AO unchanged; 8 AI switchable-range (0–10 V / 4–20 mA / 0.5–4.5 V ratiometric, jumpered per channel group), one multiplexed ADC, fused 5 V/24 V excitation per bank	Covers pressure transducers of unknown/mixed signal type without expansion boards; rides on D4/D5 per-bank fused field supply; ~10–15 cm² added area vs ~60–80 cm² removed by the 12→8 motor cut
+D9	One controller serves two machines (MR1 and the EMCO 120P retrofit) via machine-identity-bound profiles	I/O is sized for the union of both machines' needs: the MR1 consumes the 8 fitted channels plus the 4-channel expansion (which is therefore a required deliverable, not optional); the EMCO fits well inside the base channels. Each machine keeps its own profile, commissioning record and machine-bound configuration authority — one board, two machines, no shared live machine state
+Expansion interface requirements (XM9–XM12, candidate)
+The expansion interface is a required qualified deliverable of D1/D9, not an assumed socket. Candidate scope, all subject to E-gate closure:
+
+Signals per channel: the same ten-contact order as the tentative motor map — STEP+, STEP−, DIR+, DIR−, ENABLE_SW1, ENABLE_SW2, ALARM_IN, ALARM_COM, SIGNAL_0V, SHIELD/CHASSIS. Four channels per expansion connector → 8 + 4 = 12 total channels when fitted.
+Physical: keyed, coded pluggable connector family with the same current/touch/shield requirements as the base motor terminals; no backplane, no custom daughterboard ecosystem.
+Identity/presence: real, independently checked presence/identity evidence only — the IS-2 rule against forged card identities (mx4 installed, slot class, fake hw.modules entries) applies verbatim. An unqualified or absent expansion state is reported unavailable/stale, never as a believable zero.
+Permission/health propagation: expansion channels inherit every output permission condition — the 20 ms fault-to-inhibit bound, arm latches, watchdog coverage and fail-closed defaults cover expansion outputs as if fitted. An open, stale or misconfigured expansion link must inhibit, not drift.
+Versioned capability: HAL/service capability negotiation declares fitted base channels and any qualified expansion channels explicitly; no silent ABI success with invented identities. The 96/176-byte transaction discipline is unchanged.
+Electrical envelope: same STEP/DIR differential envelope, enable-switch isolation and alarm-input protection requirements as the base channels; expansion supply/return and shield/chassis terminations are separately fused and terminated.
+Encoder ports
+XE0–XE5 fitted (6 ports): differential A/B/index per port, protected 5 V sensor supply/return/shield per port, same receiver family and open-wire/termination requirements as IS-2.
+ENC6–ENC11 reserved logical (6): growth via the qualified optional accessory interface only; no connector or transport selected in this revision. With spindle + handwheel/MPG fitted, 4 ports remain for glass scales/rotary table; a scale-heavy machine needs a future revision or the accessory interface.
+6 ports = 48 field contacts (8 per port), vs IS-2's 4-port figure — recompute the terminal map below. Receiver budget: 18 ABZ + 2 frequency = 20 channels; six quad receivers give 24, leaving 4 spare differential receiver channels as circuit spares.
+Consequences (explicit, not hidden)
+hardware/motherboard/requirements.json and terminal-function-map.csv change: motor positions drop from 12 channels (12 × 14 positions) to 8; encoder positions rise from 4 ports to 6. The 451-position IS-1 map and the 371/80 split are void for the motor/encoder/DO/AI groups and must be regenerated — exact counts come from recomputing against the machine-readable contract (see is3/is3-delta-summary.json in this repo): fitted 359 + reserved 60 = 419 total, −32 vs IS-2.
+Gateware/SIM2 impact: the current canonical core maps 12 generators / 4 encoders at 15,805 LUT4 + 2,107 ADD = 17,912 (63 RAM5K). Reducing to 8 generators shrinks that; adding expansion-channel handling adds a small amount back. A remap of the revised architecture is required before any board-resource claim.
+Cost audit v11 basis is void: the $1,091.51/$877.37/$796.51 figures were computed for the all-twelve fitted board. A new named BOM for the 8-fitted architecture at 1/10/100 units is required; nothing transfers automatically.
+Driver sourcing: 8 channels need 2 quad transmitters (AM26C31-class) instead of 3; encoder receivers rise from 2 quad devices toward 6 (18 ABZ + 2 frequency channels + spares). Enable/alarm circuitry drops by 4 channels. The analog block changes from 4 AI to 8 switchable-range inputs (one multiplexed ADC, fused per-bank excitation); the two isolated 0–10 V AO paths are unchanged. All subject to the E3 worst-case envelope review.
+What this draft does NOT do
+Does not authorize board layout, schematic edits, gateware changes or any purchase. The native KiCad board, revision ledger and live machine are untouched.
+Does not establish physical, electrical, timing or manufacturing qualification of anything.
+I/O counts are revised by D7/D8 (24 DI / 24 DO, 8 AI, 6 ABZ); permission/health semantics, 20 ms inhibit bound, and compute/service/storage boundaries are retained unchanged.
+The independent audit of the uploaded tree is a separate, completed deliverable (see controller-tree-audit-report.md) and is unaffected by this draft.
+Next actions: (1) recompute the motor/encoder terminal arithmetic from hardware/motherboard/requirements.json — DONE, see is3/is3-delta-summary.json; (2) user review and merge of this draft into the GitHub repo as a dated proposal; (3) then the IS-3 remap of the revised architecture is a separate, receipted piece of work; (4) the four open gates (ND-1, ND-5, ND-6, ND-7) block their respective claims until their required evidence exists.

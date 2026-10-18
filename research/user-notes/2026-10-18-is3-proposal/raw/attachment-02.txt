@@ -1,0 +1,84 @@
+Hugging Face's logo
+Hugging Face
+Models
+Datasets
+Spaces
+Docs
+Pricing
+
+
+Hugging Face is way more fun with friends and colleagues! 🤗 Join an organization
+Datasets:
+Deadlysin777
+/
+controller-is3-revision 
+private
+Dataset card
+Files
+xet
+Community
+Settings
+controller-is3-revision
+/
+emco-console-fix-spec.md 
+Deadlysin777's picture
+Deadlysin777
+EMCO console UI + AI fix spec from the 15-hour retrofit session
+10dbeac
+verified
+5 minutes ago
+preview
+code
+|
+
+Download
+Raw
+History
+Blame
+Edit
+Delete
+5.81 kB
+EMCO 120P console fix spec
+Source: the 15-hour retrofit session (past transcript, 2026-10). Scope: what to change in how the console, its wiring artifacts, and its AI integration work — drawn from what actually went wrong. Boundary: this is a software/workflow spec; physical wiring verification stays field-held, and nothing here bypasses a safety interlock.
+
+Diagnosis — what actually went wrong
+The edit never landed where you were looking. The same wiring content existed in ~8 places (HTML pages, PDFs, a print packet, an installed handbook copy, a ZIP). The agent repeatedly fixed one copy while you looked at another. The Handbook even opened a stale installed PDF for days.
+Overproduction instead of the one thing. You asked for one photo-rich pinout; you got eight views, generated page variants, and regenerating everything on every change. The correct end state existed late and by accident: a 2-page packet, pinout on page 1, pin numbers → DIN relay → color.
+Confirmation-gates everywhere. Turret setup demanded pocket entry before calibration; homing was blocked by stacked permits; "Axis Setup" gate-chains hid what was actually blocking. You wanted: turn override on → move → done.
+The test renderer lied. Fixtures passed at 1920×1080; the live QtVCP window clipped the jog panel, overlapped labels, and rendered differently. Portrait/landscape made it worse (and the DSI black-screen bug blocked rotation entirely).
+The AI setup itself was fine; the workflow around it wasn't. Claude-default + OpenAI failover, preview-before-apply, masked key dialog — that architecture is right. What failed: the assistant answered questions instead of doing, asked for information already in the conversation, and rebuilt scaffolding instead of editing the target.
+Loop-of-regression. Late fixes reintroduced old bugs (calibration scales diverging by 1 count across four components; Apply button graying; stale fallbacks). Each fix was verified in isolation, not against the whole.
+Fix rules (the spec)
+A. One artifact, proven fresh.
+
+A1. The wiring deliverable is one packet: 2 pages, pinout on page 1. Every other view (handbook, viewer, PDF, ZIP) is a link to that packet, never a separate copy.
+A2. Single source of truth: a data file (pin table) from which the packet renders. Editing the render is forbidden — edit the data, rebuild, and the build writes a content hash + timestamp into the packet footer.
+A3. Any installed copy (handbook, desktop shortcut) is auto-checked at console start against the source hash; stale copies are replaced or loudly flagged, never served silently.
+A4. Every wiring edit ends with the exact file the user has open being refreshed and confirmed — no "I updated the packet" while the open tab shows the old one.
+B. UI converges to Part Studio, verified live.
+
+B1. Part Studio is the layout benchmark; Machine/Setup/Turret/Manual Commands are brought to it, not restyled independently. No more redesigns.
+B2. Every UI change is verified in the real window at the real size (1920×1056 live, not a fixture renderer), plus portrait, before it's called done. Fixture-pass is not done.
+B3. Never force fullscreen; title bar always closable. Rotation stays disabled until the 6.12.111-RT boot test passes with Codex open.
+B4. One commissioning model: a single test-override master (all-on/all-off, defaults off), one "next action" banner, and per-system sub-permits only where a real hazard demands them (E-stop, drives). No gate-stacking for jog/home/turret-free-jog.
+B5. Calibration components share one scale value from one source (INI), read by every component at startup — the four-places-diverge-by-one-count class of bug becomes impossible.
+C. Workflow: do, then report.
+
+C1. When a request is actionable, act; report afterward. Ask at most one consolidated question set when genuinely blocked — never re-ask information already given.
+C2. Each fix ends with: what changed, where it landed (exact path), what's verified vs held. No promises to "work on it."
+D. AI setup (kept, tightened).
+
+D1. Keep: Claude default → one OpenAI failover on provider limit; masked key dialog (key never in chat); preview → Apply; undo/redo; Clear-all confirm.
+D2. AI never commands the machine. Suggestions become reviewed changes only; LinuxCNC authority is untouched. This stays even when everything else is easy.
+D3. The assistant's own tool use follows C1/C2: act, verify at the real surface, report with evidence.
+Non-negotiable (kept exactly as the session ended up)
+No E-stop bypass toggle, no interlock removal — the refusals were correct; the frustration was process, not safety.
+Software E-stop latch auto-clears during retrofit; physical chain and limits stay live; Limit Recovery exists for backing off a pressed switch.
+Nothing is marked verified because software passed: encoder phase, axis scale (700.69 steps/mm is provisional until measured), turret seating, relay coil ratings, and air pressure stay field-held until measured.
+What this session already proved for the IS-3 motherboard
+Session evidence	IS-3 consequence
+All six Mesa outputs allocated; floodlight had no output left	24 smart DO, not 16
+DIN relays: 5 V lights the LED but won't pull a 24 V coil	Per-bank fused selectable 5/12/24 V field supply (D4)
+Direct Mesa↔FC01 RS-485 (no ESP32, RX/TX pins joined)	2 transceivers fitted, 1 in service + 1 spare (D3)
+Pressure transducer needed for tailstock readback via VFD AI	8 switchable-range AI, fused 5 V excitation (D8)
+Spindle encoder + handwheels = the real encoder demand	6 ABZ fitted + reserved, spare receiver channels (D2)

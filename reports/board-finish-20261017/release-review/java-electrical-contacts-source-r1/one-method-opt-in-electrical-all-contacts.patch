@@ -1,0 +1,41 @@
+--- upstream/app/freerouting/board/model/items/Item.java
++++ patched/app/freerouting/board/model/items/Item.java
+@@ -613,6 +613,38 @@
+    * which does not belong to a component.
+    */
+   public Set<Item> getConnectedSet(int netNumber, boolean stopAtPlane) {
++    // Explicit diagnostic opt-in. Normal/editable contact APIs and their
++    // cycle/connection-item consumers retain their original implementations.
++    // This traversal is uncached, so clone/rollback cannot retain stale groups.
++    if (Boolean.getBoolean("controller.freerouting.electricalAllContacts")) {
++      Set<Item> electrical = new TreeSet<>();
++      if (netNumber > 0 && !this.containsNet(netNumber)) {
++        return electrical;
++      }
++      java.util.ArrayDeque<Item> pending = new java.util.ArrayDeque<>();
++      electrical.add(this);
++      pending.addLast(this);
++      while (!pending.isEmpty()) {
++        Item current = pending.removeFirst();
++        Collection<Item> contacts = current.getAllContacts();
++        if (contacts == null) {
++          continue;
++        }
++        for (Item contact : contacts) {
++          if (stopAtPlane && contact instanceof ConductionArea
++              && contact.getComponentId() <= 0) {
++            continue;
++          }
++          if (netNumber > 0 && !contact.containsNet(netNumber)) {
++            continue;
++          }
++          if (electrical.add(contact)) {
++            pending.addLast(contact);
++          }
++        }
++      }
++      return electrical;
++    }
+     Set<Item> result = new TreeSet<>();
+     if (netNumber > 0 && !this.containsNet(netNumber)) {
+       return result;
