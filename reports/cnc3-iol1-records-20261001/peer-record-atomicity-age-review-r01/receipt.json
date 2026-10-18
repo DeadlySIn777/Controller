@@ -1,0 +1,44 @@
+{
+  "scope": "Read-only proposed IS2 diagnostic record/volatile DIC runtime and target cold/IRQ/flash boundaries; no authority or physical commissioning",
+  "input_sha256": {
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\target.c": "ed63ceaad973cd58c42f43da2605353eca3b289b152abd542ba437cb1d35d6a5",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\iol1.c": "99ed1b7cbbb14fa6b38cec6886e579a192771c492cfbe634909e635f641d7432",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\iol1.h": "346bd576d6382fb8b551aafb742e9d1535c1500f18f88087212292403e91bfa0",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\dic_filter.c": "fc2008bc4728d9f2d85f3299e4208b822485c1b0f83b3b4d76ab4b65086dc332",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\dic_filter.h": "4a2cb696721629482509216392c0e667d611eb6a35cb2c454f3c9d37e81ecb1a",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\board_record.c": "e9524e45a814766d690880b4dce4647a632a2823167a9b3d7f8c92355f9a0d39",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\board_record.h": "4667cdc875004e43f6634dc954bded930005fef52de55254532ef0110c995a60",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\stm32g031.ld": "f17b17b04a936377a1f1e98564997aa8b5d47d8ad684b01dd6e45d84179a593b",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\startup.S": "2d983a791c208f535a2de736f37c105f36f79a3aded9886599a028b76ec807ec",
+    "reports\\cnc3-iol1-records-20261001\\stage-r02\\record-and-wire-proposal.json": "66d82f27c11d385fd27bb2b9cb85ab3906717c011ee65d001f569876e94a020d"
+  },
+  "source_inspection_only": true,
+  "new_tests_run_by_peer": false,
+  "status": "ACTIONABLE_AGE_CORRECTION_PENDING",
+  "findings": [
+    {
+      "id": "DIC-AGE-01",
+      "file": "target.c",
+      "function": "observe",
+      "severity": "high",
+      "finding": "Direct uint16 cast of elapsed DIC sample age wraps retained stale data young after 65535 us; DIC cold observe also overwrites unavailable age before the first actual sample.",
+      "requested_successor": "UINT32 modular elapsed saturated to FFFF and actual first-sample-valid gating, with boundary/rollover/unavailable and truncation-mutant controls.",
+      "peer_acknowledged": true
+    }
+  ],
+  "reviewed_constraints": [
+    "CONFIG frame/CRC/opcode/shape/epoch/sequence validation precedes all commit state; rejected transactions do not alter config/epoch/sequence/accepted timestamp.",
+    "IRQ copies generation/group values atomically, samples actual GPIO and evolves debounce outside IRQ exclusion, then commits raw/filtered/time tuple only on the same generation.",
+    "CONFIG generation reset restarts debounce timing; no output/ARM/ACTIVE writer is added.",
+    "TIM2 accepted timestamp/state timeout tuple is protected from IRQ preemption; stale framing cannot refresh IWDG.",
+    "IWDG starts before factory flash inspection; startup/clock/option/reset timing remains physically unqualified.",
+    "Application flash is bounded to60KiB, records reserve two separate2KiB pages; target reads actual12-byte UID and never erase/programs flash.",
+    "UID+CRC+commit integrity cannot authenticate factory state; descriptor/hw_major remain diagnostic.",
+    "IDENT proposal preserves40-byte frame and first16 realtime bytes while borrowing only telemetry8 for512-byte chunks. Existing diagnostic major0 acquisition rejects unsupported record majors.",
+    "Two distinct valid generations require equal lineage; invalid/torn record fallback and equal-generation conflict are conservative."
+  ],
+  "source_or_shared_inputs_changed": false,
+  "target_compilation_or_simulation_reperformed_by_peer": false,
+  "physical_qualification": false,
+  "manufacturing_ready": false
+}

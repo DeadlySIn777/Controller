@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "revision": "motherboard-slow-enable-addition-r01",
+  "date": "2026-09-30",
+  "status": "datasheet_reviewed_candidate_adopted_by_root; native_source_and_vendor_fit_pending",
+  "original_allocation_unchanged": true,
+  "promoted_existing_free_nc_balls": 2,
+  "base_assigned_with_addition": 163,
+  "base_remaining_free_gpio": 20,
+  "signals": [
+    {
+      "signal": "FAST_PORTS_ENABLE",
+      "reference": "U1001",
+      "ball": "M4",
+      "manufacturer_pin": "GPIOB_TXP00",
+      "bank": "BANK4B",
+      "worksheet": "T20F256",
+      "worksheet_row": 192,
+      "direction": "output",
+      "mode": "LVDS_resource_as_single_ended_GPIO",
+      "io_standard": "3.3_V_LVCMOS",
+      "vccio_net": "IO_3V3",
+      "vccio_nominal_v": 3.3,
+      "old_native_net": "unconnected-(U1001-GPIOB_TXP00-PadM4)",
+      "new_native_net": "/fpga_core/FAST_PORTS_ENABLE",
+      "external_low_default_ohm": 4700,
+      "external_low_default_tolerance_percent": 1,
+      "source_implemented": false,
+      "pcb_implemented": false,
+      "gateware_implemented": false,
+      "vendor_fit": false,
+      "timing_qualified": false
+    },
+    {
+      "signal": "XF_POWER_ENABLE",
+      "reference": "U1001",
+      "ball": "M6",
+      "manufacturer_pin": "GPIOB_TXP05",
+      "bank": "BANK4B",
+      "worksheet": "T20F256",
+      "worksheet_row": 197,
+      "direction": "output",
+      "mode": "LVDS_resource_as_single_ended_GPIO",
+      "io_standard": "3.3_V_LVCMOS",
+      "vccio_net": "IO_3V3",
+      "vccio_nominal_v": 3.3,
+      "old_native_net": "unconnected-(U1001-GPIOB_TXP05-PadM6)",
+      "new_native_net": "/fpga_core/XF_POWER_ENABLE",
+      "external_low_default_ohm": 4700,
+      "external_low_default_tolerance_percent": 1,
+      "source_implemented": false,
+      "pcb_implemented": false,
+      "gateware_implemented": false,
+      "vendor_fit": false,
+      "timing_qualified": false
+    }
+  ],
+  "exact_primary_inputs": {
+    "datasheet_url": "https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf",
+    "datasheet_local": "sources/trion20-ds-v6.0.pdf",
+    "datasheet_sha256": "78ed824b7c2fc1d7b991a7739db583aec455a8eb6e95f17fe656317a5d4c0519",
+    "pinout_workbook": "inputs/research/fpga-core/t20-pinout.xlsx",
+    "pinout_workbook_sha256": "bfbdc850656904043631e562ca1d26073ffa0ff3d191b7b1f21c0fd174b6db93",
+    "live_native_xml_sha256": "8c8aab95a26901eb2108b75916e924713301f9f3ecc03183b36b8a6f2b299bd3",
+    "reviewed_rendered_pages": [
+      "sources/slow-enable-primary-p14.png",
+      "sources/slow-enable-primary-p23.png",
+      "sources/slow-enable-primary-p59.png",
+      "sources/slow-enable-primary-p86.png"
+    ]
+  },
+  "primary_electrical_review": {
+    "table_76_printed_page": 59,
+    "applicability": "W80/Q100F3/Q144/F169/F256 DC section",
+    "lvcmos_input": {
+      "vil_min_v": -0.3,
+      "vil_max_v": 0.8,
+      "vih_min_v": 2,
+      "vih_max": "VCCIO+0.3"
+    },
+    "lvcmos_output": {
+      "vol_max_v": 0.2,
+      "voh_min": "VCCIO-0.2"
+    },
+    "lvttl_output_not_selected": {
+      "vol_max_v": 0.4,
+      "voh_min_v": 2.4
+    },
+    "table_77_caution": "Drive figures are typical at 25 C, nominal supply and TT process; no guaranteed drive-current inference.",
+    "table_78": {
+      "input_leakage_uA": 10,
+      "tristate_output_leakage_uA": 10
+    },
+    "table_79": {
+      "internal_weak_pullup_min_ohm": 27000,
+      "typ_ohm": 40000,
+      "max_ohm": 65000
+    },
+    "table_129_printed_page": 86,
+    "reset": "Input tri-state with NO weak pull-up or pull-down while CRESET_N is LOW.",
+    "unconfigured": "Input tri-state with NO weak pull-up or pull-down while CRESET_N is HIGH and CDONE is LOW.",
+    "unused_user_mode": "Input tri-state with weak pull-up by default.",
+    "page_86_footnotes": "34 affects ordinary GPIO pull-down selection; 35/36 concern CSO/NSTATUS, not M4/M6.",
+    "page_14_features": "No LVDS-resource GPIO DDIO, Schmitt or pulldown; adjustable drive and slew are unavailable in F256.",
+    "page_14_output_budget": "Recommended <=16 output/bidirectional LVDS-resource GPIO per bank. This addition uses two.",
+    "page_23_separation": "At least two unused LVDS pairs between GPIO and native LVDS when mixing. No native LVDS mode used here."
+  },
+  "low_default_calculation": {
+    "engineering_assumption": "At most 20 uA aggregate upward leakage, including FPGA plus external receiving gate.",
+    "external_gate_leakage_budget_uA": 10,
+    "fpga_leakage_uA": 10,
+    "resistance_max_ohm": 4747.0,
+    "vccio_max_v": 3.47,
+    "reset_unconfigured_no_internal_pull_worst_v": 0.09494000000000001,
+    "unused_user_mode_weakpull_worst_v": 0.5995990172299746,
+    "reference_low_limit_v": 0.8,
+    "external_gate_threshold_and_leakage_must_be_checked": true,
+    "high_output_nominal_pulldown_load_mA": 0.7021276595744681,
+    "high_output_worst_min_resistor_load_mA": 0.7457554266064904,
+    "no_output_frequency_or_loaded_drive_guarantee": true
+  },
+  "required_independent_gates": [
+    "Qualified CDONE/configuration state and actual IO supply supervision must force power enables OFF independently of FPGA application state.",
+    "FAST_PORTS_ENABLE requests protected base encoder/MPG power only after actual board qualification.",
+    "XF power requires BOTH controls and the actual XF-present Schmitt output; no simulated presence or constant HIGH.",
+    "Independent gate output and load-switch input must default LOW with all compute/ESP modules missing.",
+    "No selector, status scan, LED command or service module may bypass this hardware AND."
+  ],
+  "bounded_deviation": "Two slow power-enable requests use manufacturer-supported 3.3 V LVDS-resource GPIO instead of the prior ordinary-output preference. All previous balls and functions remain untouched.",
+  "remaining": [
+    "Parent schematic/pin-map/PCB exact two-pin reconciliation and source tests.",
+    "14xxx actual default-off qualifier AND and load-switch circuit review.",
+    "Native Efinity interface fit, synthesis/timing/bitstream and full final RTL.",
+    "Physical loaded HIGH/LOW, power-ramp/reset/unconfigured and absent-module output measurements."
+  ],
+  "manufacturing_ready": false,
+  "physical_validation": false
+}

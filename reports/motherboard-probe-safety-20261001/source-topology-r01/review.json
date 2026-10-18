@@ -1,0 +1,239 @@
+{
+  "scope": "Independent exact native topology inspection; no board routing or physical qualification.",
+  "source_stage": "reports\\motherboard-integration-20260930\\r23-2688-reset-bypass-staged",
+  "source_SHA256": "bdaafde7f0feff16522d43c7531768d11c3693e5f6c21a78af654dd90c98ef32",
+  "native_XML_SHA256": "c8ec6b4d64f64b20c7cfa721413d9ce7473e1776d346ae85aceb0966b72eb49b",
+  "manufacturer": {
+    "name": "Texas Instruments",
+    "part": "ISO1212DBQR",
+    "URL": "https://www.ti.com/lit/ds/symlink/iso1212.pdf",
+    "retained_document": "SLLSEY7G, revised February2025; native downloaded document retained unchanged",
+    "primary_pages": [
+      31
+    ],
+    "primary_figures": [
+      "8-17",
+      "8-18"
+    ],
+    "topology": "External input -> RTHR -> SENSE; RSENSE bridges SENSE and IN; optional CIN goes from SENSE to own field return.",
+    "geometric_requirements": {
+      "RTHR_external_pad_to_protected_device_CIN_RSENSE_minimum_mm": 4.0,
+      "logic_bypass_positive_to_VCC_maximum_mm": 2.0
+    },
+    "voltage_rating_scope": "Retain frozen SELV field input envelopes; this does not grant full package insulation certification."
+  },
+  "channels": [
+    {
+      "channel": "PRB0",
+      "IC": "U14031",
+      "RTHR": "R14069",
+      "RSENSE": "R14070",
+      "native_SENSE_pin": "16",
+      "native_IN_pin": "15",
+      "old_RTHR_protected_pin_net": "/motherboard_operator/PRB0_IN_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_operator/PRB0_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_operator/PRB0_IN_SENSE",
+        "/motherboard_operator/PRB0_SENSE"
+      ],
+      "old_source_topology_correct": false,
+      "field_return": "/motherboard_motors/FIELD_GND",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "13",
+      "SUB_native_net": "/motherboard_operator/PRB0_SUB_ISLAND"
+    },
+    {
+      "channel": "PRB1",
+      "IC": "U14031",
+      "RTHR": "R14072",
+      "RSENSE": "R14073",
+      "native_SENSE_pin": "11",
+      "native_IN_pin": "10",
+      "old_RTHR_protected_pin_net": "/motherboard_operator/PRB1_IN_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_operator/PRB1_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_operator/PRB1_IN_SENSE",
+        "/motherboard_operator/PRB1_SENSE"
+      ],
+      "old_source_topology_correct": false,
+      "field_return": "/motherboard_motors/FIELD_GND",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "12",
+      "SUB_native_net": "/motherboard_operator/PRB1_SUB_ISLAND"
+    },
+    {
+      "channel": "EXT_PERMIT",
+      "IC": "U19001",
+      "RTHR": "R19001",
+      "RSENSE": "R19002",
+      "native_SENSE_pin": "16",
+      "native_IN_pin": "15",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/EXT_PERMIT_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/EXT_PERMIT_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/EXT_PERMIT_SENSE",
+        "/motherboard_safety_sensor/EXT_PERMIT_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "13",
+      "SUB_native_net": "/motherboard_safety_sensor/EXT_PERMIT_SUB_ISLAND"
+    },
+    {
+      "channel": "PROCESS_PERMIT",
+      "IC": "U19001",
+      "RTHR": "R19004",
+      "RSENSE": "R19005",
+      "native_SENSE_pin": "11",
+      "native_IN_pin": "10",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/PROCESS_PERMIT_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/PROCESS_PERMIT_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/PROCESS_PERMIT_SENSE",
+        "/motherboard_safety_sensor/PROCESS_PERMIT_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "12",
+      "SUB_native_net": "/motherboard_safety_sensor/PROCESS_PERMIT_SUB_ISLAND"
+    },
+    {
+      "channel": "SAFETY_STATUS",
+      "IC": "U19002",
+      "RTHR": "R19007",
+      "RSENSE": "R19008",
+      "native_SENSE_pin": "16",
+      "native_IN_pin": "15",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/SAFETY_STATUS_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/SAFETY_STATUS_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/SAFETY_STATUS_SENSE",
+        "/motherboard_safety_sensor/SAFETY_STATUS_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "13",
+      "SUB_native_net": "/motherboard_safety_sensor/SAFETY_STATUS_SUB_ISLAND"
+    },
+    {
+      "channel": "RESET_ARM",
+      "IC": "U19002",
+      "RTHR": "R19010",
+      "RSENSE": "R19011",
+      "native_SENSE_pin": "11",
+      "native_IN_pin": "10",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/RESET_ARM_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/RESET_ARM_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/RESET_ARM_SENSE",
+        "/motherboard_safety_sensor/RESET_ARM_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "12",
+      "SUB_native_net": "/motherboard_safety_sensor/RESET_ARM_SUB_ISLAND"
+    },
+    {
+      "channel": "CONTACTOR_FB",
+      "IC": "U19003",
+      "RTHR": "R19013",
+      "RSENSE": "R19014",
+      "native_SENSE_pin": "16",
+      "native_IN_pin": "15",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/CONTACTOR_FB_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/CONTACTOR_FB_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/CONTACTOR_FB_SENSE",
+        "/motherboard_safety_sensor/CONTACTOR_FB_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "13",
+      "SUB_native_net": "/motherboard_safety_sensor/CONTACTOR_FB_SUB_ISLAND"
+    },
+    {
+      "channel": "STO_FB",
+      "IC": "U19003",
+      "RTHR": "R19016",
+      "RSENSE": "R19017",
+      "native_SENSE_pin": "11",
+      "native_IN_pin": "10",
+      "old_RTHR_protected_pin_net": "/motherboard_safety_sensor/STO_FB_SENSE",
+      "required_RTHR_protected_pin_net": "/motherboard_safety_sensor/STO_FB_SENSE",
+      "exact_RSENSE_bridge": [
+        "/motherboard_safety_sensor/STO_FB_SENSE",
+        "/motherboard_safety_sensor/STO_FB_ISO_IN"
+      ],
+      "old_source_topology_correct": true,
+      "field_return": "/motherboard_do/FIELD_B_0V",
+      "logic_VCC": "/IO_3V3",
+      "logic_GND": [
+        "/LOGIC_GND",
+        "/LOGIC_GND"
+      ],
+      "SUB_pin": "12",
+      "SUB_native_net": "/motherboard_safety_sensor/STO_FB_SUB_ISLAND"
+    }
+  ],
+  "exact_required_parent_native_pin_delta": [
+    {
+      "ref": "R14069",
+      "pin": "2",
+      "old": "/motherboard_operator/PRB0_IN_SENSE",
+      "new": "/motherboard_operator/PRB0_SENSE"
+    },
+    {
+      "ref": "R14072",
+      "pin": "2",
+      "old": "/motherboard_operator/PRB1_IN_SENSE",
+      "new": "/motherboard_operator/PRB1_SENSE"
+    }
+  ],
+  "all_six_safety_RTHR_topologies_correct": true,
+  "old_two_probe_topologies_invalid": true,
+  "SUB_islands_distinct": true,
+  "footprint_MPN_parts_unchanged_by_proposed_source_correction": true,
+  "PCB_pose_spacing_return_route_and_EMC_not_passed_by_this_review": true,
+  "frozen_input_hashes": {
+    "assembly-map.json": "2d6c4f2bdccd7fa9f4dc0da9246ec37d9db8f922cbc71efd0b6cfafd8d1a7df1",
+    "design.json": "bdaafde7f0feff16522d43c7531768d11c3693e5f6c21a78af654dd90c98ef32",
+    "iso1212-layout-p31.png": "fed971e0cabb6f50e03764734102fa1c9391013cb9a34ce1e9ebf0421ae7a8f0",
+    "iso1212.pdf": "41e0bc7308dd4e0cc8c7f30efb6a2cd87bcc865d9195095ff849be6036cb2328",
+    "iso1212.txt": "521d3a4fd31af39738a2d5b22bd6f4a8f27d7ff93736a2288cb101b89e88de87",
+    "netlist.xml": "c8ec6b4d64f64b20c7cfa721413d9ce7473e1776d346ae85aceb0966b72eb49b"
+  },
+  "manufacturing_ready": false
+}

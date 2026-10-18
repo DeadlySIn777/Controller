@@ -1,0 +1,43 @@
+{
+  "status": "SCOPED_PASS_HISTORICAL_AFTER_RESET_RELEASE_FIX",
+  "generated_utc": "2026-10-04T10:56:32.885769+00:00",
+  "evidence_path": "reports/deeper-runtime-20261004/host/nml-r06",
+  "receipt_sha256": "a3752333a23b52328dc50cfbbe3d965f898d14f9bc633266585e063c06dd0155",
+  "observation_sha256": "46af1d8c1a5ae71fdf0ab8f1794e9ac0750bd60a608ff8b121afd02d3593f58d",
+  "original_review": "At initial review all71 source paths and copied input hashes matched current source exactly; manifest verified against bothclosures; no selectedfiles missing/extra; all7 executionlog hashes matched.",
+  "now_changed_sources": [
+    "cnc3_runtime/integration.py",
+    "cnc3_runtime/src/hal_cnc3_sim.c",
+    "cnc3_runtime/src/sim_transport.cpp",
+    "cnc3_runtime/src/sim_transport.h"
+  ],
+  "observed_checks_passed": 67,
+  "existing_modules_preserved": 183,
+  "settings_sha256": "3822586ddf33e91d812d94e3528f2dc26554d4b5ff8a8ae85297fe42eae708d3",
+  "all12_simultaneous_observation": {
+    "joint_velocities": [
+      0.5,
+      0.53,
+      0.56,
+      0.59,
+      0.62,
+      0.65,
+      0.6799999999999999,
+      0.71,
+      0.74,
+      0.77,
+      0.8,
+      0.7600000000000001
+    ],
+    "rtl_armed_mask": 4095,
+    "rtl_enabled_mask": 4095
+  },
+  "scope_limits": [
+    "Actual LinuxCNC FREE-joint NML jogs, not Cartesian coordinated/G-code path execution.",
+    "DI/probe/alarm levels and DO demands are authored HAL fixtures; sensors and output application then traverse actual provider/RTL/SPI feedback.",
+    "Driver motor feedback uses emitted step counters; four independent ideal ABZ model observations are crosschecked but this is not closed-loop physical positioning.",
+    "Authored model starts3198steps so3200count index appears quickly; not homing or fullrevolution endurance evidence.",
+    "Alljoints linear_mm, positive low-speed shortjogs; no loaded realtime deadline, inertia/friction, electrical or vendor qualification."
+  ],
+  "eight_first_run": "nml-eight-r01 correctly refused ARM with reset_arm_held still true, fault0x08000000, no motion claim; sourceobservation added and fresh12+8 runs required."
+}

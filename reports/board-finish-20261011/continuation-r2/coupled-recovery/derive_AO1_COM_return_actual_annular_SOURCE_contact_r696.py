@@ -1,0 +1,7 @@
+from pathlib import Path
+import hashlib,json
+H=Path(__file__).resolve().parent;p=H/'construct_AO1_old_COM_barrel_separate_ordinary_return_r694.generated.py';s=p.read_text()
+for a,b in [('controlled-detour-separate-return-escape-r694','controlled-detour-actual-annular-source-return-r696'),('R694_','R696_'),("sourcecenters=COMfree.intersection(refs['In1.Cu']).intersection(refs['In4.Cu'])","sourcecenters=COMfree.intersection(refs['In1.Cu'].buffer(.299975,quad_segs=128)).intersection(refs['In4.Cu'].buffer(.299975,quad_segs=128))"),("RETsource=RETfree.intersection(refs['In1.Cu']).intersection(refs['In4.Cu'])","RETsource=RETfree.intersection(refs['In1.Cu'].buffer(.249975,quad_segs=128)).intersection(refs['In4.Cu'].buffer(.249975,quad_segs=128))"),("'RETsource':RETsource}","'RETsource':RETsource,'RETfree':RETfree}")]:
+ assert a in s,a;s=s.replace(a,b)
+out=H/'construct_AO1_old_COM_barrel_actual_annular_return_SOURCE_r696.generated.py';assert not out.exists();out.write_text(s)
+(H/'derive-AO1-actual-annular-source-return-r696.json').write_text(json.dumps({'source':str(p.resolve()),'source_SHA256':hashlib.sha256(p.read_bytes()).hexdigest(),'generated':str(out.resolve()),'generated_SHA256':hashlib.sha256(out.read_bytes()).hexdigest(),'scope':'enlarge only attachment nomination regions by own actual annulus outer radius; retain >.005mm2 actual physical annular SOURCE contact independently on In1/In4; no plane/Cu/drill/profile exception'},indent=1)+'\n')

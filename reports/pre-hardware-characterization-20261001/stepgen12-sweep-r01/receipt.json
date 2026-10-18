@@ -1,0 +1,126 @@
+{
+  "status": "FAIL",
+  "scope": "Isolated pulse-generator characterization; not twelve-channel CNC3/end-to-end controller qualification",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\rtl\\cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\tests\\tb_stepgen12_characterization.sv": "3dc7fe59b5aecb2fc39d6ead1d16c0d7562388bf9d93e313fdd2d443b118845d",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\characterize_stepgen12.py": "b4f019a2793009137edb6ea4045565a8c7129956d69b7ce0497035927afe7075"
+  },
+  "source_hashes_unchanged": true,
+  "profiles": [
+    {
+      "name": "historical-default",
+      "status": "FAIL",
+      "scope": "Twelve simultaneous instances of unchanged pulse-generator RTL only",
+      "high_cycles": 100,
+      "low_cycles": 100,
+      "setup_cycles": 100,
+      "hold_cycles": 100,
+      "assumed_clock_hz": 50000000,
+      "analytical_safe_increment": 21367996,
+      "design_pulse_ceiling_hz": 248756.21311366558,
+      "first_adversarial_failure_increment": 21367997,
+      "first_adversarial_failure_hz": 248756.22475519776,
+      "boundary_evidence_type": "HDL_SIMULATION_AND_DESIGN_ARITHMETIC",
+      "finite_sample_cycles": 4096,
+      "rows": [
+        {
+          "increment": 8589934,
+          "reverse": 0,
+          "adversarial_reachable_phase": 0,
+          "seed_phase": 0,
+          "sample_cycles": 4096,
+          "channels": 12,
+          "timing_fault": 0,
+          "fault_mask": 0,
+          "requested_wraps_per_channel": 8,
+          "emitted_rises_per_channel": 8
+        }
+      ],
+      "binary_sha256": "edc1b3b367298c4312f379c44c8e29f707114024739ebefe854b0385e5bc5fb9",
+      "summary": []
+    }
+  ],
+  "runs": [
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "iverilog",
+        "-V"
+      ],
+      "started_utc": "2026-10-01T22:43:42.015360+00:00",
+      "returncode": 0,
+      "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r01\\iverilog-version.log",
+      "log_sha256": "bf20b19345b419d2dcc3c25cbc90486443fc65bd78046ef96c95532d5d98e8a5"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "vvp",
+        "-V"
+      ],
+      "started_utc": "2026-10-01T22:43:42.426259+00:00",
+      "returncode": 0,
+      "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r01\\vvp-version.log",
+      "log_sha256": "3aa49db2b3be88722faa1a44f3c88274d66c597c030e10dfc90fcfda5094ea7b"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "iverilog",
+        "-g2012",
+        "-Wall",
+        "-s",
+        "tb_stepgen12_characterization",
+        "-Ptb_stepgen12_characterization.HIGH=100",
+        "-Ptb_stepgen12_characterization.LOW=100",
+        "-Ptb_stepgen12_characterization.SETUP=100",
+        "-Ptb_stepgen12_characterization.HOLD=100",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-sweep-r01/historical-default.vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/gateware/rtl/cnc_stepgen.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/gateware/tests/tb_stepgen12_characterization.sv"
+      ],
+      "started_utc": "2026-10-01T22:43:42.548068+00:00",
+      "returncode": 0,
+      "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r01\\historical-default-compile.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-characterization-20261001/stepgen12-sweep-r01/historical-default.vvp",
+        "+cycles=4096"
+      ],
+      "started_utc": "2026-10-01T22:43:42.669271+00:00",
+      "returncode": 1,
+      "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r01\\historical-default-simulation.log",
+      "log_sha256": "f337f864bf414fc6aee5c483bea74e7dd0cb5ae562eb294c0d00769212001f45"
+    }
+  ],
+  "fixture_phase_injection": "Zero or reset-reachable DDS subgroup phase; explicitly injected without modifying production RTL",
+  "real_machine_interfaces_opened": false,
+  "production_endpoint_modified": false,
+  "production_default_endpoint_rate_limit_hz": 195312.5,
+  "production_default_rate_limit_evidence": "Existing CNC1 MAX_RATE 0x01000000 at assumed50MHz; endpoint excluded from this sweep",
+  "physical_validation_required": true,
+  "vendor_timing_performed": false,
+  "output_driver_cable_load_timing_performed": false,
+  "CNC3_transport_tested": false,
+  "simultaneous_full_board_load_tested": false,
+  "production_rating_hz": null,
+  "manufacturing_ready": false
+}

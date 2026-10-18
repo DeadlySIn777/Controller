@@ -1,0 +1,8 @@
+"""Use the required whole-body source support, retaining all Cu guard margins."""
+import hashlib,json,subprocess,sys
+from pathlib import Path
+H=Path(__file__).resolve().parent;source=H/'nominate_R157_two_actual_no_via_surface_signal_bridges_r284.py';target=H/'nominate_R157_two_actual_no_via_surface_signal_bridges_r285.py';assert not target.exists()
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest();before=H/'R157-two-actual-no-via-surface-signal-bridge-constructive-screen-r284/receipt.json';assert sha(before)=='7fa1d8590c6bb8f0b757ca1384ff2a36d3bc8d8a1d649a7df2877ef0cf8e7f44'
+code=source.read_text();assert code.count('buffer(-.125,quad_segs=128)')==1
+code=code.replace('buffer(-.125,quad_segs=128)','buffer(-.100005,quad_segs=128)').replace('r284','r285').replace('R284','R285');compile(code,str(target),'exec');target.write_text(code)
+receipt=H/'R285-surface-source-navigation-margin-derivation.json';assert not receipt.exists();receipt.write_text(json.dumps({'source_file':str(source),'source_SHA256':sha(source),'new_file':str(target),'new_SHA256':sha(target),'prior_bounded_no_nominee_SHA256':sha(before),'old_navigation_source_extra_margin_mm':.025,'new_navigation_source_extra_margin_mm':.000005,'whole_conservative020body_inside_actual_source_still_literal_EMPTY_required':True,'all_foreign_Cu_NATIVE_local_domain_planner025_guards_unmodified':True,'all_holes275_rules_source_Cu_pads_UNCHANGED':True,'no_unrequested_source025_clearance_claim':True,'all_route_current_SI_native_adoption_gates_OPEN':True,'native_jobs':0,'adopted':False},indent=1)+'\n');raise SystemExit(subprocess.call([sys.executable,str(H/'launch_confined_host.py'),str(target)]))

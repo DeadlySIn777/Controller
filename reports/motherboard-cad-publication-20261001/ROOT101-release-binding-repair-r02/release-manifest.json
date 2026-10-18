@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "product_revision": "engineering-r0",
+  "board_revision": "full-controller-not-frozen",
+  "manufacturer": "PCBWay",
+  "manufacturing_order_placed": false,
+  "artifacts": [
+    {
+      "id": "full_schematic",
+      "status": "partial-source26-electrical-source-physical-qualification-incomplete",
+      "note": "Actual source26 has 2688 physical footprints: 2642 purchased fitted parts, 44 bare PCB features and two DNP footprints. Native ERC: zero errors, 70 unsuppressed warnings, no ignored checks. Exact original327/1229 pin-nets and FPGA256/135 assigned/48 free/14 IO3 bank pins remain checked. Circuit representation is distinct from FPGA vendor fit/timing, target runtime and physical qualification."
+    },
+    {
+      "id": "pcb_layout",
+      "status": "partial-source26-root71-routing-incomplete",
+      "note": "Accepted working ROOT71 has 2688 footprints, 10635 track/via items,1507 zones,3773 uncapped missing joins and zero orphan copper. Native DRC has zero errors,five unsuppressed unresolved warnings,no ignored checks. Published CAD24 remains the earlier 2688-part/8051Cu/five-zone/4753-join snapshot; this manifest does not publish later copper."
+    },
+    {
+      "id": "fabrication_zip",
+      "status": "blocked-by-incomplete-schematic-routing-and-physical-contract",
+      "note": "No placeholder Gerbers/drills/ZIP generated."
+    },
+    {
+      "id": "fabrication_spec",
+      "status": "blocked-by-incomplete-design-final-stackup-not-qualified",
+      "note": "Six layers/1.6mm are MC layout assumptions, not a final manufacturing stackup."
+    },
+    {
+      "id": "bom",
+      "status": "partial-published-revision-designator-bom-current-cost-incomplete",
+      "note": "The downloadable designator BOM is frozen to published CAD24. Current source26/v11 prices105 exact MPNs and leaves185 MPNs/720 fitted pieces unpriced. Known consumed inventory per board at1/10/100 is USD1091.51/877.37/796.51; complete board/PCBWay/kit totals remain null. No complete procurement or manufacturing BOM claim.",
+      "path": "hardware/board_review/revisions/20260930-24/source-inputs/bom.csv",
+      "sha256": "52cd0f64ffb87f4931b1db36d947ee8f15b0ffc1361aa05dc5695d4070278ad9",
+      "source_design_path": "hardware/board_review/revisions/20260930-24/source-inputs/design.json",
+      "source_design_sha256": "bdaafde7f0feff16522d43c7531768d11c3693e5f6c21a78af654dd90c98ef32",
+      "published_revision": "20260930-24",
+      "source_adoption_path": "hardware/board_review/revisions/20260930-24/electrical-source-adoption.json",
+      "source_adoption_sha256": "8fa006ef4d260cbe6f5c370dca62d722a85ef0b6d4835560dde5316e35ef9278",
+      "physical_footprints": 2688,
+      "scope": "Exact frozen designator BOM of the published CAD revision; source26 component qualifications are separate current evidence"
+    },
+    {
+      "id": "placement",
+      "status": "partial-published-cad24-placement-not-production-CPL",
+      "note": "Published CAD24 preserves all2688 physical footprints. Working ROOT71 includes subsequent exact local copper/return closures. Final routing,thermal/EMC,signal integrity,mating process,assembly/programming/test and physical20ms inhibit remain unqualified. No final assembly CPL/production placement package is released."
+    },
+    {
+      "id": "assembly_drawing",
+      "status": "blocked-by-incomplete-board-and-mechanical-contract",
+      "note": "Native review/3D renders are not a final PCBWay assembly drawing."
+    },
+    {
+      "id": "erc",
+      "status": "partial-source26-erc-zero-errors-70-warnings",
+      "note": "No ignored checks; physical/reset/watchdog/EMC/thermal and loaded target qualification remain open."
+    },
+    {
+      "id": "drc",
+      "status": "partial-root71-zero-errors-connectivity-incomplete",
+      "note": "Native zero errors,five unresolved warnings; independent3773 missing joins,no orphan copper,no ignored checks. Local source-connected return/94 bypass-loop proofs do not establish whole-board qualification."
+    },
+    {
+      "id": "electrical_review",
+      "status": "partial-native-review-full-electrical-gates-unfinished",
+      "note": "Actual source26 has 2688 physical footprints: 2642 purchased fitted parts, 44 bare PCB features and two DNP footprints. Native ERC: zero errors, 70 unsuppressed warnings, no ignored checks. Exact original327/1229 pin-nets and FPGA256/135 assigned/48 free/14 IO3 bank pins remain checked. Circuit representation is distinct from FPGA vendor fit/timing, target runtime and physical qualification. Actual board proofs remain scoped; physical20ms fault-to-inhibit and partial-power/fault states are not measured."
+    },
+    {
+      "id": "fpga_build",
+      "status": "family-mapping-and-functional-simulation-pass-device-fit-and-timing-unproved"
+    },
+    {
+      "id": "software_validation",
+      "status": "engineering-tests-in-progress"
+    },
+    {
+      "id": "bringup_procedure",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_bundle",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "programming_test_scope",
+      "status": "requires-final-board-map"
+    },
+    {
+      "id": "link_prototype_measurement",
+      "status": "requires-engineering-host-and-fpga-evaluation-board-physical-measurement"
+    },
+    {
+      "id": "pcbway_quote",
+      "status": "not-requested-design-incomplete",
+      "requires": [
+        "assembly_drawing",
+        "bom",
+        "drc",
+        "erc",
+        "fabrication_spec",
+        "fabrication_zip",
+        "full_schematic",
+        "pcb_layout",
+        "placement",
+        "programming_bundle",
+        "programming_test_scope"
+      ],
+      "quantities": [
+        1,
+        10,
+        100,
+        1000
+      ],
+      "quantities_basis": "docs/BUILD_PLAN.md cost gate study quantities; the quantity actually ordered is a user decision",
+      "submission": null
+    },
+    {
+      "id": "hardware_test",
+      "status": "requires-physical-prototype"
+    },
+    {
+      "id": "loaded_realtime_test",
+      "status": "requires-selected-host-and-motion-link"
+    },
+    {
+      "id": "factory_test",
+      "status": "requires-fixture-and-accepted-board"
+    },
+    {
+      "id": "system_integration_test",
+      "status": "ui-display-motion-integration-pending"
+    },
+    {
+      "id": "final_cost",
+      "status": "incomplete-quotes"
+    },
+    {
+      "id": "compliance_review",
+      "status": "requires-final-product-and-intended-markets"
+    }
+  ],
+  "manufacturing_ready": false,
+  "partial_candidate": {
+    "scope": "Current source26 and adopted working ROOT71; published CAD24 kept separately",
+    "source_revision": "motherboard-source26",
+    "published_native_revision": "20260930-24",
+    "electrical_source_footprints": 2688,
+    "native_pcb_footprints": 2688,
+    "purchased_fitted_source_parts": 2642,
+    "bare_test_pad_footprints": 37,
+    "bare_chassis_pad_footprints": 1,
+    "bare_NPTH_mount_footprints": 6,
+    "dnp_footprints": 2,
+    "source_erc_errors": 0,
+    "source_erc_warnings": 70,
+    "drc_regular_violations": 0,
+    "drc_unresolved_warnings": 5,
+    "drc_pass": false,
+    "drc_reported_unconnected_items": 499,
+    "uncapped_physical_missing_joins": 3773,
+    "working_native_revision": "ROOT71",
+    "working_board_sha256": "71624e4bd5f957e9bb1b5ad8089dd1a43e6ba3055e6eeaba3de09309deb29488",
+    "proposed_outline_mm": [
+      460,
+      340
+    ],
+    "proposed_copper_layers": 6,
+    "proposed_thickness_mm": 1.6,
+    "final_stackup_qualified": false,
+    "published_viewer": {
+      "revision": "20260930-24",
+      "board_file": "hardware/board_review/revisions/20260930-24/motherboard-native-candidate.kicad_pcb",
+      "board_sha256": "c5f109b95261d5e57a3e3eae76eb7fa368e08afee8d0a91dacc906c23640e306",
+      "physical_footprints": 2688,
+      "track_via_items": 8051,
+      "zones": 5,
+      "uncapped_missing_joins": 4753,
+      "bom": {
+        "path": "hardware/board_review/revisions/20260930-24/source-inputs/bom.csv",
+        "sha256": "52cd0f64ffb87f4931b1db36d947ee8f15b0ffc1361aa05dc5695d4070278ad9",
+        "source_design_path": "hardware/board_review/revisions/20260930-24/source-inputs/design.json",
+        "source_design_sha256": "bdaafde7f0feff16522d43c7531768d11c3693e5f6c21a78af654dd90c98ef32",
+        "published_revision": "20260930-24",
+        "source_adoption_path": "hardware/board_review/revisions/20260930-24/electrical-source-adoption.json",
+        "source_adoption_sha256": "8fa006ef4d260cbe6f5c370dca62d722a85ef0b6d4835560dde5316e35ef9278",
+        "physical_footprints": 2688,
+        "scope": "Exact frozen designator BOM of the published CAD revision; source26 component qualifications are separate current evidence"
+      }
+    },
+    "evidence": [
+      {
+        "path": "reports/motherboard-integration-20261001/source26-reference-fuse-adopted-r04/adoption.json",
+        "sha256": "3693bddd39cdf9f3c688dfe78eef06cb3cacfca7768f3c92fd7511e7e44d98b3"
+      },
+      {
+        "path": "reports/motherboard-pcb-integration-20261001/source26-four-reference-closures-r71/adoption.json",
+        "sha256": "0c4dc364b7e0a634284cf83ba6c406ea0206acd597afc13b021c8d17d1fb7ead"
+      },
+      {
+        "path": "reports/motherboard-pcb-integration-20261001/source26-four-reference-closures-r71/independent-connectivity/review.json",
+        "sha256": "52818a3b3a43a72a179e996aaaeb99de66daccb001f93292456efdaac85dbb3d"
+      },
+      {
+        "path": "hardware/board_review/revisions/20260930-24/publication.json",
+        "sha256": "981243e5ea94500d4acab39c36e70fc30932ad80592fab4e01eb5a1363dd8810"
+      }
+    ],
+    "fabrication_outputs": []
+  }
+}

@@ -1,0 +1,88 @@
+{
+ "schema": "exact-DI6-current-target-NEW-route-derivation-r574",
+ "original_R570_script_SHA256": "e38a8f6ecac865142f98a44de59ab8299a95f75fcc3e69760113ee535096ae2a",
+ "new_R574_script_SHA256": "f843c99273265d4f0b70cf0960d3a5d0a1c7aac98831c2a75f352e8f45e96d6d",
+ "changes": [
+  {
+   "before": "DI6-only-NEW-source-port-current-policy-pair-constructor-r570",
+   "after": "DI6-actual-retained-target-NEW-only-policy-constructor-r574",
+   "count": 1
+  },
+  {
+   "before": "R570_",
+   "after": "R574_",
+   "count": 4
+  },
+  {
+   "before": "import tri_route as T",
+   "after": "import tri_route as T\nimport restore_field_current_mixed_precision_states_r366 as MS",
+   "count": 1
+  },
+  {
+   "before": "g,h,b,q,c=pickle.loads(mp.read_bytes());gp=",
+   "after": "g,h,b,q,c=pickle.loads(mp.read_bytes());MS.restore_bound_field_current_precision_states(b,q);gp=",
+   "count": 1
+  },
+  {
+   "before": "prefixend=[114.276775,102.254746]",
+   "after": "prefixend=[113.95,119.35]",
+   "count": 1
+  },
+  {
+   "before": "retained=[t for t in saved if t['layer']=='In3.Cu'and t['uuid']!='eec928da-f55c-53ac-89ea-2e4674309615'];assert len(retained)==5",
+   "after": "retained=[];assert len([t for t in saved if t['layer']=='In3.Cu'])==6",
+   "count": 1
+  },
+  {
+   "before": "win=box(110,95,125,104)",
+   "after": "win=box(110,95,125,121)",
+   "count": 1
+  },
+  {
+   "before": "localholes=[s for j,s in enumerate(holes)if not s.envelope.disjoint(win.buffer(1))]",
+   "after": "holeowners=[(v['uuid'],K.L.norm(v['net']),False)for v in h['vias']]+[(p['uuid'],K.L.norm(p['net']),p['npth'])for p in h['pads']for s in K.L.poly(p.get('hole')or[])];assert len(holeowners)==len(holes);localholes=[(s,owner)for s,owner in zip(holes,holeowners)if not s.envelope.disjoint(win.buffer(1))]",
+   "count": 1
+  },
+  {
+   "before": "gap=req(other,net)+.025+.005;tob.append(K.Z.bounded_buffer(row['shape'],gap+.105));vob.append(K.Z.bounded_buffer(row['shape'],gap+.255))",
+   "after": "gap=req(other,net)+.025+.005;localbody=row['shape'].intersection(win.buffer(1));tob.append(K.Z.bounded_buffer(localbody,gap+.105));vob.append(K.Z.bounded_buffer(localbody,gap+.255))",
+   "count": 1
+  },
+  {
+   "before": "tob.append(K.Z.bounded_buffer(s,gap+.105));vob.append(K.Z.bounded_buffer(s,gap+.255))",
+   "after": "localbody=s.intersection(win.buffer(1));tob.append(K.Z.bounded_buffer(localbody,gap+.105));vob.append(K.Z.bounded_buffer(localbody,gap+.255))",
+   "count": 1
+  },
+  {
+   "before": "if role in z:tob.append(K.Z.bounded_buffer(z[role],gap+.105));vob.append(K.Z.bounded_buffer(z[role],gap+.255))",
+   "after": "if role in z:\n      localbody=z[role].intersection(win.buffer(1));tob.append(K.Z.bounded_buffer(localbody,gap+.105));vob.append(K.Z.bounded_buffer(localbody,gap+.255))",
+   "count": 1
+  },
+  {
+   "before": "tob.extend(K.Z.bounded_buffer(s,.385)for s in localholes);vob.extend(K.Z.bounded_buffer(s,.385)for s in localholes)",
+   "after": "tob.extend(K.Z.bounded_buffer(s,.385)for s,owner in localholes if owner[1]!=net or owner[2]);vob.extend(K.Z.bounded_buffer(s,.385)for s,owner in localholes)",
+   "count": 1
+  },
+  {
+   "before": "fref=refs['In1.Cu'].buffer(-.105);iref=refs['In4.Cu'].buffer(-.105)",
+   "after": "target=next(v for v in h['vias']if v['uuid']=='0ff4e506-7bc1-48ad-91fd-aeb598e74c7a');ret=next(v for v in h['vias']if v['uuid']=='cb1390c8-49e9-4971-9ee8-740c03e5b93f');maskfile=pin(P/'R155-known-reference-native-diagnostic-r157/measure/actual-full-refill-via-flashes.json');masks=json.loads(maskfile.read_bytes())['vias'];assert tuple(prefixend)==(target['x'],target['y'])and .90<=math.dist(prefixend,[ret['x'],ret['y']])<=1.0 and 'In3.Cu'in masks[target['uuid']]and'In4.Cu'in masks[ret['uuid']];ann=K.Z.bounded_disk(ret,ret['d']/2).difference(K.Z.bounded_disk(ret,ret['drill']/2));assert not ann.intersection(refs['In4.Cu']).is_empty;targetscope=K.Z.bounded_disk(target,.575);qual=pin(H/'di6-native-existing-target-return-r22.json','6bb5403004b11d997e867092c4362c78e7033230485d4e9d48409a770fc38ad1');put(OUT/'exact-existing-native-target-own-aperture-nomination-scope.json',{'target_UUID':target['uuid'],'target_native_definition':target,'retained_return_UUID':ret['uuid'],'return_native_definition':ret,'required_own_radius_mm':.575,'historical_R22_receipt_SHA256':sha(qual),'actual_current_R157_target_masks':masks[target['uuid']],'actual_current_R157_return_masks':masks[ret['uuid']],'actual_current_host_source_annulus':info(ann.intersection(refs['In4.Cu'])),'same_actual_current_native_void_and_final_source_qualification':'OPEN; final full-body subset must be independently proved','no_In1_target_credit':True,'no_radius_expansion':True});fref=refs['In1.Cu'].intersection(win.buffer(1)).buffer(-.105);iref=refs['In4.Cu'].intersection(win.buffer(1)).union(targetscope).buffer(-.105)",
+   "count": 1
+  },
+  {
+   "before": "regionfile=OUT/'continuous-NEW-signal-port-sites.wkb';regionfile.write_bytes(region.wkb)",
+   "after": "regionfile=OUT/'continuous-NEW-signal-port-sites.wkb';regionfile.write_bytes(region.wkb);cache=OUT/'bounded-reference-native-owned-regions-NOMINATION_ONLY.pkl';cache.write_bytes(pickle.dumps({'free':free,'viaregions':viaregions,'ff':ff,'ii':ii,'signal_region':region,'return_region':rf,'targetscope':targetscope,'heldpeer':heldpeer},protocol=5))",
+   "count": 1
+  },
+  {
+   "before": "'only-NEW-DI6-signal-source-pair-and-nine-path-successor-NOMINEE.pkl'",
+   "after": "'only-NEW-DI6-replanned-F-In3-source-pair-NOMINEE.pkl'",
+   "count": 1
+  },
+  {
+   "before": "'all_five_saved_tail_In3_tracks_exact':bool(selected)",
+   "after": "'all_saved_NEW_In3_transport_replanned_no_original_Cu_change':True",
+   "count": 1
+  }
+ ],
+ "no_previous_candidate_or_native_source_mutated": true
+}

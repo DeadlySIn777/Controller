@@ -1,0 +1,34 @@
+"""Exact snippets/deletes and negative-mask ledgers only, no board/native job."""
+import json,hashlib,pickle,sys
+from pathlib import Path
+H=Path(__file__).resolve().parent.parent
+for d in('field-power','sbc-power','coupled-recovery'):sys.path.insert(0,str(H/d))
+import audit_aux_exact_raw as A
+import contact_layout as L
+from verify_source import parse,atom
+from shapely.ops import unary_union
+O=H/'sbc-power/T4-R7-exact-sparse-owned-native-and-negative-fill-recipe-r267'
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def put(p,v):Path(p).write_text(json.dumps(v,indent=1)+'\n')
+def main():
+ assert not O.exists();O.mkdir();parent=H/'sbc-power/T4-R7-sparse-exact-R250-diagnostic-r265/T4-plus-R7';assert sha(parent/'receipt.json')=='ef809424ddfeb32359740240ee195fb7a9a512d6ce1fd688ebf92cc0e473eadc';assert sha(parent/'model.pkl')=='e81143a727821d906558e6edce30088da3d410eb0dda8630f80d8fe85e1f16bf';g,h,b,q,c=pickle.loads((parent/'model.pkl').read_bytes());base=H/'coupled-recovery/CORE-R112-per-polygon-immutable-owned-construction-r250/model.pkl';assert sha(base)=='96d3f55a95b770a2a7f46e3b25274723946fe1572c6c82d81b7355b660360868';bg,bh,bb,bq,bc=pickle.loads(base.read_bytes());assert g==bg
+ source=H/'sbc-native-contract-r1/sbc-owned-native-contract.kicad_pcb';assert sha(source)=='eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a';raw=source.read_bytes();iv=A.C.inventory(raw);identity=A.N.SourceNets(raw);rows=[];tracks=[];vias=[];rm=[]
+ for dp in(H/'sbc-power/T4-duplicate-CORE5-fullwidth-detour-nominee-r256/proposed-discrete.pkl',H/'sbc-power/R7-NW-fullwidth-two-B-trunk-detour-nominations-r259/first-nominee-discrete.pkl'):
+  d=pickle.loads(dp.read_bytes());tracks+=d['tracks'];vias+=d['vias'];rm+=d['removed_original_track_UUIDs']
+ oldtracks={t['uuid']:t for t in bh['tracks']};added={}
+ for uid in rm:
+  ch=iv[3][uid];assert raw.count(ch)==1;t=oldtracks[uid];p=A.G.parse(uid,ch,{});assert(p['net'],p['layer'],p['w'],p['a'],p['b'])==(L.norm(t['net']),t['layer'],t['w'],t['a'],t['b']);f=O/(uid+'.exact-original-delete.segment-chunk');f.write_bytes(ch);rows.append({'action':'remove','uuid':uid,'kind':'segment','exact_chunk_path':str(f.resolve()),'exact_chunk_sha256':sha(f),'actual_original_geometry':t,'authority':'Only exact duplicateCORE5 pair/fullwidthCORE1V2 local pair; every shared contact/source key separately proven R257/R265'})
+ for t in tracks:
+  assert identity.raw(L.norm(t['net']))==t['net'];ch='\t(segment\n\t\t(start %.6f %.6f)\n\t\t(end %.6f %.6f)\n\t\t(width %.6f)\n\t\t(layer %s)\n\t\t(net %s)\n\t\t(uuid %s)\n\t)\n'%(*t['a'],*t['b'],t['w'],json.dumps(t['layer']),json.dumps(t['net']),json.dumps(t['uuid']));f=O/(t['uuid']+'.segment-chunk');f.write_text(ch,encoding='utf-8',newline='');added[t['uuid']]=ch.encode();ast=parse(ch);assert atom(ast,'net')==t['net']and atom(ast,'uuid')==t['uuid'];rows.append({'action':'add','uuid':t['uuid'],'kind':'segment','exact_chunk_path':str(f.resolve()),'exact_chunk_sha256':sha(f),'exact_geometry':t})
+ for v in vias:
+  assert(v['d'],v['drill'])==(.5,.2)and identity.raw(L.norm(v['net']))==v['net'];ch='\t(via\n\t\t(at %.6f %.6f)\n\t\t(size %.6f)\n\t\t(drill %.6f)\n\t\t(layers "F.Cu" "B.Cu")\n\t\t(net %s)\n\t\t(uuid %s)\n\t)\n'%(v['x'],v['y'],v['d'],v['drill'],json.dumps(v['net']),json.dumps(v['uuid']));f=O/(v['uuid']+'.via-chunk');f.write_text(ch,encoding='utf-8',newline='');added[v['uuid']]=ch.encode();assert not any(token in ch for token in('remove_unused_layers','keep_end_layers','zone_connection'));rows.append({'action':'add','uuid':v['uuid'],'kind':'via','exact_chunk_path':str(f.resolve()),'exact_chunk_sha256':sha(f),'exact_geometry':v,'native_all6_flash_must_be_measured':True})
+ identity.assert_chunks(added);role=[];by={z['uuid']:z for z in bq}
+ for z in q:
+  old=by[z['uuid']]
+  for r in('shape','zone_outline_shape'):
+   if z[r].wkb==old[r].wkb:continue
+   assert z[r].difference(old[r]).is_empty;role.append({'uuid':z['uuid'],'role':r,'raw_net':z['net'],'layer':z['layer'],'before_WKB_sha256':hashlib.sha256(old[r].wkb).hexdigest(),'after_WKB_sha256':hashlib.sha256(z[r].wkb).hexdigest(),'exact_negative_mask':old[r].difference(z[r]),'all_other_role_settings_unchanged':True})
+ assert len(role)==2 and{r['uuid']for r in role}=={'f4863c44-a057-598a-aef7-adca7cfb15f1'};rf=O/'only-two-DOB-generated-negative-role-masks.pkl';rf.write_bytes(pickle.dumps(role,protocol=5));df=O/'only-owned-new-discrete-and-four-exact-deletes.pkl';df.write_bytes(pickle.dumps({'tracks':tracks,'vias':vias,'removed':rm},protocol=5));put(O/'exact-sparse-operation-ledger.json',rows)
+ scopefiles=[parent/'exact-current-filled-record-new-primitive-ledger.json',parent/'exact-generated-role-new-antipad-ledger.json',*parent.glob('*explicit-local-gain-reserve-ledger.json'),*parent.glob('*bound-local-reserve*')];manifest={str(f.resolve()):sha(f)for f in scopefiles if f.is_file()};put(O/'required-exact-current-filled-cut-and-local-negative-ledger-manifest.json',manifest)
+ peer=H/'sbc-power/T4-R7-R265-independent-all-hard-peers-native-scope-r266/receipt.json';assert sha(peer)=='5d68b063cd9375314187cde8b86db653a0c992186e3f2bf2a4be8bdf377ab57c';result={'verdict':'EXACT_SPARSE_NATIVE_SNIPPETS_AND_FILLED_NEGATIVE_OPERATION_RECIPE_NO_BOARD_NO_NATIVE_NO_ADOPTION','exact_R250_authority_model_sha256':sha(base),'exact_source_board_sha256':sha(source),'exact_host_T4_R7_model_sha256':sha(parent/'model.pkl'),'host_incremental_receipt_sha256':sha(parent/'receipt.json'),'full_hard_DIC_REG_U25_native_hole_peer_scope_sha256':sha(peer),'counts':{'exact_original_deletes':len(rm),'new_segments':len(tracks),'new_ordinary_vias':len(vias),'generated_negative_role_masks':len(role)},'sparse_discrete_packet':str(df.resolve()),'sparse_discrete_sha256':sha(df),'exact_operation_file':str((O/'exact-sparse-operation-ledger.json').resolve()),'exact_operation_sha256':sha(O/'exact-sparse-operation-ledger.json'),'only_generated_negative_role_mask_file':str(rf.resolve()),'only_generated_negative_role_mask_sha256':sha(rf),'required_current_filled_cut_local_negative_manifest_sha256':sha(O/'required-exact-current-filled-cut-and-local-negative-ledger-manifest.json'),'minimal_rebase':'Copy neither priorwholemodels nor filled arrays; apply only these discrete/snippet/delete facts and role masks against exact prior hashes, then replay normalnewprimitives plus bound localnegative reserves on latestcurrentrecords, requalify allsource/contact/reference/current/native','no_FPs_pads_source_or_native_design_zone_rule_changes':True,'extra_via_planner_reserve':'FAIL_6_RETAINED','inherited_CORE_93p041959_wholebody_current_native':'FAIL_OR_OPEN_RETAINED','native_jobs':0,'board_written':False,'adopted':False,'script_sha256':sha(__file__)};put(O/'receipt.json',result);print('R267_COMPLETE',sha(O/'receipt.json'),sha(df),sha(rf),flush=True)
+if __name__=='__main__':main()

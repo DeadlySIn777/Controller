@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "revision": "power-entry-feasibility-r0.1",
+  "date": "2026-09-28",
+  "status": "design_draft_not_qualified",
+  "manufacturing_ready": false,
+  "scope": "Two independent nominal24V entry branches for six-step/two-encoder baseline; no display, motor power, AI accessory or eight/four expansion budget. No schematic or physical tests owned by this review.",
+  "ledger_reference": {
+    "path": "hardware/electrical-design.json",
+    "input_requirement_v": [
+      18,
+      30
+    ],
+    "core_capacity_a": 2,
+    "field_capacity_a": 6,
+    "unchanged_by_this_document": true,
+    "sha256_at_review": "f5abb8b171ee4c8e5713febb682e90ce71e86325e0dac16ecd108f723d68f63d"
+  },
+  "proposed_draft_envelope": {
+    "entry_voltage_v": [
+      19,
+      30
+    ],
+    "nominal_v": 24,
+    "core_qualified_source_and_wiring_capacity_target_a": 3,
+    "field_qualified_source_and_wiring_capacity_target_a": 6,
+    "total_series_resistance_budget_ohm": {
+      "core": 0.2,
+      "field": 0.2
+    },
+    "minimum_downstream_voltage_at_ledger_load_v": {
+      "core": 18.638,
+      "field": 18.128
+    },
+    "reason": "18V connector input minus path drop is below existing18V-min converters. The19V draft is a scoped revision, not fulfillment of the unchanged18V requirement. Core3A source/wiring is proposed; current2A ledger cannot be called protected by a nominal2.2A limiter. No selected PSU or cable."
+  },
+  "branches": [
+    {
+      "id": "CORE",
+      "ground": "LOGIC_GND",
+      "raw": "CORE_RAW_FUSED",
+      "internal_in": "CORE_EFUSE_IN",
+      "protected_out": "CORE_24V_PROTECTED",
+      "diagnostic_pullup_rail": "IO_3V3",
+      "rilim_ohm": 8200,
+      "normal_load_a": 1.81
+    },
+    {
+      "id": "FIELD",
+      "ground": "FIELD_GND",
+      "raw": "FIELD_RAW_FUSED",
+      "internal_in": "FIELD_EFUSE_IN",
+      "protected_out": "FIELD_24V_PROTECTED",
+      "diagnostic_pullup_rail": "FIELD_5V",
+      "rilim_ohm": 3650,
+      "normal_load_a": 4.36
+    }
+  ],
+  "topology": "Connector+ -> physical DC fuse -> RAW_FUSED -> Q1 source; Q1 drain -> EFUSE_IN -> U1 IN; U1 OUT -> PROTECTED. TVS and nonpolar CIN across RAW_FUSED/localGND. Grounds never tied by this block.",
+  "parts": {
+    "U1": {
+      "mpn": "TPS26630RGER",
+      "package": "RGE24 VQFN4x4 exposedpad",
+      "pins": {
+        "1": "IN",
+        "2": "IN",
+        "3": "B_GATE",
+        "4": "DRV",
+        "5": "IN_SYS",
+        "6": "UVLO",
+        "7": "OVP",
+        "8": "GND",
+        "9": "DVDT",
+        "10": "ILIM",
+        "11": "MODE_NC",
+        "12": "SHDN",
+        "13": "IMON",
+        "14": "FLT",
+        "15": "PGTH",
+        "16": "PGOOD",
+        "17": "OUT",
+        "18": "OUT",
+        "19": "NC",
+        "20": "NC",
+        "21": "NC",
+        "22": "NC",
+        "23": "NC",
+        "24": "NC",
+        "25": "GND_exposedpad"
+      },
+      "mode": "LeaveMODEopen for overload/thermal latch; not an all-fault latch. UVLO cycling or power cycling can reset it. No automatic machine arm."
+    },
+    "Q1": {
+      "mpn": "CSD19537Q3",
+      "package": "SON3.3x3.3",
+      "pins": {
+        "1": "RAW_FUSED",
+        "2": "RAW_FUSED",
+        "3": "RAW_FUSED",
+        "4": "B_GATE",
+        "5": "EFUSE_IN",
+        "6": "EFUSE_IN",
+        "7": "EFUSE_IN",
+        "8": "EFUSE_IN",
+        "exposed_drain": "EFUSE_IN"
+      },
+      "source": "RAW_FUSED",
+      "gate": "B_GATE",
+      "drain": "EFUSE_IN",
+      "footprint_warning": "Map exposedDpad to drain; package pin1-3S/4G/5-8D visually checked in TI Figure3-1. Do not substitute generic SO8 footprint."
+    },
+    "Q2": {
+      "mpn": "BSS138P,215",
+      "manufacturer": "Nexperia",
+      "package": "SOT23",
+      "pins": {
+        "1": "DRV",
+        "2": "RAW_FUSED",
+        "3": "B_GATE"
+      },
+      "limits": {
+        "vds_abs_v": 60,
+        "vgs_abs_v": 20,
+        "ciss_max_pf_at_vds10v": 50
+      },
+      "status": "Candidate substitution for TI exampleBSS138; reverse-response bench qualification required. onsemiBSS13827pF is typical only."
+    },
+    "TVS": {
+      "mpn": "SMCJ30CA",
+      "manufacturer": "Littelfuse",
+      "package": "DO214AB",
+      "nodes": [
+        "RAW_FUSED",
+        "localGND"
+      ],
+      "bidirectional": true,
+      "standoff_v": 30,
+      "breakdown_v": [
+        33.3,
+        36.8
+      ],
+      "max_clamp_v_at_test": 48.4,
+      "peak_pulse_current_a_at_test": 31,
+      "test_waveform": "10/1000us at datasheet reference temperature; not arbitrary surge rating",
+      "status": "Provisional; temperature derating/source waveform/inductance/fuse coordination unqualified"
+    },
+    "FUSE": {
+      "mpn": null,
+      "physical_serviceable": true,
+      "upstream_of_tvs": true,
+      "status": "Required functional position only; no final rating/holder/interrupting capacity until source and wiring specified. No fabrication release.",
+      "screening_candidates": {
+        "CORE": "Littelfuse0997003.WXN,3A,58VDC",
+        "FIELD": "Littelfuse099707.5WXN,7.5A,58VDC",
+        "series_interrupt_rating_a_at_58vdc": 1000,
+        "qualification": "Candidate catalog values from primary997series index only; holder, temperature rerating, time-current clearing and source coordination unproved. These are not final approvedBOMparts.7.5Afuse cannot be assumed to protect a6Arated path."
+      }
+    },
+    "OUTPUT_NEGATIVE_CLAMP": {
+      "mpn": null,
+      "status": "Unresolved; measure/limit OUT negative excursion and returned load energy before selecting. Generic Schottky forward drop does not guarantee OUT>=-0.3V."
+    }
+  },
+  "support_values": {
+    "uvov_ladder": {
+      "raw_to_uvlo_ohm": 887000,
+      "uvlo_to_ovp_ohm": 29400,
+      "ovp_to_gnd_ohm": 34000,
+      "initial_resistor_tolerance_fraction": 0.001,
+      "total_error_budget_fraction": 0.005,
+      "minimum_raw_to_uvlo_required_ohm": 300000
+    },
+    "pgth_divider": {
+      "protected_to_pgth_ohm": 140000,
+      "pgth_to_gnd_ohm": 10000,
+      "initial_resistor_tolerance_fraction": 0.001,
+      "total_error_budget_fraction": 0.005
+    },
+    "rilim": {
+      "initial_tolerance_fraction": 0.001,
+      "total_error_budget_fraction": 0.005,
+      "current_tolerance_assumption_fraction": 0.1,
+      "assumption_not_guaranteed_at_selected_r": true,
+      "datasheet_test_points_a": {
+        "30000": [
+          0.54,
+          0.6,
+          0.66
+        ],
+        "9000": [
+          1.84,
+          2,
+          2.16
+        ],
+        "4020": [
+          4.185,
+          4.5,
+          4.815
+        ],
+        "3000": [
+          5.58,
+          6,
+          6.42
+        ]
+      }
+    },
+    "dvdT": {
+      "capacitance_f": 1e-07,
+      "effective_tolerance_fraction": 0.05,
+      "dielectric": "stable low leakage; exact10V-or-higher MPN open"
+    },
+    "decoupling": {
+      "raw_min_effective_f": 1e-06,
+      "in_min_effective_f": 1e-07,
+      "out_min_effective_f": 1e-07,
+      "voltage_rating_target_v": 100,
+      "raw_must_be_nonpolar": true,
+      "total_output_capacitance_max_f": 0.001,
+      "bulk_exact_mpn": null,
+      "notes": "Capacitance after DC bias/temperature/tolerance. Totalcap limit is prototype assumption; includes converters and cable/accessories. This is not a hold-up specification."
+    },
+    "imon": {
+      "resistor_ohm": 10000,
+      "initial_tolerance_fraction": 0.001,
+      "capacitor_allowed": false,
+      "nodes": [
+        "IMON",
+        "localGND"
+      ],
+      "readout": "Local test point only until ADC input loading/clamp and isolation budget selected."
+    },
+    "fault_and_pgood": {
+      "pullup_ohm": 10000,
+      "core_pullup": "IO_3V3",
+      "field_pullup": "FIELD_5V",
+      "notes": "Domain-local only. Floating/high without diagnosticpower is not healthy. No direct unreviewedGPIO connection; isolation/power-off behavior remains open."
+    },
+    "shdn": {
+      "connection": "Normally open dry contact to localGND; otherwise leaveopen to internal pullup. No unpoweredGPIO dependency. Label RESET/POWER-OFF, not ESTOP. Bench manual clear only.",
+      "open_circuit_v": [
+        2.48,
+        3.3
+      ],
+      "low_max_v": 0.8,
+      "high_min_v": 2,
+      "notes": "Grounding removes power; opening can reenergize rail. Does not authorize outputs. Debounce/ESD/externalinterface qualification open."
+    },
+    "converter_enable": {
+      "status": "Not selected",
+      "requirement": "Held off through ramp with hardware under-voltage qualification. DiagnosticPGOOD pulled from downstreamrail alone cannot boot its own converter; exactENtranslation/sequencing independent of downstream power is required."
+    }
+  },
+  "calculations": {
+    "resistor_total_error_budget_fraction": 0.005,
+    "uvlo_rise_v": [
+      17.261780780274496,
+      18.725944834951573
+    ],
+    "uvlo_fall_v": [
+      15.984566661593453,
+      17.60624012845378
+    ],
+    "ovp_rise_v": [
+      32.28811173349429,
+      34.817824359045225
+    ],
+    "ovp_fall_v": [
+      29.907223000687736,
+      32.72926130849837
+    ],
+    "pgth_rise_v": [
+      17.455284104477617,
+      18.553326105527635
+    ],
+    "pgth_fall_v": [
+      16.177264203980105,
+      17.432914045226124
+    ],
+    "core": {
+      "normal_load_ledger_a": 1.81,
+      "ilim_nominal_a": 2.1951219512195124,
+      "ilim_screening_low_a": 1.9657808518383695,
+      "ilim_screening_high_a": 2.4267679862728277,
+      "normal_efuse_loss_w": 0.22463329999999998,
+      "normal_q1_screening_loss_w": 0.10876652,
+      "normal_efuse_31_4C_W_rise_c": 7.053485619999999,
+      "normal_drop_efuse_plus_q1_v": 0.156022,
+      "max_limit_imON_v": 0.7350850104179434
+    },
+    "field": {
+      "normal_load_ledger_a": 4.36,
+      "ilim_nominal_a": 4.931506849315069,
+      "ilim_screening_low_a": 4.416274790431405,
+      "ilim_screening_high_a": 5.451917119845805,
+      "normal_efuse_loss_w": 1.0585088,
+      "normal_q1_screening_loss_w": 0.6311187200000001,
+      "normal_efuse_31_4C_W_rise_c": 33.237176319999996,
+      "normal_drop_efuse_plus_q1_v": 0.375832,
+      "max_limit_imON_v": 1.6514238590211332
+    },
+    "inrush": {
+      "output_capacitance_max_f": 0.001,
+      "slew_model_min_v_s": 397.26190476190476,
+      "slew_model_max_v_s": 608.9473684210526,
+      "icap_model_max_a": 0.6089473684210526,
+      "rise30v_model_range_ms": [
+        49.265341400172865,
+        75.51693137548696
+      ],
+      "energy30v_j": 0.45,
+      "average_fet_charging_loss_30v_screen_w": 9.134210526315789,
+      "notes": "Algebraic parameter-corner model; gain/charging-current specifications have stated conditions, not guaranteed complete loaded ramp. Ignores constant-power startup unless load held off."
+    },
+    "q1_hot_resistance_model": {
+      "resistance_ohm": 0.0332,
+      "basis": "2times16.6mohm maximum at6Vgate/25C;2xhotfactor is engineering screening allowance, not guaranteed hotmaximum. TPS2663 minimumgateoverdrive8.3V is below10VdatasheetRDS test; use6Vpoint conservatively with monotonicity assumption."
+    },
+    "thermal_environment": {
+      "screening_local_ambient_c": 70,
+      "U1_recommended_Tj_max_c": 125,
+      "pcb_thermal_qualification": false,
+      "q1_thetaJA_model_c_w": 55,
+      "q1_model_rise_core_c": 5.9821586,
+      "q1_model_rise_field_c": 34.7115296,
+      "caution": "Package thermalmetrics depend on testPCB and cannot establish finalboardtemperature. Q1smallpadmodel160C/W wouldadd~101C atfieldnormal load andfail70Cambient budget."
+    },
+    "fuse_room_temperature_screen": {
+      "core_min_nominal_at75percent_a": 2.4133333333333336,
+      "field_min_nominal_at75percent_a": 5.8133333333333335,
+      "candidate_melting_i2t_typ_a2s": {
+        "core3a": 9.4,
+        "field7_5a": 68
+      },
+      "qualification": "Typical meltingI2t is not maxclearingI2t nor semiconductorprotection proof; temperature/holderadditionalderating open."
+    }
+  },
+  "voltage_and_transient_requirements": {
+    "U1_operating_input_v": [
+      4.5,
+      60
+    ],
+    "U1_input_abs_v": 67,
+    "U1_in_sys_negative_abs_v": -60,
+    "U1_out_abs_min_v": -0.3,
+    "U1_reverse_differential_10ms_abs_v": -85,
+    "target_downstream_operating_max_v_at_least": 36,
+    "ovp_response_max_us_at_specified_overdrive": 14,
+    "no_instantaneous_ov_clamp": true,
+    "positive_peak_target_below_v": 60,
+    "negative_abs_peak_target_above_v": -60,
+    "differential_constraint": "abs(negativeIN_SYS)+positiveOUT must stay below85V including ringing;85V is10ms transient absolute rating, not operating target. Q1VDS below100V; Q1VGS below20V. 48.4+35=83.4V leaves only1.6V to differentialabs atdatasheetconditions; thermal/traceovershoot must be tested."
+  },
+  "release_blockers": [
+    "Input19â€“30V proposal not yet integrated in ledger; original18â€“30V requirement not met by this calculation.",
+    "Core3A source/wiring proposal not yet selected or accepted; field continuous load headroom is small.",
+    "Interpolated ILIM limits are screening assumptions; selectedresistor/current transfer mustbequalified.",
+    "Fuse MPN, holder, DC interrupt rating, fuse timecurrent/I2t, source min/max prospectivefault and foldback remainunknown.",
+    "Q2 layoutcapacitance, Q1 hotresistance/thermal/SOA and eFuse startup transientthermal require measurement.",
+    "Output bulk capacitance, converter startup load/UVLO/EN/surgewithstand and outputclamps notfrozen.",
+    "TVS temperature derating, tested pulse width/repetition, cableenergy, returns and source faultvoltage unknown.",
+    "Independent output permission latch/defaults not implemented by this circuit.",
+    "PCB thermal/layout/ERC/DRC and physical tests absent; no manufacture claim."
+  ],
+  "sources": [
+    {
+      "file": "tps2663.pdf",
+      "url": "https://www.ti.com/lit/ds/symlink/tps2663.pdf",
+      "sha256": "bb61314ace65ed37684bd07f541fc676081d7cf81cb24020e7c5c2065bfe16b2",
+      "pages": 59
+    },
+    {
+      "file": "csd19537q3.pdf",
+      "url": "https://www.ti.com/lit/ds/symlink/csd19537q3.pdf",
+      "sha256": "d74d65b7815d46d642a11c89834ee71245ae6d3541595df2b4fcfa21dfbd4903",
+      "pages": 12
+    },
+    {
+      "url": "https://assets.nexperia.com/documents/data-sheet/BSS138P.pdf",
+      "access": "webprimaryread; directdownload403"
+    },
+    {
+      "url": "https://www.littelfuse.com/assetdocs/littelfuse_tvs_diode_smcj_datasheet?assetguid=37388813-0d6d-4329-969b-1aa8b7614ac1",
+      "access": "webprimaryread; directdownload403"
+    },
+    {
+      "url": "https://www.tracopower.com/tmr1-datasheet",
+      "access": "primarysearchindex confirms18â€“36V; directdownload403; notfullyread"
+    },
+    {
+      "url": "https://www.littelfuse.com/assetdocs/littelfuse-datasheet-997-mini58v?assetguid=f4bf5724-5a40-4a44-8f08-c52ae959a5ef",
+      "access": "Primarysearchindex read; fullwebopen timeout. Catalogcandidates only."
+    },
+    {
+      "url": "https://www.littelfuse.com/assetdocs/fuseology-selection-guide?assetguid=d812dff2-1c47-4dc3-bce7-07a4001ddc32",
+      "access": "Primarywebsearchsource read"
+    }
+  ]
+}

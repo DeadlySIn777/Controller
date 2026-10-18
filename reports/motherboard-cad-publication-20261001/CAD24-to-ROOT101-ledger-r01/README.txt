@@ -1,0 +1,11 @@
+This is a read-only publication ledger for published CAD 20260930-24 and the prospective ROOT101 work-in-progress board. It does not publish, export manufacturing files, or declare readiness.
+
+Both boards contain exactly 2,688 physical source footprints with the same footprint and pad UUID populations. The outline stays 460 × 340 mm and six copper layers. The requested 1.600 mm stackup/rules are now explicit; supplier approval and impedance verification remain separate.
+
+Copper changes: 6,149 prior items have identical semantic geometry, 21 were explicitly modified, 1,881 were retired, and 5,465 were added. Total tracks/vias grow from 8,051 to 11,635. These figures do not claim all original copper was retained; the full literal per-UUID ledger records every changed or retired item.
+
+886 footprint poses changed. The only physical pin-net corrections are R14069.2 and R14072.2, from the old probe-IN nodes to their actual SENSE nodes. Source24–26 account for the precise two-pin, five capacitor procurement/value and three fuse-footprint corrections. Manufacturer land/drill changes are limited to C14746's two pads and the three fuseholder instances' four lands/holes each. No footprint/pad UUID or module architecture changes occurred. R14602/R14626 native value strings are corrected from stale274k labels to the already-selected267k source values; these are display reconciliation, not new electrical source selections.
+
+There are 1,521 native zones/rule areas rather than five legacy fills. Zone definitions, generated fill, actual Source anchoring and per-route return coverage remain distinct checks. The exact added and modified definitions are recorded separately from native derived fill.
+
+Native regular DRC is zero errors/zero warnings with no ignored checks. Uncapped missing copper joins fall from4,753 to3,528 (1,225 fewer). This is still a partially routed prototype design. The prospective board is SHA81c0d8c2f4cc70140deff90266c92fd693e9c34923da62610eee49305f413226; root combined Source/connectivity,106-loop/retained-route and regression proofs must close before publication. Source27 remains unadopted. Full power/drop/thermal, FPGA vendor implementation, measured20ms behavior, mechanical qualification, manufacturing files and physical validation are not credited by this ledger.

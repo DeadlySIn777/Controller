@@ -1,0 +1,151 @@
+{
+  "source_physical_count": 880,
+  "source_sha256": {
+    "hardware/motherboard/design.json": "697d7a6c6b222ba79012607cecb01b8ae5986a651266f228b4d8c37f140eb8c5",
+    "hardware/mc_local_power/design.json": "a2c6a650d1e82e05e5739ef1712ba909da76ee1d678df0433247a86c89af781b",
+    "hardware/motherboard_motor_power/design.json": "5eb5b6ba7b3f9792ab5e52bfb7024620bd938f5310923fd86585100980f94b44",
+    "hardware/motherboard_motors/design.json": "36c934e747106aa6431e7c90ba4948622370eab3a270349641db9f12a2eb5bec",
+    "hardware/mc_motor_buffers/design.json": "768b450e006262db1a6d1a602b63083d0ef5b61f3f31515e014092e8d35a08ae"
+  },
+  "regulators_in_880": [
+    "U2001 TPS62901 CORE_1V2",
+    "U2002 TPS62901 IO_3V3"
+  ],
+  "supervisors_in_880": [
+    "U2003 CORE_5V",
+    "U2004 CORE_1V2",
+    "U2005 IO_3V3",
+    "U9001 MOTOR_5V_A + receivingIO_3V3",
+    "U9002 MOTOR_5V_B + receivingIO_3V3",
+    "U9003 postlimiterAUX_5V_A/AUX_24V_A",
+    "U9004 postlimiterAUX_5V_B/AUX_24V_B"
+  ],
+  "part_rows": [
+    {
+      "reference": "U2001",
+      "mpn": "TPS62901RPJR",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U2002",
+      "mpn": "TPS62901RPJR",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U2003",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U2004",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U2005",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U2006",
+      "mpn": "SN74LVC1G17DBVR",
+      "source_block": "mc_local_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9001",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9002",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9003",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9004",
+      "mpn": "LTC2962HUD#PBF",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9005",
+      "mpn": "SN74LVC1G17DBVR",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9006",
+      "mpn": "SN74LVC1G17DBVR",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9007",
+      "mpn": "ISO7720FDWR",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    },
+    {
+      "reference": "U9008",
+      "mpn": "SN74LVC2G08DCUR",
+      "source_block": "motherboard_motor_power",
+      "classification": "retained_functional_not_rack_only"
+    }
+  ],
+  "rack_only_regulators_identified": [],
+  "rack_only_health_chips_identified": [],
+  "planned_11xxx_not_in_880": {
+    "required_supplies": [
+      "CORE_24V protected entry",
+      "FIELD_A_24V protected entry",
+      "FIELD_B_24V protected entry",
+      "CORE_5V 6A buck",
+      "MOTION_5V source>=3A continuous",
+      "FIELD_5V>=.30A buck",
+      "SBC_5V staged supply",
+      "MOTOR_5V_A/B independent controlled feeds",
+      "postlimiterAUX_5V_A/B",
+      "postlimiterAUX_24V_A/B"
+    ],
+    "not_to_duplicate": [
+      "CORE_1V2 regulator",
+      "IO_3V3 regulator",
+      "MC voltage sequence or FPGA reset buffer",
+      "existing postlimiter9xxx supervisors",
+      "per-card regulator/identity EEPROM inventory"
+    ],
+    "tentative_minimum_new_power_ics": 13,
+    "tentative_count_explanation": "3main entry eFuses+2buck+1fieldbuck+2motorfeeds+1SBCfeed+2AUX5limiters+2AUX24limiters=13. Optional display branch and independent blanking/latch ICs additional only if required."
+  },
+  "decisions": [
+    "Preserve existing2MC regulators; no additional receiver3.3V regulator.",
+    "Do not collapse7supervisors solely by matchingMPN; domains, monitored rails, bank fault semantics and sequencing differ.",
+    "9xxx repeatedIO3 monitoring can be reviewed for sharedMChealth use later only after actual receiving voltage/drop and timing contracts are proven; not a safe automatic deletion.",
+    "Do not fit an extra11xxx health supervisor when existingMC_RAILS_OK_5V can provide actual pre-MOTOR5 logic qualification.",
+    "BothAUX24 banks andFIELD5 remain onFIELD_A entry per frozenIS1; FIELD_B separately suppliesDO8\u201315 andgeneralDI sensors.",
+    "FIELD_GND=fieldA reference; FIELD_B_0V remains distinct until explicit parentreturn mapping; neither joinsLOGIC_GND.",
+    "No new daughterboards, fixedCM5 requirement or screen-size coupling.",
+    "Any compute/display load reservation must have exact voltage/current profile;6Acorebuck is not a universal unlimited host/display rail."
+  ],
+  "engineering_gaps": [
+    "Actual11xxx source not yet generated, placed or routed.",
+    "AUX24A60.4kTPS2660 nominal.199A lacks primary guaranteed min/max at that resistance; vendor confirmation or different part required.",
+    "AUX24 existing9xxx static19\u201329Varmscreen does not prove inherited18\u201330Vrange.",
+    "ISO7720F1.7\u20132.25V undetermined region needs independent receiving-rail blanking/latch path, not another arbitrary softwarePG constant.",
+    "All normal/drop/transient current and power budgets require finalboardload reconciliation."
+  ]
+}

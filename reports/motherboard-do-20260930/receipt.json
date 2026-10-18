@@ -1,0 +1,108 @@
+{
+  "recorded_at_utc": "2026-09-30T19:43:44.282446+00:00",
+  "scope": "One-motherboard sixteen sourcing-DO frontend source r0.1",
+  "physical_components": 110,
+  "numbered_electrical_copper_pads": 552,
+  "unnumbered_paste_only_apertures": 228,
+  "native_ERC": {
+    "errors": 0,
+    "warnings": 2,
+    "ignored_checks": [],
+    "warning_justification": "Exactly two ISO7762 GND2 pin9 ground-name warnings, connected to the independently checked isolated FIELD_A/B_0V returns."
+  },
+  "native_footprint_loading": true,
+  "independent_source_validation": true,
+  "test_runs": [
+    {
+      "command": [
+        "C:/Python314/python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_motherboard_do.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "tests": 36,
+      "log": "test_motherboard_do.txt"
+    },
+    {
+      "command": [
+        "C:/Python314/python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_motherboard_di.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "tests": 28,
+      "log": "test_motherboard_di.txt"
+    },
+    {
+      "command": [
+        "C:/Python314/python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_motherboard_motors.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "tests": 24,
+      "log": "test_motherboard_motors.txt"
+    }
+  ],
+  "total_scoped_tests": 88,
+  "input_hashes": {
+    "hardware/motherboard_do/bom.csv": "98c648e97df2951156a5e3363491cc1402c9e79c26aed2e8969bd7c6dade56a6",
+    "hardware/motherboard_do/boundary-map.json": "df01d5c56e8c0cf14e332ff089d01b79bf828623360512e5f111e429570cea5b",
+    "hardware/motherboard_do/CNC.kicad_sym": "4af968e38f7ac1fd325db473a46ccf1fc289ed5fa8d302d8efbeab14f08a661d",
+    "hardware/motherboard_do/design.json": "e6bd1aba13adb9838727077b7a5d9af6c5d6c14c45620f166fd42d0558c50352",
+    "hardware/motherboard_do/erc.json": "34f43a5a9a5238b8831c817a4256175db0eefd818ca8153dfc6f43a842a702c9",
+    "hardware/motherboard_do/footprint-review.json": "3bade025502a2d39838ddac7d1a51f8129e5831146d7e6cba807671657c4e6ec",
+    "hardware/motherboard_do/fp-lib-table": "1b5093b517c145c95aa57030aa33fd907c130a6998b6732baadbf7148f9e1bef",
+    "hardware/motherboard_do/motherboard_do.kicad_pro": "df6e858f118433f06f3a62c8ae00930068ae62530ffea49874a2c810fc73fb29",
+    "hardware/motherboard_do/motherboard_do.kicad_sch": "53d5f3b6c412bbc152262a4332445d8af3cbc81df8e7485aa3a0b6527069562a",
+    "hardware/motherboard_do/netlist.xml": "2995b56b302657ef47862b17f5d88fb08bd7dbf57770c09235026432afd093b3",
+    "hardware/motherboard_do/pin-map.json": "e5ddda975ef6fbcb6c662214db6e65f49257974c0d5de3d737ddd1ec73c2bbe8",
+    "hardware/motherboard_do/README.md": "b13da6941614e07d1c2a9eeaf329c8cc83a4596c8c9c36831ba992ccf23009fe",
+    "hardware/motherboard_do/sym-lib-table": "d5faa76950eb60085738717387ea083e2f8011bfa52fc9f943307215076dd876",
+    "hardware/motherboard_do/validation.json": "1e33e5ef5f9c1d9ab17519f177c2aac9aa1c6f2536b63e804db400d391fe91d3",
+    "hardware/motherboard_do/CNC_MB_DO.pretty/CSD19538_DNH8_TI.kicad_mod": "b31eb25d215b4da2dc168acaec230e6bc7342489a1e1fff09ad1b7f3db7ebceb",
+    "hardware/motherboard_do/CNC_MB_DO.pretty/ISO7762_DBQ16_TI.kicad_mod": "b9317a221b9862fa7dde93600117dfefe6303cfb77763e47266f93f46fde6d15",
+    "hardware/motherboard_do/CNC_MB_DO.pretty/TPS274C65_RHA40_TI.kicad_mod": "9678e302bcee0430a92aa0f9d5cea675e9e71caefd303ec4191e693b63c5d540",
+    "tools/hardware_build_motherboard_do.py": "382494237abec24baecbe90b943c0139846ce50f6ad5269aa76dc7d4c746cd50",
+    "tools/hardware_validate_motherboard_do.py": "7f2a365fe96c21d561249cf518ed60f21bbf83b8ec8362fe31ca18cfcb8453f9",
+    "tests/test_motherboard_do.py": "b37028893c2419384f1d2eb9665dfea13a3b0b027bd67eb9ff1cf38ac5f3e449"
+  },
+  "changed_inputs_during_tests": [],
+  "manufacturing_ready": false,
+  "PCB_DRC": "not applicable to this source region; final parent PCB required",
+  "target_firmware_compilation": "not implemented",
+  "physical_measurements": "not performed",
+  "parent_engineering_gaps": [
+    "Two field-derived VDD supplies, power-good and safe sequencing; never parallel TPS internal VDD regulators.",
+    "Local IOL1 controllers, 1ms accepted-frame timeout / <=2ms independent IWDG, reset, epoch enable and physical qualification; no constant CARD_EN/identity.",
+    "SPI/ADC CRC driver, configuration/readback limits/calibration, fault latching, bank current/thermal/load qualification and CLI/UI integration.",
+    "Protected field entry/bank bulk/surge clamp and output cable inductive-energy/EMC protection; TVS placeholder is deliberately not fitted.",
+    "Final connectors, return current/copper/thermal vias, clearance/isolation/stencil and PCB layout.",
+    "Actual output observations/status LEDs; unused LEDOUT pins do not prove observed output state."
+  ],
+  "cost_boundary": "The frozen701/699-part cost receipt is unchanged. These110 frontend parts need a future exact integrated recost."
+}

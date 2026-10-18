@@ -1,0 +1,2094 @@
+                                                                                         ISO1540, ISO1541
+                                                                            SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+                ISO154x Low-Power Bidirectional I2C Isolators
+
+1 Features                              3 Description
+•  Isolated bidirectional, I2C compatible,              The ISO1540 and ISO1541 devices are low-power,
+   communication                                           bidirectional  isolators  that are compatible with I2C
+•  Supports up to 1-MHz operation                        interfaces. These devices have logic input and output
+•  3-V to 5.5-V supply range                              buffers  that  are  separated by Texas  Instruments
+•  Open-drain outputs With 3.5-mA Side 1 and 35-       Capacitive Isolation technology using a silicon dioxide
+  mA Side 2 sink current capability                      (SiO2)  barrier. When  used  with  isolated  power
+•  –40°C to +125°C operating temperature               supplies, these devices block high voltages, isolate
+•  ±50-kV/µs transient immunity (Typical)               grounds, and prevent noise currents from entering
+• HBM ESD protection of 4 kV on all pins;               the local ground and  interfering with or damaging
+   8 kV on bus pins                                       sensitive circuitry.
+•  Safety-related certifications:
+                                                       This  isolation  technology  provides   for  function,
+   –  4242-VPK isolation per DIN EN IEC 60747-17                                                     performance,    size,   and   power   consumption
+     (VDE 0884-17)                                                  advantages when compared  to optocouplers. The
+   –  2500-VRMS isolation for 1 minute per UL 1577                                              ISO1540 and ISO1541 devices enable a complete
+   – CSA approval per IEC 62368-1 end equipment                                                            isolated I2C  interface  to be implemented  within a
+      standard                                                       small form factor.
+   – CQC basic insulation per GB4943.1-2011
+                                             The ISO1540 has two isolated bidirectional channels
+2 Applications                                                                  for clock and data lines while the ISO1541 has a
+•  Isolated I2C buses                                        bidirectional data and a unidirectional clock channel.
+•  SMBus and PMBus interfaces                   The ISO1541  is useful in applications that have a
+•  Open-drain networks                                   single  controller while the ISO1540  is suitable  for
+•  Motor control systems                                    multi-controller applications. For applications where
+•  Battery management                                 clock stretching by the target is possible, the ISO1540
+•  I2C level shifting                                    device should be used.
+                                                           Isolated bidirectional communication is accomplished
+                                                             within these devices by offsetting the low-level output
+                                                        voltage on side 1 to a value greater than the high-
+                                                               level input voltage on side  1, thus preventing an
+                                                               internal logic latch that otherwise would occur with
+                                                     standard digital isolators.
+
+                                                              Device Information
+                                                   PART NUMBER     PACKAGE    BODY SIZE (NOM)
+
+                                                          ISO1540
+                                                                      SOIC (8)          4.90 mm × 3.91 mm
+                                                          ISO1541
+
+
+
+                                                                VCC1                                               VCC2
+
+
+
+
+
+                                                                  SDA1                                               SDA2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Capacitor
+                                                                                                or SCL1                                                                   or SCL2
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Isolation
+                                                             GND1
+                                                                                                             GND2
+
+                                                                                                   VREF
+
+                                                                     Simplified Schematic
+
+
+
+
+
+     An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+       intellectual property matters and other important disclaimers. PRODUCTION DATA.
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+                                 Table of Contents
+
+ 1 Features............................................................................1      7.1 Overview...................................................................19
+ 2 Applications.....................................................................1      7.2 Functional Block Diagrams....................................... 19
+ 3 Description.......................................................................1      7.3 Feature Description...................................................20
+ 4 Revision History.............................................................. 2      7.4 Isolator Functional Principle......................................20
+ 5 Pin Configuration and Functions...................................4      7.5 Device Functional Modes..........................................21
+ 6 Specifications.................................................................. 6    8 Application and Implementation..................................22
+   6.1 Absolute Maximum Ratings........................................ 6      8.1 Application Information............................................. 22
+   6.2 ESD Ratings............................................................... 6      8.2 Typical Application.................................................... 23
+   6.3 Recommended Operating Conditions.........................6    9 Power Supply Recommendations................................25
+   6.4 Thermal Information....................................................7    10 Layout...........................................................................27
+   6.5 Power Ratings.............................................................7      10.1 Layout Guidelines................................................... 27
+   6.6 Insulation Specifications............................................. 8      10.2 Layout Example...................................................... 27
+   6.7 Safety-Related Certifications...................................... 9    11 Device and Documentation Support..........................28
+   6.8 Safety Limiting Values.................................................9      11.1 Documentation Support.......................................... 28
+   6.9 Electrical Characteristics...........................................10      11.2 Related Links.......................................................... 28
+   6.10 Supply Current Characteristics............................... 11      11.3 Receiving Notification of Documentation Updates..28
+   6.11 Timing Requirements.............................................. 11      11.4 Community Resources............................................28
+   6.12 Switching Characteristics........................................12      11.5 Trademarks............................................................. 28
+   6.13 Insulation Characteristics Curves........................... 13    12 Mechanical, Packaging, and Orderable
+   6.14 Typical Characteristics............................................14          Information.................................................................... 28
+ 7 Detailed Description......................................................19
+
+
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+
+Changes from Revision E (March 2019) to Revision F (December 2022)                        Page
+ •  Changed all instances of legacy terminology to controller and target where I2C is mentioned.......................... 1
+ •   Editorial and cosmetic changes throughout the document.................................................................................1
+ •  Updated electrical and switching parameters.....................................................................................................6
+ •  Updated 'DIN VDE V 0884-11:2017-01' to 'DIN EN IEC 60747-17 (VDE 0884-17)' and removed references to
+   'CSA/IEC 60950-1'..............................................................................................................................................9
+
+Changes from Revision D (December 2016) to Revision E (March 2019)                       Page
+ •  Changed VDE Standard name From: DIN V VDE V 0884-10 (VDE V 0884-10): 2006-12 To: DIN VDE V
+   0884-11:2017-01 in Section 1 ............................................................................................................................1
+ •  Changed Section 1 bullet From: CSA Component Acceptance Notice 5A, IEC 60950-1 and IEC 61010-1 End
+   Equipment Standards To: CSA approval per IEC 60950-1 and IEC 62368-1 end equipment standards...........1
+ •  Updated certifications approval status, numbers, standard names, and details according to the latest agency
+    certificates in Section 6.7 table...........................................................................................................................9
+ •  Changed both bypass capacitors From: 10 µF To: 0.1 µF in . Even though larger capacitors can be used, 0.1
+   µF is the minimum recommended bypass capacitor size.................................................................................24
+ •  Changed both bypass capacitors From: 10 µF To: 0.1 µF in . Even though larger capacitors can be used, 0.1
+   µF is the minimum recommended bypass capacitor size.................................................................................24
+
+Changes from Revision C (June 2015) to Revision D (December 2016)                        Page
+ •  Deleted the Device Comparison Table; see the Features List table for device comparison ..............................4
+ •  Changed the status of CQC certification from planned to certified ....................................................................9
+ •  Changed the Regulatory Information table to Safety-Related Certifications and updated content.....................9
+ •  Changed formatting of supply current parameters to combine device and sides. Moved parameters to
+   separate table .................................................................................................................................................. 11
+ •  Added the Receiving Notification of Documentation Updates section .............................................................28
+
+
+
+
+2     Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+Changes from Revision B (May 2013) to Revision C (June 2015)                             Page
+ •  Added Pin Configuration and Functions section, ESD Ratings table, Feature Description section, Device
+    Functional Modes, Application and Implementation section, Power Supply Recommendations section, Layout
+    section, Device and Documentation Support section, and Mechanical, Packaging, and Orderable Information
+    section ............................................................................................................................................................... 1
+ •  VDE Standard changed to DIN V VDE V 0884-10 (VDE V 0884-10): 2006-12 .................................................1
+ •  Changed minimum air gap (Clearance) parameter, L(I01), to external clearance, CLR, and minimum external
+    tracking (creepage) parameter, L(I02), to external creepage............................................................................. 8
+ •  Changed values and test conditions in the Insulation Specifications table.........................................................8
+ •  Changed the descriptions of VDE and CSA information ................................................................................... 9
+
+Changes from Revision A (October 2012) to Revision B (May 2013)                           Page
+ •  Change Safety Feature From: (VDE 0884 Part 2) (Pending) To: (VDE 0884 Part 2) (Approved)...................... 1
+ •  Changed, VDE column From: File number: 40016131 (pending) To: File number: 40016131...........................9
+
+Changes from Revision * (July 2012) to Revision A (October 2012)                           Page
+ •  Changed From: CSA Component Acceptance Notice 5A (Pending) To: CSA Component Acceptance Notice
+   5A (Approved).....................................................................................................................................................1
+ •  Changed From: IEC 60950-1 and IEC 61010-1 End Equipment Standards (Pending) To: IEC 60950-1 and
+   IEC 61010-1 End Equipment Standards (Approved)..........................................................................................1
+ •  Changed Section 6.7, CSA column From: File number: 220991 (pending) To: File number: 220991................9
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback     3
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+5 Pin Configuration and Functions
+
+
+
+
+                                  VCC1    1                             8   VCC2
+
+
+                                   SDA1    2                             7   SDA2
+                                    SCL1    3                                                                  Isolation              6    SCL2
+
+
+                                GND1    4                             5   GND2
+
+
+                                                             Side 1          Side 2
+
+                                                        Not to scale
+
+                         Figure 5-1. ISO1540 D Package 8-Pin SOIC Top View
+
+                                  Table 5-1. Pin Functions—ISO1540
+            PIN
+                                    I/O                                DESCRIPTION
+ NAME           NO.
+
+ GND1             4     —    Ground, side 1
+
+ GND2             5     —    Ground, side 2
+
+ SCL1              3           I/O    Serial clock input / output, side 1
+
+ SCL2              6           I/O    Serial clock input / output, side 2
+
+ SDA1             2           I/O    Serial data input / output, side 1
+
+ SDA2             7           I/O    Serial data input / output, side 2
+
+ VCC1             1     —    Supply voltage, side 1
+
+ VCC2             8     —    Supply voltage, side 2
+
+
+
+
+
+4     Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+
+
+
+                                  VCC1    1                             8   VCC2
+
+
+                                   SDA1    2                             7   SDA2
+                                    SCL1    3                                                                  Isolation              6    SCL2
+
+
+                                GND1    4                             5   GND2
+
+
+                                                             Side 1          Side 2
+
+                                                        Not to scale
+
+                         Figure 5-2. ISO1541 D Package 8-Pin SOIC Top View
+
+                                  Table 5-2. Pin Functions—ISO1541
+            PIN
+                                    I/O                                DESCRIPTION
+ NAME           NO.
+
+ GND1             4     —    Ground, side 1
+
+ GND2             5     —    Ground, side 2
+
+ SCL1              3                   I     Serial clock input, side 1
+
+ SCL2              6      O     Serial clock output, side 2
+
+ SDA1             2           I/O    Serial data input / output, side 1
+
+ SDA2             7           I/O    Serial data input / output, side 2
+
+ VCC1             1     —    Supply voltage, side 1
+
+ VCC2             8     —    Supply voltage, side 2
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback     5
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+6 Specifications
+ 6.1 Absolute Maximum Ratings
+
+ over operating free-air temperature range (unless otherwise noted)(1) (2)
+                                                                          MIN       MAX       UNIT
+
+                               VCC1, VCC2                                            –0.5           6
+            Voltage               SDA1, SCL1                                            –0.5     VCC1 + 0.5(3)     V
+                               SDA2, SCL2                                            –0.5     VCC2 + 0.5(3)
+
+                               SDA1, SCL1                                        0           20
+ IO         Output current                                                              mA
+                               SDA2, SCL2                                        0           100
+ TJ(MAX)   Maximum junction temperature                                                           150         °C
+  Tstg       Storage temperature                                                      –65          150         °C
+
+ (1)   Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress
+       ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under
+     Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device
+         reliability.
+ (2)    All voltage values here within are with respect to the local ground pin (GND1 or GND2) and are peak voltage values.
+ (3)  Maximum voltage must not exceed 6 V.
+
+ 6.2 ESD Ratings
+
+                                                                               VALUE     UNIT
+
+                             Human body model (HBM), per ANSI/ESDA/JEDEC  Bus pins          ±8000
+                                         JS-001(1)                                                                                                                   All pins            ±4000
+ V(ESD)     Electrostatic discharge                                                                  V
+                                     Charged-device model (CDM), per JEDEC specification JESD22-         ±1500
+                                        C101(2)
+
+ (1)  JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+ (2)  JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+
+ 6.3 Recommended Operating Conditions
+
+                                                                           MIN      MAX     UNIT
+
+ VCC1, VCC2    Supply voltage                                                          3           5.5      V
+ VSDA1, VSCL1     Input and output signal voltages, side 1                                      0      VCC1      V
+ VSDA2, VSCL2     Input and output signal voltages, side 2                                      0      VCC2      V
+ VIL1             Low-level input voltage, side 1                                             0           0.5      V
+ VIH1             High-level input voltage, side 1                                            0.7 × VCC1      VCC1      V
+ VIL2             Low-level input voltage, side 2                                             0   0.3 × VCC2      V
+ VIH2             High-level input voltage, side 2                                            0.7 × VCC2      VCC2      V
+ IOL1            Output current, side 1                                                             0.5           3.5     mA
+ IOL2            Output current, side 2                                                             0.5          35     mA
+ C1              Capacitive load, side 1                                                              40      pF
+
+ C2              Capacitive load, side 2                                                             400      pF
+ fMAX            Operating frequency(1)                                                               1     MHz
+ TA             Ambient temperature                                                   –40         125       °C
+ TJ               Junction temperature                                                   –40         136       °C
+ TSD            Thermal shutdown                                                     139         197       °C
+
+ (1)   This represents the maximum frequency with the maximum bus load (C) and the maximum current sink (IO). If the system has less bus
+      capacitance, then higher frequencies can be achieved.
+
+
+
+
+
+6     Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+ 6.4 Thermal Information
+
+                                                                                        ISO154x
+                          THERMAL METRIC(1)                              D (SOIC)         UNIT
+
+                                                                                          8 PINS
+ RθJA           Junction-to-ambient thermal resistance                                                    114.6          °C/W
+  RθJC(top)        Junction-to-case (top) thermal resistance                                                  69.6           °C/W
+ RθJB           Junction-to-board thermal resistance                                                      55.3           °C/W
+ ψJT             Junction-to-top characterization parameter                                                 27.2           °C/W
+ ψJB            Junction-to-board characterization parameter                                               54.7           °C/W
+  RθJC(bot)        Junction-to-case (bottom) thermal resistance                                         N/A           °C/W
+
+ (1)   For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+       report (SPRA953).
+
+ 6.5 Power Ratings
+
+             PARAMETER                       TEST CONDITIONS             MIN    TYP   MAX   UNIT
+ PD      Maximum power dissipation (both sides)   VCC1 = VCC2 = 5.5 V, TJ = 150 °C, C1                         105  mW
+                                           = 20 pF, C2 = 400 pF; R1 = 1.4 kΩ, R2 =
+ PD1     Maximum power dissipation (side-1)                                                               37  mW                                             94 Ω; Input a 1-MHz 50% duty cycle clock
+ PD2     Maximum power dissipation (side-2)        signal                                                    68  mW
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback     7
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ 6.6 Insulation Specifications
+
+              PARAMETER                          TEST CONDITIONS                VALUE       UNIT
+
+ GENERAL
+ CLR       External clearance(1)                      Shortest terminal-to-terminal distance through air          >4       mm
+
+                                                      Shortest terminal-to-terminal distance across the CPG      External creepage(1)                                                                   >4       mm
+                                               package surface
+
+ DTI       Distance through the insulation          Minimum internal gap (internal clearance)                 0.014      mm
+
+ CTI       Comparative tracking index             DIN EN 60112 (VDE 0303-11); IEC 60112               >400         V
+
+             Material group                                                                                                                                                    II
+                                               Rated mains voltage ≤ 150 VRMS                             I–IV
+           Overvoltage category
+                                               Rated mains voltage ≤ 300 VRMS                                      I–III
+ DIN EN IEC 60747-17 (VDE 0884-17)(2)
+ VIORM    Maximum repetitive peak isolation voltage AC voltage (bipolar)                                 566          VPK
+                                                 VTEST = VIOTM
+ VIOTM    Maximum transient isolation voltage             t = 60 s (qualification)                                4242         VPK
+                                                                                          t = 1 s (100% production)
+                                             Method a: After I/O safety test subgroup 2/3, Vini =
+                                                      VIOTM, tini = 60 s; Vpd(m) = 1.2 × VIORM = 680 VPK, tm        <5
+                                           = 10 s
+
+                                             Method a: After environmental tests subgroup 1,
+ qpd       Apparent charge(3)                                Vini = VIOTM, tini = 60 s; Vpd(m) = 1.6 × VIORM = 906          <5         pC
+                                                    VPK, tm = 10 s
+                                             Method b1: At routine test (100% production) and
+                                                        preconditioning (type test) Vini = VIOTM, tini = 1 s;           <5
+                                                         Vpd(m) = 1.875 × VIORM = 1062 VPK, tm = 1 s
+ CIO        Barrier capacitance, input to output(4)      VIO = 0.4 sin (2πft), f = 1 MHz                         ~1          pF
+                                                    VIO = 500 V, TA = 25°C                                 >1012
+ RIO        Isolation resistance, input to output(4)       VIO = 500 V, 100°C ≤ TA ≤ 125°C                         >1011       Ω
+                                                    VIO = 500 V at TS = 150°C                             >109
+             Pollution degree                                                                        2
+
+             Climatic category                                                                             40/125/21
+
+ UL 1577
+                                                 VTEST = VISO = 2500 VRMS, t = 60 s (qualification);
+ VISO      Withstand isolation voltage               VTEST = 1.2 × VISO = 3000 VRMS, t = 1 s (100%            2500        VRMS
+                                                       production)
+
+ (1)   Creepage and clearance requirements should be applied according to the specific equipment isolation standards of an application.
+      Care should be taken to maintain the creepage and clearance distance of a board design to ensure that the mounting pads of
+      the isolator on the printed-circuit board do not reduce this distance. Creepage and clearance on a printed-circuit board become
+      equal in certain cases. Techniques such as inserting grooves and/or ribs on a printed circuit board are used to help increase these
+       specifications.
+ (2)   This coupler is suitable for basic electrical insulation only within the maximum operating ratings. Compliance with the safety ratings
+       shall be ensured by means of suitable protective circuits.
+ (3)   Apparent charge is electrical discharge caused by a partial discharge (pd).
+ (4)    All pins on each side of the barrier tied together creating a two-terminal device
+
+
+
+
+
+8     Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+ 6.7 Safety-Related Certifications
+
+           VDE                    CSA                    UL                  CQC
+
+ Certified according to DIN EN IEC                                Recognized under UL
+                                          Certified according to CSA/IEC                                        Certified according to
+ 60747-17 (VDE 0884-17) and DIN                              1577 Component Recognition
+                                 62368-1                                                  GB4943.1-2011
+ EN 61010-1 (VDE 0411-1)                                     Program
+ Basic Insulation                   2.5-kVRMS Insulation Rating;
+ Maximum Transient Overvoltage,    300 VRMS Basic Insulation                                       Basic Insulation, Altitude ≤ 5000
+ 4242 VPK;                         working voltage per CSA         Single protection, 2500 VRMS    m, Tropical Climate, 250 VRMS
+ Maximum Repetitive Peak Voltage,  62368-1-14 and IEC                                   maximum working voltage
+ 566 VPK                         62368-1:2014
+                                                                                                                    Certificate number:
+ Certificate number: 40047657       Master contract number: 220991  File number: E181974
+                                                                                 CQC14001109540
+
+ 6.8 Safety Limiting Values
+
+ Safety limiting intends to minimize potential damage to the isolation barrier upon failure of input or output circuitry. A failure
+ of the I/O can allow low resistance to ground or the supply and, without current limiting, dissipate sufficient power to overheat
+ the die and damage the isolation barrier, potentially leading to secondary system failures.
+           PARAMETER                        TEST CONDITIONS                MIN   TYP   MAX   UNIT
+                                          RθJA = 114.6°C/W, VI = 5.5 V, TJ = 150°C, TA = 25°C,                                                                                                     198
+          Safety input, output, or supply     see Figure 6-1
+  IS                                                                              mA
+           current                          RθJA = 114.6°C/W, VI = 3.6 V, TJ = 150°C, TA = 25°C,                                                                                                     303
+                                       see Figure 6-1
+ TS       Safety temperature                                                                             150    °C
+
+The safety-limiting constraint is the maximum junction temperature specified in the data sheet. The power
+ dissipation and junction-to-air thermal impedance of the device installed in the application hardware determines
+ the junction temperature. The assumed junction-to-air thermal resistance in the Section 6.4 table is that of a
+ device installed on a high-K test board for leaded surface-mount packages. The power is the recommended
+maximum input voltage times the current. The junction temperature is then the ambient temperature plus the
+power times the junction-to-air thermal resistance.
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback     9
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ 6.9 Electrical Characteristics
+
+ over recommended operating conditions, unless otherwise noted
+           PARAMETER                    TEST CONDITIONS                 MIN   TYP      MAX  UNIT
+
+ SIDE 1 (ONLY)
+
+          Voltage input threshold low, SDA1
+ VILT1                                                                              480    550         660  mV         and SCL1
+
+          Voltage input threshold high, SDA1
+ VIHT1                                                                              520    610         700  mV         and SCL1
+ VHYST1  Voltage input hysteresis             VIHT1 –VILT1                                    40     60           mV
+          Low-level output voltage, SDA1 and
+ VOL1                                        0.5 mA ≤ (ISDA1 and ISCL1) ≤ 3.5 mA                570                800  mV          SCL1(1)
+
+          Low-level output voltage to high-
+ ΔVOIT1   level input voltage threshold         0.5 mA ≤ (ISDA1 and ISCL1) ≤ 3.5 mA                 50                mV
+           difference, SDA1 and SCL1(1) (2)
+
+ SIDE 2 (ONLY)
+
+          Voltage input threshold low, SDA2
+ VILT2                                                                                      0.3 × VCC2           0.4 × VCC2   V         and SCL2
+
+          Voltage input threshold high, SDA2
+ VIHT2                                                                                      0.4 × VCC2           0.5 × VCC2   V         and SCL2
+ VHYST2  Voltage input hysteresis             VIHT2 – VILT2                               0.05 × VCC2                   V
+          Low-level output voltage, SDA2 and
+ VOL2                                        0.5 mA ≤ (ISDA2 and ISCL2) ≤ 35 mA                                           0.4   V        SCL2
+
+ BOTH SIDES
+           Input leakage currents, SDA1,       VSDA1, VSCL1 = VCC1;  |II|                                                                                                   0.01          10   µA         SCL1, SDA2, and SCL2            VSDA2, VSCL2 = VCC2
+           Input capacitance to local ground,
+ CI                                             VI = 0.4 × sin(2E6πt) + 2.5 V                               7              pF        SDA1, SCL1, SDA2, and SCL2
+
+ CMTI   Common-mode transient immunity  See Figure 7-3                                  25     50               kV/µs
+
+       VCC undervoltage lockout
+ VCCUV                                                                                             1.7     2.5           2.9   V           threshold(3)
+
+ (1)   This parameter does not apply to the ISO1541 SCL1 line as it is unidirectional.
+ (2)   ∆VOIT1 = VOL1 – VIHT1. This represents the minimum difference between a Low-Level Output Voltage and a High-Level Input Voltage
+      Threshold to prevent a permanent latch condition that would otherwise exist with bidirectional communication.
+ (3)  Any VCC voltages, on either side, less than the minimum will ensure device lockout. Both VCC voltages greater than the maximum will
+      prevent device lockout.
+
+
+
+
+
+10    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+ 6.10 Supply Current Characteristics
+
+ over recommended operating conditions, unless otherwise noted. For more information, see Figure 7-1.
+            PARAMETER                       TEST CONDITIONS              MIN   TYP  MAX   UNIT
+
+ 3 V ≤ VCC1, VCC2 ≤ 3.6 V
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               2.4      7.1
+                                             R1, R2 = Open; C1, C2 = Open
+                          ISO1540
+                                                VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               2.5      4
+                                             R1, R2 = Open; C1, C2 = Open
+ ICC1   Supply current, side 1                                                             mA
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               2.1      6.1
+                                             R1, R2 = Open; C1, C2 = Open
+                          ISO1541
+                                                VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               2.3      3.6
+                                             R1, R2 = Open; C1, C2 = Open
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               1.7      6.7
+                          ISO1540 and     R1, R2 = Open; C1, C2 = Open
+ ICC2   Supply current, side 2                                                             mA
+                          ISO1541          VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               1.9      3.5
+                                             R1, R2 = Open; C1, C2 = Open
+
+ 4.5 V ≤ VCC1, VCC2 ≤ 5.5 V
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               3.1      7.2
+                                         R1,R2 = Open; C1,C2 = Open
+                          ISO1540
+                                                VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               3.1      4.7
+                                             R1, R2 = Open; C1, C2 = Open
+ ICC1   Supply current, side 1                                                             mA
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               2.8      6.2
+                                             R1, R2 = Open; C1, C2 = Open
+                          ISO1541
+                                                VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               2.9      4.5
+                                             R1, R2 = Open; C1, C2 = Open
+                                                VSDA1, VSCL1 = GND1; VSDA2, VSCL2 = GND2;                                                                                                               2.3      6.8
+                          ISO1540 and     R1, R2 = Open; C1, C2 = Open
+ ICC2   Supply current, side 2                                                             mA
+                          ISO1541          VSDA1, VSCL1 = VCC1; VSDA2, VSCL2 = VCC2;                                                                                                               2.5      4
+                                             R1, R2 = Open; C1, C2 = Open
+
+ 6.11 Timing Requirements
+
+                                                                            MIN   NOM    MAX  UNIT
+ tUVLO    Time to recover from UVLO                 2.7 V to 0.9 V; See Figure 7-4                30      50      151    µs
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    11
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ 6.12 Switching Characteristics
+
+ over recommended operating conditions, unless otherwise noted
+          PARAMETER                          TEST CONDITIONS                  MIN  TYP  MAX  UNIT
+
+ 3 V ≤ VCC1, VCC2 ≤ 3.6 V
+
+                                 See Figure 7-1             0.7 × VCC1 to 0.3 × VCC1            8    17    29
+             Output Signal Fall Time
+  tf1                            R1 = 953 Ω,                                                                  ns            (SDA1, SCL1)                               C1 = 40 pF                 0.9 × VCC1 to 900 mV              16    29    48
+
+                                 See Figure 7-1             0.7 × VCC2 to 0.3 × VCC2           14    23    47
+             Output Signal Fall Time
+  tf2                            R2 = 95.3 Ω,                                                                 ns            (SDA2, SCL2)                               C2 = 400 pF                0.9 × VCC2 to 400 mV              35    50   100
+
+             Low-to-High Propagation
+  tpLH1-2                                                            0.55 V to 0.7 × VCC2                     33    65    ns              Delay, Side 1 to Side 2
+
+             High-to-Low Propagation
+  tPHL1-2                                                               0.7 V to 0.4 V                           90   181    ns              Delay, Side 1 to Side 2
+             Pulse Width Distortion      See Figure 7-1                                                 55   123    ns PWD1-2
+                  |tpHL1-2 – tpLH1-2|         R1 = 953 Ω,
+            (1)    Low-to-High Propagation   R2 = 95.3 Ω,  tPLH2-1              Delay, Side 2 to Side 1      C1, C2 = 10 pF             0.4 × VCC2 to 0.7 × VCC1                 47    68    ns
+            (1)    High-to-Low Propagation  tPHL2-1                                                               0.4 × VCC2 to 0.9 V                      67   109    ns              Delay, Side 2 to Side 1
+              (1)   Pulse Width Distortion PWD2-1                                                                                         20    49    ns                  |tpHL2-1 – tpLH2-1|
+                                 See Figure 7-2;
+            (1)    Round-trip propagation tLOOP1                          R1 = 953 Ω, C1 = 40 pF     0.4 V to 0.3 × VCC1                     100   165    ns              delay on Side 1
+                               R2 = 95.3 Ω, C2 = 400 pF
+
+ 4.5 V ≤ VCC1, VCC2 ≤ 5.5 V
+
+                                 See Figure 7-1             0.7 × VCC1 to 0.3 × VCC1            6    11    22
+             Output Signal Fall Time
+  tf1                            R1 = 1430 Ω,                                                                 ns            (SDA1, SCL1)                               C1 = 40 pF                 0.9 × VCC1 to 900 mV              13    21    48
+
+                                 See Figure 7-1             0.7 × VCC2 to 0.3 × VCC2           10    18    35
+             Output Signal Fall Time
+  tf2                            R2 = 143 Ω,                                                                  ns            (SDA2, SCL2)                               C2 = 400 pF                0.9 × VCC2 to 400 mV              28    41    76
+
+             Low-to-High Propagation
+  tpLH1-2                                                            0.55 V to 0.7 × VCC2                     31    62    ns              Delay, Side 1 to Side 2
+
+             High-to-Low Propagation
+  tPHL1-2                                                               0.7 V to 0.4 V                           70   139    ns              Delay, Side 1 to Side 2
+             Pulse Width Distortion      See Figure 7-1                                                 38    80    ns PWD1-2
+                  |tpHL1-2 – tpLH1-2|         R1 = 1430 Ω,
+            (1)    Low-to-high propagation    R2 = 143 Ω,  tPLH2-1               delay, side 2 to side 1       C1,2 = 10 pF               0.4 × VCC2 to 0.7 × VCC1                 55    80    ns
+            (1)    High-to-low propagation  tPHL2-1                                                               0.4 × VCC2 to 0.9 V                      47    85    ns               delay, Side 2 to side 1
+              (1)   Pulse Width Distortion PWD2-1                                                                                          8    34    ns                  |tpHL2-1 – tpLH2-1|
+                                 See Figure 7-2;
+            (1)    Round-trip propagation tLOOP1                          R1 = 1430 Ω, C1 = 40 pF    0.4 V to 0.3 × VCC1                      110   180    ns              delay on side 1
+                               R2 = 143 Ω, C2 = 400 pF
+
+ (1)   This parameter does not apply to the ISO1541 SCL1 line as it is unidirectional.
+
+
+
+
+
+12    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+ 6.13 Insulation Characteristics Curves
+
+
+                                       350
+                                                             VCC1 = VCC2 = 3.6 V
+                                                             VCC1 = VCC2 = 5.5 V                                       300
+                                                                                 (mA)
+                                       250
+                                                                                                                                             Current 200
+
+                                       150                                                                                                                                                                 Limiting
+                                                                                                                         Safety 100
+                                        50
+
+
+                                         0
+                                           0           50          100         150         200
+                                                            Ambient Temperature (qC)
+                    Figure 6-1. Thermal Derating Curve for Limiting Current per VDE
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    13
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ 6.14 Typical Characteristics
+
+
+          0.800                                                                                    3.0
+                                                                                                           IOL1 = 3.5 mA
+          0.780                                                                                 IOL1 = 0.5 mA                        2.5
+
+          0.760
+                                                                                                   2.0        (V)          0.740                                                                                                                                                  (mA)
+           OL1                                                                                                                                                                        OL1  1.5   V          0.720                                     I
+
+          0.700                                                                                    1.0                       Voltage,          0.680                                                                                                                                                                                                                                                                                                    Current,
+                                                                                                   0.5
+          0.660                 Output                                                                                                                                                                                                                                               Output
+                                                                                                   0.0
+          0.640
+
+          0.620                                                                                          -0.5
+          0.600                                                                         0    0.1   0.2   0.3   0.4   0.5   0.6   0.7   0.8   0.9
+          −40 −25 −10  5   20  35  50  65  80  95  110 125                                  Applied Voltage, V SDA1 , VSCL1 (V)
+                             Free−Air Temperature (°C)
+                                                                      TA = 25°C
+  Figure 6-2. Side 1: Output Low Voltage vs Free-Air
+                                                   Figure 6-3. Side 1: Output Low Current vs SDA1 or                  Temperature
+                                                               SCL1 Applied Voltage
+
+       20                                                              20
+                                                                                                 R1 = 1430 :
+       18                                                              18                                  R1 = 2.2 k:
+
+       16                                                              16
+
+       14                                                              14
+         (ns)                                                                                                                                          (ns)
+       12                                                              12
+      tf1                                                                                            tf1
+            Time, 10                                                                                                                                                                   Time, 10
+        8                                                               8
+         Fall                                                                                                                                          Fall
+        6                                                               6
+
+        4                                                               4
+        2                                    R1= 953 :              2
+                                            R1= 2.2 k:
+        0                                                               0
+          -40  -25  -10   5   20  35  50  65  80  95  110 125              -40  -25  -10   5   20  35  50  65  80  95  110 125
+                             Free-Air Temperature (qC)                D001                                Free-Air Temperature (qC)                D002
+         VCC1 = 3.3 V                      C1 = 40 pF           VCC1 = 5 V                      C1 = 40 pF
+                            Fall time measured from 70% to 30% VCC1                             Fall time measured from 70% to 30% VCC1
+
+   Figure 6-4. Side 1: Output Fall Time vs Free-Air     Figure 6-5. Side 1: Output Fall Time vs Free-air
+                  Temperature                                   Temperature
+
+       30                                                              30
+
+
+       25                                                              25
+
+         (ns) 20                                                                                                                                   (ns) 20
+      tf2                                                                                            tf2
+         Time 15                                                                                                                                   Time 15
+         Fall 10                                                                                                                                   Fall 10
+
+
+        5                                                               5
+                                          R2 = 95.3 :                                               R2 = 143 :
+                                          R2 = 2.2 k:                                               R2 = 2.2 k:
+        0                                                               0
+          -40  -25  -10   5   20  35  50  65  80  95  110 125              -40  -25  -10   5   20  35  50  65  80  95  110 125
+                             Free-Air Temperature (qC)                D003                                Free-Air Temperature (qC)                D004
+         VCC2 = 3.3 V                     C2 = 400 pF           VCC2 = 5 V                     C2 = 400 pF
+                            Fall time measured from 70% to 30% VCC2                             Fall time measured from 70% to 30% VCC2
+
+   Figure 6-6. Side 2: Output Fall Time vs Free-Air     Figure 6-7. Side 2: Output Fall Time vs Free-Air
+                  Temperature                                   Temperature
+
+
+14    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+
+       45                                                              120
+
+       40
+         (ns) 35                                                                                                                                    (ns) 100
+
+       30                                                               80              tPLH1-2                                                                                                                                                                                                                         tPHL1-2
+       25
+                                                                        60              Delay,                                                                                                                                                                                                                 Delay,       20
+
+       15                                                               40
+
+       10                         Propagation                                                                                                                                                                                                                                                                                                                                                                                               Propagation  20
+        5               VCC1 and VCC2 = 3.3 V, R2 = 95.3 :                            VCC1 and VCC2 = 3.3 V, R2 = 95.3 :
+                       VCC1 and VCC2 = 5 V, R2 = 143 :                              VCC1 and VCC2 = 5 V, R2 = 143 :
+        0                                                                0
+          -40  -25  -10   5   20  35  50  65  80  95  110 125               -40  -25  -10   5   20  35  50  65  80  95  110 125
+                             Free-Air Temperature (qC)                D005                                 Free-Air Temperature (qC)                 D006
+           C2 = 10 pF                                         C2 = 10 pF
+   Figure 6-8. tPLH1-2 Propagation Delay vs Free-Air    Figure 6-9. tPHL1-2 Propagation Delay vs Free-Air
+                  Temperature                                   Temperature
+
+       1050                                                            90
+                                 VCC1 and VCC2 = 3.3 V
+       1045                        VCC1 and VCC2 = 5 V              80
+         (ns) 1040                                                                                                                               (ns) 70
+       1035
+                                                                       60                tPLH1-2 1030                                                                                                                                                                                                       tPHL1-2
+                                                                       50
+       1025             Delay,                                                                                                                                                                                                                Delay, 40
+       1020
+
+       1015                                                            30
+
+       1010                                                            20                        Propagation                                                                                                                                                                                                                                                                                                                                                                                             Propagation
+       1005                                                            10                        VCC1 and VCC2 = 3.3 V
+                                                                                     VCC1 and VCC2 = 5 V
+       1000
+                                                                        0
+            -40  -25  -10   5   20  35  50  65  80  95  110 125
+                                                                                   -40  -25  -10   5   20  35  50  65  80  95  110 125
+                                Free-Air Temperature (qC)                D007                                Free-Air Temperature (qC)                D008
+           R2 = 2.2 kΩ      C2 = 400 pF                                                           R2 = 2.2 kΩ      C2 = 400 pF
+  Figure 6-10. tPLH1-2 Propagation Delay vs Free-Air   Figure 6-11. tPHL1-2 Propagation Delay vs Free-Air
+                  Temperature                                                                Temperature
+
+       70                                                              80
+
+       60                                                              70
+         (ns)                                                                                                                                          (ns)
+                                                                       60
+              tPHL2-1 50                                                                                                                                                                                                             tPHL2-1 50
+       40
+                                                                       40              Delay,                                                                                                                                                                                                               Delay,
+       30
+                                                                       30
+
+       20
+                                                                       20                         Propagation                                                                                                                                                                                                                                                                                                                                                                                           Propagation
+       10                       VCC1 and VCC2 = 3.3 V, R1 = 953 :             10                VCC1 and VCC2 = 3.3 V, R1 = 953 :
+                       VCC1 and VCC2 = 5 V, R1 = 1430 :                            VCC1 and VCC2 = 5 V, R1 = 1430 :
+        0                                                               0
+          -40  -25  -10   5   20  35  50  65  80  95  110 125              -40  -25  -10   5   20  35  50  65  80  95  110 125
+                             Free-Air Temperature (qC)                D009                                Free-Air Temperature (qC)                D010
+           C1 = 10 pF                                         C1 = 10 pF
+  Figure 6-12. tPLH2-1 Propagation Delay vs Free-Air   Figure 6-13. tPHL2-1 Propagation Delay vs Free-Air
+                  Temperature                                   Temperature
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    15
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+
+       148                                                      80
+
+       146                                                      70
+         (ns)                                                                                                                          (ns)
+       144                                                      60
+              tPLH2-1 142                                                      50
+
+       140                                                               40             Delay,                                                                                                                                                                                                                                                                                                                                                                                                     Delay,tPHL2-1
+       138                                                      30
+
+       136
+                                                               20                        Propagation       134                        VCC1 and VCC2 = 3.3 V                                          Propagation                                                               10                        VCC1 and VCC2 = 3.3 V
+                                VCC1 and VCC2 = 5 V                                                                              VCC1 and VCC2 = 5 V
+       132
+           -40  -25  -10   5   20  35  50  65  80  95  110 125         0
+                                                                −40 −25 −10  5   20  35  50  65  80  95  110 125
+                              Free-Air Temperature (qC)                 D011                             Free-Air Temperature (°C)
+           R1 = 2.2 kΩ       C1 = 40 pF                                                           R1 = 2.2 kΩ       C1 = 40 pF
+  Figure 6-14. tPLH2-1 Propagation Delay vs Free-Air   Figure 6-15. tPHL2-1 Propagation Delay vs Free-Air
+                  Temperature                                                                Temperature
+
+       140                                                             600
+
+
+       120
+                                                                       595
+
+       100
+
+         (ns)  80                                                                                                                                  (ns) 590
+
+
+        60            tLOOP1                                                                                                                                                                                           tLOOP1 585
+
+        40
+
+                                                                       580
+        20               VCC1 and VCC2 = 3.3 V, R1 = 953 :, R2 = 95.3 :                                     VCC1 and VCC2 = 3.3 V
+               VCC1 and VCC2 = 5 V, R1 = 1430 :, R2 = 143 :                                      VCC1 and VCC2 = 5 V
+         0                                                             575
+           -40  -25  -10   5   20  35  50  65  80  95  110 125               -40  -25  -10   5   20  35  50  65  80  95  110 125
+                              Free-Air Temperature (qC)                 D013                                 Free-Air Temperature (qC)                 D014
+           C1 = 40 pF      C2 = 400 pF                          C1 = 40 pF      C2 = 400 pF
+     Figure 6-16. tLOOP1 vs Free-Air Temperature              R1 = 2.2 kΩ      R2 = 2.2 kΩ
+                                                      Figure 6-17. tLOOP1 vs Free-Air Temperature
+
+                                       70
+                                                                                                                                          (kV/Ps) 60
+
+
+                                       50                                                                                                                                                                Immunity
+                                       40
+
+
+                                       30                                                                                                                                                                                    Transient
+
+                                       20
+
+
+                                       10                                                          VCC1 and VCC2 = 3.3 V
+                                                          VCC1 and VCC2 = 5 V                                                                                                                                                                                                                            Common-Mode
+                                        0
+                                               -40  -25  -10   5   20  35  50  65  80  95  110 125
+                                                                    Free-Air Temperature (qC)                D015
+                              Figure 6-18. CMTI vs Free-Air Temperature
+
+
+
+
+
+16    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+Parameter Measurement Information
+
+
+
+
+
+                                                                 ±                                             ±
+                               VCC1     +                                           +   VCC2
+
+
+
+
+                              R1         R1                         R2         R2
+
+
+
+                        SDA1                          ISO1540                       SDA2
+                                                           ISO1541                        SCL2
+                          SCL1
+
+
+
+                             C1          C1                       C2          C2
+
+
+
+                                                                       Copyright © 2016, Texas Instruments Incorporated
+
+                                      Figure 7-1. Test Diagram
+
+                           VCC1             VCC2
+
+
+             VCC1                       R1
+    GND1
+
+
+                                                                                          tLOOP1
+             SDA1 or
+                                                                                                                              0.3 VCC1              SCL1      C1                                                            Isolation                        SDA1
+                 Output                                             SCL1 (ISO1540 Only)
+                                                                                                                 0.4 V
+
+                     GND1
+
+
+
+
+
+                                                                                                   Copyright © 2016, Texas Instruments Incorporated
+
+                             Figure 7-2. tLoop1 Setup and Timing Diagram
+
+                                       VCCx                      VCCy
+
+
+
+                                 2 k                                                    2 k
+
+
+                                                         Input
+
+                                                                                         +
+
+                                                                                                      Output                                                                                                                                                                                                                                                                                                                            Isolation
+
+                                                                                              ±
+
+                                     GNDx                     GNDy
+
+
+
+
+                                                        VCMTI
+
+                      Figure 7-3. Common-Mode Transient Immunity Test Circuit
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    17
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+                           VCCx                       VCCy
+                                                                                       Side x, Side y VCCx,VCCy  Ry
+
+                                                                                                              1, 2       3.3 V, 3.3 V 95.3 Ω
+                         VCCx
+                                                                    Ry          2, 1       3.3 V, 3.3 V 953 Ω
+                    0 V
+                           SDAx or
+                             SCLx
+                                                                             +
+                                                                                                                                                                                                                                                              Isolation                             Output
+
+
+                                                                                                                                        -
+
+                          GNDx                     GNDy
+
+
+
+
+
+                                                               or
+
+                            VCCx                      VCCy
+
+
+
+                                                                              VCCy
+                                                                    Ry
+                           SDAx or                                             0 V
+                             SCLx
+
+                                                                              +
+                                                                                                                                                                                                                                                                Isolation                             Output
+
+
+
+                          GNDx                      GNDy
+
+
+
+
+
+                                                                  VCCx or
+                                                                   VCCy
+                          VCCx (UVLO+)
+
+
+                                                tUVLO
+
+
+
+
+
+                                                                           0.9 V
+
+                                                                                       Output
+
+                          Figure 7-4. tUVLO Test Circuit and Timing Diagrams
+
+
+
+
+
+18    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+7 Detailed Description
+ 7.1 Overview
+The I2C bus is used in a wide range of applications because it is simple to use. The bus consists of a two-wire
+ communication bus that supports bidirectional data transfer between a controller device and several target
+ devices. The controller, or processor, controls the bus, specifically the serial clock (SCL) line. Data is transferred
+between the controller and target through a serial data (SDA) line. This data can be transferred in four speeds:
+ standard mode (0 to 100 kbps), fast mode (0 to 400 kbps), fast-mode plus (0 to 1 Mbps), and high-speed mode
+ (0 to 3.4 Mbps). The most common speeds are the standard and fast modes.
+The I2C bus operates in bidirectional, half-duplex mode, while standard  digital isolators are unidirectional
+ devices. To make  efficient use of one technology supporting the other, external  circuitry  is required that
+ separates the bidirectional bus into two unidirectional signal paths without introducing significant propagation
+ delay. These devices have their logic input and output buffers separated by TI's capacitive isolation technology
+ using a silicon dioxide (SiO2) barrier. When used in conjunction with isolated power supplies, these devices
+ block high voltages, isolate grounds, and prevent noise currents from entering the local ground and interfering
+ with or damaging sensitive circuitry.
+
+ 7.2 Functional Block Diagrams
+
+                       VCC1                                                       VCC2
+
+
+
+
+
+                                                                                   SDA2
+                        SDA1
+
+                                                                                                                                                                                                                                                                                                                                           Capacitor
+                                    VREF
+                                                                                                                                                                                                                                                                                                                                           Isolation
+
+                          SCL1                                                            SCL2
+
+
+
+
+
+                      GND1                                                   GND2
+
+
+                                    VREF
+
+
+                                 Figure 7-1. ISO1540 Block Diagram
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    19
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+
+                       VCC1                                                     VCC2
+
+
+
+
+
+                        SDA1                                                       SDA2
+                                                                                                                                                                                                                                                                                                                                             Capacitor
+
+                                    VREF                                                                                                                                                                                                                                                                                                                                             Isolation
+
+
+                         SCL1                                                         SCL2
+
+
+                       GND1                                                   GND2
+
+
+
+                                 Figure 7-2. ISO1541 Block Diagram
+
+ 7.3 Feature Description
+The device enables a complete isolated I2C interface to be implemented within a small form factor having the
+ features listed in Table 7-1.
+
+                                       Table 7-1. Features List
+       PART NUMBER         CHANNEL DIRECTION        RATED ISOLATION(1)       MAXIMUM FREQUENCY
+
+                                               Bidirectional (SCL)
+           ISO1540
+                                               Bidirectional (SDA)                2500 VRMS                                                                                                1 MHz
+                                            Unidirectional (SCL)                4242 VPK
+           ISO1541
+                                               Bidirectional (SDA)
+
+ (1)  See Section 6.7 for detailed Isolation specifications.
+
+ 7.4 Isolator Functional Principle
+
+ To isolate a bidirectional signal path (SDA or SCL), the ISO1540 internally splits a bidirectional line into two
+ unidirectional signal lines, each of which is isolated through a single-channel digital isolator. Each channel output
+ is made open-drain to comply with the open-drain technology of I2C. Side 1 of the ISO1540 connects to a
+ low-capacitance I2C node, while side 2 is designed for connecting to a fully loaded I2C bus with up to 400 pF of
+ capacitance.
+
+
+          VCC1                                                         VCC2
+
+                                  A
+                                                                  RPU2                VC-out              RPU1               B
+
+
+      SDA1                                           SDA2
+                                   ISO1540
+
+                                                                                          40 mV         50 mV
+            Cnode                                                                              Cbus
+                          C                                                                                               VSDA1
+                                 D                                                       VILT1              VIHT1            VOL1
+      GND1
+                                                  GND2
+                      VREF
+
+
+                     Figure 7-3. SDA Channel Design and Voltage Levels at SDA1
+
+ At first sight, the arrangement of the internal buffers suggests a closed signal loop that is prone to latch-up.
+ However, this loop is broken by implementing an output buffer (B) whose output low-level is raised by a diode
+ drop to approximately 0.75 V, and the input buffer (C) that consists of a comparator with defined hysteresis.
+
+
+20    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+The comparator’s upper and lower input thresholds then distinguish between the proper low-potential of 0.4 V
+(maximum) driven directly by SDA1 and the buffered output low-level of B.
+ Figure 7-4 demonstrate the switching behavior of the I2C isolator, ISO1540, between a controller node at SDA1
+and a heavy loaded bus at SDA2.
+
+            VCC2                        VCC2                VCC1                                 VCC1
+
+                                                                                                                 VOL1
+      SDA2         50%                                  SDA1
+                               30%                                                       VIHT1
+
+                                                                                                                         Receive
+                             Receive                                                           Transmit                       Delay
+                             Delay                                                         Delay
+                                            Receive
+             VCC1                      Delay   VCC1                VCC2                                VCC2
+                                                                                                    Transmit                         VIHT2
+                                                         SDA2                   Delay
+      SDA1           50%
+                                 30%
+
+                  Figure 7-4. SDA Channel Timing in Receive and Transmit Directions
+
+ 7.4.1 Receive Direction (Left Diagram of )
+When the I2C bus drives SDA2 low, SDA1 follows after a certain delay in the receive path. The output low is the
+ buffered output of VOL1 = 0.75 V, which is sufficiently low to be detected by Schmitt-trigger inputs with a minimum
+ input-low voltage of VIL = 0.9 V at 3 V supply levels.
+When SDA2 is released,  its voltage potential increases towards VCC2 following the time-constant formed
+ by RPU2 and Cbus. After the receive delay, SDA1 is released and also rises towards VCC1, following the
+ time-constant RPU1 × Cnode. Because of the significant lower time-constant, SDA1 may reach VCC1 before
+SDA2 reaches VCC2 potential.
+
+ 7.4.2 Transmit Direction (Right Diagram of )
+
+When a controller drives SDA1 low, SDA2 follows after a certain delay in the transmit direction. When SDA2
+ turns low  it also causes the output of buffer B to turn low but at a higher 0.75 V level. This level cannot be
+ observed immediately as it is overwritten by the lower low-level of the controller.
+
+ However, when the controller releases SDA1, the voltage potential increases and first must pass the upper input
+ threshold of the comparator, VIHT1, to release SDA2. SDA1 then increases further until  it reaches the buffered
+ output level of VOL1 = 0.75 V, maintained by the receive path. When comparator C turns high, SDA2 is released
+ after the delay in transmit direction. It takes another receive delay until B’s output turns high and fully releases
+SDA1 to move toward VCC1 potential.
+
+ 7.5 Device Functional Modes
+
+ Table 7-2 lists the ISO154x functional modes.
+
+                                      Table 7-2. Function Table
+                POWER STATE                 INPUT                  OUTPUT
+
+                VCC1 or VCC2 < 2.1 V               X                        Z
+
+                VCC1 and VCC2 > 2.8 V                  L                           L
+
+                VCC1 and VCC2 > 2.8 V             H                        Z
+                VCC1 and VCC2 > 2.8 V                        Z(1)                          ?
+
+                    (1)   Invalid input condition as an I2C system requires that a pullup resistor to VCC is connected.
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    21
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+8 Application and Implementation
+
+                                           Note
+
+      Information in the following applications sections is not part of the TI component specification, and
+      TI does not warrant its accuracy or completeness. TI’s customers are responsible for determining
+       suitability  of components  for  their purposes. Customers should  validate and  test  their design
+     implementation to confirm system functionality.
+
+ 8.1 Application Information
+ 8.1.1 I2C Bus Overview
+The  inter-integrated  circuit  (I2C) bus  is a single-ended,  multi-controller, 2-wire bus  for  efficient  inter-IC
+ communication in half-duplex mode.
+ I2C uses open-drain technology, requiring two lines, serial data (SDA) and serial clock (SCL), to be connected
+ to VDD by resistors (see Figure 8-1). Pulling the line to ground is considered a logic zero while letting the line
+ float is a logic one. This logic is used as a channel access method. Transitions of logic states must occur while
+ the SCL pin is low. Transitions while the SCL pin is high indicate START and STOP conditions. Typical supply
+ voltages are 3.3 V and 5 V, although systems with higher or lower voltages are allowed.
+
+        VDD
+
+           RPU          RPU       RPU          RPU       RPU          RPU       RPU          RPU
+
+
+        SDA
+
+        SCL
+
+
+
+              SDA    SCL              SDA    SCL              SDA    SCL              SDA    SCL
+
+
+
+
+
+                 GND                  GND                   GND                   GND
+
+
+                  C                    ADC                    DAC                     C
+                         Controller                           Target                            Target                             Target
+
+                                         Figure 8-1. I2C Bus
+
+ I2C communication uses a 7-bit address space with 16 reserved addresses, so a theoretical maximum of 112
+nodes can communicate on the same bus. In praxis, however, the number of nodes is limited by the specified,
+ total bus capacitance of 400 pF, which restricts communication distances to a few meters.
+
+The specified signaling rates for the ISO1540 and ISO1541 devices are 100 kbps (standard mode), 400 kbps
+ (fast mode), 1 Mbps (fast mode plus).
+
+The bus has two roles for nodes: controller and target. A controller node issues the clock and target addresses,
+and also initiates and ends data transactions. A target node receives the clock and addresses and responds to
+ requests from the controller. Figure 8-2 shows a typical data transfer between controller and target.
+
+
+
+
+
+22    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+
+
+                                   7-bit                                                 8-bit                                       8-bit        ACK  /
+   SDA                        R/W     ACK                       ACK
+                  ADDRESS                            DATA                       DATA       NACK
+
+
+
+
+   SCL                        1 - 7          8         9              1 - 8          9               1 - 8          9
+           S                                                                                       P
+
+         START                                                                                   STOP
+           Condition                                                                                                                           condition
+
+                        Figure 8-2. Timing Diagram of a Complete Data Transfer
+
+The controller initiates a transaction by creating a START condition, following by the 7-bit address of the target
+ it wishes to communicate with. This is followed by a single read and write (R/W) bit, representing whether the
+ controller wishes to write to 0, or to read from 1 the target. The controller then releases the SDA line to allow the
+ target to acknowledge the receipt of data.
+
+The target responds with an acknowledge bit (ACK) by pulling the SDA pin low during the entire high time of
+ the 9th clock pulse on the SCL signal, after which the controller continues in either transmit or receive mode
+ (according to the R/W bit sent), while the target continues in the complementary mode (receive or transmit,
+ respectively).
+
+The address and the 8-bit data bytes are sent most significant bit (MSB) first. The START bit is indicated by
+a high-to-low transition of SDA while SCL is high. The STOP condition is created by a low-to-high transition of
+SDA while SCL is high.
+
+ If the controller writes to a target, it repeatedly sends a byte with the target sending an ACK bit. In this case, the
+ controller is in controller-transmit mode and the target is in target-receive mode.
+
+ If the controller reads from a target, it repeatedly receives a byte from the target, while acknowledging (ACK) the
+ receipt of every byte but the last one (see Figure 8-3). In this situation, the controller is in controller-receive mode
+and the target is in target-transmit mode.
+
+The controller ends the transmission with a STOP bit, or may send another START bit to maintain bus control for
+ further transfers.
+
+                          S  Target Address W A     DATA     A     DATA     A P      A = acknowledge
+                                                                              A = not acknowledge
+       From Controller to Target                 Controller Transmitter writing to Target Receiver
+                                                                              S = Start
+       From Target to Controller                                                       P = Stop
+
+                          S  Target Address R A     DATA     A     DATA     A P     R = Read
+                                                       W = Write
+                                                  Controller Receiver reading from Target Transmitter
+
+                 Figure 8-3. Transmit or Receive Mode Changes During a Data Transfer
+
+When writing to a target, a controller mainly operates in transmit-mode and only changes to receive-mode when
+ receiving acknowledgment from the target.
+
+When reading from a target, the controller starts in transmit-mode and then changes to receive-mode after
+ sending a READ request (R/W bit = 1) to the target. The target continues in the complementary mode until the
+end of a transaction.
+
+                                           Note
+
+    The controller ends a reading sequence by not acknowledging (NACK) the last byte received. This
+     procedure resets the target state machine and allows the controller to send the STOP command.
+
+ 8.2 Typical Application
+ In Figure 8-4, the ultra low-power microcontroller, MSP430G2132, controls the I2C data traffic of configuration
+ data and conversion results for the analog inputs and outputs. Low-power data converters build the analog
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    23
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ interface to sensors and actuators. The ISO1541 device provides the required isolation between different ground
+ potentials of the system controller, remote sensor, and actuator circuitry to prevent ground loop currents that
+ otherwise may falsify the acquired data.
+
+The entire circuit operates from a single 3.3-V supply. A low-power push-pull converter, SN6501, drives a
+ center-tapped transformer with an output that is rectified and linearly regulated to provide a stable 5-V supply for
+ the data converter.
+
+    VS
+
+     3.3V             0.1 μF
+                        2                 1:2.2  MBR0520L
+                      Vcc     3                                             1           5   5VISO                                 0.1 μF
+                         D2                                                      IN   OUT
+                                                                                                                   8
+                                                                            LP2981-50        10 μF
+                   SN6501                               10μF 0.1μF
+                                                                           3                                                                                       2                9 SDA   VDD   AIN0 4                                                         ON  GND
+                              1                                                                                                                                       4                                                                                                                                                  Analog                                                                                                        10
+                                                                                           SCL ADS1115                GND D1                                                                         1Ω                                                                                                                                                                      Inputs
+                                  10 μF     MBR0520L                                                    1
+                               4,5                                                               ADDR          AIN3
+                                                                                    GND RDY     7
+
+                                                                                                                 3    2
+
+                                                                                                                                          5VISO
+                                                  ISO-BARRIER                                             5VISO             6           2
+                                                                                                                                       VOUT    VIN
+                                                                                                                              1μF                                                                                  5VISO           SDA    SCL   0.1 μF       22 μF
+                                                                                                                          REF5040
+                                                                                                                                              4
+                                                                                                       GND
+                                                                             0.1 μF              0.1 μF                              15  4 12       3                                 0.1 μF
+                                                                                                  H                                                                                                            1. 5 kΩ       1.5 kΩ                                                        1.5 kΩ        1.5 kΩ                                                                                                      A2 VDD IOVDD VREF                                                                                                               11                                                                                                                                    1                                                                                       SDA                                   2                                                               1           8                                                                                                          V                                                                                                                                               OUT A
+                                                                                                        10
+                                                                                           SCL                                                     VCC1                                                             VCC2                                                                                                                                            4                                                                                                                                                        Analog                               DVcc                                                                                                     DAC8574                       5                                             9              2                                                                               7                         9                                                                                                                                                            Outputs                    XOUT                                 SDA                                                        SDA1                                                             SDA2                                                                                         LDAC                           MSP430
+                                                                  ISO1541                                             8              3                                                                               6                        14                       6                                   SCL                                                                                                         VOUT D                                                           SCL1                                                                                                    A1                                                                 SCL2                         XIN    G2132                                                                                                                                    8                                                                                                      A0 A3 GND VREFL                               DVss                                                    GND1                                                             GND2
+                                                                                                            13 16   6     5
+                                   4                           4           5
+
+
+
+
+                                                                                                    Copyright © 2016, Texas Instruments Incorporated
+
+                           Figure 8-4. Isolated I2C Data Acquisition System
+
+ 8.2.1 Design Requirements
+
+The recommended power supply voltages (VCC1 and VCC2) must be from 3 V to 5.5 V. A recommended
+ decoupling capacitor with a value of 0.1 µF is required between both the VCC1 and GND1 pins, and the VCC2
+and GND2 pins to support of power supply voltages transient and to ensure reliable operation at all data rates.
+
+ 8.2.2 Detailed Design Procedure
+
+The power-supply capacitor with a value of 0.1-µF must be placed as close to the power supply pins as possible.
+The recommended placement of the capacitors must be 2-mm maximum from input and output power supply
+ pins (VCC1 and VCC2).
+
+The maximum load permissible on the input lines, SDA1 and SCL1, is ≤ 40 pF and on the output lines, SDA2
+and SCL2, is ≤ 400 pF.
+
+The minimum pullup resistors on the input lines, SDA1 and SCL1 to VCC1 must be selected in such a way that
+ input current drawn is ≤ 3.5 mA. The minimum pullup resistors on the input lines, SDA2 and SCL2, to VCC2
+must be selected in such a way that output current drawn is ≤ 35 mA. The maximum pullup resistors on the input
+
+
+
+
+
+24    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+ lines (SDA1 and SCL1) to VCC1 and on output lines (SDA1 and SCL1) to VCC2, depends on the load and rise
+ time requirements on the respective lines.
+
+
+                                                             ISO1540                           2mm                                                    2 mm
+                               maximum                                          maximum
+
+      VCC1                                                                                         VCC2
+                                            11                                            8
+                                              0.1 F                                                      0.1 F
+            1 k       1 k                                                                                      1 k       1 k
+      SDA1                                                                                           SDA2
+                                            2                                            7                                                                                                                                                                                                                                                                                                                                                Capacitor
+
+      SCL1                                                                                                SCL2
+                                            3                                            6                                                                                                                                                                                                                                                                                                                                                Isolation
+
+                           GND1
+                                                                             GND2
+                                            4                                            5
+
+                                                    Side 1                                  Side 2
+
+                             Figure 8-5. Typical ISO1540 Circuit Hookup
+
+
+                           2mm                     ISO1541                      2 mm
+                               maximum                                          maximum
+
+      VCC1                                                                                         VCC2
+                                            11                                            8
+                                              0.1 F                                                      0.1 F
+            1 k       1 k                                                                                      1 k       1 k
+      SDA1                                                                                           SDA2
+                                            2                                            7                                                                                                                                                                                                                                                                                                                                                Capacitor
+
+      SCL1                                                                                                SCL2
+                                            3                                            6                                                                                                                                                                                                                                                                                                                                                Isolation
+
+                           GND1                                             GND2
+                                            4                                            5
+
+                                                    Side 1                                  Side 2
+
+                             Figure 8-6. Typical ISO1541 Circuit Hookup
+
+ 8.2.3 Application Curve
+
+
+
+                                                             TA = 25 oC
+                                                        VCC1 = 3.6 V
+
+
+                                                                                                                                                 mV/div
+                                                                         500
+
+
+
+
+                                                                                                                900 mV
+                                                                                                VOL1
+
+
+
+
+
+                                                                                          GND1
+
+
+
+                                                                      Time - 50 ns/div
+
+                              Figure 8-7. Side 1: Low-to-High Transition
+
+9 Power Supply Recommendations
+
+ To help ensure reliable operation at data rates and supply voltages, TI recommends connecting a 0.1-µF bypass
+ capacitor at the input and output supply pins (VCC1 and VCC2). The capacitors should be placed as close to the
+ supply pins as possible. If only a single, primary-side power supply is available in an application, isolated power
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    25
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+ can be generated for the secondary-side with the help of a transformer driver such as TI's SN6501 device. For
+ such applications, detailed power supply design and transformer selection recommendations are available in
+SN6501 Transformer Driver for Isolated Power Supplies. (SLLSEA0).
+
+
+
+
+
+26    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                                                          ISO1540, ISO1541
+www.ti.com                                                                  SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022
+
+10 Layout
+ 10.1 Layout Guidelines
+
+A minimum of four layers is required to accomplish a low EMI PCB design (see Figure 10-1). Layer stacking
+ should be in the following order (top-to-bottom): high-speed signal layer, ground plane, power plane and low-
+ frequency signal layer.
+
+ •  Routing the high-speed traces on the top layer avoids the use of vias (and the introduction of their
+    inductances) and allows for clean interconnects between the isolator and the transmitter and receiver circuits
+    of the data link.
+ •  Placing a solid ground plane next to the high-speed signal layer establishes controlled impedance for
+    transmission line interconnects and provides an excellent low-inductance path for the return current flow.
+ •  Placing the power plane next to the ground plane creates additional high-frequency bypass capacitance of
+    approximately 100 pF/in2.
+ •  Routing the slower speed control signals on the bottom layer allows for greater flexibility as these signal links
+    usually have margin to tolerate discontinuities such as vias.
+
+ If an additional supply voltage plane or signal layer is needed, add a second power or ground plane system
+ to the stack to keep  it symmetrical. This makes the stack mechanically stable and prevents  it from warping.
+ Also the power and ground plane of each power system can be placed closer together, thus increasing the
+ high-frequency bypass capacitance significantly.
+
+ For detailed layout recommendations, see the Digital Isolator Design Guide (SLLA284)
+
+ 10.1.1 PCB Material
+
+ For digital circuit boards operating at less than 150 Mbps, (or rise and fall times greater than 1 ns), and trace
+ lengths of up to 10 inches, use standard FR-4 UL94V-0 printed circuit board. This PCB is preferred over cheaper
+ alternatives because of lower dielectric losses at high frequencies, less moisture absorption, greater strength
+and stiffness, and the self-extinguishing flammability-characteristics.
+
+ 10.2 Layout Example
+
+
+                     High-speed traces
+                                           10 mils
+
+                       Ground plane
+                                                      Keep this
+                                                           space free      FR-4
+                                          40 mils
+                                                       from planes,       0r ~ 4.5
+                                                                      traces, pads,
+                                                       and vias
+                       Power plane
+                                           10 mils
+
+                    Low-speed traces
+
+                               Figure 10-1. Recommended Layer Stack
+
+
+
+
+
+Copyright © 2022 Texas Instruments Incorporated                                                       Submit Document Feedback    27
+
+                                              Product Folder Links: ISO1540 ISO1541
+ISO1540, ISO1541
+SLLSEB6F – JULY 2012 – REVISED DECEMBER 2022                                                                 www.ti.com
+
+11 Device and Documentation Support
+ 11.1 Documentation Support
+
+                                           Note
+      TI is transitioning to use more inclusive terminology. Some language may be different than what you
+     would expect to see for certain technology areas.
+
+ 11.1.1 Related Documentation
+
+ For related documentation see the following:
+
+ •   Digital Isolator Design Guide (SLLA284)
+ •  ISO154xEVM Low-Power Bidirectional I2C Isolators Evaluation Module (SLLU166)
+ •  TI Isolation Glossary (SLLA353)
+ •  SN6501 Transformer Driver for Isolated Power Supplies. (SLLSEA0)
+
+ 11.2 Related Links
+
+The table below  lists quick access links. Categories include technical documents, support and community
+ resources, tools and software, and quick access to sample or buy.
+
+                                      Table 11-1. Related Links
+                                                     TECHNICAL        TOOLS &        SUPPORT &
+      PARTS      PRODUCT FOLDER   SAMPLE & BUY
+                                               DOCUMENTS      SOFTWARE       COMMUNITY
+
+      ISO1540              Click here              Click here              Click here              Click here              Click here
+
+      ISO1541              Click here              Click here              Click here              Click here              Click here
+
+ 11.3 Receiving Notification of Documentation Updates
+
+ To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper
+ right corner, click on Alert me to register and receive a weekly digest of any product information that has
+ changed. For change details, review the revision history included in any revised document.
+
+ 11.4 Community Resources
+ 11.5 Trademarks
+ All trademarks are the property of their respective owners.
+12 Mechanical, Packaging, and Orderable Information
+
+The following pages include mechanical, packaging, and orderable information. This information is the most
+ current data available for the designated devices. This data is subject to change without notice and revision of
+ this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+
+
+
+
+
+28    Submit Document Feedback                                                                     Copyright © 2022 Texas Instruments Incorporated
+
+                                              Product Folder Links: ISO1540 ISO1541
+                                                         PACKAGE OPTION ADDENDUM
+
+
+    www.ti.com                                                                                                                                                                      6-Feb-2026
+
+
+PACKAGING INFORMATION
+
+   Orderable part number     Status   Material type    Package | Pins    Package qty | Carrier    RoHS        Lead finish/       MSL rating/       Op temp (°C)           Part marking
+                                                      (1)                 (2)                                                                                          (3)            Ball material        Peak reflow                                                              (6)
+                                                                                                                                                                                                    (4)                                (5)
+       ISO1540DR             Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1540
+       ISO1540DR.A           Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1540
+      ISO1540DRG4           Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1540
+      ISO1540DRG4.A          Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1540
+       ISO1541DR             Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1541
+       ISO1541DR.A           Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1541
+      ISO1541DRG4           Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1541
+      ISO1541DRG4.A          Active     Production      SOIC (D) | 8      2500 | LARGE T&R      Yes          NIPDAU        Level-2-260C-1 YEAR       -40 to 125               IS1541
+
+(1) Status: For more details on status, see our product life cycle.
+
+(2) Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+
+(3) RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+
+(4) Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+
+(5) MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+
+(6) Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+
+
+                                                                               Addendum-Page 1
+                                                         PACKAGE OPTION ADDENDUM
+
+
+    www.ti.com                                                                                                                                                                      6-Feb-2026
+
+
+
+
+
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+
+OTHER QUALIFIED VERSIONS OF ISO1540, ISO1541 :
+• Automotive : ISO1540-Q1, ISO1541-Q1
+
+
+NOTE: Qualified Version Definitions:
+       • Automotive - Q100 devices qualified for high-reliability automotive applications targeting zero defects
+
+
+
+
+
+                                                                               Addendum-Page 2
+                         PACKAGE MATERIALS INFORMATION
+
+
+www.ti.com                                                                                                                      21-Aug-2026
+
+TAPE AND REEL INFORMATION
+
+     REEL DIMENSIONS                                  TAPE DIMENSIONS
+                                                       K0    P1
+
+
+                                                   W                                                                               B0
+                                      Reel
+                                    Diameter
+                                                                         Cavity       A0
+                                         A0  Dimension designed to accommodate the component width
+                                           B0  Dimension designed to accommodate the component length
+                                         K0  Dimension designed to accommodate the component thickness
+                           W   Overall width of the carrier tape
+                                               P1   Pitch between successive cavity centers
+
+                                      Reel Width (W1)
+                  QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+                                                                                         Sprocket Holes
+
+
+                                  Q1  Q2     Q1  Q2
+
+                                  Q3  Q4     Q3  Q4             User Direction of Feed
+
+
+                                                      Pocket Quadrants
+
+
+*All dimensions are nominal
+        Device        Package Package Pins  SPQ     Reel     Reel    A0    B0    K0    P1   W     Pin1
+                       Type   Drawing               Diameter  Width  (mm)  (mm)  (mm)  (mm)  (mm) Quadrant
+                                                 (mm)  W1 (mm)
+      ISO1540DR       SOIC    D      8    2500    330.0     12.4     6.4     5.2     2.1     8.0    12.0    Q1
+      ISO1540DR       SOIC    D      8    2500    330.0     12.4     6.5     5.4     2.0     8.0    12.0    Q1
+    ISO1540DRG4      SOIC    D      8    2500    330.0     12.4     6.4     5.2     2.1     8.0    12.0    Q1
+      ISO1541DR       SOIC    D      8    2500    330.0     12.4     6.5     5.4     2.0     8.0    12.0    Q1
+      ISO1541DR       SOIC    D      8    2500    330.0     12.4     6.4     5.2     2.1     8.0    12.0    Q1
+    ISO1541DRG4      SOIC    D      8    2500    330.0     12.4     6.4     5.2     2.1     8.0    12.0    Q1
+
+
+
+
+
+                                                  Pack Materials-Page 1
+                         PACKAGE MATERIALS INFORMATION
+
+
+www.ti.com                                                                                                                      21-Aug-2026
+
+
+ TAPE AND REEL BOX DIMENSIONS
+
+
+
+
+
+                                                                                                   Width (mm)     H
+
+
+
+
+
+     W             L
+
+
+
+
+
+*All dimensions are nominal
+         Device          Package Type  Package Drawing  Pins   SPQ    Length (mm)  Width (mm)   Height (mm)
+      ISO1540DR           SOIC          D          8     2500        353.0         353.0          32.0
+      ISO1540DR           SOIC          D          8     2500        356.0         356.0          36.0
+     ISO1540DRG4          SOIC          D          8     2500        353.0         353.0          32.0
+      ISO1541DR           SOIC          D          8     2500        356.0         356.0          36.0
+      ISO1541DR           SOIC          D          8     2500        353.0         353.0          32.0
+     ISO1541DRG4          SOIC          D          8     2500        353.0         353.0          32.0
+
+
+
+
+
+                                                  Pack Materials-Page 2
+                                 PACKAGE OUTLINE
+D0008A                                                                                                                                                                                                                                                                                 SCALE 2.800            SOIC - 1.75 mm max height
+                                                                 SMALL OUTLINE INTEGRATED CIRCUIT
+
+
+                                                                           C
+
+                                                                         SEATING PLANE
+                                  .228-.244 TYP
+                                     [5.80-6.19]                                                                                                    .004 [0.1] C
+       A                                    PIN 1 ID AREA
+                                                        6X .050
+                                                                                       [1.27]
+                                                       8
+              1
+
+
+
+                                                         2X     .189-.197
+      [4.81-5.00]                                                       .150
+    NOTE 3                                                                  [3.81]
+
+
+                                                                      4X (0 -15 )
+
+              4
+                                                       5
+                                                        8X .012-.020
+              B               .150-.157                                [0.31-0.51]                                                                                                           .069 MAX
+                                        [3.81-3.98]                        .010 [0.25]   C A B                     [1.75]
+                          NOTE 4
+
+
+
+
+
+                                                                          .005-.010 TYP
+                                                                               [0.13-0.25]
+
+
+                            4X (0 -15 )
+
+             SEE DETAIL A
+                                                                   .010
+                                                                              [0.25]
+
+
+
+                                                                                                                   .004-.010                                                        0 - 8                                                                                                                            [0.11-0.25]
+                                                                        .016-.050
+                                                                             [0.41-1.27]              DETAIL A
+                                                                                                (.041)        TYPICAL
+                                                                                                    [1.04]
+
+                                                                                                   4214825/C  02/2019
+NOTES:
+
+1. Linear dimensions are in inches [millimeters]. Dimensions in parenthesis are for reference only. Controlling dimensions are in inches.
+  Dimensioning and tolerancing per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+  exceed .006 [0.15] per side.
+4. This dimension does not include interlead flash.
+5. Reference JEDEC registration MS-012, variation AA.
+
+
+
+
+                                                    www.ti.com
+                             EXAMPLE BOARD LAYOUT
+D0008A                                    SOIC - 1.75 mm max height
+                                                                 SMALL OUTLINE INTEGRATED CIRCUIT
+
+
+
+
+
+                         8X (.061  )
+                                        [1.55]
+                                        SYMM               SEE
+                                                                       DETAILS
+                                    1
+                                                                          8
+
+                       8X (.024)
+                                        [0.6]                                  SYMM
+
+
+
+                                                                                        (R.002  ) TYP
+                                                                                                            [0.05]                                                                          5
+                                     4
+                   6X (.050  )
+                                 [1.27]
+                                                                    (.213)
+                                                                             [5.4]
+
+                            LAND PATTERN EXAMPLE
+                                    EXPOSED METAL SHOWN
+                                                SCALE:8X
+
+
+
+
+
+                                SOLDER MASK      SOLDER MASK
+               METAL             OPENING              OPENING               METAL UNDER                                                                         SOLDER MASK
+
+
+        EXPOSED
+           METAL                                EXPOSED
+                                                   METAL
+                                 .0028 MAX                                              .0028 MIN
+                                       [0.07]                                                             [0.07]
+                            ALL AROUND                                    ALL AROUND
+
+                  NON SOLDER MASK                            SOLDER MASK
+                         DEFINED                                      DEFINED
+
+                              SOLDER MASK DETAILS
+
+
+
+
+                                                                                                   4214825/C  02/2019
+
+NOTES: (continued)
+
+6. Publication IPC-7351 may have alternate designs.
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+
+
+
+
+
+                                                    www.ti.com
+                            EXAMPLE STENCIL DESIGN
+D0008A                                    SOIC - 1.75 mm max height
+                                                                 SMALL OUTLINE INTEGRATED CIRCUIT
+
+
+
+
+
+                           8X (.061  )
+                                            [1.55]              SYMM
+
+                                        1
+                                                                             8
+
+                         8X (.024)
+                                            [0.6]                                                            SYMM
+
+
+
+                                                                                            (R.002  ) TYP
+                                                                                                                [0.05]                                                                             5
+                                        4
+                      6X (.050  )
+                                     [1.27]
+                                                                         (.213)
+                                                                                  [5.4]
+
+                              SOLDER PASTE EXAMPLE
+                                BASED ON .005 INCH [0.125 MM] THICK STENCIL
+                                                   SCALE:8X
+
+
+
+
+
+                                                                                                   4214825/C  02/2019
+
+NOTES: (continued)
+
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+  design recommendations.
+9. Board assembly site may have different recommendations for stencil design.
+
+
+
+
+
+                                                     www.ti.com
+                 IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+
+TI objects to and rejects any additional or different terms you may propose.
+
+IMPORTANT NOTICE
+
+                                         Copyright © 2026, Texas Instruments Incorporated
+
+                                                       Last updated 10/2025

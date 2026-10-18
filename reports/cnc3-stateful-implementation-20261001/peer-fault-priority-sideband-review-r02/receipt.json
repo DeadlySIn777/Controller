@@ -1,0 +1,57 @@
+{
+  "status": "SCOPED_READ_ONLY_REVIEW",
+  "scoped_review_passed": true,
+  "input_sha256": {
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_alarm_filter.v": "c02ff736f523f44c79940471fbb43f05e0a5d8e1a417a2f3bf2e031f6cc2c39d",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_encoder_runtime.v": "f92a47bc75e7f3b51f8ab445ffa34c91b43a2baf2152e638c7aa8d257908da7b",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_motion_spi.v": "c46ed27067d8aa53b572cc652908ab072996ea7fcd803c9f2abbf2ee864b83c9",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_motion_state.v": "8591640c64cead8e08454a0cbc68af96f09b30e74875cf67639219f6fbadb158",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_spi_transport_stateful.v": "6ecfbb7f308d323976924d3b131e67fdfe2f155e66ab57bb55d019f1ce03a12c",
+    "reports\\cnc3-stateful-implementation-20261001\\stage-r01\\cnc3_stepgen_runtime.v": "599bfda0983af834d510e3e2ffd83e5a3e069400ea0dbf063bf88ef082ac27f3"
+  },
+  "evidence_sha256": {
+    "reports\\cnc3-stateful-implementation-20261001\\fault-priority-fixed-r02\\receipt.json": "1bff80122c2c552d8a5de7b86fb74f79d3f18c266948d55f7d5498091f8d4f4c",
+    "reports\\cnc3-stateful-implementation-20261001\\rejection-header-r03\\receipt.json": "420dc8b4880271da4d1ba18248d26d94887ffb37c3beb17feecb5c0e8d8b7670",
+    "reports\\cnc3-stateful-implementation-20261001\\actual-SPI-motion-r05\\receipt.json": "bdf7541b4f962fab520e08e6adbd7ce1ccd8c8c9352fdaff3e29f6b04711001e",
+    "reports\\cnc3-stateful-implementation-20261001\\state-proof-r07\\receipt.json": "aef970f198c5eb52a69e51272d9bb6990b44e903493890a35ffd4926c43d0067",
+    "reports\\cnc3-stateful-implementation-20261001\\family-proof-r05\\receipt.json": "d44832327b6f25ab241bb4c6a1890fa9e7b65c5b018b5abb7218ae0853e5a5c4"
+  },
+  "scope": [
+    "fault and CONFIG priority correction",
+    "rejection-only metadata authority",
+    "cold/default state"
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "closed": true,
+      "meaning": "Earlier same-cycle fault_cut gates the request case and final fault priority forces rates, progress and acceptance low; arming-timeout UPDATE no longer overrides that cut.",
+      "evidence": "reports\\cnc3-stateful-implementation-20261001\\fault-priority-fixed-r02\\receipt.json"
+    },
+    {
+      "id": "F2",
+      "closed": true,
+      "meaning": "CONFIG/SYNC admission rejects live qualification changes and external power-cycle faults; rejected CONFIG preserves accepted diagnostics while invalidating masks."
+    },
+    {
+      "id": "F3",
+      "closed": true,
+      "meaning": "Captured magic/ABI/opcode on rejected transaction only invalidates recognizable CONFIGURE. It cannot enter valid frame, command commit, session/sequence, generation, watchdog progress or permission."
+    },
+    {
+      "id": "F4",
+      "closed": true,
+      "meaning": "Reset holds zero session, zero masks/rates/continuity, config-invalid, selftests-pending. No general IOL1/output provider success is synthesized."
+    },
+    {
+      "id": "OPEN_RATE_ADMISSION",
+      "closed": false,
+      "meaning": "Peer and root identified missing global +/-0x01000000 UPDATE admission bound in this exact predecessor. Separate norm-derived successor and atomic rejection tests are required; this focused review does not close rate admission."
+    }
+  ],
+  "no_source_or_PCB_or_shared_RTL_writes": true,
+  "peer_checks_are_source_inspection_not_independent_RTL_execution": true,
+  "existing_520_edge_and_71_sideband_controls_observed_from_hash_bound_peer_receipts": true,
+  "full_endpoint_safety_qualifier_IOL1_events_pages_HAL_vendorfit_and_physical_qualification": false,
+  "configuration_opcode_continuity_clear_not_explicitly_required_by_frozen_table": true
+}

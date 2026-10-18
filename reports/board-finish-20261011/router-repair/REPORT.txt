@@ -1,0 +1,107 @@
+Read-only signal strategy review — 11 October 2026
+
+The staged selector permits only an additive pass on explicitly recognized
+indicator families. Every existing copper item must remain. Unknown names are
+review-required. It has eight passing host tests and uses no pcbnew, GPU or
+process-management APIs. No shared tools or board files were changed.
+
+Sources: docs/MOTHERBOARD_IS2.md retained interfaces/fault obligations; actual
+exclude.txt/exclude-pairs.txt, pairs.json, power_widths.json and saved zone nets;
+r06 saved board/partitions; E1 saved stripped board/jobs/checkpoint; the two
+40-job diag-nopath relaxation censuses. inventory-summary.json records hashes.
+
+E1 removes 58,126 copper items on 892 nets. Read-only UUID comparison exactly
+reproduces its 54,379 segments and 3,747 vias removed, with no changed retained
+UUID/net/type record and no new UUID. The staged selector marks 768 of the removed
+nets protected (50,750 items). Disjoint name-based subsets include STEP/DIR:
+67 nets/5,452 items; analog:111/5,514; encoder/MPG/fast-input:71/4,827;
+fault/permission/enable:180/14,468. The remaining protected source scopes account
+for339 nets/20,489 items. These counts describe explicit source-name categories;
+they are not electrical qualification. E1 cannot be adopted wholesale as an
+ordinary-signal pass. Power/plane/pair lists were retained, but those lists did
+not protect all later critical signal copper. E1 remains an isolated experiment.
+
+E1 also cannot finish routing with this job set: 163 long joins exceed its120mm
+job-generation limit, and eight unaddressable islands are explicitly omitted.
+The eight are seven CHASSIS shield pads (J15005.SH x3, J15006.SH x3, J15007.SH x1)
+plus U14737.2 on AI_REF_LIMIT_OUT. The latter is analog, not chassis.
+signal_jobs.py and corridor_router_in3v.py both use (reference,pad number) as the
+endpoint key; repeated physical pads with that identity require explicit physical
+pad handling. All omissions are retained in separate JSON inventories.
+
+r06 has1,367 required pad-island joins/API1,376 unconnected items. The conservative
+selector classifies1,289 joins protected,52 explicitly eligible ordinary indicator
+joins,26 requiring source review. It exports115 eligible source net names. Of
+E1's2,147 stripped-board jobs,127 involve eligible families and2,020 are withheld.
+The E1 job inventory is not router input for r06 or a later candidate: regenerate
+jobs/geometry/partitions from the exact candidate head first.
+
+Ranked next work:
+1. Keep root's proven additive bridge candidate and finish native cleanup/DRC and
+   partition-diff gates. Added geometry must preserve every existing connection.
+2. On that exact candidate, regenerate an additive indicator-only pass using
+   ordinary-eligible-nets.txt, preserve all existing copper and all reservations,
+   and reject any post-cleanup connection loss or added rule violation.
+3. Treat the largest unresolved plane/return and power islands as constrained
+   net-specific distribution work. r06's saved name-based inventory includes352
+   plane/pour/return joins and54 other power-table joins. Join required isolated
+   pieces with reviewed widths/domains; do not remove protected tracks to create
+   ordinary routes. Ground/return continuity and current capacity need their own
+   native proof beyond a connectivity count.
+4. Finish protected STEP/DIR, encoder, analog, fault and differential-pair gaps
+   with their own additive qualified geometry and timing/return/coupling checks.
+   Increasing max hop distance is a planning change, not permission to narrow
+   copper or ignore length, pair or isolation obligations. Account for all163
+   long joins and all eight ambiguous physical-pad islands explicitly.
+
+The40-job census explains why further generic ripping is a poor next step. On
+the r07/r06 signal-rich geometry, only1/40 sampled joins is reachable unchanged;
+removing all track obstacles hypothetically permits32; retaining power/return
+obstacles while stripping ordinary copper leaves10/40 reachable. On the stripped
+geometry, removing plane/return obstacles permits28/40, removing power-table
+obstacles16, both31; these experiments erase mandatory geometry and therefore
+cannot become routing policy. Removing zones or reservation keepouts does not
+improve either full case. Reducing the extra raster margin to zero changes only
+the stripped case10->12. There is no source evidence that disabling reservations
+or blanket clearance-margin reduction would finish this board safely.
+
+No concrete coordinate defect was demonstrated in these bounded reads. The
+duplicate physical-pad addressing limitation is concrete. E1's generic multi-
+layer BFS also emits10–17-via paths; the source has no single-dive-and-return
+constraint. This creates expensive, difficult-to-qualify replacements, although
+the saved logs alone do not establish their DRC or electrical validity.
+
+Evidence boundary: source/host inventories only. No new native KiCad, HDL,
+synthesis, ERC, DRC, physical, fabrication or manufacturing evidence is claimed.
+Native after-cleanup partition lost=0 and all relevant rule/quality gates remain
+mandatory for every candidate. Shared source/board hashes remained unchanged.
+
+Additive E1 extractor prepared (host only)
+
+The immutable e1-frozen snapshot captures checkpoint1689/2147, explicitly
+incomplete. extract_e1.py requires exact source-job SHA, exact head/native
+partition SHA, complete per-net job accounting and a successful job spanning
+distinct existing head islands. Every emitted main/auxiliary item for a selected
+net stays in one indivisible group, because older routers omit auxiliary job IDs.
+On r06 this selects five groups/83 emitted records: OBS24_K, OBS27_K, OBS34_K,
+RGB_DRIVER_19 and RGB_DRIVER_3. Failed source jobs remain visible; no net is
+claimed fully connected. Group selection is regenerated for any changed head.
+
+native_group_gate.py preserves every original track/via UUID and its inspected
+geometry/net/lock signature. Its staging preflight also rejects physically
+ambiguous endpoint identities. Native DRC runs on a disposable prospective
+copy. The filter rejects whole NEW net groups on any warning/error mentioning a
+new UUID, including cross-new-group conflicts. It never removes original items.
+Old-only reports remain visible and cannot justify removing old copper.
+
+run_e1_additive.sh stages, runs native preflight DRC, filters, measures the result
+and computes a partition diff under the existing heavy slot wrappers. It records
+timings/exit codes and stage/filter receipts, skips project settings in native
+SaveBoard, and performs no adoption. Its output directory must be a child of
+this isolated router-repair directory. It starts no GPU and writes no E1 files.
+
+Host verification: eight selector tests and ten extractor/staging-adapter/filter
+tests pass, plus AST/shell syntax checks. Native stages have not been run by this
+agent. extractor-host-receipt.json binds the staged tool hashes. Root must use
+the actual KiCad native runner and after-cleanup loss/rule/quality gates before
+calling any of the extracted copper usable.

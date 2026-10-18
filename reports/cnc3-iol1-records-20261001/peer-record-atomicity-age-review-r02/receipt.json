@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "scope": "Bounded read-only exact-source review of proposed IS2 diagnostic record/volatile DIC config runtime, GPIO sample age and cold/IRQ/flash boundaries",
+  "input_sha256": {
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\target.c": "b69aade32b21136d87f6de405a92b3759cc1be4d9ec0efbef1310bcba1d57aa4",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\iol1.c": "6140e520dc514642d6094060e8c40a3b4bc528823ba96e84a9e586390a70c2f1",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\iol1.h": "27d58362e1f92d9e8568d25fb295a01c12c830816a2840dc8e264809207e3c2e",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\dic_filter.c": "fc2008bc4728d9f2d85f3299e4208b822485c1b0f83b3b4d76ab4b65086dc332",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\dic_filter.h": "4a2cb696721629482509216392c0e667d611eb6a35cb2c454f3c9d37e81ecb1a",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\board_record.c": "e9524e45a814766d690880b4dce4647a632a2823167a9b3d7f8c92355f9a0d39",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\board_record.h": "4667cdc875004e43f6634dc954bded930005fef52de55254532ef0110c995a60",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\stm32g031.ld": "f17b17b04a936377a1f1e98564997aa8b5d47d8ad684b01dd6e45d84179a593b",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\startup.S": "2d983a791c208f535a2de736f37c105f36f79a3aded9886599a028b76ec807ec",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\record-and-wire-proposal.json": "66d82f27c11d385fd27bb2b9cb85ab3906717c011ee65d001f569876e94a020d",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\README.md": "56054d50c11158ea8a0de065aae70875f57b67542ee3b6df27eb9ca33caff5a7",
+    "reports\\cnc3-iol1-records-20261001\\record-config-replay-candidate-r03\\bundle-manifest.json": "8815124143befd5a6a72fa3ed0a0f171d2f687089e320c76cd145f013fdc7b56"
+  },
+  "source_inspection_only": true,
+  "prior_rejected_age_review_sha256": "b544dcbbc93ee35a27fccea70a3a6f8243df421c4d8a73d3afc1e16e05a15b31",
+  "resolved_findings": [
+    {
+      "id": "DIC-AGE-01",
+      "resolved": true,
+      "exact_actual_helper": "iol1_sample_age_us",
+      "source_paths": [
+        "target.c:observe",
+        "target.c:sample_dic",
+        "iol1.c:iol1_sample_age_us"
+      ],
+      "resolution": "UINT32 modular elapsed saturates at65535; cold data requires actual sample tuple; observing stale clears valid latch until a fresh actual sample, preventing later full-counter wrap revival. Both target DIC and DO use the same helper."
+    }
+  ],
+  "reviewed_constraints": [
+    "CONFIG frame/CRC/opcode/shape/epoch/sequence validation precedes all commit state; rejected transactions do not alter config/epoch/sequence/accepted timestamp.",
+    "IRQ copies generation/group values atomically, samples actual GPIO and evolves debounce outside IRQ exclusion, then commits raw/filtered/time tuple only on the same generation.",
+    "CONFIG generation reset restarts debounce timing; no output/ARM/ACTIVE writer is added.",
+    "TIM2 accepted timestamp/state timeout tuple is protected from IRQ preemption; stale framing cannot refresh IWDG.",
+    "IWDG starts before factory flash inspection; startup/clock/option/reset timing remains physically unqualified.",
+    "Application flash is bounded to60KiB, records reserve two separate2KiB pages; target reads actual12-byte UID and never erase/programs flash.",
+    "UID+CRC+commit integrity cannot authenticate factory state; descriptor/hw_major remain diagnostic.",
+    "IDENT proposal preserves40-byte frame and first16 realtime bytes while borrowing only telemetry8 for512-byte chunks. Existing diagnostic major0 acquisition rejects unsupported record majors.",
+    "Two distinct valid generations require equal lineage; invalid/torn record fallback and equal-generation conflict are conservative."
+  ],
+  "additional_constraints": [
+    "Sample validity is committed atomically with raw/filtered/last time under the same-generation guard; no config ISR can publish a mixed sample tuple.",
+    "The stale latch only affects sample availability; FIELD rail-good remains an independent hardware observation and no ACTIVE/ARM/output authority is added.",
+    "Host/target record formats remain explicitly proposed and unadopted; target does not authenticate Ed25519 or provision flash option bytes.",
+    "Default_Handler may reset-loop under corrupt ECC after software IWDG begins; recovery/clock/bootstrap reset behavior remains physically unqualified."
+  ],
+  "unresolved_actionable_source_findings": [],
+  "peer_actual_evidence_paths": [
+    "record-config-replay-full-r03/report.json",
+    "actual-SPI-record-config-r03/receipt.json",
+    "compiled-record-config-r03/receipt.json"
+  ],
+  "target_compilation_simulation_or_MMIO_execution_reperformed_by_this_review": false,
+  "physical_GPIO_DMA_IRQ_flash_or_watchdog_timing_qualified": false,
+  "source_or_shared_inputs_changed": false,
+  "manufacturing_ready": false
+}

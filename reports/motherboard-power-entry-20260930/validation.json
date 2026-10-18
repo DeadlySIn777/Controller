@@ -1,0 +1,203 @@
+{
+  "passed": true,
+  "errors": [],
+  "fitted_parts": 220,
+  "native_pins": 738,
+  "native_nc_pins": 42,
+  "source_engineering_gates": [
+    "Series pre-isolation health contacts independently clear each MOTION5-powered feed latch AND physically open the final TX/LED/enable authority path. ISO7720F1.7\u20132.25V receiver outputs cannot defeat these contacts when raw field/corehealth is LOW and their LED drivers have valid power. Arbitrary CORE/FIELD/MOTION ramps, healthy-at-powerup CLR/CLK sequencing and partial VCC LED-driver behavior remain electrical qualification gates.",
+    "AUX24 exact overload testpoint ranges fit normal/cap budgets. Resistor tolerance uses an inverse-law engineering model; the published shortcircuit max at7.5k does not guarantee hardshort bounds at26.7k/44.2k. Vendor confirmation or a source-backed hardshort bound remains required.",
+    "18\u201330V fullfieldinput requirement remains narrower than9xxx19\u201329V guaranteedstaticarming screen.",
+    "Field5 fixedregulation/tolerance+AUX5 limiter/distribution losses must meet4.86919887V worstUVarmingthreshold; circuitfitted, lossqualification open.",
+    "Motorfeed switch/distribution loss must stayunder20.3624mV. TPS22990 RON guarantees are atlistedbiasvoltage; thermal/noise/transient/IRdrop need reconciliation.",
+    "Separatefield3.3LDO normal/dynamicICC/thermal/railcurrent budget must be completed; .1A rating isnotloadestimate.",
+    "All fittedpassiveMPNs and three fittedfuseaccessoryMPNs are selected. Outputnegativeclamp/surgecoordination, fusefault/thermalcoordination, connector matingorientation andstencilprocess remain engineering/procurement gates.",
+    "Nexperia74LVC2G04 raw-health inputs retain a10ns/V recommendedrise/fall constraint despite advertisedSchmittaction. ExactLTC RST loading/slew at the fitted10k pullups andadded100k biases must be reconciled; no arbitraryslowramp guarantee is claimed.",
+    "Reviewed buck compensation/MLCC effectivecap/stability andhostinrush must be rerun atwholeboardloads.",
+    "Displaypower andoptionalAI loads remain qualifiedpermodule; no fixedCM5 or21inch assumption.",
+    "Two-step bank bootstrap: freshOPI rearm powers healthybankfeed, waitreceiving5Vqualification, then freshOPI rearm setsOPIstatus. Circuitfitted, softwaresequence notimplemented here."
+  ],
+  "conditional_screen": {
+    "evidence": "Conditional source arithmetic; source rails valid4.8..5.25V, internal ambient0..55C; optical parameters only25C testconditions, no temperature/time interpolation",
+    "series_led_current_a": [
+      0.005347153668970054,
+      0.018996960486322188
+    ],
+    "led_current_bounds_use_monotonic_diode_inference": true,
+    "ordinary_resistor_corner_including_initial_and_0_to55c_tcr": 0.013000000000000001,
+    "led_trigger_max_a_at25c": 0.003,
+    "led_return_min_a_at25c": 0.0001,
+    "powered_ioz_a_max_at_vcc5p5": 2e-06,
+    "vcc0_ioff_a_max": 2e-06,
+    "powered_leakage_at_every_4p8_to5p25v_guaranteed_by_testpoint": false,
+    "nexperia_driver_vcc_recommended_v": [
+      1.65,
+      5.5
+    ],
+    "below1p65_partial_led_driver_state": "unspecified; opto turnoff through every arbitrary source-supply ramp is not guaranteed",
+    "gate_off_v_with_two_contact_leaks": 0.002026,
+    "clear_off_v_with_two_contact_leaks": 0.20259999999999997,
+    "final_gate_high_min_v_at_2p4v_source_testpoint": 2.3985419198055893,
+    "am26c31_vih_v": 2,
+    "logic_receiving_vih_v": 2,
+    "contacts_toff_max_s_at25c_if5ma_rl200_vdd20": 0.0002,
+    "contacts_ton_max_s_at25c_if5ma_rl200_vdd20": 0.0005,
+    "opening_at_actual5p36_to18p94ma_or_alltemperatures_guaranteed": false,
+    "clear_decay_s_to_vil": 0.0001414345144224404,
+    "contact_plus_clear_rc_conditional_withdrawal_s": 0.0003414345144224404,
+    "direct_gate_path_opens_before_rail_removal_is_required": true,
+    "default_low_iso_partial_region_independently_inhibited_at_valid_health_source_rails": true,
+    "whole20ms_watchdog_physical_or_allcondition_proof": false,
+    "field_ldo_per_bank_reservation_a": 0.02,
+    "field_ldo_estimated_w_at30v_3p234v_20ma": 0.53532,
+    "field_ldo_estimated_tj_at55c_66p2kperw": 90.438184,
+    "field_ldo_100ma_at30v_continuous_allowed": false,
+    "aux24_overload_testpoints_a": {
+      "A": [
+        0.237,
+        0.257
+      ],
+      "B": [
+        0.145,
+        0.159
+      ]
+    },
+    "aux24_hardshort_max_guaranteed_at_fittedR": false
+  },
+  "parent_interposition_rules": {
+    "exactly_two_output_pin_changes_permitted": {
+      "A": {
+        "old_driver": [
+          "U6042",
+          "7"
+        ],
+        "old_driver_mpn": "SN74LVC2G08DCUR",
+        "new_driver_net": "MOTOR_TX_GATE_SOURCE_A",
+        "final_consumers_must_remain_exact": [
+          [
+            "R6095",
+            "1"
+          ],
+          [
+            "U6001",
+            "4"
+          ],
+          [
+            "U6002",
+            "4"
+          ],
+          [
+            "U6003",
+            "4"
+          ],
+          [
+            "U6004",
+            "4"
+          ],
+          [
+            "U6033",
+            "3"
+          ],
+          [
+            "U6043",
+            "6"
+          ],
+          [
+            "U6048",
+            "10"
+          ],
+          [
+            "U6048",
+            "13"
+          ],
+          [
+            "U6048",
+            "2"
+          ],
+          [
+            "U6048",
+            "5"
+          ],
+          [
+            "U6049",
+            "10"
+          ],
+          [
+            "U6049",
+            "13"
+          ],
+          [
+            "U6049",
+            "2"
+          ],
+          [
+            "U6049",
+            "5"
+          ]
+        ],
+        "frozen_motor_source_sha256": "36c934e747106aa6431e7c90ba4948622370eab3a270349641db9f12a2eb5bec"
+      },
+      "B": {
+        "old_driver": [
+          "U6042",
+          "3"
+        ],
+        "old_driver_mpn": "SN74LVC2G08DCUR",
+        "new_driver_net": "MOTOR_TX_GATE_SOURCE_B",
+        "final_consumers_must_remain_exact": [
+          [
+            "R6096",
+            "1"
+          ],
+          [
+            "U6005",
+            "4"
+          ],
+          [
+            "U6006",
+            "4"
+          ],
+          [
+            "U6034",
+            "3"
+          ],
+          [
+            "U6044",
+            "6"
+          ],
+          [
+            "U6050",
+            "10"
+          ],
+          [
+            "U6050",
+            "13"
+          ],
+          [
+            "U6050",
+            "2"
+          ],
+          [
+            "U6050",
+            "5"
+          ]
+        ],
+        "frozen_motor_source_sha256": "36c934e747106aa6431e7c90ba4948622370eab3a270349641db9f12a2eb5bec"
+      }
+    },
+    "no_wildcard_net_rename": true,
+    "final_gate_inputs_and_source_gate_outputs_must_not_be_directly_joined": true,
+    "raw_field_health_promotions": {
+      "A": [
+        "U9003",
+        "12"
+      ],
+      "B": [
+        "U9004",
+        "12"
+      ]
+    },
+    "IO3_to_motorIO3_mapping": "Explicit whole-board power map only; no ground-domain aliases inferred."
+  },
+  "manufacturing_ready": false
+}

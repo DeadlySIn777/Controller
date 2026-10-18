@@ -1,0 +1,41 @@
+Prospective bound partition tools: SOURCE ONLY / NOT RUN
+
+native_bound_partitions.py explicitly loads the sibling project through the
+native settings manager, loads the board, captures class/global/effective
+state, calls BOARD.SetProject with that exact handle, and requires unchanged
+effective state. The source checks compare declared netclass dimensions and
+global dimensional rules with the exact project JSON. It preserves the old
+uncapped pad partition naming, traversal and count semantics. The intended
+native sequence is Fill followed by BuildConnectivity; no board or project
+save is requested, and cleanup unloads without saving.
+
+prepare_bound_run.py creates a distinct exact project/source clone and captures
+all original source, clone, effective footprint-library, tool and native binary
+identities. It defaults to preparation only; --run starts a single selected
+existing KiCad slot and verifies every identity and saved manifest afterwards.
+No invocation of either native path or preparation clone has been made here.
+The tools are held for root review, not deployed into any shared or frozen run.
+
+Six host/model controls PASS: fallback class clearance, fallback globals and
+board/project effective-class disagreements are refused; authentic model state
+passes; repeated pad numbers retain the exact old #k IDs; connected and split
+model pads retain old uncapped count semantics. Python source compilation also
+passes. These do not establish that the native SWIG producer executes correctly.
+
+Proof audit inspected the official KiCad 10.0.4 scripting helper and reported
+that LoadBoard already binds the sibling project and initializes sibling custom
+rules. Official BOARD.SetProject source does not replace the DRC engine, though
+its redundant rebind does not reinitialize custom rules. Consequently a missing
+explicit Python SetProject is not by itself evidence of unbound prior refill.
+The direct native diagnostic is separate and still being reconciled.
+
+These prospective outputs deliberately say full custom-rule engine equivalence
+NOT_VERIFIED. A non-null project handle, matching classes and matching global
+dimensions are insufficient to establish that equivalence. The original helper
+can catch an InitEngine exception; actual resolved-rule sentinels or another
+verified equivalence proof remain necessary. Existing c03/c04 copies have the
+matching board.kicad_pro and board.kicad_dru; no duplicate refill may start unless
+root establishes an actual difference or explicitly approves a further proof.
+
+No native/GPU job, source adoption, native DRC result or manufacturing readiness
+is asserted. All old frozen and shared tools remain unchanged.

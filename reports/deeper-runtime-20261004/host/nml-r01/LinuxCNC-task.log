@@ -1,0 +1,29 @@
+Machine configuration file is 'sim2.ini'
+Could not find INI file '/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/profile/sim2.ini'
+Traceback (most recent call last):
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/cnc3_runtime/profile.py", line 101, in <module>
+    main()
+    ~~~~^^
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/cnc3_runtime/profile.py", line 97, in main
+    print(create_profile(args.manifest, args.store, args.module, args.output, args.observation))
+          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/cnc3_runtime/profile.py", line 26, in create_profile
+    manifest = verify_configuration(read_json(manifest_path), SetupService(store_path),
+        source_root=ROOT, expected_source_files=runtime_sources())
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/controller_lab/cnc3_configuration.py", line 219, in verify_configuration
+    expected = prepare_configuration(service, manifest["configuration_binding"],
+        run_id=manifest["simulation_context"]["run_id"], source_root=source_root,
+        source_files=expected_source_files,
+        encoder_mapping=manifest["virtual_encoder_mapping"])
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/controller_lab/cnc3_configuration.py", line 145, in prepare_configuration
+    snapshot = service.backup_snapshot()
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/controller_config/setup_service.py", line 523, in backup_snapshot
+    with _exclusive_lock(self.path):
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/source/controller_config/setup_service.py", line 68, in _exclusive_lock
+    descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | getattr(os, "O_BINARY", 0), 0o600)
+PermissionError: [Errno 13] Permission denied: '/work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/configuration/setup.json.setup.lock'
+/usr/bin/linuxcnc: line 338: cd: /work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/profile: No such file or directory
+/usr/bin/grep: /work/deeper-cnc3-88d845136fc9428dbe9e1cec3e015036/profile/sim2.ini: No such file or directory

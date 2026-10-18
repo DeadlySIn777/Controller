@@ -1,0 +1,88 @@
+{
+  "passed": false,
+  "input_sha256": {
+    "hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "hardware\\motherboard\\netlist.xml": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "reports\\pre-hardware-characterization-20261001\\INA149-active-model-discovery-r01\\SBOMC47\\ina149.lib": "7adccaf61abbb093980aa6fe6604bea72068541cf4112141e22aaaa79a463c8b",
+    "reports\\pre-hardware-characterization-20261001\\AI-active-model-discovery-r01\\SBOMA34\\OPAx197.LIB": "fc5b020e63346e511bd808bf41c856b0150b000bcf8a41fe00eeececb1f422a5",
+    "reports\\pre-hardware-characterization-20261001\\AI-buffer-SPICE-full-r02\\receipt.json": "e765e51297cc0f7c898795cf6f93ff0f7778569e65f06ce9943cc989657767f0",
+    "reports\\pre-hardware-characterization-20261001\\INA149-initialization-exploration-r02\\actual_ground_descending_nodeset\\case.cir": "f138512243677b29ef7559b9d358bdf0054e64d73d4dca5f0df5b6230f79b4fd",
+    "reports\\pre-hardware-characterization-20261001\\prove_INA149_bidirectional_nominal_r01.py": "382a0d615c3d4c5ee963a5d1a3fdf790797bf9bf560bfc4969b94f50d8fb713f"
+  },
+  "source_unchanged": true,
+  "cases": [
+    {
+      "shunt_ohm": 1000000000000.0,
+      "max_step_ns": 5,
+      "passed": false,
+      "checks": {
+        "both_directions_reach_final": false,
+        "complete_waveform": false,
+        "no_nan_or_infinity": true,
+        "within_ADC_nominal_range": true
+      },
+      "measured": {
+        "initial_out": 6.25024,
+        "final_out": 1.25061,
+        "recovered_out": 0.0
+      },
+      "expected": {
+        "initial_out": 6.249706263805601,
+        "final_out": 1.2499412527611202,
+        "recovered_out": 6.249706263805601
+      },
+      "errors": [
+        "doAnalyses: TRAN:  Timestep too small; time = 7.32252e-05, timestep = 6.25e-21: trouble with node \"xina.xu1.34\"",
+        "tran simulation(s) aborted"
+      ],
+      "seconds": 23.354693399975076,
+      "returncode": 0,
+      "deck_sha256": "cddfb2c6e08c16f61728d1d71a679c1956f5c6ae5e89898b22d7610ec90eaf49",
+      "log_sha256": "bcbdeb722f84897ad4f2596ca0e431f8f3847e605fdefe8e9f76013abac723cc",
+      "waveform_sha256": "e18a0577eda22dcec7bbb36ed02f1d3e0d0686cc29a3fd4385677caf70a080ff"
+    }
+  ],
+  "solver_sensitivity_max_final_V": null,
+  "source_channel": 0,
+  "source_references": {
+    "channel": 0,
+    "checked_references": [
+      "U14715",
+      "U14713",
+      "R14726",
+      "R14727",
+      "R14728",
+      "C14727"
+    ],
+    "model_pin_order": {
+      "INA149": [
+        "3",
+        "2",
+        "5",
+        "1",
+        "7",
+        "4",
+        "6"
+      ],
+      "OPA4197_core": [
+        "3",
+        "2",
+        "4",
+        "11",
+        "1"
+      ]
+    }
+  },
+  "whole_analog_chain_passed": false,
+  "physical_qualified": false,
+  "manufacturing_ready": false,
+  "scope": "Single exact-Source26 INA149/divider/OPA/filter path, 15V ideal supply, 2.5V ideal reference,25C, -10V common mode, 10\u21920\u219210V differential. All original vendor devices retained; .nodeset is only a solver initial guess.",
+  "remaining": [
+    "Four-channel simultaneous corners still fail model convergence",
+    "No protected-terminal transient/load protection model",
+    "ADC only 1Mohm load approximation; no sampling/quantization/ENOB",
+    "No power-up/rail/reference dynamics",
+    "No minimum/maximum IC process coverage",
+    "No PCB/cable parasitics or physical qualification"
+  ]
+}

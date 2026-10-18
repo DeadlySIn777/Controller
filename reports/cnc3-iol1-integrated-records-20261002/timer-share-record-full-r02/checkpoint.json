@@ -1,0 +1,50 @@
+{
+  "stages": [
+    {
+      "name": "actual_four_lane_record_config_SPI",
+      "runner": "run_record_acquisition.py",
+      "evidence_type": "actual simulated SPI into exact r03 target C; all2048 bytes and applied DIC configuration echo; no target MMIO",
+      "status": "PASS",
+      "exit_code": 0,
+      "receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\timer-share-record-full-r02\\actual_four_lane_record_config_SPI\\receipt.json",
+      "receipt_sha256": "3a6b7a0ffabf173d1c089d9b9cf77ec0d3eb455d416797049d05b1262193aafc"
+    },
+    {
+      "name": "shared_record_integrity_controls",
+      "runner": "run_stream_controls.py",
+      "evidence_type": "actual compiled bit-serial CRC/shape/queue; independent20-case host vectors plus six compiled mutations",
+      "status": "PASS",
+      "exit_code": 0,
+      "receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\timer-share-record-full-r02\\shared_record_integrity_controls\\receipt.json",
+      "receipt_sha256": "592d53fdbe260737b4078700b2942d18a11e34f1057445aa692e0ca93468925d"
+    },
+    {
+      "name": "actual_previous_command_tuple_controls",
+      "runner": "run_wire_tuple_controls.py",
+      "evidence_type": "actual wire frames into exact C; two compiled current-vs-cached response metadata mutations",
+      "status": "PASS",
+      "exit_code": 0,
+      "receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\timer-share-record-full-r02\\actual_previous_command_tuple_controls\\receipt.json",
+      "receipt_sha256": "c091a066f1903bbe0f7d1006fa63aed2e56ad6250848b84a48ba09849e439b4d"
+    },
+    {
+      "name": "composed_family_mapping",
+      "runner": "run_record_family.py",
+      "evidence_type": "family mapping of actual twelve-axis motion/session plus acquisition; separate failed T20 cell screen, no vendor fit",
+      "status": "PASS",
+      "exit_code": 0,
+      "receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\timer-share-record-full-r02\\composed_family_mapping\\receipt.json",
+      "receipt_sha256": "1a722c338ee51dbe7022c1df10b05a9ba08183dba2fe9af7435ab9ce380d85aa",
+      "coarse_T20_capacity_screen": {
+        "status": "FAIL",
+        "device_LEs": 19728,
+        "mapped_LUT4_plus_ADD": 21264,
+        "frozen_diagnostic_LUT4_plus_ADD": 22960,
+        "basis": "T20 manufacturer LE contains a LUT OR full adder; current mapped primitive lower-bound screen. Vendor resynthesis/optimization can change the netlist; no board/device change or fit claim",
+        "primary_local": "research/fpga-core/trion20-ds-v6.0.txt",
+        "primary_URL": "https://www.efinixinc.com/shop/t20.php"
+      }
+    }
+  ],
+  "bundle_integrity": true
+}

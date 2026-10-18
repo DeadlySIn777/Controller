@@ -1,0 +1,73 @@
+    pg=GeometryIndex();ti={l:GeometryIndex()for l in [pcbnew.F_Cu,pcbnew.B_Cu,pcbnew.In3_Cu]};holes=[]
+    def pad(ref,pin):return pads[(ref,str(pin))][0]
+    def rebuild():
+        nonlocal pg,ti,holes
+        pg=GeometryIndex();ti={l:GeometryIndex()for l in ti};holes=[]
+        for p in [p for f in fs.values()for p in f.Pads()]:
+            if not p.IsOnCopperLayer():continue
+            pol=p.GetEffectivePolygon(pcbnew.F_Cu)
+            polys=[[mm(pol.Outline(k).CPoint(i))for i in range(pol.Outline(k).PointCount())]for k in range(pol.OutlineCount())]
+            bb=p.GetBoundingBox();box=(pcbnew.ToMM(bb.GetLeft()),pcbnew.ToMM(bb.GetTop()),pcbnew.ToMM(bb.GetRight()),pcbnew.ToMM(bb.GetBottom()))
+            pg.add((p.GetNetname(),p.GetParentFootprint().GetReference(),polys,p.IsOnLayer(pcbnew.F_Cu),p.IsOnLayer(pcbnew.B_Cu)),box)
+        for t in b.GetTracks():obstacle(t)
+    def obstacle(t):
+        via=isinstance(t,pcbnew.PCB_VIA);width=pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)if via else t.GetWidth());s,e=mm(t.GetStart()),mm(t.GetEnd())
+        for l in ti:
+            if t.IsOnLayer(l):ti[l].add((t.GetNetname(),s,e,width),(min(s[0],e[0])-width/2,min(s[1],e[1])-width/2,max(s[0],e[0])+width/2,max(s[1],e[1])+width/2))
+        if via:holes.append((s,pcbnew.ToMM(t.GetDrillValue())))
+    def clear(ps,net,layer,width):
+        gap=width/2+.151
+        for s,e in zip(ps,ps[1:]):
+            if layer in [pcbnew.F_Cu,pcbnew.B_Cu]:
+                for n,ref,polys,top,bot in pg.candidates(s,e,gap):
+                    if n==net or not(top if layer==pcbnew.F_Cu else bot):continue
+                    if any(hits(s,e,poly,gap)for poly in polys):return False
+            for n,ta,tb,w in ti[layer].candidates(s,e,gap):
+                if n!=net and segment_distance(s,e,ta,tb)<gap+w/2-1e-6:return False
+        return True
+    def via_clear(pt,net):
+        if not clear([pt,pt],net,pcbnew.F_Cu,.5)or not clear([pt,pt],net,pcbnew.B_Cu,.5)or not clear([pt,pt],net,pcbnew.In3_Cu,.5):return False
+        return not any(math.dist(pt,p)<.1+d/2+.251 for p,d in holes)
+    def grid_path(s,e,net,layer,width=.2,step=.2,pad=3):
+        """Bounded actual-copper maze search; every final segment is screened."""
+        low=(min(s[0],e[0])-pad,min(s[1],e[1])-pad);high=(max(s[0],e[0])+pad,max(s[1],e[1])+pad)
+        q=[(math.dist(s,e),0,(0,0))];prev={};cost={(0,0):0};end=None
+        def pt(k):return(s[0]+k[0]*step,s[1]+k[1]*step)
+        while q and len(cost)<35000:
+            _,d,k=heapq.heappop(q)
+            if d>cost[k]+1e-8:continue
+            p=pt(k)
+            if math.dist(p,e)<=step*1.5 and clear([p,e],net,layer,width):end=k;break
+            for dx,dy in [(1,0),(-1,0),(0,1),(0,-1),(1,1),(-1,1),(1,-1),(-1,-1)]:
+                t=(k[0]+dx,k[1]+dy);r=pt(t)
+                if not(low[0]<=r[0]<=high[0]and low[1]<=r[1]<=high[1])or not clear([p,r],net,layer,width):continue
+                nd=d+step*math.hypot(dx,dy)
+                if nd>=cost.get(t,float('inf'))-1e-8:continue
+                cost[t]=nd;prev[t]=k;heapq.heappush(q,(nd+math.dist(r,e),nd,t))
+        if end is None:return None
+        out=[e,pt(end)];k=end
+        while k!=(0,0):k=prev[k];out.append(pt(k))
+        out.reverse();simple=[]
+        for p in out:
+            if simple and math.dist(simple[-1],p)<1e-8:continue
+            while len(simple)>1:
+                x,y=simple[-2],simple[-1]
+                if abs((y[0]-x[0])*(p[1]-y[1])-(y[1]-x[1])*(p[0]-y[0]))>1e-8:break
+                simple.pop()
+            simple.append(p)
+        assert clear(simple,net,layer,width)
+        return simple
+    additions=[];connections=[];unrouted=[];zones=[]
+    def trace(net,ps,width=.2,layer=pcbnew.F_Cu,kind='support'):
+        items=[]
+        for s,e in zip(ps,ps[1:]):
+            if math.dist(s,e)<1e-6:continue
+            t=pcbnew.PCB_TRACK(b);t.SetNet(b.FindNet(net));t.SetStart(xy(s));t.SetEnd(xy(e));t.SetWidth(pcbnew.FromMM(width));t.SetLayer(layer);b.Add(t);obstacle(t);items.append(t);additions.append(dict(uuid=t.m_Uuid.AsString(),kind=kind,net=net,identity=identity(t)))
+        return items
+    def via(net,pt,kind='return_stitch'):
+        v=pcbnew.PCB_VIA(b);v.SetNet(b.FindNet(net));v.SetPosition(xy(pt));v.SetWidth(pcbnew.FromMM(.5));v.SetDrill(pcbnew.FromMM(.2));v.SetViaType(pcbnew.VIATYPE_THROUGH);v.SetLayerPair(pcbnew.F_Cu,pcbnew.B_Cu);v.SetRemoveUnconnected(False);v.SetIsFree(True);b.Add(v);obstacle(v);additions.append(dict(uuid=v.m_Uuid.AsString(),kind=kind,net=net,identity=identity(v)));return v
+    def zone(net,layer,points,kind,priority=20):
+        z=pcbnew.ZONE(b);z.SetNet(b.FindNet(net));z.SetLayer(layer);z.SetLocalClearance(pcbnew.FromMM(.15));z.SetMinThickness(pcbnew.FromMM(.15));z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL);z.SetAssignedPriority(priority+len(zones))
+        o=z.Outline();o.NewOutline()
+        for pt in points:o.Append(pcbnew.FromMM(pt[0]),pcbnew.FromMM(pt[1]))
+        b.Add(z);zones.append(dict(uuid=z.m_Uuid.AsString(),kind=kind,net=net,layer=b.GetLayerName(layer),polygon_mm=points,pad_connection='solid',thermal_ampacity_qualified=False));return z

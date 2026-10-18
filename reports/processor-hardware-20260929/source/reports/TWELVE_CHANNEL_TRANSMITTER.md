@@ -1,0 +1,13 @@
+# Twelve-channel STEP/DIR circuit
+
+The new `hardware/tx_twelve` circuit implements **24 differential signals for twelve motor channels**, using six AM26C31IPWR banks. It is a fully populated electrical candidate. The first eight channels satisfy the required channel-count direction; channels 9–12 are drawn on the same circuit. A lower-cost eight-channel population or plug-in expansion requires a separately checked BOM and connector/power design.
+
+This replaces the transmitter sheet only in the newest connected-circuit study. The six-channel drawing, ledger, runtime, synthesis results and frozen connected-hardware archive remain separate historical evidence. **The existing CNC1 endpoint still commands six channels.** Adding twelve transmitters does not expand the firmware or establish twelve-axis machine operation. Drive enables and drive alarms are separate interfaces and are not supplied by this sheet.
+
+Each channel has a 33-ohm series provision and a 10-kohm input default. Each bank has a 10-kohm permission default, 100-nF bypass and 1-uF local bulk. The independent permission circuit drives `TX_PERMIT`; its source must support six parallel defaults and the six enable inputs. The active-low driver enables are held at CORE_5V. Removing permission makes the outputs high impedance; receiver bias and independent drive inhibit remain machine-specific qualification requirements.
+
+The PW16 pin groups are independently checked against [TI AM26C31 Rev. P, Table 4-1](https://www.ti.com/lit/ds/symlink/am26c31.pdf). Tests inspect the native KiCad netlist and detect swapped polarity, bypassed permission, missing defaults/bypass/returns, duplicate pin membership, incorrect package, missing expansion banks and incorrect scope metadata. The first fresh export has zero ERC violations; final evidence belongs to the connected-circuit snapshot.
+
+The 1.2-A supply reservation is a design allowance, **not a measured or guaranteed upper load bound**. Loading, switching, shorts, thermal behavior and cable compatibility need calculation and measurement for an approved receiver profile. The earlier six-channel 0.6-A reservation cannot silently cover this expansion. A passive resistor value cannot be used to claim compatibility with arbitrary optocouplers or receivers. No operating speed is approved by this schematic.
+
+Current open work includes power closure, external line protection, exact passive and connector sourcing, FPGA implementation for all channels, driver timing profiles, physical testing and PCB layout. The connector symbols are review boundaries, not approved user wiring instructions. No fabrication package or manufacturing approval has been produced.

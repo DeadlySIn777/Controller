@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "nominal_board_thickness_mm": 1.6,
+  "finished_thickness_tolerance_percent": 10,
+  "copper_layers": [
+    {
+      "name": "F.Cu",
+      "thickness_mm": 0.07
+    },
+    {
+      "name": "In1.Cu",
+      "thickness_mm": 0.035
+    },
+    {
+      "name": "In2.Cu",
+      "thickness_mm": 0.035
+    },
+    {
+      "name": "In3.Cu",
+      "thickness_mm": 0.035
+    },
+    {
+      "name": "In4.Cu",
+      "thickness_mm": 0.035
+    },
+    {
+      "name": "B.Cu",
+      "thickness_mm": 0.07
+    }
+  ],
+  "dielectric_thickness_mm": [
+    0.22,
+    0.33,
+    0.22,
+    0.33,
+    0.22
+  ],
+  "dielectric_material": "FR-4 Tg170 minimum; 2116-family prepreg, pressed thickness as specified; core dielectric0.330mm",
+  "dielectric_nominal_Dk": [
+    4.45,
+    4.6,
+    4.45,
+    4.6,
+    4.45
+  ],
+  "dielectric_loss_tangent_for_layout_model": 0.02,
+  "surface_finish": "ENIG",
+  "soldermask": "Both sides; no exposed signal vias; BGA/capillary vias tented unless assembly review specifies filling",
+  "nominal_outer_finished_copper_oz": 2,
+  "nominal_inner_copper_oz": 1,
+  "reference_layers": {
+    "F.Cu": "In1.Cu",
+    "B.Cu": "In4.Cu"
+  },
+  "controlled_impedance": [
+    {
+      "interface": "USB2",
+      "target_ohm": 90,
+      "tolerance_percent": 10
+    },
+    {
+      "interface": "HDMI TMDS / Ethernet MDI",
+      "target_ohm": 100,
+      "tolerance_percent": 10
+    }
+  ],
+  "ordinary_track_minimum_mm": 0.2,
+  "conventional_via_diameter_mm": 0.5,
+  "conventional_via_finished_drill_mm": 0.2,
+  "conventional_via_annular_width_mm": 0.15,
+  "ordinary_copper_clearance_mm": 0.15,
+  "copper_to_edge_minimum_mm": 0.5,
+  "inner_drill_to_copper_minimum_mm": 0.205,
+  "uncoated_SELV_interdomain_engineering_clearance_mm": 0.6,
+  "final_FPGA_conventional_pad_via_exception_mm": 0.125,
+  "GCT_USB4105_own_locating_hole_ground_pad_exception_mm": 0.18,
+  "exact_low_current_control_via_exceptions": [
+    {
+      "net": "/motherboard_power/C_PGOOD",
+      "position_mm": [
+        234.65,
+        156.18
+      ],
+      "diameter_mm": 0.4,
+      "finished_drill_mm": 0.2,
+      "annular_width_mm": 0.1,
+      "scope": "Exact four receiving control escapes only; never power/thermal vias",
+      "factory_DFM_and_quote_approved": false
+    },
+    {
+      "net": "/motherboard_power/CORE_CONFIG",
+      "position_mm": [
+        237.38,
+        156.45
+      ],
+      "diameter_mm": 0.4,
+      "finished_drill_mm": 0.2,
+      "annular_width_mm": 0.1,
+      "scope": "Exact four receiving control escapes only; never power/thermal vias",
+      "factory_DFM_and_quote_approved": false
+    },
+    {
+      "net": "/motherboard_power/C_PGOOD",
+      "position_mm": [
+        230.65,
+        182.18
+      ],
+      "diameter_mm": 0.4,
+      "finished_drill_mm": 0.2,
+      "annular_width_mm": 0.1,
+      "scope": "Exact four receiving control escapes only; never power/thermal vias",
+      "factory_DFM_and_quote_approved": false
+    },
+    {
+      "net": "/motherboard_power/MOTION_CONFIG",
+      "position_mm": [
+        233.38,
+        182.45
+      ],
+      "diameter_mm": 0.4,
+      "finished_drill_mm": 0.2,
+      "annular_width_mm": 0.1,
+      "scope": "Exact four receiving control escapes only; never power/thermal vias",
+      "factory_DFM_and_quote_approved": false
+    }
+  ],
+  "factory_stackup_approval": false,
+  "physical_impedance_verified": false,
+  "primary_sources": [
+    "https://www.pcbway.com/pcb_prototype/What_is_layer_stack_up.html",
+    "https://www.pcbway.com/multi-layer-laminated-structure.html"
+  ],
+  "provenance": "Engineering custom thickness request based on PCBWay published 6-layer2oz/1oz2116/core family; not an asserted stock stackup. Published laminated versus finished dimensions are distinct.",
+  "required_factory_review": [
+    "Confirm actual Tg170 laminate/prepreg product, pressed thicknesses and outer finished copper before controlled-impedance routing release",
+    "Provide field-solver impedance width/gap adjustment and90/100ohm coupon results; do not alter isolation, lands, pad clearance or outline without review",
+    "Confirm .20mm finished plated drills/.15mm annulus and the exact .125mm BGA pad-via and .18mm own GCT NPTH clearances for2ozouter6L processing",
+    "Separately quote and approve only the four exact .40/.20mm control vias with .10mm annuli under the scoped coordinate rules; no whole-board annulus relaxation",
+    "460x340mm assembly handling/warpage, no panel substitutions without reviewed datums"
+  ]
+}

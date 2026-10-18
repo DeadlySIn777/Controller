@@ -1,0 +1,4755 @@
+ISOW14x2 Isolated RS-485/RS-422 Transceiver with Integrated Low-Emissions, Low-
+Noise, High-Efficiency DC-DC Converter
+1 Features
+•
+Meets or exceeds the requirements of the TIA/ 
+EIA-485A standard
+•
+Data rates
+–
+ISOW1412 : 500kbps
+–
+ISOW1432 : 12Mbps
+•
+Integrated low-emissions DC-DC converter with 
+low-emissions, low-noise
+–
+Meets CISPR 32 Class B and EN 55032 Class 
+B with margin on a two-layer PCB
+–
+Low frequency power converter at 25MHz 
+enabling low noise performance
+•
+Additional 2Mbps GPIO channel
+•
+High efficiency output power
+–
+Typical efficiency: 46%
+–
+VISOOUT accuracy: ±5%
+–
+Additional output current: 20mA
+•
+Independent power supply for RS-485 and DC-DC
+–
+Logic supply (VIO): 1.71V to 5.5V
+–
+Power converter supply (VDD): 3V to 5.5V
+•
+RS-485 with PROFIBUS compatibility
+–
+Open, short, and idle bus failsafe
+–
+1/8 unit load: up to 256 nodes on bus
+–
+Glitch-free power up and power down
+•
+Reinforced and Basic isolation options
+•
+High CMTI: 100kV/µs (typical)
+•
+High ESD bus protection
+–
+HBM: ±16kV
+–
+IEC 61000-4-2 contact discharge: ±8kV
+•
+Operating temperature range: -40°C to 125°C
+•
+Current limit and thermal shutdown
+•
+20-pin wide SOIC package
+•
+Safety-Related Certifications:
+–
+VDE reinforced and basic insulation per DIN 
+EN IEC 60747-17 (VDE 0884-17)
+–
+UL 1577 component recognition program
+–
+IEC 62368-1, IEC 61010-1, IEC 60601-1 and 
+GB 4943.1 certifications
+2 Applications
+•
+Factory automation
+•
+Building automation
+•
+Industrial transport
+•
+Solar inverters, protection relay
+•
+Motor drives
+Table 2-1. Device Information
+DEVICE
+PACKAGE(1)
+PACKAGE 
+SIZE(2)
+BODY SIZE 
+(NOM)
+ISOW1412
+ISOW1432
+DFM (SOIC, 
+20)
+12.83mm × 
+10.30mm
+12.83mm × 
+7.5mm
+ISOW1412B
+ISOW1432B
+(1)
+For more information, see Mechanical, Packaging, and 
+Orderable Information.
+(2)
+The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+3 Description
+The ISOW14x2 devices are galvanically-isolated RS-485/RS-422 transceivers with a built-in isolated DC-DC 
+converter, that eliminates the need for a separate isolated power supply in space constrained isolated designs. 
+The low-emissions, isolated DC-DC converter meets CISPR 32 radiated emissions Class B standard with just 
+two ferrite beads on a simple two-layer PCB. Additional 20mA output current can be used to power other circuits 
+on the board. An integrated 2Mbps GPIO channel helps remove any additional digital isolator or optocoupler for 
+diagnostics, LED indication or supply monitoring.
+Two options of data rates are provided: ISOW1412 is optimized for maximum 500kbps and ISOW1432 is 
+designed for maximum 12Mbps data rate. These devices do not require any external components other than 
+bypass capacitors to realize an isolated RS-485 port, designed for long distance communications. Isolation 
+breaks the ground loop between the communicating nodes, allowing for a much larger common mode voltage 
+range. Both signal and power paths are 5kVRMS isolated per UL1577 and are qualified for reinforced and basic 
+isolation per VDE, TUV, CSA and CQC.
+The ISOW14x2 can operate from a single supply voltage of 3V to 5.5V by connecting VIO and VDD together on 
+PCB. If lower logic levels are required, 1.71V to 5.5V logic supply (VIO) can be separated and independent from 
+the power converter supply (VDD) of 3V to 5.5V. These devices support a wide operating ambient temperature 
+range from –40°C to +125°C and are available in 20-pin DFM (SOIC-20 footprint compatible package) offering a 
+minimum of 8mm creepage and clearance.
+Galvanic Isolation
+Barrier
+Signal
+Isolation
+Signal
+Isolation
+RS485
+Y
+Z
+B
+A
+DC-DC
+Primary
+DC-DC
+Secondary
+MCU
+VCC
+GISOIN
+GND2
+VISOOUT
+RS485 Bus
+DE
+D
+R
+VDD
+GND1
+VISOIN
+VIO
+Must be connected on PCB,
+not connected internally
+RE
+GNDIO
+Simplified Schematic
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................2
+4 Device Comparison Table ..............................................3
+5 Pin Configuration and Functions...................................4
+6 Specifications.................................................................. 6
+6.1 Absolute Maximum Ratings........................................ 6
+6.2 ESD Ratings............................................................... 6
+6.3 Recommended Operating Conditions.........................7
+6.4 Thermal Information....................................................8
+6.5 Power Ratings.............................................................8
+6.6 Insulation Specifications............................................. 9
+6.7 Safety-Related Certifications.................................... 10
+6.8 Safety Limiting Values...............................................10
+6.9 Electrical Characteristics...........................................11
+6.10 Supply Current Characteristics at VISOOUT = 3.3 
+V..................................................................................13
+6.11 Supply Current Characteristics at  VISOOUT = 5 V... 15
+6.12 Switching Characteristics at VISOOUT = 3.3 V..........16
+6.13 Switching Characteristics at VISOOUT = 5 V.............17
+6.14 Insulation Characteristics Curves........................... 18
+6.15 Typical Characteristics............................................19
+7 Parameter Measurement Information..........................27
+8 Detailed Description......................................................30
+8.1 Overview...................................................................30
+8.2 Power Isolation......................................................... 30
+8.3 Signal Isolation..........................................................30
+8.4 RS-485......................................................................30
+8.5 Functional Block Diagram.........................................31
+8.6 Feature Description...................................................31
+8.7 Device Functional Modes..........................................33
+8.8 Device I/O Schematics..............................................36
+9 Application and Implementation..................................37
+9.1 Application Information............................................. 37
+9.2 Typical Application.................................................... 38
+9.3 Power Supply Recommendations.............................40
+9.4 Layout....................................................................... 41
+10 Device and Documentation Support..........................42
+10.1 Documentation Support.......................................... 42
+10.2 Receiving Notification of Documentation Updates..42
+10.3 Support Resources................................................. 42
+10.4 Trademarks.............................................................42
+10.5 Electrostatic Discharge Caution..............................42
+10.6 Glossary..................................................................42
+11 Revision History.......................................................... 42
+12 Mechanical, Packaging, and Orderable 
+Information.................................................................... 43
+4 Device Comparison Table 
+Part number
+Isolation
+Duplex
+Data Rate
+Package
+ISOW1412/ISOW1412B
+Reinforced/Basic
+Full
+500Kbps
+20-DFM(SOIC)
+ISOW1432/ISOW1432B
+Reinforced/Basic
+Full
+12Mbps
+20-DFM(SOIC)
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: ISOW1412 ISOW1432
+5 Pin Configuration and Functions
+VIO
+D
+DE
+R
+RE
+GNDIO
+OUT
+EN/FLT
+VDD
+GND1
+A
+B
+Z
+Y
+VISOIN
+GISOIN
+IN
+MODE
+VISOOUT
+GND2
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+20
+19
+18
+17
+16
+15
+14
+13
+12
+11
+I S O L A T I O N
+Figure 5-1. ISOW14x2 20-pin DFM Top View 
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Table 5-1. Pin Functions
+PIN
+TYPE(1)
+DESCRIPTION
+NAME
+NO.
+VIO
+1
+--
+Side 1 logic supply
+D
+2
+I
+Data input
+DE
+3
+I
+Driver enable. If pin is floating, driver is disabled (internal pull-down resistor)
+R
+4
+O
+Received data output
+RE
+5
+I
+Receiver enable. If pin is floating, receiver buffer is disabled (internal pull-up resistor)
+GNDIO
+6
+--
+Ground connections for VIO. GNDIO and GND1 need be shorted directly on PCB.
+OUT
+7
+O
+General purpose logic output
+EN/FLT
+8
+I/O
+Multi-function power converter enable input pin or fault output pin. Can only be used as either an 
+input pin or an output pin.
+•
+If the pin is used as a Power converter enable input pin, the pin enables and disables the 
+integrated DC-DC power converter. Connect directly to microcontroller or through a series 
+current limiting resistor to use as an enable input pin. DC-DC power converted is enabled 
+when EN is high (connected to VIO) and disabled when low (connected to GND1). If EN is 
+floating, DC-DC converter is enabled (internal pull-up resistor)
+•
+If the pin is used as a Fault output pin, the pin gives an alert signal if power converter is 
+not operating properly. This pin is active low. Connect to microcontroller through a 5kΩ or 
+greater pullup resistor to use as a fault output pin.
+VDD
+9
+--
+Side 1 DC-DC converter power supply
+GND1
+10
+--
+Ground connection for VIO. GNDIO and GND1 need be shorted directly on PCB.
+GND2
+11
+--
+Ground connection for VISOOUT. GND2 and GISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+VISOOUT
+12
+--
+Isolated power converter output voltage. VISOOUT and VISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+MODE
+13
+I
+Mode select. For RS-485 transceiver to operate at 3.3V supply, connect MODE to GND2. 
+For RS-485 transceiver to operate in 5V supply PROFIBUS mode, connect MODE to VISOOUT 
+(internal pull-down resistor)
+IN
+14
+I
+General purpose logic input
+GISOIN
+15
+--
+Ground connections for VISOIN. GND2 and GISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+VISOIN
+16
+--
+Side 2 supply voltage for RS485. VISOOUT and VISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+Y
+17
+O
+RS-485 driver non-inverting output
+Z
+18
+O
+RS-485 driver inverting output
+B
+19
+I
+RS-485 receiver inverting input
+A
+20
+I
+RS-485 receiver non-inverting input
+(1)
+I = Input; O = Output; I/O = Input or Output
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: ISOW1412 ISOW1432
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted)(1) (2)
+MIN
+MAX
+UNIT
+VDD
+Power converter supply voltage
+–0.5
+6
+V
+VISOIN
+Isolated supply voltage, input supply for RS-485 transceiver
+–0.5
+6
+V
+VISOOUT
+Isolated supply voltage, Power converter output at RS485 mode (MODE = 
+GND2)
+–0.5
+4
+V
+VISOOUT
+Isolated supply voltage, Power converter output at Profibus mode (MODE 
+= VISOOUT)
+–0.5
+6
+V
+VIO
+Logic supply voltage
+–0.5
+6
+V
+VBUS
+Voltage on bus pins (A, B, Y, Z with respect to GND2)
+–12
+15
+V
+VLOGIC_IO
+Logic I/O voltage level (D, DE, RE, R, EN, OUT)
+–0.5
+VIO + 0.5(3)
+V
+IN
+-0.5
+VISOIN + 0.5
+V
+MODE
+-0.5
+VISOOUT + 0.5
+V
+IO
+Output current on R and OUT pins
+–15
+15
+mA
+TJ
+Junction temperature
+–40
+150
+°C
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+Operation outside the Absolute Maximum Ratings may cause permanent device damage. Absolute Maximum Ratings do not imply 
+functional operation of the device at these or any other conditions beyond those listed under Recommended Operating Conditions. 
+If used outside the Recommended Operating Conditions but within the Absolute Maximum Ratings, the device may not be fully 
+functional, and this may affect device reliability, functionality, performance, and shorten the device lifetime.
+(2)
+All voltage values except differential I/O bus voltages are with respect to the local ground pin (GND1 or GND2). All voltage values 
+except differential I/O bus voltages are peak voltage values.
+(3)
+The maximum voltage must not be greater than 6 V.
+6.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic 
+discharge
+Human body model (HBM), per ANSI/
+ESDA/JEDEC JS-001(1)
+All pins except bus pins
+±3000
+V
+V(ESD)
+Electrostatic 
+discharge
+Human body model (HBM), per ANSI/
+ESDA/JEDEC JS-001(1)
+Bus pins with respect to GND2 (same 
+side)
+±16000
+V
+V(ESD)
+Electrostatic 
+discharge
+Charged device model (CDM), per JEDEC specification JESD22-C101(2)
+±1500
+V
+V(ESD)
+Electrostatic 
+discharge
+IEC 61000-4-2 contact discharge
+Bus pins and GND1 (across barrier)
+±8000
+V
+V(ESD)
+Electrostatic 
+discharge
+IEC 61000-4-2 contact discharge
+Bus pins and GND2 (same side)
+±8000
+V
+(1)
+JEDEC document JEP155 states that 500V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250V CDM allows safe manufacturing with a standard ESD control process.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.3 Recommended Operating Conditions
+MIN
+NOM
+MAX
+UNIT
+VIO
+Logic supply voltage
+1.8V operation
+1.71
+1.89
+V
+2.5V, 3.3V, and 5V operation
+2.25
+5.5
+VDD
+Power converter supply voltage
+3
+5.5
+V
+VDD(UVLO+)
+Positive threshold when power converter supply is rising
+2.8
+2.93
+V
+VDD(UVLO-)
+Positive threshold when power converter supply is falling
+2.40
+2.55
+V
+VHYS1(UVLO)
+Power converter supply voltage hysteresis
+0.15
+0.25
+V
+VIO(UVLO+)
+Rising threshold of logic supply voltage
+1.7
+V
+VIO(UVLO-)
+Falling threshold of logic supply voltage
+1
+V
+VHYS2(UVLO)
+Logic supply voltage hysteresis
+75
+125
+mV
+VBUS
+Input voltage at any bus terminal (separately with respect to GND2 or common 
+mode)
+–7
+12
+V
+VIH
+High-level input voltage (D, DE, EN, and RE inputs)
+0.7 × VIO
+VIO
+V
+High- level input voltage (IN input)
+0.7 × 
+VISOIN
+VISOIN
+V
+VIL
+Low-level input voltage (D, DE, EN, and RE inputs)
+0
+0.3 × VIO
+V
+Low- level input voltage (IN input)
+0
+0.3 × 
+VISOIN
+V
+VID
+Differential input voltage (receiver terminals A with respect to B)
+–12
+12
+V
+IO(DRV)
+Output current, driver (Y, Z)
+–60
+60
+mA
+IO
+Output current, R and OUT pins
+VIO = 4.5 to 5.5V
+–4
+4
+mA
+VIO = 3 to 3.6 V
+-2
+2
+mA
+VIO = 2.25 to 2.75V, 1.71 to 1.89V
+-1
+1
+mA
+RL
+Differential load resistance on bus
+54
+Ω
+1/tUI
+Signaling rate
+ISOW1412
+500
+kbps
+1/tUI
+Signaling rate
+ISOW1432
+12
+Mbps
+DR
+Data rate for GPIO channel
+2
+Mbps
+tpwrup
+Power up time after applying input supply 
+(Isolated output supply reaches 90% of set 
+point and data transmission can start after 
+this)
+5
+ms
+TA
+Ambient operating temperature (MODE= GND2), no extra current available on 
+VISOUT (1)
+–40
+125
+°C
+Ambient operating temperature (MODE= GND2), 20mA extra current available 
+on VISOUT (1)
+–40
+105
+°C
+Ambient operating temperature (MODE= VISOOUT), 50% duty cycle on DE, no 
+extra current available on VISOUT (1)
+–40
+125
+°C
+Ambient operating temperature (MODE= VISOOUT), no extra current available 
+on VISOUT (1)
+–40
+105
+°C
+Ambient operating temperature (MODE= VISOOUT), 20mA extra current 
+available on VISOUT (1)
+–40
+85
+°C
+(1)
+Extra current is only available at VDD=5 V ± 10% mode
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: ISOW1412 ISOW1432
+6.4 Thermal Information
+THERMAL METRIC(1)
+ISOW14x2
+UNIT
+DFM
+20 PINS
+RθJA 
+Junction-to-ambient thermal resistance
+68.5
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+20.9
+°C/W
+RθJB
+Junction-to-board thermal resistance
+44.8
+°C/W
+ΨJT
+Junction-to-top characterization parameter
+13
+°C/W
+ΨJB
+Junction-to-board characterization parameter
+44
+°C/W
+RθJC(bot)
+Junction-to-case (bottom) thermal resistance
+--
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application 
+note.
+6.5 Power Ratings
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+PD
+Maximum power dissipation (both sides)
+ISOW1412: VDD = VIO = 5.5V, MODE = VISOOUT, 
+TJ = 150°C, Y-Z load = 54Ω||50pF, Y shorted to A, 
+Z shorted to B(loopback), Load on R = 15pF, Input 
+a 250kHz 50% duty cycle square wave to D pin 
+with VDE = VIO, VRE = GND1
+1060
+mW
+PD1
+Maximum power dissipation (side-1)
+490
+mW
+PD2
+Maximum power dissipation (side-2)
+570
+mW
+PD
+Maximum power dissipation (both sides)
+ISOW1432: VDD= VIO= 5.5V, MODE= VISOOUT, 
+TJ=150°C, Y-Z load= 54Ω||50pF, Y shorted to A, 
+Z shorted to B(loopback), Load on R=15pF, Input 
+a 6MHz 50% duty cycle square wave to D pin with 
+VDE=VIO, VRE=GND1
+1110
+mW
+PD1
+Maximum power dissipation (side-1)
+510
+mW
+PD2
+Maximum power dissipation (side-2)
+600
+mW
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.6 Insulation Specifications
+PARAMETER
+TEST CONDITIONS
+VALUE
+UNIT
+GENERAL
+CLR
+External clearance(1)
+Shortest terminal-to-terminal distance through air
+>8
+mm
+CPG
+External creepage(1)
+Shortest terminal-to-terminal distance across the package 
+surface
+>8
+mm
+DTI
+Distance through the insulation
+Minimum internal gap (internal clearance – capacitive 
+signal isolation)
+>17
+µm
+Minimum internal gap (internal clearance- transformer 
+power isolation)
+>120
+CTI
+Comparative tracking index
+DIN EN 60112 (VDE 0303-11); IEC 60112
+>600
+V
+Material group
+According to IEC 60664-1
+I
+Overvoltage category per IEC 60664-1
+Rated mains voltage ≤ 150VRMS
+I-IV
+Rated mains voltage ≤ 300VRMS
+I-IV
+Rated mains voltage ≤ 600VRMS
+I-IV
+Rated mains voltage ≤ 1000VRMS
+I-III
+DIN EN IEC 60747-17 (VDE 0884-17)(2)
+VIORM
+Maximum repetitive peak isolation voltage
+AC voltage (bipolar)
+1500
+VPK
+VIOWM
+Maximum working isolation voltage
+AC voltage (sine wave) Time dependent dielectric 
+breakdown (TDDB) test
+1000
+VRMS
+DC voltage
+1500
+VDC
+VIOTM
+Maximum transient isolation voltage
+VTEST = VIOTM, t = 60s (qualification);
+VTEST = 1.2 × VIOTM, t = 1s (100% production)
+7071
+VPK
+VIOSM
+Maximum surge isolation voltage ISOW14x2(3)
+Test method per IEC 62368-1, 1.2/50µs waveform
+10000
+VPK
+VIOSM
+Maximum surge isolation voltage ISOW14x2B(3)
+Test method per IEC 62368-1, 1.2/50µs waveform
+7800
+VPK
+qpd
+Apparent charge(4)
+Method a: After I/O safety test subgroup 2/3,
+Vini = VIOTM, tini = 60s;
+Vpd(m) = 1.2 × VIORM , tm = 10s
+≤5
+pC
+Method a: After environmental tests subgroup 1,
+Vini = VIOTM, tini = 60 s;
+ISOW14x2: Vpd(m) = 1.6 × VIORM , tm = 10s
+ISOW14x2B: Vpd(m) = 1.2 × VIORM , tm = 10s
+≤5
+Method b1: At routine test (100% production)
+Vini = 1.2 × VIOTM, tini = 1s;
+ISOW14x2: Vpd(m) = 1.875 × VIORM , tm = 1s (method b1)
+ISOW14x2B: Vpd(m) = 1.5 × VIORM , tm = 1s (method b1), or
+Vpd(m) = Vini, tm = tini (method b2)
+≤5
+CIO
+Barrier capacitance, input to output(5)
+VIO = 0.4 sin (2πft), f = 1MHz
+≅3.5
+pF
+RIO
+Isolation resistance, input to output(5)
+VIO = 500V, TA = 25°C
+>1012
+Ω
+VIO = 500V, 100°C ≤ TA ≤ 125°C
+>1011
+Ω
+VIO = 500V at TS = 150°C
+>109
+Ω
+Pollution degree
+2
+Climatic category
+40/125/21
+UL 1577
+VISO
+Withstand isolation voltage
+VTEST = VISO = 5000VRMS, t = 60s (qualification);
+VTEST = 1.2 × VISO = 6000VRMS, t = 1s (100% production)
+5000
+VRMS
+(1)
+Creepage and clearance requirements should be applied according to the specific equipment isolation standards of an application. 
+Care should be taken to maintain the creepage and clearance distance of a board design to ensure that the mounting pads of 
+the isolator on the printed-circuit board do not reduce this distance. Creepage and clearance on a printed-circuit board become 
+equal in certain cases. Techniques such as inserting grooves and/or ribs on a printed circuit board are used to help increase these 
+specifications.
+(2)
+ISOW14x2 is suitable for safe electrical insulation and ISOW14x2B is suitable for basic electrical insulation only within the safety 
+ratings. Compliance with the safety ratings shall be ensured by means of suitable protective circuits.
+(3)
+Testing is carried out in air or oil to determine the intrinsic surge immunity of the isolation barrier.
+(4)
+Apparent charge is electrical discharge caused by a partial discharge (pd).
+(5)
+All pins on each side of the barrier tied together creating a two-terminal device
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: ISOW1412 ISOW1432
+6.7 Safety-Related Certifications
+VDE
+CSA
+UL
+TUV
+CQC
+Certified according to DIN EN 
+IEC 60747-17 (VDE 0884-17)
+Certified according to IEC 
+62368-1, IEC 61010-1 and 
+IEC 60601-1
+Certified under UL 1577 
+Component Recognition 
+Program
+Certified according to EN 
+61010-1 and EN 62368-1
+Certified according to GB 4943.1
+Certificate number:
+40040142 (Reinforced)
+40047657 (Basic)
+Master contract number: 
+220991
+File number: E181974
+Client ID number: 77311
+Certificate number: 
+CQC21001297517
+6.8 Safety Limiting Values
+Safety limiting intends to minimize potential damage to the isolation barrier upon failure of input or output circuitry.
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+IS
+Safety input, output, or supply current(1)
+RθJA = 68.5°C/W, VI = 5.5V, TJ = 150°C, TA = 25°C , See Figure 
+6-1
+332
+mA
+RθJA = 68.5°C/W, VI = 3.6V, TJ = 150°C, TA = 25°C , See Figure 
+6-1
+507
+PS
+Safety input, output, or total power(1)
+RθJA = 68.5°C/W, TJ = 150°C, TA = 25°C , See Figure 6-2
+1826
+mW
+TS
+Safety temperature(1)
+150
+°C
+(1)
+The maximum safety temperature,TS, has the same value as the maximum junction temperature,TJ, specified for the device. The 
+IS and PS parameters represent the safety current and safety power respectively.The maximum limits of IS and PS should not be 
+exceeded. These limits vary with the ambient temperature, TA.
+The junction-to-air thermal resistance, RθJA, in the Thermal Information table is that of a device installed on a high-K test board for 
+leaded surface-mount packages. Use these equations to calculate the value for each parameter:
+TJ = TA + RθJA × P, where P is the power dissipated in the device.
+TJ(max) = TS = TA +RθJA × PS, where TJ(max) is the maximum allowed junction temperature.
+PS = IS × VI, where VI is the maximum input voltage.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.9 Electrical Characteristics
+Over recommended operating conditions, typical values are at VDD = VIO = 3.3V and TA =25°C, GND1 = GNDIO, GND2 = 
+GISOIN (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Device
+VISOOUT
+Isolated output supply voltage
+MODE=GND2, DE=GND1, D, RE and IN 
+floating
+3.135
+3.3V
+3.465
+V
+Isolated output supply voltage
+MODE=VISOOUT, DE=GND1, D, RE and IN 
+floating
+4.75
+5
+5.25
+V
+VOH
+Output high voltage on OUT 
+pin
+VIO = 5V ± 10%, IOH = –4mA, IN=VISOIN
+VIO – 0.4
+V
+Output high voltage on OUT 
+pin
+VIO = 3.3V ± 10% , IOH = –2mA, IN=VISOIN
+VIO – 0.3
+V
+Output high voltage on OUT 
+pin
+VIO = 2.5V ± 10% , IOH = –1mA, IN=VISOIN
+VIO – 0.2
+V
+Output high voltage on OUT 
+pin
+VIO = 1.8V ± 5%, IOH = –1mA, IN=VISOIN
+VIO – 0.2
+V
+VOL
+Output low voltage on OUT pin VIO = 5V ± 10%, IOL = 4mA, IN=GND2
+0.4
+V
+Output low voltage on OUT pin VIO = 3.3V ± 10% , IOL = 2mA, IN=GND2
+0.3
+V
+Output low voltage on OUT pin VIO = 2.5V ± 10%, IOL = 1mA, IN=GND2
+0.2
+V
+Output low voltage on OUT pin VIO = 1.8V ± 5%, IOL = 1mA, IN=GND2
+0.2
+V
+II
+Input current, IN
+IN at 0V or VISOIN
+–25
+25
+µA
+II
+Input current, EN
+EN at 0V or VIO
+–25
+25
+µA
+|CMH|
+High-level common-mode 
+transient immunity
+Driver and receiver path, VCM = 1000V, see 
+Figure 7-4
+100
+kV/µs
+|CML|
+Low-level common-mode 
+transient immunity
+Driver and receiver path, VCM = 1000V, see 
+Figure 7-4
+100
+kV/µs
+Driver
+|VOD|
+Differential output voltage 
+magnitude
+Unloaded bus, VDD = 3V to 3.6V with 
+MODE=GND2, or 4.5V to 5.5V with MODE= 
+VISOOUT
+1.5
+VISOIN
+V
+RL = 60Ω, –7V ≤ VTEST ≤ 12V (see Figure 
+7-1), VDD = 3V to 3.6V, MODE = GND2
+1.5
+VISOIN
+RL = 100Ω (see Figure 7-2) (RS-422 load), 
+VDD = 3V to 3.6V, MODE = GND2
+2
+VISOIN
+RL = 54 Ω (see Figure 7-2) (RS-485 load), 
+VDD = 3V to 3.6V, MODE = GND2
+1.5
+VISOIN
+|VOD|
+Differential output voltage 
+magnitude
+RL = 54Ω, VDD = 4.5V to 5.5V, MODE = 
+VISOOUT , see Figure 7-2
+2.1
+VISOIN
+V
+|VOD|
+Differential output voltage 
+magnitude
+RL = 100Ω (see Figure 7-2) (RS-422 load), 
+VDD = 4.5V to 5.5V, MODE = VISOOUT
+2.1
+VISOIN
+V
+|VOD|
+Differential output voltage 
+magnitude
+RL = 60Ω, –7V ≤ VTEST ≤ 12V (see Figure 
+7-1), VDD = 4.5V to 5.5V, MODE = VISOOUT
+2.1
+VISOIN
+V
+Δ|VOD|
+Change in differential output 
+voltage between the two states RL = 54 Ω or 100 Ω (see Figure 7-2)
+–200
+200
+mV
+VOC
+Common-mode output voltage
+RL = 54Ω or 100Ω (see Figure 7-2)
+1 0.5 × VISOIN
+3
+V
+ΔVOC(SS)
+Change in steady-state 
+common-mode output voltage 
+between the two states
+RL = 54Ω or 100Ω (see Figure 7-2)
+–200
+200
+mV
+VOC(PP)
+Peak-to-peak common mode 
+output voltage
+RL = 54Ω or 100Ω, VISOIN=VISOOUT=3.3V, 
+see Figure 7-2
+400
+mV
+IOS
+Short-circuit output current
+VDE = VIO, VD=VIO or GND1, –7V ≤ Y or Z ≤ 
+12V, or Y shorted to Z, see Figure 7-10
+180
+mA
+II
+Input current , D, DE
+VD, VDE at 0V or VIO
+–25
+25
+µA
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: ISOW1412 ISOW1432
+Over recommended operating conditions, typical values are at VDD = VIO = 3.3V and TA =25°C, GND1 = GNDIO, GND2 = 
+GISOIN (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Receiver
+II1
+Bus input current
+VDE = 0V, VISOIN = 0V or 3.3V or 5V, 
+ISOW1412 or ISOW1432, VA or VB = –7V to 
+12V, other input at 0V
+–100
+125
+µA
+VTH+
+Positive-going input-threshold 
+voltage
+–7V ≤ VCM ≤ 12V
+See(1)
+–78
+–20
+mV
+VTH–
+Negative-going input-threshold 
+voltage
+–7V ≤ VCM ≤ 12V
+–200
+–141
+See(1)
+mV
+Vhys
+Input hysteresis (VTH+ – VTH–)
+–7V ≤ VCM ≤ 12V
+40
+63
+mV
+VOH
+Output high voltage on R pin
+VIO = 5V ± 10%, IOH = –4mA, VID ≥ 200mV
+VIO – 0.4
+V
+VIO = 3.3V ± 10%, IOH = –2mA, VID ≥ 200mV
+VIO – 0.3
+VIO = 2.5V ± 10% , IOH = –1mA, VID ≥ 200mV
+VIO – 0.2
+VIO = 1.8V ± 5%, IOH = –1mA, VID ≥ 200mV
+VIO – 0.2
+VOL
+Output low voltage on R pin
+VIO = 5V ± 10%, IOL = 4mA, VID ≤ –200mV
+0.4
+V
+VIO = 3.3V ± 10%, IOL = 2mA, VID ≤ –200mV
+0.3
+VIO = 2.5V ± 10% , IOL = 1mA, VID ≤ –200mV
+0.2
+VIO = 1.8V ± 5%, IOL = 1mA, VID ≤ –200mV
+0.2
+IOZ
+Output high-impedance current 
+on R pin
+VR = 0V or VIO, V RE = VIO
+–1
+1
+µA
+II(RE)
+Input current on RE pin
+V RE at 0V or VIO
+–25
+25
+µA
+(1)
+The VTH+ voltage is specified to be greater than the VTH– voltage by at least the Vhys voltage under any specific conditions.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.10 Supply Current Characteristics at VISOOUT = 3.3 V
+over recommended operating conditions, VDD = VIO = 3 to 5.5V, MODE=GND2, GND1 = GNDIO, GND2 = GISOIN (unless 
+otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Power converter disabled
+IDD
+Power converter supply 
+current
+EN=GND1, D, DE, RE  floating
+0.23
+0.45
+mA
+IIO
+Logic supply current
+EN=GND1, D, DE, RE  floating
+0.24
+0.55
+mA
+Power converter supply current: Driver enabled, receiver disabled
+IDD
+Power converter supply 
+current
+VDE = VIO, V RE = VIO, bus load = 120Ω, VD= VIO, VDD = 
+5V ± 10%, A and B floating
+56
+77
+mA
+VDE = VIO, V RE = VIO, bus load = 120Ω, VD= VIO, VDD = 
+3.3V ± 10%, A and B floating
+69
+125
+mA
+IDD
+Power converter supply 
+current, ISOW1412
+VDE = VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 5V ± 10%
+62
+86
+mA
+VDE = VIO, V RE = VIO, bus load = 100Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 5V ± 10%
+69
+88
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 5V ± 10%
+90
+122
+mA
+VDE = VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 3.3V ± 10%
+76
+131
+mA
+VDE = VIO, V RE = VIO, bus load = 100Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 3.3V ± 10%
+84
+131
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 3.3V ± 10%
+111
+158
+mA
+IDD
+Power converter supply 
+current, ISOW1432
+VDE = VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 5V ± 10%
+87
+99
+mA
+VDE = VIO, V RE = VIO, bus load = 100Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 5V ± 10%
+69
+96
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 5V ± 10%
+114
+130
+mA
+VDE= VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 3.3V ± 10%
+105
+135
+mA
+VDE= VIO, V RE = VIO, bus load = 100Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 3.3V ± 10%
+84
+140
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 3.3V ± 10%
+137
+163
+mA
+Power converter supply current: Driver disabled, receiver enabled
+IDD
+Power converter supply 
+current, ISOW1412
+VDE = VGND1, V RE = VGND1, Y and Z bus loaded and 
+unloaded, A-B = square wave 500kbps 50% duty VD= 
+VGND1, VDD = 5V ± 10%, CL on R = 15pF
+16
+28
+mA
+VDE = VGND1, V RE = VGND1, Y and Z bus loaded and 
+unloaded, A-B = square wave 500kbps 50% duty VD= 
+VGND1, VDD = 3.3V ± 10%, CL on R = 15pF
+18
+30
+IDD
+Power converter supply 
+current, ISOW1432
+VDE = VGND1, V RE = VGND1, Y and Z bus loaded and 
+unloaded, A-B = square wave 12Mbps 50% duty VD= 
+VGND1, VDD = 5V ± 10%, CL on R = 15pF
+15
+22
+mA
+VDE = VGND1, V RE = VGND1, Y and Z bus loaded and 
+unloaded, A-B = square wave 12Mbps 50% duty VD= 
+VGND1, VDD = 3.3V ± 10%, CL on R = 15pF
+17
+27
+Power converter supply current: Driver enabled, receiver enabled
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: ISOW1412 ISOW1432
+over recommended operating conditions, VDD = VIO = 3 to 5.5V, MODE=GND2, GND1 = GNDIO, GND2 = GISOIN (unless 
+otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+IDD
+Power converter supply 
+current, ISOW1412
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 500kbps 50% duty, VDD = 5V ± 
+10%, CL on R = 15pF
+63
+102
+mA
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 500kbps 50% duty, VDD = 3.3V 
+± 10%, CL on R = 15pF
+77
+129
+IDD
+Power converter supply 
+current, ISOW1432
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 12Mbps 50% duty, VDD = 5V ± 
+10%, CL on R = 15pF
+90
+105
+mA
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 12Mbps 50% duty, VDD = 3.3V ± 
+10%, CL on R = 15pF
+109
+138
+Logic supply current: Driver disabled, receiver disabled
+IIO
+Logic supply current
+VDE = VGND1, V RE = VIO , VD = VIO, VIO= 3.3V ± 10%
+3.2
+6.0
+mA
+Logic supply current: Driver enabled, Receiver enabled, static
+IIO
+Logic supply current
+VDE = VIO, V RE = VGND1, VD = VIO, loopback(1), VIO= 
+3.3V ± 10%
+4
+6.8
+mA
+Logic supply current: Driver enabled, receiver enabled, dynamic
+IIO
+Logic supply current, 
+ISOW1412
+VDE = VIO, V RE = VGND1, D = 500kbps 50% duty 
+square wave, loopback(1), VIO = 3.3V ± 10%
+4.6
+7.2
+mA
+IIO
+Logic supply current, 
+ISOW1432
+VDE = VIO, V RE = VGND1 , D = 12Mbps 50% duty 
+square wave, loopback(1), VIO = 3.3V ± 10%
+4.6
+7.2
+mA
+(1)
+The output of the driver is connected to the input of a receiver in a loop back mode.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+14
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.11 Supply Current Characteristics at  VISOOUT = 5 V
+over recommended operating conditions, VDD = VIO = 4.5V to 5.5V, MODE=VISOOUT , GND1 = GNDIO, GND2 = GISOIN 
+(unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Power converter disabled
+IDD
+Power converter supply 
+current
+EN=GND1, D, DE, RE  floating
+0.23
+0.45
+mA
+IIO
+Logic supply current
+EN=GND1, D, DE, RE  floating
+0.24
+0.55
+mA
+Power converter supply current: Driver enabled, receiver disabled
+IDD
+Power converter supply 
+current
+VDE = VIO, V RE = VIO, bus load = 120Ω, VD= VIO, VDD = 
+5V ± 10%, A and B floating
+97
+160
+mA
+IDD
+Power converter supply 
+current, ISOW1412
+VDE = VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 5V ± 10%
+123
+161
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+500kbps square wave 50% duty, VDD = 5V ± 10%
+175
+227
+mA
+IDD
+Power converter supply 
+current, ISOW1432
+VDE = VIO, V RE = VIO, bus load = 120Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 5V ± 10%
+146
+185
+mA
+VDE = VIO, V RE = VIO, bus load = 54Ω || 50pF, D = 
+12Mbps square wave 50% duty, VDD = 5V ± 10%
+202
+240
+mA
+Power converter supply current: Driver disabled, receiver enabled
+IDD
+Power converter supply 
+current
+VDE= VGND1, V RE = VGND1, Y and Z bus loaded and 
+unloaded, A-B = square wave 500kbps 50% duty VD= 
+VIO, VDD= 5V ± 10%, CL on R = 15pF
+17
+31
+mA
+IDD
+Power converter supply 
+current
+VDE= VGND1, V RE = VGND1, Y and Z bus loaded 
+and unloaded, A-B = square wave 12Mbps 50% duty 
+(ISOW1432) VD= VIO, VDD= 5V ± 10%, CL on R = 15pF
+24
+36
+mA
+Power converter supply current: Driver enabled, receiver enabled
+IDD
+Power converter supply 
+current, ISOW1412
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 500kbps 50% duty, VDD = 5V ± 
+10%, CL on R = 15pF
+123
+207
+mA
+IDD
+Power converter supply 
+current, ISOW1432
+VDE = VIO, V RE = VGND1, Y and Z bus load = 120Ω || 
+50pF, loopback(1), D = 12Mbps 50% duty, VDD = 5V ± 
+10%, CL on R = 15pF
+145
+210
+mA
+(1)
+The output of the driver is connected to the input of a receiver in a loop back mode.
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+15
+Product Folder Links: ISOW1412 ISOW1432
+6.12 Switching Characteristics at VISOOUT = 3.3 V
+Min / Max specifications are over recommended operating conditions, typical values are at VDD = VIO = 3.3V, MODE=GND2 
+( VISOOUT= 3.3V), GND1 = GNDIO, GND2 = GISOIN, TA = 25°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Driver: 500-kbps device (ISOW1412)
+tr, tf
+Differential output rise time and fall time
+RL = 54Ω, CL = 50pF, see Figure 7-3
+190
+300
+600
+ns
+tPHL, tPLH Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+450
+610
+ns
+PWD
+Pulse width distortion(1), |tPHL - tPLH|
+RL = 54Ω, CL = 50pF, see Figure 7-3
+3
+40
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+56
+200
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+280
+600
+ns
+Receiver: 500-kbps device (ISOW1412)
+tr, tf
+Output rise time and fall time
+CL = 15pF, see Figure 7-7
+4
+ns
+tPHL, tPLH Propagation delay
+CL = 15pF, see Figure 7-7
+60
+135
+ns
+PWD
+Pulse width distortion(1), |tPHL - tPLH|
+CL = 15pF, see Figure 7-7
+2
+15
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+9
+30
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+8
+30
+ns
+Driver: 12-Mbps device (ISOW1432)
+tr, tf
+Differential output rise time and fall time
+RL = 54Ω, CL = 50pF, see Figure 7-3
+6
+15
+25
+ns
+tPHL
+Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+49
+125
+ns
+tPLH
+Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+49
+125
+ns
+tPHL, tPLH Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+52
+125
+ns
+PWD
+Pulse width distortion(1), |tPHL - tPLH|
+RL = 54Ω, CL = 50pF, see Figure 7-3
+1
+10
+ns
+tPHZ
+Disable time
+See Figure 7-5 and Figure 7-6
+35
+125
+ns
+tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+35
+125
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+36
+125
+ns
+tPZH
+Enable time
+See Figure 7-5 and Figure 7-6
+46
+150
+ns
+tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+36
+150
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+48
+110
+ns
+Receiver: 12-Mbps device (ISOW1432)
+tr, tf
+Output rise time and fall time
+CL = 15pF, see Figure 7-7
+4
+ns
+tPHL
+Propagation delay
+CL = 15pF, see Figure 7-7
+59
+120
+ns
+tPLH
+Propagation delay
+CL = 15pF, see Figure 7-7
+59
+120
+ns
+tPHL, tPLH Propagation delay
+CL = 15pF, see Figure 7-7
+42
+120
+ns
+PWD
+Pulse width distortion(1), |tPHL - tPLH|
+CL = 15pF, see Figure 7-7
+1.7
+10
+ns
+tPHZ
+Disable time
+See Figure 7-8 and Figure 7-9
+7
+30
+ns
+tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+6
+30
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+9
+30
+ns
+tPZH
+Enable time
+See Figure 7-8 and Figure 7-9
+6
+30
+ns
+tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+5
+30
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+8
+30
+ns
+GPIO channel
+tPHL, tPLH Propagation delay time
+See Figure 7-11
+227
+347
+ns
+PWD
+Pulse width distortion, |tPHL - tPLH|
+20
+110
+ns
+tr
+Output signal rise time
+1
+4
+ns
+tf
+Output signal fall time
+1
+4
+ns
+(1)
+Also known as pulse skew.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+16
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.13 Switching Characteristics at VISOOUT = 5 V
+Min / Max specifications are over recommended operating conditions, typical values are at VDD = VIO = 5V, MODE=VISOOUT 
+( VISOOUT= 5V), GND1 = GNDIO, GND2 = GISOIN, TA = 25°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Driver: 500-kbps device (ISOW1412)
+tr, tf
+Differential output rise time and fall time
+RL = 54Ω, CL = 50pF, see Figure 7-3
+200
+300
+600
+ns
+tPHL, tPLH Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+400
+610
+ns
+PWD
+Pulse width distortion(1), |tPHL – tPLH|
+RL = 54Ω, CL = 50pF, see Figure 7-3
+2
+40
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+30
+200
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+115
+600
+ns
+Receiver: 500-kbps device (ISOW1412)
+tr, tf
+Output rise time and fall time
+CL = 15pF, see Figure 7-7
+4
+ns
+tPHL, tPLH Propagation delay
+CL = 15pF, see Figure 7-7
+49
+135
+ns
+PWD
+Pulse width distortion(1), |tPHL – tPLH|
+CL = 15pF, see Figure 7-7
+2
+20
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+8
+30
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+7
+30
+ns
+Driver: 12-Mbps device (ISOW1432)
+tr, tf
+Differential output rise time and fall time
+RL = 54Ω, CL = 50pF, see Figure 7-3
+4
+10
+18
+ns
+tPHL
+Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+40
+125
+ns
+tPLH
+Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+40
+125
+ns
+tPHL, tPLH Propagation delay
+RL = 54Ω, CL = 50pF, see Figure 7-3
+40
+125
+ns
+PWD
+Pulse width distortion(1), |tPHL – tPLH|
+RL = 54Ω, CL = 50pF, see Figure 7-3
+2
+10
+ns
+tPHZ
+Disable time
+See Figure 7-5 and Figure 7-6
+30
+125
+ns
+tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+30
+125
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-5 and Figure 7-6
+28
+40
+ns
+tPZH
+Enable time
+See Figure 7-5 and Figure 7-6
+34
+150
+ns
+tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+25
+150
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-5 and Figure 7-6
+33
+150
+ns
+Receiver: 12-Mbps device (ISOW1432)
+tr, tf
+Output rise time and fall time
+CL = 15pF, see Figure 7-7
+6
+ns
+tPHL
+Propagation delay
+CL = 15pF, see Figure 7-7
+55
+120
+ns
+tPLH
+Propagation delay
+CL = 15pF, see Figure 7-7
+55
+120
+ns
+tPHL, tPLH Propagation delay
+CL = 15pF, see Figure 7-7
+52
+120
+ns
+PWD
+Pulse width distortion(1), |tPHL – tPLH|
+CL = 15pF, see Figure 7-7
+2.5
+10
+ns
+tPHZ
+Disable time
+See Figure 7-8 and Figure 7-9
+5
+30
+ns
+tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+5
+30
+ns
+tPHZ, tPLZ
+Disable time
+See Figure 7-8 and Figure 7-9
+8
+30
+ns
+tPZH
+Enable time
+See Figure 7-8 and Figure 7-9
+4
+30
+ns
+tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+4
+30
+ns
+tPZH, tPZL
+Enable time
+See Figure 7-8 and Figure 7-9
+7
+30
+ns
+GPIO channel
+tPHL, tPLH Propagation delay time
+See Figure 7-11
+227
+347
+ns
+PWD
+Pulse width distortion, |tPHL - tPLH|
+20
+110
+ns
+tr
+Output signal rise time
+2.2
+4
+ns
+tf
+Output signal fall time
+2.2
+4
+ns
+(1)
+Also known as pulse skew.
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+17
+Product Folder Links: ISOW1412 ISOW1432
+6.14 Insulation Characteristics Curves
+Ambient Temperature (C)
+Safety Limiting Current (mA)
+0
+50
+100
+150
+200
+0
+100
+200
+300
+400
+500
+600
+VI = 5.5V
+VI = 3.6V
+Figure 6-1. Thermal Derating Curve for Limiting 
+Current per VDE
+Ambient Temperature (qC)
+Safety Limiting Power (mW)
+0
+50
+100
+150
+200
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+1800
+2000
+D002
+Figure 6-2. Thermal Derating Curve for Limiting 
+Power per VDE
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+18
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+6.15 Typical Characteristics
+Data Rate (kbps)
+IDD (mA)
+100
+150
+200
+250
+300
+350
+400
+450
+500
+0
+20
+40
+60
+80
+100
+120
+Open Load
+54 Load
+120 Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+TA = 25°C
+DE = VIO
+Figure 6-3. ISOW1412 VDD Supply Current vs Data 
+Rate - RS485 Mode
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+TA = 25°C
+DE = VIO
+Figure 6-4. ISOW1432 VDD Supply Current vs Data 
+Rate - RS485 Mode
+Data Rate (kbps)
+IIO (mA)
+100
+150
+200
+250
+300
+350
+400
+450
+500
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+5
+5.1
+5.2
+Open Load
+54 Load
+120 Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+TA = 25°C
+DE = VIO
+Figure 6-5. ISOW1412 VIO Supply Current vs Data 
+Rate - RS485 Mode
+Data Rate (Mbps)
+IIO (mA)
+0
+2
+4
+6
+8
+10
+12
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+5
+5.1
+Open Load
+54Load
+120Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+TA = 25°C
+DE = VIO
+Figure 6-6. ISOW1432 VIO Supply Current vs Data 
+Rate - RS485 Mode
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+19
+Product Folder Links: ISOW1412 ISOW1432
+Tempearture (C)
+IDD (mA)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+120
+Open Load
+54 Load
+120 Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+DE = VIO
+Figure 6-7. ISOW1412 VDD Current vs Temperature 
+- RS485 Mode
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+DE = VIO
+Figure 6-8. ISOW1432 VDD Current vs Temperature 
+- RS485 Mode
+Tempearture (C)
+IIO (mA)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+4
+4.5
+5
+5.5
+6
+Open Load
+54 Load
+120 Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+DE = VIO
+Figure 6-9. ISOW1412 VIO Current vs Temperature - 
+RS485 Mode
+Temperature (C)
+IIO (mA)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+4
+4.5
+5
+5.5
+6
+Open Load
+54Load
+120Load
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+DE = VIO
+Figure 6-10. ISOW1432 VIO Current vs Temperature 
+- RS485 Mode
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+20
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Temperature (C)
+Delay Time(ms)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+400
+405
+410
+415
+420
+425
+430
+435
+440
+tPLH
+tPHL
+MODE = GND2
+VDD = 3.3V
+DE = VIO
+LOAD = 54Ω || 
+50pF
+Figure 6-11. ISOW1412 Driver Propagation Delay 
+vs Temperature - RS485 Mode
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+44
+46
+48
+50
+52
+54
+56
+58
+60
+tPLH
+tPHL
+MODE = GND2
+VDD = 3.3V
+DE = VIO
+LOAD = 54Ω || 
+50pF
+Figure 6-12. ISOW1432 Driver Propagation Delay 
+vs Temperature - RS485 Mode
+Temperature (C)
+Delay Time (ns)
+-45
+-30
+-15
+0
+15
+30
+45
+60
+75
+90
+105 120
+350
+360
+370
+380
+390
+tPLH
+tPHL
+MODE = VISOOUT
+VDD = 5V
+DE = VIO
+LOAD = 54Ω || 
+50pF
+Figure 6-13. ISOW1412 Driver Propagation Delay 
+vs Temperature - Profibus Mode
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+34
+36
+38
+40
+42
+44
+46
+tPLH
+tPHL
+MODE = VISOOUT
+VDD = 5V
+DE = VIO
+DE = VIO
+Figure 6-14. ISOW1432 Driver Propagation Delay 
+vs Temperature - Profibus Mode
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+21
+Product Folder Links: ISOW1412 ISOW1432
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+50
+55
+60
+65
+70
+75
+80
+tPLH
+tPHL
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+LOAD = 54Ω || 
+50pF
+Figure 6-15. ISOW1412 Receiver Propagation Delay 
+vs Temperature - RS485 Mode
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+54
+56
+58
+60
+62
+64
+66
+tPLH
+tPHL
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+LOAD = 54Ω || 
+50pF
+Figure 6-16. ISOW1432 Receiver Propagation Delay 
+vs Temperature - RS485 Mode
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+50
+55
+60
+65
+70
+tPLH
+tPHL
+MODE = VISOOUT
+VDD = 5V
+RE = GND1
+LOAD = 54Ω || 
+50pF
+Figure 6-17. ISOW1412 Receiver Propagation Delay 
+vs Temperature - Profibus Mode
+Temperature (C)
+Delay Time (ns)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+50
+52
+54
+56
+58
+60
+62
+tPLH
+tPHL
+MODE = VISOOUT
+VDD = 5V
+RE = GND1
+LOAD = 54Ω || 
+50pF
+Figure 6-18. ISOW1432 Receiver Propagation Delay 
+vs Temperature - Profibus Mode
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+22
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+MODE = VISOOUT
+VDD = 5V
+DE = VIO
+LOAD = 54Ω || 50pF
+TA = 25°C
+Figure 6-19. ISOW1412 Driver Propagation Delay - 
+Profibus Mode
+MODE = GND2
+VDD = 3.3V
+DE = VIO
+LOAD = 54Ω || 
+50pF
+TA = 25°C
+Figure 6-20. ISOW1412 Driver Propagation Delay - 
+RS485 Mode
+MODE = VISOOUT
+VDD = 5V
+RE = GND1
+LOAD = 54Ω || 50pF
+TA = 25°C
+Figure 6-21. ISOW1412 Receiver Propagation Delay 
+- Profibus Mode
+MODE = GND2
+VDD = 3.3V
+RE = GND1
+LOAD = 54Ω || 
+50pF
+TA = 25°C
+Figure 6-22. ISOW1412 Receiver Propagation Delay 
+- RS485 Mode
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+23
+Product Folder Links: ISOW1412 ISOW1432
+Driver Output Current (mA)
+Voltage (V)
+0
+10
+20
+30
+40
+50
+60
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+VOH
+VOL
+MODE = GND2
+VDD = 3.3V
+DE = VIO
+LOAD = 54Ω
+TA = 25°C
+Figure 6-23. ISOW1412 Driver Output Voltage vs 
+Driver Output Current - RS485 Mode
+Driver Output Current (mA)
+Voltage (V)
+0
+10
+20
+30
+40
+50
+60
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+5
+VOH
+VOL
+MODE = VISOOUT
+VDD = 5V
+DE = VIO
+LOAD = 54Ω
+TA = 25°C
+Figure 6-24. ISOW1412 Driver Output Voltage vs 
+Driver Output Current - Profibus Mode
+High Level Output Current (IOH) (mA)
+High Level Output Voltage (VOH) (V)
+-15
+-12
+-9
+-6
+-3
+0
+2.5
+3
+3.5
+4
+4.5
+5
+MODE = GND
+MODE = VISOOUT
+RE = GND1
+Load = 54Ω
+TA = 25°C
+Figure 6-25. ISOW1412 Receiver Buffer High Level 
+Output Voltage vs High Level Output Current - 
+RS485 and Profibus Mode
+Temperature (C)
+High Level Output Voltage (VOH) (V)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+3
+3.25
+3.5
+3.75
+4
+4.25
+4.5
+4.75
+5
+MODE = GND
+MODE = VISOOUT
+RE = GND1 LOAD = -2mA (RS485 Mode), 
+-4mA (Profibus Mode)
+Figure 6-26. ISOW1412 Receiver Buffer High Level 
+Output Voltage vs Temperature - RS485 and 
+Profibus Mode
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+24
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Low Level Output Current (IOL) (mA)
+Low Level Output Voltage (VOL) (V)
+0
+2
+4
+6
+8
+10
+12
+14
+16
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+MODE = GND
+MODE = VISOOUT
+RE = GND1
+LOAD = 54Ω
+TA = 25°C
+Figure 6-27. ISOW1412 Receiver Buffer Low Level 
+Output Voltage vs Low Level Output Current - 
+RS485 and Profibus Mode
+Temperature (C)
+Low Level Output Voltage (VOL) (V)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+0.05
+0.1
+0.15
+0.2
+0.25
+0.3
+MODE = GND
+MODE = VISOOUT
+RE = GND1
+LOAD = 2mA (RS485 Mode), 
+4mA (Profibus Mode)
+Figure 6-28. ISOW1412 Receiver Buffer Low Level 
+Output Voltage vs Temperature - RS485 and 
+Profibus Mode
+Data Rate (kbps)
+Voltage (mV)
+100
+140
+180
+220
+260
+300
+340
+380
+420
+460
+500
+100
+120
+140
+160
+180
+200
+220
+240
+260
+280
+300
+320
+340
+360
+380
+400
+VDD = 5 V, VISOOUT = 5 V
+VDD = 3.3 V, VISOOUT = 3.3 V
+For PWD ≤±5%
+TA = 25°C
+Figure 6-29. ISOW1412 Receiver VID vs Data Rate - 
+RS485 and Profibus Mode
+Data Rate (Mbps)
+Voltage (mV)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+200
+400
+600
+800
+1000
+VDD = 5 V, VISOOUT = 5 V
+VDD = 3.3 V, VISOOUT = 3.3 V
+For PWD ≤±5%
+TA = 25°C
+Figure 6-30. ISOW1432 Receiver VID vs Data Rate - 
+RS485 and Profibus Mode
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+25
+Product Folder Links: ISOW1412 ISOW1432
+MODE = GND2
+D = VIO
+DE = VIO
+RE = GND1
+TA = 25°C LOAD = 54Ω || 50pF
+Figure 6-31. Glitch-free Power Up/down- RS485 
+Mode
+MODE = VISOOUT
+D = VIO
+DE = VIO
+TA = 25°C
+LOAD = 54Ω || 
+50pF
+Figure 6-32. Glitch-free Power Up/down- Profibus 
+Mode
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+26
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+7 Parameter Measurement Information
+In this section, GND1 = GNDIO, GND2 = GISOIN unless otherwise noted.
+0V or 
+VIO
+VOC
+VOD
+GND2
+Y  
+D
+Z
+RL
+(1) / 2
+RL
+(1) / 2
+VOC(PP)
+VOC
+Y
+Z
+VOC(SS)
+VY
+VZ
+Figure 7-1. Driver Voltages
+0V or 
+VIO
+VOC
+VOD
+GND2
+Y  
+D
+Z
+RL
+(1) / 2
+RL
+(1) / 2
+VOC(PP)
+VOC
+Y
+Z
+VOC(SS)
+VY
+VZ
+A.
+RL = 100Ω for RS-422, RL = 54Ω for RS-485
+Figure 7-2. Driver Voltages
+0V
+10%
+VOD (L)
+VOD (H)
+tf
+tr
+10%
+VOD
+0V
+90%
+tPLH
+tPHL
+VI
+90%
+Z
+Input 
+Generator
+VI
+D
+GND1
+CL
+(1)
+50pF ± 20%
+RL
+54
+ ± 1%
+50
+ Y
+VOD
+DE = VIO
+VIO
+50%
+A.
+CL includes fixture and instrumentation capacitance
+Figure 7-3. Driver Switching Specifications
+GND1
+DE
+VIO
+GND1
++
+VOH or VOL
+–
+RE
+R
+GND1
+Y
+Z
++
+VOH or VOL
+–
++ VCM –
+D
+VISOIN
+VIO
+A
+B
+1.5V or 0V
+0V or 1.5V
+GND2
+54
+54 CL 
+15pF(1)
+1k
+(Connected to VISOOUT on PCB)
+10µF
+0.1µF
+0.1µF
+10µF
+A.
+Includes probe and fixture capacitance
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+27
+Product Folder Links: ISOW1412 ISOW1432
+B.
+Pass-fail criteria: Device is tested in both half-duplex and full-duplex conditions. Both the signal path and power path must be in a 
+specification compliant region during the application of CMTI pulse. This means no bit flips on R, and both VISOOUT and Driver VOD must 
+be within specifications mentioned in electrical characteristics table.
+Figure 7-4. Common Mode Transient Immunity (CMTI)—Full Duplex
+Y
+Input 
+Generator
+VI
+GND1
+DE
+VO
+CL
+(1)
+50pF
+RL
+110 
+=0V  
+0V
+VOH
+50%
+VO
+tPHZ
+50 %
+50 %
+VIO
+tPZH
+VI
+90%
+D
+50 Z
+S1
+GND2
+~
+A.
+CL includes fixture and instrumentation capacitance
+Figure 7-5. Driver Enable and Disable Times
+0V
+VOL
+50%
+VO
+tPLZ
+50 %
+50 %
+tPZL
+VI
+10%
+VISOIN
+Y
+Input 
+Generator
+VI
+GND1
+DE
+D
+50
+Z
+S1
+GND2
+VISOIN
+VIO
+RL
+110 CL
+(1)
+50pF
+Figure 7-6. Driver Enable and Disable Times
+0V
+50 %
+3V
+tPLH
+VI
+90%
+10%
+50%
+tr
+tf
+tPHL
+VO
+VOH
+VOL
+50%
+50 %
+Input 
+Generator
+A
+B
+1.5V
+RE
+R
+VO
+VI
+50
+
+CL
+(1)
+15pF
+A.
+CL includes fixture and instrumentation capacitance
+Figure 7-7. Receiver Switching Specifications
+VO
+VI
+50%
+VISOIN
+0V
+0V
+VOH
+50%
+VOL
+VIO
+tPZL
+VO
+tPZH
+50%
+tPLZ
+90%
+10%
+tPHZ
+=~  
+Figure 7-8. Receiver Enable and Disable Times
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+28
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+VO
+VI
+50%
+VISOIN
+0V
+0V
+VOH
+50%
+VOL
+VIO
+tPZL
+VO
+tPZH
+50%
+tPLZ
+90%
+10%
+tPHZ
+=~  
+Figure 7-9. Receiver Enable and Disable Times
+C
+Steady State 
+Logic Input
+ (1 or 0)
+–7V 
+ V 
+  12V
+GND
+Y
+Z
+I(1)
+G
+V
+G
+C
+Y
+Z
+Steady-State 
+Logic Input
+ (1 or 0)
+GND
+A.
+The driver must not sustain any damage with this configuration
+Figure 7-10. Short-Circuit Current Limiting
+IN
+OUT
+CL
+See Note B
+VO
+VI
+VOL
+VOH
+VISOIN
+0V
+tr
+Isolation Barrier
+50
+Input 
+Generator 
+(See Note A)
+VI
+VO
+tf
+tPLH
+tPHL
+50%
+50%
+50%
+50%
+90%
+10%
+The input pulse is supplied by a generator having the following characteristics: PRR ≤ 50kHz, 50% duty cycle, tr ≤ 3ns, tf ≤ 3ns, ZO = 
+50Ω. At the input, 50Ω resistor is required to terminate the input generator signal. The resistor is not required in the actual application. 
+CL = 15pF and includes instrumentation and fixture capacitance within ±20%.
+Figure 7-11. GPIO Channel: Switching Characteristics Test Circuit and Voltage Waveforms
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+29
+Product Folder Links: ISOW1412 ISOW1432
+8 Detailed Description
+8.1 Overview
+The ISOW14x2 family of devices has signal isolation channels, power isolation with integrated transformer and 
+RS-485 transceiver all integrated in one package. ISOW1412 supports maximum signaling rate up to 500kbps, 
+while ISOW1432 is designed for 12Mbps maximum data rate. Figure 10-1 shows functional block diagram of 
+ISOW14x2 family of devices.
+8.2 Power Isolation
+The integrated isolated DC-DC converter uses advanced circuit and on-chip layout techniques to reduce 
+radiated emissions and achieve up to 46% typical efficiency. The integrated transformer uses thin film polymer 
+as the insulation barrier. Output voltage of power converter can be controlled to 3.3V or 5V using MODE pin. 
+In case bus communication is not needed, the DC-DC converter can be switched off using EN (enable) pin to 
+save power. The output voltage, VISOOUT, is monitored and feedback information is conveyed to the primary side 
+through a dedicated isolation channel. The duty cycle of the primary switching stage is adjusted accordingly. 
+The fast feedback control loop of the power converter provides low overshoots and undershoots during load 
+transients. Undervoltage lockout (UVLO) with hysteresis is integrated on the VIO, VDD and VISOOUT supplies 
+which provides robust fails-safe system performance under noisy conditions. An integrated soft-start mechanism 
+provides controlled inrush current and avoids any overshoot on the output during power up.
+8.3 Signal Isolation
+The integrated signal isolation channels employ an ON-OFF keying (OOK) modulation scheme to transmit the 
+digital data across a silicon-dioxide based isolation barrier. The transmitter sends a high frequency carrier 
+across the barrier to represent one state and sends no signal to represent the other state. The receiver 
+demodulates the signal after signal conditioning and produces the output through a buffer stage. The signal-
+isolation channels incorporate advanced circuit techniques to maximize the CMTI performance and minimize the 
+radiated emissions from the high frequency carrier and IO buffer switching. Figure 8-2 shows a functional block 
+diagram of a typical signal isolation channel.
+To keep any noise coupling from power converter away from signal path, power supplies on side1 for power 
+converter (VDD) and signal path(VIO) are kept separate. Similarly on side2, power converter output (VISOOUT) 
+needs to be connected to power supply for RS-485 (VISOIN) externally on PCB. For more details, refer to Layout 
+guidelines section.
+8.4 RS-485
+In a typical RS-485 network, multiple nodes can be connected on the bus and the distance of communicating 
+nodes can be as far as 4000-5000 feet. While communicating at such large distances, usual common mode of 
+non-isolated RS-485 transceiver is not sufficient. ISOW14x2 has integrated isolation barrier with up to 1500Vpk 
+working voltage rating. Isolation breaks the ground loop between the communicating nodes and allows for data 
+transfer in the presence of large ground potential differences. These devices have a higher typical differential 
+output voltage (VOD) than traditional transceivers for better noise immunity. A minimum differential output voltage 
+of 2.1V is specified when VISOIN is configured for 5V supply which meets the requirements for PROFIBUS 
+applications.
+The ISOW14x2 family of devices is designed for applications that have limited board space and require more 
+integration. Only external bypass capacitors are needed to fully realize an isolated RS-485 port. This family 
+of devices is also designed for very-high voltage applications, where power transformers for discrete isolated 
+supply meeting the required isolation specifications are bulky and expensive. Though the device family is 
+full-duplex, the device can also be used for half-duplex applications by connecting driver output (Y, Z) to receiver 
+input (A, B) on PCB- this helps to reduce cabling costs. For more details, refer to Application Information.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+30
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+8.5 Functional Block Diagram
+DC-DC
+Primary
+DC-DC
+Secondary
+Tx
+Tx
+Rx
+Rx
+Rx
+Rx
+Tx
+Tx
+GND
+Y
+Z
+B
+A
+Full Duplex
+IN
+MODE
+VISOOUT
+GND2
+VISOIN
+GND1
+GND1
+GND2
+VIO
+DE
+D
+R
+OUT
+VDD
+EN/FLT
+GISOIN
+GND1
+VISOIN
+RE
+GNDIO
+GISOIN
+GNDIO
+Figure 8-1. Block Diagram
+TX IN
+Oscillator
+OOK 
+Modulation
+Emissions 
+Reduction 
+Techniques
+TX Signal 
+Conditioning
+Envelope 
+Detection
+RX Signal 
+Conditioning
+Receiver
+RX OUT
+Transmitter
+SiO2 based 
+Capacitive 
+Isolation 
+Barrier
+TX IN
+RX OUT
+Carrier signal through 
+isolation barrier
+Figure 8-2. Signal Isolation channel
+8.6 Feature Description
+8.6.1 Power-Up and Power-Down Behavior
+The ISOW14x2 family of devices has built-in under-voltage lockout (UVLO) on all supplies (VDD, VIO and 
+VISOOUT) with positive-going and negative-going thresholds and hysteresis. Both the power converter supply 
+(VDD) and Logic supply (VIO) need to be present for the device to work. If either of them is below UVLO, both the 
+signal path and the power converter are disabled.
+Assuming VIO is above UVLO+, when the VDD voltage crosses the positive-going UVLO threshold during power-
+up, the DC-DC converter initializes and the power converter duty cycle is increased in a controlled manner. This 
+soft-start scheme limits primary peak currents drawn from the VDD supply and charges the VISOOUT output in a 
+controlled manner, avoiding overshoots. RS-485 driver output is in high impedance state in this duration. When 
+the UVLO positive-going threshold is crossed on the secondary side VISOOUT pin, the feedback channel starts 
+providing feedback to the primary controller. The regulation loop takes over and RS-485 drive output, Received 
+data output (R) and general purpose logic output (OUT) take the respective states defined by the inputs to the 
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+31
+Product Folder Links: ISOW1412 ISOW1432
+device, the Driver enable (DE), driver data to be transmitted (D), Receiver enable (RE) and general purpose 
+logic input (IN) respectively. Designers must consider a sufficient time margin (typically 5ms with 10µF load 
+capacitance) to allow this power up sequence before any usable system functionality.
+When either of VDD or VIO is lost, the primary side DC-DC controller turns off when the UVLO lower threshold is 
+reached. The VISOOUT capacitor then discharges depending on the isolation channels and RS-485 load.
+8.6.2 Protection Features
+The ISOW14x2 family of devices has multiple protection features to create a robust system level design.
+•
+The first feature is an Enable/Fault protection feature. This EN/FLT pin can be used as either an input pin to 
+enable or disable the integrated DC-DC power converter or as an output pin which works as an alert signal 
+if the power converter is not operating properly. In the /Fault use case, a fault is reported if VDD > 7V, VDD < 
+2.5V, or if the junction temperature >170°C. When a fault is detected, this pin goes low, disabling the DC-DC 
+converter to prevent any damage.
+Powers Down RS-485 Transceiver
+and DC-DC Converter. 
+IQ < 1mA Typical
+Fault Reported If
+VDD < 2.5V
+VDD > 7V
+Junction Temp > 170°C
+EN/FLT
+  5k
+  
+MCU OUTPUT
+MCU INPUT
+Figure 8-3. EN Fault Pin Diagram
+•
+An over-voltage clamp feature is present on VISOOUT which clamps the voltage at 6V at Profibus mode 
+(MODE = VISOOUT ) or 4V at RS485 mode (MODE = GND2), if there is an increase in voltage seen. For 
+device reliability, TI recommends that VISOOUT stays lower than the over-clamp voltage for device reliability.
+•
+Over-Voltage Lock Out (OVLO) on VDD occurs when a voltage higher than 7V on VDD is seen. At OVLO, the 
+device goes into a low power state and the EN/FLT pin goes low.
+•
+These devices are protected against output overload and short circuit. In cases of overload or short on power 
+converter output VISOOUT, maximum duty cycle of power converter is limited. In cases of driver bus short 
+circuit due to the external power supply cable shorting to the bus cable, or due to bus contention, short circuit 
+current protection on RS-485 chip restricts the bus current to ±250mA maximum.
+•
+Thermal protection is also integrated to help prevent the device from getting damaged under such scenarios. 
+An increase in the die temperature is monitored and the device is disabled when the die temperature 
+becomes 165°C (typical), thus disabling the short condition. The device is re-enabled when the junction 
+temperature becomes 155°C (typical). If an overload or output short-circuit condition prevails, this protection 
+cycle is repeated. Care must be taken in the system design to prevent repeated or prolonged exposure to bus 
+shorts as this exposes the device to high junction temperatures for extreme amounts of time affecting device 
+reliability.
+8.6.3 Failsafe Receiver
+The differential receiver of the ISOW14x2 devices has failsafe protection from invalid bus states caused by:
+•
+Open bus conditions such as a broken cable or a disconnected connector
+•
+Shorted bus conditions such as insulation breakdown of a cable that shorts the twisted-pair
+•
+Idle bus conditions that occur when no driver on the bus is actively driving.
+The differential input of the RS-485 receiver is 0 in any of these conditions for a terminated transmission line. 
+The receiver outputs a failsafe logic-high state on R pin so that the output of the receiver is determinate. The 
+receiver thresholds are offset in the receiver design so that the indeterminate range does not include a 0V 
+differential. See Receiver functional table for more details.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+32
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+8.6.4 Glitch-Free Power Up and Power Down
+Communication on the bus that already exist between a controller node and target node in an RS-485 network 
+must not be disturbed when a new node is swapped in or out of the network. No glitches on the bus must occur 
+when the device is:
+•
+Hot plugged into the network in an unpowered state
+•
+Hot plugged into the network in a powered state and disabled state
+•
+Powered up or powered down in a disabled state when already connected to the bus
+The ISOW14x2 devices meet above criteria and do not cause any false data toggling on the bus when powered 
+up or powered down in a disabled state with supply ramp rates ≥50µs.
+8.7 Device Functional Modes
+Table 8-1 lists the supply configuration for these devices:
+Table 8-1. Supply Configuration Function Table
+INPUTS
+OUTPUT
+VDD (1)
+VIO
+EN/FLT
+MODE
+VISOOUT (3)
+< VDD(UVLO+)
+>VIO(UVLO+)
+H or Open
+X
+OFF
+>VDD(UVLO+)
+<VIO(UVLO+)
+X
+Invalid Operation
+5V
+1.71V to 5.5V
+High(shorted to VISOOUT)
+5V
+5V or 3.3V
+1.71V to 5.5V
+Low(shorted to GND2) or floating 
+(2)
+3.3V
+3.3V
+1.71V to 5.5V
+High(shorted to VISOOUT)
+Invalid Operation
+X
+X
+L
+X
+OFF
+(1)
+VDD= 3.3V, MODE shorted to VISOOUT(essentially VISOOUT = 5V) is an invalid operation
+(2)
+The MODE pin has a weak pulldown internally. Therefore for VISOOUT = 3.3V, the MODE pin must be strongly connected to the GND2 
+pin in noisy system scenarios.
+(3)
+VISOOUT shorted to VISOIN on PCB. GND2 and GISOIN pins are shorted to each other and EN=High
+Table 8-2 shows the driver functional modes:
+Table 8-2. Driver Functional Table
+INPUTS
+OUTPUTS(3)
+VDD (1)
+VIO
+EN/FLT
+D
+DE
+Y
+Z
+PU
+PU
+H or Open
+H
+H
+H
+L
+L
+H
+L
+H
+X
+L
+Hi-Z
+Hi-Z
+X
+Open
+Hi-Z
+Hi-Z
+Open
+H
+H
+L
+L
+X
+X
+Hi-Z
+Hi-Z
+PD
+PU
+X
+X
+X
+Hi-Z
+Hi-Z
+PU
+PD(2)
+X
+X
+X
+Invalid Operation
+(1)
+PU=Powered up, PD=Powered down; H=high level; L=Low level; X=Irrelevant; Hi-Z=High impedance state
+(2)
+A strongly driven input signal on D, DE or RE can weakly power the floating VIO through an internal protection diode and cause an 
+undetermined output.
+(3)
+VISOOUT shorted to VISOIN on PCB and both GND2 pins are shorted to each other and EN=High
+When the driver enable pin, DE, is logic high, the differential outputs, Y and Z, follow the logic states at data 
+input, D. A logic high at the D input causes the Y output to go high and the Z output to go low. Therefore the 
+differential output voltage defined by Equation 1 is positive.
+VOD = VY −VZ
+(1)
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+33
+Product Folder Links: ISOW1412 ISOW1432
+A logic low at the D input causes the Z output to go high and the Y output to go low. Therefore the differential 
+output voltage defined by Equation 1 is negative. A logic low at the DE input causes both outputs to go to the 
+high-impedance (Hi-Z) state. The logic state at the D pin is irrelevant when the DE input is logic low. The DE pin 
+has an internal pulldown resistor to ground. The driver is disabled (bus outputs are in the Hi-Z) by default when 
+the DE pin is left open. The D pin has an internal pullup resistor. The Y output goes high and the Z output goes 
+low when the D pin is left open while the driver enabled.
+Table 8-3 shows the receiver functional modes:
+Table 8-3. Receiver Functional Table
+INPUTS
+OUTPUT
+VDD (1)
+VIO
+EN/FLT
+Differential Input VID = 
+VA- VB
+RE
+R (3)
+PU
+PU
+H or Open
+VID > VIT+
+L
+H
+VIT- < VID < VIT+
+L
+Indeterminate
+VID < VIT-
+L
+L
+X
+H
+Hi-Z
+X
+Open
+Hi-Z
+Open, Short, Idle
+L
+H
+L
+X
+X
+H
+PD
+PU
+X
+X
+X
+Hi-Z
+PU
+PD(2)
+H or Open
+X
+X
+Invalid Operation
+L
+X
+X
+(1)
+PU=Powered up, PD=Powered down; H=high level; L=Low level; X=Irrelevant; Hi-Z=High impedance state
+(2)
+A strongly driven input signal on D, DE or RE can weakly power the floating VIO through an internal protection diode and cause an 
+undetermined output.
+(3)
+VISOOUT shorted to VISOIN on PCB and both GND2 pins are shorted to each other and EN/FLT=High
+The receiver is enabled when the receiver enable pin, RE, is logic low. The receiver output, R, goes high when 
+the differential input voltage defined by Equation 2 is greater than the positive input threshold, VTH+.
+VID = VA −VB
+(2)
+The receiver output, R, goes low when the differential input voltage defined by Equation 2 is less than the 
+negative input threshold, VTH–. If the VID voltage is between the VTH+ and VTH– thresholds, the output is 
+indeterminate. The receiver output is in the Hi-Z state and the magnitude and polarity of VID are irrelevant when 
+the RE pin is logic high or left open. The internal biasing of the receiver inputs causes the output to go to a 
+failsafe-high when the transceiver is disconnected from the bus (open-circuit), the bus lines are shorted to one 
+another (short-circuit), or the bus is not actively driven (idle bus).
+Other device feature functional states in shown in Table 8-4 and Table 8-5 below:
+Table 8-4. DC-DC Converter Enable/Disable
+INPUTS
+OUTPUT
+VDD
+VIO
+EN/FLT
+VISOOUT
+PU
+PU
+H or Open
+3.3V or 5V depending on MODE pin 
+setting
+PU
+PU
+L
+OFF
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+34
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Table 8-5. General Purpose Logic Input/Output
+INPUTS
+OUTPUT
+Comments
+VDD (1) (2)
+VIO
+EN/FLT
+IN
+OUT
+PU
+PU
+H or Open
+H
+H
+Output channel assumes 
+logic state governed by IN
+L
+L
+Open
+L
+Default state
+L
+X
+Hi-Z
+Device is in disabled state 
+when either of VDD or VIO is 
+missing
+PD
+PU
+X
+X
+Hi-Z
+PU
+PD
+X
+X
+Invalid Operation
+(1)
+PU = Powered Up; PD = Powered Down; H = Logic High; L= Logic Low; X = Irrelevant, Hi-Z = High Impedance (OFF) state
+(2)
+VISOOUT shorted to VISOIN on PCB. GISOIN and GND2 pins are shorted to each other and EN/FLT=High
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+35
+Product Folder Links: ISOW1412 ISOW1432
+8.8 Device I/O Schematics
+D, RE
+VIO
+985
+500k DE
+DE
+VIO
+500k
+985
+
+VIO
+VIO
+VIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+EN/FLT
+EN/FLT
+VIO
+VIO
+VIO
+VIO
+550k  
+985
+  
+20k
+  
+1mA
+VIO
+R or OUT
+20
+
+GNDIO
+IN
+IN
+VISOIN 
+VISOIN
+VISOIN
+500k
+985	
+GISOIN
+GISOIN
+GISOIN
+MODE
+MODE
+VISOOUT
+VISOOUT
+VISOOUT
+500k
+985
+
+GND2
+GND2
+GND2
+R, OUT
+D, RE
+VIO
+VIO
+GND1
+GND1
+GND1
+GND1
+~=
+Figure 8-4. Device I/O schematics
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+36
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, and 
+TI does not warrant its accuracy or completeness. TI’s customers are responsible for determining 
+suitability of components for their purposes. Customers should validate and test their design 
+implementation to confirm system functionality.
+9.1 Application Information
+The ISOW14x2 devices are designed for bidirectional data transfer on multipoint RS-485 networks. An RS-485 
+bus has multiple transceivers that connect in parallel to a bus cable. Both cable ends are terminated with a 
+termination resistor, RT, to remove line reflections. The value of RT matches the characteristic impedance, Z0, of 
+the cable. This method, known as parallel termination, lets higher data rates be used over a longer cable length.
+Full-duplex implementation shown in Figure 9-1 requires two signal pairs (four wires). Full-duplex implementation 
+lets each node to transmit data on one pair while simultaneously receiving data on the other pair.
+Y
+Z
+A
+B
+B
+A
+Z
+Y
+Z
+Y
+B
+A
+R
+RE
+DE
+D
+ISOW14x2 Target
+ISOW14x2
+Controller
+ISOW14x2 Target
+R
+RE
+DE
+D
+R
+RE
+DE
+D
+RT
+RT
+Figure 9-1. Typical RS-485 network with Full-duplex Isolated transceivers
+Figure 9-2 below, shows ISOW14x2 devices used in half duplex configuration. Driver outputs Y and Z are 
+shorted to A and B respectively. This reduces overall cabling requirements. Also DE/RE are shorted to each 
+other, and at a time, any node acts as either a driver or a receiver. Split termination is also shown in this 
+configuration which helps to boost network immunity in noisy environments by providing common-mode noise 
+filtering and also reduces radiated emissions by providing low impedance path to earth to the bus common mode 
+excursions.
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+37
+Product Folder Links: ISOW1412 ISOW1432
+A
+B
+A
+B
+R
+RE
+DE
+D
+A
+B
+A
+B
+R
+RE
+DE
+D
+R
+RE
+DE
+D
+Integrated isolation barrier allows for communication between 
+nodes with ground potential differences of up to 1500V
+GND2
+GND2
+GND2
+GND2
+ISOW14x2
+ISOW14x2
+ISOW14x2
+ISOW14x2
+100pF
+60
+60
+100pF
+60
+60
+R
+RE
+DE
+D
+Figure 9-2. Typical RS-485 Network With Half-Duplex Isolated Transceivers
+9.2 Typical Application
+PSU
+1
+6
+3
+4
+5
+7
+9
+10
+20
+19
+11
+R
+VCC1
+DE
+D
+NC
+GND1
+GND1
+RE
+NC
+B
+GND2
+Z
+Y
+16
+VISOIN
+MCU
+GPIO3
+GPIO1
+VIO
+DGND
+L1
+N
+PE
+3.3V
+GND
+Galvanic
+Isolation Barrier
+ISOW14x2
+GPIO2
+VIO
+GNDIO
+5V
+VDD
+GND1
+R
+DE
+RE
+D
+OUT
+GPIO4
+EN/FLT
+4.7k
+8
+2
+12
+VISOOUT
+GND2
+MODE 13
+GISOIN 15
+0.1μF
+B
+A
+Other Field 
+Circuitry
+Extra Current  
+Notes: 
+1. Extra current is only available in VDD = 5V +/- 10% mode.
+2. Keep 10nF bypass capacitors close to VDD and VISOOUT pins (< 1 mm) for optimum radiated emissions performance.
+3. GND1 and GNDIO must be shorted directly. GND2 and GISOIN must be shorted directly, or through ferrite beads.  
+FB
+FB
+FB
+FB
+10nF
+1µF
+10µF
+10nF
+1µF
+10µF
+18
+17
+RS-485 
+BUS
+FB
+10μF
+0.1μF
+=20mA
+~
+Figure 9-3. Application circuit for ISOW14x2 
+9.2.1 Design Requirements
+Unlike an optocoupler-based design, which requires several external components to improve performance, 
+provide bias, or limit current, the ISOW14x2 devices only require external bypass capacitors to operate as 
+shown in above application diagram. Because of high peak currents flowing through VDD and VISOOUT supplies, 
+bulk capacitance of minimum 10μF is recommended on both pins. Higher values of bulk capacitors attenuates 
+noise and ripple further, enhancing performance.
+9.2.2 Detailed Design Procedure
+The RS-485 bus is a robust electrical interface designed for long-distance communications. The RS-485 
+interface can be used in a wide range of applications with varying requirements of distance of communication, 
+data rate, and number of nodes.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+38
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+9.2.2.1 Data Rate, Bus Length and Bus Loading
+The RS-485 standard has typical curves similar to those shown in Figure 11-4. These curves show the inverse 
+relationship between signaling rate and cable length. If the data rate of the payload between two nodes is lower, 
+the cable length between the nodes can be longer. Use below Figure as a guideline for cable selection, data 
+rate, cable length and subsequent jitter budgeting.
+Cable Length (ft)
+Data Rate (bps)
+10000
+1000
+100
+10
+100
+1k
+10 k
+100 k
+1M
+10 M
+100 M
+Conservative
+Characteristics
+5%, 10%, and 20% Jitter
+Figure 9-4. Cable Length vs Data Rate Characteristics
+The current supplied by the driver must supply into a load because the output of the driver depends on 
+this current. Add transceivers to the bus to increase the total bus loading. The RS-485 standard specifies a 
+hypothetical term of a unit load (UL) to estimate the maximum number of possible bus loads. The UL represents 
+a load impedance of approximately 12kΩ. Standard-compliant drivers must be able to drive 32 of these ULs. The 
+ISOW14x2 devices have 1/8 UL impedance transceiver and can connect up to 256 nodes to the bus.
+9.2.2.2 Stub Length
+In an RS-485 network, the distance between the transceiver inputs and the cable trunk is known as the stub. The 
+stub must be as short as possible when a node is connected to the bus. Stubs are a non-terminated piece of 
+bus line that can introduce reflections of varying phase as the length of the stub increases. The electrical length, 
+or round-trip delay, of a stub must be less than one-tenth of the rise time of the driver as a general guideline. 
+Therefore, the maximum physical stub length (L(STUB)) is calculated as shown in Equation 3.
+L STUB ≤0.1 × tr × v × c
+(3)
+where:
+•
+tr is the 10/90 rise time of the driver.
+•
+c is the speed of light (3 × 108m/s).
+•
+v is the signal velocity of the cable or trace as a factor of c.
+9.2.3 Insulation Lifetime
+Insulation lifetime projection data is collected by using industry-standard Time Dependent Dielectric Breakdown 
+(TDDB) test method. In this test, all pins on each side of the barrier are tied together creating a two-terminal 
+device and high voltage applied between the two sides as shown in below TDDB test setup. The insulation 
+breakdown data is collected at various high voltages switching at 60Hz over temperature. For reinforced 
+insulation, VDE standard requires the use of TDDB projection line with failure rate of less than 1 part per million 
+(ppm). Even though the expected minimum insulation lifetime is 20 years at the specified working isolation 
+voltage, VDE reinforced certification requires additional safety margin of 20% for working voltage and 50% for 
+lifetime which translates into minimum required insulation lifetime of 30 years at a working voltage that is 20% 
+higher than the specified value.  
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+39
+Product Folder Links: ISOW1412 ISOW1432
+DUT
+Time Counter > 
+1mA
+A
+VS
+Vcc 1
+Vcc 2
+GND 1
+GND 2
+Oven at 150°C
+Figure 9-5. Test Setup for Insulation Lifetime Measurement
+The insulation lifetime projection data shows the intrinsic capability of the isolation barrier to withstand high 
+voltage stress over the lifetime of the barrier. Based on the TDDB data, the intrinsic capability of the insulation is 
+1000VRMS with a lifetime of 1184 years.
+Figure 9-6. Insulation Lifetime Projection Data
+9.3 Power Supply Recommendations
+To make sure that operation is reliable at all data rates and supply voltages, adequate decoupling capacitors 
+must be located as close to supply pins as possible. Power converter input VDD and output VISOOUT supply pins 
+must have high frequency ceramic capacitors 10nF and bulk capacitors 10μF at least close to the pins. Signal 
+path supply pins, VIO and VISOIN, must have 100nF or higher value ceramic bypass capacitors close to device 
+pins. ISOW1412 can consume typical peak pulse currents of up to 250mA under fully loaded conditions for short 
+durations (10s of µs) from the power source that is powering VDD of ISOW1412. Please make sure the current 
+limit of upstream power device is at least 300mA typical.
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+40
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+9.4 Layout
+9.4.1 Layout Guidelines
+Figure 11-1 shows the recommended placement and routing of device bypass capacitors. Below guidelines must 
+be followed to achieve low emissions design:
+1.
+High frequency bypass capacitors 10nF must be placed close to VDD and VISOOUT pins, less than 1mm 
+distance away from device pins. This is very essential for optimised radiated emissions performance. Verify 
+that these capacitors are 0402 size so that the capacitors offer least inductance (ESL).
+2.
+Bulk capacitors of at least 10µF must be placed on power converter input (VDD) and output (VISOOUT) supply 
+pins.
+3.
+Traces on VDD and GND1 must be symmetric until bypass capacitors. Similarly traces on VISOOUT and GND2 
+must be symmetric.
+4.
+Place two 0402 size Ferrite beads (Part number: BLM15EX331SN1) on power supply pins, one between 
+VISOOUT and VISOIN and the other between GND2(11) and GISOIN(15), as shown in example PCB layout, 
+so that any high frequency noise from power converter output sees high impedance before reaching other 
+components on PCB.
+5.
+Do not have any metal traces or ground pour within 4mm of power converter output terminals VISOOUT 
+(pin12) and GND2 (pin11). MODE pin is also in VISOOUT domain and must be shorted to either pin 11 or pin 
+12 for output voltage selection.
+6.
+Common mode choke or ferrite beads on bus terminals (Y/Z/A/B) can minimise any high frequency noise 
+that can couple of RS-485 bus cable which can act as antenna and amplify that noise. This improves 
+radiated emissions performance on a system level.
+7.
+Following the layout guidelines of EVM as much as possible is highly recommended for a low radiated 
+emissions design. Reference to the EVM is available in Related Documentation.
+9.4.2 Layout Example
+Input Supply 1
+Input Ground
+Input Supply 2
+Z
+Y
+DE
+EN/FLT
+A
+B
+GNDIO
+VDD
+D
+VIO
+R
+GND2
+Ground plane on 
+side 1
+GND1
+VISOOUT
+16
+15
+14
+12
+11
+1
+2
+3
+4
+5
+6
+7
+8
+13
+IN
+MODE
+OUT
+ISOW14x2
+10
+9
+17
+18
+19
+20
+0.1µF
+Ground 
+plane on 
+side2
+C
+C
+Keep-out zone
+for any metal  
+0.1µF
+FB1
+FB2
+VISOIN
+GISOIN
+RE
+ISOLATION
+FB3
+FB4
+10nF
+1µF
+10µF
+C
+C
+C
+<1mm
+2-4mm
+C
+10nF
+1µF
+C
+<1mm
+2-4mm
+10µF
+C
+R
+R
+RS-485 
+BUS
+FB5
+<2mm
+C
+10µF
+<2mm
+Ground plane on side1
+Figure 9-7. Layout Example
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+41
+Product Folder Links: ISOW1412 ISOW1432
+10 Device and Documentation Support
+10.1 Documentation Support
+10.1.1 Related Documentation
+For related documentation see the following:
+•
+Texas Instruments, Digital Isolator Design Guide
+•
+Texas Instruments, Isolation Glossary application note
+•
+ISOW1412DFM Evaluation board
+10.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper 
+right corner, click on Alert me to register and receive a weekly digest of any product information that has 
+changed. For change details, review the revision history included in any revised document.
+10.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+10.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+10.5 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+10.6 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+11 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision C (March 2022) to Revision D (August 2026)
+Page
+•
+Added ESD Ratings table...................................................................................................................................6
+•
+Fixed typos in the Power Ratings table and changed ISOW1432 PD2 From: 610 mW To: 600 mW..................8
+•
+Updated Insulation Specifications section per DIN EN IEC 60747-17 (VDE 0884-17)...................................... 9
+•
+Updated the Safety-Related Certifications section to remove content that is found in the 
+associated certificates...................................................................................................................................... 10
+•
+Updated legacy terminology to "Controller" and "Target" throughout the document........................................ 33
+•
+Updated the Driver Functional Table in the Device Functional Modes section................................................ 33
+•
+Updated the Insulation Lifetime section and the Insulation Lifetime Projection Data graph.............................39
+Changes from Revision B (October 2021) to Revision C (March 2022)
+Page
+•
+Changed ISOW1432 from Advanced Information to Production Data............................................................... 2
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+42
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+Changes from Revision A (May 2021) to Revision B (October 2021)
+Page
+•
+Changed ISOW1412 from Advanced Information to Production Data............................................................... 2
+Changes from Revision * (May 2018) to Revision A (May 2021)
+Page
+•
+Updated datasheet to include ISOW1432 device...............................................................................................2
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical packaging and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+43
+Product Folder Links: ISOW1412 ISOW1432
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+44
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+www.ti.com
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+45
+Product Folder Links: ISOW1412 ISOW1432
+ISOW1412, ISOW1432
+SLLSF86D – MAY 2018 – REVISED AUGUST 2026
+www.ti.com
+46
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1412 ISOW1432
+PACKAGE OPTION ADDENDUM
+www.ti.com
+6-Feb-2026
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+ISOW1412BDFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1412BDFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1412DFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1412DFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1412DFMRG4
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1412DFMRG4.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1412
+ISOW1432BDFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ISOW1432BDFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ISOW1432DFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ISOW1432DFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ISOW1432DFMRG4
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ISOW1432DFMRG4.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1432
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com
+6-Feb-2026
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+13-Dec-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+ISOW1412BDFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1412DFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1412DFMRG4
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1432BDFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1432DFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1432DFMRG4
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+13-Dec-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+ISOW1412BDFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1412DFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1412DFMRG4
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1432BDFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1432DFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1432DFMRG4
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+18X 1.27
+2X
+11.43
+20X 0.51
+0.31
+10.63
+9.97 TYP
+SEATING
+PLANE
+0.25
+GAGE PLANE
+(3.18)
+B
+7.6
+7.4
+NOTE 4
+A
+12.93
+12.73
+NOTE 3
+0.95
+0.65
+- 8
+0
+0.33
+0.1
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+1
+10
+11
+20
+0.15
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+ 
+A  10
+DETAIL A
+TYPICAL
+SCALE  1.250
+4225640/A   01/2020
+0.30
+0.10
+3.55 MAX.
+5. Ref. JEDEC registration MS-013
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+20X (2.1)
+20X (0.6)
+20X (1.27)
+(9.7)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+4225640/A   01/2020
+www.ti.com
+EXAMPLE STENCIL DESIGN
+20X (2.1)
+20X (0.6)
+20X (1.27)
+(9.7)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+4225640/A   01/2020
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

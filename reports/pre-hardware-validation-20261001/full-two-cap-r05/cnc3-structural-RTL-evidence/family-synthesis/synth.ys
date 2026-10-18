@@ -1,0 +1,12 @@
+read_verilog cnc3_command_validate.v cnc3_spi_transport.v cnc3_frame_endpoint.v cnc3_feedback_pack.v cnc3_status_pack.v
+hierarchy -check -top cnc3_frame_endpoint
+proc
+check -assert
+select -assert-none t:$dlatch t:$adlatch t:$dlatchsr
+tee -o structural-stat.json stat -json
+synth_efinix -top cnc3_frame_endpoint
+delete t:$scopeinfo
+check -assert -mapped
+select -assert-none t:EFX_LATCH t:$_DLATCH_* t:$dlatch t:$adlatch t:$dlatchsr
+tee -o mapped-stat.json stat -json
+write_json cnc3_frame_endpoint_efinix.json

@@ -1,0 +1,62 @@
+def build(out=OUT):
+    out = Path(out); out.mkdir(parents=True,exist_ok=True)
+    model = description(); parts = model['components']; uid = lambda name:str(uuid.uuid5(NS,name)); root = uid('root')
+    funcs = dict(PINS)
+    for p in parts.values():
+        if not p['physical']:funcs[p['kind']] = {int(k):(k,'passive') for k in p['pins']}
+    funcs['PWR_FLAG'] = {1:('pwr','power_out')}
+    library = []; geometry = {}
+    for kind,pinmap in funcs.items():
+        if kind in ('R','C','L','F','D'):
+            coords = [(1,'',0,5.08,270,'passive'),(2,'',0,-5.08,90,'passive')]
+            shape = '(rectangle(start -1.016 2.54)(end 1.016 -2.54)(stroke(width .254)(type default))(fill(type none)))' if kind=='R' else '(polyline(pts(xy -2.54 .762)(xy 2.54 .762))(stroke(width .3)(type default))(fill(type none)))(polyline(pts(xy -2.54 -.762)(xy 2.54 -.762))(stroke(width .3)(type default))(fill(type none)))(polyline(pts(xy 0 2.54)(xy 0 .762))(stroke(width .254)(type default))(fill(type none)))(polyline(pts(xy 0 -.762)(xy 0 -2.54))(stroke(width .254)(type default))(fill(type none)))'
+        elif kind=='PWR_FLAG':coords=[(1,'pwr',0,0,90,'power_out')];shape=''
+        else:
+            keys=list(pinmap);left=keys[:(len(keys)+1)//2];right=keys[len(left):];half=max(len(left),len(right))*5.08
+            coords=[]
+            for side,keys in ((-1,left),(1,right)):
+                for i,n in enumerate(keys):coords.append((n,pinmap[n][0],side*20.32,half-i*10.16,0 if side<0 else 180,pinmap[n][1]))
+            shape=f'(rectangle(start -17.78 {half+5.08})(end 17.78 {-half+5.08})(stroke(width .254)(type default))(fill(type background)))'
+        geometry[kind]=coords
+        library.append(symbol(kind,coords,shape,'R' if kind=='R' else 'C' if kind=='C' else '#FLG' if kind=='PWR_FLAG' else 'B' if kind.startswith('B') else 'U'))
+    items=[];nets={};ic_count=passive_count=boundary_count=0
+    for ref,p in parts.items():
+        kind=p['kind']; passive=kind in ('R','C','L','F','D')
+        if passive:x=50.8+(passive_count%10)*101.6;y=1701.8+(passive_count//10)*38.1;passive_count+=1
+        elif p['physical']:x=177.8+(ic_count%4)*266.7;y=114.3+(ic_count//4)*167.64;ic_count+=1
+        else:x=177.8+boundary_count*508;y=2500.0;boundary_count+=1
+        py=y-10.16 if passive else y-max(abs(row[3]) for row in geometry[kind])-15.24
+        props=f'(property "Reference" {quote(ref)}(at {x+5.08 if passive else x} {py} 0){effects(.95)})(property "Value" {quote(p["value"])}(at {x+7.62 if passive else x} {py+5.08} 0){effects(.8)})'
+        props+=f'(property "MPN" {quote(p["mpn"])}(at {x} {y} 0){effects(extra="hide")})(property "Footprint" {quote(p["footprint"])}(at {x} {y} 0){effects(extra="hide")})'
+        items.append(f'(symbol(lib_id "CNC:{kind}")(at {x} {y} 0)(unit 1)(in_bom {"yes" if p["physical"] else "no"})(on_board {"yes" if p["physical"] else "no"})(dnp no)(uuid "{uid(ref)}"){props}(instances(project "motherboard_power_entry"(path "/{root}"(reference {quote(ref)})(unit 1)))))')
+        for n,_,px,py,_,_ in geometry[kind]:
+            xx,yy=round(x+px,4),round(y-py,4);net=p['pins'][str(n)]
+            if net is None:items.append(f'(no_connect(at {xx} {yy})(uuid "{uid(ref+str(n)+"nc")}"))');continue
+            ex=xx if passive else round(xx+(-30.48 if px<0 else 10.16),4);ey=round(yy+(-5.08 if n==1 else 5.08),4) if passive else yy
+            if (ex,ey)!=(xx,yy):items.append(f'(wire(pts(xy {xx} {yy})(xy {ex} {ey}))(stroke(width 0)(type default))(uuid "{uid(ref+str(n)+"w")}"))')
+            items.append(f'(label {quote(net)}(at {ex} {ey} 0){effects(.7,"(justify left bottom)")}(uuid "{uid(ref+str(n)+"l")}"))')
+            nets.setdefault(net,[]).append([ref,str(n)])
+    for i,net in enumerate(BOUNDARY_POWER):
+        x,y=50.8+i*88.9,2650.0;ref='#FLG'+str(11001+i)
+        items.append(f'(symbol(lib_id "CNC:PWR_FLAG")(at {x} {y} 0)(unit 1)(in_bom no)(on_board no)(dnp no)(uuid "{uid(ref)}")(property "Reference" {quote(ref)}(at {x} {y-5.08} 0){effects(extra="hide")})(property "Value" "ACTUAL PARENT RAIL REQUIRED"(at {x} {y-2.54} 0){effects(extra="hide")})(instances(project "motherboard_power_entry"(path "/{root}"(reference {quote(ref)})(unit 1)))))(label {quote(net)}(at {x} {y} 0){effects(.7,"(justify left bottom)")}(uuid "{uid(ref+"l")}"))')
+    for i,line in enumerate(['PROTECTED ENTRY / ACTUAL RAIL GENERATION / ONE MOTHERBOARD / SOURCE CANDIDATE r0.1','CORE/FIELD_A/FIELD_B entries; preserve existingFPGA1V2 andIO3 regulators, sequence and9xxx window monitors.','CORE5 6A +MOTION5 6A converters; two switchedmotorfeeds; FIELD5 .6A +independentAUX limiters.','AUX24A60.4k min/max current bounds remain vendor gate; ISO partialpower independentblanking circuit remains engineering gate.','No fabrication release; exact package/peripheral load/IR drop andfield surge coordination require reconciliation.']):
+        items.append(f'(text {quote(line)}(at 25.4 {20.32+i*7.62} 0){effects(1.2,"(justify left top)")}(uuid "{uid("note"+str(i))}"))')
+    raw=f'(kicad_sch(version 20250114)(generator "eeschema")(uuid "{root}")(paper "User" 1189 2720)(title_block(title "One-board protected power entry and supply")(date "2026-09-30")(rev "r0.1 / source candidate"))(lib_symbols {"".join(library)})'+''.join(items)+')'
+    (out/'motherboard_power_entry.kicad_sch').write_text(dump(parse(raw))+'\n',encoding='utf-8')
+    lib='(kicad_symbol_lib(version 20241209)(generator "kicad_symbol_editor")'+''.join(s.replace('(symbol "CNC:','(symbol "',1) for s in library)+')'
+    (out/'CNC.kicad_sym').write_text(dump(parse(lib))+'\n',encoding='utf-8')
+    (out/'sym-lib-table').write_text(dump(parse('(sym_lib_table(version 7)(lib(name "CNC")(type "KiCad")(uri "${KIPRJMOD}/CNC.kicad_sym")(options "")(descr "Actual motor health source candidate")))'))+'\n',encoding='utf-8')
+    (out/'fp-lib-table').write_text(dump(parse('(fp_lib_table(version 7)(lib(name "CNC_MB_Entry")(type "KiCad")(uri "${KIPRJMOD}/CNC_MB_Entry.pretty")(options "")(descr "Source-backed power monitor lands")))'))+'\n',encoding='utf-8')
+    (out/'motherboard_power_entry.kicad_pro').write_text(json.dumps({'meta':{'filename':'motherboard_power_entry.kicad_pro','version':1},'erc':{'rule_severities':{k:'warning' for k in ('single_global_label','four_way_junction','simulation_model_issue','footprint_filter')}}},indent=2)+'\n',encoding='utf-8')
+    model['nets']={n:sorted(v) for n,v in sorted(nets.items())}
+    (out/'design.json').write_text(json.dumps(model,indent=2)+'\n',encoding='utf-8')
+    (out/'pin-map.json').write_text(json.dumps(model['nets'],indent=2)+'\n',encoding='utf-8')
+    with (out/'bom.csv').open('w',newline='',encoding='utf-8') as f:
+        writer=csv.writer(f);writer.writerow(['Reference','Value','MPN','Footprint','Status'])
+        for ref,p in parts.items():
+            if p['physical']:writer.writerow([ref,p['value'],p['mpn'],p['footprint'],'source candidate / not qualified'])
+    footprints(out)
+    print(out/'motherboard_power_entry.kicad_sch')
+
+
+if __name__=='__main__':build()

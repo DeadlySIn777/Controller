@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "review_type": "independent primary-source interpretation and bounded dimensional proposal",
+  "no_source_or_pcb_mutation": true,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "sources": {
+    "isow1432": {
+      "url": "https://www.ti.com/lit/ds/symlink/isow1432.pdf",
+      "file": "isow1432.pdf",
+      "sha256": "3e46deca77909a2aab205ffae1ea0df4630a888126ef6dd60caaa08d6e4fa4b4"
+    },
+    "isow1044": {
+      "url": "https://www.ti.com/lit/ds/symlink/isow1044.pdf",
+      "file": "isow1044.pdf",
+      "sha256": "552b2c30bd7b2b1b533ef66b9aaab2279a3982046057314993e7ac6bab0bef38"
+    },
+    "sllu337": {
+      "url": "https://www.ti.com/lit/ug/sllu337/sllu337.pdf",
+      "file": "sllu337.pdf",
+      "sha256": "9278fd36915f14e58a513363ccf4dda409edfe5adb36e203d905c26d72ab78bc"
+    },
+    "grm155": {
+      "url": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM155R71H103KA88-01A.pdf",
+      "file": "grm155.pdf",
+      "sha256": "7f6df06f2f3de797c5a8a1a78e9554288f39d4eb167f0cc86fea91ac178960ab"
+    }
+  },
+  "evidence": [
+    {
+      "source": "isow1432",
+      "page": 41,
+      "figure": "9-7",
+      "fact": "Figure arrow is terminal-edge to capacitor terminal-edge; text says less than1mm from device pins without defining an exact PCB-land/body datum."
+    },
+    {
+      "source": "isow1044",
+      "page": 37,
+      "figure": "9-7",
+      "fact": "Equivalent close HF-cap guidance and matching layout arrangement."
+    },
+    {
+      "source": "sllu337",
+      "page": 8,
+      "figure": "4-2",
+      "fact": "C20 HF-cap lands visibly overlap corresponding same-net extended ISOW IC lands; this is a drawing observation, not an extracted numeric placement coordinate."
+    },
+    {
+      "source": "sllu337",
+      "page": 10,
+      "table": "5-1",
+      "fact": "C6/C20 are10nF0402; this EVM uses a different capacitor manufacturer than the selected motherboard MPN."
+    },
+    {
+      "source": "isow1432",
+      "page": 51,
+      "drawing": "DFM0020A",
+      "fact": "Manufacturer lead-tip overall span9.97..10.63mm."
+    },
+    {
+      "source": "grm155",
+      "page": 2,
+      "fact": "Selected GRM155R71H103KA88 package body1.0\u00b1.05 by.5\u00b1.05mm."
+    }
+  ],
+  "rejected_inference": "A1.48mm minimum centre-spacing bound is not universal: it assumes copper clearance between matching-net IC and capacitor lands, which the EVM deliberately overlaps.",
+  "distance_interpretation": "Record shortest actual routed matching-land-edge gap/length and physical lead-tip-to-cap-body bounds independently. Do not convert either into an unqualified centre-distance threshold.",
+  "proposed_recipe": {
+    "hf_cap_local_center_abs_x_mm": 6.1,
+    "hf_cap_local_center_y_mm": 5.08,
+    "orientation": "0402 vertical between converter power/return pins",
+    "ic_recommended_land_outer_abs_x_mm": 5.9,
+    "cap_matching_land_inner_abs_x_mm": 5.79,
+    "same_net_land_overlap_x_mm": 0.11,
+    "manufacturer_ic_tip_radius_mm": [
+      4.985,
+      5.315
+    ],
+    "manufacturer_cap_body_width_mm": [
+      0.45,
+      0.55
+    ],
+    "nominal_tip_to_body_gap_mm": [
+      0.51,
+      0.89
+    ],
+    "total_relative_x_placement_bound_mm": 0.1,
+    "bounded_tip_to_body_gap_mm": [
+      0.41,
+      0.99
+    ],
+    "relative_bound_is_process_qualification_not_manufacturer_guarantee": true,
+    "using_point1_mm_per_component_would_make_gap_upper_mm": 1.09,
+    "proposed_courtyard_indentation_abs_x_mm": 5.55,
+    "nominal_max_lead_tip_to_courtyard_margin_mm": 0.235,
+    "courtyard_changes_must_preserve_all_native_copper_paste_mask_lands": true
+  },
+  "rejected_farther_recipe": {
+    "abs_x_mm": 6.91,
+    "nominal_tip_to_body_gap_mm": [
+      1.32,
+      1.7
+    ],
+    "reason": "May have0.70mm PCB-land-edge path but cannot be called literal less-than1mm device-tip-to-body compliance."
+  },
+  "additional_actual_layout_requirements": [
+    "Symmetric close power/return trace paths until the HF bypass; exact local loop and actual native return proof remain required.",
+    "Maintain manufacturer4mm raw secondary EMI exclusion from unrelated traces/pours near VISOOUT/GND2. Required local raw HF/bulk/ferrite paths shown in the example remain intentional; filtered return planes must not bypass the real ferrite.",
+    "Native DRC plus exact IC/cap/body/courtyard pose proof, package and capacitor dimension tolerances, and actual assembler relative placement capability before adopting the bounded courtyard recipe."
+  ],
+  "source_geometry_proposal_review": "coherent as bounded proposal; no native candidate reviewed or adopted by this receipt"
+}

@@ -1,0 +1,4 @@
+from pathlib import Path
+s=Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U26-cell-r203.py').read_text().replace('ROOT94-health-U26-cell-r203','ROOT94-health-U26-cell-r204')
+s=s.replace("p=ps['U11026',pn];n=p.GetNetname();via(rv,n", "p=ps['U11026',pn];n=p.GetNetname();pt=mm(p.GetPosition());candidates=[]\n for d in[.75,1.,1.25,1.5,2.,2.5,3.,4.,5.]:\n  for dx,dy in[(1,0),(-1,0),(0,1),(0,-1),(.707107,.707107),(-.707107,.707107),(.707107,-.707107),(-.707107,-.707107)]:\n   z=(pt[0]+d*dx,pt[1]+d*dy)\n   if all(g.clear([z,z],n,l,.5)for l in[pcbnew.F_Cu,pcbnew.B_Cu])and any(g.clear(v,n,pcbnew.F_Cu,.2)for v in paths(pt,z)):candidates.append(z)\n assert candidates,('OUTPUT_POWER_ANCHOR',pn);rv=candidates[0];via(rv,n")
+Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U26-cell-r204.py').write_text(s)

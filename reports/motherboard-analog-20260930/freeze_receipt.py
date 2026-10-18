@@ -1,0 +1,21 @@
+"""Freeze actual AO143 + bounded ACC250, with fresh preserved source regression."""
+import datetime,hashlib,json,re,shutil,subprocess,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2];REPORT=Path(__file__).resolve().parent;ACC_REPORT=ROOT/'reports/motherboard-acc-control-20260930/r02-ao-spi-correction'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+paths=[p for folder in ['hardware/motherboard_analog_output','hardware/motherboard_acc_control'] for p in (ROOT/folder).rglob('*') if p.is_file()]
+paths += [ROOT/f for f in ['tools/hardware_build_motherboard_analog_output.py','tools/hardware_validate_motherboard_analog_output.py','tests/test_motherboard_analog_output.py','tools/hardware_build_motherboard_acc_control.py','tools/hardware_validate_motherboard_acc_control.py','tests/test_motherboard_acc_control.py','tools/hardware_build_motherboard_io_control.py','hardware/motherboard_io_control/design.json','hardware/motherboard_process/design.json']]
+paths += [REPORT/'primary-observations.json',REPORT/'native-footprints.json',ACC_REPORT/'native-footprints.json']
+paths += list((REPORT/'sources').glob('*.pdf'))+list((REPORT/'sources').glob('*.txt'))
+before={p.relative_to(ROOT).as_posix():sha(p) for p in paths};tests=[]
+for name in ['analog_output','acc_control','process','io_control','operator','do','di','motors']:
+ r=subprocess.run([sys.executable,'-X','utf8','-m','unittest','discover','-s','tests','-p','test_motherboard_'+name+'.py','-v'],cwd=ROOT,capture_output=True,text=True,encoding='utf-8');log=REPORT/('tests-'+name+'.txt');log.write_text(r.stdout+r.stderr);m=re.search(r'Ran (\d+) tests?',r.stdout+r.stderr);tests.append({'name':name,'count':int(m.group(1)) if m else None,'passed':r.returncode==0,'log_sha256':sha(log)})
+ if r.returncode:print(r.stdout+r.stderr);raise SystemExit(r.returncode)
+changed=[k for k,v in before.items() if sha(ROOT/k)!=v]
+for p in paths:
+ q=REPORT/'frozen-inputs'/p.relative_to(ROOT);q.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,q)
+(REPORT/'input-hashes.json').write_text(json.dumps(before,indent=2)+'\n')
+base={'schema_version':1,'time_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'status':'frozen native circuit candidate','tests':tests,'fresh_test_count':sum(t['count'] for t in tests),'input_hash_count':len(before),'changed_inputs':changed,'manufacturing_ready':False,'parent_integrated':False,'target_firmware_compiled':False,'option_bytes_provisioned':False,'physical_qualified':False}
+ao={**base,'physical_footprints':143,'purchased_fitted_parts':143,'unique_electrical_pads':468,'native_ERC':{'errors':0,'warnings':8,'ignored_checks':[],'warnings_justified':'strict exact8 isolated-COM ground-name heuristic warnings; islands intentionally not LOGIC_GND'},'nativeXML_independent_checks':'PASS','native_footprints_loaded':143,'boundary_file':'hardware/motherboard_analog_output/boundary-map.json','engineering_gates':json.loads((ROOT/'hardware/motherboard_analog_output/design.json').read_text())['open_gates'],'contract_correction':'AD5683RBRMZ-3 realinputregister SDO +LDACLOW copiesDAC, actualADSterminalADC;4MHz12uswrite/24usreadback wiretime only'}
+acc={**base,'physical_footprints':50,'purchased_fitted_parts':44,'PCB_copper_testpads':6,'unique_electrical_pads':159,'native_ERC':{'errors':0,'warnings':0,'ignored_checks':[]},'nativeXML_independent_checks':'PASS','native_footprints_loaded':50,'boundary_file':'hardware/motherboard_acc_control/boundary-map.json','bounded_change':'two10kOHM CS pullups, PB3/PB4 GPIOplus fullpinallowlist/DACrevision; prior48archive preserved','prior48_historical_receipt':'reports/motherboard-acc-control-20260930/receipt.json','engineering_gates':['Target firmware/options/bootloader andloadedvalidity/age/deliberate rearm/20msfaultpath.','Actual AI4/isolatedRS485/CAN supplies/frontends andrealmonitor sources.','Parenthardwareintegration/routing/physicalterminals andmanufacturinggates.']}
+(REPORT/'receipt.json').write_text(json.dumps(ao,indent=2)+'\n');(ACC_REPORT/'receipt.json').write_text(json.dumps(acc,indent=2)+'\n');print(json.dumps({'AO_parts':143,'ACC2_parts':50,'native_ERC_AO':[0,8],'native_ERC_ACC2':[0,0],'fresh_test_count':base['fresh_test_count'],'input_hash_count':len(before),'changed_inputs':changed,'manufacturing_ready':False}));raise SystemExit(bool(changed))

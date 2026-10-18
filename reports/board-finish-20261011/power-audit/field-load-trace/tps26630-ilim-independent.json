@@ -1,0 +1,166 @@
+{
+  "schema": "original-root106-tps26630-ilim-source-and-primary-reference-v1",
+  "verdict": "SOURCE_TOPOLOGY_AND_DATASHEET_THRESHOLD_ONLY",
+  "original_ROOT106": true,
+  "rows": [
+    {
+      "switch": "U11004",
+      "MPN": "TPS26630RGER",
+      "ILIM_pin": {
+        "ref": "U11004",
+        "pin": "10",
+        "pinfunction": "ILIM_10",
+        "pintype": "passive",
+        "net": "/motherboard_power_entry/FA_ILIM"
+      },
+      "resistor": "R11011",
+      "resistor_value": "3000R 0.1%",
+      "resistor_MPN": "TNPW06033K00BEEA",
+      "resistor_pin_roles": [
+        {
+          "ref": "R11011",
+          "pin": "2",
+          "pinfunction": "",
+          "pintype": "passive",
+          "net": "/motherboard_motors{slash}FIELD_GND"
+        },
+        {
+          "ref": "R11011",
+          "pin": "1",
+          "pinfunction": "",
+          "pintype": "passive",
+          "net": "/motherboard_power_entry/FA_ILIM"
+        }
+      ],
+      "protected_output_pins": [
+        {
+          "ref": "U11004",
+          "pin": "17",
+          "pinfunction": "OUT_17",
+          "pintype": "passive",
+          "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED"
+        },
+        {
+          "ref": "U11004",
+          "pin": "18",
+          "pinfunction": "OUT_18",
+          "pintype": "power_out",
+          "net": "/motherboard_power_entry{slash}FIELD_A_24V_PROTECTED"
+        }
+      ],
+      "nominal_set_threshold_A": 6.0,
+      "source_policy_amps_not_hardware_resistor_threshold": true
+    },
+    {
+      "switch": "U11006",
+      "MPN": "TPS26630RGER",
+      "ILIM_pin": {
+        "ref": "U11006",
+        "pin": "10",
+        "pinfunction": "ILIM_10",
+        "pintype": "passive",
+        "net": "/motherboard_power_entry/FB_ILIM"
+      },
+      "resistor": "R11018",
+      "resistor_value": "3000R 0.1%",
+      "resistor_MPN": "TNPW06033K00BEEA",
+      "resistor_pin_roles": [
+        {
+          "ref": "R11018",
+          "pin": "2",
+          "pinfunction": "",
+          "pintype": "passive",
+          "net": "/motherboard_do{slash}FIELD_B_0V"
+        },
+        {
+          "ref": "R11018",
+          "pin": "1",
+          "pinfunction": "",
+          "pintype": "passive",
+          "net": "/motherboard_power_entry/FB_ILIM"
+        }
+      ],
+      "protected_output_pins": [
+        {
+          "ref": "U11006",
+          "pin": "17",
+          "pinfunction": "OUT_17",
+          "pintype": "passive",
+          "net": "/motherboard_power_entry{slash}FIELD_B_24V_PROTECTED"
+        },
+        {
+          "ref": "U11006",
+          "pin": "18",
+          "pinfunction": "OUT_18",
+          "pintype": "power_out",
+          "net": "/motherboard_power_entry{slash}FIELD_B_24V_PROTECTED"
+        }
+      ],
+      "nominal_set_threshold_A": 6.0,
+      "source_policy_amps_not_hardware_resistor_threshold": true
+    }
+  ],
+  "primary_reference": {
+    "url": "https://www.ti.com/lit/ds/symlink/tps2663.pdf?ts=1708243767399",
+    "canonical_url": "https://www.ti.com/lit/ds/symlink/tps2663.pdf",
+    "local_copy": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\ti-tps2663-slvse94g.pdf",
+    "sha256": "bb61314ace65ed37684bd07f541fc676081d7cf81cb24020e7c5c2065bfe16b2",
+    "document": "SLVSE94G Rev.G, June2024",
+    "pages": 59,
+    "formula": "IOL(A) = 18 / RILIM(kohm)",
+    "formula_section": "8.3.7.1 Eq5",
+    "table_section": "6.5 printedpage7",
+    "table_condition": "RILIM=3kohm,VIN-VOUT=1V; -40<=TA=TJ<=125C and4.5V<VIN<60V unless otherwise noted",
+    "table_min_typ_max_A": [
+      5.58,
+      6.0,
+      6.42
+    ],
+    "adjustable_current_limit_A": [
+      0.6,
+      6.0
+    ],
+    "TPS26630_current_limit_mode": "1x active current limit; no sustained2x pulse-current capability inferred",
+    "limit_thermal_note": "current regulation can end in thermal shutdown; threshold is not continuous-load qualification"
+  },
+  "optional_resistor_tolerance_inference": {
+    "method": "table values scaled inversely with explicit +/-0.1% resistor tolerance; conservative engineering screen, not extra TI guarantee",
+    "min_A": 5.574425574425575,
+    "max_A": 6.426426426426426
+  },
+  "limitations": [
+    "frozen modeled cluster totals/policy must be reconciled to actual source and simultaneous loads; no model/spec change",
+    "no board capacity, return-current, temperature, startup/inrush, shutdown/fault coordination, manufacturing or measured evidence inferred"
+  ],
+  "input_hashes_before": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\source-inventory.json": "7191c377fb05d9350c3884d8820d3c4f25de820135708230c907ba6ef0ea9018",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\verify_tps26630_ilim.py": "016a80d69c1a3a9255f2cbc10a4d6d5fd4d91d1bd2b3b873eb9a830b16ae1212",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\receipt.json": "d08774ee40e3e87a9792d65d5d211da2ccf25cdd3713e559a8ac01cf5b4c6d68",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-identity.json": "e5871af08c81611af7d7d459a5f796909988ff381759f403d1ee716b5b1533f3",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_power_entry.kicad_sch": "2333b1aab8dcddfefcc3b3e42058cb832ca5a937bef2447b8c0f61b5fcee77e4",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_safety_sensor.kicad_sch": "c3b706fe9ebeea1582fa9abd1cf921eac245f79b8db27a875e32cbcbcfbcb673",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_do.kicad_sch": "b4db38050ebb0030917bdcaffe1a62df521c3cb779ef51991f55daf41724ca91",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_terminals.kicad_sch": "2f644652c0fda0584c7e32110e6a037dec608fd6074cfc9cd86d7dd9afbe08c8",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\ti-tps2663-slvse94g.pdf": "bb61314ace65ed37684bd07f541fc676081d7cf81cb24020e7c5c2065bfe16b2"
+  },
+  "input_hashes_after": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\source-inventory.json": "7191c377fb05d9350c3884d8820d3c4f25de820135708230c907ba6ef0ea9018",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\verify_tps26630_ilim.py": "016a80d69c1a3a9255f2cbc10a4d6d5fd4d91d1bd2b3b873eb9a830b16ae1212",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\tools\\netlist_parity.py": "042f64bd6476c5797a4701b8f99056b6b2763068b9de8362030b2ab958ec87f1",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\fresh.net": "c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\constraint-snapshot\\0-field_pdn_spec.json": "4017a3c85560a9469c37f6cdfc304c586ce71847eec4084ef8603405b074754d",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-export\\receipt.json": "d08774ee40e3e87a9792d65d5d211da2ccf25cdd3713e559a8ac01cf5b4c6d68",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source-identity.json": "e5871af08c81611af7d7d459a5f796909988ff381759f403d1ee716b5b1533f3",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_power_entry.kicad_sch": "2333b1aab8dcddfefcc3b3e42058cb832ca5a937bef2447b8c0f61b5fcee77e4",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_safety_sensor.kicad_sch": "c3b706fe9ebeea1582fa9abd1cf921eac245f79b8db27a875e32cbcbcfbcb673",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_do.kicad_sch": "b4db38050ebb0030917bdcaffe1a62df521c3cb779ef51991f55daf41724ca91",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\parity-repair\\root106\\source\\motherboard_terminals.kicad_sch": "2f644652c0fda0584c7e32110e6a037dec608fd6074cfc9cd86d7dd9afbe08c8",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\field-load-trace\\ti-tps2663-slvse94g.pdf": "bb61314ace65ed37684bd07f541fc676081d7cf81cb24020e7c5c2065bfe16b2"
+  },
+  "native_jobs": 0,
+  "GPU_jobs": 0,
+  "source_changed": false
+}

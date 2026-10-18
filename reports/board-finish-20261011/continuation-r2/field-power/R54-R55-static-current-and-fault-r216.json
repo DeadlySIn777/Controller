@@ -1,0 +1,30 @@
+{
+ "schema": "scoped-static-FAULT-pullup-and-retained-AUX5-bleed-current-r216",
+ "native_owned_recipe_file": "R11054-static-and-AUX-bleed-native-owned-recipe-r208/receipt.json",
+ "native_owned_recipe_sha256": "1e768077e1be6ca94c5da4d48e724f911679bb3b4454b2325aa748b343e8aa70",
+ "host_source_contact_gate_sha256": "99d211934c834887b8ec697f7c2e1ad7210bd7e23f8381339668dbf257ec5b3b",
+ "native_R54_pose_gate_sha256": "8c1576328972121a3fbc391c63088dc43dc6ce651153d079fe62e62243bb780c",
+ "fresh_source_export_sha256": "070444b08e9225319d80e54a7e23a841218d5bb32e38a10c3739052e3197e7b2",
+ "normal_model_file": "normal-model-r3.json",
+ "signed_port_model_authority": "../field-signed-port-allocation-r4/receipt.json",
+ "preserved_exact_IC": {"ref":"U11014", "Value_and_MPN":"TPS2553DBVR-1", "footprint":"Package_TO_SOT_SMD:SOT-23-6", "SOT23_IN":"1", "GND":"2", "FAULT":"4", "OUT":"6", "ILIM":"5", "R11053_ohm":110000, "R11053_MPN":"CRCW0603110KFKEA", "RILIM_and_latchoff_behavior_unchanged":true},
+ "primary_sources": [
+  {"url":"https://www.ti.com/lit/ds/symlink/tps2553.pdf", "document":"TI SLVS841F Rev F", "sections":["6","7.1","7.3","7.5","9.3","9.4"], "summary":"FAULT is open drain. Recommended FAULT sink maximum is 10 mA; absolute pin voltage extends to 7 V. Operating IN is 2.5–6.5 V. FAULT low row uses 1 mA; off leakage maximum is 1 uA at 6.5 V. Overcurrent reporting is delayed 5–10 ms. Independent safe operation below UVLO is not guaranteed by normal rows."},
+  {"url":"https://www.ti.com/product/TPS2553-1/part-details/TPS2553DBVR-1", "summary":"The exact preserved orderable part is a six-pin DBV active-high latch-off switch with reverse blocking."}
+ ],
+ "R54": {"ref":"R11054", "ohm":10000, "source":"FIELD_5V", "other_net":"/motherboard_power_entry/AUX5_B_FAULT_N", "actual_FAULT_sink":"U11014.4", "signed_GND_return":"U11014.2", "model_voltage_upper_V":5.1, "combined_R_min_factor":0.975, "current_upper_A":0.0005230769230769231, "derivation":"5.1/(10000*.975), allowing zero FAULT voltage", "static_F_strap_length_mm":0.62736785196, "static_F_strap_width_mm":0.2, "fault_pad2_absolute_center_mm":[221,42.075], "source_pad1_new_absolute_center_mm":[221,43.725], "existing_FAULT_pad_discrete_contacts_preserved":true},
+ "R55": {"ref":"R11055", "ohm":100000, "source":"/motherboard_motors{slash}AUX_5V_B", "actual_source_port":"U11014.6", "actual_return_port":"R11055.2", "actual_return_raw_net":"/motherboard_motors{slash}FIELD_GND", "combined_R_min_factor":0.975, "current_upper_A":0.000052307692307692306, "derivation":"5.1/(100000*.975)", "owned_output_branch_is_only_bleed_plus_two_retained_tracks":true, "new_AUX5_barrel_diameter_drill_mm":[0.6,0.3], "new_F_stubs_width_mm":0.25, "new_In1_source_bridge_length_mm":11.639652397865575, "constructor_source_core_width_mm":0.5, "full_motor_AUX5_load_and_output_limits_unchanged":true},
+ "normal_accounting": {"new_component_current_terms":0, "same_two_existing_signed_terms_preserved":true, "R54_full_sink_reservation_A":0.0005230769230769231, "R55_full_bleed_reservation_A":0.000052307692307692306, "sharing_inference":"Neither resistor branch carries the whole motor AUX current in normal operation. Its individual endpoint allocation is exact; no harness or device pad equal sharing is assumed."},
+ "sequencing_and_faults": [
+  "R54 pullup and U11014 IN use FIELD_5V; the topology change preserves both source node assignments. Actual full supply and local ground root/contact/drop are required in the joint candidate.",
+  "The 5.1 V planning pullup is below the IC absolute FAULT voltage and its zero-drop current is below the recommended sink limit; this does not qualify surge, ESD or below-UVLO logic behavior.",
+  "R54 pullup cannot by itself prove a valid healthy signal during startup, disabled switching, UVLO or loss of device power. Existing FAULT qualification and deliberately inhibited restart remain mandatory.",
+  "The copper before R55 can see a short fault above its 52.3 uA normal load. Retained TPS2553-1 current limiting, response, latchoff, charging energy and fault-loop thermal behavior remain separate obligations; no normal bleed-current capacity waiver is applied.",
+  "External AUX5 backfeed, input-off operation and output-capacitor discharge remain subject to the existing IC reverse-blocking and harness fault contract. The TI 1 uA reverse-leak row is only VIN=0,VOUT=6.5 V,TJ=25 C and is not a full-temperature guarantee."
+ ],
+ "new_static_strap_reference_scope": "Static resistor power feed; source-rooted DC supply and local return required. All retained old reference coverage remains absolute. No fast clock shadow requirement is inferred solely from the FIELD5 net name.",
+ "open_gates": ["actual final joint source/old-contact/reference audit with native pad polygons", "actual native copper parse/refill/DRC and annular attachment", "full declared sheet/constriction/barrel/plating/temp/drop at all branch scenarios", "upstream fault/current-limit/package/return transient behavior"],
+ "source_limits_output_concurrency_and_control_rates_changed":false,
+ "board_written":false,
+ "native_jobs":0
+}

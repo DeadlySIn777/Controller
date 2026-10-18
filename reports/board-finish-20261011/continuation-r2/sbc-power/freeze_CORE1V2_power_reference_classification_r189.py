@@ -1,0 +1,38 @@
+"""Source/type evidence for a narrowly proposed PDN review; no audit waiver."""
+import ast,hashlib,json,re,sys
+from pathlib import Path
+H=Path(__file__).resolve().parent.parent;ROOT=H.parents[2]
+sys.path.insert(0,str(H/'field-power'))
+from verify_source import parse,child,children,atom
+O=H/'sbc-power/CORE1V2-own-rail-shadow-classification-proposal-r189'
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def main():
+ assert not O.exists();O.mkdir()
+ nf=H/'field-power/combined-power-source-r3-hierarchy/source-export/fresh.net'
+ assert sha(nf)=='070444b08e9225319d80e54a7e23a841218d5bb32e38a10c3739052e3197e7b2'
+ src=parse(nf.read_text(encoding='utf-8'));allnets={atom(q,'name'):q for q in children(child(src,'nets'),'net')};net=allnets['/CORE_1V2']
+ nodes=[{k:atom(q,k) for k in ('ref','pin','pinfunction','pintype')} for q in children(net,'node')]
+ assert {'ref':'L2001','pin':'2','pinfunction':None,'pintype':'passive'} in nodes
+ assert any(q['ref']=='U1001' and q['pintype']=='power_in' for q in nodes)
+ assert any((q['ref'],q['pin'],q['pinfunction'])==('U2001','3','VOS_3') for q in nodes)
+ comps={atom(q,'ref'):q for q in children(child(src,'components'),'comp')};parts={}
+ for ref in sorted({q['ref'] for q in nodes}|{'U2001','C2001'}):
+  q=comps[ref];parts[ref]={'value':atom(q,'value'),'footprint':atom(q,'footprint'),'fields':{atom(f,'name'):f[2] if len(f)>2 else '' for f in children(child(q,'fields') or [],'field')},'all_source_pins':[{k:atom(n,k) for k in ('ref','pin','pinfunction','pintype')}|{'net_raw':raw} for raw,nq in allnets.items() for n in children(nq,'node') if atom(n,'ref')==ref]}
+ assert 'TPS62901' in parts['U2001']['value'] or any('TPS62901' in str(v) for v in parts['U2001']['fields'].values())
+ df=H/'SAFE-remaining-logic-reference-diagnosis-r59/receipt.json';diag=json.loads(df.read_bytes());same=[];signals=[];other=[]
+ for r in diag['rows']:
+  if r['net']=='/CORE_1V2' and r['layer']=='B.Cu' and any(q['UUID']=='69c62b44-c4ad-55f0-bf91-575b93a0b295' and q['net']=='/CORE_1V2' and q['overlap_mm2']>0 for q in r['nearby_owned_power_planes']):
+   same.append({'exact_track_UUID':r['uuid'],'raw_net':r['net'],'native_track':r['actual_retained_track'],'prior_reference_lost_mm2':r['prior_source_reference_lost_mm2'],'lost_reference_WKB_sha256':r['loss_WKB_sha256'],'same_raw_owned_plane_UUID':'69c62b44-c4ad-55f0-bf91-575b93a0b295','classification':'DC_DISTRIBUTION_POWER_CANDIDATE_REQUIRES_BRANCH_PDN_AND_QUIET_SENSE_REVIEW','signal_gate_exempted':False})
+  elif r['net'] in ('/mc_local_power{slash}CORE_5V','/IO_3V3','/CORE_1V2'):
+   other.append({'exact_track_UUID':r['uuid'],'raw_net':r['net'],'layer':r['layer'],'prior_reference_lost_mm2':r['prior_source_reference_lost_mm2'],'status':'KEEP_ORIGINAL_REFERENCE_LEDGER_HARD_PENDING_SEPARATE_POWER_BRANCH_REVIEW'})
+  else:signals.append({'exact_track_UUID':r['uuid'],'raw_net':r['net'],'layer':r['layer'],'prior_reference_lost_mm2':r['prior_source_reference_lost_mm2'],'status':'SIGNAL_SOURCE_REFERENCE_PRESERVATION_MANDATORY'})
+ docs=[]
+ for rel,line,role in [('docs/HARDWARE_PRE_DESIGN.md',420,'Continuous reference planes requirement explicitly names high-speed signals; does not establish an identical per-track DC-power shadow contract.'),('docs/CURRENT_ACCEPTANCE_GATES.md',33,'G07 separately requires full PDN, stability, thermal, startup/fault and measured loaded transient acceptance.'),('hardware/mc_local_power/README.md',23,'CORE_1V2 is FPGA core/PLL power; downstream package filters and decoupling are retained.')]:
+  f=ROOT/rel;assert f.exists(),f;docs.append({'file':str(f.resolve()),'sha256':sha(f),'line':line,'interpretation':role})
+ localpdf=ROOT/'research/logic-power/tps62901.pdf';manufacturer={'title':'TI TPS62901 datasheet Rev A, SLVSFS7A January2024','url':'https://www.ti.com/lit/ds/symlink/tps62901.pdf','reviewed_sections':['4 pin functions','7.5.1 layout guidelines'],'saved_pdf_sha256':sha(localpdf),'paraphrase':'TI requires close input/output capacitance, short/wide low-inductance high-di/dt loops, minimum loop area, quiet short VOS/FB routes, and common system ground. It does not specify preservation of the identical historical ground shadow under every distributed DC conductor.','interpretation_not_physical_proof':True}
+ obligations=['Restore every retained physical CORE1V2 source/component contact and all25 formerly connected source pads; separately finish the3original isolated supply pads.','Trace each proposed literal power-track classification to its actual FPGA power/capacitor branches; do not use net name or width alone to exempt a VOS/feedback/supervisor sense segment on a shared rail.','Prove source/load/decoupling ground current conservation and local return/loop geometry for U2001.4, C2001/C2002.2 and all actual FPGA core/PLL decoupling ground pins. Preserve full0.8A fitted CORE1V2 planning load, copper/drop/thermal/barrel and endpoint constraints.','Keep converter SW, VOS/FB, UV/OV, PG, enable, permission, PWM_CLAMP_GATE and all actual signal reference shadows mandatory, with every original strict loss retained.','Re-evaluate effective capacitance/ESR, source stability, load-step droop, startup, brownout and1.15–1.25V FPGA limits on the changed fullPDN. Host connectivity or an equipotential plane alone cannot qualify the electrical loop.','Native full fill, actual flashed annuli/source roots, all baselines, ordinary DRC and every aperture/clearance rule remain mandatory. No source, load, mechanical, net or oldnative copper change follows from classification.']
+ receipt={'verdict':'SOURCE_BACKED_SCOPED_POWER_VS_SIGNAL_CLASSIFICATION_PROPOSAL_ONLY','source_file':str(nf.resolve()),'source_sha256':sha(nf),'source_actual_CORE1V2_nodes':nodes,'source_component_evidence':parts,'exact_reference_loss_parent_file':str(df.resolve()),'exact_reference_loss_parent_sha256':sha(df),'literal_same_raw_CORE1V2_B_power_candidate_rows':same,'other_power_losses_kept_unresolved':other,'signal_losses_mandatory':signals,'saved_contract_evidence':docs,'primary_manufacturer_layout_evidence':manufacturer,'mandatory_replacement_PDN_obligations':obligations,'original_strict_checker_modified':False,'any_reference_loss_waived':False,'any_track_exempted':False,'host_retained_relationships_pass_changed':False,'CORE1V2_25_pad_source_restore_still_required':True,'physical_PDN_qualified':False,'native_jobs':0,'board_or_source_changes':0,'script_sha256':sha(__file__)}
+ (O/'receipt.json').write_text(json.dumps(receipt,indent=1)+'\n')
+ (O/'proposal.md').write_text('The saved continuous-reference requirement names high-speed signals. The exact source shows CORE_1V2 is FPGA core/PLL power, and the historical checker conservatively applies its signal-shadow test to every same-domain non-ground conductor. The literal same-rail B power rows are candidates for a separate PDN qualification; their lost-shadow measurements remain recorded and no row is exempted here.\n\nTI requires close bypass capacitors, low-inductance high-current loops and quiet short sense connections. A same-rail plane can improve supply conductance, but does not prove the ground-return loop, dynamic impedance or decoupling performance. Each actual power branch requires the explicit source/return/current/stability obligations in receipt.json. Actual control, fault, clock and sense paths keep their strict reference requirements.\n\nNo circuit, geometry, source, audit result or manufacturing gate is changed by this proposal.\n')
+ print('R189_COMPLETE',sha(O/'receipt.json'),'same_rail_candidates',len(same),'other_power_losses',len(other),'mandatory_signal_losses',len(signals),flush=True)
+if __name__=='__main__':main()

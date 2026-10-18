@@ -1,0 +1,1492 @@
+{
+  "initialized": true,
+  "store_id": "935c9697-35d7-41dc-852d-43513402949b",
+  "revision": 7,
+  "current_revision": 7,
+  "generation": 1,
+  "epoch": "bdaf4980-a0f4-42cc-9888-c30297b2b621",
+  "draft": {
+    "encoders": [
+      {
+        "counts_per_revolution": 4000,
+        "equipment_profile": "sim-abz-5v-v1",
+        "resource": "SIM.ABZ0",
+        "role": "ABZ encoders 1"
+      }
+    ],
+    "inputs": [],
+    "kind": "is2_disconnected_setup_draft",
+    "machine_name": "Workshop mill \u00b7 setup example",
+    "motors": [
+      {
+        "axis": "x",
+        "dir_hold_ns": 5000,
+        "dir_inverted": false,
+        "dir_setup_ns": 5000,
+        "equipment_profile": "sim-step-drive-v1",
+        "gear_load_revolutions": 1,
+        "gear_motor_revolutions": 1,
+        "id": "m0",
+        "max_velocity_units_per_second": 10,
+        "microsteps": 16,
+        "motor_steps_per_revolution": 200,
+        "resource": "SIM.M0",
+        "step_active_high": true,
+        "step_high_ns": 5000,
+        "step_low_ns": 5000,
+        "travel_per_load_revolution": 5,
+        "unit": "mm"
+      },
+      {
+        "axis": "y",
+        "dir_hold_ns": 5000,
+        "dir_inverted": false,
+        "dir_setup_ns": 5000,
+        "equipment_profile": "sim-step-drive-v1",
+        "gear_load_revolutions": 1,
+        "gear_motor_revolutions": 1,
+        "id": "m1",
+        "max_velocity_units_per_second": 10,
+        "microsteps": 16,
+        "motor_steps_per_revolution": 200,
+        "resource": "SIM.M1",
+        "step_active_high": true,
+        "step_high_ns": 5000,
+        "step_low_ns": 5000,
+        "travel_per_load_revolution": 5,
+        "unit": "mm"
+      },
+      {
+        "axis": "z",
+        "dir_hold_ns": 5000,
+        "dir_inverted": false,
+        "dir_setup_ns": 5000,
+        "equipment_profile": "sim-step-drive-v1",
+        "gear_load_revolutions": 1,
+        "gear_motor_revolutions": 1,
+        "id": "m2",
+        "max_velocity_units_per_second": 10,
+        "microsteps": 16,
+        "motor_steps_per_revolution": 200,
+        "resource": "SIM.M2",
+        "step_active_high": true,
+        "step_high_ns": 5000,
+        "step_low_ns": 5000,
+        "travel_per_load_revolution": 5,
+        "unit": "mm"
+      }
+    ],
+    "outputs": [
+      {
+        "current_a": 0.25,
+        "equipment_profile": "sim-smart-output-v1",
+        "resource": "SIM.DO0",
+        "role": "Smart outputs 1",
+        "voltage_v": 24
+      }
+    ],
+    "profile_id": "sim-mill-3axis",
+    "schema_version": 1,
+    "simulation_only": true
+  },
+  "active": {
+    "calculations": [
+      {
+        "alarm_resource": "SIM.M0.ALM",
+        "axis": "x",
+        "enable_resource": "SIM.M0.EN",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "maximum_simulation_rate_hz": 100000.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "motor_id": "m0",
+        "motor_to_load_ratio": 1.0,
+        "physical_qualified": false,
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "pulses_per_motor_revolution": 3200.0,
+        "rate_margin_hz": 93600.0,
+        "required_step_rate_hz": 6400.0,
+        "resource": "SIM.M0",
+        "steps_per_mm": 640.0,
+        "steps_per_unit": 640.0,
+        "timing_ceiling_hz": 100000.0,
+        "unit": "mm"
+      },
+      {
+        "alarm_resource": "SIM.M1.ALM",
+        "axis": "y",
+        "enable_resource": "SIM.M1.EN",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "maximum_simulation_rate_hz": 100000.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "motor_id": "m1",
+        "motor_to_load_ratio": 1.0,
+        "physical_qualified": false,
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "pulses_per_motor_revolution": 3200.0,
+        "rate_margin_hz": 93600.0,
+        "required_step_rate_hz": 6400.0,
+        "resource": "SIM.M1",
+        "steps_per_mm": 640.0,
+        "steps_per_unit": 640.0,
+        "timing_ceiling_hz": 100000.0,
+        "unit": "mm"
+      },
+      {
+        "alarm_resource": "SIM.M2.ALM",
+        "axis": "z",
+        "enable_resource": "SIM.M2.EN",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "maximum_simulation_rate_hz": 100000.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "motor_id": "m2",
+        "motor_to_load_ratio": 1.0,
+        "physical_qualified": false,
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "pulses_per_motor_revolution": 3200.0,
+        "rate_margin_hz": 93600.0,
+        "required_step_rate_hz": 6400.0,
+        "resource": "SIM.M2",
+        "steps_per_mm": 640.0,
+        "steps_per_unit": 640.0,
+        "timing_ceiling_hz": 100000.0,
+        "unit": "mm"
+      }
+    ],
+    "configuration_sha256": "92ec2f40fbf75c925851aa30af898d5c0abedae010271b006bcb00ed4009710c",
+    "draft": {
+      "encoders": [
+        {
+          "counts_per_revolution": 4000,
+          "equipment_profile": "sim-abz-5v-v1",
+          "resource": "SIM.ABZ0",
+          "role": "ABZ encoders 1"
+        }
+      ],
+      "inputs": [],
+      "kind": "is2_disconnected_setup_draft",
+      "machine_name": "Workshop mill \u00b7 setup example",
+      "motors": [
+        {
+          "axis": "x",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m0",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M0",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        },
+        {
+          "axis": "y",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m1",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M1",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        },
+        {
+          "axis": "z",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m2",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M2",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        }
+      ],
+      "outputs": [
+        {
+          "current_a": 0.25,
+          "equipment_profile": "sim-smart-output-v1",
+          "resource": "SIM.DO0",
+          "role": "Smart outputs 1",
+          "voltage_v": 24
+        }
+      ],
+      "profile_id": "sim-mill-3axis",
+      "schema_version": 1,
+      "simulation_only": true
+    },
+    "generation": 1,
+    "wiring": [
+      {
+        "owner": "m0",
+        "physical_wiring_verified": false,
+        "resource": "SIM.M0",
+        "simulation_only": true,
+        "terminals": [
+          "SIM.M0.STEP+",
+          "SIM.M0.STEP-",
+          "SIM.M0.DIR+",
+          "SIM.M0.DIR-",
+          "SIM.M0.EN",
+          "SIM.M0.ALM"
+        ]
+      },
+      {
+        "owner": "m1",
+        "physical_wiring_verified": false,
+        "resource": "SIM.M1",
+        "simulation_only": true,
+        "terminals": [
+          "SIM.M1.STEP+",
+          "SIM.M1.STEP-",
+          "SIM.M1.DIR+",
+          "SIM.M1.DIR-",
+          "SIM.M1.EN",
+          "SIM.M1.ALM"
+        ]
+      },
+      {
+        "owner": "m2",
+        "physical_wiring_verified": false,
+        "resource": "SIM.M2",
+        "simulation_only": true,
+        "terminals": [
+          "SIM.M2.STEP+",
+          "SIM.M2.STEP-",
+          "SIM.M2.DIR+",
+          "SIM.M2.DIR-",
+          "SIM.M2.EN",
+          "SIM.M2.ALM"
+        ]
+      },
+      {
+        "owner": "Smart outputs 1",
+        "physical_wiring_verified": false,
+        "resource": "SIM.DO0",
+        "simulation_only": true,
+        "terminals": [
+          "SIM.DO0.OUT",
+          "SIM.DO0.REF"
+        ]
+      },
+      {
+        "owner": "ABZ encoders 1",
+        "physical_wiring_verified": false,
+        "resource": "SIM.ABZ0",
+        "simulation_only": true,
+        "terminals": [
+          "SIM.ABZ0.A+",
+          "SIM.ABZ0.A-",
+          "SIM.ABZ0.B+",
+          "SIM.ABZ0.B-",
+          "SIM.ABZ0.Z+",
+          "SIM.ABZ0.Z-"
+        ]
+      }
+    ]
+  },
+  "retained_profile_drafts": {},
+  "history": [],
+  "validation": {
+    "valid": true,
+    "draft": {
+      "encoders": [
+        {
+          "counts_per_revolution": 4000,
+          "equipment_profile": "sim-abz-5v-v1",
+          "resource": "SIM.ABZ0",
+          "role": "ABZ encoders 1"
+        }
+      ],
+      "inputs": [],
+      "kind": "is2_disconnected_setup_draft",
+      "machine_name": "Workshop mill \u00b7 setup example",
+      "motors": [
+        {
+          "axis": "x",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m0",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M0",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        },
+        {
+          "axis": "y",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m1",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M1",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        },
+        {
+          "axis": "z",
+          "dir_hold_ns": 5000,
+          "dir_inverted": false,
+          "dir_setup_ns": 5000,
+          "equipment_profile": "sim-step-drive-v1",
+          "gear_load_revolutions": 1,
+          "gear_motor_revolutions": 1,
+          "id": "m2",
+          "max_velocity_units_per_second": 10,
+          "microsteps": 16,
+          "motor_steps_per_revolution": 200,
+          "resource": "SIM.M2",
+          "step_active_high": true,
+          "step_high_ns": 5000,
+          "step_low_ns": 5000,
+          "travel_per_load_revolution": 5,
+          "unit": "mm"
+        }
+      ],
+      "outputs": [
+        {
+          "current_a": 0.25,
+          "equipment_profile": "sim-smart-output-v1",
+          "resource": "SIM.DO0",
+          "role": "Smart outputs 1",
+          "voltage_v": 24
+        }
+      ],
+      "profile_id": "sim-mill-3axis",
+      "schema_version": 1,
+      "simulation_only": true
+    },
+    "missing_facts": [],
+    "blockers": [],
+    "calculations": [
+      {
+        "motor_id": "m0",
+        "axis": "x",
+        "resource": "SIM.M0",
+        "unit": "mm",
+        "pulses_per_motor_revolution": 3200.0,
+        "motor_to_load_ratio": 1.0,
+        "steps_per_unit": 640.0,
+        "steps_per_mm": 640.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "required_step_rate_hz": 6400.0,
+        "timing_ceiling_hz": 100000.0,
+        "maximum_simulation_rate_hz": 100000.0,
+        "rate_margin_hz": 93600.0,
+        "enable_resource": "SIM.M0.EN",
+        "alarm_resource": "SIM.M0.ALM",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "physical_qualified": false
+      },
+      {
+        "motor_id": "m1",
+        "axis": "y",
+        "resource": "SIM.M1",
+        "unit": "mm",
+        "pulses_per_motor_revolution": 3200.0,
+        "motor_to_load_ratio": 1.0,
+        "steps_per_unit": 640.0,
+        "steps_per_mm": 640.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "required_step_rate_hz": 6400.0,
+        "timing_ceiling_hz": 100000.0,
+        "maximum_simulation_rate_hz": 100000.0,
+        "rate_margin_hz": 93600.0,
+        "enable_resource": "SIM.M1.EN",
+        "alarm_resource": "SIM.M1.ALM",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "physical_qualified": false
+      },
+      {
+        "motor_id": "m2",
+        "axis": "z",
+        "resource": "SIM.M2",
+        "unit": "mm",
+        "pulses_per_motor_revolution": 3200.0,
+        "motor_to_load_ratio": 1.0,
+        "steps_per_unit": 640.0,
+        "steps_per_mm": 640.0,
+        "maximum_velocity_mm_per_second": 10.0,
+        "required_step_rate_hz": 6400.0,
+        "timing_ceiling_hz": 100000.0,
+        "maximum_simulation_rate_hz": 100000.0,
+        "rate_margin_hz": 93600.0,
+        "enable_resource": "SIM.M2.EN",
+        "alarm_resource": "SIM.M2.ALM",
+        "formula": "steps/rev * microsteps * motor_revs/load_revs / travel_per_load_rev",
+        "provenance": "derived_from_unverified_user_selections_and_simulation_profile",
+        "physical_qualified": false
+      }
+    ],
+    "wiring": [
+      {
+        "owner": "m0",
+        "resource": "SIM.M0",
+        "terminals": [
+          "SIM.M0.STEP+",
+          "SIM.M0.STEP-",
+          "SIM.M0.DIR+",
+          "SIM.M0.DIR-",
+          "SIM.M0.EN",
+          "SIM.M0.ALM"
+        ],
+        "simulation_only": true,
+        "physical_wiring_verified": false
+      },
+      {
+        "owner": "m1",
+        "resource": "SIM.M1",
+        "terminals": [
+          "SIM.M1.STEP+",
+          "SIM.M1.STEP-",
+          "SIM.M1.DIR+",
+          "SIM.M1.DIR-",
+          "SIM.M1.EN",
+          "SIM.M1.ALM"
+        ],
+        "simulation_only": true,
+        "physical_wiring_verified": false
+      },
+      {
+        "owner": "m2",
+        "resource": "SIM.M2",
+        "terminals": [
+          "SIM.M2.STEP+",
+          "SIM.M2.STEP-",
+          "SIM.M2.DIR+",
+          "SIM.M2.DIR-",
+          "SIM.M2.EN",
+          "SIM.M2.ALM"
+        ],
+        "simulation_only": true,
+        "physical_wiring_verified": false
+      },
+      {
+        "owner": "Smart outputs 1",
+        "resource": "SIM.DO0",
+        "terminals": [
+          "SIM.DO0.OUT",
+          "SIM.DO0.REF"
+        ],
+        "simulation_only": true,
+        "physical_wiring_verified": false
+      },
+      {
+        "owner": "ABZ encoders 1",
+        "resource": "SIM.ABZ0",
+        "terminals": [
+          "SIM.ABZ0.A+",
+          "SIM.ABZ0.A-",
+          "SIM.ABZ0.B+",
+          "SIM.ABZ0.B-",
+          "SIM.ABZ0.Z+",
+          "SIM.ABZ0.Z-"
+        ],
+        "simulation_only": true,
+        "physical_wiring_verified": false
+      }
+    ],
+    "output_groups": [
+      {
+        "group": 0,
+        "selected_current_a": 0.25,
+        "limit_a": 2
+      },
+      {
+        "group": 1,
+        "selected_current_a": 0.0,
+        "limit_a": 2
+      },
+      {
+        "group": 2,
+        "selected_current_a": 0.0,
+        "limit_a": 2
+      },
+      {
+        "group": 3,
+        "selected_current_a": 0.0,
+        "limit_a": 2
+      }
+    ],
+    "assigned_resources": {
+      "SIM.M0": "m0",
+      "SIM.M1": "m1",
+      "SIM.M2": "m2",
+      "SIM.DO0": "Smart outputs 1",
+      "SIM.ABZ0": "ABZ encoders 1"
+    },
+    "physical_checks": "unverified; this fixture cannot commission equipment",
+    "fact_provenance": "user_selections_only_not_physical_evidence",
+    "simulation_only": true,
+    "physical_commissioning_complete": false,
+    "motion_authorized": false,
+    "outputs_inhibited": true,
+    "homed": false,
+    "machine_commands": []
+  },
+  "capabilities": {
+    "schema_version": 1,
+    "catalog_version": "is2-simulation-catalog/1",
+    "identity": {
+      "id": "SIM.motherboard-12m-4enc",
+      "required_topology": "motherboard-12m-4enc",
+      "simulation_only": true,
+      "observed": false
+    },
+    "requirements": {
+      "motor_channels": 12,
+      "individual_motor_enables": 12,
+      "individual_motor_alarms": 12,
+      "abz_encoders": 4,
+      "general_di": 24,
+      "general_do": 16,
+      "do_channel_current_a": 0.5,
+      "do_four_channel_group_current_a": 2,
+      "fault_to_inhibit_maximum_ms": 20,
+      "additional_interfaces": [
+        "fast_probe",
+        "frequency_input",
+        "mpg_pendant",
+        "pwm",
+        "process_contact",
+        "analog_input",
+        "analog_output",
+        "rs485",
+        "can",
+        "watchdog_permission",
+        "power_protection",
+        "status_indicators",
+        "compute",
+        "esp",
+        "protected_settings_storage",
+        "accessory_expansion"
+      ]
+    },
+    "resources": [
+      {
+        "id": "SIM.M0",
+        "kind": "step_dir",
+        "label": "M1",
+        "terminals": [
+          "SIM.M0.STEP+",
+          "SIM.M0.STEP-",
+          "SIM.M0.DIR+",
+          "SIM.M0.DIR-",
+          "SIM.M0.EN",
+          "SIM.M0.ALM"
+        ],
+        "enable_resource": "SIM.M0.EN",
+        "alarm_resource": "SIM.M0.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M1",
+        "kind": "step_dir",
+        "label": "M2",
+        "terminals": [
+          "SIM.M1.STEP+",
+          "SIM.M1.STEP-",
+          "SIM.M1.DIR+",
+          "SIM.M1.DIR-",
+          "SIM.M1.EN",
+          "SIM.M1.ALM"
+        ],
+        "enable_resource": "SIM.M1.EN",
+        "alarm_resource": "SIM.M1.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M2",
+        "kind": "step_dir",
+        "label": "M3",
+        "terminals": [
+          "SIM.M2.STEP+",
+          "SIM.M2.STEP-",
+          "SIM.M2.DIR+",
+          "SIM.M2.DIR-",
+          "SIM.M2.EN",
+          "SIM.M2.ALM"
+        ],
+        "enable_resource": "SIM.M2.EN",
+        "alarm_resource": "SIM.M2.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M3",
+        "kind": "step_dir",
+        "label": "M4",
+        "terminals": [
+          "SIM.M3.STEP+",
+          "SIM.M3.STEP-",
+          "SIM.M3.DIR+",
+          "SIM.M3.DIR-",
+          "SIM.M3.EN",
+          "SIM.M3.ALM"
+        ],
+        "enable_resource": "SIM.M3.EN",
+        "alarm_resource": "SIM.M3.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M4",
+        "kind": "step_dir",
+        "label": "M5",
+        "terminals": [
+          "SIM.M4.STEP+",
+          "SIM.M4.STEP-",
+          "SIM.M4.DIR+",
+          "SIM.M4.DIR-",
+          "SIM.M4.EN",
+          "SIM.M4.ALM"
+        ],
+        "enable_resource": "SIM.M4.EN",
+        "alarm_resource": "SIM.M4.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M5",
+        "kind": "step_dir",
+        "label": "M6",
+        "terminals": [
+          "SIM.M5.STEP+",
+          "SIM.M5.STEP-",
+          "SIM.M5.DIR+",
+          "SIM.M5.DIR-",
+          "SIM.M5.EN",
+          "SIM.M5.ALM"
+        ],
+        "enable_resource": "SIM.M5.EN",
+        "alarm_resource": "SIM.M5.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M6",
+        "kind": "step_dir",
+        "label": "M7",
+        "terminals": [
+          "SIM.M6.STEP+",
+          "SIM.M6.STEP-",
+          "SIM.M6.DIR+",
+          "SIM.M6.DIR-",
+          "SIM.M6.EN",
+          "SIM.M6.ALM"
+        ],
+        "enable_resource": "SIM.M6.EN",
+        "alarm_resource": "SIM.M6.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M7",
+        "kind": "step_dir",
+        "label": "M8",
+        "terminals": [
+          "SIM.M7.STEP+",
+          "SIM.M7.STEP-",
+          "SIM.M7.DIR+",
+          "SIM.M7.DIR-",
+          "SIM.M7.EN",
+          "SIM.M7.ALM"
+        ],
+        "enable_resource": "SIM.M7.EN",
+        "alarm_resource": "SIM.M7.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M8",
+        "kind": "step_dir",
+        "label": "M9",
+        "terminals": [
+          "SIM.M8.STEP+",
+          "SIM.M8.STEP-",
+          "SIM.M8.DIR+",
+          "SIM.M8.DIR-",
+          "SIM.M8.EN",
+          "SIM.M8.ALM"
+        ],
+        "enable_resource": "SIM.M8.EN",
+        "alarm_resource": "SIM.M8.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M9",
+        "kind": "step_dir",
+        "label": "M10",
+        "terminals": [
+          "SIM.M9.STEP+",
+          "SIM.M9.STEP-",
+          "SIM.M9.DIR+",
+          "SIM.M9.DIR-",
+          "SIM.M9.EN",
+          "SIM.M9.ALM"
+        ],
+        "enable_resource": "SIM.M9.EN",
+        "alarm_resource": "SIM.M9.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M10",
+        "kind": "step_dir",
+        "label": "M11",
+        "terminals": [
+          "SIM.M10.STEP+",
+          "SIM.M10.STEP-",
+          "SIM.M10.DIR+",
+          "SIM.M10.DIR-",
+          "SIM.M10.EN",
+          "SIM.M10.ALM"
+        ],
+        "enable_resource": "SIM.M10.EN",
+        "alarm_resource": "SIM.M10.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.M11",
+        "kind": "step_dir",
+        "label": "M12",
+        "terminals": [
+          "SIM.M11.STEP+",
+          "SIM.M11.STEP-",
+          "SIM.M11.DIR+",
+          "SIM.M11.DIR-",
+          "SIM.M11.EN",
+          "SIM.M11.ALM"
+        ],
+        "enable_resource": "SIM.M11.EN",
+        "alarm_resource": "SIM.M11.ALM",
+        "maximum_simulation_rate_hz": 100000,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.ABZ0",
+        "kind": "abz",
+        "label": "ABZ1",
+        "terminals": [
+          "SIM.ABZ0.A+",
+          "SIM.ABZ0.A-",
+          "SIM.ABZ0.B+",
+          "SIM.ABZ0.B-",
+          "SIM.ABZ0.Z+",
+          "SIM.ABZ0.Z-"
+        ],
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.ABZ1",
+        "kind": "abz",
+        "label": "ABZ2",
+        "terminals": [
+          "SIM.ABZ1.A+",
+          "SIM.ABZ1.A-",
+          "SIM.ABZ1.B+",
+          "SIM.ABZ1.B-",
+          "SIM.ABZ1.Z+",
+          "SIM.ABZ1.Z-"
+        ],
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.ABZ2",
+        "kind": "abz",
+        "label": "ABZ3",
+        "terminals": [
+          "SIM.ABZ2.A+",
+          "SIM.ABZ2.A-",
+          "SIM.ABZ2.B+",
+          "SIM.ABZ2.B-",
+          "SIM.ABZ2.Z+",
+          "SIM.ABZ2.Z-"
+        ],
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.ABZ3",
+        "kind": "abz",
+        "label": "ABZ4",
+        "terminals": [
+          "SIM.ABZ3.A+",
+          "SIM.ABZ3.A-",
+          "SIM.ABZ3.B+",
+          "SIM.ABZ3.B-",
+          "SIM.ABZ3.Z+",
+          "SIM.ABZ3.Z-"
+        ],
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI0",
+        "kind": "digital_input",
+        "label": "IN1",
+        "terminals": [
+          "SIM.DI0.IN",
+          "SIM.DI0.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI1",
+        "kind": "digital_input",
+        "label": "IN2",
+        "terminals": [
+          "SIM.DI1.IN",
+          "SIM.DI1.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI2",
+        "kind": "digital_input",
+        "label": "IN3",
+        "terminals": [
+          "SIM.DI2.IN",
+          "SIM.DI2.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI3",
+        "kind": "digital_input",
+        "label": "IN4",
+        "terminals": [
+          "SIM.DI3.IN",
+          "SIM.DI3.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI4",
+        "kind": "digital_input",
+        "label": "IN5",
+        "terminals": [
+          "SIM.DI4.IN",
+          "SIM.DI4.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI5",
+        "kind": "digital_input",
+        "label": "IN6",
+        "terminals": [
+          "SIM.DI5.IN",
+          "SIM.DI5.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI6",
+        "kind": "digital_input",
+        "label": "IN7",
+        "terminals": [
+          "SIM.DI6.IN",
+          "SIM.DI6.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI7",
+        "kind": "digital_input",
+        "label": "IN8",
+        "terminals": [
+          "SIM.DI7.IN",
+          "SIM.DI7.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI8",
+        "kind": "digital_input",
+        "label": "IN9",
+        "terminals": [
+          "SIM.DI8.IN",
+          "SIM.DI8.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI9",
+        "kind": "digital_input",
+        "label": "IN10",
+        "terminals": [
+          "SIM.DI9.IN",
+          "SIM.DI9.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI10",
+        "kind": "digital_input",
+        "label": "IN11",
+        "terminals": [
+          "SIM.DI10.IN",
+          "SIM.DI10.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI11",
+        "kind": "digital_input",
+        "label": "IN12",
+        "terminals": [
+          "SIM.DI11.IN",
+          "SIM.DI11.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI12",
+        "kind": "digital_input",
+        "label": "IN13",
+        "terminals": [
+          "SIM.DI12.IN",
+          "SIM.DI12.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI13",
+        "kind": "digital_input",
+        "label": "IN14",
+        "terminals": [
+          "SIM.DI13.IN",
+          "SIM.DI13.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI14",
+        "kind": "digital_input",
+        "label": "IN15",
+        "terminals": [
+          "SIM.DI14.IN",
+          "SIM.DI14.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI15",
+        "kind": "digital_input",
+        "label": "IN16",
+        "terminals": [
+          "SIM.DI15.IN",
+          "SIM.DI15.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI16",
+        "kind": "digital_input",
+        "label": "IN17",
+        "terminals": [
+          "SIM.DI16.IN",
+          "SIM.DI16.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI17",
+        "kind": "digital_input",
+        "label": "IN18",
+        "terminals": [
+          "SIM.DI17.IN",
+          "SIM.DI17.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI18",
+        "kind": "digital_input",
+        "label": "IN19",
+        "terminals": [
+          "SIM.DI18.IN",
+          "SIM.DI18.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI19",
+        "kind": "digital_input",
+        "label": "IN20",
+        "terminals": [
+          "SIM.DI19.IN",
+          "SIM.DI19.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI20",
+        "kind": "digital_input",
+        "label": "IN21",
+        "terminals": [
+          "SIM.DI20.IN",
+          "SIM.DI20.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI21",
+        "kind": "digital_input",
+        "label": "IN22",
+        "terminals": [
+          "SIM.DI21.IN",
+          "SIM.DI21.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI22",
+        "kind": "digital_input",
+        "label": "IN23",
+        "terminals": [
+          "SIM.DI22.IN",
+          "SIM.DI22.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DI23",
+        "kind": "digital_input",
+        "label": "IN24",
+        "terminals": [
+          "SIM.DI23.IN",
+          "SIM.DI23.REF"
+        ],
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO0",
+        "kind": "digital_output",
+        "label": "OUT1",
+        "terminals": [
+          "SIM.DO0.OUT",
+          "SIM.DO0.REF"
+        ],
+        "group": 0,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO1",
+        "kind": "digital_output",
+        "label": "OUT2",
+        "terminals": [
+          "SIM.DO1.OUT",
+          "SIM.DO1.REF"
+        ],
+        "group": 0,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO2",
+        "kind": "digital_output",
+        "label": "OUT3",
+        "terminals": [
+          "SIM.DO2.OUT",
+          "SIM.DO2.REF"
+        ],
+        "group": 0,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO3",
+        "kind": "digital_output",
+        "label": "OUT4",
+        "terminals": [
+          "SIM.DO3.OUT",
+          "SIM.DO3.REF"
+        ],
+        "group": 0,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO4",
+        "kind": "digital_output",
+        "label": "OUT5",
+        "terminals": [
+          "SIM.DO4.OUT",
+          "SIM.DO4.REF"
+        ],
+        "group": 1,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO5",
+        "kind": "digital_output",
+        "label": "OUT6",
+        "terminals": [
+          "SIM.DO5.OUT",
+          "SIM.DO5.REF"
+        ],
+        "group": 1,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO6",
+        "kind": "digital_output",
+        "label": "OUT7",
+        "terminals": [
+          "SIM.DO6.OUT",
+          "SIM.DO6.REF"
+        ],
+        "group": 1,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO7",
+        "kind": "digital_output",
+        "label": "OUT8",
+        "terminals": [
+          "SIM.DO7.OUT",
+          "SIM.DO7.REF"
+        ],
+        "group": 1,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO8",
+        "kind": "digital_output",
+        "label": "OUT9",
+        "terminals": [
+          "SIM.DO8.OUT",
+          "SIM.DO8.REF"
+        ],
+        "group": 2,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO9",
+        "kind": "digital_output",
+        "label": "OUT10",
+        "terminals": [
+          "SIM.DO9.OUT",
+          "SIM.DO9.REF"
+        ],
+        "group": 2,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO10",
+        "kind": "digital_output",
+        "label": "OUT11",
+        "terminals": [
+          "SIM.DO10.OUT",
+          "SIM.DO10.REF"
+        ],
+        "group": 2,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO11",
+        "kind": "digital_output",
+        "label": "OUT12",
+        "terminals": [
+          "SIM.DO11.OUT",
+          "SIM.DO11.REF"
+        ],
+        "group": 2,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO12",
+        "kind": "digital_output",
+        "label": "OUT13",
+        "terminals": [
+          "SIM.DO12.OUT",
+          "SIM.DO12.REF"
+        ],
+        "group": 3,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO13",
+        "kind": "digital_output",
+        "label": "OUT14",
+        "terminals": [
+          "SIM.DO13.OUT",
+          "SIM.DO13.REF"
+        ],
+        "group": 3,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO14",
+        "kind": "digital_output",
+        "label": "OUT15",
+        "terminals": [
+          "SIM.DO14.OUT",
+          "SIM.DO14.REF"
+        ],
+        "group": 3,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      },
+      {
+        "id": "SIM.DO15",
+        "kind": "digital_output",
+        "label": "OUT16",
+        "terminals": [
+          "SIM.DO15.OUT",
+          "SIM.DO15.REF"
+        ],
+        "group": 3,
+        "maximum_current_a": 0.5,
+        "maximum_group_current_a": 2,
+        "voltage_v": 24,
+        "simulation_only": true,
+        "observed": false,
+        "physically_qualified": false
+      }
+    ],
+    "additional_interface_status": "required_but_not_configurable_in_this_setup_fixture",
+    "source_contract": "docs/MOTHERBOARD_IS2.md; source representation is not live observation or qualification",
+    "physical_pin_guidance": false,
+    "physical_equipment_discovered": false,
+    "removable_units_required": [
+      "qualified_compute",
+      "qualified_esp",
+      "qualified_settings_storage"
+    ],
+    "soldered_region_service": "whole_motherboard_exchange",
+    "notice": "SIM labels and 100 kHz model ceiling are authored fixture limits, not hardware ratings. No motion API.",
+    "simulation_only": true,
+    "physical_commissioning_complete": false,
+    "motion_authorized": false,
+    "outputs_inhibited": true,
+    "homed": false,
+    "machine_commands": []
+  },
+  "simulation_only": true,
+  "physical_commissioning_complete": false,
+  "motion_authorized": false,
+  "outputs_inhibited": true,
+  "homed": false,
+  "machine_commands": []
+}

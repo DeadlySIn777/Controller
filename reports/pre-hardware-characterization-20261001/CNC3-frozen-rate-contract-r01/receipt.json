@@ -1,0 +1,28 @@
+{
+  "status": "SOURCE_CONTRACT_CONFIRMED_ENFORCEMENT_AND_HIGHER_TARGET_OPEN",
+  "evidence_type": "SOURCE_INSPECTION_AND_EXACT_ARITHMETIC",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\v3\\frozen\\spec\\protocol.json": "7b99fe71d695dd9dfbecc75da980402169805ed8359626ca24eca2e8bb91bf07",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\01-protocol-and-schedule.md": "2730d33874d0faad2a987b857189fe7fb8ceb8ec4a818fc07a4476953ef75300",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\record_cnc3_rate_contract_r01.py": "a9499ed6cd795c2439a212bfe53889581eabe2402691b72cee1fad0820127eb1"
+  },
+  "spec_revision": "IS-1",
+  "literal_CAP3_fields": {
+    "core_hz": "50,000,000",
+    "max_rate": "0x01000000",
+    "timing_min": "100",
+    "timing_max": "1023"
+  },
+  "actual_CNC3_protocol_contract_steps_per_second": 195312.5,
+  "assumed_core_hz": 50000000,
+  "max_unsigned_magnitude_rate": 16777216,
+  "configured_timing_min_core_ticks": 100,
+  "configured_timing_max_core_ticks": 1023,
+  "normative_decision": "| D01-12 | **Step-rate cap stays 195,312.5 steps/s per channel** (MAX_RATE 0x01000000, timing table minimum 100 ticks = 2 \u00b5s) | It is the rate the existing RTL was simulated at [SI]; the DM542T V4 reference drive accepts at most 200 kHz [DS]; the expanded target's 2,000,000 steps/s figure is a qualification goal that would need a shorter timing minimum, a new MAX_RATE and physical AM26C31/cable qualification. A higher cap can be added later under a CAP3 feature bit without a layout change (`max_rate` is already a capability field) | None | Standard; higher cap is a later option |",
+  "historical_CNC1_same_value_is_separate_evidence": true,
+  "current_stateful_candidate_rate_enforcement": "Root identified missing incoming MAX_RATE/channel timing checks; actual corrective implementation and adversarial acceptance tests required before accepting stateful candidate",
+  "user_2MHz_target": "Retained as unfinished target. Actual protocol/rate/timing evolution, drive limits, routed electrical qualification, vendor timing and complete runtime tests required; no hidden cap or specification change made.",
+  "isolated_9_and_12_tick_component_sweeps_are_not_current_protocol_configuration": true,
+  "hardware_qualified": false,
+  "manufacturing_ready": false
+}

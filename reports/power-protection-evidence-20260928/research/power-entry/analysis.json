@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "manufacturing_ready": false,
+  "evidence": "datasheet-based numerical screening only",
+  "errors": [],
+  "issues": [
+    "OVP recovery is not guaranteed at maximum normal input voltage",
+    "CORE: unsequenced startup can enter current limit",
+    "CORE: original ledger source capacity is below assumed upper limiter",
+    "FIELD: unsequenced startup can enter current limit"
+  ],
+  "not_proved": [
+    "physical fuse clearing/source coordination",
+    "transient voltage survival",
+    "startup sequence and thermal SOA",
+    "board thermal behavior",
+    "EMC immunity",
+    "complete hardware or manufacturing readiness"
+  ],
+  "thresholds": {
+    "uvlo_rise_v": [
+      17.261780780274496,
+      18.725944834951573
+    ],
+    "uvlo_fall_v": [
+      15.984566661593453,
+      17.60624012845378
+    ],
+    "ovp_rise_v": [
+      32.28811173349429,
+      34.817824359045225
+    ],
+    "ovp_fall_v": [
+      29.907223000687736,
+      32.72926130849837
+    ],
+    "pgth_rise_v": [
+      17.455284104477617,
+      18.553326105527635
+    ],
+    "pgth_fall_v": [
+      16.177264203980105,
+      17.432914045226124
+    ]
+  },
+  "startup": {
+    "model_slew_v_per_s": [
+      397.26190476190476,
+      608.9473684210526
+    ],
+    "capacitive_peak_a": 0.6089473684210526,
+    "rise_to_max_input_ms": [
+      49.265341400172865,
+      75.51693137548698
+    ],
+    "stored_energy_j": 0.45,
+    "fast_model_average_efuse_loss_w": 9.134210526315789,
+    "startup_loads_must_be_held_off": true,
+    "thermal_soa_proved": false
+  },
+  "branches": {
+    "CORE": {
+      "load_a": 1.81,
+      "nominal_limit_a": 2.1951219512195124,
+      "assumed_limit_range_a": [
+        1.9657808518383695,
+        2.4267679862728277
+      ],
+      "assumed_low_limit_margin_a": 0.15578085183836943,
+      "minimum_output_model_v": 18.638,
+      "efuse_loss_model_w": 0.22463329999999998,
+      "q1_hot_loss_assumption_w": 0.10876652,
+      "efuse_reference_rise_c": 7.053485619999999,
+      "q1_reference_rise_c": 5.9821586,
+      "imon_max_model_v": 0.7350850104179434,
+      "unsequenced_load_plus_capacitor_a": 2.4189473684210525,
+      "source_target_a": 3.0,
+      "ledger_source_capacity_a": 2.0
+    },
+    "FIELD": {
+      "load_a": 4.36,
+      "nominal_limit_a": 4.931506849315069,
+      "assumed_limit_range_a": [
+        4.416274790431405,
+        5.451917119845805
+      ],
+      "assumed_low_limit_margin_a": 0.05627479043140493,
+      "minimum_output_model_v": 18.128,
+      "efuse_loss_model_w": 1.0585088,
+      "q1_hot_loss_assumption_w": 0.6311187200000001,
+      "efuse_reference_rise_c": 33.237176319999996,
+      "q1_reference_rise_c": 34.711529600000006,
+      "imon_max_model_v": 1.6514238590211332,
+      "unsequenced_load_plus_capacitor_a": 4.968947368421053,
+      "source_target_a": 6.0,
+      "ledger_source_capacity_a": 6.0
+    }
+  },
+  "assumptions": [
+    "ILIM transfer +/-10% or greater is an assumption at selectedR",
+    "Q1 hot resistance2x25C6V-gate max is an assumption",
+    "source/path targets and0.20ohm budget are not selected hardware",
+    "thermal metrics are reference-board values",
+    "dVdT gain/current endpoint product is a model, not waveform qualification"
+  ],
+  "calculation_valid": true,
+  "input_sha256": {
+    "requirements": "60abfb531c4fd441c268ade45c12bca59b0d7d303dc63b8144092b12510db9d6",
+    "ledger": "f5abb8b171ee4c8e5713febb682e90ce71e86325e0dac16ecd108f723d68f63d"
+  }
+}

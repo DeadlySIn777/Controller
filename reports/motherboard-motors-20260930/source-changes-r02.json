@@ -1,0 +1,89 @@
+{
+  "revision": "motherboard-motors-r0.2",
+  "utc": "2026-09-30T18:40:15.253547+00:00",
+  "prior_source_archive": "archive-r0.1/archive.json",
+  "changes": [
+    {
+      "kind": "datasheet-backed driver substitution",
+      "old": "SN74LVC07APWR",
+      "new": "74LVC07APW,118",
+      "refs": [
+        "U6007",
+        "U6008"
+      ],
+      "reason": "TI onlyspecifiesIoff-atzero; Nexperia also specifiespoweredHIGHIOZ\u00b110\u00b5Athrough85C; samePW14pins/footprint"
+    },
+    {
+      "kind": "sourcing substitution, NOTpinrepair",
+      "old": "SN74LVC2G74DCUR",
+      "new": "SN74LVC1G74DCUR",
+      "refs": [
+        "U6043",
+        "U6044"
+      ],
+      "reason": "BothareSINGLE8-pinDFFs, sameDCUpinmap; earlierstatement2G74wasdual/nonexistentwasmistaken"
+    },
+    {
+      "kind": "ordering-string normalization",
+      "old": [
+        "TLP3640A(TPL,E)",
+        "TLP4176A(TP,F)"
+      ],
+      "new": [
+        "TLP3640A(TPL,E",
+        "TLP4176A(TP,F"
+      ],
+      "reason": "Officialproductpagesandcataloglistnoendparenthesis; package/partunchanged; vendorpacking/factorysuffixmustmatchpurchasedstock",
+      "official_urls": [
+        "https://toshiba.semicon-storage.com/us/semiconductor/product/isolators-solid-state-relays/photorelay-mosfet-output/detail.TLP3640A.html",
+        "https://toshiba.semicon-storage.com/us/semiconductor/product/isolators-solid-state-relays/photorelay-mosfet-output/detail.TLP4176A.html"
+      ]
+    },
+    {
+      "kind": "directperchannelpermissioninhibit",
+      "new_refs": [
+        "U6046",
+        "U6047",
+        "U6048",
+        "U6049",
+        "U6050"
+      ],
+      "reason": "SchmittINV(EN_N)\u2192NANDwithphysicalGATE\u219207; GATELOWforcesHIGH/ZLEDsinkwithoutwaitingforbankcapdischarge"
+    },
+    {
+      "kind": "digitalboth-edgequalification",
+      "old": "SN74LVC2G17DBVR+820R/1.5nFRC",
+      "new": [
+        "LTC6994IS6-2#TRPBF",
+        "74AHCT1G17GVH",
+        "60400R1%"
+      ],
+      "reason": "Fulltemperatureprogrammeddelaybounds1.118374\u20131.299574\u00b5s; noSchmittthresholdinterpolation; TTL5VbufferfixesupstreamHIGHmargin"
+    },
+    {
+      "kind": "passivebankbleed",
+      "old_ohm": 1000,
+      "new_ohm": 330,
+      "reason": "Isolatedidealrail100nFmaxdischargesbelow100\u00b5Athrough220Rin200.391\u00b5swithoutassumingLEDVf; TPSturnoff/leak/boardcapstillnotguaranteed"
+    },
+    {
+      "kind": "manufacturerlands",
+      "component": "TLP4176A",
+      "old_pad_mm": [
+        1.8,
+        0.9
+      ],
+      "new_pad_mm": [
+        1.2,
+        0.8
+      ],
+      "reason": "Official2.54SOP4referenceGIFmatches6.3mmby2.54mmpadcentrepattern"
+    },
+    {
+      "kind": "TIISO1212landsandfloatingcopper",
+      "old": "stockSSOP16,NConSUB",
+      "new": "CNC_Motors:ISO1212_DBQ16_TI; ALM0..11_SUB_FLOAT",
+      "reason": "TI1.60\u00d70.41mmpadsat\u00b12.70/0.635pitch; everySUBown2x2mmfloatingisland"
+    }
+  ]
+}

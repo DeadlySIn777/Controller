@@ -1,0 +1,1376 @@
+TPS1H000-Q1 Automotive 40V, 1Ω, Single-Channel Smart High-Side Switch
+1 Features
+• Qualified for automotive applications
+• AEC-Q100 qualified with the following results:
+– Device temperature grade 1: –40°C to 125°C 
+ambient operating temperature range
+– Device HBM ESD Classification Level H2
+– Device CDM ESD Classification Level C4B
+• Single-channel 1000mΩ smart high-side switch
+• Wide operating voltage: 3.4V to 40V
+• Low standby current: <500nA
+• Adjustable current limit with external resistor
+– ±15% When ≥150mA
+– ±10% When ≥300mA
+• Configurable behavior after current limit
+– Holding mode
+– Latch-off mode with adjustable delay time
+– Auto-retry mode
+• Supports standalone operation without an MCU
+• Protection:
+– Short-to-GND and overload
+– Thermal shutdown and thermal swing
+– Negative voltage clamp for inductive loads
+– Loss-of-GND and loss-of-battery
+• Diagnostics:
+– Overload and short-to-GND detection
+– Open-load and short-to-battery detection in ON 
+or OFF State
+– Thermal shutdown and thermal swing
+2 Applications
+• Single-channel LED driver
+• Single-channel high-side relay driver
+• Body lighting
+• Advanced driver assistance systems (ADAS) 
+sensors
+• General resistive, inductive, and capacitive loads
+3 Description
+The TPS1H000-Q1 device is a fully protected single-
+channel high-side power switch with an integrated 
+1000mΩ NMOS power FET.
+An adjustable current limit improves system reliability 
+by limiting the inrush or overload current. The high 
+accuracy of the current limit improves overload 
+protection, simplifying the front-stage power design. 
+Configurable features besides current limit provide 
+design flexibility in the areas of functionality, cost, and 
+thermal dissipation.
+The device supports full diagnostics with the digital 
+status output. Open-load detection is available in 
+both the ON- and OFF-states. The device supports 
+operation with or without an MCU. Standalone mode 
+allows use of the device in isolated systems.
+Package Information
+PART NUMBER PACKAGE(1) PACKAGE SIZE(2)
+TPS1H000-Q1 DGN (HVSSOP, 8) 3.00mm × 4.90mm
+(1) For all available packages, see the orderable addendum at 
+the end of the datasheet.
+(2) The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+Copyright © 2017, Texas Instruments Incorporated
+VS
+OUT
+DELAY
+CL
+3.4 V to 40 V
+Supply Voltage
+GND
+LED Strings
+Sub Module:
+Cameras, Sensors
+General Resistive, Capacitive,
+Inductive Loads
+Relays
+IN
+DIAG_EN
+FAULT
+Up to 40 V
+Up to 40 V
+Typical Block Diagram
+ Current-Limit Protection in Auto-Retry Mode
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Pin Configuration and Functions...................................3
+5 Specifications.................................................................. 4
+5.1 Absolute Maximum Ratings........................................ 4
+5.2 ESD Ratings............................................................... 4
+5.3 Recommended Operating Conditions.........................4
+5.4 Thermal Information....................................................5
+5.5 Electrical Characteristics.............................................5
+5.6 Switching Characteristics............................................7
+5.7 Typical Characteristics................................................8
+6 Detailed Description......................................................10
+6.1 Overview...................................................................10
+6.2 Functional Block Diagram.........................................10
+6.3 Feature Description...................................................10
+6.4 Device Functional Modes..........................................20
+7 Application and Implementation..................................22
+7.1 Application Information............................................. 22
+7.2 Typical Application.................................................... 22
+7.3 Power Supply Recommendations.............................23
+7.4 Layout....................................................................... 23
+8 Device and Documentation Support............................25
+8.1 Receiving Notification of Documentation Updates....25
+8.2 Support Resources................................................... 25
+8.3 Trademarks...............................................................25
+8.4 Electrostatic Discharge Caution................................25
+8.5 Glossary....................................................................25
+9 Revision History............................................................ 25
+10 Mechanical, Packaging, and Orderable 
+Information.................................................................... 25
+10.1 Mechanical Data..................................................... 26
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+2 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+4 Pin Configuration and Functions
+1IN 8  VS
+2DIAG_EN 7  OUT
+3FAULT 6  GND
+4CL 5  DELAY
+Not to scale
+Thermal
+Pad
+Figure 4-1. DGN PowerPAD™ Package, 8-Pin HVSSOP With Exposed Thermal Pad (Top View) 
+Table 4-1. Pin Functions
+PIN
+TYPE(1) DESCRIPTION
+NAME NO.
+CL 4 O Adjustable current limit. Connect to device GND if external current limit is not used.
+DELAY 5 I/O Function configuration when in current limit; internal pullup.
+DIAG_EN 2 I Enable the diagnostic function.
+FAULT 3 O Open-drain diagnostic status output. Leave floating if not used.
+GND 6 — Ground pin.
+IN 1 I Input control for output activation; internal pulldown.
+OUT 7 O Output, source of the high-side switch, connected to the load.
+VS 8 I Power supply, drain for the high-side switch.
+Thermal pad — — Thermal pad. Connect to device GND or leave floating.
+(1) I = input, O = output, I/O = bidirectional
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 3
+Product Folder Links: TPS1H000-Q1
+5 Specifications
+5.1 Absolute Maximum Ratings
+over operating ambient temperature range (unless otherwise noted)(1) (2)
+MIN MAX UNIT
+Supply voltage VS pin t < 400ms — 42 V
+Reverse polarity voltage (3) t < 1 minute –36 — V
+Current on GND t < 2 minutes –100 250 mA
+Voltage on IN and DIAG_EN pins –0.3 42 V
+Current on IN and DIAG_EN pins –10 — mA
+Voltage on DELAY pin –0.3 7 V
+Current on DELAY pin –60 — mA
+Voltage on FAULT pin –0.3 7 V
+Current on FAULT pin –30 10 mA
+Voltage on CL pin –0.3 7 V
+Current on CL pin — 6 mA
+Voltage on OUT pin — 42 V
+Inductive load switch-off energy dissipation 
+single pulse(4) — 40 mJ
+Operating junction temperature –40 150 °C
+Storage temperature, Tstg –65 150 °C
+(1) Operation outside the Absolute Maximum Ratings may cause permanent device damage. Absolute Maximum Ratings do not imply 
+functional operation of the device at these or any other conditions beyond those listed under Recommended Operating Conditions. 
+If used outside the Recommended Operating Conditions but within the Absolute Maximum Ratings, the device may not be fully 
+functional, and this may affect device reliability, functionality, performance, and shorten the device lifetime.
+(2) All voltage values are with respect to ground.
+(3) Reverse polarity condition: VIN = 0V, reverse current < IR(2), GND pin 1kΩ resistor in parallel with diode.
+(4) Test condition: VVS = 13.5V, L = 300mH, TJ = 150°C. FR4 2s2p board, 2 × 70μm Cu, 2 × 35μm Cu. 600mm2 thermal pad copper area.
+5.2 ESD Ratings
+VALUE UNIT
+V(ESD) Electrostatic discharge
+Human-body model (HBM), per AEC 
+Q100-002(1)
+All pins except VS, OUT, 
+and GND ±2000
+VPins VS, OUT, and GND ±3000
+Charged-device model (CDM), per AEC Q100-011 ±750
+(1) AEC Q100-002 indicates that HBM stressing shall be in accordance with the ANSI/ESDA/JEDEC JS-001 specification.
+5.3 Recommended Operating Conditions
+over operating ambient temperature range (unless otherwise noted)
+MIN NOM MAX UNIT
+VS Operating voltage 4 40 V
+Voltage on IN and DIAG_EN pins 0 40 V
+Voltage on FAULT pin 0 5 V
+Io,nom Nominal dc load current 0 1 A
+TJ Operating junction temperature –40 150 °C
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+4 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+5.4 Thermal Information
+THERMAL METRIC(1)
+TPS1H000-Q1
+UNITDGN (HVSSOP)
+8 PINS
+RθJA Junction-to-ambient thermal resistance 49.7 °C/W
+RθJC(top) Junction-to-case (top) thermal resistance 74.0 °C/W
+RθJB Junction-to-board thermal resistance 21.4 °C/W
+ψJT Junction-to-top characterization parameter 3.8 °C/W
+ψJB Junction-to-board characterization parameter 21.5 °C/W
+RθJC(bot) Junction-to-case (bottom) thermal resistance 7.7 °C/W
+(1) For more information about traditional and new thermal metrics, see Semiconductor and IC Package Thermal Metrics.
+5.5 Electrical Characteristics
+over operating ambient temperature range (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+OPERATING VOLTAGE
+VVS(nom) Nominal operating voltage 4 40 V
+VVS(uvr) Undervoltage restart VVS rising 3.5 3.7 4 V
+VVS(uvf) Undervoltage shutdown VVS falling 3 3.2 3.4 V
+V(uv,hys) Undervoltage shutdown, hysteresis 0.5 V
+OPERATING CURRENT
+I(op) Nominal operating current VVS = 13.5V, VIN = 5V, VDIAG_EN = 
+0V, IOUT = 0.1A, ICL = 0.5A. 5 mA
+I(off) Standby current
+VVS = 13.5V, VIN = VDIAG_EN = VCL = 
+VOUT = 0V, TJ = 25°C 0.5
+µA
+VVS = 13.5V, VIN = VDIAG_EN = VCL = 
+VOUT = 0V, TJ = 125°C 3
+I(off,diag)
+Standby current with diagnostics 
+enabled VVS = 13.5V, VIN = 0V, VDIAG_EN = 5V 3 mA
+t(off,deg) Standby-mode deglitch time(1)
+IN from high to low, if deglitch 
+time≥ t(off,deg), the device enters into 
+standby mode.
+12.5 ms
+Ilkg(out) Output leakage current in off-state VVS = 13.5V, VIN = VDIAG_EN = VOUT 
+= 0V 3 µA
+POWER STAGE
+rDS(on) On-state resistance
+VVS ≥ 3.5V, TJ = 25°C 1000
+mΩ
+VVS ≥ 3.5V, TJ = 150°C 2000
+ICL(int) Internal current limit CL pin connected to GND 1 1.8 A
+ICL(TSD)
+Current-limit value percentage during 
+thermal shutdown 60%
+VDS(clamp)
+Drain−to−source voltage internally 
+clamped 45 65 V
+OUTPUT DIODE CHARACTERISTICS
+VF Drain−to-source diode voltage IN = 0, IOUT = −0.15A 0.3 0.7 1 V
+IR(1)
+Continuous reverse current from 
+source to drain during a short-to-
+battery condition(1)
+t < 60s, VIN= 0V, TJ = 25°C. 1 A
+IR(2)
+Continuous reverse current from 
+source to drain during a reverse-
+polarity condition(1)
+t < 60s, VIN= 0V, TJ = 25°C. GND pin 
+1kΩ resistor in parallel with diode. 1 A
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 5
+Product Folder Links: TPS1H000-Q1
+5.5 Electrical Characteristics (continued)
+over operating ambient temperature range (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+LOGIC INPUT (IN, DIAG_EN)
+VIH Logic high-level voltage 2 V
+VIL Logic low-level voltage 0.8 V
+Rpd,in Logic-pin pulldown resistor
+IN. VIN = 5V 150 400
+kΩ
+DIAG_EN. VVS = VDIAG_EN = 5V 350 850
+DIAGNOSTICS
+Ilkg(loss,GND)
+Loss of ground output leakage 
+current 100 µA
+td(ol,on) Open-load deglitch time in on-state
+VIN = 5V, VDIAG_EN = 5V, when IOUT 
+< I(ol,on), duration longer than td(ol,on), 
+open load is detected.
+200 300 450 µs
+I(ol,on)
+Open-load detection threshold in on-
+state
+VIN = 5V, VDIAG_EN = 5V, when IOUT 
+< I(ol,on), duration longer than td(ol,on), 
+open load is detected.
+1 5 8 mA
+V(ol,off)
+Open-load detection threshold in off-
+state
+VIN = 0V, VDIAG_EN = 5V, when VVS 
+– VOUT < V(ol,off), duration longer than 
+td(ol,off), open load is detected.
+1.4 2.6 V
+td(ol,off) Open-load deglitch time in off-state
+VIN = 0V, VDIAG_EN = 5V, when VVS 
+– VOUT < V(ol,off), duration longer than 
+td(ol,off), open load is detected.
+200 300 450 µs
+I(ol,off) Off-state output sink current VIN = 0V, VDIAG_EN = 5V, VVS = VOUT 
+= 13.5V –70 µA
+V FAULT FAULT low output voltage I FAULT = 2mA 0.2 V
+t FAULT FAULT signal holding time(1) 8.5 ms
+T(SD) Thermal shutdown threshold(1) 175 °C
+T(SD,rst) Thermal shutdown status reset(1) 155 °C
+T(sw) Thermal swing shutdown threshold(1) 60 °C
+T(hys)
+Hysterisis for resetting the thermal 
+shutdown and swing(1) 10 °C
+CURRENT LIMIT AND DELAY CONFIGURATION
+K(CL) Current-limit current ratio(1) 600
+VCL(th)
+Current-limit internal threshold 
+voltage(1) 0.8 V
+dK(CL)/K(CL)
+External current limit accuracy(2) 
+(IOUT – ICL × K(CL)) × 100 / (ICL × 
+K(CL))
+Ilimit ≥ 0.05A， VVS – VOUT ≥ 2.5V –20% 20%
+Ilimit ≥ 0.15A ， VVS – VOUT ≥ 2.5V –15% 15%
+Ilimit ≥ 0.3A, Ilimit < 1A， VVS – VOUT ≥ 
+2.5V –10% 10%
+Idl(chg)
+Delay pin charging current in latch-off 
+mode(1) 4.5 µA
+Vdl(th)
+Pulling up threshold in auto-retry 
+mode 2.7 V
+Vdl(ref)
+Internal reference voltage in latch-off 
+mode 1.45 V
+tdl1 Internal fixed delay time(1) 300 400 500 µs
+tdl2
+Adjustable delay time by external 
+capacitor on DELAY pin(1)
+Connect with 3.3uF capacitor as the 
+maximum value. 1000 ms
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+6 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+5.5 Electrical Characteristics (continued)
+over operating ambient temperature range (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+tCL(deg) Deglitch time when current limit (1)
+IN low to high, VDIAG_EN = 5V, the 
+deglitch time from IN rising edge to 
+FAULT reporting out.
+300 500
+µs
+IN keeps high, VDIAG_EN = 5V, the 
+deglitch time from CL start-point to 
+FAULT reporting out.
+80 180
+thic(on) On-time when in auto-retry mode(1) 35 40 45 ms
+thic(off) Off-time when in auto-retry mode(1) 0.8 1 1.2 s
+(1) Value specified by design, not subject to production test
+(2) External current limit accuracy is only applicable to overload conditions greater than 1.5x the current limit setting
+5.6 Switching Characteristics
+PARAMETER TEST CONDITIONS MIN NOM MAX UNIT
+td(on)
+Turnon delay time, IN rising edge to 
+10% of VOUT
+VVS = 13.5V, VDIAG_EN = 5V, IOUT = 
+0.1A 20 50 90 µs
+td(off)
+Turnoff delay time, IN falling edge to 
+90% of VOUT
+VVS = 13.5V, VDIAG_EN = 5V, IOUT = 
+0.1A 20 50 90 µs
+dV/dt(on) Slew rate on, VOUT from 10% to 90% VVS = 13.5V, VDIAG_EN = 5V, IOUT = 
+0.1A 0.1 0.6 V/µs
+dV/dt(off) Slew rate off, VOUTfrom 90% to 10% VVS = 13.5V, VDIAG_EN = 5V, IOUT = 
+0.1A 0.3 0.9 V/µs
+VOUT 
+td(on)
+10%
+90%
+10%
+90%
+dV/dt(on)
+VIN 
+td(off)
+dV/dt(off)
+Figure 5-1. Output Delay Characteristics
+Open LoadOpen Load
+IN
+FAULT
+td(ol,on) td(ol,off)
+Figure 5-2. Open-Load Blanking-Time Characteristic
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 7
+Product Folder Links: TPS1H000-Q1
+5.7 Typical Characteristics
+Ambient Temperature (°C)
+UVLO Voltage (V)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+3.8
+3.9
+4
+D001
+VVS Rising
+VVS Falling
+Figure 5-3. UVLO Voltage Threshold
+Ambient Temperature (°C)
+IN Voltage (V)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+1
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+D002
+IN High
+IN Low Figure 5-4. IN Voltage Threshold
+Ambient Temperature (°C)
+DIAG_EN Voltage (V)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+1
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+D003
+DIAG_EN High
+DIAG_EN Low
+Figure 5-5. DIAG_EN Voltage Threshold
+Ambient Temperature (°C)
+Diode Voltage (V)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+0.6
+0.7
+0.8
+0.9
+1
+D004 Figure 5-6. Body-Diode Forward Voltage
+Ambient Temperature (°C)
+Clamp Voltage (V)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+50
+51
+52
+53
+54
+55
+D005
+Figure 5-7. Drain-to-Source Clamp Voltage
+Ambient Temperature (°C)
+On-Resistance (:)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+0.8
+0.9
+1
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+1.9
+2
+D006
+rDS(on)_3.5V
+rDS(on)_13.5V
+rDS(on)_40V Figure 5-8. FET On-Resistance
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+8 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+5.7 Typical Characteristics (continued)
+Ambient Temperature (°C)
+50mA CL Accuracy (%)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+-5
+-4.5
+-4
+-3.5
+-3
+-2.5
+-2
+-1.5
+D007
+IOUT = 50mA
+Figure 5-9. Current-Limit Accuracy at 50mA
+Ambient Temperature (°C)
+150mA CL Accuracy (%)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+1
+1.5
+2
+2.5
+3
+3.5
+D008
+IOUT = 150mA
+Figure 5-10. Current-Limit Accuracy at 150mA
+Ambient Temperature (°C)
+300mA CL Accuracy (%)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+1
+1.5
+2
+2.5
+3
+D009
+IOUT = 300mA
+Figure 5-11. Current-Limit Accuracy at 300mA
+Ambient Temperature (°C)
+1A CL Accuracy (%)
+-40 -25 -10 5 20 35 50 65 80 95 110 125
+-2.5
+-2
+-1.5
+-1
+-0.5
+0
+D010
+IOUT = 1A
+Figure 5-12. Current-Limit Accuracy at 1A
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 9
+Product Folder Links: TPS1H000-Q1
+6 Detailed Description
+6.1 Overview
+The TPS1H000-Q1 device is a smart high-side switch, with an internal charge pump and single-channel 
+integrated NMOS power FET. The adjustable current-limit function greatly improves the reliability of the whole 
+system. Full diagnostic features enable intelligent control of the load.
+The external high-accuracy current limit allows setting the current-limit value for the application. When 
+overcurrent occurs, the device improves system reliability by clamping the inrush current effectively. The 
+TPS1H000-Q1 device can also save system cost by reducing the size of PCB traces and connectors, and 
+the capacity of the preceding power stage. The TPS1H000-Q1 device allows three modes when a current limit 
+occurs. Through the configuration on the DELAY pin, users can set the output to any of three modes: hold the 
+current consistently, latch off immediately, or retry automatically. The configurable behaviors during current limit 
+provide design flexibility that considers functionality, cost, and thermal dissipation.
+The TPS1H000-Q1 device supports full diagnostics with the digital status output. High-accuracy and low-
+threshold open-load detection enables real-time on-state monitoring. The TPS1H000-Q1 device also supports 
+operation without an MCU, the standalone mode, which allows the system to implement the full functionality 
+locally.
+The TPS1H000-Q1 device is a smart high-side switch for a wide variety of resistive, inductive, and capacitive 
+loads, including LEDs, relays, and sub-modules.
+6.2 Functional Block Diagram
+Gate Driver
+Diagnostics 
+and Protection
+Short to GND and Overload
+Current Limit
+IN
+FAULT
+CL
+VDS Clamp
+GND
+Charge PumpInternal 
+Reference
+ON/OFF State
+Open Load Detection
+Thermal Monitor
+DIAG_EN
+DELAY
+VS
+OUT
+6.3 Feature Description
+6.3.1 Current Limit
+A high-accuracy current limit allows high reliability of the design. It protects the load and the power supply from 
+overstressing during short-circuit-to-GND or power-up conditions. The current limit can also save system cost by 
+reducing the size of PCB traces and connectors, and the capacity of the preceding power stage.
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+10 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+When a current-limit threshold is reached, a closed loop activates immediately. The output current is clamped at 
+the set value, and a fault is reported out. The device heats up due to the high power dissipation on the power 
+FET.
+The device has two current-limit thresholds.
+• Internal current limit – The internal current limit is fixed at ICL(int). Tie the CL pin directly to the device GND for 
+large-transient-current applications.
+• External adjustable current limit – An external resistor is used to set the current-limit threshold. Use Equation 
+1 to calculate R(CL). VCL(th) is the internal band-gap voltage. K(CL) is the ratio of the output current and the 
+current-limit set value. K(CL) is constant across temperature and supply voltage. The external adjustable 
+current limit allows the flexibility to set the current-limit value by application.
+RCL =
+VCL th × K CL
+IOUT (1)
+Note that if using a GND network which causes a level shift between the device GND and board GND, the CL 
+pin must be connected to the device GND.
+For better protection from a hard short-to-GND condition (when the IN pin is enabled, a short to GND occurs 
+suddenly), the device implements a fast-trip protection to turn off the output before the current-limit closed loop 
+is set up. The fast-trip response time is less than 1µs, typically. With this fast response, the device can achieve 
+better inrush current-suppression performance.
+OUT
+VS
+IOUT/K(CL)
+IOUT
+Internal Current Limit
++
+–
+External Current Limit
++
+–
++
++
+–
+CL
+VCL(th)
+VCL(th)
+GND
+GND
+GND
+Figure 6-1. Current Limit
+6.3.2 DELAY Pin Configuration
+When a current limit occurs, the TPS1H000-Q1 device supports three different behaviors of the output.
+Table 6-1. Current Limit Configurations
+MODE DELAY 
+CONFIGURATION OUTPUT CURRENT BEHAVIOR FAULT RECOVERY
+Holding Connect to GND 
+directly
+When hitting a current limit, the output current 
+holds at the setting current. The device enters into 
+thermal shutdown mode when TJ > T(SD).
+FAULT clears when IN turns low for a 
+duration longer than t  FAULT OR when the 
+current limit is removed when IN is high.
+Latch-off Connect to GND 
+through a capacitor
+When hitting a current limit, the output current 
+holds at the setting current, but latches off after 
+a preset DELAY time (tdl1+ tdl2). tdl1 is the default 
+delay time; tdl2 is a capacitor-configurable delay 
+time.
+The output stays latched off regardless of whether 
+the current limit is removed. The output recovers 
+only when IN is toggling.
+FAULT clears when IN turns low for a 
+duration longer than t  FAULT .
+Auto-retry External pullup
+When hitting a current limit, the output current 
+holds at the setting current, but periodically comes 
+on for thic(on) and turns off for thic(off).
+FAULT clears when IN turns low for a 
+duration longer than t  FAULT OR when the 
+current limit is removed for thic(on)
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 11
+Product Folder Links: TPS1H000-Q1
+6.3.2.1 Holding Mode
+Holding mode is active when the DELAY pin connects to GND directly. When hitting a current limit, the output 
+current holds at the setting current. The device enters into thermal shutdown mode when TJ > T(SD).
+DELAY TPS1H000-Q1
+Figure 6-2. Holding Mode Connection
+IOUT
+VFAULT
+tCL(deg)   
+Current Limit
+Holding the current
+Figure 6-3. Holding Mode Example
+6.3.2.2 Latch-Off Mode
+Latch-off mode is active when the DELAY pin connects to GND through a capacitor. When hitting a current limit, 
+the output current holds at the setting current, but latches off after a preset DELAY time (t dl1 + t dl2). t dl1 is the 
+default delay time, t dl2 is a configurable delay time set by a capacitor. The output stays latched off regardless of 
+whether the current limit is removed. The output recovers only when IN is toggling.
+Use Equation 2 to calculate t dl2. The Idl(chg)is the device charging current in latch-off mode, V dl(ref) is the internal 
+reference voltage in latch off mode, t dl2 is the user-setting delay time, and C DELAY is the capacitor connected on 
+the DELAY pin.
+CDELAY =
+Idl chg × tdl2
+Vdl ref (2)
+DELAY TPS1H000-Q1
+Figure 6-4. Latch-Off-Mode Connection
+tdl1
+Current Limit
+Latch off
+VFAULT
+IOUT
+tCL(deg)   tdl2
+Figure 6-5. Latch-Off-Mode Example
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+12 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+6.3.2.3 Auto-Retry Mode
+Auto-retry mode is active when the DELAY pin is externally pulled up. The pullup voltage must be higher than 
+Vdl(th). When hitting the current limit, the output current holds at the setting current, but periodically comes on for 
+thic(on) and turns off for thic(off).
+DELAY TPS1H000-Q1
+Figure 6-6. Auto-Retry-Mode Connection
+Current Limit
+thic(on)
+VFAULT
+IOUT
+tCL(deg)   tCL(deg)   
+thic(off)
+thic(on)
+thic(off)
+Figure 6-7. Auto-Retry-Mode Example
+6.3.3 Standalone Operation
+In a typical application, the TPS1H000-Q1 device is controlled by a microcontroller. The device also supports 
+standalone operation. IN and DIAG_EN have a 40V maximum dc rating, and can connect to the VS pin directly. 
+In auto-retry mode, the DELAY pin can also connect to the VS pin through a 100kΩ resistor.
+VS
+OUT
+DELAY
+IN
+GND
+DIAG_EN
+1
+2
+3
+4 5
+6
+8
+7
+Tab
+CL
+3.4V - 40V
+Load
+FAULT
+Figure 6-8. Standalone Operation in Latch-Off Mode
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 13
+Product Folder Links: TPS1H000-Q1
+VS
+OUT
+DELAY
+IN
+GND
+DIAG_EN
+1
+2
+3
+4 5
+6
+8
+7
+Tab
+CL
+3.4V - 40V
+Load
+FAULT
+Figure 6-9. Standalone Operation in Auto-Retry Mode
+6.3.4 Fault Truth Table
+The DIAG_EN pin enables or disables the diagnostic functions. If multiple devices are used, but the ADC 
+resource is limited in the microcontroller, the microcontroller can use GPIOs to set DIAG_EN high to enable 
+the diagnostics of one device while disabling the diagnostics of the other devices by setting DIAG_EN low. In 
+addition, the device can keep the power consumption to a minimum by setting DIAG_EN and IN low.
+Table 6-2 applies when the DIAG_EN pin is enabled. Table 6-3 applies when the DIAG_EN pin is disabled.
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+14 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+Table 6-2. Fault Truth Table
+CONDITION IN OUT CRITERION FAULT FAULT RECOVERY
+Normal
+L L — H
+—
+H H — H
+Overload or short to GND H L Current limit triggered. L See Table 6-1.
+Open load or short to 
+battery
+H H IOUT < l(ol,on) L
+FAULT clears when IN turns low 
+for a duration longer than t  FAULT . 
+OR FAULT clears when the open 
+load is removed.
+L(1) H VVS – VOUT < V(ol,off) L
+FAULT clears when IN is toggling 
+OR FAULT clears when the open 
+load is removed.
+Thermal shutdown H — Thermal shutdown 
+triggered L
+FAULT clears when IN turns low 
+for a duration longer than t  FAULT . 
+OR FAULT clears when thermal 
+shutdown quits.
+Thermal swing H — Thermal swing triggered L
+FAULT clears when IN turns low 
+for a duration longer than t  FAULT . 
+OR FAULT clears when thermal 
+swing quits.
+(1) An external pullup is required for open-load detection.
+Table 6-3. DIAG_EN Disabled Condition
+DIAG_EN IN PROTECTIONS AND DIAGNOSTICS
+LOW
+ON Diagnostics disabled, full protections
+OFF Diagnostics disabled, no protection
+6.3.5 Full Diagnostics
+6.3.5.1 Short-to-GND and Overload Detection
+When the output is on, a short to GND or an overload condition causes overcurrent. If the overcurrent triggers 
+either the internal or external current-limit threshold, a fault condition is reported out as FAULT pin = low.
+6.3.5.2 Open-Load Detection
+6.3.5.2.1 Output On
+When the output is on, if the current flowing through the output I OUT < l(ol,on), the device recognizes an open-load 
+fault. For open-load detection in output on, no external circuitry is required.
+6.3.5.2.2 Output Off
+When the output is off, if a load is connected, the output is pulled down to GND. But if an open load occurs, 
+the output voltage is close to the supply voltage (V VS – VOUT < V(ol,off)), and the device recognizes an open-load 
+fault.
+There is always a leakage current I (ol,off) present on the output due to the internal logic control path or external 
+humidity, corrosion, and so forth. So an external pullup resistor is recommended to offset the leakage current 
+when an open load is detected. The recommended pullup resistance is 15kΩ.
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 15
+Product Folder Links: TPS1H000-Q1
+V(ol,off)
+Open Load Detection in Off-State 
+R(pullup)
+Vds
+Load
+Figure 6-10. Open-Load Detection in Output Off
+6.3.5.3 Short-to-Battery Detection
+Short-to-battery has the same detection mechanism and behavior as open-load detection, in both the on-state 
+and off-state.
+6.3.5.4 Thermal Fault Detection
+To protect the device in severe power stressing cases, the device implements two types of thermal fault 
+detection, absolute temperature protection (thermal shutdown) and dynamic temperature protection (thermal 
+swing).
+IOUT
+FAULT
+TJ
+T(SD)
+IN
+T(SD,rst)
+ICL
+T(hys)
+Thermal behaviors after Short to GND 
+T(hys)
+T(SW)
+ICL(TSD)
+Figure 6-11. Thermal Behavior Diagram
+6.3.5.4.1 Thermal Shutdown
+Thermal shutdown is active when the absolute temperature T J > T (SD). When thermal shutdown occurs, the 
+output turns off.
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+16 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+6.3.5.4.2 Thermal Swing
+Thermal swing activates when the power FET temperature is increasing sharply, that is, when Equation 3, then 
+the output turns off.
+ΔT = T FET − T Logic > T sw (3)
+The output automatically recovers and the fault signal clears when
+ΔT = T FET − T Logic < T sw − T hys (4)
+The thermal swing function improves the device reliability when subjected to repetitive fast thermal variation.
+6.3.5.4.3 Fault Report Holding
+When using PWM dimming, FAULT is easily cleared by the PWM falling edge. Even if the fault condition remains 
+all the time, FAULT is discontinuous. To avoid this unexpected fault report behavior, the device implements fault-
+report holding time. Figure 6-12 shows a typical issue when PWM dimming, the FAULT is cleared unexpectedly 
+even when the short-to-GND still exists. The TPS1H000-Q1 device with fault-report holding function allows the 
+right behavior as shown in Figure 6-13.
+       Short-to-GND
+IN
+FAULT
+Fault cleared
+Figure 6-12. Without Fault-Report Holding
+       Short-to-GND
+IN
+FAULT Fault not cleared
+t < tFAULT
+Figure 6-13. With Fault-Report Holding
+6.3.6 Full Protections
+6.3.6.1 UVLO Protection
+The device monitors the supply voltage, V VS, to prevent unpredicted behaviors when V VS is too low. When V VS 
+falls down to VVS(uvf), the device shuts down. When VVS rises up to VVS(uvr), the device turns on.
+6.3.6.2 Inductive Load Switching Off Clamp
+When switching an inductive load off, the inductive reactance tends to pull the output voltage negative. 
+Excessive negative voltage can cause the power FET to break down. To protect the power FET, an internal 
+clamp between drain and source is implemented, namely VDS(clamp).
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 17
+Product Folder Links: TPS1H000-Q1
++
+OUT
+VS
+GND
+-
+VDS(clamp)
+R
+L
+Figure 6-14. Drain-to-Source Clamping Structure
+IN
+VOUT
+VVS
+t(decay)
+IOUT
+VDS(clamp)
+Figure 6-15. Inductive-Load Switching-Off Diagram
+6.3.6.3 Loss-of-GND Protection
+When loss of GND occurs, the output is shut down regardless of whether the IN pin is high or low. The device 
+can protect against two ground-loss conditions, loss of device GND and loss of module GND.
+6.3.6.4 Loss-of-Power-Supply Protection
+When loss of supply occurs, the output is shut down regardless of whether the IN pin is high or low. For a 
+resistive or a capacitive load, loss of supply has no risk. But for a charged inductive load, the current is driven 
+from all the logic control pins to maintain the inductance current. To protect the system in this condition, TI 
+recommends protection with an external free-wheeling diode.
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+18 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+D
+High-side Switch
+IOs
+OUT
+VS
+Vs
+L
+MCU
+Figure 6-16. Protection for Loss of Power Supply
+6.3.6.5 Reverse-Current Protection
+Reverse current occurs in two conditions: short to supply and reverse polarity.
+• When a short to the supply occurs, there is only reverse current through the body diode. IR(1) specifies the 
+limit of the reverse current.
+• In a reverse-polarity condition, there are reverse currents through the body diode and the device GND pin. 
+IR(2) specifies the limit of the reverse current.
+To protect the device, TI recommends two types of external circuitry.
+• Adding a blocking diode (method 1). Both the device and load are protected when in reverse polarity.
+• Adding a GND network (method 2). The reverse current through the device GND is blocked. The reverse 
+current through the FET is limited by the load itself. TI recommends a resistor in parallel with the diode 
+as a GND network. The recommended configuration is a 1kΩ resistor in parallel with a >100mA diode. 
+The reverse current protection diode in the GND network forward voltage must be less than 0.6V in any 
+circumstances. In addition a minimum resistance of 4.7K is recommended on the I/O pins.
+Load
+Figure 6-17. Reverse-Current External Protection, Method 1
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 19
+Product Folder Links: TPS1H000-Q1
+Load
+Figure 6-18. Reverse-Current External Protection, Method 2
+6.3.6.6 MCU I/O Protection
+TI recommends series resistors to protect the microcontroller, for example, 4.7k Ω when using a 3.3V 
+microcontroller and 10kΩ for a 5V microcontroller.
+TPS1H000-Q1
+IOs
+Load
+MCU
+Figure 6-19. MCU I/O External Protection
+6.4 Device Functional Modes
+6.4.1 Working Modes
+The device has three working modes, the normal mode, the standby mode, and the standby mode with 
+diagnostics, as shown in Figure 6-20.
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+20 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+Standby Mode
+(IN low, DIAG_EN low)
+DIAG_EN low 
+AND 
+IN high to low 
+AND
+t > t(off,deg)    
+DIAG_EN high to low
+DIAG_EN  low to high
+IN low to high
+IN high to low 
+AND 
+DIAG_EN high
+AND
+t > t(off,deg)    
+IN low to high   Standby Mode
+With DIAG
+(IN low, DIAG_EN high)
+Normal Mode
+(IN high)
+Figure 6-20. Working Modes
+6.4.1.1 Normal Mode
+When IN is high, the device enters normal mode.
+6.4.1.2 Standby Mode
+When IN is low and DIAG_EN is low, the device enters standby mode with ultra-low power consumption.
+6.4.1.3 Standby Mode With Diagnostics
+When IN is low and DIAG_EN is high, the device enters standby mode with diagnostics. The device still supports 
+open-load and short-to-battery detection even when IN is low.
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 21
+Product Folder Links: TPS1H000-Q1
+7 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+7.1 Application Information
+The TPS1H000-Q1 device is a smart high-side switch, with an internal charge pump and single-channel 
+integrated NMOS power FET. The adjustable current-limit function greatly improves the reliability of the whole 
+system. Full diagnostic features enable intelligent control of the load. The TPS1H000-Q1 device can be used for 
+a wide variety of resistive, inductive, and capacitive loads, including LEDs, relays, and sub-modules.
+7.2 Typical Application
+Figure 7-1 shows an example of how to design the external circuitry parameters.
+VS
+Supply Voltage
+OUT
+IN
+DELAY
+DIAG_EN
+FAULT   
+CL GND
+General Resistive, Capacitive, 
+Inductive Loads3.3/5V
+R(CL)
+MCU R(pullup)
+R(SER)
+R(SER)
+R(SER)
+C(DELAY)
+Figure 7-1. Typical Application Circuitry
+7.2.1 Design Requirements
+• VVS range from 6V to 18V
+• Nominal current of 100mA
+• Expected current limit value of 500mA
+• Thermal sensitive system, when current limit occurs, the output latches off after 0.2s. The 0.2s is to verify the 
+safe start-up for a capacitive load, clamping the inrush current but without latch-off during start-up.
+• Full diagnostics with 5V MCU, including on-state open-load detection, short-to-GND or overcurrent detection, 
+and thermal shutdown detection
+7.2.2 Detailed Design Procedure
+To set the adjustable current limit value at 500mA, calculate R(CL) as follows:
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+22 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+R CL =
+VCL th × K CL
+IOUT = 0.8 × 600
+0.5 = 960Ω (5)
+To set the adjustable latch-off delay at 0.2s, calculate C(DELAY) as follows:
+tdl = tCL deg + tdl1 + tdl2 = 0.2 ≈ tdl2
+CDELAY =
+Idl chg × tdl2
+Vdl rerf = 4.5 × 0.2
+1.45 × 10−6 = 0.62μF
+(6)
+TI recommends R(SER) = 10kΩ for a 5V MCU, and R(pullup) = 10kΩ as the pullup resistor.
+7.2.3 Application Curves
+The following curves are test examples of hard short conditions. The load is 0.1A and the current limit value is 
+0.5A. Figure 7-2 shows a waveform of the latch-off mode. Figure 7-3 shows a waveform of the auto-retry mode.
+Load = 0.1A Current limit = 0.5A
+Figure 7-2. Hard-Short Condition in Latch-Off Mode
+Load = 0.1A Current limit = 0.5A
+Figure 7-3. Hard-Short Condition in Auto-Retry 
+Mode
+7.3 Power Supply Recommendations
+Use the device for both 12V and 24V applications. The normal power supply connection is a 12V or 24V system.
+7.4 Layout
+7.4.1 Layout Guidelines
+To prevent thermal shutdown, T J must be less than 175°C. If the output current is very high, the power 
+dissipation can be large. However, the PCB layout is very important. Good PCB design can optimize heat 
+transfer, which is absolutely essential for the long-term reliability of the device.
+• Maximize the copper coverage on the PCB to increase the thermal conductivity of the board. The major 
+heat-flow path from the package to the ambient is through the copper on the PCB. Maximum copper is 
+extremely important when there are not any heat sinks attached to the PCB on the other side of the board 
+opposite the package.
+• Add as many thermal vias as possible directly under the package thermal pad to optimize the thermal 
+conductivity of the board.
+• All thermal vias must either be plated shut or plugged and capped on both sides of the board to prevent 
+solder voids. To establish reliability and performance, the solder coverage must be at least 85%.
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 23
+Product Folder Links: TPS1H000-Q1
+7.4.2 Layout Example
+VS
+OUT
+DELAY
+IN
+GNDFAULT
+1
+2
+3
+4 5
+6
+8
+7
+Thermal Pad
+CL
+DIAG_EN
+Figure 7-4. Layout Example
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+24 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+8 Device and Documentation Support
+8.1 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Notifications to register and receive a weekly digest of any product information that has changed. For change 
+details, review the revision history included in any revised document.
+8.2 Support Resources
+TI E2E ™ support forums  are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+8.3 Trademarks
+PowerPAD™ and TI E2E™ are trademarks of Texas Instruments.
+All trademarks are the property of their respective owners.
+8.4 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+8.5 Glossary
+TI Glossary This glossary lists and explains terms, acronyms, and definitions.
+9 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision D (December 2024) to Revision E (May 2026) Page
+• Changed RθJC(top) from 50.2°C/W to 74.0°C/W..................................................................................................5
+• Changed ψJT from 0.8°C/W to 3.8°C/W............................................................................................................. 5
+• Changed RθJC(bot) from 7.1°C/W to 7.7°C/W......................................................................................................5
+• Updated exposed pad dimensions to relax minimum limit................................................................................25
+Changes from Revision C (June 2019) to Revision D (December 2024) Page
+• Updated the numbering format for tables, figures, and cross-references throughout the document................. 1
+• Updated maximum ratings of VS pin and IN/DIAG_EN pins to 42V in the Absolute Maximum Ratings table... 4
+10 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most-
+current data available for the designated device. This data is subject to change without notice and without 
+revision of this document. For browser-based versions of this data sheet, see the left-hand navigation pane.
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 25
+Product Folder Links: TPS1H000-Q1
+10.1 Mechanical Data
+www.ti.com
+PACKAGE OUTLINE
+C6X 0.652X1.958X 0.380.25
+5.054.75 TYP SEATINGPLANE
+0.150.05
+0.25GAGE PLANE
+0-8 1.1 MAX
+0.230.13
+1.8460.990
+2.151.18
+B 3.12.9NOTE 4
+A
+3.12.9NOTE 3
+0.70.4
+(0.18)NOTE 6 (0.45)NOTE 6
+PowerPAD   VSSOP - 1.1 mm max heightDGN0008K-C01SMALL OUTLINE PACKAGE
+4232899/A   04/2026
+1
+4 5
+8
+0.13CAB
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1C
+NOTES:  1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing    per ASME Y14.5M. 2. This drawing is subject to change without notice. 3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not    exceed 0.15 mm per side. 4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.5. Reference JEDEC registration MO-187.6. Features may differ or may not be present.
+PowerPAD is a trademark of Texas Instruments.TYPICAL
+TM
+A  20
+SCALE  4.000
+DETAIL A
+EXPOSED THERMAL PAD
+1
+4 5
+89
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+26 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAXALL AROUND0.05 MINALL AROUND
+8X (1.4)8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+(2)NOTE 10
+(3)NOTE 10(1.22)(0.55)(0.2) TYPVIA
+(1.57)
+(1.89)
+PowerPAD   VSSOP - 1.1 mm max heightDGN0008K-C01SMALL OUTLINE PACKAGE
+4232899/A   04/2026NOTES: (continued)   7. Publication IPC-7351 may have alternate designs.   8. Solder mask tolerances between and around signal pads can vary based on board fabrication site.  9. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown      on this view. It is recommended that vias under paste be filled, plugged or tented.10. Size of metal pad may vary due to creepage requirement.
+EXPOSED METAL SHOWN
+ 
+TM
+LAND PATTERN EXAMPLESCALE: 15X
+SYMM
+SYMM1
+4 5
+8SOLDER MASKDEFINED PADMETAL COVEREDBY SOLDER MASKSEE DETAILS
+9
+15.000
+METALSOLDER MASKOPENINGMETAL UNDERSOLDER MASKSOLDER MASKOPENINGEXPOSED METALEXPOSED METALNON-SOLDER MASKSOLDER MASK DETAILSDEFINED(PREFERRED)SOLDER MASKDEFINED
+www.ti.com
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+Copyright © 2026 Texas Instruments Incorporated Submit Document Feedback 27
+Product Folder Links: TPS1H000-Q1
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (1.4)8X (0.45)
+6X (0.65)(4.4)
+(R0.05) TYP
+(1.57)BASED ON0.125 THICKSTENCIL
+(1.89)BASED ON0.125 THICKSTENCIL
+PowerPAD   VSSOP - 1.1 mm max heightDGN0008K-C01SMALL OUTLINE PACKAGE
+4232899/A   04/2026
+1.33 X 1.600.1751.43 X 1.730.151.57 X 1.89 (SHOWN)0.1251.76 X 2.110.1SOLDER STENCILOPENINGSTENCILTHICKNESS
+NOTES: (continued) 11. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate      design recommendations.   12. Board assembly site may have different recommendations for stencil design. 
+TM
+SOLDER PASTE EXAMPLEEXPOSED PAD 9:100% PRINTED SOLDER COVERAGE BY AREASCALE: 15X
+SYMM
+SYMM1
+4 5
+8
+METAL COVEREDBY SOLDER MASK SEE TABLE FORDIFFERENT OPENINGSFOR OTHER STENCILTHICKNESSES
+9
+TPS1H000-Q1
+SLVSDO6E – AUGUST 2017 – REVISED MAY 2026
+ www.ti.com
+28 Submit Document Feedback Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: TPS1H000-Q1
+PACKAGE OPTION ADDENDUM
+www.ti.com 22-Apr-2026
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS1H000AQDGNRQ1 Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU | NIPDAUAG Level-2-260C-1 YEAR -40 to 125 17SX
+TPS1H000AQDGNRQ1.A Active Production HVSSOP (DGN) | 8 2500 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 17SX
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 15-Jul-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0B0K0WDimension designed to accommodate the component lengthDimension designed to accommodate the component thicknessOverall width of the carrier tapePitch between successive cavity centersDimension designed to accommodate the component width
+TAPE DIMENSIONSK0 P1B0WA0Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket QuadrantsSprocket HolesQ1Q1Q2Q2Q3Q3Q4Q4User Direction of Feed
+P1ReelDiameter
+ 
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS1H000AQDGNRQ1 HVSSOP DGN 8 2500 330.0 12.4 5.3 3.4 1.4 8.0 12.0 Q1
+TPS1H000AQDGNRQ1 HVSSOP DGN 8 2500 330.0 12.4 5.3 3.4 1.4 8.0 12.0 Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 15-Jul-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W LH
+ 
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS1H000AQDGNRQ1 HVSSOP DGN 8 2500 366.0 364.0 50.0
+TPS1H000AQDGNRQ1 HVSSOP DGN 8 2500 353.0 353.0 32.0
+Pack Materials-Page 2
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

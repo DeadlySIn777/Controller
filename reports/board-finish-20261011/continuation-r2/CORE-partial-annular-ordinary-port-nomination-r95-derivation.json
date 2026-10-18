@@ -1,0 +1,94 @@
+{
+ "base_sha256": "878d87503cf02843fd8061c1af5b6f0319f714d8effca5812a958ba271e6ffad",
+ "derived_sha256": "b943403a1da6e5d56e512fc5c6215f42bfad430441ee49dee8a0a6b959f03178",
+ "changes": [
+  {
+   "old": "def audit(self,candidate,region,out,side):",
+   "new": "def audit(self,candidate,region,out,side,actual):",
+   "count": 1
+  },
+  {
+   "old": "assert original.read_bytes()==region.wkb,('R90 geometry changed',side)",
+   "new": "assert original.exists();R90_original_region_WKB_equal=original.read_bytes()==region.wkb",
+   "count": 1
+  },
+  {
+   "old": "'exact_R90_final_region_WKB_unchanged':True",
+   "new": "'R90_initial_full_disk_containment_predicate_replaced_with_exact_annular_contact':True,'R90_original_final_region_WKB_equal_diagnostic':R90_original_region_WKB_equal",
+   "count": 1
+  },
+  {
+   "old": "self.propose_IO3_antipad_ports(candidate,out,side)",
+   "new": "self.propose_IO3_antipad_ports(candidate,out,side,actual)",
+   "count": 1
+  },
+  {
+   "old": "def propose_IO3_antipad_ports(self,candidate,out,side):",
+   "new": "def propose_IO3_antipad_ports(self,candidate,out,side,actual):",
+   "count": 1
+  },
+  {
+   "old": "for face in sorted(parts(region),key=lambda q:-q.area)[:6]:",
+   "new": "nominees=parts(region)\n  if side=='main':nominees=parts(region.intersection(box(174,92.5,181,100)))+nominees\n  if side=='source':nominees=parts(region.intersection(box(226,92,233.5,101)))+nominees\n  used=set()\n  for face in sorted(nominees,key=lambda q:(0 if(side=='main'and q.bounds[0]>=174)or(side=='source'and q.bounds[2]<=233.5)else 1,-q.area))[:20]:",
+   "count": 1
+  },
+  {
+   "old": "point=face.representative_point();xy=[round(point.x,6),round(point.y,6)]\n   if not region.covers(Point(xy)):continue",
+   "new": "point=face.representative_point();xy=[round(point.x,6),round(point.y,6)]\n   if tuple(xy)in used or not region.covers(Point(xy)):continue\n   used.add(tuple(xy));via={'x':xy[0],'y':xy[1]};ann=N.bounded_disk(via,.25).difference(N.bounded_disk(via,.1));finite_overlap=ann.intersection(actual).area\n   if finite_overlap<.01:continue",
+   "count": 1
+  },
+  {
+   "old": "'controller-CORE-native-IO3-antipad-r93/'",
+   "new": "'controller-CORE-partial-annular-antipad-r95/'",
+   "count": 1
+  },
+  {
+   "old": "'ordinary_site_face_area_mm2':face.area,'one_native_IO3",
+   "new": "'ordinary_site_face_area_mm2':face.area,'actual_existing_CORE_In3_annular_overlap_mm2':finite_overlap,'one_native_IO3",
+   "count": 1
+  },
+  {
+   "old": "'actual_CORE_In3_finite_annular_overlap':'REQUIRES_EXACT_MODEL_CHECK'",
+   "new": "'actual_CORE_In3_finite_annular_overlap':'EACH_NOMINEE_AT_LEAST_0_01_MM2_MEASURED_FROM_EXACT_ANNULUS'",
+   "count": 1
+  },
+  {
+   "old": "window.intersection(actual.buffer(-.25-.000100))",
+   "new": "window.intersection(actual.buffer(.20))",
+   "count": 1
+  },
+  {
+   "old": "obs.audit(candidate,region,out,label)",
+   "new": "obs.audit(candidate,region,out,label,actual)",
+   "count": 1
+  },
+  {
+   "old": "CORE-native-IO3-antipad-external-port-nominees-r93';assert",
+   "new": "CORE-partial-annular-native-IO3-antipad-port-nominees-r95';assert",
+   "count": 1
+  },
+  {
+   "old": "'verdict':'LITERAL_NATIVE_IO3_NEW_ANTIPAD_ORDINARY_PORT_PROPOSALS_ONLY'",
+   "new": "'verdict':'PARTIAL_FINITE_ANNULAR_CONTACT_ORDINARY_PORT_PROPOSALS_ONLY'",
+   "count": 1
+  },
+  {
+   "old": "'no_geometry_predicate_changed':True",
+   "new": "'new_initial_candidate_uses_annular_overlap_instead_of_whole_disk_containment':True,'all_clearance_hole_keepout_oldreference_predicates_unchanged':True",
+   "count": 1
+  },
+  {
+   "old": "'R93_LITERAL_IO3_ANTIPAD_PORT_PROPOSALS_FROZEN'",
+   "new": "'R95_PARTIAL_ANNULAR_IO3_ANTIPAD_PORT_PROPOSALS_FROZEN'",
+   "count": 1
+  },
+  {
+   "old": "'R93_IO3_ANTIPAD_ORDINARY_PORT_NOMINEES'",
+   "new": "'R95_PARTIAL_ANNULAR_IO3_ANTIPAD_NOMINEES'",
+   "count": 1
+  }
+ ],
+ "design_clearances_and_ordinary_size_not_relaxed": true,
+ "actual_native_CORE_finite_annular_overlap_required_mm2": 0.01,
+ "new_native_IO3_antipads_ALL77_direct_contact_current_and_native_gates_open": true
+}

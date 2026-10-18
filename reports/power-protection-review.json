@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-28T19:07:54.920694+00:00",
+  "scope": "Two new partial power circuits, their connectivity and bounded numerical analysis",
+  "manufacturing_ready": false,
+  "blocks": {
+    "encoder_power": {
+      "validation": "hardware/encoder_power/validation.json",
+      "validation_sha256": "9474fea951fdeb8de55ed4c925198cea64aacecd0e0d99b9381418444a8236d6",
+      "verified_source_entries": 19,
+      "consistency_pass": true,
+      "erc_violations": 0,
+      "manufacturing_ready": false
+    },
+    "power_entry": {
+      "validation": "hardware/power_entry/validation.json",
+      "validation_sha256": "442d7e81b8b514165161588dbc3e237b139ec36709a7b31d8a04a58c626b27f5",
+      "verified_source_entries": 23,
+      "consistency_pass": true,
+      "erc_violations": 0,
+      "manufacturing_ready": false
+    }
+  },
+  "scoped_python": {
+    "tests": 46,
+    "skipped": 0,
+    "result": "PASS",
+    "seconds": 0.377,
+    "source_stable_during_run": true,
+    "source_stable_after_run": true,
+    "generated_validation_reports_refreshed_after_tests": true,
+    "output": "reports/power-protection-scoped-tests.txt"
+  },
+  "combined_python_observation": {
+    "tests": 386,
+    "skipped": 3,
+    "failed": 0,
+    "seconds": 24.683,
+    "stable_snapshot": false,
+    "changed_during_run": [
+      "tests/test_configuration_service.py"
+    ],
+    "output": "reports/power-protection-python-tests.txt"
+  },
+  "analysis": {
+    "calculation_valid": true,
+    "open_findings": [
+      "OVP recovery is not guaranteed at maximum normal input voltage",
+      "CORE: unsequenced startup can enter current limit",
+      "CORE: original ledger source capacity is below assumed upper limiter",
+      "FIELD: unsequenced startup can enter current limit"
+    ],
+    "review": "research/POWER_ENTRY_REVIEW.md"
+  },
+  "visual_review": [
+    "hardware/power_entry/preview.png",
+    "hardware/power_entry/detail.png",
+    "hardware/encoder_power/preview.png",
+    "hardware/encoder_power/detail.png"
+  ],
+  "independent_review": "Second reviewer checked both circuits and source arithmetic; no topology/value defect found within partial scope. Original manufacturer diagrams were inspected.",
+  "source_archive": "reports/power-protection-evidence-20260928",
+  "archived_files": 47,
+  "source_manifest_sha256": "3d1f919319a34b8e97fc08753de77da79cabb9f443edcba72127c961f5204e1b",
+  "prior_exact_implementation_review": "reports/durable-hardware-review.json",
+  "remaining": [
+    "Whole supply/startup/inhibit schematic and full-board integration",
+    "Exact fuse/holder/source/clamp/passive coordination",
+    "Whole-system current and voltage budget reconciliation",
+    "PCB layout and manufacturing outputs",
+    "Physical power/fault/thermal/EMC and motion qualification"
+  ]
+}

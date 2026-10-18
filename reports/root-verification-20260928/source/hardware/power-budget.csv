@@ -1,0 +1,18 @@
+id,rail,budget_a,basis
+sbc_budget,CORE_5V,3,engineering reservation; exact5V delivery/connector and measured SBC peak open
+tx_cables,CORE_5V,0.6,"conservative12drivers+termination reservation, not datasheet quiescent current"
+encoder_supply,CORE_5V,0.4,two independently current-limited5V encoder ports at0.2A each
+io3v3_input,CORE_5V,0.37,"0.4A*3.3V/5V/0.85=0.3106A plus 0.05A reserve, rounded up to 10mA"
+esp3v3_input,CORE_5V,0.6,"0.7A*3.3V/5V/0.85=0.5435A plus 0.05A reserve, rounded up to 10mA"
+core1v2_input,CORE_5V,0.28,"0.8A*1.2V/5V/0.85=0.2259A plus 0.05A reserve, rounded up to 10mA"
+misc5v,CORE_5V,0.1,supervision/interface reservation
+fpga_io_rx_isolators,IO_3V3,0.4,reservation; Efinity power estimate and toggle activity open
+esp_peak,ESP_3V3,0.7,radio and boot margin; measure exact module image
+fpga_core,CORE_1V2,0.8,reservation; not a measured/estimated T20 netlist consumption
+field_outputs,FIELD_24V,4.3,8*0.5A +6*0.05A; excludes external motor drive power
+field_control,FIELD_24V,0.06,"switch quiescent, buck and sensing provision; sensors separately verified"
+field_isolation,FIELD_5V,0.05,5isolators/gate/diagnostic reservation
+analog_total,ANALOG_12V,0.03,DAC/isolator5V input + amplifier/clamp reservation
+analog_digital,ANALOG_5V,0.02,DAC and ISO7740 reservation
+logic_converter_input,CORE_24V,1.75,"5.35A*5V/0.85/18V=1.7484A at minimum input, rounded up to 10mA"
+analog_converter_input,CORE_24V,0.06,isolated stage input reservation at minimum supply

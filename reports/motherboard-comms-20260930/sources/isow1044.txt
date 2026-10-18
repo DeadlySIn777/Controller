@@ -1,0 +1,3953 @@
+ISOW1044 Isolated CAN FD Transceiver With Integrated Low-Emissions, Low-Noise, 
+High-Efficiency DC-DC Converter
+1 Features
+•
+Meets the requirements of ISO 11898-2:2016 
+physical layer standards
+–
+Support of Classical CAN: 1Mbps
+–
+Optimized for CAN FD: 2 and 5Mbps
+•
+Integrated DC-DC converter with low-emissions, 
+low-noise
+–
+Meets CISPR 32 and EN 55032 Class B with 
+greater than 6dB margin on a two-layer PCB
+–
+Low frequency power converter at 25MHz 
+enabling low noise performance
+•
+Additional 10Mbps GPIO channel
+•
+High efficiency output power
+–
+Typical efficiency: 47%
+–
+Isolated output voltage accuracy: ± 5%
+–
+Additional output current: 20mA
+•
+Independent power supply for CAN and DC-DC
+–
+Logic supply (VIO): 1.71V to 5.5V
+–
+Power converter supply (VDD): 4.5V to 5.5V
+•
+Fault-Protected CAN FD Transceiver
+–
+DC Bus fault protection voltage: ± 58V
+–
+Receiver common mode input voltage: ±12V
+–
+Remote wakeup using BUS wake-up pattern
+•
+Typical loop delay: 167ns
+•
+Reinforced and Basic isolation options
+•
+High CMTI: 100kV/µs (typical)
+•
+High ESD bus protection with respect to GND2
+–
+HBM ESD: ±12kV
+–
+IEC 61000-4-2 contact discharge: ±8kV
+•
+Operating temperature range: -40°C to 125°C
+•
+Current limit and thermal shutdown
+•
+20-pin wide SOIC package
+•
+Safety-Related Certifications:
+–
+VDE Reinforced and Basic insulation per DIN 
+EN IEC 60747-17 (VDE 0884-17)
+–
+UL 1577 component recognition program
+–
+IEC 62368-1, IEC 61010-1, IEC 60601-1 and 
+GB 4943.1 certifications
+2 Applications
+•
+Factory Automation
+•
+Building Automation
+•
+Industrial Transport
+•
+Solar Inverters, Protection Relay
+•
+Motor Drives
+Device Information
+DEVICE
+PACKAGE(1)
+PACKAGE 
+SIZE(2)
+BODY SIZE 
+(NOM)
+ISOW1044
+DFM (SOIC, 
+20)
+12.83mm × 
+10.30mm
+12.83mm × 
+7.5mm
+ISOW1044B
+(1)
+See also, Mechanical, Packaging, and Orderable Information.
+(2)
+The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+3 Description
+The ISOW1044 device is a galvanically-isolated controller area network (CAN) transceiver with a built-in isolated 
+DC-DC converter that eliminates the need for a separate isolated power supply in space-constrained isolated 
+designs. The low-emissions, isolated DC-DC meets CISPR 32 radiated emissions Class B standard with just two 
+ferrite beads on a simple two-layer PCB. Additional 20mA output current can be used to power other circuits on 
+the board. An integrated 10Mbps GPIO channel is available and can help remove an additional digital isolator or 
+optocoupler for diagnostics, LED indication or supply monitoring.
+The device supports both classical CAN and CAN FD networks up to 5 Megabits per second (Mbps) data rate. 
+The device offers ±58V DC bus fault protection and ±12V common-mode voltage range. Both signal and power 
+paths are 5kVRMS isolated per UL1577 and are qualified for reinforced and basic isolation per VDE, CSA, TUV 
+and CQC. The bus pins of these devices can endure up to 8kV of IEC 61000-4-2 electrostatic discharge (ESD),.
+The ISOW1044 device can operate from a single supply voltage of 4.5V to 5.5V by connecting VIO and VDD 
+together on PCB. If lower logic levels are required, these devices support 1.71V to 5.5V logic supply (VIO) 
+that can be independent from the power converter supply (VDD) of 4.5V to 5.5V. This device supports a wide 
+operating ambient temperature range from –40°C to +125°C and are available in 20-pin DFM (SOIC-20 footprint 
+compatible package) offering a minimum of 8mm creepage and clearance.
+The ISOW1044 supports a standby mode and wake over CAN compliant to the ISO 11898-2:2016 defined wake-
+up pattern (WUP). The device also includes protection and diagnostic features supporting thermal-shutdown 
+(TSD), TXD dominant time-out (DTO) and supply undervoltage detection.
+Galvanic Isolation
+Barrier
+Signal
+Isolation
+Signal
+Isolation
+CAN
+CANH
+CANL
+OUT
+DC-DC
+Primary
+DC-DC
+Secondary
+MCU
+VCC
+GISOIN
+GND2
+VISOOUT
+CAN 
+BUS
+TXD
+STB
+RXD
+VDD
+GND1
+VISOIN
+VIO
+Must be connected on PCB,
+not connected internally
+IN
+GNDIO
+Simplified Schematic
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................2
+4 Device Comparison Table ..............................................3
+5 Pin Configuration and Functions...................................4
+6 Specifications.................................................................. 6
+6.1 Absolute Maximum Ratings........................................ 6
+6.2 ESD Ratings............................................................... 6
+6.3 Recommended Operating Conditions.........................6
+6.4 Thermal Information....................................................7
+6.5 Power Ratings.............................................................7
+6.6 Insulation Specifications............................................. 8
+6.7 Safety-Related Certifications...................................... 9
+6.8 Safety Limiting Values.................................................9
+6.9 Electrical Characteristics...........................................10
+6.10 Supply Current Characteristics............................... 13
+6.11 Switching Characteristics........................................14
+6.12 Insulation Characteristics Curves........................... 15
+6.13 Typical Characteristics............................................15
+7 Parameter Measurement Information..........................19
+8 Detailed Description......................................................23
+8.1 Overview...................................................................23
+8.2 Power Isolation......................................................... 23
+8.3 Signal Isolation..........................................................23
+8.4 CAN Transceiver.......................................................23
+8.5 Remote Wake Request Using Wake-Up Pattern 
+(WUP) in Standby Mode..............................................23
+8.6 Functional Block Diagram.........................................25
+8.7 Feature Description...................................................25
+8.8 Device Functional Modes..........................................29
+8.9 Device I/O Schematics..............................................31
+9 Application and Implementation..................................32
+9.1 Application Information............................................. 32
+9.2 Typical Application.................................................... 32
+9.3 Power Supply Recommendations.............................36
+9.4 Layout....................................................................... 36
+10 Device and Documentation Support..........................38
+10.1 Documentation Support.......................................... 38
+10.2 Receiving Notification of Documentation Updates..38
+10.3 Support Resources................................................. 38
+10.4 Trademarks.............................................................38
+10.5 Electrostatic Discharge Caution..............................38
+10.6 Glossary..................................................................38
+11 Revision History.......................................................... 38
+12 Mechanical, Packaging, and Orderable 
+Information.................................................................... 39
+4 Device Comparison Table 
+PART NUMBER
+ISOLATION
+PACKAGE
+BODY SIZE (NOM)
+ISOW1044
+Reinforced
+20-DFM (SOIC)
+12.83mm × 7.5mm
+ISOW1044B
+Basic
+20-DFM (SOIC)
+12.83mm × 7.5mm
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: ISOW1044
+5 Pin Configuration and Functions
+VIO
+IN
+TXD
+STB
+GNDIO
+NC
+EN/FLT
+VDD
+GND1
+VISOIN
+CANH
+CANL
+GISOIN
+GISOIN
+OUT
+VSIN
+VISOOUT
+GND2
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+20
+19
+18
+17
+16
+15
+14
+13
+12
+11
+I S O L A T I O N
+RXD
+GISOIN
+Figure 5-1. ISOW1044 20-pin DFM Top View 
+Table 5-1. Pin Functions
+PIN
+TYPE (1) 
+DESCRIPTION
+NAME
+NO.
+VIO
+1
+--
+Side 1 Logic supply
+IN
+2
+I
+General purpose logic (GPIO) input (internal pull-down)
+TXD
+3
+I
+CAN transmit data input (LOW for dominant and HIGH for recessive bus states)
+STB
+4
+I
+Standby enable. Connect this pin to GNDIO in normal mode. If this pin is floating or logic high, 
+driver is in standby mode.
+RXD
+5
+O
+CAN receive data output (LOW for dominant and HIGH for recessive bus states)
+GNDIO
+6
+--
+Ground connection on side 1 for VIO. GNDIO and GND1 are not internally connected and need 
+be shorted on PCB.
+NC
+7
+--
+Not connected internally
+EN/FLT
+8
+I/O
+Multi-function power converter enable input pin or fault output pin. Can only be used as either an 
+input pin or an output pin.
+•
+If the pin used as Power converter enable input pin, the EN/FLT pin enables and disables 
+the integrated DC-DC power converter. Connect directly to microcontroller or through a 
+series current limiting resistor to use as an enable input pin. DC-DC power converted is 
+enabled when EN is high (connected to VIO) and disabled when low (connected to GND1). If 
+EN is floating, DC-DC converter is enabled (internal pullup resistor)
+•
+If the pin used as Fault output pin, the EN/FLT pin gives an alert signal if power converter 
+is not operating properly. This pin is active low. Connect to microcontroller through a 5kΩ or 
+greater pullup resistor to use as a fault output pin.
+VDD
+9
+--
+Side 1 DC-DC converter power supply
+GND1
+10
+--
+Ground connections on side for VDD. GNDIO and GND1 are not internally connected and need 
+be shorted on PCB.
+GND2
+11
+--
+Ground connections on side for VISOOUT. GND2 and GISOIN are not internally connected and 
+need be shorted directly on PCB, or connected through a ferrite bead.
+VISOOUT
+12
+--
+Isolated power converter output voltage. VISOOUT and VISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+VSIN
+13
+I
+Power converter input. Pin 12 and pin 13 need be shorted directly on PCB.
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+Table 5-1. Pin Functions (continued)
+PIN
+TYPE (1) 
+DESCRIPTION
+NAME
+NO.
+OUT
+14
+O
+General purpose logic (GPIO) output (default output is low)
+GISOIN
+15, 16, 17
+--
+Ground connections for VISOIN. GND2 and GISOIN need be shorted directly on PCB, or 
+connected through a ferrite bead.
+CANL
+18
+I/O
+Low-level CAN bus line
+CANH
+19
+I/O
+High-level CAN bus line
+VISOIN
+20
+--
+Power supply input for CAN transceiver. VISOIN and VISOOUT need be shorted directly on PCB, or 
+connected through a ferrite bead.
+(1)
+I = Input, O = Output
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: ISOW1044
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted)(1) (2)
+MIN
+MAX
+UNIT
+VDD
+Power converter supply voltage
+–0.5
+6
+V
+VISOIN
+Isolated supply voltage, input supply for CAN transceiver
+–0.5
+6
+V
+VISOOUT
+Isolated supply voltage, Power converter output
+–0.5
+6
+V
+VIO
+Logic supply voltage
+–0.5
+6
+V
+VBUS
+Voltage on bus pins (CANH, CANL with respect to GND2)
+-58
+58
+V
+VBUS_DIFF
+Max Differential voltage on bus pins (CANH-CANL)
+-45
+45
+V
+Vlogic_IO
+Logic I/O voltage level ( RXD, TXD, STB, EN, IN)
+–0.5
+VIO + 0.5(3)
+V
+OUT
+-0.5
+VISOIN + 0.5
+V
+IO
+Output current on RXD, OUT pins
+–15
+15
+mA
+TJ
+Junction temperature
+–40
+150
+°C
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+Operation outside the Absolute Maximum Ratings may cause permanent device damage. Absolute Maximum Ratings do not imply 
+functional operation of the device at these or any other conditions beyond those listed under Recommended Operating Conditions. 
+If used outside the Recommended Operating Conditions but within the Absolute Maximum Ratings, the device may not be fully 
+functional, and this may affect device reliability, functionality, performance, and shorten the device lifetime.
+(2)
+All voltage values except differential I/O bus voltages are with respect to the local ground pin (GND1 or GND2). All voltage values 
+except differential I/O bus voltages are peak voltage values.
+(3)
+The maximum voltage must not be greater than 6 V.
+6.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic 
+discharge
+Human body model (HBM), per ANSI/
+ESDA/JEDEC JS-001(1)
+All pins except bus pins
+±2000
+V
+CANH, CANL Bus pins w.r.t 
+GND2(pin15/16/17)
+±12000
+V(ESD)
+Electrostatic 
+discharge
+Charged device model (CDM), per JEDEC specification JESD22-C101(2)
+±1500
+V
+V(ESD)
+Electrostatic 
+discharge
+per IEC61000-4-2 contact discharge, 
+CANH and CANL with respect to GND2
+±8000
+V
+V(ESD)
+Electrostatic 
+discharge
+per IEC61000-4-2 contact discharge, 
+CANH and CANL with respect to GND1 
+(across Isolation barrier)
+±8000
+V
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+VIO
+Logic supply voltage
+1.8V operation
+1.71
+1.89
+V
+2.5V, 3.3V, and 5.5V operation
+2.25
+5.5
+VDD
+Power converter supply voltage
+4.5
+5.5
+V
+VDD(UVLO+)
+Supply threshold when Power converter supply is rising
+2.7
+2.95
+V
+VDD(UVLO-)
+Supply threshold when Power converter supply is falling
+2.40
+2.55
+V
+VHYS1(UVLO)
+Power converter supply voltage hysteresis
+0.15
+0.24
+V
+VIO(UVLO+)
+Rising threshold of Logic supply voltage
+1.7
+V
+VIO(UVLO-)
+Falling threshold of Logic supply voltage
+1
+V
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+over operating free-air temperature range (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+VHYS2(UVLO)
+Logic supply voltage hysteresis
+75
+125
+mV
+VIH
+High-level input voltage (TXD, STB, EN, and IN inputs)
+0.7 × VIO
+VIO
+V
+VIL
+Low-level input voltage (TXD, STB, EN, and IN inputs)
+0
+0.3 × VIO
+V
+IOH
+High-level output current RXD
+VIO = 5V
+-4
+mA
+VIO = 3.3V
+-2
+mA
+VIO = 1.8V or 2.5V
+-1
+mA
+IOL
+Low-level output current RXD
+VIO = 5V
+4
+mA
+VIO = 3.3V
+2
+mA
+VIO = 1.8V or 2.5V
+1
+mA
+IOH
+High-level output current OUT
+VDD=4.5V to 5.5V
+-4
+mA
+IOL
+Low-level output current OUT
+VDD=4.5V to 5.5V
+4
+mA
+1/tUI
+Signaling rate
+CAN
+5
+Mbps
+DR
+Data rate for extra GPIO channel
+GPIO
+10
+Mbps
+Tpwrup
+Power up time after applying input supply(Isolated output supply reaches 90% 
+of setpoint and data transmission can start after this)
+5
+ms
+TA
+Ambient operating temperature
+≤ 50% of bits are dominant
+–40
+125
+°C
+–40
+105
+°C
+6.4 Thermal Information
+THERMAL METRIC(1)
+ISOW1044
+UNIT
+DFM
+20 PINS
+RθJA 
+Junction-to-ambient thermal resistance
+68.5
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+20.9
+°C/W
+RθJB
+Junction-to-board thermal resistance
+44.8
+°C/W
+ΨJT
+Junction-to-top characterization parameter
+13
+°C/W
+ΨJB
+Junction-to-board characterization parameter
+44
+°C/W
+RθJC(bot)
+Junction-to-case (bottom) thermal resistance
+--
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metricsapplication 
+note.
+6.5 Power Ratings
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+PD
+Maximum power dissipation (both sides)
+VIO = VDD = 5.5V, STB= GND1, CAN Bus load RL= 
+60Ω, TXD=repetitive pattern of 1ms time period 
+with 990µs LOW time, 10µs HIGH time, Extra load 
+on VISOOUT= 20mA
+1060
+mW
+PD1
+Maximum power dissipation (side-1)
+490
+mW
+PD2
+Maximum power dissipation by (side-2)
+570
+mW
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: ISOW1044
+6.6 Insulation Specifications
+PARAMETER
+TEST CONDITIONS
+VALUE
+UNIT
+GENERAL
+CLR
+External clearance(1)
+Shortest terminal-to-terminal distance through air
+>8
+mm
+CPG
+External creepage(1)
+Shortest terminal-to-terminal distance across the package 
+surface
+>8
+mm
+DTI
+Distance through the insulation
+Minimum internal gap (internal clearance – capacitive 
+signal isolation)
+>17
+µm
+DTI
+Distance through the insulation
+Minimum internal gap (internal clearance- transformer 
+power isolation)
+>120
+µm
+CTI
+Comparative tracking index
+IEC 60112; UL 746A
+>600
+V
+Material group
+According to IEC 60664-1
+I
+Overvoltage Category
+Rated mains voltage ≤ 600VRMS
+I-IV
+Rated mains voltage ≤ 1000VRMS
+I-III
+DIN EN IEC 60747-17 (VDE 0884-17)(2)
+VIORM
+Maximum repetitive peak isolation voltage
+AC voltage (bipolar)
+1500
+VPK
+VIOWM
+Maximum working isolation voltage
+AC voltage (sine wave) Time dependent dielectric 
+breakdown (TDDB) test
+1000
+VRMS
+DC voltage
+1500
+VIOTM
+Maximum transient isolation voltage
+VTEST = VIOTM, t = 60s (qualification);
+VTEST = 1.2 × VIOTM, t = 1s (100% production)
+7071
+VPK
+VIOSM
+Maximum surge isolation voltage ISOW1044(3)
+Test method per IEC 62368-1, 1.2/50 µs waveform
+10000
+VPK
+VIOSM
+Maximum surge isolation voltage ISOW1044B(3)
+Test method per IEC 62368-1, 1.2/50 µs waveform
+7800
+VPK
+qpd
+Apparent charge (4)
+Method a: After I/O safety test subgroup 2/3,
+Vini = VIOTM, tini = 60s;
+Vpd(m) = 1.2 × VIORM , tm = 10s
+≤5
+pC
+Method a: After environmental tests subgroup 1,
+Vini = VIOTM, tini = 60s;
+ISOW1044: Vpd(m) = 1.6 × VIORM, tm = 10s
+ISOW1044B: Vpd(m) = 1.2 × VIORM, tm = 10s
+≤5
+At routine test (100% production)
+Vini = 1.2 × VIOTM, tini = 1s;
+ISOW1044: Vpd(m) = 1.875 × VIORM , tm = 1s (method b1),
+ISOW1044B: Vpd(m) = 1.5 × VIORM , tm = 1s (method b1) or
+ISOW1044/ISOW1044B: Vpd(m) = Vini, tm = tini (method b2)
+≤5
+CIO
+Barrier capacitance, input to output(5)
+VIO = 0.4 sin (2πft), f = 1MHz
+≅3.5
+pF
+RIO
+Isolation resistance, input to output(5)
+VIO = 500V, TA = 25°C
+>1012
+Ω
+VIO = 500V, 100°C ≤ TA ≤ 125°C
+>1011
+Ω
+VIO = 500V at TS = 150°C
+>109
+Ω
+Pollution degree
+2
+Climatic category
+40/125/21
+UL 1577
+VISO
+Withstand isolation voltage
+VTEST = VISO, t = 60s (qualification);
+VTEST = 1.2 × VISO , t = 1s (100% production)
+5000
+VRMS
+(1)
+Creepage and clearance requirements should be applied according to the specific equipment isolation standards of an application. 
+Care should be taken to maintain the creepage and clearance distance of a board design to ensure that the mounting pads of 
+the isolator on the printed-circuit board do not reduce this distance. Creepage and clearance on a printed-circuit board become 
+equal in certain cases. Techniques such as inserting grooves and/or ribs on a printed circuit board are used to help increase these 
+specifications.
+(2)
+This coupler is suitable for safe electrical insulation (ISOW1044) and basic electrical insulation (ISOW1044B) only within the maximum 
+operating ratings. Compliance with the safety ratings shall be ensured by means of suitable protective circuits.
+(3)
+Testing is carried out in air or oil to determine the intrinsic surge immunity of the isolation barrier.
+(4)
+Apparent charge is electrical discharge caused by a partial discharge (pd).
+(5)
+All pins on each side of the barrier tied together creating a two-terminal device.
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+6.7 Safety-Related Certifications
+VDE
+CSA
+UL
+TUV
+CQC
+Certified according to DIN 
+EN IEC 60747-17 (VDE 
+0884-17)
+Certified according to IEC 
+62368-1, IEC 61010-1 and 
+IEC 60601-1
+Certified under UL 1577 
+Component Recognition 
+Program
+Certified according to EN 
+61010-1 and EN 62368-1
+Certified according to GB 4943.1
+Certificate number:
+40040142 (Reinforced)
+40047657 (Basic)
+Master Contract Number:
+220991
+File number: E181974
+Client ID number: 77311
+Certificate number:
+CQC21001297517
+6.8 Safety Limiting Values
+Safety limiting intends to minimize potential damage to the isolation barrier upon failure of input or output circuitry.
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+IS
+Safety input, output, or supply current(1)
+RθJA = 68.5°C/W, VI = 5.5V, TJ = 150°C, TA = 25°C, See Figure 
+8-1
+332
+mA
+RθJA = 68.5°C/W, VI = 3.6V, TJ = 150°C, TA = 25°C, See Figure 
+8-1
+507
+PS
+Safety input, output, or total power(1)
+RθJA = 68.5°C/W, TJ = 150 °C, TA = 25°C, See Figure 8-2
+1826
+mA
+TS
+Safety temperature(1)
+150
+℃
+(1)
+The maximum safety temperature,TS, has the same value as the maximum junction temperature,TJ, specified for the device. The 
+IS and PS parameters represent the safety current and safety power respectively.The maximum limits of IS and PS should not be 
+exceeded. These limits vary with the ambient temperature, TA.
+The junction-to-air thermal resistance, RθJA, in the table is that of a device installed on a high-K test board for leaded surface-mount 
+packages. Use these equations to calculate the value for each parameter:
+TJ = TA + RθJA × P,where P is the power dissipated in the device.
+TJ(max) = TS = TA +RθJA × PS, where TJ(max) is the maximum allowed junction temperature.
+PS = IS × VI, where VI is the maximum input voltage.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: ISOW1044
+6.9 Electrical Characteristics
+over recommended operating conditions, typical values are at VDD = 5V, GND1 = GNDIO, GND2 = GISOIN, VIO = 3.3V and 
+TA =25°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Device
+VISOOUT
+Isolated Output supply voltage EN=VDD, STB, TXD, IN floating
+4.75
+5
+5.25
+V
+Iout
+Extra current available on 
+Visoout
+VDD = 4.5 to 5.5V, CAN full loaded 60Ω, 
+TXD toggling 5Mbps, IN toggling 10Mbps
+20
+mA
+VOH
+Output high voltage on OUT 
+pin
+VDD = 5V ± 10%, IOH = –4mA, IN = VIO
+VISOIN – 0.4
+V
+VOL
+Output low voltage on OUT 
+pin
+VDD = 5V ± 10%, IOL = 4mA, IN = GND2
+0.4
+V
+II
+Input current, IN
+IN at GND1 or VIO
+–25
+25
+µA
+II
+Input current, EN
+EN at GND1 or VIO
+–25
+25
+µA
+TXD TERMINAL
+II
+Input leakage current
+TXD = VIO or GND1
+–25
+25
+µA
+CI
+Input capacitance
+VIN = 0.4 × sin(2 × π × 1E+6 × t) + 1.65V, 
+VIO = 3.3V
+2
+pF
+RXD TERMINAL
+VOH 
+High level output voltage
+IO = -4mA for 4.5V ≤ VIO ≤ 5.5V, See Figure 
+7-4
+VIO – 0.4
+VIO – 0.2
+V
+IO = -2mA for 3.0V ≤ VIO ≤ 3.6V, See Figure 
+7-4
+VIO – 0.2
+VIO  – 0.06
+V
+IO = -1mA for 2.25V ≤ VIO ≤ 2.75V, See 
+Figure 7-4
+VIO – 0.1
+VIO – 0.04
+V
+IO = -1mA for 1.71V ≤ VIO ≤ 1.89V, See 
+Figure 7-4
+VIO – 0.1
+VIO – 0.04
+V
+VOL
+Low level output voltage
+IO = 4mA for 4.5V ≤ VIO ≤ 5.5V, See Figure 
+7-4
+0.2
+0.4
+V
+IO = 2mA for 3.0V ≤ VIO ≤ 3.6V, See Figure 
+7-4
+0.07
+0.2
+V
+IO = 1mA for 2.25V ≤ VIO ≤ 2.75V, See 
+Figure 7-4
+0.035
+0.1
+V
+IO = 1mA for 1.71V ≤ VIO ≤ 1.89V, See 
+Figure 7-4
+0.04
+0.1
+V
+STB Terminal
+II
+Input leakage current
+STB = VIO or GND1
+-25
+25
+µA
+CI
+Input capacitance
+VIN = 0.4 × sin(2 × π × 1E+6 × t) + 1.65V, 
+VIO = 3.3V
+2
+pF
+DRIVER ELECTRICAL CHARACTERISTICS
+VO(DOM)
+Bus output voltage(Dominant), 
+CANH
+STB=GND1, TXD = 0V, 50Ω ≤ RL ≤ 65Ω, 
+and CL = open, See Figure 9-1 and Figure 
+9-2
+2.75
+4.5
+V
+Bus output voltage(Dominant), 
+CANL
+STB=GND1, TXD = 0V, 50Ω ≤ RL ≤ 65Ω, 
+and CL = open, See Figure 9-1 and Figure 
+9-2
+0.5
+2.25
+V
+VO(REC)
+Bus output voltage(recessive), 
+CANH and CANL
+STB=GND1, TXD = VIO and RL = 
+open, See Figure 9-1 and Figure 9-2
+2.0 0.5 × VISOIN
+3.0
+V
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+over recommended operating conditions, typical values are at VDD = 5V, GND1 = GNDIO, GND2 = GISOIN, VIO = 3.3V and 
+TA =25°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+VOD(DOM)
+Differential output 
+voltage(dominant)
+STB=GND1, TXD = 0V, 45Ω ≤ RL ≤ 70Ω, 
+and CL = open, See Figure 9-1 and Figure 
+9-2
+1.4
+3.3
+V
+Differential output 
+voltage(dominant)
+STB=GND1, TXD = 0V, 50Ω ≤ RL ≤ 65Ω, 
+and CL = open, See Figure 9-1 and Figure 
+9-2
+1.5
+3.0
+V
+Differential output 
+voltage(dominant)
+STB=GND1, TXD = 0V, RL = 2240Ω, and CL 
+= open, See Figure 9-1 and Figure 9-2
+1.5
+5.0
+V
+VOD(REC)
+Differential output 
+voltage(recessive)
+TXD = VIO, RL = 60Ω, and CL = open, See 
+Figure 9-1 and Figure 9-2
+–120.0
+12.0
+mV
+Differential output 
+voltage(recessive)
+TXD = VIO, RL = open, and CL = open, See 
+Figure 9-1 and Figure 9-2
+–50.0
+50.0
+mV
+VO(STB)
+Bus Output Voltage, CANH, 
+Standby mode
+STB = VIO, RL = open, See Figure 
+9-1 and Figure 9-2
+–100
+100
+mV
+VO(STB)
+Bus Output Voltage, CANL, 
+Standby mode
+STB = VIO, RL = open, See Figure 
+9-1 and Figure 9-2
+–100
+100
+mV
+VOD(STB)
+Bus Output Voltage, CANH-
+CANL, Standby mode
+STB=VIO, RL = open, See Figure 
+9-1 and Figure 9-2
+-200
+200
+mV
+VSYM_DC
+Output symmetry (VISOIN - 
+VO(CANH) - VO(CANL))
+RL = 60Ω and CL = open, TXD = VIO or 
+GND1, See Figure 9-1 and Figure 9-2
+–400.0
+400.0
+mV
+IOS(SS_DOM) Short circuit current steady 
+state output current, dominant
+ -15 V < CANH < 40 V, CANL = open, and 
+TXD = 0 V, See Figure 9-8
+–115.0
+mA
+-15 V < CANL < 40 V, CANH = open, and 
+TXD = 0 V, See Figure 9-8
+115.0
+mA
+IOS(SS_REC)
+Short circuit current steady 
+state output current, recessive
+-27 V < VBUS < 32 V, VBUS = CANH = 
+CANL, and TXD = VIO ,  See Figure 9-8
+–5.0
+5.0
+mA
+RECEIVER ELECTRICAL CHARACTERISTICS
+VCM
+Input common mode range
+See Figure 9-4 and Table 9-1
+–12
+12
+V
+VIT
+Differential input threshold 
+voltage, normal mode
+-12V ≤ VCM ≤ 12V, STB = GND1, See Figure 
+9-4 and Table 9-1
+500.0
+900.0
+mV
+VIT(STB)
+Differential input threshold 
+voltage, standby mode
+-12V ≤ VCM ≤ 12V, STB = VIO
+400
+1150
+mV
+VHYS
+Hysteresis voltage for 
+differential input threshold, 
+normal mode
+-12V ≤ VCM ≤ 12V, STB = GND1
+100
+mV
+VDIFF(DOM)
+Dominant state differential 
+input voltage range, normal 
+mode
+-12V ≤ VCM ≤ 12V, STB = GND1, See Figure 
+9-4 and Table 9-1
+0.9
+9
+V
+VDIFF(DOM)
+Dominant state differential 
+input voltage range, standby 
+mode
+-12V ≤ VCM ≤ 12V, STB = VIO, See Figure 
+9-4 and Table 9-1
+1.15
+9
+V
+VDIFF(REC)
+Recessive state differential 
+input voltage range, normal 
+mode
+-12V ≤ VCM ≤ 12V, STB = GND1, See Figure 
+9-4 and Table 9-1
+–4
+0.5
+V
+VDIFF(REC)
+Recessive state differential 
+input voltage range, standby 
+mode
+-12V ≤ VCM ≤ 12V, STB = VIO, See Figure 
+9-4 and Table 9-1
+–4
+0.4
+V
+IOFF(LKG)
+power-off bus input leakage 
+current
+CANH = CANL = 5V, VDD = VIO = GND1
+5
+µA
+CI
+Input capacitance to ground 
+(CANH or CANL)
+TXD = VIO
+20
+pF
+CID
+Differential input capacitance
+TXD = VIO
+10
+pF
+RID
+Differential input resistance
+TXD = VIO ; -12V ≤ VCM ≤ +12V
+40
+90
+kΩ
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: ISOW1044
+over recommended operating conditions, typical values are at VDD = 5V, GND1 = GNDIO, GND2 = GISOIN, VIO = 3.3V and 
+TA =25°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+RIN
+Input resistance (CANH or 
+CANL)
+TXD = VIO ; -12V ≤ VCM ≤ +12V
+20
+45
+kΩ
+RIN(M)
+Input resistance matching: (1 - 
+RIN(CANH)/RIN(CANL)) × 100%
+VCANH = VCANL = 5V
+–1
+1
+%
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+6.10 Supply Current Characteristics
+Typical values are at VDD=5V, VIO=3.3V, Min/Max over recommended operating conditions, GND1 = GNDIO, GND2 = 
+GISOIN, VDD = 4.5V to 5.5V (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Power converter disabled
+IDD
+Power converter supply 
+current
+EN = GND1, STB, TXD, IN floating
+0.23
+0.27
+mA
+IIO
+Logic supply current
+EN = GND1, STB, TXD, IN floating
+0.34
+0.70
+mA
+Supply current: Normal Mode
+IDD
+Power converter supply 
+current
+TXD = GND1, Bus dominant, RL= 60Ω
+124
+211
+mA
+IDD
+Power converter supply 
+current
+TXD = VIO, Bus recessive, RL = 60Ω
+26
+46
+mA
+IDD
+Power converter supply 
+current
+TXD = 1Mbps 50% duty square wave, RL = 60Ω
+76
+123
+mA
+IDD
+Power converter supply 
+current
+TXD = 5 Mbps 50% duty square wave, RL= 60Ω
+78
+136
+mA
+IIO
+Logic supply current
+TXD = GND1, Bus dominant, VIO = 1.71 to 1.89V
+4.3
+5.5
+mA
+IIO
+Logic supply current
+TXD = GND1, Bus dominant, VIO = 2.25 to 5.5V
+4.9
+6.0
+mA
+IIO
+Logic supply current
+TXD = VIO, Bus recessive, VIO = 1.71 to 1.89V
+3.3
+5.4
+mA
+IIO
+Logic supply current
+TXD = VIO, Bus recessive, VIO = 2.25 to 5.5V
+3.8
+5.5
+mA
+IIO
+Logic supply current
+TXD = 1 Mbps square wave 50% duty, VIO = 3 to 3.6V
+4.4
+5.3
+mA
+IIO
+Logic supply current
+TXD = 5 Mbps square wave 50% duty, VIO = 3 to 3.6V
+4.5
+6.2
+mA
+Supply current: Standby mode
+IDD
+Power converter supply 
+current
+STB = VIO , RL = 60Ω
+16
+23
+mA
+IIO
+Logic supply current
+STB = VIO , VIO = 3 to 3.6V
+2.7
+3.5
+mA
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: ISOW1044
+6.11 Switching Characteristics
+Typical specifications are at VIO = 3.3V, VDD = 5V, GND1 = GNDIO, GND2 = GISOIN, Min/Max are over recommended 
+operating conditions (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+DEVICE SWITCHING CHARACTERISTICS
+tPROP(LOO
+P1)
+Total loop delay, driver input TXD to 
+receiver RXD, recessive to dominant
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+= 1ns; 1.71V < VIO < 5.5V, See Figure 7-3
+140
+205
+ns
+tPROP(LOO
+P2)
+Total loop delay, driver input TXD to 
+receiver RXD, dominant to recessive
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns; 1.71V < VIO < 5.5V, See Figure 7-3
+167
+222
+ns
+tMODE
+Mode change time, from Normal to 
+Standby or from Standby to Normal
+20
+µs
+tWK_FILTE
+R
+Filter time for a valid wake-up pattern
+0.5
+1.8
+µs
+tWK_TIME
+OUT
+Bus wake-up timeout value
+0.8
+5
+ms
+CMTI
+Common mode transient immunity
+TXD = VIO or GND1, VCM = 1200VPK, See 
+Figure 7-9
+85
+100
+kV/µs
+DRIVER SWITCHING CHARACTERISTICS
+tpHR
+Propagation delay time, LOW to HIGH 
+TXD edge to driver recessive (dominant 
+to recessive)
+RL = 60Ω and CL = 100pF; input rise/fall 
+time (10% to 90%) on TXD =1ns, See 
+Figure 7-3
+87
+110
+ns
+tpLD
+Propagation delay time, HIGH TO LOW 
+TXD edge to driver dominant (recessive 
+to dominant)
+78
+105
+tsk(p)
+pulse skew (|tpHR - tpLD|)
+15
+tR
+Differential output signal rise time
+27
+tF
+Differential output signal fall time
+48
+VSYM
+Driver symmetry (VO(CANH) + 
+VO(CANL))/VCC
+RTERM = 60Ω, CL = open, CSPLIT = 4.7nF, 
+TXD = Dominant or recessive or toggling 
+at 250kHz, 1MHz See Figure 7-3
+0.9
+1.1
+V/V
+tTXD_DTO
+Dominant time out
+RL = 60Ω and CL = open, See Figure 7-7
+1.2
+3.8
+ms
+RECEIVER SWITCHING CHARACTERISTICS
+tpRH
+Propagation delay time, bus dominant to 
+recessive transition to RXD high output 
+(dominant to recessive)
+CL(RXD) = 15pF, See Figure 7-5
+90
+115
+ns
+tpDL
+Propagation delay time, bus recessive to 
+dominant transition to RXD low output 
+(recessive to dominant)
+80
+105
+ns
+tR
+Output signal rise time(RXD)
+1
+ns
+tF
+Output signal fall time(RXD)
+1
+ns
+FD TIMING PARAMETERS
+tBIT(BUS)
+Bit time on CAN bus output pins with 
+tBIT(TXD) = 500ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns, See Figure 7-6
+435
+530
+ns
+Bit time on CAN bus output pins with 
+tBIT(TXD) = 200ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns, See Figure 7-6
+155
+210
+ns
+tBIT(RXD)
+Bit time on RXD bus output pins with 
+tBIT(TXD) = 500ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns, See Figure 7-6
+400
+550
+ns
+Bit time on RXD bus output pins with 
+tBIT(TXD) = 200ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns, See Figure 7-6
+120
+220
+ns
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+14
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+Typical specifications are at VIO = 3.3V, VDD = 5V, GND1 = GNDIO, GND2 = GISOIN, Min/Max are over recommended 
+operating conditions (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+∆tREC
+Receiver timing symmetry with tBIT(TXD) = 
+500ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns; ΔtREC = tBIT(RXD) - tBIT(BUS), See 
+Figure 7-6
+-65
+40
+ns
+Receiver timing symmetry with tBIT(TXD) = 
+200ns
+RL = 60Ω, CL = 100pF, CL(RXD) = 15pF; 
+input rise/fall time (10% to 90%) on TXD 
+=1ns; ΔtREC = tBIT(RXD) - tBIT(BUS), See 
+Figure 7-6
+-45
+15
+ns
+GPIO Channel
+tPLH, tPHL Propagation delay time
+11
+25
+ns
+PWD
+Pulse Width distortion, |tPLH- tPHL|
+3.5
+10
+ns
+tr
+Output signal rise time
+2.2
+5
+ns
+tf
+Output signal fall time
+2.2
+5
+ns
+6.12 Insulation Characteristics Curves
+Ambient Temperature (qC)
+Safety Limiting Current (mA)
+0
+50
+100
+150
+200
+0
+100
+200
+300
+400
+500
+600
+D001
+VI = 5.5 V
+VI = 3.6 V
+Figure 6-1. Thermal Derating Curve for Limiting 
+Current per VDE
+Ambient Temperature (qC)
+Safety Limiting Power (mW)
+0
+50
+100
+150
+200
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+1800
+2000
+D002
+Figure 6-2. Thermal Derating Curve for Limiting 
+Power per VDE
+6.13 Typical Characteristics
+VDD = VIO, VISOIN = VISOOUT, CL(RXD) = 15pF , RL = 60Ω, TA = 25°C unless otherwise noted.
+Data Rate (Mbps)
+VDD Supply Current (mA)
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+5
+68
+70
+72
+74
+76
+78
+80
+82
+VDD=4.5V
+VDD=5V
+VDD=5.5V
+VISOOUT = 5V
+STB = Low
+Figure 6-3. VDD Supply Current vs Datarate
+Temperature (C)
+VDD Supply Current (mA)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+68
+70
+72
+74
+76
+78
+80
+82
+250kbps
+500kbps
+1Mbps
+2Mbps
+5Mbps
+VDD = 5V
+STB = Low
+VISOOUT = 5V
+Figure 6-4. VDD Supply Current vs Temperature
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+15
+Product Folder Links: ISOW1044
+6.13 Typical Characteristics (continued)
+VDD = VIO, VISOIN = VISOOUT, CL(RXD) = 15pF , RL = 60Ω, TA = 25°C unless otherwise noted.
+Data Rate (Mbps)
+VIO Supply Current (mA)
+0
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+4
+4.5
+5
+3.6
+3.8
+4.0
+4.2
+4.4
+4.6
+4.8
+5.0
+VIO=1.8V
+VIO=2.5V
+VIO=3.3V
+VIO=5V
+VISOOUT = 5V
+STB = Low
+Figure 6-5. VIO Supply Current vs Datarate
+Temperature (C)
+VIO Supply Current (mA)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+3.5
+3.7
+3.9
+4.1
+4.3
+4.5
+4.7
+4.9
+5.1
+5.3
+5.5
+IN=Low
+IN=High
+VDD = 5V
+STB = High
+VISOOUT = 5V
+Figure 6-6. VIO Standby Current vs Temerature
+Temperature (C)
+VIO Non-Standby Current (mA)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+4.0
+4.2
+4.4
+4.6
+4.8
+5.0
+5.2
+250kbps
+500kbps
+1Mbps
+2Mbps
+5Mbps
+VDD = 5V
+STB = Low
+VISOOUT = 5V
+Figure 6-7. VIOI Non-standby Current vs Temperature
+Temperature (C)
+Loop1 Delay (ns)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+130
+135
+140
+145
+150
+155
+VIO=1.8V
+VIO=2.5V
+VIO=3.3V
+VIO=5V
+VDD = 5V
+STB = Low
+VISOOUT = 5V
+CL = 100pF
+Figure 6-8. Loop Delay (Recessive to Dominant) vs Temperature 
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+16
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+6.13 Typical Characteristics (continued)
+VDD = VIO, VISOIN = VISOOUT, CL(RXD) = 15pF , RL = 60Ω, TA = 25°C unless otherwise noted.
+Temperature (C)
+Loop2 Delay (ns)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+165
+170
+175
+180
+185
+VIO=1.8V
+VIO=2.5V
+VIO=3.3V
+VIO=5V
+VDD = 5V
+STB = Low
+VISOOUT = 5V
+CL = 100pF
+Figure 6-9. Loop Delay (Dominant to Recessive) vs Temperature 
+Temperature (C)
+VOD (V)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+2.15
+2.20
+2.25
+2.30
+2.35
+VDD = 5V
+STB = Low
+Figure 6-10. Dominant state differential output voltage vs 
+Temperature 
+Temperature (C)
+VIT (mV)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+0
+100
+200
+300
+400
+500
+600
+700
+800
+VITR
+VITF
+Vhys
+VDD = 5V
+STB = Low
+Figure 6-11. Receiver differential threshold voltage vs 
+Temperature 
+VDD = 5V
+STB = Low
+Figure 6-12. Dominant Timeout vs Temperature 
+Figure 6-13. Glitch Free Power Up on VDD
+Figure 6-14. Typical TXD, RXD, CANH and CANL Waveforms at 
+500kbps 
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+17
+Product Folder Links: ISOW1044
+6.13 Typical Characteristics (continued)
+VDD = VIO, VISOIN = VISOOUT, CL(RXD) = 15pF , RL = 60Ω, TA = 25°C unless otherwise noted.
+Figure 6-15. Typical TXD, RXD, CANH and CANL Waveforms at 
+2Mbps 
+Figure 6-16. Typical TXD, RXD, CANH and CANL Waveforms at 
+5Mbps 
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+18
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+7 Parameter Measurement Information
+0 or
+V
+VI
+TXD
+CANH
+CANL
+VO(CANL )
+VO(CANH)
+VOD
+IO(CANH)
+IO(CANL)
+GND2
+GND1
+GND1
+GND2
+II
+VOC
+VO(CANH) + VO(CANL)
+2
+RL
+ISOIN
+Figure 7-1. Driver Voltage, Current and Test Definitions
+» 2.5V
+» 3.5V
+» 1.5V
+Recessive
+Dominant
+O (CANH)
+V
+O (CANL)
+V
+Figure 7-2. Bus Logic State Voltage Definitions
+VI
+(SEE NOTE A)
+VO
+TXD
+CANL
+CANH
+C
+Vcc/2
+Vcc/2
+Vcc
+tf
+tr
+t PLH
+t PHL
+10%
+90%
+0.9V
+0 V
+VO(D)
+VO(R)
+0.5V
+V I
+VO
+R L
+L
+A.
+The input pulse is supplied by a generator having the following characteristics: PRR ≤ 125kHz, 50% duty 
+cycle, tr ≤ 6ns, tf ≤ 6ns, ZO = 50Ω.
+Figure 7-3. Driver Test Circuit and Voltage Waveforms
+RXD
+CANH
+CANL
+GND2
+GND1
+VI(CANH)
+VI(CANL)
+IO
+VIC
+VI(CANH)
+=
+VI(CANL)
++
+2
+VID
+VO
+Figure 7-4. Receiver Voltage and Current Definitions
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+19
+Product Folder Links: ISOW1044
+RXD
+CANH
+CANL
+GND 2
+GND 1
+V I
+(SEE NOTE A)
+1 .5 V
+IO
+V O
+VI
+VO
+2 V
+2.4 V
+3.5 V
+VOH
+t f
+t r
+t pHL
+1.5 V
+VOL
+90 %
+10 %
+0.3 Vcc 1
+0.7 Vcc 1
+t pLH
+CL(RXD)
+A.
+The input pulse is supplied by a generator having the following characteristics: PRR ≤ 125kHz, 50% duty cycle,
+tr ≤ 6ns, tf ≤ 6ns, ZO = 50Ω.
+Figure 7-5. Receiver Test Circuit and Voltage Waveforms
+Table 7-1. Receiver Differential Input Voltage Threshold Test
+INPUT
+OUTPUT
+VCANH
+VCANL
+|VID|
+RXD
+-11.5V
+-12.5V
+1000mV
+L
+VOL
+12.5V
+11.5V
+1000mV
+L
+-8.55V
+-9.45V
+900mV
+L
+9.45V
+8.55V
+900mV
+L
+-8.75V
+-9.25V
+500mV
+H
+VOH
+9.25V
+8.75V
+500mV
+H
+-11.8V
+-12.2V
+400mV
+H
+12.2V
+11.8V
+400mV
+H
+Open
+Open
+X
+H
+RL
+CANH
+CANL
+TXD
+CL
+VO
+CL(RXD)
+RXD
+VI
+TXD
+VDIFF
+70%
+500 mV
+30%
+30%
+900 mV
+VI
+0V
+tBIT(BUS)
+RXD
+VOH
+VOL
+70%
+30%
+tBIT(RXD)
+tBIT(TXD)
+GND1
+5 x tBIT
+Figure 7-6. tLOOP and CAN FD Timing Parameter Measurement
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+20
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+CANH
+CANH
+TXD
+(see Note A)
+CL
+VI
+VOD
+GND 1
+V
+VI
+VOD
+500 mV
+900 mV
+0 V
+VOD(D)
+0 V
+t TXD_DTO
+RL
+ISOIN
+A.
+The input pulse is supplied by a generator having the following characteristics: tr ≤ 6ns, tf ≤ 6ns, ZO = 50Ω.
+Figure 7-7. Dominant Time-out Test Circuit and Voltage Waveforms
+CANH
+CANL
+TXD
+0V
+VBUS
+VBUS
+IOS
+VBUS
+0V
+VBUS
+VBUS
+or
+IOS
+GND2
+200μs
++
+– 
+IOS
+Figure 7-8. Driver Short-Circuit Current Test Circuit and Waveforms
+GND1
+VIO
+GND1
++
+VOH or VOL
+±
+RXD
+GND1
+CANH
+CANL
++
+VOH or VOL
+±
++ VCM ±
+TXD
+VISOIN
+VIO
+GND2
+
+
+10 µF
+10 µF
+CL 
+15 pF(1)
+CL 
+15 pF(1)
+0.1 µF
+0.1 µF
+0.1 µF
+10 µF
+(Connected to VISOO UT on PCB)
+STB
+S 1
+Figure 7-9. Common-Mode Transient Immunity Test Circuit
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+21
+Product Folder Links: ISOW1044
+IN
+OUT
+CL
+See Note B
+VO
+VI
+VOL
+VOH
+VCCI
+0V
+tr
+Isolation Barrier
+50Ω
+Input 
+Generator 
+(See Note A)
+VI
+VO
+tf
+tPLH
+tPHL
+50%
+50%
+50%
+50%
+90%
+10%
+A.
+VCCI and VCCO refers to the power supplies VIO and VISOIN, respectively. CL = 15pF and The input pulse is supplied by a generator 
+having the following characteristics: PRR ≤ 50kHz, 50% duty cycle, tr ≤ 3ns, tf ≤ 3ns, ZO = 50Ω. At the input, 50Ω resistor is required to 
+terminate Input Generator signal. The resistor is not needed in actual application.
+B.
+B. CL = 15pF and includes instrumentation and fixture capacitance within ±20%.
+Figure 7-10. Switching Characteristics Test Circuit and Voltage Waveforms
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+22
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+8 Detailed Description
+8.1 Overview
+The ISOW1044 has signal isolation channels, power isolation with integrated transformer and CAN transceiver 
+all integrated in one package. ISOW1044 supports maximum signaling rate up to 1Mbps for CAN, and 5Mbps for 
+CAN FD. Functional Block Diagram shows functional block diagram of ISOW1044.
+8.2 Power Isolation
+The integrated isolated DC-DC converter uses advanced circuit and on-chip layout techniques to reduce 
+radiated emissions and achieve up to 47% typical efficiency. The integrated transformer uses thin film polymer 
+as the insulation barrier. In case bus communication is not needed, the DC-DC converter can be switched off 
+using EN pin to save power. The output voltage, VISOOUT, is monitored and feedback information is conveyed to 
+the primary side through a dedicated isolation channel. The duty cycle of the primary switching stage is adjusted 
+accordingly. The fast feedback control loop of the power converter verifies low overshoots and undershoots 
+during load transients. Undervoltage lockout (UVLO) with hysteresis is integrated on the VIO, VDD and VISOOUT 
+supplies which provides robust fails-safe system performance under noisy conditions. An integrated soft-start 
+mechanism provides controlled inrush current and avoids any overshoot on the output during power up.
+8.3 Signal Isolation
+The integrated signal isolation channels for CAN transceiver and GPIIO employ an ON-OFF keying (OOK) 
+modulation scheme to transmit the digital data across a silicon-dioxide based isolation barrier. The transmitter 
+sends a high frequency carrier across the barrier to represent one state and sends no signal to represent the 
+other state. The receiver demodulates the signal after signal conditioning and produces the output through 
+a buffer stage. The signal-isolation channels incorporate advanced circuit techniques to maximize the CMTI 
+performance and minimize the radiated emissions from the high frequency carrier and IO buffer switching. Figure 
+8-3 shows a functional block diagram of a typical signal isolation channel.
+To keep any noise coupling from power converter away from signal path, power supplies on side1 for power 
+converter (VDD) and signal path(VIO) are kept separate. Similarly on side2, power converter output (VISOOUT) 
+needs to be connected to power supply for CAN (VISOIN) externally on PCB. For more details, refer to Layout 
+guidelines section.
+8.4 CAN Transceiver
+The ISOW1044 device includes a digitally isolated CAN transceiver that offers ±58V DC bus fault protection 
+and ±12V common-mode voltage range. The device supports up to 5Mbps data rate in CAN FD mode allowing 
+much faster transfer of payload compared to classic CAN. The power converter operates from a 5V supply on 
+side 1 (VDD) and a 5V supply on side 2 (VISOOUT). The logic supply VIO on side 1 can operate from 1.71V 
+up to 5.5V. This wide VIO supply range is of particular advantage for applications operating in harsh industrial 
+environments because the low voltage on side 1 enables the connection to low voltage microcontrollers for 
+power conservation, whereas the 5V on side 2 maintains a high signal-to-noise ratio of the bus signals.
+The ISOW1044 supports a standby mode and remote BUS Wake-UP (WUP). The STB pin can be supplied from 
+either the system processor or from a static system voltage source. In standby mode, the CAN driver and main 
+receiver are switched off and bidirectional CAN communication is not possible. The DC-DC converter, low-power 
+receiver, and bus monitor circuits are still enabled to allow for RXD wake-up requests using the CAN bus. The 
+CAN bus pins are weakly pulled to GND in this mode. If normal mode is the only intended mode of operation 
+than the STB pin can be tied directly to GND.
+8.5 Remote Wake Request Using Wake-Up Pattern (WUP) in Standby Mode
+The ISOW1044 supports a remote wake-up request that is used to indicate to the host controller that the bus is 
+active and the node must return to normal operation.
+The device uses the multiple filtered dominant wake-up pattern (WUP) from the ISO 11898-2:2016 standard to 
+qualify bus activity. Once a valid WUP has been received, the wake request is indicated to the controller by a 
+falling edge and low period corresponding to a filtered dominant on the RXD output of the ISOW1044.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+23
+Product Folder Links: ISOW1044
+The WUP consists of a filtered dominant pulse, followed by a filtered recessive pulse, and finally by a second 
+filtered dominant pulse. The first filtered dominant initiates the WUP, and the bus monitor then waits on a filtered 
+recessive; other bus traffic does not reset the bus monitor. Once a filtered recessive is received the bus monitor 
+is waiting for a filtered dominant and again, other bus traffic does not reset the bus monitor. Immediately upon 
+reception of the second filtered dominant the bus monitor recognizes the WUP and drives the RXD output low 
+every time an additional filtered dominant signal is received from the bus.
+For a dominant or recessive to be considered filtered, the bus must be in that state for more than the 
+tWK_FILTER time. Due to variability in tWK_FILTER the following scenarios are applicable. Bus state times less 
+than tWK_FILTER(MIN) are never detected as part of a WUP and thus no wake request is generated. Bus state 
+times between tWK_FILTER(MIN) and tWK_FILTER(MAX) can be detected as part of a WUP and a wake-up request can 
+be generated. Bus state times greater than tWK_FILTER(MAX) are always detected as part of a WUP, and thus a 
+wake request is always generated. See Figure 8-1 for the timing diagram of the wake-up pattern.
+The pattern and tWK_FILTER time used for the WUP prevents noise and bus stuck dominant faults from causing 
+false wake-up requests while allowing any valid message to initiate a wake-up request.
+The ISO 11898-2:2016 standard has defined times for a short and long wake-up filter time. The tWK_FILTER timing 
+for the device has been picked to be within the minimum and maximum values of both filter ranges. This timing 
+has been chosen such that a single bit time at 500kbps, or two back-to-back bit times at 1Mbps triggers the filter 
+in either bus state. Any CAN frame at 500kbps or less contains a valid WUP.
+For an additional layer of robustness and to prevent false wake-ups, the device implements a wake-up timeout 
+feature. For a remote wake-up event to successfully occur, the entire WUP must be received within the timeout 
+value t ≤ tWK_TIMEOUT. If not, the internal logic is reset and the transceiver remains in the current state without 
+waking up. The full pattern must then be transmitted again, conforming to the constraints mentioned in this 
+section. See Figure 8-1 for the timing diagram of the wake-up pattern with wake timeout feature.
+Bus VDiff
+tWK_FILTER
+tWK_FILTER
+tWK_FILTER
+Bus
+Filtered
+Dominant
+Filtered
+Dominant
+Filtered
+Recessive
+Wake Up Pattern (WUP) received t < tWK_Timeout
+RXD
+tWK_FILTER
+Filtered Dominant RXD Output
+Bus Wake Via RXD Requests  
+Bus Wake using RXD 
+Request
+Waiting for 
+Filtered 
+Recessive
+Waiting for 
+Filtered 
+Dominant
+Figure 8-1. Wake-Up Pattern (WUP) With tWK_TIMEOUT 
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+24
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+8.6 Functional Block Diagram
+Tx
+Rx
+Rx
+Tx
+TXD
+RXD
+D
+R
+VIO
+CANH
+GISOIN
+VISOIN
+DC-DC Primary
+DC-DC Secondary
+GND1
+GND2
+CANL
+Tx
+STB
+Rx
+EN/FLT
+Galvanic Isolation
+Barrier
+GNDIO
+Tx
+Rx
+IN
+OUT
+VDD
+VISOOUT
+VSIN
+Figure 8-2. Block Diagram
+TX IN
+Oscillator
+OOK 
+Modulation
+Emissions 
+Reduction 
+Techniques
+TX Signal 
+Conditioning
+Envelope 
+Detection
+RX Signal 
+Conditioning
+Receiver
+RX OUT
+Transmitter
+SiO2 based 
+Capacitive 
+Isolation 
+Barrier
+TX IN
+RX OUT
+Carrier signal through 
+isolation barrier
+Figure 8-3. Signal Isolation Channel
+8.7 Feature Description
+8.7.1 CAN Bus States
+The CAN bus has two logical states during operation: recessive and dominant. A dominant bus state occurs 
+when the bus is driven differentially and corresponds to a logic low on the TXD and RXD pins. A recessive 
+bus state occurs when the bus is biased to VCC/2 using the high-resistance internal input resistors (RIN) of the 
+receiver and corresponds to a logic high on the TXD and RXD pins.
+A dominant state overwrites the recessive state during arbitration. Multiple CAN nodes can be transmitting a 
+dominant bit at the same time during arbitration, and in this case the differential voltage of the bus is greater than 
+the differential voltage of a single driver.
+The ISOW1044 transceiver implements a standby (STB) mode which enables a third bus state where the bus 
+pins are weakly biased to ground using the high resistance internal resistors of the receiver.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+25
+Product Folder Links: ISOW1044
+Recessive
+Dominant
+Recessive
+Time, t
+Typical Bus Voltage
+Normal Mode
+Standby Mode  
+CANL
+CANH
+VDIFF
+VDIFF
+Figure 8-4. Bus States (Physical Bit Representation)
+Bias 
+Unit
+2.5V
+A
+B
+GND
+CANL
+CANH
+RXD
+Figure 8-5. Simplified Recessive Common Mode Bias and Receiver 
+A.
+A - Normal Mode B - Standby Mode
+8.7.2 Digital Inputs and Outputs: TXD (Input) and RXD (Output)
+The VIO supply for the isolated digital input and output side of the device can be supplied by 1.8V, 2.5V, 3.3V, 
+and 5V supplies and therefore the digital inputs and outputs are 1.8V, 2.5V, 3.3V, and 5V compatible.
+8.7.3 TXD Dominant Timeout (DTO)
+The TXD DTO circuit prevents the transceiver from blocking network communication in the event of a hardware 
+or software failure where the TXD pin is held dominant longer than the timeout period, tTXD_DTO. The DTO circuit 
+timer starts on a falling edge on the TXD pin. The DTO circuit disables the CAN bus driver if no rising edge 
+occurs before the timeout period expires, which frees the bus for communication between other nodes on the 
+network. The CAN driver is activated again when a recessive signal occurs on the TXD pin, clearing the TXD 
+DTO condition. The receiver and RXD pin still reflect activity on the CAN bus, and the bus terminals are biased 
+to the recessive level during a TXD dominant timeout.
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+26
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+RXD
+(receiver)
+TXD
+(driver)
+CAN
+Bus
+Signal
+Normal CAN 
+communication
+TXD fault stuck dominant
+Example: PCB failure or bad software
+Driver disabled freeing bus for other nodes
+TXD DTO prevents the bus from being stuck dormant, thereby 
+blocking communication for the whole network, and frees the bus 
+for communication after tTXD_DTO time.
+tTXD_DTO
+tTXD_DTO
+Fault is repaired and transmission 
+capability is restored
+Communication from 
+other bus nodes
+Communication from 
+repaired nodes
+Communication from 
+other bus nodes
+Communication from 
+repaired nodes
+Communication from 
+local node
+Figure 8-6. Example Timing Diagram for TXD DTO
+Note
+The minimum dominant TXD time (tTXD_DTO) allowed by the TXD DTO circuit limits the minimum 
+possible transmitted data rate of the device. The CAN protocol allows a maximum of eleven 
+successive dominant bits (on TXD) for the worst case, where five successive dominant bits are 
+followed immediately by an error frame. This, along with the tTXD_DTO minimum, limits the minimum 
+data rate. Calculate the minimum transmitted data rate with Equation 1.
+Minimum Data Rate =  
+11
+tTXD_DTO
+(1)
+8.7.4 Power-Up and Power-Down Behavior 
+The ISOW1044 has built-in under-voltage lockout (UVLO) on all supplies (VDD, VIO and VISOOUT) with positive-
+going and negative-going thresholds and hysteresis. Both the power converter supply (VDD) and Logic supply 
+(VIO) need to be present for the device to work. If either of them is below UVLO, both the signal path and the 
+power converter are disabled.
+Assuming VIO is above UVLO+, when the VDD voltage crosses the positive-going UVLO threshold during power-
+up, the DC-DC converter initializes and the power converter duty cycle is increased in a controlled manner. This 
+soft-start scheme limits primary peak currents drawn from the VDD supply and charges the VISOOUT output in a 
+controlled manner, avoiding overshoots. CAN BUS is in high impedance state in this duration. When the UVLO 
+positive-going threshold is crossed on the secondary side VISOOUT pin, the feedback channel starts providing 
+feedback to the primary controller. The regulation loop takes over and CAN drive output, Received data output 
+(RXD) and general purpose logic channel (OUT) take the respective states defined by the inputs to the device: 
+the Standby (STB), driver data to be transmitted (TXD), and general purpose logic input (IN), respectively. 
+Designers must consider a sufficient time margin (typically 5ms with 10µF load capacitance) to allow this power 
+up sequence before any usable system functionality.
+When either of VDD or VIO is lost, the primary side DC-DC controller turns off when the UVLO lower threshold is 
+reached. The VISOOUT capacitor then discharges depending on the isolation channels and BUS load.
+8.7.5 Protection Features 
+The ISOW1044 device has multiple protection features to create a robust system-level design.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+27
+Product Folder Links: ISOW1044
+•
+The first feature is an Enable/Fault protection feature. This EN/FLT pin can be used as either an input pin to 
+enable or disable the integrated DC-DC power converter or as an output pin which works as an alert signal 
+if the power converter is not operating properly. In the /Fault use-case, a fault is reported if VDD > 7V, VDD < 
+2.5V, or if the junction temperature >170°C. When a fault is detected, this pin goes low, disabling the DC-DC 
+converter to prevent any damage.
+MCU OUTPUT
+MCU INPUT
+Powers Down CAN Transceiver
+and DC-DC Converter. 
+IQ < 1 mA Typical
+Fault Reported If
+VDD < 2.5 V
+VDD > 7 V
+Junction Temp > 170° C
+EN/FLT
+  5 kΩ  
+Figure 8-7. EN Fault Pin Diagram
+•
+An overvoltage clamp feature is present on VISOOUT which clamps the voltage at 6V if there is an increase in 
+voltage seen. For device reliability, VISOOUT must stay lower than the over-clamp voltage for device reliability.
+•
+Over-Voltage Lock Out (OVLO) on VDD occurs when a voltage higher than 7V on VDD is seen. At OVLO, the 
+device goes into a low power state and the EN/FLT pin goes low.
+•
+In cases of overload or short on power converter output VISOOUT, maximum duty cycle of power converter is 
+limited. In cases of driver bus short circuit due to the external power supply cable shorting to the bus cable, 
+short circuit current protection on CAN chip restricts the bus current to ±115mA maximum.
+•
+Thermal protection is also integrated to help prevent the device from getting damaged under such scenarios. 
+An increase in the die temperature is monitored and the device is disabled when the die temperature 
+becomes 165°C (typical), thus disabling the short condition. The device is re-enabled when the junction 
+temperature becomes 155°C (typical). If an overload or output short-circuit condition prevails, this protection 
+cycle is repeated. Take care in the system design to prevent repeated or prolonged exposure to bus shorts as 
+this exposes the device to high junction temperatures for extreme amounts of time affecting device reliability.
+8.7.6 Floating Pins, Unpowered Device
+The ISOW1044 is designed to be best when passive or with no load to the CAN bus if the device is unpowered. 
+The bus pins (CANH, CANL) have extremely low leakage currents when the device is unpowered to avoid 
+loading down the bus which is critical if some nodes of the network are unpowered while the rest of the of 
+network remains in operation.
+The device has internal pull-ups on critical pins (TXD and STB) which places the device into known states if 
+the pin floats. This internal bias must not be relied upon by design though, especially in noisy environments, but 
+instead must be considered a failsafe protection feature. When a CAN controller supporting open drain outputs 
+is used, an adequate external pullup resistor must be used to verify that the TXD output of the CAN controller 
+maintains adequate bit timing to the input of the CAN transceiver. See Table 8-3 for more details.
+8.7.7 Glitch-Free Power Up and Power Down
+Communication on the bus that already exist between a controller node and target node in a CAN network must 
+not be disturbed when a new node is swapped in or out of the network. No glitches on the bus must occur when 
+the device is:
+•
+Hot plugged into the network in an unpowered state
+•
+Hot plugged into the network in a powered state and recessive state
+•
+Powered up or powered down in a recessive state when already connected to the bus
+The ISOW1044 device meets above criteria and does not cause any false data toggling on the bus when 
+powered up or powered down in a recessive state with supply ramp rates ≥ 50µs.
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+28
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+8.8 Device Functional Modes
+Table 8-1 lists the supply configuration for these devices:
+Table 8-1. Supply configuration Function Table
+INPUTS
+OUTPUTS
+VDD
+VIO
+EN/FLT
+BUS OUTPUT (CANH/
+CANL)
+RXD
+VISOOUT (2)
+< VDD(UVLO+)
+>VIO(UVLO+)
+X
+High-Z
+Recessive 
+(Default High)
+OFF
+>VDD(UVLO+)
+<VIO(UVLO+)
+X
+High-Z
+Recessive 
+(Default High)
+Invalid Operation
+5V
+1.71V to 5.5V
+H or Open
+Per Device Mode (1) and 
+TXD
+Mirrors Bus
+5V
+5V
+1.71V to 5.5V
+L
+High-Z
+Recessive 
+(Default High)
+OFF
+(1)
+At Normal mode (STB = L), BUS OUTPUT follows TXD. Otherwise if at Standby mode (STB = H or Open), BUS OUTPUT is High-Z.
+(2)
+VISOOUT shorted to VISOIN on PCB. GND2 and GISOIN pins are shorted together and EN/FLT = High.
+Table 8-2 shows the different driver functional modes:
+Table 8-2. Driver Functional Table
+INPUTS
+OUTPUTS
+VDD (1)
+VIO
+EN/FLT
+STB
+INPUT TXD
+CANH (3)
+CANL (3)
+DRIVEN BUS STATE
+PU
+PU
+H or Open
+L
+L
+H
+L
+Dominant
+H or Open
+Z
+Z
+Recessive
+H or Open
+X
+Hi-Z
+Hi-Z
+Weak pull-down to 
+ground
+L
+X
+X
+Hi-Z
+Hi-Z
+Weak pull-down to 
+ground
+PD
+PU
+X
+X
+X
+Hi-Z
+Hi-Z
+Weak pull-down to 
+ground
+PU
+PD(2)
+X
+X
+X
+Invalid Operation
+(1)
+PU=Powered up, PD=Powered down; H=high level; L=Low level; X=Irrelevant; Z = common-mode (recessive) biased to VISOIN/2, 
+Hi-Z=High impedance state
+(2)
+A strongly driven input signal on TXD can weakly power the floating VIO through an internal protection diode and cause an 
+undetermined output.
+(3)
+VISOOUT shorted to VISOIN on PCB and GND2 and GISOIN pins are shorted together and EN/FLT = High
+At Normal mode (STB = L), the CAN outputs follow the logic states at data input, TXD. A logic low at the TXD 
+input causes the CAN output to go dominant. Therefore the differential output voltage defined by Equation 2 is 
+positive. A logic high at the TXD input causes the CAN BUS to go recessive. Therefore the differential output 
+voltage defined by Equation 2 is negative.
+VOD = VCANH −VCANL
+(2)
+At Standby mode (STB = H or Open), both outputs go to the high-impedance (Hi-Z) state. The logic state at the 
+TXD pin is irrelevant when this mode. The driver is disabled (bus outputs are in the Hi-Z) by default when the 
+STB pin is left open. The TXD pin has an internal pullup resistor.
+Table 8-3 shows the different receiver functional modes:
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+29
+Product Folder Links: ISOW1044
+Table 8-3. Receiver Functional Table
+INPUTS
+OUTPUT
+VDD (1)
+VIO
+EN/FLT
+STB
+CAN DIFFERENTIAL 
+INPUTS VID = VCANH- 
+VCANL
+BUS STATE
+RXD (3)
+PU
+PU
+H or Open
+L
+VID > 0.9V
+Dominant
+L
+0.5V< VID < 0.9V
+Undefined
+Undefined
+VID < 0.5V
+Recessive
+H
+H or Open
+VID > 1.15V
+Dominant
+H (L if a remote wake 
+event occurred)
+0.4V< VID < 1.15V
+Undefined
+VID < 0.4V
+Recessive
+X
+Open (VID = 0V)
+Open
+H
+L
+X
+X
+X
+Hi-Z
+PD
+PU
+X
+X
+X
+X
+Hi-Z
+PU
+PD(2)
+X
+X
+X
+X
+Invalid Operation
+(1)
+PU=Powered up, PD=Powered down; H=high level; L=Low level; X=Irrelevant; Hi-Z=High impedance state
+(2)
+A strongly driven input signal on TXD can weakly power the floating VIO through an internal protection diode and cause an 
+undetermined output.
+(3)
+VISOOUT shorted to VISOIN on PCB. GND2 and GISOIN pins are shorted together and EN/FLT = High
+At Normal mode (STB = L), the receiver output, RXD, goes low when the differential input voltage defined by 
+Equation 3 is greater than the positive input threshold, VIT+. The receiver output, RXD, goes high when the 
+differential input voltage defined by Equation 3 is less than the negative input threshold, VIT–. If the VID voltage is 
+between the VIT+ and VIT– thresholds, the output is indeterminate.
+VID = VCANH −VCANL
+(3)
+At Standby mode (STB = H or Open), RXD output goes high and if a remote wake-up event occurs, RXD output 
+goes low.
+Other device feature functional states are shown inTable 8-4 and Table 8-5 below:
+Table 8-4. DC-DC Converter Enable/Disable
+INPUTS
+OUTPUT
+VDD
+VIO
+EN/FLT
+VISOOUT
+PU
+PU
+H or Open
+5V
+PU
+PU
+L
+OFF
+Table 8-5. General Purpose Logic Input/Output
+INPUTS
+OUTPUT
+Comments
+VDD (1) (2)
+VIO
+EN/FLT
+IN
+OUT
+PU
+PU
+H or Open
+H
+H
+Output channel assumes 
+logic state governed by IN
+L
+L
+Open
+L
+Default state
+L
+X
+Hi-Z
+Device is in disabled state 
+when either of VDD or VIO is 
+missing
+PD
+PU
+X
+X
+Hi-Z
+PU
+PD
+X
+X
+Invalid Operation
+(1)
+PU = Powered Up; PD = Powered Down; H = Logic High; L= Logic Low; X = Irrelevant, Hi-Z = High Impedance (OFF) state
+(2)
+VISOOUT shorted to VISOIN on PCB. GND2 and GISOIN pins are shorted together and EN=High
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+30
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+8.9 Device I/O Schematics
+TXD, STB
+VIO
+
+
+500 k
+500 k
+IN
+IN
+VIO
+500 k
+500 k
+
+
+VIO
+VIO
+VIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+GNDIO
+VISOIN
+ OUT
+a
+a
+GISOIN
+OUT
+TXD, STB
+VIO
+VIO
+EN/FLT
+EN/FLT
+VIO
+VIO
+VIO
+VIO
+550 k
+1mA
+GND1
+GND1
+GND1
+GND1
+VIO
+RXD
+a
+a
+GNDIO
+RXD
+Figure 8-8. Device I/O Schematics
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+31
+Product Folder Links: ISOW1044
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, and 
+TI does not warrant its accuracy or completeness. TI’s customers are responsible for determining 
+suitability of components for their purposes. Customers should validate and test their design 
+implementation to confirm system functionality.
+9.1 Application Information
+The ISOW1044 device can be used with other components from Texas Instruments such as a microcontroller 
+and a linear voltage regulator to form a fully isolated CAN interface. Typically two power supplies isolated from 
+each other are needed to power up both sides of Isolated CAN device. Due to the integrated DC-DC converter in 
+the device, the isolated supply is generated inside the device that can be used to power isolated side of the CAN 
+device and peripherals on isolated side, thus saving board space.
+9.2 Typical Application
+The ISOW1044 device is designed for applications that have limited board space and desire more integration. 
+The device is also designed for very high voltage applications, where power transformers meeting the 
+required isolation specifications are bulky and expensive. The device can be used in applications with a host 
+microcontroller or FPGA that includes the link layer portion of the CAN protocol. Figure 9-1 shows a typical 
+application configuration for 5V controller applications. The bus termination is shown for illustrative purposes. 
+The ISOW1044 device meets 8kV contact ESD (Electrostatic discharge) per IEC 61000-4-2 standalone with no 
+external components on bus. If the application requires the usage of Common mode choke (CMC), then use of 
+Transient voltage suppressor (TVS) is a must to achieve 8kV IEC ESD.
+PSU
+1
+6
+3
+4
+5
+7
+9
+10
+16
+19
+18
+11
+R
+VCC1
+DE
+D
+NC
+GND1
+GND1
+RE
+NC
+B
+GND2
+CANL
+GISOIN 17
+20
+VISOIN
+MCU
+RXD
+GPIO1
+VIO
+DGND
+L1
+N
+PE
+GND
+Optional bus protection
+Galvanic
+Isolation Barrier
+ISOW1044
+TXD
+0.1μF
+VIO
+GNDIO
+5V
+VDD
+GND1
+STB
+TXD
+RXD
+NC
+IN
+GPIO2
+EN/FLT
+4.7k
+8
+2
+12
+VISOOUT
+GND2
+VSIN 13
+GISOIN 15
+0.1μF
+CANH
+GISOIN
+Other field 
+circuitry
+Extra current 
+~20mA
+Notes: 
+1. Keep 10 nF bypass capacitors close to VDD and VISOOUT pins (< 1 mm) for opmum Radiated emissions performance
+2. GND1 and GNDIO need be shorted directcly. GND2 and GISOIN need be shorted directly, or through ferrite beads.
+3. All GISOIN pins (pin 15, 16, 17) need be shorted on PCB for opmum IEC-ESD performance.
+4. VSIN and VISOOUT must be shorted on PCB.
+OUT 14
+FB
+FB
+FB
+FB
+Optional 
+Termination
+10nF
+1µF 10µF
+10nF
+1µF
+10µF
+10μF
+CAN
+BUS
+FB
+Figure 9-1. Application Circuit for ISOW1044
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+32
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+9.2.1 Design Requirements
+Unlike an optocoupler-based design, which requires several external components to improve performance, 
+provide bias, or limit current, the ISOW1044 device only requires external bypass capacitors to operate as 
+shown in the application diagram.
+Because of very-high current flowing through the device VDD and VISOOUT supplies, higher decoupling 
+capacitors typically provide better noise and ripple performance. Although a 10µF capacitor is adequate, higher 
+decoupling capacitors (such as 47µF) on both the VDD and VISOOUT pins to the respective grounds are strongly 
+recommended to achieve the best performance.
+9.2.2 Detailed Design Procedure
+9.2.2.1 Bus Loading, Length and Number of Nodes
+The ISO 11898-2 Standard specifies a maximum bus length of 40m and maximum stub length of 0.3m. However, 
+with careful design, users can have longer cables, longer stub lengths, and many more nodes to a bus. A large 
+number of nodes requires transceivers with high input impedance such as the ISOW1044 transceiver.
+Many CAN organizations and standards have scaled the use of CAN for applications outside the original ISO 
+11898-2 Standard. These organizations and standards have made system-level trade-offs for data rate, cable 
+length, and parasitic loading of the bus. Examples of some of these specifications are ARINC825, CANopen, 
+DeviceNet, and NMEA2000.
+The ISOW1044 device is specified to meet the 1.5V requirement with a 50Ω load, incorporating the worst case 
+including parallel transceivers. The differential input resistance of the device is a minimum of 30kΩ. If 100 
+ISOW1044 transceivers are in parallel on a bus, this requirement is equivalent to a 300Ω differential load worst 
+case. That transceiver load of 300Ω in parallel with the 60Ω gives an equivalent loading of 50Ω. Therefore, the 
+ISOW1044 device theoretically supports up to 100 transceivers on a single bus segment. However, for CAN 
+network design margin must be given for signal loss across the system and cabling, parasitic loadings, network 
+imbalances, ground offsets and signal integrity, therefore a practical maximum number of nodes is typically much 
+lower. Bus length can also be extended beyond the original ISO 11898 standard of 40m by careful system 
+design and data-rate tradeoffs. For example, CAN open network design guidelines allow the network to be up 
+to 1km with changes in the termination resistance, cabling, less than 64 nodes, and a significantly lowered data 
+rate.
+This flexibility in CAN network design is one of the key strengths of the various extensions and additional 
+standards that have been built on the original ISO 11898-2 CAN standard. Using this flexibility requires the 
+responsibility of good network design and balancing these tradeoffs.
+9.2.2.2 CAN Termination 
+The ISO11898 standard specifies the interconnect to be a single twisted pair cable (shielded or unshielded) with 
+120Ω characteristic impedance (ZO). Resistors equal to the characteristic impedance of the line must be used to 
+terminate both ends of the cable to prevent signal reflections. Unterminated drop-lines (stubs) connecting nodes 
+to the bus must be kept as short as possible to minimize signal reflections. The termination can be in a node, 
+but if nodes are removed from the bus, the termination must be carefully placed so that the termination is not 
+removed from the bus.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+33
+Product Folder Links: ISOW1044
+Node 1
+CAN
+Transceiver
+MCU or DSP
+CAN
+Controller
+Node 2
+CAN
+Transceiver
+MCU or DSP
+CAN
+Controller
+Node 3
+CAN
+Transceiver
+MCU or DSP
+CAN
+Controller
+Node n
+(with termination)
+CAN
+Transceiver
+MCU or DSP
+CAN
+Controller
+RTERM
+RTERM
+Figure 9-2. Typical CAN Bus
+Termination can be a single 120Ω resistor at the end of the bus, either on the cable or in a terminating node. 
+If filtering and stabilization of the common-mode voltage of the bus is desired, then split termination can be 
+used as below termination concepts. Split termination improves the electromagnetic emissions behavior of 
+the network by eliminating fluctuations in the bus common-mode voltages at the start and end of message 
+transmissions.
+CAN
+Transceiver
+CAN
+Transceiver
+CANH
+CANL
+CANH
+CANL
+RTERM
+RTERM / 2
+RTERM / 2
+CSPLIT
+Standard Termination
+Split Termination
+Figure 9-3. CAN Bus Termination Concepts
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+34
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+9.2.3 Application Curve
+Red: Peak vertical scan. Green: Peak horizontal scan
+VDD = 5V
+VISOOUT = 5V
+Data rate = 1Mbps
+Figure 9-4. ISOW1044 Radiated Emissions Versus CISPR32B Line
+9.2.3.1 Insulation Lifetime
+Insulation lifetime projection data is collected by using industry-standard Time Dependent Dielectric Breakdown 
+(TDDB) test method. In this test, all pins on each side of the barrier are tied together creating a two-terminal 
+device and high voltage applied between the two sides; See Figure 9-5 for TDDB test setup. The insulation 
+breakdown data is collected at various high voltages switching at 60Hz over temperature. For reinforced 
+insulation, VDE standard requires the use of TDDB projection line with failure rate of less than 1 part per million 
+(ppm). Even though the expected minimum insulation lifetime is 20 years at the specified working isolation 
+voltage, VDE reinforced certification requires additional safety margin of 20% for working voltage and 50% for 
+lifetime which translates into minimum required insulation lifetime of 30 years at a working voltage that is 20% 
+higher than the specified value. Figure 9-6 shows the intrinsic capability of the isolation barrier to withstand high 
+voltage stress over the lifetime of the barrier. Based on the TDDB data, the intrinsic capability of the insulation is 
+1000VRMS with a lifetime of >100 years.
+DUT
+Time Counter > 
+1mA
+A
+VS
+Vcc 1
+Vcc 2
+GND 1
+GND 2
+Oven at 150°C
+Figure 9-5. Test Setup for Insulation Lifetime Measurement
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+35
+Product Folder Links: ISOW1044
+Figure 9-6. Insulation Lifetime Projection Data
+9.3 Power Supply Recommendations
+To make sure that operation is reliable at all data rates and supply voltages, adequate decoupling capacitors 
+must be located as close to supply pins as possible. Power converter input VDD and output VISOOUT supply pins 
+must have high frequency ceramic capacitors 10nF and bulk capacitors 10μF at least close to the pins. Signal 
+path supply pins, VIO and VISOIN, must have 100nF or higher value ceramic bypass capacitors close to device 
+pins. ISOW10144 can consume typical peak pulse currents of up to 250mA under fully loaded conditions for 
+short durations (10s of µs) from the power source that is powering VDD of ISOW1044. Please make sure the 
+current limit of upstream power device is at least 300mA typical.
+9.4 Layout
+9.4.1 Layout Guidelines
+Figure 11-1 shows the recommended placement and routing of device bypass capacitors. Below guidelines must 
+be followed to achieve low emissions design:
+1.
+High frequency bypass capacitors 10nF must be placed close to VDD and VISOOUT pins, within 1mm distance 
+away from device pins. This is very essential for optimised radiated emissions performance. Verify that these 
+capacitors are 0402 size so that the capacitors offer least inductance (ESL).
+2.
+Bulk capacitors of at least 10μF must be placed on power converter input (VDD) and output (VISOOUT) supply 
+pins after the 10nF capacitor with a distance of 2 - 4mm, as shown in Layout Example.
+3.
+Traces on VDD and GND1 must be symmetric until bypass capacitors. Similarly traces on VISOOUT and GND2 
+must be symmetric.
+4.
+Place two 0402 size Ferrite beads (Part number: BLM15EX331SN1) on power supply pins, one between 
+VISOOUT and VISOIN and the other between GND2 (pin 11) and GND2(pin 15), as shown in example PCB 
+layout, so that any high frequency noise from power converter output sees a high impedance before the 
+noise goes to other components on PCB.
+5.
+Do not have any metal traces or ground pour within 4mm of power converter output terminals VISOOUT 
+(pin12) and GND2 (pin11).
+6.
+Place the CAN BUS protection and filtering circuitry close to the bus connector to prevent transients, 
+ESD, and noise from propagating onto the board. This layout example shows an optional transient voltage 
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+36
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+suppression (TVS) diode, D1, which can be implemented if the system-level requirements exceed the 
+specified rating of the transceiver. This example also shows two optional 68pF bus filter capacitors
+7.
+Common mode choke or ferrite beads on bus terminals (CANH/CANL) can minimise any high frequency 
+noise that can couple of CAN bus cable which can act as antenna and amplify that noise. This improves 
+Radiated emissions performance on a system level.
+8.
+Following the layout guidelines of EVM as much as possible is highly recommended for a low radiated 
+emissions design. EVM Link is available in Related Documentation.
+9.4.2 Layout Example
+Ground plane on 
+side 1
+Ground plane on side2
+CANL
+TXD
+EN/FLT
+VISOIN
+CANH
+GNDIO
+VDD
+IN
+VIO
+STB
+GND2
+GND1
+VISOOUT
+16
+15
+14
+12
+11
+1
+2
+3
+4
+5
+6
+7
+8
+13
+OUT
+NC
+ISOW1044
+10
+9
+17
+18
+19
+20
+C
+Ground 
+plane on 
+side2
+Keep-out zone
+for any metal 
+10 nF
+1 µF
+C
+10 µF
+FB1
+FB2
+C
+ISOLATION
+RXD
+0.1 µF
+C
+VSIN
+C
+68 pF
+Optional 
+Protection and
+Termination
+<1mm
+2-4mm
+R
+R
+C
+D1
+68 pF
+C
+Ground plane 
+on side2
+GISOIN
+GISOIN
+GISOIN
+C
+10 µF
+<2mm
+CAN
+BUS
+Ground plane on side1
+Input Supply 1
+Input Ground
+Input Supply 2
+0.1 µF
+C
+FB3
+FB4
+10 nF
+1 µF
+10 µF
+C
+C
+C
+FB5
+<2mm
+<1mm
+2-4mm
+Figure 9-7. Layout Example
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+37
+Product Folder Links: ISOW1044
+10 Device and Documentation Support
+10.1 Documentation Support
+10.1.1 Related Documentation
+For related documentation see the following:
+•
+Texas Instruments, Digital Isolator Design Guide
+•
+Texas Instruments, Isolation Glossary
+•
+ISOW1044DFM Evaluation board
+10.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper 
+right corner, click on Alert me to register and receive a weekly digest of any product information that has 
+changed. For change details, review the revision history included in any revised document.
+10.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+10.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+10.5 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+10.6 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+11 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision A (December 2021) to Revision B (August 2026)
+Page
+•
+Updated the VDE certification information throughout the document.................................................................1
+•
+Updated the Insulation Specifications section per DIN EN IEC 60747-17 (VDE 0884-17)................................ 8
+•
+Updated the Safety-Related Certifications section to remove content that is found in the 
+associated certificates........................................................................................................................................ 9
+•
+Changed legacy terminology to "Controller" and "Target" throughout the document....................................... 28
+•
+Updated the Insulation Lifetime section and Insulation Lifetime Projection Data graph...................................35
+Changes from Revision * (March 2021) to Revision A (December 2021)
+Page
+•
+Updated device status to Production status....................................................................................................... 2
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+38
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical packaging and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this datasheet, refer to the left-hand navigation.
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+39
+Product Folder Links: ISOW1044
+www.ti.com
+PACKAGE OUTLINE
+C
+18X 1.27
+2X
+11.43
+20X 0.51
+0.31
+10.63
+9.97 TYP
+SEATING
+PLANE
+0.25
+GAGE PLANE
+(3.18)
+B
+7.6
+7.4
+NOTE 4
+A
+12.93
+12.73
+NOTE 3
+0.95
+0.65
+- 8
+0
+0.33
+0.1
+SOIC - 3.55 mm max height
+DFM0020A-C01
+SMALL OUTLINE PACKAGE
+1
+10
+11
+20
+0.15
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL A
+0.1 C
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. This dimension does not include mold ﬂash, protrusions, or gate burrs. Mold ﬂash, protrusions, or gate burrs shall not
+exceed 0.15 mm per side.
+4. This dimension does not include interlead ﬂash. Interlead ﬂash shall not exceed 0.25 mm per side.
+A 10
+DETAIL A
+TYPICAL
+SCALE 1.250
+4226217/A 08/2020
+0.30
+0.10
+3.55 MAX.
+5. Ref. JEDEC registration MS-013
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+40
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+20X (1.65)
+20X (0.6)
+20X (1.27)
+(9.75)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A-C01
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+5. Publication IPC-7351 may have alternate designs.
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+4226217/A 08/2020
+8.1 mm CLRARANCE/CREEPAGE
+www.ti.com
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+Copyright © 2026 Texas Instruments Incorporated
+Submit Document Feedback
+41
+Product Folder Links: ISOW1044
+www.ti.com
+EXAMPLE STENCIL DESIGN
+20X (1.65)
+20X (0.6)
+20X (1.27)
+(9.75)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A-C01
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+7. Laser cutting apertures with trapezoidal walls and rounded corners may oﬀer better paste release. IPC-7525 may have alternate
+design recommendations.
+8. Board assembly site may have diﬀerent recommendations for stencil design.
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+4226217/A 08/2020
+8.1 mm CLEARANCE/CREEPAGE
+ISOW1044
+SLLSFF7B – MAY 2021 – REVISED AUGUST 2026
+www.ti.com
+42
+Submit Document Feedback
+Copyright © 2026 Texas Instruments Incorporated
+Product Folder Links: ISOW1044
+PACKAGE OPTION ADDENDUM
+www.ti.com
+21-Aug-2026
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+ISOW1044BDFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ISOW1044BDFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ISOW1044DFMR
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ISOW1044DFMR.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ISOW1044DFMRG4
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ISOW1044DFMRG4.A
+Active
+Production
+SOIC (DFM) | 20
+850 | LARGE T&R
+Yes
+NIPDAU
+Level-3-260C-168 HR
+-40 to 125
+ISOW1044
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com
+21-Aug-2026
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+22-Aug-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+ISOW1044BDFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1044DFMR
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+ISOW1044DFMRG4
+SOIC
+DFM
+20
+850
+330.0
+24.4
+10.85
+13.4
+4.0
+16.0
+24.0
+Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+22-Aug-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+ISOW1044BDFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1044DFMR
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+ISOW1044DFMRG4
+SOIC
+DFM
+20
+850
+350.0
+350.0
+43.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+18X 1.27
+2X
+11.43
+20X 0.51
+0.31
+10.63
+9.97 TYP
+SEATING
+PLANE
+0.25
+GAGE PLANE
+(3.18)
+B
+7.6
+7.4
+NOTE 4
+A
+12.93
+12.73
+NOTE 3
+0.95
+0.65
+- 8
+0
+0.33
+0.1
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+1
+10
+11
+20
+0.15
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+ 
+A  10
+DETAIL A
+TYPICAL
+SCALE  1.250
+4225640/A   01/2020
+0.30
+0.10
+3.55 MAX.
+5. Ref. JEDEC registration MS-013
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+20X (2.1)
+20X (0.6)
+20X (1.27)
+(9.7)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+4225640/A   01/2020
+www.ti.com
+EXAMPLE STENCIL DESIGN
+20X (2.1)
+20X (0.6)
+20X (1.27)
+(9.7)
+(R0.05) TYP
+SOIC - 3.55 mm max height
+DFM0020A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 8X
+SYMM
+SYMM
+1
+10
+11
+20
+4225640/A   01/2020
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

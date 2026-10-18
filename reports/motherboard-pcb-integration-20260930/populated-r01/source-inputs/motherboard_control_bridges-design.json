@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "scope": "SAME 3.3V LOGIC DOMAIN / DELIBERATE REARM AND ACTIVE-LOW TRIP CLEAR\nOPI_REARM_M default LOW; WATCHDOG_TRIP_CLEAR default HIGH. FPGA unconfigured GPIO must be high-impedance.\nSeparate receiving net names and existing latch/bias circuitry are preserved. No automatic restart or healthy bypass.\nGateware, pulldown/startup contention, IOZ at intermediate supplies and loaded response remain qualification gates.",
+  "components": {
+    "R12001": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "OPI_REARM_TX"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12002": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "OPI_REARM_BOE"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12003": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "WD_M_TRIP_CLEAR_N"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12004": {
+      "kind": "R",
+      "physical": true,
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 33,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "WD_O_TRIP_CLEAR_N"
+      },
+      "role": "bounded same-domain control fanout"
+    },
+    "R12005": {
+      "kind": "R",
+      "physical": true,
+      "value": "100000R 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 100000,
+      "pins": {
+        "1": "OPI_REARM_M",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined common-stem bias"
+    },
+    "R12006": {
+      "kind": "R",
+      "physical": true,
+      "value": "47000R 1%",
+      "mpn": "CRCW060347K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "resistance_ohm": 47000,
+      "pins": {
+        "1": "WATCHDOG_TRIP_CLEAR",
+        "2": "IO_3V3"
+      },
+      "role": "defined common-stem bias"
+    }
+  },
+  "one_custom_motherboard": true
+}

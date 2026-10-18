@@ -1,0 +1,5 @@
+read_verilog -formal -sv old.v new.v miter.v
+prep -top timer_miter -flatten
+async2sync
+opt
+sat -seq 3 -tempinduct -prove-asserts -set-def-inputs -set-init-zero -maxsteps 12 -verify

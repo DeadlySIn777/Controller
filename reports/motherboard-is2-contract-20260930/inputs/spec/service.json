@@ -1,0 +1,114 @@
+{
+ "spec_revision": "IS-1",
+ "section": "05-service-contract",
+ "companion_document": "docs/interface-spec/05-service-contract.md",
+ "date": "2026-09-29",
+ "status": "Interface specification only. The configuration and diagnostics service, its setup routes, validator, preview and update machinery are not implemented; nothing here is measured or ready for release.",
+ "principles": [
+  "one service contract behind the CLI, the configuration schema and the UI (AGENTS.md)",
+  "the AI proposes; a deterministic validator decides; nothing is applied without validation, preview/diff and a reversible commit",
+  "unknown information produces a specific question, never an invented setting",
+  "every function below works offline, with no internet connection and no AI credit; AI is never mandatory",
+  "measured facts and diagnoses are separate record types (section 04 section 12.1)"
+ ],
+ "hw_modules": {
+  "object": "hw.modules[<slot>]",
+  "slot_keys": ["psm", "cmc", "mc", "mia", "mx4", "eia", "ex8", "dic", "doa", "dob", "acc", "esc", "scart", "xs"],
+  "fields": [
+   {"name": "present", "type": "bool", "source": "cnc1.module.{slot}.present"},
+   {"name": "power_good", "type": "bool", "source": "cnc1.module.{slot}.power-good"},
+   {"name": "accepted", "type": "bool", "source": "cnc1.module.{slot}.accepted"},
+   {"name": "class", "type": "u32", "source": "cnc1.module.{slot}.class"},
+   {"name": "mir1", "type": "object", "source": "HOST.i2c.module[i].mir1 (decoded: class, hardware revision, serial, date, capabilities, compatibility ranges, signature state)"},
+   {"name": "temperature", "type": "measurement", "source": "cnc1.module.{slot}.temperature with -valid and -age"},
+   {"name": "compatibility", "type": "enum", "values": ["compatible", "update_required", "weaker_capability", "unqualified", "incompatible", "unidentified"]},
+   {"name": "required_checks", "type": "list", "source": "section 02 section 13 re-verification list for the class, filtered by the active configuration"}
+  ]
+ },
+ "setup_routes": {
+  "cad": {
+   "inputs": "an assembly with kinematic joints; STEP AP242 with kinematic constraints and URDF are the first targets; other formats are listed per release",
+   "steps": ["import the assembly", "identify moving groups (rigid bodies joined by prismatic or revolute joints)", "propose an axis assignment for each group", "wire and verify the reference channels (section 03 test ids)", "confirm orientation with a low-speed jog per axis (gantry groups jogged together)", "verify travel by homing and a soft-limit check"],
+   "moving_group": {"fields": ["id", "parts", "joint_type (prismatic|revolute)", "direction (unit vector in the model frame)", "travel_min", "travel_max", "proposed_axis", "proposed_channels", "confidence (0-1)", "evidence (model feature ids)"]}
+  },
+  "no_cad": {
+   "layouts": ["gantry_router_xyyz", "fixed_gantry_mill_xyz", "knee_mill_xyz", "lathe_xz", "plasma_table_xyyz", "five_axis_trunnion_xyzac", "multi_head_12_motor"],
+   "dimensions_asked": ["travel per axis", "gantry width (gantry layouts)", "Z clearance", "table size", "rotary centre offsets (rotary layouts)", "tool length reference"],
+   "output": "simplified moving model (boxes and cylinders per moving group) with the same moving_group records as the CAD route"
+  },
+  "equal_usability": "both routes end in the same machine profile, the same validator and the same verification steps"
+ },
+ "profiles": {
+  "drive": {"required": ["manufacturer", "model", "revision", "enable.behaviour (enable_on_current|disable_on_current)", "enable.voltage_range_v", "enable.current_ma", "enable.isolated", "step.max_rate_hz", "step.high_min_us", "step.low_min_us", "step.dir_setup_us", "step.input_level", "alarm.output_type", "alarm.normal_state", "alarm.rating", "enable_settle_ms", "cable_loop_resistance_ohm (NC-5V wiring)", "independent_stop_path (disable-on-current drives, exception E1)", "evidence (document, revision, page)"],
+            "reference": "DM542T V4: section 04 section 3.4 facts; wiring mode NC-5V"},
+  "sensor": {"required": ["type", "supply_v", "supply_ma", "output (PNP|NPN|dry contact)", "contact (NO|NC)", "response_ms", "evidence"]},
+  "spindle": {"required": ["control (analog|pwm|modbus)", "hardware_run_input (always required, rule V-EL-08)", "direction_input", "at_speed_output", "fault_output", "stop_behaviour", "modbus_map (when modbus)", "evidence"]},
+  "output_device": {"required": ["continuous_a", "peak_a", "peak_ms", "de_energized_state_is_safe", "energize_to (release|clamp|run)", "evidence"]},
+  "unknown_rule": "any required field without a verified value becomes a question object; the profile stays 'unverified' and cannot be applied until the question is answered by the user or by a verified document",
+  "generation": "a verified profile generates the terminal-by-terminal wiring list (terminal id, net, wire colour suggestion, target device pin) and the configuration together, from spec/terminals.json and the allocation rules"
+ },
+ "question": {"fields": ["id", "subject (profile or model element)", "field", "why_needed (which rule needs it)", "options (when enumerable)", "blocks (list of actions it blocks)"],
+              "rule": "the service never fills a question with a guessed value; an AI answer is a proposal validated like any other input"},
+ "validator_rules": [
+  {"id": "V-EL-01", "rule": "enable wiring mode matches the drive profile: NO for enable-on-current, NC for disable-on-current; loop 0-30 V, <= 50 mA, else exception E5 (external relay)"},
+  {"id": "V-EL-02", "rule": "NC-5V wiring needs a declared cable loop resistance <= 1.25 ohm (ENA >= 4.5 V, section 04 section 3.2) and a declared independent stop path (exception E1)"},
+  {"id": "V-EL-03", "rule": "alarm polarity from the drive profile; unknown polarity is a question, never a default"},
+  {"id": "V-EL-04", "rule": "DO continuous current <= 0.5 A per output, <= 2.0 A per 4-output group; entry totals within section 04 section 10.2"},
+  {"id": "V-EL-05", "rule": "output fault states of section 04 section 9: energize-to-clamp workholding and energize-to-clamp drawbars are refused"},
+  {"id": "V-EL-06", "rule": "a DO load whose declared peak exceeds the 0.62 A minimum current-limit setting needs an interposing relay"},
+  {"id": "V-EL-07", "rule": "sourcing terminal loads within their limits: sensor group 0.20 A, probe supply 0.10 A, AI sensor supply 0.10 A, arm lamp 0.05 A"},
+  {"id": "V-EL-08", "rule": "every spindle has a hardware run path (a DO or the XPC0 contact); Modbus or CAN is never the only run-enable path"},
+  {"id": "V-EL-09", "rule": "XS1.3 gates only XPC0/XPC1; a 'spindle permit' on XS1.3 is refused unless the spindle run or STO input is wired through XPC0"},
+  {"id": "V-EL-10", "rule": "a PWM device must be off at a low input (IS-1 has no inverted PWM)"},
+  {"id": "V-EL-11", "rule": "an analog-output device must be safe at the 0 V zero clamp"},
+  {"id": "V-EL-12", "rule": "reset_arm_required = 0 only when the profile declares a machine safety relay with its own manual reset feeding EXT_PERMIT"},
+  {"id": "V-EL-13", "rule": "contactor and STO feedback modes and times match the declared wiring (section 04 section 8.1)"},
+  {"id": "V-EL-14", "rule": "plasma: HF-start sources with ohmic sensing refused; raw arc voltage never on a controller terminal; the divided-voltage module identity must match"},
+  {"id": "V-CH-01", "rule": "no terminal and no resource channel used twice"},
+  {"id": "V-CH-02", "rule": "expansion channels only with the MX4 or EX8 identified and accepted"},
+  {"id": "V-CH-03", "rule": "a pendant axis selector uses the terminal labelled for its axis"},
+  {"id": "V-CH-04", "rule": "generated net list: exactly one writer per HAL input pin"},
+  {"id": "V-CH-05", "rule": "every joint has exactly one motor-pos-fb source (step count or encoder)"},
+  {"id": "V-CH-06", "rule": "gantry members share one negative HOME_SEQUENCE and identical search/latch settings"},
+  {"id": "V-CH-07", "rule": "unhome and enable use the channel-to-joint map; every halui joint index is below the joint count; indexers are extra joints"},
+  {"id": "V-CH-08", "rule": "motion.probe-input has one writer (direct, or2 or mux2)"},
+  {"id": "V-ML-01", "rule": "step rate <= min(195312.5 steps/s, drive maximum) per channel"},
+  {"id": "V-ML-02", "rule": "step high/low time, DIR setup and enable_settle_ms >= the drive minimums"},
+  {"id": "V-ML-03", "rule": "velocity and acceleration <= drive, motor and mechanics limits of the profile"},
+  {"id": "V-ML-04", "rule": "soft limits inside the model travel and inside the hard limits"},
+  {"id": "V-ML-05", "rule": "every encoder-closed joint has a following-error limit"},
+  {"id": "V-TM-01", "rule": "din_stale_limit_us and ain_stale_limit_us within 250-440 us (section 01 section 5.3)"},
+  {"id": "V-TM-02", "rule": "every displayed value uses the stale limit of its source table (section 01 section 3.12)"}
+ ],
+ "spec_validator_coverage": {"V-CH-01": "check_allocations", "V-CH-02": "check_allocations", "V-CH-03": "check_hal_nets", "V-CH-04": "check_hal_nets", "V-CH-05": "check_hal_nets", "V-CH-06": "check_hal_nets", "V-CH-07": "check_hal_nets", "V-CH-08": "check_hal_nets", "V-EL-04": "check_hal_nets", "V-EL-06": "check_hal_nets", "V-EL-08": "check_hal_nets", "V-EL-09": "check_hal_nets", "V-TM-01": "check_protocol", "V-TM-02": "check_display_rule"},
+ "apply_flow": ["propose (user, expert editor or AI)", "validate (all rules above; any failure blocks)", "preview and diff against the committed generation", "commit as a new generation (write, verify, switch pointer; the previous generation stays)", "run the required checks before re-enabling", "rollback to the previous generation on request or on a failed check"],
+ "preview": {
+  "fields": [
+   {"name": "commanded_position", "source": "joint.J.pos-cmd and the axis commanded positions (LinuxCNC status)", "label_rule": "always labelled 'commanded'"},
+   {"name": "measured_position", "source": "cnc1.encoder.K.position for joints whose hal_map lists an encoder; none otherwise", "label_rule": "shown only where an encoder is mapped; a joint without feedback is labelled 'commanded position (no feedback)'"},
+   {"name": "disagreement", "source": "|measured - commanded| per joint", "label_rule": "highlighted above the warn threshold, alarm colour above the alarm threshold"},
+   {"name": "feedback_state", "source": "cnc1.encoder.K.valid, cnc1.feedback-valid and the value age", "label_rule": "stale or invalid feedback is shown as stale, never as a position"},
+   {"name": "homed", "source": "halui.joint.J.is-homed", "label_rule": "unhomed joints drawn with an 'unhomed' marker"},
+   {"name": "travel_limits", "source": "INI [JOINT_J] MIN_LIMIT/MAX_LIMIT and the limit-switch DI states", "label_rule": "soft limits drawn as the working envelope"},
+   {"name": "active_tool", "source": "halui.tool.number and the tool table", "label_rule": "tool drawn from the tool table geometry"},
+   {"name": "work_offset", "source": "LinuxCNC status g5x_index and g5x_offset", "label_rule": "active offset named (G54-G59.3)"}
+  ],
+  "thresholds": {"disagreement_warn_fraction_of_ferror": 0.5, "disagreement_alarm_fraction_of_ferror": 1.0, "feedback_stale_after_ms": 3.0, "basis": "FERROR is the joint's [JOINT_J] FERROR; LinuxCNC itself faults at 1.0; 3 ms = 3 servo periods"},
+  "clearance_rule": "clearance warnings only between components that are modeled and registered in the machine model; the preview never claims to prevent collisions"
+ },
+ "export": {
+  "format": "machine bundle v1: a tar archive with manifest.json first",
+  "manifest": ["format = 'cnc-machine-bundle'", "version = 1", "spec_revision", "created (UTC)", "controller serial", "files: path, sha256, bytes"],
+  "contents": ["machine profile", "device profiles (drive, sensor, spindle, output devices)", "terminal allocation", "calibration records", "commissioning records", "preview model", "generated INI and HAL (informational; regenerated on import)"],
+  "import": ["verify manifest hashes", "run the validator", "preview and diff", "commit as a new generation", "run the required checks"]
+ },
+ "update_states": {
+  "host_image": {"states": ["IDLE", "DOWNLOADED", "VERIFIED", "STAGED", "TRIAL_BOOT", "COMMITTED", "ROLLED_BACK"], "power_loss": "boots the last COMMITTED slot (A/B); TRIAL_BOOT falls back after a failed boot count"},
+  "card_firmware": {"states": ["IDLE", "BOOTLOADER", "ERASING", "WRITING", "VERIFYING", "COMMITTED"], "power_loss": "card restarts in its bootloader (class 0x7F) with outputs off; the service resumes from the local package (section 01 section 4.8)"},
+  "gateware": {"states": ["IDLE", "CRESET_HELD", "WRITING", "VERIFYING", "COMMITTED"], "power_loss": "CDONE low keeps every permission off; the host restores the flash again from the local image"},
+  "esp_firmware": {"states": ["IDLE", "WRITING_OTA", "VERIFYING", "COMMITTED", "ROLLED_BACK"], "power_loss": "ESP-IDF boots the previous OTA slot"},
+  "configuration": {"states": ["COMMITTED_N", "WRITING_N+1", "VERIFYING_N+1", "COMMITTED_N+1"], "power_loss": "a torn write leaves generation N active (two committed generations on the cartridge)"}
+ },
+ "offline": ["ordinary operation", "local diagnostics and the history ring", "saved previews", "configuration recovery and export", "module replacement and re-verification", "setup on both routes"],
+ "tests": ["interrupt every update type by power removal at every state", "remove network connectivity and AI credit, then run setup, repair and export", "adversarial proposals (over-rating, double allocation, stale proposal) are refused", "a profile with a missing field yields a question, not a value"]
+}

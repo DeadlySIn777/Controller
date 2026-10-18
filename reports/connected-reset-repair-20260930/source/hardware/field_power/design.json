@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "revision": "field-power-r0.1",
+  "status": "review_circuit_not_qualified",
+  "manufacturing_ready": false,
+  "frozen_inputs": {
+    "input-electrical-design.json": "f5abb8b171ee4c8e5713febb682e90ce71e86325e0dac16ecd108f723d68f63d",
+    "input-entry-requirements.json": "60abfb531c4fd441c268ade45c12bca59b0d7d303dc63b8144092b12510db9d6"
+  },
+  "ground_domain": "FIELD_GND",
+  "input_local_v": [
+    18,
+    30
+  ],
+  "output_target_v": [
+    4.85,
+    5.15
+  ],
+  "output_nominal_v": 5,
+  "external_capacity_target_a": 0.1,
+  "baseline_reserved_load_a": 0.05,
+  "switching_hz": [
+    930000,
+    1050000
+  ],
+  "input_surge_screen_v": 60,
+  "surge_screen_is_qualification": false,
+  "resistor_temperature_departure_k": 100,
+  "entry_pg_max_rdson_ohm": 130,
+  "entry_pg_leakage_abs_a": 1.5e-07,
+  "buck_en_leakage_assumed_abs_a": 8e-09,
+  "buck_en_leakage_limitation": "8nA is specified at 3.3V only; applying across divider operating range requires validation",
+  "en_rising_max_v": 1.36,
+  "en_falling_min_screen_v": 0.76,
+  "entry_ramp_max_v_s": 608.947368421,
+  "input_effective_capacitance_floor_f": 4.7e-06,
+  "output_effective_capacitance_floor_f": 2.2e-05,
+  "effective_capacitance_verified": false,
+  "high_side_fault_current_reference_a": 1.11,
+  "full_output_accuracy_verified": false,
+  "physical_qualification": false,
+  "integration": {
+    "entry_pullup_to_remove": "hardware/power_entry R29; remove physically, not parallel/DNP",
+    "entry_pg_net": "F_PGOOD",
+    "entry_pg_pin": 16,
+    "entry_pg_unpowered": "unknown; retained protected input may allow restart",
+    "field_5v_pgood": "diagnostic only, no isolated host input in this sheet",
+    "field_load_holdoff": "4.3A output loads must remain disabled during ramp; actual driver/inhibit circuit is outside this block",
+    "negative_input": "not allowed below -0.3V; upstream clamp qualification unresolved",
+    "retained_output": "no qualified output reverse-current barrier; do not externally power FIELD_5V",
+    "entry_18v_requirement": "unresolved system startup at 18V; do not call 19-30V entry draft equivalent"
+  },
+  "components": {
+    "U1": {
+      "value": "LMR36506R5RPER / FIXED 5V",
+      "mpn": "LMR36506R5RPER",
+      "footprint": "",
+      "pins": {
+        "1": "FIELD_VCC",
+        "2": "FIELD_5V_PGOOD",
+        "3": "F_PGOOD",
+        "4": "FIELD_24V_PROTECTED",
+        "5": "FIELD_SW",
+        "6": "FIELD_BOOT",
+        "7": "FIELD_VCC",
+        "8": "FIELD_5V",
+        "9": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "package": "RPE0009A VQFN-HR 2x2mm; ground pad 9",
+      "footprint_status": "missing_verified_custom_land_pattern"
+    },
+    "L1": {
+      "value": "22uH / 20%",
+      "mpn": "LPS6235-223MRC",
+      "footprint": "",
+      "pins": {
+        "1": "FIELD_SW",
+        "2": "FIELD_5V"
+      },
+      "status": "proposed_not_qualified",
+      "package": "6.0x6.0mm shielded inductor",
+      "inductance_h": 2.2e-05,
+      "tolerance": 0.2,
+      "isat_10pct_25c_a": 1.6,
+      "irms_20c_rise_a": 1.1,
+      "dcr_25c_max_ohm": 0.15,
+      "footprint_status": "missing_verified_custom_land_pattern"
+    },
+    "C1": {
+      "value": "2.2uF 100V X7S",
+      "mpn": "CGA5L3X7S2A225K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-06,
+      "voltage_v": 100,
+      "tolerance": 0.1,
+      "temp_change": 0.22
+    },
+    "C2": {
+      "value": "2.2uF 100V X7S",
+      "mpn": "CGA5L3X7S2A225K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-06,
+      "voltage_v": 100,
+      "tolerance": 0.1,
+      "temp_change": 0.22
+    },
+    "C3": {
+      "value": "2.2uF 100V X7S",
+      "mpn": "CGA5L3X7S2A225K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-06,
+      "voltage_v": 100,
+      "tolerance": 0.1,
+      "temp_change": 0.22
+    },
+    "C4": {
+      "value": "2.2uF 100V X7S",
+      "mpn": "CGA5L3X7S2A225K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-06,
+      "voltage_v": 100,
+      "tolerance": 0.1,
+      "temp_change": 0.22
+    },
+    "C5": {
+      "value": "100nF 100V X7R",
+      "mpn": "GRM188R72A104KA35D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 100,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "C6": {
+      "value": "100nF 16V X7R",
+      "mpn": "GCM155R71C104KA55D",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pins": {
+        "1": "FIELD_BOOT",
+        "2": "FIELD_SW"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "C7": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "FIELD_VCC",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "C8": {
+      "value": "22uF 10V X7R",
+      "mpn": "GCM31CR71A226KE02L",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-05,
+      "voltage_v": 10,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "C9": {
+      "value": "22uF 10V X7R",
+      "mpn": "GCM31CR71A226KE02L",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 2.2e-05,
+      "voltage_v": 10,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "C10": {
+      "value": "100nF 16V X7R",
+      "mpn": "GCM155R71C104KA55D",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temp_change": 0.15
+    },
+    "R1": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "F_PGOOD"
+      },
+      "status": "proposed_not_qualified",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "working_voltage_v": 75,
+      "power_70c_w": 0.1
+    },
+    "R2": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "F_PGOOD",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "working_voltage_v": 75,
+      "power_70c_w": 0.1
+    },
+    "R3": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_5V_PGOOD"
+      },
+      "status": "proposed_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "working_voltage_v": 75,
+      "power_70c_w": 0.1
+    },
+    "R4": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "tcr_ppm_k": 100,
+      "working_voltage_v": 75,
+      "power_70c_w": 0.1
+    },
+    "J1": {
+      "value": "ENTRY BOUNDARY / NOT CONNECTOR MPN",
+      "mpn": "",
+      "footprint": "",
+      "pins": {
+        "1": "FIELD_24V_PROTECTED",
+        "2": "FIELD_GND",
+        "3": "F_PGOOD",
+        "4": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "role": "boundary_not_orderable"
+    },
+    "J2": {
+      "value": "LOAD BOUNDARY / NOT CONNECTOR MPN",
+      "mpn": "",
+      "footprint": "",
+      "pins": {
+        "1": "FIELD_5V",
+        "2": "FIELD_GND",
+        "3": "FIELD_5V_PGOOD",
+        "4": "FIELD_GND"
+      },
+      "status": "proposed_not_qualified",
+      "role": "boundary_not_orderable"
+    }
+  }
+}

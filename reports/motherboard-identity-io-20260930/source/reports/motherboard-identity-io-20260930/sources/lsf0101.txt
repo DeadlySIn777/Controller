@@ -1,0 +1,1800 @@
+LSF0101 1-Channel Auto-Bidirectional Multi-Voltage Level Translator
+for Open-Drain and Push-Pull Applications
+1 Features
+•
+Provides bidirectional voltage translation with no 
+direction pin
+•
+Supports up to 100-MHz up translation and greater 
+than 100-MHz down translation at
+≤ 30 pF capacitive load and up To 40-MHz up or 
+down translation at 50 pF capacitive load
+•
+Allows bidirectional voltage-level translation 
+between
+–
+0.95 V ↔ 1.8/2.5/3.3/5 V
+–
+1.2 V ↔ 1.8/2.5/3.3/5 V
+–
+1.8 V ↔ 2.5/3.3/5 V
+–
+2.5 V ↔ 3.3/5 V
+–
+3.3 V ↔ 5 V
+•
+Low standby current
+•
+5-V tolerance I/O port to support TTL
+•
+Low RON provides less signal distortion
+•
+High-impedance I/O pins for EN = Low
+•
+Flow-through pinout for easy PCB trace routing
+•
+Latch-up performance >100 mA per JESD 17
+•
+–40°C to 125°C operating temperature range
+2 Applications
+•
+GPIO, MDIO, PMBus, SMBus, SDIO, UART, I2C, 
+and other interfaces in telecom infrastructure
+•
+Enterprise systems
+•
+Communications equipment
+•
+Personal electronics
+•
+Industrial applications
+3 Description
+The LSF family of devices supports bidirectional 
+voltage translation without the need for DIR pin which 
+minimizes system effort (for PMBus, I2C, SMBus, and 
+so forth). The LSF family of devices supports up to 
+100-MHz up translation and greater than 100-MHz 
+down translation at ≤ 30 pF capacitive load and up to 
+40-MHz up or down translation at 50 pF capacitive 
+load which allows the LSF family to support more 
+consumer or telecom interfaces (MDIO or SDIO).
+LSF family supports 5-V tolerance on I/O port which 
+makes it compatible with TTL levels in industrial and 
+telecom applications. The LSF family is able to set up 
+different voltage translation levels which makes it very 
+flexible.
+Package Information
+PART NUMBER
+PACKAGE(1)
+PACKAGE SIZE(2)
+LSF0101
+DRY (SON, 6)
+1.45 mm × 1 mm
+DTQ (X2SON, 6)
+1 mm × 0.8 mm
+(1)
+For all available packages, see the orderable addendum at 
+the end of the data sheet.
+(2)
+The package size (length × width) is a nominal value and 
+includes pins, where applicable.
+Vref_A
+Vref_B
+2
+5
+3
+6 EN
+4
+1
+GND
+A1
+B1
+LSF0101
+SW
+Functional Block Diagram
+LSF0101
+SDLS973 – JUNE 2023
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Revision History.............................................................. 2
+5 Pin Configuration and Functions...................................3
+6 Specifications.................................................................. 4
+6.1 Absolute Maximum Ratings........................................ 4
+6.2 ESD Ratings............................................................... 4
+6.3 Recommended Operating Conditions.........................4
+6.4 Thermal Information....................................................4
+6.5 Electrical Characteristics.............................................5
+6.6 LSF0101 AC Performance (Translating Down) 
+Switching Characteristics , VCCB = 3.3 V.......................5
+6.7 LSF0101 AC Performance (Translating Down) 
+Switching Characteristics, VCCB = 2.5 V........................5
+6.8 LSF0101 AC Performance (Translating Up) 
+Switching Characteristics, VCCB = 3.3 V........................5
+6.9 LSF0101 AC Performance (Translating Up) 
+Switching Characteristics, VCCB = 2.5 V........................6
+6.10 Typical Characteristics..............................................6
+7 Parameter Measurement Information............................7
+8 Detailed Description........................................................8
+8.1 Overview.....................................................................8
+8.2 Functional Block Diagram...........................................8
+8.3 Feature Description.....................................................8
+8.4 Device Functional Modes............................................9
+9 Application and Implementation.................................. 11
+9.1 Application Information..............................................11
+9.2 Typical Applications...................................................11
+10 Power Supply Recommendations..............................17
+11 Layout...........................................................................17
+11.1 Layout Guidelines................................................... 17
+11.2 Layout Example...................................................... 17
+12 Device and Documentation Support..........................18
+12.1 Related Documentation.......................................... 18
+12.2 Receiving Notification of Documentation Updates..18
+12.3 Support Resources................................................. 18
+12.4 Trademarks.............................................................18
+12.5 Electrostatic Discharge Caution..............................18
+12.6 Glossary..................................................................18
+13 Mechanical, Packaging, and Orderable 
+Information.................................................................... 18
+4 Revision History
+DATE
+REVISION
+NOTES
+June 2023
+*
+Initial Release
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+5 Pin Configuration and Functions
+Pinout drawings are not to scale
+Figure 5-1. LSF0101 DRY Package, 6-Pin SON 
+(Transparent Top View) 
+Figure 5-2. LSF0101 DTQ Package, 6-Pin X2SON 
+(Transparent Top View) 
+Table 5-1. Pin Functions
+PIN
+TYPE(1)
+DESCRIPTION
+NAME
+NO.
+A1
+3
+I/O
+Input/Output A port for Channel 1
+B1
+4
+I/O
+Input/Output B port for Channel 1
+EN
+6
+I
+I/O enable input; see Section 9.2.1.2.1 for typical setup. Should be tied directly to Vref_B to 
+be enabled or pulled LOW to disable all I/O pins.
+GND
+1
+—
+Ground
+Vref_A
+2
+—
+A side reference supply voltage; see Section 9 for setup and supply voltage range.
+Vref_B
+5
+—
+B side reference supply voltage. Must be connected to supply through 200 kΩ; see Section 
+9 for setup and supply voltage range.
+(1)
+I = input, O = output
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: LSF0101
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature (unless otherwise noted)(1)
+MIN
+MAX
+UNIT
+VI
+Input voltage(2)
+–0.5
+7
+V
+VI/O
+Input/output voltage(2)
+–0.5
+7
+V
+Continuous channel current
+128
+mA
+IIK
+Input clamp current
+VI < 0
+–50
+mA
+TJ
+Junction Temperature
+150
+°C
+Tstg
+Storage temperature range
+–65
+150
+°C
+(1)
+Operation outside the Absolute Maximum Ratings may cause permanent device damage. Absolute Maximum Ratings do not imply 
+functional operation of the device at these or any other conditions beyond those listed under Recommended Operating Conditions. 
+If used outside the Recommended Operating Conditions but within the Absolute Maximum Ratings, the device may not be fully 
+functional, and this may affect device reliability, functionality, performance, and shorten the device lifetime.
+(2)
+The input and input or output negative-voltage ratings may be exceeded if the input and input or output clamp-current ratings are 
+observed.
+6.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic discharge
+Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001(1)
+±2000
+V
+Charged-device model (CDM), per JEDEC specification JESD22-C101(2)
+±1000
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process. Manufacturing with 
+less than 500-V HBM is possible with the necessary precautions.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process. Manufacturing with 
+less than 250-V CDM is possible with the necessary precautions.
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VI/O
+Input/output voltage
+0
+5.5
+V
+Vref_A/B/EN
+Reference voltage
+0
+5.5
+V
+IPASS
+Pass transistor current
+64
+mA
+TA
+Operating free-air temperature
+–40
+125
+°C
+6.4 Thermal Information
+THERMAL METRIC(1)
+LSF0101
+UNIT
+DTQ (X2SON)
+DRY (SON)
+6 PINS
+6 PINS
+RθJA
+Junction-to-ambient thermal resistance
+294.4
+407.0
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+188.9
+285.2
+°C/W
+RθJB
+Junction-to-board thermal resistance
+216.8
+271.6
+°C/W
+ψJT
+Junction-to-top characterization parameter
+26.5
+113.5
+°C/W
+ψJB
+Junction-to-board characterization parameter
+216.0
+271.0
+°C/W
+RθJC(bot)
+Junction-to-case (bottom) thermal resistance
+n/a
+n/a
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the IC Package Thermal Metrics application report, SPRA953.
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+6.5 Electrical Characteristics
+over recommended operating free-air temperature range (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP(1)
+MAX
+UNIT
+VIK
+II = –18 mA,
+VEN = 0
+–1.2
+V
+IIH
+VI = 5 V
+VEN = 0
+5.0
+µA
+ICC
+Vref_B = VEN = 5.5 V, Vref_A = 4.5 V, IO = 0, VI = VCC or GND
+6
+µA
+CI(ref_A/B/EN)
+VI = 3 V or 0
+11
+pF
+Cio(off)
+VO = 3 V or 0,
+VEN = 0
+4.0
+6.0
+pF
+Cio(on)
+VO = 3 V or 0,
+VEN = 3 V
+10.5
+12.5
+pF
+ron (2)
+VI = 0,
+IO = 64 mA
+Vref_A = 3.3 V; Vref_B = VEN = 5 V
+8.0
+Ω
+Vref_A = 1.8 V; Vref_B = VEN = 5 V
+9.0
+Vref_A = 1.0 V; Vref_B = VEN = 5 V
+10
+VI = 0,
+IO = 32 mA
+Vref_A = 1.8 V; Vref_B = VEN = 5 V
+10
+Ω
+Vref_A = 2.5 V; Vref_B = VEN = 5 V
+15
+VI = 1.8 V,
+IO = 15 mA
+Vref_A = 3.3 V; Vref_B = VEN = 5 V
+9.0
+Ω
+VI = 1.0 V,
+IO = 10 mA
+Vref_A = 1.8 V; Vref_B = VEN = 3.3 V
+18
+Ω
+VI = 0 V,
+IO = 10 mA
+Vref_A = 1.0 V; Vref_B = VEN = 3.3 V
+20
+Ω
+VI = 0 V,
+IO = 10 mA
+Vref_A = 1.0 V; Vref_B = VEN = 1.8 V
+30
+Ω
+(1)
+All typical values are at TA = 25°C.
+(2)
+Measured by the voltage drop between the A and B pins at the indicated current through the switch. On-state resistance is determined 
+by the lowest voltage of the two (A or B) pins.
+6.6 LSF0101 AC Performance (Translating Down) Switching Characteristics , VCCB = 3.3 V
+over recommended operating free-air temperature range, VCCB = 3.3 V, VCCB = VIH = Vref_A+ 1, VIL = 0, and VM = 0.5Vref_A 
+(unless otherwise noted) (see Figure 7-1)
+PARAMETER
+FROM (INPUT)
+TO (OUTPUT)
+CL = 50 pF
+CL = 30 pF
+CL = 15 pF
+UNIT
+TYP
+MAX
+TYP
+MAX
+TYP
+MAX
+tPLH
+A or B
+B or A
+1.1
+0.7
+0.3
+ns
+tPHL
+1.2
+0.8
+0.4
+6.7 LSF0101 AC Performance (Translating Down) Switching Characteristics, VCCB = 2.5 V
+over recommended operating free-air temperature range, VCCB = 2.5 V, VCCB = VIH = Vref_A+ 1, VIL = 0, and VM = 0.5Vref_A 
+(unless otherwise noted) (see Figure 7-1)
+PARAMETER
+FROM (INPUT)
+TO (OUTPUT)
+CL = 50 pF
+CL = 30 pF
+CL = 15 pF
+UNIT
+TYP
+MAX
+TYP
+MAX
+TYP
+MAX
+tPLH
+A or B
+B or A
+1.2
+0.8
+0.35
+ns
+tPHL
+1.3
+1
+0.5
+6.8 LSF0101 AC Performance (Translating Up) Switching Characteristics, VCCB = 3.3 V
+over recommended operating free-air temperature range, VCCB = 3.3 V, VCCB = VT = Vref_A+ 1, Vref_A = VIH, VIL = 0, VM = 
+0.5Vref_A and RL = 300 (unless otherwise noted) (see Figure 7-1)
+PARAMETER
+FROM (INPUT)
+TO (OUTPUT)
+CL = 50 pF
+CL = 30 pF
+CL = 15 pF
+UNIT
+TYP
+MAX
+TYP
+MAX
+TYP
+MAX
+tPLH
+A or B
+B or A
+1
+0.8
+0.4
+ns
+tPHL
+1
+0.9
+0.4
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: LSF0101
+6.9 LSF0101 AC Performance (Translating Up) Switching Characteristics, VCCB = 2.5 V
+over recommended operating free-air temperature range, VCCB = 2.5 V, VCCB = VT = Vref_A+ 1, Vref_A = VIH, VIL = 0, VM = 
+0.5Vref_A and RL = 300 (unless otherwise noted) (see Figure 7-1)
+PARAMETER
+FROM (INPUT)
+TO (OUTPUT)
+CL = 50 pF
+CL = 30 pF
+CL = 15 pF
+UNIT
+TYP
+MAX
+TYP
+MAX
+TYP
+MAX
+tPLH
+A or B
+B or A
+1.1
+0.9
+0.45
+ns
+tPHL
+1.3
+1.1
+0.6
+6.10 Typical Characteristics
+Figure 6-1. Signal Integrity (1.8 to 3.3 V Up Translation at 50 MHz)
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+7 Parameter Measurement Information
+Figure 7-1. Load Circuit for Outputs
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: LSF0101
+8 Detailed Description
+8.1 Overview
+The LSF family can be used in level-translation applications for interfacing devices or systems operating with 
+one another that operate at different interface voltages. The LSF family is ideal for use in applications where an 
+open-drain driver is connected to the data I/Os. With appropriate pull-up resistors and layout, LSF can achieve 
+100 MHz. The LSF family can also be used in applications where a push-pull driver is connected to the data 
+I/Os. For an overview of device setup and operation, see The Logic Minute training series on Understanding the 
+LSF Family of Bidirectional, Multi-Voltage Level Translators.
+8.2 Functional Block Diagram
+Vref_A
+Vref_B
+2
+5
+3
+6 EN
+4
+1
+GND
+A1
+B1
+LSF0101
+SW
+8.3 Feature Description
+8.3.1 Auto Bidirectional Voltage Translation
+The device is an auto bidirectional voltage level translator that is operational from 0.95 to 5.5 V on Vref_A and 1.8 
+to 5.5 V on Vref_B. This allows bidirectional voltage translation between 0.95 V and 5.5 V without the need for a 
+direction pin in open-drain or push-pull applications. The LSF family supports level translation applications with 
+transmission speeds greater than 100 Mbps for open-drain systems using a 30-pF capacitance and 250-Ω pullup 
+resistor. Both the output driver of the controller and the peripheral device output can be push-pull or open-drain 
+(pull-up resistors may be required). In both up and down translation, the B-side is often referred to as the high 
+side and refers to devices connected to the B ports. The A-side can be referred to as the low side.
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+8.3.2 Output Enable
+To enable the I/O pins, the EN input should be tied directly to Vref_B during operation and both pins must be 
+pulled up to the HIGH side (VCCB) through a bias resistor (typically 200 kΩ). To be in the high impedance state 
+during power-up, power-down, or during operation, the EN pin must be LOW. The EN pin should always be tied 
+directly to the Vref_B pin and is recommended to be disabled by an open-drain driver without a pullup resistor. 
+This allows Vref_B to regulate the EN input and bias the channels for proper translation. A filter capacitor on Vref_B 
+is recommended for a stable supply at the device.
+1.8 V
+Vref_A
+VCCB
+EN
+200 kΩ  
+Vref_B
+3.3 V
+A1
+B1
+0.1 μF
+Figure 8-1. Enable Pin Tied to Vref_B Directly and to VCCB Through a Bias Resistor
+The supply voltage of open drain I/O devices can be completely different from the supplies used for the LSF and 
+has no impact on the operation. For additional details on how to use the enable pin, see the Using the Enable 
+Pin with the LSF Family video.
+Table 8-1. Enable Pin Function Table
+INPUT EN(1) PIN
+Data Port State
+Tied directly to Vref_B
+An = Bn
+L
+Hi-Z
+(1)
+EN is controlled by Vref_B logic levels.
+8.4 Device Functional Modes
+For each channel (n), when either the An or Bn port is LOW, the switch provides a low impedance path between 
+the An and Bn ports; the corresponding Bn or An port will be pulled LOW. The low RON of the switch allows 
+connections to be made with minimal propagation delay and signal distortion.
+Table 8-1 provides a summary of device operation. For additional details on the functional operation of the LSF 
+family of devices, see the Down Translation with the LSF Family and Up Translation with the LSF Family videos.
+Table 8-2. Device Functionality
+Signal Direction(1)
+Input State
+Switch State
+Functionality
+B to A (Down Translation)
+B = LOW
+ON
+(Low Impedance)
+A-side voltage is pulled low through the switch to the B-side voltage
+B = HIGH
+OFF
+(High Impedance)
+A-side voltage is clamped at Vref_A (2)
+A to B (Up Translation)
+A = LOW
+ON
+(Low Impedance)
+B-side voltage is pulled low through the switch to the A-side voltage
+A = HIGH
+OFF
+(High Impedance)
+B-side voltage is clamped at Vref_A and then pulled up to the VPU 
+supply voltage
+(1)
+The downstream channel should not be actively driven through a low impedance driver, or else bus contention may occur.
+(2)
+The A-side can have a pullup to Vref_A for additional current drive capability or may also be pulled above Vref_A with a pullup resistor. 
+Specifications in the Recommended Operating Conditions section should always be followed.
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: LSF0101
+8.4.1 Up and Down Translation
+8.4.1.1 Up Translation
+When the signal is being driven from A to B and the An port is HIGH, the switch will be OFF and the Bn port 
+will then be driven to a voltage higher than Vref_A by the pull-up resistor that is connected to the pull-up supply 
+voltage (VPU). This functionality allows seamless translation between higher and lower voltages selected by the 
+user, without the need for directional control. Pull-up resistors are always required on the high side, and pull-ups 
+are only required on the low side, if the low side of the device's output is open drain or its input has a leakage 
+greater than 1 µA.
+1.8 V
+Vref_A
+VCCB
+EN
+200 k  
+A1
+A2
+B1
+B2
+GND
+LSF010x
+Vref_B
+VCCA
+1.8 V
+Device
+3.3 V
+RB1
+3.3 V
+Device
+0.1  μF
+Figure 8-2. Up Translation Example Schematic with Push-Pull and Open Drain Configuration
+Up translation with the LSF requires attention to two important factors: maximum data rate and sink current. 
+Maximum data rate is directly related to the rising edge of the output signal. Sink current depends on supply 
+values and the chosen pull-up resistor values. Equation 1 shows the maximum data rate formula and Equation 2 
+shows the maximum sink current formula, both of which are estimations. A low RC value is needed to reach high 
+speeds, which also require strong drivers. Please see the Up Translation with the LSF Family video for estimated 
+data rate and sink current calculations based on circuit components.
+1
+3 × 2RB1CB1 =  
+1
+6RB1CB1 
+bits
+second
+(1)
+IOL  ≅ 
+VCCA
+RA1 +  
+VCCB
+RB1   A
+(2)
+8.4.1.2 Down Translation
+When the signal is being driven HIGH from the Bn port to An port, the switch will be OFF, clamping the voltage 
+on the An port to the voltage set by Vref_A. A pull-up resistor can be added on either side of the device. There are 
+special circumstances that allow the removal of one or both of the pull-up resistors. If the signal is always going 
+to be down translated from a push-pull transmitter, then the resistor on the B-side can be removed. If the leakage 
+current into the receiver on the A-side is less than 1 µA, then the resistor on the A-side can also be removed. 
+This arrangement with no external pull-up resistors can be used when down translating from a push-pull output 
+to a low-leakage input. For an open drain transmitter, the pull-up resistor on the B-side is necessary because 
+an open drain output can't drive high by itself. For a summary of device operation, refer to Section 8.4. For 
+additional details on the functional operation of the LSF family of devices, see the Up Translation with the LSF 
+Family and Down Translation with the LSF Family videos.
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+9.1 Application Information
+The LSF devices can perform voltage translation for open-drain or push-pull interfaces. provides common 
+interfaces and the corresponding device recommendation from the LSF family which supports the corresponding 
+bit count.
+Table 9-1. Voltage Translator for Common Interfaces
+Part Name
+Channel Number
+Interface
+LSF0101
+1
+GPIO
+Some important reminders regarding the LSF family of devices are as follows:
+•
+LSF devices are switch-based, not buffer-based (for more information, see the TXB family for buffer-based 
+devices).
+•
+Specific data rates cannot be calculated by using 1/Tpd.
+•
+VCCB/VCCA are not the same as Vref_B or Vref_A: VCCB refers to the B-side supply voltage supplied to the LSF 
+device, while Vref_B refers to the voltage at the Vref_B pin (pin 7 of Figure 9-1) on the other side of the 200 kΩ 
+resistor.
+9.2 Typical Applications
+9.2.1 Open-Drain Interface (I2C, PMBus, SMBus, and GPIO)
+Vref_A
+Vref_B
+2
+5
+3
+6 EN
+4
+1
+GND
+A1
+B1
+LSF0101
+200 K
+
+ON
+Off
+Rpu
+Rpu
+Vref(A) = 1.8 V  
+Vpu = 3.3 V    
+GND
+GND
+3.3 V enable signal
+Vcc
+MDIO
+SW
+Vcc
+MDIO
+Figure 9-1. Typical Application Circuit for Open-Drain Translation (MDIO Shown as an Example)
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: LSF0101
+9.2.1.1 Design Requirements
+9.2.1.1.1 Enable, Disable, and Reference Voltage Guidelines
+In the previous figure, Vref_B is connected through a 200-kΩ resistor to a 3.3 V power supply and Vref_A is set 
+to 1.8 V. The A1 and A2 channels have a maximum output voltage equal to Vref_A and the B1 and B2 channels 
+have has a maximum output voltage equal to VPU.
+The LSF family has an EN input that is used to disable the device by setting EN LOW, placing all I/Os 
+in the high-impedance state. Since the LSF family of devices are switch-type voltage translators, the power 
+consumption is very low. TI recommends always enabling the LSF family for bidirectional applications (I2C, 
+SMBus, PMBus, or MDIO).
+Table 9-2. Application Operating Condition
+PARAMETER
+MIN
+TYP
+MAX
+UNIT
+Vref_A (1)
+reference voltage (A)
+0.65
+5.5
+V
+Vref_B
+reference voltage (B)
+Vref_A + 0.8
+5.5
+V
+VI(EN)
+input voltage on EN pin
+Vref_A + 0.8
+5.5
+V
+VPU
+pull-up supply voltage
+0
+Vref_B
+V
+(1)
+Vref_A is required to be the lowest voltage level across all inputs and outputs.
+Note
+The 200 kΩ, bias resistor is required to allow Vref_B to regulate the EN input and properly bias the 
+device for translation.
+9.2.1.1.2 Bias Circuitry
+For proper operation, VCCA must always be at least 0.8 V less than VCCB (VCCA + 0.8 ≦ VCCB). The 200 kΩ bias 
+resistor is required to allow Vref_B to regulate the EN input and properly bias the device for translation. A 0.1 µF 
+capacitor is recommended for providing a path from Vref_B to ground for high frequency noise. Vref_B and VI(EN) 
+are recommended to be 1.0 V higher than Vref_A for best signal integrity.
+Attempting to drive the EN pin directly with a push-pull output device is a very common design error with the 
+LSF0101 series of devices. It is also very important to note that current does flow into the A-side voltage supply 
+during normal operation. Not all voltage sources can sink current, so be sure that applicable designs can handle 
+this current. For more design details, see the Understanding the Bias Circuit for the LSF Family video.
+1.8 V
+Vref_A
+VCCB
+EN
+200 kΩ    
+Vref_B
+3.3 V
+A1
+B1
+0.1 µF
+Figure 9-2. Bias Circuitry Inside the LSF010x Device
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+9.2.1.2 Detailed Design Procedure
+9.2.1.2.1 Bidirectional Translation
+For the bidirectional translation configuration (higher voltage to lower voltage or lower voltage to higher voltage), 
+the EN input must be connected to Vref_B and both pins must be pulled up to the HIGH side VCCB through a 
+bias resistor (typically 200 kΩ). This allows Vref_B to regulate the EN input and bias the channels for proper 
+translation. A filter capacitor on Vref_B is recommended for a stable supply at the device. The controller output 
+driver can be push-pull or open-drain (pull-up resistors may be required) and the peripheral device output can be 
+push-pull or open-drain (pull-up resistors are required to pull the Bn outputs to VPU).
+Note
+If either output is push-pull, data must be unidirectional or the outputs must be tri-state and be 
+controlled by some direction-control mechanism to prevent HIGH-to-LOW bus contention in either 
+direction. If both outputs are open-drain, no direction control is needed.
+9.2.1.2.2 Pull-Up Resistor Sizing
+The pull-up resistor value needs to limit the current through the pass transistor when it is in the ON state to about 
+15 mA. Doing this causes a voltage drop of 260 mV to 350 mV to have a valid LOW signal on the downstream 
+channel. If the current through the pass transistor is higher than 15 mA, the voltage drop is also higher in the 
+ON state. To set the current through each pass transistor at 15 mA, calculate the pull-up resistor value using the 
+following equation:
+Rpu  =   Vpu  − 0.35 V
+0.015 A
+ 
+(3)
+Table 9-3 provides resistor values, reference voltages, and currents at 8 mA, 5 mA, and 3 mA. The resistor value 
+shown in the +10% column (or a larger value) should be used so that the voltage drop across the transistor is 
+350 mV or less. The external driver must be able to sink the total current from the resistors on both sides of 
+the LSF family device at 0.175 V, although the 15 mA applies only to current flowing through the LSF family 
+device. The device driving the low state at 0.175 V must sink current from one or more of the pull-up resistors 
+and maintain VOL. A decrease in resistance will increase current, and thus result in increased VOL.
+Table 9-3. Pull-Up Resistor Values
+VPU (1) (2)
+8 mA
+5 mA
+3 mA
+NOMINAL (Ω)
++10%(3) (Ω)
+NOMINAL (Ω)
++10%(3) (Ω)
+NOMINAL (Ω)
++10%(3) (Ω)
+5 V
+581
+639
+930
+1023
+1550
+1705
+3.3 V
+369
+406
+590
+649
+983
+1082
+2.5 V
+269
+296
+430
+473
+717
+788
+1.8 V
+181
+199
+290
+319
+483
+532
+1.5 V
+144
+158
+230
+253
+383
+422
+1.2 V
+106
+117
+170
+187
+283
+312
+(1)
+Calculated for VOL = 0.35 V
+(2)
+Assumes output driver VOL = 0.175 V at stated current
+(3)
++10% to compensate for VDD range and resistor tolerance
+9.2.1.2.3 Single Supply Translation
+Sometimes, an external device will have an unknown voltage that could be above or below the desired 
+translation voltage, preventing a normal connection of the LSF. Resistors are added on the A side in place 
+of the second supply in this case – this is an example of when LSF single supply operation is utilized, shown in 
+Figure 9-5. In the following figure, a single 3.3 V supply is used to translate between a 3.3 V device and a device 
+that can change between 1.8 V and 5.0 V. R1 and R2 are added in place of the second supply. Note that due to 
+some current coming out of the Vref_A pin, this cannot be treated as a simple voltage divider.
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: LSF0101
+Vref_A
+VCCB
+EN
+200 k  
+A1
+A2
+B1
+B2
+GND
+LSF0108-Q1
+Vref_B
+3.3 V
+Device
+3.3 V
+RB2
+RB1
+0.1 mF    
+RA1
+RA2
+R1 
+R2 
+1.8 V –
+V
+1.8 V –
+V
+Device
+5
+5
+LSF010x
+Figure 9-3. Single Supply Translation with 3.3 V Supply
+The steps to select the resistor values for R1 and R2 are as follows:
+1.
+Select a value for R1. Typically, 1 MΩ is used to reduce current consumption.
+2.
+Plug in values for your system into the following equation. Note that Vref_A is the lowest voltage in the 
+system. VCCB is the primary supply and R1 is the selected value from step 1.
+R2  =  
+200  103   ×  R1  ×  VREFA
+200  103   +  R1
+VCCB  − VREFA   − 0.85  ×  R1
+ 
+(4)
+The single supply used must be at least 0.8 V larger than the lowest desired translation voltage. The voltage at 
+Vref_A must be selected as the lowest voltage to be used in the system. The LSF evaluation module (LSF-EVM) 
+contains unpopulated pads to place R1 and R2 for single supply operation testing. For an example single supply 
+translation schematic and details, see the Single Supply Translation with the LSF Family video.
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+14
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+9.2.1.3 Application Curve
+Figure 9-4. Open Drain Translation (1.8 V to 3.3 V at 2.5 MHz)
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+15
+Product Folder Links: LSF0101
+9.2.2 Voltage Translation for Vref_B < Vref_A + 0.8 V
+As described in the Enable, Disable, and Reference Voltage Guidelines section, it is generally recommended 
+that Vref_B > Vref_A + 0.8 V; however, the device can still operate in the condition where Vref_B < Vref_A + 0.8 V as 
+long as additional considerations are made for the design.
+Typical Operation (Vref_B > Vref_A + 0.8 V): in this scenario, pullup resistors are not required on the A-side for 
+proper down-translation. When down translating from B to A, the A-side I/O ports will clamp at Vref_A to provide 
+proper voltage translation. For further explanation of device operation, see the Down Translation with the LSF 
+Family video.
+Requirements for Vref_B < Vref_A + 0.8 V Operation: in this scenario, there is not a large enough voltage 
+difference between Vref_A and Vref_B to ensure that the A side I/O ports will be clamped at Vref_A, but rather at a 
+voltage approximately equal to Vref_B – 0.8 V. For example, if Vref_B = 1.8 V and Vref_A = 1.2 V, the A-side I/Os 
+will clamp to a voltage around 1.0 V. Therefore, to operate in such a condition, the following additional design 
+considerations must be met:
+•
+Vref_B must be greater than VRef_A during operation (Vref_B > Vref_A)
+•
+Pullup resistors should be populated on A-side I/O ports for the line to be fully pulled up to the desired 
+voltage.
+Figure 9-5 shows an example of this setup, where 1.2 V ↔ 1.8 V translation is achieved with the LSF0101. This 
+type of setup also applies for other voltage nodes such as 1.8 V ↔ 2.5 V, 1.05 V ↔ 1.5 V, and others as long as 
+the Recommended Operating Conditions table is followed.
+1.8 V
+SW
+SW
+1.8 V Device
+1.2 V Device
+200 kΩ 
+Vref_B  
+RPU(B1) 
+Vref_A  
+1.2 V
+RPU(B2) 
+EN
+B1
+B2
+A2
+A1
+RPU(A2) 
+RPU(A1) 
+0.1 μF
+Figure 9-5. 1.2 V to 1.8 V Level Translation with LSF010x
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+16
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+10 Power Supply Recommendations
+There are no power sequence requirements for the LSF family. Table 10-1 provides recommended operating 
+voltages for all supply and input pins.
+Table 10-1. Recommended Operating Voltages
+PARAMETER
+MIN
+TYP
+MAX
+UNIT
+Vref_A (1)
+reference voltage (A)
+0.65
+5.5
+V
+Vref_B
+reference voltage (B)
+Vref_A + 0.8
+5.5
+V
+VI(EN)
+input voltage on EN pin
+Vref_A + 0.8
+5.5
+V
+VPU
+pull-up supply voltage
+0
+Vref_B
+V
+(1)
+Vref_A is required to be the lowest voltage level across all inputs and outputs.
+11 Layout
+11.1 Layout Guidelines
+Because the LSF family is a switch-type level translator, the signal integrity is highly related with a pull-up 
+resistor and PCB capacitance condition.
+•
+Short signal trace as possible to reduce capacitance and minimize stub from pull-up resistor.
+•
+Place LSF device close to the high voltage side.
+•
+Select the appropriate pull-up resistor that applies to translation levels and driving capability of the 
+transmitter.
+11.2 Layout Example
+LSF010x
+1
+GND
+20
+EN
+2
+Vref_A
+19
+Vref_B
+3
+A1
+18
+B1
+4
+A2
+17
+B2
+10
+A8
+11
+B8
+Minimize Stub as possible
+Short Signal Trace as possible
+Figure 11-1. Short Trace Layout
+Device PCB
+TP1
+SD Controller
+(1.8 V IO)
+TP2
+LSF0108
+SDIO level translator
+SDIO Connnector
+(3.3 V IO)
+LSF010x
+Figure 11-2. Device Placement
+www.ti.com
+LSF0101
+SDLS973 – JUNE 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+17
+Product Folder Links: LSF0101
+12 Device and Documentation Support
+12.1 Related Documentation
+For related documentation, see the following:
+•
+Texas Instruments, LSF Translator Family Evaluation Module user's guide
+•
+Texas Instruments, Biasing Requirements for TXS, TXB, and LSF Auto-Bidirectional Translators application 
+note
+•
+Texas Instruments, Voltage Level Translation with the LSF Family application note
+•
+The Logic Minute Video Training Series on Understanding the LSF Family of Devices:
+–
+Texas Instruments, Introduction - Voltage Level Translation with the LSF Family
+–
+Texas Instruments, Understanding the Bias Circuit for the LSF Family
+–
+Texas Instruments, Using the Enable Pin with the LSF Family
+–
+Texas Instruments, Translation Basics with the LSF Family
+–
+Texas Instruments, Down Translation with the LSF Family
+–
+Texas Instruments, Up Translation with the LSF Family
+–
+Texas Instruments, Multi-Voltage Translation with the LSF Family
+–
+Texas Instruments, Single Supply Translation with the LSF Family
+12.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For 
+change details, review the revision history included in any revised document.
+12.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+12.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+12.5 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+12.6 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+LSF0101
+SDLS973 – JUNE 2023
+www.ti.com
+18
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: LSF0101
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+LSF0101DRYR
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DRYR.A
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DRYR.B
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DRYRG4
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DRYRG4.A
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DRYRG4.B
+Active
+Production
+SON (DRY) | 6
+5000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+VD
+LSF0101DTQR
+Active
+Production
+X2SON (DTQ) | 6
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+FC
+LSF0101DTQR.A
+Active
+Production
+X2SON (DTQ) | 6
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+FC
+LSF0101DTQR.B
+Active
+Production
+X2SON (DTQ) | 6
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 125
+FC
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+25-Jul-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+LSF0101DRYR
+SON
+DRY
+6
+5000
+180.0
+9.5
+1.15
+1.6
+0.75
+4.0
+8.0
+Q1
+LSF0101DRYRG4
+SON
+DRY
+6
+5000
+180.0
+9.5
+1.15
+1.6
+0.75
+4.0
+8.0
+Q1
+LSF0101DTQR
+X2SON
+DTQ
+6
+3000
+180.0
+9.5
+0.94
+1.13
+0.5
+2.0
+8.0
+Q2
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+25-Jul-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+LSF0101DRYR
+SON
+DRY
+6
+5000
+184.0
+184.0
+19.0
+LSF0101DRYRG4
+SON
+DRY
+6
+5000
+184.0
+184.0
+19.0
+LSF0101DTQR
+X2SON
+DTQ
+6
+3000
+189.0
+185.0
+36.0
+Pack Materials-Page 2
+GENERIC PACKAGE VIEW
+Images above are just a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+DRY 6
+USON - 0.6 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+4207181/G
+www.ti.com
+PACKAGE OUTLINE
+C
+6X 0.25
+0.15
+4X
+0.5
+5X 0.35
+0.25
+2X
+1
+0.6 MAX
+0.05
+0.00
+3X 0.6
+0.4
+0.3
+B
+1.05
+0.95
+A
+1.5
+1.4
+(0.05) TYP
+(0.127) TYP
+4222894/A   01/2018
+USON - 0.6 mm max height
+DRY0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+PIN 1 INDEX AREA
+SEATING PLANE
+0.08 C
+1
+3
+4
+6
+(OPTIONAL)
+PIN 1 ID 
+0.1
+C A B
+0.05
+C
+SYMM
+SYMM
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+SCALE  8.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MIN
+ALL AROUND
+0.05 MAX
+ALL AROUND
+5X (0.3)
+6X (0.2)
+4X (0.5)
+(0.6)
+(R0.05) TYP
+(0.35)
+4222894/A   01/2018
+USON - 0.6 mm max height
+DRY0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+SYMM
+1
+3
+4
+6
+SYMM
+LAND PATTERN EXAMPLE
+1:1 RATIO WITH PKG SOLDER PADS
+EXPOSED METAL SHOWN
+SCALE:40X
+NOTES: (continued)
+ 
+3. For more information, see QFN/SON PCB application report in literature No. SLUA271 (www.ti.com/lit/slua271).
+ 
+ 
+METAL
+SOLDER MASK
+OPENING
+SOLDER MASK DETAILS
+NON SOLDER MASK
+DEFINED
+EXPOSED
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+(PREFERRED)
+EXPOSED
+METAL
+www.ti.com
+EXAMPLE STENCIL DESIGN
+5X (0.3)
+6X (0.2)
+4X (0.5)
+(0.6)
+(R0.05) TYP
+(0.35)
+4222894/A   01/2018
+USON - 0.6 mm max height
+DRY0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+NOTES: (continued)
+ 
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.075 - 0.1 mm THICK STENCIL
+SCALE:40X
+SYMM
+1
+3
+4
+6
+SYMM
+www.ti.com
+PACKAGE OUTLINE
+C
+4X 0.25
+0.17
+4X 0.30
+0.22
+0.40 MAX
+0.05
+0.00
+2X 0.6
+0.25
+ TYP
++0.05
+-0.03
+0.4
+B
+1.05
+0.95
+A
+0.85
+0.75
+(0.1) TYP
+(0.1)
+(0.08)
+(0.027) TYP
+X2SON - 0.4 mm max height
+DTQ0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+4224056/B   07/2024
+PIN 1 INDEX AREA
+SEATING PLANE
+0.05 C
+1
+3
+4
+0.1
+C A B
+0.05
+C
+5
+NOTE 5
+(OPTIONAL)
+PIN 1 ID
+2
+6
+PKG
+PKG
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. The package thermal pads must be soldered to the printed circuit board for optimal thermal and mechanical performance.
+4. The size and shape of this feature may vary.
+5. Features may not exist. Recommend use of pin 1 marking on top of package for orientation purposes.
+SCALE  12.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MIN
+ALL AROUND
+TYP
+4X (0.25)
+4X (0.4)
+(0.25)
+TYP
+(R0.05) TYP
+(0.6)
+(0.8)
+(0.4)
+(0.2)
+TYP
+(0.027) TYP
+(0.2) TYP
+EXPOSED METAL
+CLEARANCE
+4X (0.271)
+X2SON - 0.4 mm max height
+DTQ0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+4224056/B   07/2024
+NOTES: (continued)
+ 
+6. This package is designed to be soldered to a thermal pads on the board. For more information, see Texas Instruments literature
+    number SLUA271 (www.ti.com/lit/slua271).
+7. Vias are optional depending on application, refer to device data sheet. If some or all are implemented, recommended via locations are shown.
+ 
+ 
+SYMM
+1
+2
+3
+SYMM
+4
+5
+LAND PATTERN EXAMPLE
+SOLDER MASK DEFINED
+SCALE:50X
+6
+METAL UNDER
+SOLDER MASK
+TYP
+TYP
+SOLDER MASK OPENING
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(0.21)
+(0.8)
+4X (0.6)
+4X (0.4)
+4X (0.25)
+(R0.05) TYP
+(0.367)
+(0.279)
+TYP
+(0.2)
+TYP
+(0.2) TYP
+(0.027) TYP
+4X (0.271)
+X2SON - 0.4 mm max height
+DTQ0006A
+PLASTIC SMALL OUTLINE - NO LEAD
+4224056/B   07/2024
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+ SOLDER PASTE EXAMPLE
+BASED ON 0.07 mm THICK STENCIL
+ 
+PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+SCALE:50X
+SYMM
+1
+3
+4
+SYMM
+SOLDER MASK
+EDGE, 2X
+6
+5
+2
+METAL UNDER
+SOLDER MASK
+TYP
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2025, Texas Instruments Incorporated
+Last updated 10/2025

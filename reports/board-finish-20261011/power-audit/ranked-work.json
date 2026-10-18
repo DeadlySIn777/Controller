@@ -1,0 +1,200 @@
+{
+  "updated_utc": "2026-10-11T12:55:34.100102+00:00",
+  "adopted": false,
+  "manufacturing_ready": false,
+  "source_base": "r06 0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53",
+  "authoritative_r06_measure": "Z:\\pcb-runs\\claude-finish\\integrate\\measure\\r06-stitch-plane-pads-2",
+  "rejected_preprune_measure": "Z:\\pcb-runs\\claude-finish\\integrate\\measure\\r06-stitch-plane-pads-2.applied",
+  "donor_native_result": {
+    "revision_before": "0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53",
+    "revision_after": "6abe14a856b2d5f13846a4911f13d1b986d07c0ddeab7b4d1fdd0d28052c196e",
+    "connections_completed": 4,
+    "connections_lost": 0,
+    "drc_errors_after": 0,
+    "drc_warnings_after": 169
+  },
+  "documented_load_sum_vs_assumed_rail": {
+    "FAG": {
+      "design_a": 4.58,
+      "limit_a": 5.08,
+      "sum_cluster_max_a": 5.268,
+      "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current"
+    },
+    "FA": {
+      "design_a": 4.58,
+      "limit_a": 5.08,
+      "sum_cluster_max_a": 5.036,
+      "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current"
+    },
+    "FBG": {
+      "design_a": 4.82,
+      "limit_a": 5.32,
+      "sum_cluster_max_a": 6.61,
+      "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current"
+    },
+    "FB": {
+      "design_a": 4.82,
+      "limit_a": 5.32,
+      "sum_cluster_max_a": 6.55,
+      "share_rule": "cluster current = documented maximum (basis/cite); segment current = downstream sum capped at the rail design current"
+    }
+  },
+  "selected_model": {
+    "segments": 251,
+    "length_mm": 251.0,
+    "min_width_mm": 0.3,
+    "max_width_mm": 0.3,
+    "segments_over_10C": 0,
+    "via_groups": 4,
+    "vias": 8,
+    "via_groups_below_n_req": 0,
+    "unreached_islands": 82,
+    "worst_drop_v": 0.0395
+  },
+  "selected_current_reaching_source_a": 0.096,
+  "rejected_fb_via_groups": [
+    {
+      "name": "SOURCE U11006 OUT (TPS26630 FIELD_B eFuse exit) -> In3 component 1450",
+      "amps": 3.05,
+      "n": 5,
+      "n_req": 7,
+      "ok": false,
+      "landing_to_terminal_mm": 181.42
+    },
+    {
+      "name": "DO-B quad 0 VS (DO08-DO11 -> JD09.B1-B4); ARM_LAMP switch IN (U19018 TPS1H000 -> JD08.A6); DI sensor supply G0 limiter IN (U19004 -> SENS24_G0 JD07.A9/A10)",
+      "amps": 3.05,
+      "n": 5,
+      "n_req": 7,
+      "ok": false,
+      "landing_to_terminal_mm": 1.43
+    }
+  ],
+  "strict_power_ripup_readiness": {
+    "jobs": 25,
+    "routed": 0,
+    "routed_without_rip": 0,
+    "routed_with_rip": 0,
+    "not_routed": 25,
+    "ripped_routes": 0,
+    "ripped_chain_fragments": 0,
+    "ripped_items": 0,
+    "ripped_nets": 0,
+    "ripped_track_mm": 0,
+    "reroute_items_in_plan": 0,
+    "cap": 12,
+    "penalty": 10.0,
+    "cheap_mm": 20.0,
+    "router": "corridor_router_in3s.py",
+    "router_sha256": "1d8703db023448ba1b8c29f7019782093eaea6082cb6cc5614e7751171ce4d08",
+    "entry_mm": 2.0,
+    "i_via": 0.5,
+    "seconds": 961
+  },
+  "ranked_work": [
+    {
+      "rank": 1,
+      "task": "Restore r07 losses and establish one no-loss composition baseline",
+      "action": "Use exact lost-net copper identities, preserve all successful new routes, then strict partition guard and same-rules uncapped native DRC",
+      "reason": "r07/r08 net gain hides17 lost joins; other root workstream owns this recovery",
+      "adoption_condition": "0 lost connections and0 native DRC errors on one frozen revision"
+    },
+    {
+      "rank": 2,
+      "task": "Finish FIELD_A/B supply and return trunks jointly",
+      "action": "Rework source/load landing arrays and domain-preserving In3 corridors together, preserving0.6mm ordinary cross-domain clearance and exact current-derived widths; reroute every displaced signal before saving",
+      "reason": "FA9/FAG82/FB3/FBG19 islands still unreached; both FB donor arrays have5 vias but require7 at3.05A; full-load documented totals exceed clipped design current",
+      "adoption_condition": "Complete uncapped connectivity, no losses, all via-array counts fulfilled, extracted-copper supply+return IR and thermal/transient checks on exact candidate; preserved actual current/fault limits"
+    },
+    {
+      "rank": 3,
+      "task": "Completed additive FIELD_A partial return proof",
+      "action": "253 In3 segments and8 vias added with exact source/footprint/copper preservation; native DRC/connectivity PASS +3/-0. Root owns further frozen compositions",
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r06\\candidate\\board.kicad_pcb",
+      "reason": "Reuses native-clean donor while excluding the under-counted high-current FB branch",
+      "adoption_condition": "Strict native preservation/connectivity/DRC proof; full-rail electrical qualification stays OPEN;0.096A allocation and unassigned relay currents remain explicit",
+      "proof": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r06\\final-proof.json"
+    },
+    {
+      "rank": 4,
+      "task": "Fix supply bottlenecks and vias using actual extracted copper",
+      "action": "Export the eventual composed/refilled candidate once, run PDN solver and branch-temperature/part derating models on same hashes; target CORE_24V_PROTECTED,C_RAW,CORE_5V,DOA_FIELD_3V3 andSBC_5V after rerouting closes them",
+      "reason": "Historical cc053 power records contain81FAIL/368NOT_ROUTED; CORE_24V_PROTECTED reports521.7mV vs180mV, C_RAW via1.198A vs0.5A, CORE_5V modeled124.4C rise. These are historical leads, not current-r06 results",
+      "adoption_condition": "One-revision current solver passes retained budgets with full connected loads and documented assumptions, including ground return drop"
+    },
+    {
+      "rank": 5,
+      "task": "Rebase and verify DFM fixes against current copper",
+      "action": "Root owns fresh native DFM on r06. Hardened dfm_contract_v2 source receipt passes exact four cap moves, two fid moves, eight .448mm F.Cu owned ties, 2499 silk edits and one keepout",
+      "reason": "The old DFM donor is not imported as a whole; only bounded proven source edits are transferred. Current native and electrical gates remain required",
+      "adoption_condition": "No new/lost required joins or hidden exclusions; actual final0 unresolved DRC and reviewed drill/land/process dispositions; no manufacturing release yet",
+      "source_receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\c02a-dfm-contract-v2.json"
+    },
+    {
+      "rank": 6,
+      "task": "Close return/isolation/SI and complete final uniform gate",
+      "action": "Run tools/verify on one frozen refilled composition after routing/power and controlled-pair corrections, with retained barriers, complete12motor/fourencoder/24DI/16DO contracts and current schema/service limits",
+      "reason": "Existing dense cc053 reports are bound to an older board and contain return3468FAIL,isolation31FAIL,SI11FAIL/52NOT_ROUTED; cannot combine their PASSes with newer routing measurements",
+      "adoption_condition": "Complete required test matrix, source/native/HDL/target/synthesis/ERC/DRC/physical evidence separated; physical manufacture gates remain explicit"
+    }
+  ],
+  "observed_sources": {
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\w\\design\\design.json": "d79f9dbe94457e9c73f59c737b6c487f97cf1ae09828598082ddf81c44207828",
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\w\\design\\analysis.json": "29442eda7d6f4cd2b1019ea8669554ce399352456d5d1050320fc4ecbacfa9f1",
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\field-pdn\\testA3\\m\\report.json": "a39ac347abe56a6603483035870d1b14b974e2e1325f173b6481258f59d80a76",
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\power-ripup\\dev\\v3a\\rip.json": "eaab22f079c9dc6a2925d24e065e11763af7b7b66d24a287ce5e74dd059205cf",
+    "Z:\\pcb-runs\\claude-finish\\agent-work\\dfm-fix-r3\\proof\\fixed.measure.log": "568cd96ae7f71cb5c4bc4db1c94f66b9d5279983c3fa5c6cec553683150c75db"
+  },
+  "limits": [
+    "Partial/native source inspection is distinct from physical current qualification",
+    "All12motor interfaces remain fitted independent of display size/licensing; no old modular-card architecture recreated",
+    "No live board/shared tools/queue changed; native subset uses one shared KiCad slot sequentially with no GPU"
+  ],
+  "selected_subset_native_result": {
+    "candidate_sha256": "a10803bbfa3aa5b7e1a859ca4c5a7b6481969c97dc038a66cef21f92e5f61789",
+    "verdict": "PASS",
+    "connections_completed": 3,
+    "connections_lost": 0,
+    "drc_errors": 0,
+    "drc_warnings": 169,
+    "missing_pad_joins": 1364,
+    "unconnected_api_uncapped": 1373,
+    "proof": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r06\\final-proof.json",
+    "scope": "Partial 0.096 A FIELD_A return branch; native parity skipped and all full electrical gates open"
+  },
+  "sbc_root106_next_design_change": {
+    "current_case_a": 3.6,
+    "load": "J15001",
+    "source": "U11012 VOUT8/9/10",
+    "budget_mv": 100,
+    "native_source_candidate_created": false,
+    "current_qualified": false,
+    "source_array_bottleneck": "In3 7/2/1 sampled sites; B6/2/2; In2none, at.8mm centres with retained clearances. Single C11061 pad-obstacle counterfactual reaches8 onIn3",
+    "minimal_local_relayout_lead": "Reposition C11061 CT/GND capacitor and preserve its exact ramp/ground circuit; tested east nudges.25..2.4mm collide with retained OPI_REARM_TX or fault vias and are rejected",
+    "long_corridor_gate": "No shared constant3mm source/load corridor in investigated window onIn3/In2/B. Nearest In3 source/load wide components are95.071491mm apart inside LOGIC reference territory; many locked compute/status/DO signal tracks cross the gap",
+    "next_action": "Reserve an adequate power corridor and re-layout owned local source array/CT/GND and bounded blocking signals together; require explicit current-share resistor network/IR+thermal before a native candidate",
+    "packing_scope": "0.1mm sampled continuous landing region, up to49starts and12sweep directions; not an exhaustive continuous packing impossibility proof",
+    "split_route": "OPEN_NO_BOUNDED_NETWORK: disconnected wide components, so no split-branch current-share model or native candidate was forced",
+    "receipt": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-bottleneck-receipt.json",
+    "diagram": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-source-bottleneck.png"
+  },
+  "native_parity": {
+    "verdict": "OPEN_NATIVE_CHECK_SKIPPED",
+    "reason": "Native logs cannot fetch netlist because full annotation is missing; empty parity lists are not execution proof",
+    "next_gate": "Root's independent native API/netlist parity and fresh-export qualification; no borrowed historical parity result"
+  },
+  "workstream_artifact_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\finish_fag_proof.py": "4933fad79c42ee841f656e72559f347f8bc09312474d74bb73d6dbfebedda255",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\test_fag_final.py": "66c82b25da63635cec0e7744800dce7fe44b7bda280af72d55c7310b4871b3e2",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-r06\\final-proof.json": "706c5e8bf582a6a7c180314acd3a24d7f110188ef354e97674e26faf95a248f1",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\fag-final-status.json": "22c60798353038ce7b3a4b7707b126f91810abe345379c33fb85c99e38e91b0f",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-root106-plan.json": "ed3558513aae0ed85b0146be885af54345befeed95dfe52beb645dfb9c7a2ae3",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-root106-hubs.json": "0c298846d6dcd8484f131163e55cbe1d6ad27895d454e04f4f46692a9f948e04",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-local-change-attribution.json": "91477f78dc09c5a3b61f1865ea204a6b76e80ecfefe24e3ae1ff966d6d727bcf",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-bottleneck-receipt.json": "5a0cdd2f03c8926b85f3620b2392b6dd161a801306b444b5f6e16a3096099759",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\sbc-source-bottleneck.png": "78ebe19eec87cc0f457af44e963116f9e346b57563aec9f111a093da9ac0d1fb",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\power-audit\\c02a-dfm-contract-v2.json": "33dcdfd3bf2be5aa59fc3489759eefecd7354f30174577ce05ea510e55074ded",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\dfm_contract_v2.py": "3efc4e25568c6f7d6b5b23e7cd5c73c57e1d00516adb5322a4304795f5bad567",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261011\\test_dfm_contract_v2.py": "7b876ab238666b58995e7e747db1aa54f51427dd585ec587400715d12499ac37"
+  }
+}

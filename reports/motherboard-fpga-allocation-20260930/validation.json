@@ -1,0 +1,105 @@
+{
+  "ok": true,
+  "errors": [],
+  "source_only": true,
+  "native_vendor_fit": false,
+  "candidates": {
+    "base_preserve_all_current": {
+      "assigned": 161,
+      "unassigned": 0,
+      "free": 22
+    },
+    "full_preserve_all_current": {
+      "assigned": 183,
+      "unassigned": 5,
+      "free": 0
+    },
+    "full_with_five_legacy_repurposes": {
+      "assigned": 183,
+      "unassigned": 0,
+      "free": 0
+    }
+  },
+  "mutation_tests": [
+    {
+      "name": "duplicate ball",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current duplicate ball",
+        "base_preserve_all_current free-pad accounting",
+        "base_preserve_all_current worksheet mismatch ARM_LAMP_FPGA manufacturer_pin"
+      ]
+    },
+    {
+      "name": "wrong manufacturer bank",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current worksheet mismatch STEP0_FPGA bank",
+        "base_preserve_all_current output-bank count BANK4B"
+      ]
+    },
+    {
+      "name": "5 V logic-bank claim",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current bank voltage/standard STEP0_FPGA"
+      ]
+    },
+    {
+      "name": "missing required frequency input",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current required coverage",
+        "base_preserve_all_current assigned count",
+        "base_preserve_all_current free-pad accounting"
+      ]
+    },
+    {
+      "name": "encoder erroneously classified as enable output",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current wrong direction ENC0_A_FPGA"
+      ]
+    },
+    {
+      "name": "dedicated configuration ball reused",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current consumes dedicated/configuration/power/ground pad",
+        "base_preserve_all_current free-pad accounting",
+        "base_preserve_all_current altered retained current pad STEP0_FPGA"
+      ]
+    },
+    {
+      "name": "retained STEP pad moved",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current duplicate ball",
+        "base_preserve_all_current free-pad accounting",
+        "base_preserve_all_current altered retained current pad STEP0_FPGA"
+      ]
+    },
+    {
+      "name": "unsupported LVDS Schmitt option",
+      "passed": true,
+      "detected_errors": [
+        "base_preserve_all_current unsupported LVDS feature schmitt"
+      ]
+    },
+    {
+      "name": "unsupported vendor-fit claim",
+      "passed": true,
+      "detected_errors": [
+        "Unproved scope flag vendor_fit"
+      ]
+    },
+    {
+      "name": "unimplemented health marked complete",
+      "passed": true,
+      "detected_errors": [
+        "Health circuitry is not implemented"
+      ]
+    }
+  ],
+  "mutation_tests_passed": 10
+}

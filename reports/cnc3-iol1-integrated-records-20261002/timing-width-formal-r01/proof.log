@@ -1,0 +1,548 @@
+
+-- Executing script file `prove.ys' --
+
+1. Executing Verilog-2005 frontend: old.v
+Parsing formal SystemVerilog input from `old.v' to AST representation.
+Generating RTLIL representation for module `\cnc3_stepgen_runtime_reference'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: new.v
+Parsing formal SystemVerilog input from `new.v' to AST representation.
+Generating RTLIL representation for module `\cnc3_stepgen_runtime'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: miter.v
+Parsing formal SystemVerilog input from `miter.v' to AST representation.
+Generating RTLIL representation for module `\timer_miter'.
+Successfully finished Verilog frontend.
+
+4. Executing PREP pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1.1. Analyzing design hierarchy..
+Top module:  \timer_miter
+Used module:     \cnc3_stepgen_runtime
+Used module:     \cnc3_stepgen_runtime_reference
+Parameter \TIMER_BITS = 10
+
+4.1.2. Executing AST frontend in derive mode using pre-parsed AST for module `\cnc3_stepgen_runtime'.
+Parameter \TIMER_BITS = 10
+Generating RTLIL representation for module `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010'.
+
+4.1.3. Analyzing design hierarchy..
+Top module:  \timer_miter
+Used module:     $paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010
+Used module:     \cnc3_stepgen_runtime_reference
+
+4.1.4. Analyzing design hierarchy..
+Top module:  \timer_miter
+Used module:     $paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010
+Used module:     \cnc3_stepgen_runtime_reference
+Removing unused module `\cnc3_stepgen_runtime'.
+Removed 1 unused modules.
+Module timer_miter directly or indirectly contains formal properties -> setting "keep" attribute.
+Mapping positional arguments of cell timer_miter.new ($paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010).
+Mapping positional arguments of cell timer_miter.old (cnc3_stepgen_runtime_reference).
+
+4.2. Executing PROC pass (convert processes to netlists).
+
+4.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 6 switch rules as full_case in process $proc$new.v:25$132 in module $paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.
+Marked 6 switch rules as full_case in process $proc$old.v:21$12 in module cnc3_stepgen_runtime_reference.
+Removed a total of 0 dead cases.
+
+4.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 8 redundant assignments.
+Promoted 6 assignments to connections.
+
+4.2.4. Executing PROC_INIT pass (extract init attributes).
+
+4.2.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+Found async reset \rst_n in `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+
+4.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~22 debug messages>
+
+4.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\timer_miter.$proc$miter.v:5$78'.
+Creating decoders for process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+     1/8: $0\phase[31:0]
+     2/8: $0\delay_left[9:0]
+     3/8: $0\delay_kind[1:0]
+     4/8: $0\hold_left[9:0]
+     5/8: $0\timing_fault[0:0]
+     6/8: $0\count[31:0]
+     7/8: $0\dir[0:0]
+     8/8: $0\step[0:0]
+Creating decoders for process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+     1/9: $0\phase[31:0]
+     2/9: $0\hold_left[15:0]
+     3/9: $0\setup_left[15:0]
+     4/9: $0\low_left[15:0]
+     5/9: $0\high_left[15:0]
+     6/9: $0\timing_fault[0:0]
+     7/9: $0\count[31:0]
+     8/9: $0\dir[0:0]
+     9/9: $0\step[0:0]
+
+4.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+4.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\step' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$431' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\dir' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$436' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\count' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$441' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\timing_fault' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$446' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\phase' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$451' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\hold_left' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$456' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\delay_kind' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$461' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.\delay_left' using process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+  created $adff cell `$procdff$466' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\step' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$471' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\dir' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$476' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\count' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$481' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\timing_fault' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$486' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\phase' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$491' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\high_left' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$496' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\low_left' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$501' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\setup_left' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$506' with positive edge clock and positive level reset.
+Creating register for signal `\cnc3_stepgen_runtime_reference.\hold_left' using process `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+  created $adff cell `$procdff$511' with positive edge clock and positive level reset.
+
+4.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `timer_miter.$proc$miter.v:5$78'.
+Found and cleaned up 10 empty switches in `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+Removing empty process `$paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.$proc$new.v:25$132'.
+Found and cleaned up 12 empty switches in `\cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+Removing empty process `cnc3_stepgen_runtime_reference.$proc$old.v:21$12'.
+Cleaned up 22 empty switches.
+
+4.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+<suppressed ~4 debug messages>
+Optimizing module $paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.
+<suppressed ~36 debug messages>
+Optimizing module cnc3_stepgen_runtime_reference.
+<suppressed ~41 debug messages>
+
+4.3. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod\cnc3_stepgen_runtime\TIMER_BITS=s32'00000000000000000000000000001010.
+Deleting now unused module cnc3_stepgen_runtime_reference.
+<suppressed ~2 debug messages>
+
+4.4. Executing FUTURE pass.
+
+4.5. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+4.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+Removed 21 unused cells and 173 unused wires.
+<suppressed ~25 debug messages>
+
+4.7. Executing CHECK pass (checking for obvious problems).
+Checking module timer_miter...
+Found and reported 0 problems.
+
+4.8. Executing OPT pass (performing simple optimizations).
+
+4.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+4.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+<suppressed ~57 debug messages>
+Removed a total of 19 cells.
+
+4.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \timer_miter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+      Replacing known input bits on port A of cell $flatten\new.$ternary$new.v:20$123: \rate -> { 1'0 \rate [30:0] }
+      Replacing known input bits on port A of cell $flatten\old.$ternary$old.v:16$3: \rate -> { 1'0 \rate [30:0] }
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~31 debug messages>
+
+4.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \timer_miter.
+Performed a total of 0 changes.
+
+4.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+4.8.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+Removed 0 unused cells and 19 unused wires.
+<suppressed ~1 debug messages>
+
+4.8.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+4.8.8. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.8.9. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \timer_miter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~30 debug messages>
+
+4.8.10. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \timer_miter.
+Performed a total of 0 changes.
+
+4.8.11. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+Removed a total of 0 cells.
+
+4.8.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+
+4.8.13. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+4.8.14. Finished OPT passes. (There is nothing left to do.)
+
+4.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 22 bits (of 32) from port B of cell timer_miter.$le$miter.v:6$80 ($le).
+Removed top 22 bits (of 32) from port B of cell timer_miter.$le$miter.v:6$81 ($le).
+Removed top 22 bits (of 32) from port B of cell timer_miter.$le$miter.v:6$83 ($le).
+Removed top 22 bits (of 32) from port B of cell timer_miter.$le$miter.v:6$85 ($le).
+Removed top 15 bits (of 16) from port B of cell timer_miter.$flatten\old.$eq$old.v:33$23 ($eq).
+Removed top 1 bits (of 33) from port A of cell timer_miter.$flatten\old.$add$old.v:17$4 ($add).
+Removed top 1 bits (of 33) from port B of cell timer_miter.$flatten\old.$add$old.v:17$4 ($add).
+Removed top 31 bits (of 32) from port B of cell timer_miter.$flatten\old.$add$old.v:16$2 ($add).
+Removed top 15 bits (of 16) from port B of cell timer_miter.$flatten\new.$eq$new.v:33$139 ($eq).
+Removed top 1 bits (of 33) from port A of cell timer_miter.$flatten\new.$add$new.v:21$124 ($add).
+Removed top 1 bits (of 33) from port B of cell timer_miter.$flatten\new.$add$new.v:21$124 ($add).
+Removed top 6 bits (of 16) from mux cell timer_miter.$flatten\new.$ternary$new.v:18$120 ($mux).
+Removed top 6 bits (of 16) from mux cell timer_miter.$flatten\new.$ternary$new.v:17$117 ($mux).
+Removed top 6 bits (of 16) from mux cell timer_miter.$flatten\new.$ternary$new.v:16$114 ($mux).
+Removed top 1 bits (of 2) from port B of cell timer_miter.$flatten\new.$eq$new.v:16$112 ($eq).
+Removed top 6 bits (of 64) from wire timer_miter.nt.
+
+4.10. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+4.11. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.12. Executing OPT pass (performing simple optimizations).
+
+4.12.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+4.12.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+Removed a total of 0 cells.
+
+4.12.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+
+4.12.4. Finished fast OPT passes.
+
+4.13. Printing statistics.
+
+=== timer_miter ===
+
+   Number of wires:                243
+   Number of wire bits:           2719
+   Number of public wires:          73
+   Number of public wire bits:    1152
+   Number of ports:                  9
+   Number of port bits:            100
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                203
+     $add                            5
+     $adff                          17
+     $check                          6
+     $eq                             6
+     $le                             4
+     $logic_and                     19
+     $logic_not                     18
+     $logic_or                       1
+     $mux                          106
+     $ne                             2
+     $not                            1
+     $reduce_bool                    6
+     $reduce_or                      3
+     $scopeinfo                      2
+     $sub                            7
+
+4.14. Executing CHECK pass (checking for obvious problems).
+Checking module timer_miter...
+Found and reported 0 problems.
+
+5. Executing ASYNC2SYNC pass.
+Replacing timer_miter.$flatten\new.$procdff$431 ($adff): ARST=\rst_n, D=$flatten\new.$0\step[0:0], Q=\new.step
+Replacing timer_miter.$flatten\new.$procdff$436 ($adff): ARST=\rst_n, D=$flatten\new.$0\dir[0:0], Q=\new.dir
+Replacing timer_miter.$flatten\new.$procdff$441 ($adff): ARST=\rst_n, D=$flatten\new.$0\count[31:0], Q=\new.count
+Replacing timer_miter.$flatten\new.$procdff$446 ($adff): ARST=\rst_n, D=$flatten\new.$0\timing_fault[0:0], Q=\new.timing_fault
+Replacing timer_miter.$flatten\new.$procdff$451 ($adff): ARST=\rst_n, D=$flatten\new.$0\phase[31:0], Q=\new.phase
+Replacing timer_miter.$flatten\new.$procdff$456 ($adff): ARST=\rst_n, D=$flatten\new.$0\hold_left[9:0], Q=\new.hold_left
+Replacing timer_miter.$flatten\new.$procdff$461 ($adff): ARST=\rst_n, D=$flatten\new.$0\delay_kind[1:0], Q=\new.delay_kind
+Replacing timer_miter.$flatten\new.$procdff$466 ($adff): ARST=\rst_n, D=$flatten\new.$0\delay_left[9:0], Q=\new.delay_left
+Replacing timer_miter.$flatten\old.$procdff$471 ($adff): ARST=\rst_n, D=$flatten\old.$0\step[0:0], Q=\old.step
+Replacing timer_miter.$flatten\old.$procdff$476 ($adff): ARST=\rst_n, D=$flatten\old.$0\dir[0:0], Q=\old.dir
+Replacing timer_miter.$flatten\old.$procdff$481 ($adff): ARST=\rst_n, D=$flatten\old.$0\count[31:0], Q=\old.count
+Replacing timer_miter.$flatten\old.$procdff$486 ($adff): ARST=\rst_n, D=$flatten\old.$0\timing_fault[0:0], Q=\old.timing_fault
+Replacing timer_miter.$flatten\old.$procdff$491 ($adff): ARST=\rst_n, D=$flatten\old.$0\phase[31:0], Q=\old.phase
+Replacing timer_miter.$flatten\old.$procdff$496 ($adff): ARST=\rst_n, D=$flatten\old.$0\high_left[15:0], Q=\old.high_left
+Replacing timer_miter.$flatten\old.$procdff$501 ($adff): ARST=\rst_n, D=$flatten\old.$0\low_left[15:0], Q=\old.low_left
+Replacing timer_miter.$flatten\old.$procdff$506 ($adff): ARST=\rst_n, D=$flatten\old.$0\setup_left[15:0], Q=\old.setup_left
+Replacing timer_miter.$flatten\old.$procdff$511 ($adff): ARST=\rst_n, D=$flatten\old.$0\hold_left[15:0], Q=\old.hold_left
+
+6. Executing OPT pass (performing simple optimizations).
+
+6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+<suppressed ~9 debug messages>
+
+6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+Removed a total of 0 cells.
+
+6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \timer_miter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~47 debug messages>
+
+6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \timer_miter.
+Performed a total of 0 changes.
+
+6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+Removed a total of 0 cells.
+
+6.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $flatten\new.$procdff$431 ($sdff) from module timer_miter (D = $flatten\new.$procmux$288_Y, Q = $auto$async2sync.cc:228:execute$515, rval = 1'0).
+Adding SRST signal on $flatten\new.$procdff$436 ($sdff) from module timer_miter (D = $flatten\new.$procmux$269_Y, Q = $auto$async2sync.cc:228:execute$517, rval = 1'0).
+Adding SRST signal on $flatten\new.$procdff$446 ($sdff) from module timer_miter (D = $flatten\new.$procmux$241_Y, Q = $auto$async2sync.cc:228:execute$521, rval = 1'0).
+Adding SRST signal on $flatten\new.$procdff$451 ($sdff) from module timer_miter (D = \new.sum [31:0], Q = $auto$async2sync.cc:228:execute$523, rval = 0).
+Adding SRST signal on $flatten\new.$procdff$456 ($sdff) from module timer_miter (D = $flatten\new.$procmux$224_Y, Q = $auto$async2sync.cc:228:execute$525, rval = 10'0000000000).
+Adding SRST signal on $flatten\old.$procdff$471 ($sdff) from module timer_miter (D = $flatten\old.$procmux$422_Y, Q = $auto$async2sync.cc:228:execute$531, rval = 1'0).
+Adding SRST signal on $flatten\old.$procdff$476 ($sdff) from module timer_miter (D = $flatten\old.$procmux$403_Y, Q = $auto$async2sync.cc:228:execute$533, rval = 1'0).
+Adding SRST signal on $flatten\old.$procdff$486 ($sdff) from module timer_miter (D = $flatten\old.$procmux$375_Y, Q = $auto$async2sync.cc:228:execute$537, rval = 1'0).
+Adding SRST signal on $flatten\old.$procdff$491 ($sdff) from module timer_miter (D = \old.sum [31:0], Q = $auto$async2sync.cc:228:execute$539, rval = 0).
+Adding SRST signal on $flatten\old.$procdff$496 ($sdff) from module timer_miter (D = $flatten\old.$procmux$358_Y, Q = $auto$async2sync.cc:228:execute$541, rval = 16'0000000000000000).
+Adding SRST signal on $flatten\old.$procdff$501 ($sdff) from module timer_miter (D = $flatten\old.$procmux$339_Y, Q = $auto$async2sync.cc:228:execute$543, rval = 16'0000000000000000).
+Adding SRST signal on $flatten\old.$procdff$511 ($sdff) from module timer_miter (D = $flatten\old.$procmux$319_Y, Q = $auto$async2sync.cc:228:execute$547, rval = 16'0000000000000000).
+
+6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+Removed 21 unused cells and 30 unused wires.
+<suppressed ~22 debug messages>
+
+6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+6.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+6.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \timer_miter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~45 debug messages>
+
+6.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \timer_miter.
+Performed a total of 0 changes.
+
+6.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+<suppressed ~33 debug messages>
+Removed a total of 11 cells.
+
+6.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+Removed 0 unused cells and 11 unused wires.
+<suppressed ~1 debug messages>
+
+6.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+6.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+6.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \timer_miter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~45 debug messages>
+
+6.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \timer_miter.
+Performed a total of 0 changes.
+
+6.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\timer_miter'.
+Removed a total of 0 cells.
+
+6.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \timer_miter..
+
+6.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module timer_miter.
+
+6.23. Finished OPT passes. (There is nothing left to do.)
+
+7. Executing SAT pass (solving SAT problems in the circuit).
+
+Setting up time step 1:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+Final init constraint equation: { $auto$async2sync.cc:228:execute$545 $auto$async2sync.cc:228:execute$535 $auto$async2sync.cc:228:execute$529 $auto$async2sync.cc:228:execute$527 $auto$async2sync.cc:228:execute$519 $auto$async2sync.cc:228:execute$547 $auto$async2sync.cc:228:execute$543 $auto$async2sync.cc:228:execute$541 $auto$async2sync.cc:228:execute$539 $auto$async2sync.cc:228:execute$537 $auto$async2sync.cc:228:execute$533 $auto$async2sync.cc:228:execute$531 $auto$async2sync.cc:228:execute$525 $auto$async2sync.cc:228:execute$523 $auto$async2sync.cc:228:execute$521 $auto$async2sync.cc:228:execute$517 $auto$async2sync.cc:228:execute$515 } = 220'0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+Setting up time step 2:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+
+Setting up time step 3:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+
+Setting up time step 1:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:11$101_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:12$106_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:13$111_Y when 1'1.
+Import proof for assert: $logic_and$miter.v:7$94_Y when 1'1.
+Import proof for assert: $eq$miter.v:9$96_Y when 1'1.
+
+** Trying induction with length 1 **
+
+Setting up time step 4:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:11$101_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:12$106_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:13$111_Y when 1'1.
+Import proof for assert: $logic_and$miter.v:7$94_Y when 1'1.
+Import proof for assert: $eq$miter.v:9$96_Y when 1'1.
+
+[base case 1] Solving problem with 178653 variables and 495219 clauses..
+Base case for induction length 1 proven.
+
+Setting up time step 2:
+Final constraint equation: { } = { }
+Import def constraint for this timestep: \stop
+Import def constraint for this timestep: \rst_n
+Import def constraint for this timestep: \enable
+Import def constraint for this timestep: \clk
+Import def constraint for this timestep: \hold_ticks
+Import def constraint for this timestep: \space_ticks
+Import def constraint for this timestep: \pulse_ticks
+Import def constraint for this timestep: \setup_ticks
+Import def constraint for this timestep: \rate
+Imported 209 cells to SAT database.
+Import constraint from assume cell: $logic_and$miter.v:6$86_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:11$101_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:12$106_Y when 1'1.
+Import proof for assert: $logic_not$miter.v:13$111_Y when 1'1.
+Import proof for assert: $logic_and$miter.v:7$94_Y when 1'1.
+Import proof for assert: $eq$miter.v:9$96_Y when 1'1.
+
+[induction step 1] Solving problem with 86364 variables and 238615 clauses..
+Induction step proven: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+

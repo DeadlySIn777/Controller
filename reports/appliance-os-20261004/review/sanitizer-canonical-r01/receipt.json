@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "utc": "2026-10-04T11:29:11.242977+00:00",
+  "status": "SCOPED_PASS",
+  "review_type": "Read-only independent receipt/source/build-script/log inspection; no tests rerun",
+  "reviewed_receipt_sha256": {
+    "receipt.json": "54cc3db31d5dbc09ff38145ef17ee7ce4e0d55e6e39de7f0296b001ef950a0df",
+    "sanitizer-r01/receipt.json": "fe76c523bddf51ff23ea63cf65c4bda69fdba9eca573c855318e94d2fb038947",
+    "sanitizer-r02/receipt.json": "9a8f7c71b7e33d410ee705e0355db6949f1e943b844085c0dea11e503d71202d",
+    "sanitizer-reader-strict-r01/receipt.json": "fd364edd8d560d420050f1a87a5236dac5d090fc3111ddaa8d6f94f43d4f0b25"
+  },
+  "host_readme_sha256": "d83aaa06a41140a24702084d31aa02a309144cb147e10d952b281b1c09fc33b3",
+  "results": {
+    "receipt.json": {
+      "status": "PASS",
+      "current_sources": {
+        "count": 71,
+        "mismatches": []
+      },
+      "artifact_hashes": {
+        "count": 176,
+        "mismatches": []
+      },
+      "orchestration_hashes": {
+        "count": 0,
+        "mismatches": []
+      }
+    },
+    "sanitizer-r01/receipt.json": {
+      "status": "FAIL",
+      "current_sources": {
+        "count": 71,
+        "mismatches": []
+      },
+      "artifact_hashes": {
+        "count": 79,
+        "mismatches": []
+      },
+      "orchestration_hashes": {
+        "count": 0,
+        "mismatches": []
+      }
+    },
+    "sanitizer-r02/receipt.json": {
+      "status": "PASS",
+      "current_sources": {
+        "count": 71,
+        "mismatches": []
+      },
+      "artifact_hashes": {
+        "count": 79,
+        "mismatches": []
+      },
+      "orchestration_hashes": {
+        "count": 3,
+        "mismatches": []
+      }
+    },
+    "sanitizer-reader-strict-r01/receipt.json": {
+      "status": "PASS",
+      "current_sources": {
+        "count": 71,
+        "mismatches": []
+      },
+      "artifact_hashes": {
+        "count": 2,
+        "mismatches": []
+      },
+      "orchestration_hashes": {
+        "count": 2,
+        "mismatches": []
+      }
+    },
+    "bindings": {
+      "san_receipt": true,
+      "strict_receipt": true,
+      "compile_receipt": true,
+      "runtime_readme": true,
+      "copied_compiled_binaries": true,
+      "all_four_execution_exits_zero": true,
+      "strict18_no_diagnostics": true
+    }
+  },
+  "confirmed_scope": {
+    "current_compiled_driver_SPI_RTL_plant_ASan_UBSan_checks": 374,
+    "strict_compiled_reader_controls": 18,
+    "leak_detection_enabled": true,
+    "NML_HAL_rerun": false,
+    "physical_authority": false,
+    "full_requested_milestone_complete": false
+  },
+  "limits": [
+    "First sanitizer-r01 compiled successfully but its execution failed due absent namespace proc for LeakSanitizer; preserved as failure.",
+    "r02 reuses hash-identical sanitized binaries with fresh configuration/source verification and namespace proc.",
+    "Strict reader controls require exact ACCEPTED/REFUSED, exit0/1 and empty stderr; crashes cannot be treated as expected refusals.",
+    "Does not qualify all possible memory behavior, hardware, real-time deadlines, Cartesian/G-code/sensor homing, Efinity fit/timing or target OS."
+  ],
+  "findings": []
+}

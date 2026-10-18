@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "status": "INCOMPLETE",
+  "input_sha256": {
+    "reports\\pre-hardware-characterization-20261001\\stepgen12-sweep-r02\\receipt.json": "36a7d492c666d41c69f0f272890eb25497df50917e12a068fc820724261c74aa",
+    "reports\\pre-hardware-characterization-20261001\\stepgen12-mutation-controls-r02\\receipt.json": "1c5fb6825fd8c9faa3fb30a916f6fa231a43760ccbc453c33df5363159fb710d",
+    "reports\\motherboard-pcb-integration-20261001\\source26-BankA-health-U25-C19033-merged-trial-r101\\adoption.json": "9a7f90700c2b5105fea8a4343bada60b796400c254d1a1d495c6abc569e1a8bd",
+    "hardware\\motherboard\\design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "research\\user-notes\\2026-10-01-pre-hardware-characterization.txt": "982baefc9eb08d367ef32536883120ff0634b1fadd7a408da6965e53bfa303e0",
+    "research\\user-notes\\2026-10-01-virtual-machine-bench.txt": "9ace66a1419070de23c10e7c762ff263d9afabbde5259fd088ad587b495acce4",
+    "reports\\pre-hardware-characterization-20261001\\build_characterization_register_r01.py": "3dbc2d39c1fd2353151ff6800824b40b099bcb53847b91edfb44998cb3832108",
+    "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\report.json": "a80f9b327e515f8167149841b3803107c5052d4dabb0ad13e1b09322d4bf0d3c",
+    "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\isolated_stepgen12_dynamic-evidence\\receipt.json": "46da25cf8e67fd6f425a6e3a3b600badacaf0f11e52ea695b15599a75541d84f",
+    "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\isolated_encoder4_sweep-evidence\\receipt.json": "5ab99eb46733958f52a94a9aa0655ea0f50fe312c7e785a46d6df1c169008af4",
+    "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\cnc3-structural-RTL-evidence\\receipt.json": "3610b376dc16d2fa98a7a553549f7a769d04f3fef1d93fc036eb36f65d1ff7cb",
+    "reports\\pre-hardware-characterization-20261001\\analog-simulation-summary-r01\\receipt.json": "be0ebd4eaed0d5399f2359fe740cf79021d4bde14e40aeb840980b44a6c36543",
+    "reports\\motherboard-return-zoning-20261001\\ROOT101-two-same-side-bypass-restored-r06\\adoption.json": "4049be1426b2098b84885ce30b5593d7960adc30da940f3e61a93af65aeb8864",
+    "reports\\motherboard-pcb-integration-20261001\\two-cap-full-drill-SMD-audit-r01\\receipt.json": "aa300a1bf50844994c2852197e6f8dc51c7a21cfde707e326231024b12fce75d",
+    "reports\\pre-hardware-characterization-20261001\\characterization-register-r01\\requirements-and-coverage.json": "d49dd74f570e22768d053b11d891cf03b6eb7f137b88578b6fd6bc8b9d39d0b5",
+    "reports\\pre-hardware-characterization-20261001\\characterization-register-r01\\provisional-datasheet.json": "29208dc422181926d6086a61241eb64355d58f32a155c935fa21295bd69fb2f4",
+    "reports\\pre-hardware-characterization-20261001\\build_characterization_register_r02.py": "5942c71777e851ad9233260f92700cbb3c80edab7d158339080312900959a950"
+  },
+  "adopted_source_revision": 26,
+  "adopted_PCB_revision": 102,
+  "actual_footprints": 2688,
+  "required_remaining_joins": 3524,
+  "manufacturing_ready": false,
+  "accepted_user_requirements": {
+    "no_architecture_restart": true,
+    "one_custom_board": true,
+    "source_notes": [
+      "research\\user-notes\\2026-10-01-pre-hardware-characterization.txt",
+      "research\\user-notes\\2026-10-01-virtual-machine-bench.txt"
+    ],
+    "pre_fabrication_characterization_required": true,
+    "full_automated_virtual_bench_required": true,
+    "physical_qualification_separate": true
+  },
+  "evidence_types": [
+    "SOURCE_INSPECTION",
+    "HOST_TEST",
+    "TARGET_COMPILE",
+    "HDL_SIMULATION",
+    "TECHNOLOGY_MAPPING",
+    "VENDOR_FIT_TIMING",
+    "CIRCUIT_ERC",
+    "PCB_DRC",
+    "PHYSICAL_MEASUREMENT",
+    "SPICE_COMPONENT_SIMULATION"
+  ],
+  "labels": [
+    "DESIGN LIMIT",
+    "SIMULATED LIMIT",
+    "DATASHEET LIMIT",
+    "PHYSICAL VALIDATION REQUIRED"
+  ],
+  "sweep_policy": {
+    "levels": [
+      "nominal",
+      "proposed rated maximum",
+      "+10%",
+      "+20%",
+      "+50%",
+      "first observed failure or component hard limit"
+    ],
+    "component_absolute_maximum_is_not_operating_rating": true,
+    "do_not_exceed_hard_limits_in_physical_trials": true,
+    "missing_models_fail_closed": true,
+    "seed_and_model_versions_required": true,
+    "report_unreached_boundary_as_lower_bound_only": true,
+    "physical_rating_rule": "Every accepted operating profile must satisfy the weakest modeled and physically qualified limit. An internal RTL limit cannot authorize a drive timing or current rating."
+  },
+  "corners": {
+    "required": [
+      "exact MPN and source pin binding",
+      "declared voltage min/nom/max",
+      "declared ambient/junction range",
+      "component tolerance and timing extrema",
+      "startup/partial-power sequence",
+      "min/max receiver/load/cable",
+      "simultaneous subsystem load"
+    ],
+    "values": "Unspecified ranges remain missing requirements/model inputs; do not silently use generic 12/24 V or -40/+85 C assumptions.",
+    "monte_carlo": "Declare distributions, correlations, seeds and sample counts; Monte Carlo does not replace worst-case extrema."
+  },
+  "subsystems": [
+    {
+      "id": "STEP",
+      "name": "Twelve simultaneous STEP/DIR generators",
+      "required_method": "Twelve actual unchanged cnc_stepgen instances: fixed positive/negative segments, all emitted-edge/count comparisons, pulse high/low, safe DDS boundary and first adversarial failure",
+      "status": "PARTIAL",
+      "remaining_engineering": "Actual twelve-generator steady and changing independent rate/reversal/stop fixtures pass. Complete stateful CNC3/HAL integration, configured runtime timing, drive/cable/load corners and vendor timing remain open.",
+      "physical_qualified_limit": null,
+      "latest_component_evidence": "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\isolated_stepgen12_dynamic-evidence\\receipt.json",
+      "complete_subsystem_qualified": false
+    },
+    {
+      "id": "ENCODER",
+      "name": "Four base ABZ paths, expansion toward twelve",
+      "required_method": "Sweep full receiver/filter/synchronizer/counter chain by quadrature EDGE rate, both directions, duty/phase extremes, Z gating, illegal transitions, unplug and noisy inputs",
+      "status": "PARTIAL",
+      "remaining_engineering": "Four unchanged actual encoder instances tested at ideal digital boundaries, with index-at-rest and illegal-transition checks. Receiver/cable/filter/metastability, duty-cycle extremes, full controller integration and vendor timing remain open.",
+      "physical_qualified_limit": null,
+      "latest_component_evidence": "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\isolated_encoder4_sweep-evidence\\receipt.json",
+      "complete_subsystem_qualified": false
+    },
+    {
+      "id": "SPI",
+      "name": "Host and local I/O transports",
+      "required_method": "Sweep clock, CS framing, duty cycle and turnaround with independent clocks, latency, jitter, corruption, stale/repeated/partial frames and all lanes active",
+      "status": "PARTIAL",
+      "remaining_engineering": "Actual CNC3 dual-CS transport, structural validator, atomic queue and response packers pass real serial/CRC/timing cases and independent C codec comparisons. Stateful motion/safety endpoint, HAL, target timing and routed electrical chain remain open.",
+      "physical_qualified_limit": null,
+      "latest_component_evidence": "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\cnc3-structural-RTL-evidence\\receipt.json",
+      "complete_subsystem_qualified": false
+    },
+    {
+      "id": "SERVO",
+      "name": "1 kHz target with 700 us completion budget",
+      "required_method": "Actual LinuxCNC/CNC3 HAL through Verilated actual FPGA; record complete exchange age and missed deadlines under display/CAD/storage/network/ESP load",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Historical CNC1 six/two evidence is separate; host simulation cannot qualify target PREEMPT_RT jitter",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "DIGITAL_INPUT",
+      "name": "24 DI plus alarms and fast inputs",
+      "required_method": "Source-extracted thresholds/delay/hysteresis at voltage, tolerance and temperature corners; NPN/PNP profiles only where the actual circuit supports them",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Source26 block-specific models and declared corner ranges needed",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "PROBE",
+      "name": "Probe, toolsetter and frequency capture",
+      "required_method": "Asynchronous phase/rate sweep with full motion/IO; exact capture-cycle, synchronizer delay, debounce, loss/validity and inhibit interactions",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Full FPGA endpoint/event transport and source-bound input models needed",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "OUTPUT",
+      "name": "16 TPS274C65ASRHAR outputs",
+      "required_method": "DC/pulsed/inductive loads, open load, shorts, supply faults and simultaneous banks; current sense tolerance, channel limit and disable propagation",
+      "status": "NOT_RUN",
+      "remaining_engineering": "0.5 A/channel and 2 A/four-channel bank are design limits, not demonstrated ampacity; accurate protected-switch models needed",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "POWER",
+      "name": "Power entry and actual rail distribution",
+      "required_method": "Per-source converter/load models; ramp order/rate, dip duration/depth, partial power, backfeed, hot/cold tolerance, inrush, short/fuse recovery and remote load steps",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Final routes/copper/cooling and validated component models needed; net names are not fabricated voltage limits",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "WATCHDOG",
+      "name": "Independent permission removal <=20 ms",
+      "required_method": "Actual dual watchdog/reset/latch/driver chain across tolerance/voltage/temperature; clock halt, link loss, reset, brownout and stuck progress; no autonomous restart",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Source27 known slow-input/reset corrections must be integrated and routed before full-circuit claim; 14.12402 ms conditional budget is not measured bound",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "ANALOG",
+      "name": "Analog inputs and process/0-10 V outputs",
+      "required_method": "Gain/offset/reference/divider/ADC/DAC errors, input impedance, saturation, settling, crosstalk, open/short sensor, temperature corners and declared-distribution Monte Carlo",
+      "status": "PARTIAL",
+      "remaining_engineering": "96 actual source-bound passive filter cases and12 simultaneous four-channel manufacturer OPA buffer model cases pass. INA149 full-chain model convergence failed; ADC manufacturer model is encrypted TINA. Upstream/reference/power boundaries remain ideal,ADC load approximated; full analog accuracy/fault/corner qualification open.",
+      "physical_qualified_limit": null,
+      "latest_component_evidence": "reports\\pre-hardware-characterization-20261001\\analog-simulation-summary-r01\\receipt.json",
+      "complete_subsystem_qualified": false
+    },
+    {
+      "id": "COMMUNICATIONS",
+      "name": "CAN, RS-485, ESP and expansion",
+      "required_method": "Concurrent traffic, bus contention/loss, supply isolation, stale identity/data, disconnect/reconnect and missing modules with permissions safe",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Existing isolated host/IOL1/ESP tests are partial evidence, not complete physical bus qualification",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "THERMAL",
+      "name": "FPGA, converters, output banks and enclosure",
+      "required_method": "Source-bound power estimator, switching activity, copper loss and thermal model under simultaneous maximum allowed loads at specified ambient/airflow",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Vendor power estimator, final copper, enclosure/cooling and component dissipation models missing",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "SIGNAL_INTEGRITY",
+      "name": "STEP/DIR cable and high-speed traces",
+      "required_method": "Actual extracted layer/length/via/return geometry, transmitter/receiver and cable/load models at corner edge rates; reflection, crosstalk and timing margins",
+      "status": "NOT_RUN",
+      "remaining_engineering": "Board still has3524required joins; actual final stackup, extracted copper and selected receiver/cable models are not complete.",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "FULL_LOAD",
+      "name": "All features active together",
+      "required_method": "Twelve motors, four base and any qualified expansion encoders, 24 DI, 16 DO within bank limits, analog, CAN/RS-485, display rendering/CAD, network/storage and ESP radios",
+      "status": "NOT_RUN",
+      "remaining_engineering": "No assembled full virtual controller yet; report servo/SPI/resource/power/temperature denominators together",
+      "physical_qualified_limit": null
+    },
+    {
+      "id": "UX",
+      "name": "Blank setup through fault and recovery",
+      "required_method": "Detect compute, offline provision, validated hardware profile, CAD or no-CAD setup, kinematics, wiring, home/jog/G-code, injected fault, deterministic diagnosis/recovery through shared UI/CLI service",
+      "status": "NOT_RUN",
+      "remaining_engineering": "File-only configuration/host tests are not complete UX acceptance; unsupported machine types remain explicitly unavailable",
+      "physical_qualified_limit": null
+    }
+  ],
+  "virtual_plant": {
+    "parameters": [
+      "steps/rev",
+      "microsteps",
+      "screw lead",
+      "gear ratio",
+      "travel",
+      "acceleration",
+      "backlash"
+    ],
+    "input": "Actual emitted STEP/DIR edges",
+    "outputs": [
+      "ABZ",
+      "home",
+      "limits",
+      "drive alarms",
+      "probe",
+      "spindle encoder",
+      "frequency inputs"
+    ],
+    "faults": [
+      "missed steps",
+      "encoder count disagreement",
+      "reversed motor",
+      "reversed encoder",
+      "gantry side lag",
+      "limit switch stuck",
+      "home switch never triggers",
+      "excessive following error",
+      "backlash",
+      "unachievable acceleration"
+    ],
+    "status": "NOT_IMPLEMENTED",
+    "no_circular_oracle": true
+  },
+  "motion_scenarios": [
+    "all12 low speed",
+    "all12 100kHz",
+    "all12 500kHz",
+    "all12 1MHz",
+    "all12 proposed2MHz",
+    "changing independent velocities",
+    "all channels reversing",
+    "multiple gantry pairs",
+    "concurrent encoders",
+    "probe during maximum motion",
+    "full I/O traffic"
+  ],
+  "fault_injection": {
+    "cases": [
+      "LinuxCNC crash",
+      "servo-thread stall",
+      "SPI stops",
+      "CS stuck low",
+      "MOSI stuck high",
+      "MISO disconnected",
+      "CRC corruption",
+      "repeated/stale packet",
+      "FPGA reset",
+      "FPGA clock stall",
+      "compute reboot",
+      "ESP reboot",
+      "module removed",
+      "encoder unplugged",
+      "drive alarm",
+      "watchdog timeout",
+      "24 V brownout",
+      "slow power-up",
+      "3.3 V dip",
+      "output short",
+      "output open-load",
+      "analog sensor open circuit"
+    ],
+    "required_assertions": [
+      "fault detected with valid time source",
+      "covered output permissions removed within specified electrical bound",
+      "no new motion pulses after declared inhibit propagation",
+      "actual emitted position and homing validity handled",
+      "no automatic restart"
+    ],
+    "randomized_runs": "Seeded repeatable thousands of combinations and long-duration runs after actual integration; retain failing seeds/traces. No claim that overnight runs have occurred."
+  },
+  "machine_profiles": [
+    {
+      "name": "3-axis mill",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "dual-Y router",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "4-axis mill",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "5-axis trunnion",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "lathe",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "mill-turn",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "plasma table",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "6-axis robot",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "12-joint test machine",
+      "status": "NOT_RUN"
+    }
+  ],
+  "toolchain_gates": {
+    "CNC3_HAL_and_actual_RTL": "STRUCTURAL_RTL_PASS_STATEFUL_HAL_MACHINE_INCOMPLETE",
+    "ngspice_and_validated_models": "NGSPICE_AND_SELECTED_PASSIVE_BUFFER_MODELS_PASS_COMPLETE_CHAIN_BLOCKED",
+    "Efinity_T20F256_fit_and_STA": "MISSING_VENDOR_TOOL_AND_FULL_BINDING",
+    "physical_validation": "NOT_RUN"
+  },
+  "measured_hardware_ratings": {},
+  "hardware_qualification_performed": false,
+  "current_board_sha256": "769541d11876ea0050240ec065f6b0b85bff19c7c8324f1c26b9b637212a8af5",
+  "latest_disconnected_full_run": "reports\\pre-hardware-validation-20261001\\full-two-cap-r05\\report.json",
+  "full_bench_counts": {
+    "BLOCKED": 9,
+    "NOT_RUN": 1,
+    "PASS": 17
+  },
+  "latest_source_hashes_unchanged": true,
+  "current_assembly_findings": {
+    "positive_drill_land_overlaps": 279,
+    "unique_drilled_vias": 275,
+    "foreign_net_overlaps": 0,
+    "exact_tangency_excluded_by_native_zero_clearance": true,
+    "lower_bound_only": true,
+    "qualified_process_disposition": false
+  }
+}

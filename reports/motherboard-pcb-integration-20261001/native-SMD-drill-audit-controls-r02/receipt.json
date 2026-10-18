@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "label": "inside",
+      "angle": 0,
+      "center_mm": [
+        0,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "label": "edge_overlap",
+      "angle": 0,
+      "center_mm": [
+        0.59,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "label": "outside_10um",
+      "angle": 0,
+      "center_mm": [
+        0.61,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "label": "exact_tangent_excluded_by_native_zero_clearance",
+      "angle": 0,
+      "center_mm": [
+        0.6,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "label": "rotated_overlap",
+      "angle": 90,
+      "center_mm": [
+        0,
+        0.59
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "label": "rotated_clear",
+      "angle": 90,
+      "center_mm": [
+        0.59,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0,
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "label": "tangent_detected_by_explicit_gap_screen",
+      "angle": 0,
+      "center_mm": [
+        0.6,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0.15,
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "label": "gap140um_below150um",
+      "angle": 0,
+      "center_mm": [
+        0.74,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0.15,
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "label": "gap160um_above150um",
+      "angle": 0,
+      "center_mm": [
+        0.76,
+        0
+      ],
+      "drill_mm": 0.2,
+      "requested_gap_mm": 0.15,
+      "expected": false,
+      "actual": false,
+      "passed": true
+    }
+  ],
+  "input_sha256": {
+    "reports\\motherboard-pcb-integration-20261001\\two-cap-full-drill-SMD-audit-r01\\receipt.json": "aa300a1bf50844994c2852197e6f8dc51c7a21cfde707e326231024b12fce75d",
+    "reports\\motherboard-pcb-integration-20261001\\audit_actual_SMD_drill_intersections_r01.py": "15d7606fbf22284e34c5b2ff31a2c35cc8ff8e8a8d3e162e2b8f6fe02a440686",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-pcb-integration-20261001\\check_native_SMD_drill_screen_r02.py": "00421bf8d4e58060fa7baeebef702e358a84347f08c0350cac6da4c888ffc941"
+  },
+  "scope": "Positive-area native drill/SMD collisions are identified. Exact tangent is NOT identified at zero clearance: first attempted expectation was wrong and is retained separately. A manufacturing registration-clearance guard must additionally use an explicit process-qualified gap.",
+  "previous_attempt": "native-SMD-drill-audit-controls-r01: five expected controls matched, exact tangency expectation failed; no PCB/source changes.",
+  "original_audit_279_is_lower_bound_for_assembly_clearance_screen": true,
+  "physical_qualification": false
+}

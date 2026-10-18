@@ -1,0 +1,49 @@
+import sys,json,hashlib,shutil,math,subprocess
+from pathlib import Path
+sys.path.insert(0,str(Path('tools').resolve()))
+import pcbnew
+from hardware_fix_motor_receiving_heads_native import FastGeometry
+from hardware_route_logic_return import mm,xy,identity,pad_identity
+from hardware_route_local_signals import paths,GeometryIndex
+from hardware_build_assembly import parse,child,value
+from hardware_merge_bounded_pcb_delta import dump_board,without_generated_fills
+B=Path('reports/motherboard-power-entry-20261001/Source27-reset-native-population-r400/motherboard-staged-Source27-reset-unrouted-candidate.kicad_pcb');O=Path('reports/motherboard-power-entry-20261001/Source27-reset-local-route-r408');assert not O.exists();O.mkdir()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+frozen={str(p):sha(p)for p in[B,Path(__file__)]};b0=pcbnew.LoadBoard(str(B));b0.BuildConnectivity();ps0={(p.GetParentFootprint().GetReference(),p.GetNumber()):p for p in b0.GetPads()if p.GetNumber()};ret=set()
+for bank,latch in[('A','U11032'),('B','U11034')]:
+ p=ps0[latch,'6'];slow='/motherboard_power_entry/MOTOR_FEED_CLEAR_N_'+bank
+ for t in b0.GetTracks():
+  if t.GetNetname()==slow and (p.HitTest(t.GetStart())or p.HitTest(t.GetEnd())):ret.add(t.m_Uuid.AsString())
+assert ret;tree=parse(without_generated_fills(B.read_text()));tree=[x for x in tree if not(isinstance(x,list)and x and x[0]in['segment','via']and value(child(x,'uuid')[1])in ret)];temp=O/'old-two-CLR-terminal-retired.kicad_pcb';temp.write_text(dump_board(tree));b=pcbnew.LoadBoard(str(temp));ps={(p.GetParentFootprint().GetReference(),p.GetNumber()):p for p in b.GetPads()if p.GetNumber()};g=FastGeometry(b);added=[];routes=[];alive=[]
+def debug():pcbnew.SaveBoard(str(O/'debug.kicad_pcb'),b);(O/'debug.json').write_text(json.dumps(dict(retired=sorted(ret),routes=routes,new_Cu=added),indent=2))
+def route(s,e,n,l,role,width=.25):
+ pts=next((p for p in paths(s,e)if g.clear(p,n,l,width)),None)
+ if pts is None:pts=g.grid(s,e,n,l,width,step=.20,padding=8,max_nodes=45000)
+ if pts is None:debug();raise AssertionError(('Route',role,s,e,n,b.GetLayerName(l)))
+ ids=[]
+ for a,c in zip(pts,pts[1:]):
+  if math.dist(a,c)<1e-7:continue
+  t=pcbnew.PCB_TRACK(b);t.SetStart(xy(a));t.SetEnd(xy(c));t.SetLayer(l);t.SetWidth(pcbnew.FromMM(width));t.SetNet(b.FindNet(n));b.Add(t);g.add(t);ids.append(t.m_Uuid.AsString());added.append(dict(uuid=t.m_Uuid.AsString(),identity=identity(t),role=role))
+ routes.append(dict(role=role,net=n,layer=b.GetLayerName(l),points_mm=pts,actual_Cu_UUIDs=ids))
+def pair(r,p,q,k,role,width=.25):
+ a,c=ps[r,str(p)],ps[q,str(k)];assert a.GetNetname()==c.GetNetname(),(role,a.GetNetname(),c.GetNetname());assert a.GetLayer()==c.GetLayer();route(mm(a.GetPosition()),mm(c.GetPosition()),a.GetNetname(),a.GetLayer(),role,width)
+def via(pt,n,role):
+ assert g.clear([pt,pt],n,pcbnew.F_Cu,.50)and g.clear([pt,pt],n,pcbnew.B_Cu,.50),('Via',role,pt)
+ for p in b.GetPads():
+  if p.GetAttribute()!=pcbnew.PAD_ATTRIB_SMD:continue
+  x,y=mm(p.GetPosition());an=math.radians(p.GetOrientationDegrees());dx=pt[0]-x;dy=pt[1]-y;xx=dx*math.cos(an)+dy*math.sin(an);yy=-dx*math.sin(an)+dy*math.cos(an);w,h=mm(p.GetSize());gap=math.hypot(max(abs(xx)-w/2,0),max(abs(yy)-h/2,0))-.10;assert gap>.15+1e-9,('Drill',role,p.GetParentFootprint().GetReference(),p.GetNumber(),gap)
+ v=pcbnew.PCB_VIA(b);v.SetPosition(xy(pt));v.SetWidth(pcbnew.FromMM(.50));v.SetDrill(pcbnew.FromMM(.20));v.SetViaType(pcbnew.VIATYPE_THROUGH);v.SetLayerPair(pcbnew.F_Cu,pcbnew.B_Cu);v.SetNet(b.FindNet(n));v.SetIsFree(True);v.SetRemoveUnconnected(False);b.Add(v);g.add(v);added.append(dict(uuid=v.m_Uuid.AsString(),identity=identity(v),role=role));return v
+for bank,latch,por,sch,cap1,cap2,pd,slowcap,rawcap,sv,gv in[('A','U11032','U11035','U11036','C11089','C11090','R11082','C11082','C11083',(266.85,197.25),(267.7,197.25)),('B','U11034','U11037','U11038','C11091','C11092','R11083','C11085','C11086',(270.35,154.25),(271.2,154.25))]:
+ for p in ['3','5','6']:pair(por,p,cap1,'1',bank+'_POR_RAW_'+p)
+ pair(por,'2',cap1,'2',bank+'_POR_local_Ground')
+ pair(sch,'5',cap2,'1',bank+'_Schmitt_local_RAW');pair(sch,'3',cap2,'2',bank+'_Schmitt_local_Ground')
+ pair(cap1,'1',rawcap,'1',bank+'_POR_actual_existing_RAW_source');pair(cap2,'1',rawcap,'1',bank+'_Schmitt_actual_existing_RAW_source')
+ pair(cap1,'2',rawcap,'2',bank+'_POR_actual_Ground_source');pair(cap2,'2',rawcap,'2',bank+'_Schmitt_actual_Ground_source');pair(pd,'2',cap2,'2',bank+'_FAST_default_Ground')
+ pair(por,'1',slowcap,'1',bank+'_POR_RESET_actual_slow_CLR');pair(sch,'2',slowcap,'1',bank+'_Schmitt_actual_slow_CLR')
+ n=ps[latch,'6'].GetNetname();v=via(sv,n,bank+'_FAST_CLR_actual_transfer');ground=ps[cap2,'2'].GetNetname();vg=via(gv,ground,bank+'_FAST_CLR_actual_return_stitch')
+ route(mm(ps[sch,'4'].GetPosition()),sv,n,pcbnew.B_Cu,bank+'_actual_conditioned_FAST_CLR')
+ route(sv,mm(ps[latch,'6'].GetPosition()),n,pcbnew.F_Cu,bank+'_actual_DFF_FAST_CLR_receive')
+ route(mm(ps[pd,'1'].GetPosition()),mm(ps[sch,'4'].GetPosition()),n,pcbnew.B_Cu,bank+'_actual_missing_conditioner_FAST_default')
+ route(gv,mm(ps[cap2,'2'].GetPosition()),ground,pcbnew.B_Cu,bank+'_FAST_CLR_return_actual_Source')
+debug();print('LOCAL_ROUTES',len(routes),len(added),'old_terminal',len(ret),flush=True)
+

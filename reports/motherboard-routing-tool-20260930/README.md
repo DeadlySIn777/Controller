@@ -1,0 +1,27 @@
+The selected ordinary-signal routing tool is implemented in `tools/hardware_route_selected_additive.py`. It prepares a frozen interchange copy and imports a session into an isolated donor. The donor never replaces the authoritative native PCB. Only reviewed new segments and through vias can be appended; every old copper UUID, full native pad piece, footprint, mechanical drawing, board setting and zone definition must remain exact.
+
+The tool requires an exact board, native project/rule and physical source hash manifest. Every selected net must have its complete source-pin inventory, explicitly reviewed ordinary-logic classification, width, clearance, voltage envelope, routing layers and adjacent same-domain reference layers. Power, switching, precision, high-speed, STEP/DIR, encoder, frequency and PWM paths are excluded from this workflow. It does not choose nets on the engineer's behalf or declare all six layers available.
+
+Partial DSN network declarations include only selected nets. Excluded pads stay in the full native physical library. Old wires and vias are protected netless obstacles in this interchange only. Excluded nominal plane declarations are removed to prevent the router from reintroducing a ground/power job; their actual filled copper on routable layers is converted to fixed keepout polygons with real holes. Original electrical net assignments and all plane definitions remain exact in the authoritative PCB. This is a routing interchange, not a replacement source netlist.
+
+Acceptance runs native KiCad DRC with all track errors, all severities and zone refill, rejects any regular violation or ignored check, validates the complete source population and then runs the independent uncapped copper-cluster inventory. Exact polygon subtraction checks the whole projected route corridor against the actual adjacent filled return, detecting even a narrow slot. This is a necessary geometric check, not measured return impedance, EMC or signal integrity qualification. Through-hole antipads may make this conservative gate reject a viable route; it never dismisses such a failure as qualified. New vias require exact reviewed drill/diameter and real nearby same-domain return stitching; blind/buried or curved additions are outside this implementation.
+
+The final disconnected native fixture is `native-fixture-r05`. It has four resistors, eight electrical pads, eleven retained track/via items, an adjacent In1.Cu return and a real F.Cu ground fill. Both a handcrafted test session and a real local Freerouting 2.4.1 session add three approved F.Cu segments, preserving all eleven old copper items. The final native DRC has zero violations, zero ignored checks and zero unconnected items; independent inventory has zero missing joins and zero orphans. Twenty-one destructive-mutation tests passed. Four native return cases passed, including rejection of a 10 µm slot, a wrong field return and an absent reference layer.
+
+The router's interchange log still reports fourteen violations caused by protected netless conductor/pad/filled-copper obstacle overlap. The log is retained without suppression; it is not cited as a clean router DRC. The authoritative native geometry after the additive merge passes actual KiCad DRC. The first four fixture iterations are retained as development evidence. A raw unsaved-board zone-fill attempt exited without a usable file, so the fixture now uses a saved native project and CLI refill. A later real-router experiment exposed and fixed the excluded nominal-plane net recreation; the final router now starts with exactly the one selected net and finishes with zero unrouted selected items.
+
+Primary code reviewed and archived under `primary/` is the exact Freerouting v2.4.1 [Wiring parser](https://github.com/freerouting/freerouting/blob/v2.4.1/src/main/java/app/freerouting/io/specctra/parser/Wiring.java), [NetClass parser](https://github.com/freerouting/freerouting/blob/v2.4.1/src/main/java/app/freerouting/io/specctra/parser/NetClass.java), [Network layer selection](https://github.com/freerouting/freerouting/blob/v2.4.1/src/main/java/app/freerouting/io/specctra/parser/Network.java), and [GlobalSettings](https://github.com/freerouting/freerouting/blob/v2.4.1/src/main/java/app/freerouting/settings/GlobalSettings.java). Native SES behavior was checked against [KiCad's importer](https://docs.kicad.org/doxygen/specctra__import_8cpp_source.html). The local fixture command disables GUI, telemetry and analytics and does not upload a controller board.
+
+Run preparation using KiCad's Python:
+
+```
+hardware_route_selected_additive.py prepare --board <frozen.pcb> --design <frozen-design.json> --netlist <frozen-netlist.xml> --manifest <reviewed-manifest.json> --out <new-report-folder>
+```
+
+The manifest structure is demonstrated in `native-fixture-r05/manifest.json`. The local offline router argv is preserved in `native-fixture-r05/router-argv.json`; its paths are fixture-specific. Import the produced session with:
+
+```
+hardware_route_selected_additive.py import --prepared <prepared-report-folder> --session <session.ses> --out <new-report-folder>
+```
+
+All reports are immutable new directories. There is no live publication or controller/source mutation. No complete motherboard has been routed with this helper yet, no final stackup or manufacturing export was produced, and the controller is not claimed manufacture-ready.

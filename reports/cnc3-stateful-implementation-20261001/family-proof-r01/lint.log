@@ -1,0 +1,138 @@
+%Warning-PINCONNECTEMPTY: cnc3_motion_spi.v:55:903: Instance pin connected by name with empty reference: 'request_ready'
+                          ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.048
+                          ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:79:26: Operator ASSIGNW expects 12 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+                                              : ... note: In instance 'cnc3_motion_spi.state_machine'
+   79 |  wire [11:0] cmd_required=request_frame[1263 -: 16];
+      |                          ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.048
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:81:30: Operator ASSIGNW expects 12 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+                                              : ... note: In instance 'cnc3_motion_spi.state_machine'
+   81 |  wire [11:0] cmd_enc_required=request_frame[383 -: 16];
+      |                              ^
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:160:17: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'test_age' generates 20 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  160 |      if(test_age+1'b1>=TEST_MIN_TICKS && test_age+1'b1<=TEST_MAX_TICKS)begin
+      |                 ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.048
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:160:50: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'test_age' generates 20 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  160 |      if(test_age+1'b1>=TEST_MIN_TICKS && test_age+1'b1<=TEST_MAX_TICKS)begin
+      |                                                  ^
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:164:25: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'test_age' generates 20 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  164 |     end else if(test_age+1'b1>=TEST_MAX_TICKS)begin
+      |                         ^
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:176:23: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'arming_age' generates 10 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  176 |     else if(arming_age>=ARM_SETTLE_TICKS-1)fault_cut(F_STUCK);
+      |                       ^~
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:185:23: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'disarm_age' generates 10 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  185 |     else if(disarm_age>=OPI_DROP_TICKS-1)begin disarm_proof<=0;fault_cut(F_STUCK);end
+      |                       ^~
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:201:50: Operator ASSIGNDLY expects 12 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+                                               : ... note: In instance 'cnc3_motion_spi.state_machine'
+  201 |       required_mask<=cmd_required;alarm_trip_mask<=request_frame[1247 -:16];
+      |                                                  ^~
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:202:26: Operator ASSIGNDLY expects 12 bits on the Assign RHS, but Assign RHS's SEL generates 16 bits.
+                                               : ... note: In instance 'cnc3_motion_spi.state_machine'
+  202 |       alarm_on_no_current<=request_frame[1231 -:16];expected_module_class<=cmd_class;
+      |                          ^~
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:210:67: Operator ASSIGNDLY expects 4 bits on the Assign RHS, but Assign RHS's SEL generates 8 bits.
+                                               : ... note: In instance 'cnc3_motion_spi.state_machine'
+  210 |       required_encoder_mask<=cmd_enc_required;encoder_filter_ticks<=request_frame[391 -:8];
+      |                                                                   ^~
+%Warning-WIDTHTRUNC: cnc3_motion_state.v:236:35: Operator ASSIGNDLY expects 16 bits on the Assign RHS, but Assign RHS's DIV generates 32 bits.
+                                               : ... note: In instance 'cnc3_motion_spi.state_machine'
+  236 |       else last_update_interval_us<=(ticks-last_update_tick)/50;
+      |                                   ^~
+%Warning-WIDTHEXPAND: cnc3_motion_state.v:281:36: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'watchdog_age' generates 18 bits.
+                                                : ... note: In instance 'cnc3_motion_spi.state_machine'
+  281 |    if(armed_mask!=0 && watchdog_age>=WATCHDOG_TICKS-1 && !(request_valid && op==8'h03 && next_sequence && mask==armed_mask && !stopping && fault_word==0 && request_frame[895 -:240]==0))fault_cut(F_WATCHDOG);
+      |                                    ^~
+%Warning-BLKSEQ: cnc3_motion_state.v:140:78: Blocking assignment '=' in sequential logic process
+                                           : ... note: In instance 'cnc3_motion_spi.state_machine'
+                                           : ... Suggest using delayed assignment '<='
+  140 |    last_update_interval_us<=0;late_update_count<=0;sync_clear<=0;cycle_faults=0;
+      |                                                                              ^
+                 ... For warning description see https://verilator.org/warn/BLKSEQ?v=5.048
+                 ... Use "/* verilator lint_off BLKSEQ */" and lint_on around source to disable this message.
+%Warning-BLKSEQ: cnc3_motion_state.v:146:16: Blocking assignment '=' in sequential logic process
+                                           : ... note: In instance 'cnc3_motion_spi.state_machine'
+                                           : ... Suggest using delayed assignment '<='
+  146 |    cycle_faults=0;
+      |                ^
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:36:7: Signal is not used: 'snapshot_start'
+                                             : ... note: In instance 'cnc3_motion_spi'
+   36 |  wire snapshot_start,snapshot_fb;
+      |       ^~~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.048
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:36:22: Signal is not used: 'snapshot_fb'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   36 |  wire snapshot_start,snapshot_fb;
+      |                      ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:43:28: Signal is not used: 'required_mask'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   43 |  wire[11:0] installed_mask,required_mask,timing_latched,alarm_latched,required_encoders;
+      |                            ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:43:71: Signal is not used: 'required_encoders'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   43 |  wire[11:0] installed_mask,required_mask,timing_latched,alarm_latched,required_encoders;
+      |                                                                       ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:24: Signal is not driven, nor used: 'consumed'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,consumed,sync_clear,io,effective;
+      |                        ^~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:44: Signal is not used: 'io'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,consumed,sync_clear,io,effective;
+      |                                            ^~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:47: Signal is not used: 'effective'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,consumed,sync_clear,io,effective;
+      |                                               ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:46:19: Signal is not used: 'config_hash'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   46 |  wire[31:0] ticks,config_hash;
+      |                   ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:47:13: Signal is not used: 'config_crc'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   47 |  wire[15:0] config_crc,servo_period,interval,late;
+      |             ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:47:24: Signal is not used: 'servo_period'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   47 |  wire[15:0] config_crc,servo_period,interval,late;
+      |                        ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:48:36: Signal is not used: 'mpg'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   48 |  wire[7:0] config_generation,state,mpg;
+      |                                    ^~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:51:58: Signal is not used: 'index_counts'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   51 |  wire signed[31:0] step_counts[0:11],encoder_counts[0:3],index_counts[0:3];
+      |                                                          ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:52:28: Signal is not used: 'index_seen'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   52 |  wire[3:0] encoder_illegal,index_seen,index_pulse;
+      |                            ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:52:39: Signal is not used: 'index_pulse'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   52 |  wire[3:0] encoder_illegal,index_seen,index_pulse;
+      |                                       ^~~~~~~~~~~
+%Warning-UNUSEDPARAM: cnc3_motion_state.v:49:3: Parameter is not used: 'F_CLASS'
+                                              : ... note: In instance 'cnc3_motion_spi.state_machine'
+   49 |   F_CLASS=32'h00000100,F_OPI=32'h00000200,F_STUCK=32'h00000400,
+      |   ^~~~~~~
+                      ... For warning description see https://verilator.org/warn/UNUSEDPARAM?v=5.048
+                      ... Use "/* verilator lint_off UNUSEDPARAM */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: cnc3_command_validate.v:5:50: Bits of signal are not used: 'frame'[15:0]
+                                                   : ... note: In instance 'cnc3_motion_spi.validate'
+    5 | module cnc3_command_validate(input wire [1407:0] frame, input wire cs_fb,
+      |                                                  ^~~~~
+- V e r i l a t i o n   R e p o r t: Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260428
+- Verilator: Built from 0.275 MB sources in 8 modules, into 1.320 MB in 4 C++ files needing 0.000 MB
+- Verilator: Walltime 0.261 s (elab=0.027, cvt=0.132, bld=0.000); cpu 0.201 s on 1 threads; allocated 31.227 MB

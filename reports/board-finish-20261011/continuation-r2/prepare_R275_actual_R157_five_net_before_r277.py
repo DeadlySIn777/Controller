@@ -1,0 +1,13 @@
+"""Actual full R157 BEFORE for ROOT's five affected nets, no host-fill credit."""
+import hashlib,json,pickle,sys,time
+from pathlib import Path
+H=Path(__file__).resolve().parent
+for d in('field-power','sbc-power','coupled-recovery'):sys.path.insert(0,str(H/d))
+import R157_native_selected_actual_conversion_r673 as N
+K=N.K;sha=N.sha;OUT=H/'R275-actual-R157-fresh-five-net-BEFORE-cache-r277';assert not OUT.exists();OUT.mkdir();started=time.monotonic()
+base=H/'R5051-own-drill-intended-only-current-R364-rebase-r155/model.pkl';assert sha(base)=='ff9893e41f73f868d377357e114dab60a943379fc0c411a8629f609df96bc5b4';g,h,b,q,c=pickle.loads(base.read_bytes());nets={'/LOGIC_GND','/motherboard_motors/FIELD_GND','/IO_3V3','/motherboard_do/DOA_SDI_HOST','/motherboard_do/DOA_FLT_N_FIELD'};N.assert_R157_actual_before();known,missing=N.bound_R663_before_groups({'/LOGIC_GND','/motherboard_motors/FIELD_GND','/IO_3V3'})
+geo=N.R157/'actual-full-refill-geometry.json';mask=N.R157/'actual-full-refill-via-flashes.json';native=json.loads(geo.read_bytes());flashes=json.loads(mask.read_bytes())['vias'];board=N.R157/'copy/board.kicad_pcb';assert sha(board)=='3e6b099d85e1cfc4f3b30eb69c4de91dde6440dbab007af59a94d2405c34cd38'
+actual,ctx,pads=N.convert_selected_actual(h,c,native,flashes,nets,source_pcb=board);groups=dict(known)
+for net in sorted(nets-set(groups)):
+ groups[net]=K.physical(actual,net,ctx)[1];print('R277_BEFORE_FRESH',net,len(groups[net]),flush=True)
+gp=OUT/'actual-R157-five-affected-net-groups.pkl';gp.write_bytes(pickle.dumps(groups,protocol=5));ap=OUT/'actual-R157-five-net-model.pkl';ap.write_bytes(pickle.dumps(actual,protocol=5));(OUT/'actual-native-pad-bindings.json').write_text(json.dumps(pads,indent=1)+'\n');r={'status':'R157_ACTUAL_FULL_NATIVE_FIVE_NET_BEFORE_BOUND','source_model_SHA256':sha(base),'source_native_full_geometry_SHA256':sha(geo),'source_actual_full_via_flash_SHA256':sha(mask),'native_board_SHA256':sha(board),'groups_SHA256':sha(gp),'actual_model_SHA256':sha(ap),'cached_actual_R663_nets':sorted(known),'fresh_missing_and_signal_nets':sorted(nets-set(known)),'all_holes_actual_count':len(ctx[0]),'all_five_net_native_pad_bindings':len(pads),'actual_net_group_counts':{net:len(gs)for net,gs in groups.items()},'actual_native_graph_distance_mm':.000002,'raw_Cu_reference_threshold':0,'all_after_source_contact_refill_root_body_current':'OPEN','no_synthetic_source_plane_or_forced_mask':True,'native_jobs':0,'adopted':False,'elapsed_seconds':time.monotonic()-started};(OUT/'receipt.json').write_text(json.dumps(r,indent=1)+'\n');print('R277_BOUND',sha(OUT/'receipt.json'),flush=True)

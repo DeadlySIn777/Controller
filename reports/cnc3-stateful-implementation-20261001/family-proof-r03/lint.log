@@ -1,0 +1,77 @@
+%Warning-BLKSEQ: cnc3_motion_state.v:147:78: Blocking assignment '=' in sequential logic process
+                                           : ... note: In instance 'cnc3_motion_spi.state_machine'
+                                           : ... Suggest using delayed assignment '<='
+  147 |    last_update_interval_us<=0;late_update_count<=0;sync_clear<=0;cycle_faults=0;
+      |                                                                              ^
+                 ... For warning description see https://verilator.org/warn/BLKSEQ?v=5.048
+                 ... Use "/* verilator lint_off BLKSEQ */" and lint_on around source to disable this message.
+%Warning-BLKSEQ: cnc3_motion_state.v:153:16: Blocking assignment '=' in sequential logic process
+                                           : ... note: In instance 'cnc3_motion_spi.state_machine'
+                                           : ... Suggest using delayed assignment '<='
+  153 |    cycle_faults=0;
+      |                ^
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:36:7: Signal is not used: 'snapshot_start'
+                                             : ... note: In instance 'cnc3_motion_spi'
+   36 |  wire snapshot_start,snapshot_fb;
+      |       ^~~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.048
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:36:22: Signal is not used: 'snapshot_fb'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   36 |  wire snapshot_start,snapshot_fb;
+      |                      ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:43:28: Signal is not used: 'required_mask'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   43 |  wire[11:0] installed_mask,required_mask,timing_latched,alarm_latched,required_encoders;
+      |                            ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:43:71: Signal is not used: 'required_encoders'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   43 |  wire[11:0] installed_mask,required_mask,timing_latched,alarm_latched,required_encoders;
+      |                                                                       ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:35: Signal is not used: 'io'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,sync_clear,io,effective,request_ready;
+      |                                   ^~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:38: Signal is not used: 'effective'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,sync_clear,io,effective,request_ready;
+      |                                      ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:45:48: Signal is not used: 'request_ready'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   45 |  wire alarm_valid,stop,sync_clear,io,effective,request_ready;
+      |                                                ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:46:19: Signal is not used: 'config_hash'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   46 |  wire[31:0] ticks,config_hash;
+      |                   ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:47:13: Signal is not used: 'config_crc'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   47 |  wire[15:0] config_crc,servo_period,interval,late;
+      |             ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:47:24: Signal is not used: 'servo_period'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   47 |  wire[15:0] config_crc,servo_period,interval,late;
+      |                        ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:48:36: Signal is not used: 'mpg'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   48 |  wire[7:0] config_generation,state,mpg;
+      |                                    ^~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:51:58: Signal is not used: 'index_counts'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   51 |  wire signed[31:0] step_counts[0:11],encoder_counts[0:3],index_counts[0:3];
+      |                                                          ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:52:28: Signal is not used: 'index_seen'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   52 |  wire[3:0] encoder_illegal,index_seen,index_pulse;
+      |                            ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_motion_spi.v:52:39: Signal is not used: 'index_pulse'
+                                              : ... note: In instance 'cnc3_motion_spi'
+   52 |  wire[3:0] encoder_illegal,index_seen,index_pulse;
+      |                                       ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: cnc3_command_validate.v:5:50: Bits of signal are not used: 'frame'[15:0]
+                                                   : ... note: In instance 'cnc3_motion_spi.validate'
+    5 | module cnc3_command_validate(input wire [1407:0] frame, input wire cs_fb,
+      |                                                  ^~~~~
+- V e r i l a t i o n   R e p o r t: Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260428
+- Verilator: Built from 0.278 MB sources in 8 modules, into 1.321 MB in 4 C++ files needing 0.000 MB
+- Verilator: Walltime 0.282 s (elab=0.019, cvt=0.165, bld=0.000); cpu 0.225 s on 1 threads; allocated 31.191 MB

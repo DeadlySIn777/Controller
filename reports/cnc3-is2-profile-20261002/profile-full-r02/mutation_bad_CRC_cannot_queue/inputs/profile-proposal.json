@@ -1,0 +1,30 @@
+{
+  "spec_revision": "IS-2",
+  "frame_lengths": [
+    96,
+    176
+  ],
+  "supported_integrated_step_channels": 12,
+  "supported_base_encoders": 4,
+  "installed_qualified_channels": 0,
+  "integrated_motor_class": 0,
+  "unsupported": [
+    "index one-shot",
+    "MPG",
+    "event ring",
+    "telemetry mirror",
+    "expansion class/presence",
+    "general I/O output authority",
+    "complete factory/provider qualification"
+  ],
+  "feature_bitmap": "0x13ffb",
+  "read_page": "only page0; full accepted request then next full acceptable CS_FB consumes; corrupt/partial/CMD/foreign-session must not consume",
+  "complete_profile": false,
+  "driver_behavior": "real CAP3 parse then bounded qualification refusal before CONFIGURE/ARM",
+  "read_page_lifecycle_distinction_from_IS1": "This incomplete IS2 prototype consumes only accepted full FB_READ/READ_PAGE0. Frozen IS1 says next completed CS_FB; unsupported, corrupted, wrong-session or CMD transactions are explicitly non-consuming.",
+  "driver_pretransport_rejection": [
+    "required encoder outsidebase4",
+    "encoder expansion class !=0",
+    "MPG config !=0"
+  ]
+}

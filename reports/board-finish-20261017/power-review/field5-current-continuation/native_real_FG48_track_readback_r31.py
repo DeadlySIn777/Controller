@@ -1,0 +1,11 @@
+"""Native parser proof for the exact locked 2mm ground-stitch segment."""
+import ctypes
+k=ctypes.WinDLL('kernel32',use_last_error=True);k.GetCurrentProcess.restype=ctypes.c_void_p;k.SetProcessAffinityMask.argtypes=[ctypes.c_void_p,ctypes.c_size_t];k.SetPriorityClass.argtypes=[ctypes.c_void_p,ctypes.c_uint32];h=k.GetCurrentProcess();assert k.SetProcessAffinityMask(h,(1<<16)|(1<<17));assert k.SetPriorityClass(h,0x4000)
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json
+import pcbnew
+HERE=Path(__file__).resolve().parent;OUT=HERE/'real-FG48-native-track-readback-r31';M=HERE/'real-FG48-stage3-sparse-packet-r30/manifest.json';sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def main():
+ assert not OUT.exists();OUT.mkdir();d=json.loads(M.read_text());f=Path(d['native_readback_only_fixture']);assert sha(f)==d['native_readback_only_fixture_SHA256'];b=pcbnew.LoadBoard(str(f));tracks=list(b.GetTracks());assert len(tracks)==1;t=tracks[0];op=next(x for x in d['operations']if x['kind']=='segment');assert t.m_Uuid.AsString()==op['UUID']==d['new_ground_track_UUID'];assert t.GetWidth()==2000000 and t.GetLayer()==pcbnew.In1_Cu and t.IsLocked();a=t.GetStart();z=t.GetEnd();assert[a.x,a.y]==[round(v*1e6)for v in op['native_start_mm']]and[z.x,z.y]==[round(v*1e6)for v in op['native_end_mm']];zone=next(z for z in b.Zones()if z.m_Uuid.AsString()==d['native_FG_comparison_zone_UUID']);assert t.GetNetCode()==zone.GetNetCode()and t.GetNetname()==zone.GetNetname();r={'utc':datetime.now(timezone.utc).isoformat(),'status':'EXACT_NATIVE_FG48_2MM_LOCKED_IN1_SEGMENT_ENDPOINTS_AND_EXISTING_FG_NET_IDENTITY_PASS_NO_FILL','input_sha256':{str(p):sha(p)for p in(M,f,Path(__file__))},'native_version':pcbnew.GetBuildVersion(),'track_UUID':t.m_Uuid.AsString(),'width_IU':t.GetWidth(),'start_IU':[a.x,a.y],'end_IU':[z.x,z.y],'native_net_name':t.GetNetname(),'existing_FG_zone_UUID':zone.m_Uuid.AsString(),'same_native_net_code':True,'locked':True,'fill_called':False,'DRC_called':False,'actual_coupled_fill_minwidth_source_reference_return_current_material_thermal_SI':'OPEN','adopted':False,'manufacturing_ready':False};(OUT/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'status':r['status'],'track_UUID':r['track_UUID']}))
+if __name__=='__main__':main()

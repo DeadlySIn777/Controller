@@ -1,0 +1,714 @@
+Efinity Synthesis report for project cnc3_runtime_sim
+Version: 2026.1.132
+Generated at: Oct 17, 2026 23:24:15
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : cnc3_runtime_sim
+
+family : Trion
+device : T20F256
+project : cnc3_runtime_sim
+root : cnc3_runtime_sim
+binary-db : outflow\cnc3_runtime_sim.vdb
+insert-ios : 0
+max-carry-cascade : 240
+max_mult : -1
+max_ram : -1
+mode : speed
+output-dir : outflow
+proj_curr_path : C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map
+project : cnc3_runtime_sim
+project-xml : C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\cnc3_runtime_sim.xml
+root : cnc3_runtime_sim
+work-dir : work_syn
+write-efx-verilog : outflow\cnc3_runtime_sim.map.v
+
+File List:
+
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_alarm_filter.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_encoder_runtime.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_event_bank.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_rate_admission_serial.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_cap3.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_events.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_provider.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_sim.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_state.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_runtime_validate.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_spi_transport_stateful.v
+C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_stepgen_runtime.v
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'stable' is not initialized, assuming empty initial contents. (C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_alarm_filter.v:8)
+"MEM|SYN-0677" : ... Memory 'memory' is not initialized, assuming empty initial contents. (C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_event_bank.v:7)
+"MEM|SYN-0657" : Mapping into logic memory block 'stable' (24 bits) (C:\Users\Gluis\OneDrive\Documents\ChatGPT\Controller\reports\board-finish-20261017\release-review\event-dispatch-r1\native-full-map\inputs\cnc3_alarm_filter.v:8) because size is too small (<=64)
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 220
+Total number of FFs with enable signals: 7375
++---------------------------+------------------+
+|CE Signal                  |Number of FF loads|
++---------------------------+------------------+
+|ceg_net103                 |             1408 |
+|transport/n34398           |             1402 |
+|ceg_net105                 |             1392 |
+|state_machine/n36399       |              832 |
+|provider/n1083             |              177 |
+|state_machine/n8933        |              113 |
+|ceg_net135                 |               83 |
+|state_machine/n35935       |               82 |
+|ceg_net109                 |               48 |
+|transport/n34401           |               48 |
+|state_machine/n38308       |               40 |
+|ceg_net57                  |               37 |
+|transport/n34416           |               36 |
+|transport/n63              |               35 |
+|ceg_net49                  |               32 |
+|ceg_net117                 |               32 |
+|transport/n34408           |               32 |
+|transport/n34432           |               32 |
+|transport/n1559            |               32 |
+|motors[0].generator/n1374  |               24 |
+|motors[2].generator/n1374  |               24 |
+|motors[5].generator/n1374  |               24 |
+|encoders[2].encoder/n223   |               24 |
+|encoders[1].encoder/n223   |               24 |
+|motors[6].generator/n1374  |               24 |
+|~alarm_filter/n1074        |               24 |
+|encoders[0].encoder/n223   |               24 |
+|motors[3].generator/n1374  |               24 |
+|motors[4].generator/n1374  |               24 |
+|motors[1].generator/n1374  |               24 |
+|encoders[3].encoder/n223   |               24 |
+|motors[11].generator/n1374 |               24 |
+|motors[9].generator/n1374  |               24 |
+|motors[8].generator/n1374  |               24 |
+|motors[7].generator/n1374  |               24 |
+|motors[10].generator/n1374 |               24 |
+|ceg_net44                  |               20 |
+|ceg_net401                 |               16 |
+|ceg_net261                 |               16 |
+|ceg_net301                 |               16 |
+|ceg_net269                 |               16 |
+|ceg_net272                 |               16 |
+|ceg_net275                 |               16 |
+|ceg_net381                 |               16 |
+|ceg_net309                 |               16 |
+|ceg_net312                 |               16 |
+|ceg_net315                 |               16 |
+|ceg_net281                 |               16 |
+|ceg_net349                 |               16 |
+|ceg_net375                 |               16 |
+|ceg_net241                 |               16 |
+|ceg_net0                   |               16 |
+|ceg_net372                 |               16 |
+|ceg_net369                 |               16 |
+|ceg_net201                 |               16 |
+|ceg_net255                 |               16 |
+|ceg_net252                 |               16 |
+|ceg_net209                 |               16 |
+|ceg_net212                 |               16 |
+|ceg_net215                 |               16 |
+|ceg_net249                 |               16 |
+|ceg_net195                 |               16 |
+|ceg_net192                 |               16 |
+|ceg_net189                 |               16 |
+|ceg_net181                 |               16 |
+|ceg_net415                 |               16 |
+|ceg_net232                 |               16 |
+|ceg_net341                 |               16 |
+|ceg_net235                 |               16 |
+|ceg_net395                 |               16 |
+|ceg_net229                 |               16 |
+|ceg_net335                 |               16 |
+|ceg_net409                 |               16 |
+|state_machine/n38293       |               16 |
+|ceg_net332                 |               16 |
+|ceg_net329                 |               16 |
+|ceg_net412                 |               16 |
+|ceg_net221                 |               16 |
+|ceg_net295                 |               16 |
+|ceg_net292                 |               16 |
+|ceg_net321                 |               16 |
+|ceg_net289                 |               16 |
+|ceg_net392                 |               16 |
+|ceg_net361                 |               16 |
+|ceg_net355                 |               16 |
+|ceg_net389                 |               16 |
+|ceg_net352                 |               16 |
+|ceg_net127                 |               16 |
+|ceg_net59                  |               12 |
+|ceg_net107                 |               12 |
+|ceg_net61                  |               12 |
+|ceg_net90                  |               10 |
+|ceg_net40                  |               10 |
+|ceg_net55                  |               10 |
+|ceg_net136                 |                9 |
+|ceg_net13                  |                8 |
+|ceg_net10                  |                8 |
+|ceg_net22                  |                8 |
+|ceg_net63                  |                6 |
+|ceg_net6                   |                6 |
+|ceg_net140                 |                4 |
+|alarm_filter/n944          |                3 |
+|ceg_net98                  |                2 |
+|state_machine/n41789       |                2 |
+|ceg_net124                 |                1 |
+|ceg_net113                 |                1 |
+|alarm_filter/n945          |                1 |
+|alarm_filter/n1202         |                1 |
+|alarm_filter/n1225         |                1 |
+|ceg_net119                 |                1 |
+|ceg_net416                 |                1 |
+|ceg_net316                 |                1 |
+|ceg_net296                 |                1 |
+|ceg_net115                 |                1 |
+|alarm_filter/n1203         |                1 |
+|ceg_net132                 |                1 |
+|ceg_net138                 |                1 |
+|ceg_net142                 |                1 |
+|provider/n1098             |                1 |
+|~motors[11].generator/n1372|                1 |
+|ceg_net404                 |                1 |
+|ceg_net111                 |                1 |
+|alarm_filter/n1219         |                1 |
+|alarm_filter/n1213         |                1 |
+|alarm_filter/n1214         |                1 |
+|alarm_filter/n1222         |                1 |
+|alarm_filter/n1223         |                1 |
+|alarm_filter/n1215         |                1 |
+|alarm_filter/n1216         |                1 |
+|alarm_filter/n1217         |                1 |
+|alarm_filter/n1224         |                1 |
+|alarm_filter/n1211         |                1 |
+|alarm_filter/n1210         |                1 |
+|alarm_filter/n1218         |                1 |
+|alarm_filter/n1212         |                1 |
+|alarm_filter/n1220         |                1 |
+|alarm_filter/n1209         |                1 |
+|alarm_filter/n1221         |                1 |
+|alarm_filter/n1208         |                1 |
+|alarm_filter/n1207         |                1 |
+|ceg_net304                 |                1 |
+|~motors[6].generator/n1372 |                1 |
+|ceg_net256                 |                1 |
+|alarm_filter/n1206         |                1 |
+|alarm_filter/n1205         |                1 |
+|alarm_filter/n1204         |                1 |
+|ceg_net28                  |                1 |
+|ceg_net162                 |                1 |
+|ceg_net164                 |                1 |
+|encoders[0].encoder/n475   |                1 |
+|ceg_net167                 |                1 |
+|ceg_net42                  |                1 |
+|state_machine/n2647        |                1 |
+|ceg_net66                  |                1 |
+|ceg_net24                  |                1 |
+|ceg_net26                  |                1 |
+|ceg_net160                 |                1 |
+|ceg_net30                  |                1 |
+|ceg_net32                  |                1 |
+|events/n26060              |                1 |
+|ceg_net37                  |                1 |
+|ceg_net52                  |                1 |
+|ceg_net284                 |                1 |
+|~motors[5].generator/n1372 |                1 |
+|ceg_net8                   |                1 |
+|ceg_net336                 |                1 |
+|ceg_net364                 |                1 |
+|~motors[9].generator/n1372 |                1 |
+|ceg_net376                 |                1 |
+|ceg_net344                 |                1 |
+|~motors[8].generator/n1372 |                1 |
+|ceg_net356                 |                1 |
+|ceg_net324                 |                1 |
+|~motors[7].generator/n1372 |                1 |
+|ceg_net15                  |                1 |
+|ceg_net144                 |                1 |
+|ceg_net146                 |                1 |
+|ceg_net148                 |                1 |
+|ceg_net150                 |                1 |
+|ceg_net152                 |                1 |
+|ceg_net154                 |                1 |
+|ceg_net156                 |                1 |
+|ceg_net158                 |                1 |
+|encoders[1].encoder/n472   |                1 |
+|~motors[3].generator/n1372 |                1 |
+|snapshot_start             |                1 |
+|ceg_net264                 |                1 |
+|~motors[4].generator/n1372 |                1 |
+|ceg_net276                 |                1 |
+|encoders[0].encoder/n472   |                1 |
+|encoders[0].encoder/n469   |                1 |
+|encoders[1].encoder/n475   |                1 |
+|ceg_net170                 |                1 |
+|ceg_net244                 |                1 |
+|encoders[1].encoder/n469   |                1 |
+|encoders[2].encoder/n475   |                1 |
+|ceg_net173                 |                1 |
+|ceg_net224                 |                1 |
+|~motors[2].generator/n1372 |                1 |
+|ceg_net236                 |                1 |
+|ceg_net384                 |                1 |
+|~motors[10].generator/n1372|                1 |
+|encoders[2].encoder/n472   |                1 |
+|ceg_net17                  |                1 |
+|ceg_net19                  |                1 |
+|events/n26057              |                1 |
+|ceg_net20                  |                1 |
+|ceg_net3                   |                1 |
+|ceg_net204                 |                1 |
+|~motors[1].generator/n1372 |                1 |
+|ceg_net216                 |                1 |
+|ceg_net396                 |                1 |
+|encoders[2].encoder/n469   |                1 |
+|encoders[3].encoder/n475   |                1 |
+|ceg_net176                 |                1 |
+|encoders[3].encoder/n472   |                1 |
+|encoders[3].encoder/n469   |                1 |
+|ceg_net184                 |                1 |
+|~motors[0].generator/n1372 |                1 |
+|ceg_net196                 |                1 |
++---------------------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 1
+Total number of FFs with set/reset signals: 9862
++---------+------------------+
+|SR Signal|Number of FF loads|
++---------+------------------+
+|rst_n    |             9862 |
++---------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Sequential Elements/Signals Trimming Report (begin) ### ### ### 
+'events/write_data[1262]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1263]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1266]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1267]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1268]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1269]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1270]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1271]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[946]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[947]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[948]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[949]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[950]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[951]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1090]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1091]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1092]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1093]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1094]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1095]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1101]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1102]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1103]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1106]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1107]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1108]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1109]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1110]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1111]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1250]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1251]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1252]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1253]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1254]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1255]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[1261]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[626]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[627]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[628]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[629]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[630]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[631]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[770]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[771]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[772]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[773]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[774]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[775]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[781]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[782]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[783]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[786]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[787]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[788]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[789]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[790]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[791]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[930]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[931]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[932]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[933]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[934]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[935]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[941]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[942]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[943]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[308]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[309]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[310]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[311]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[450]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[451]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[452]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[453]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[454]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[455]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[461]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[462]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[463]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[466]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[467]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[468]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[469]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[470]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[471]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[610]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[611]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[612]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[613]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[614]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[615]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[621]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[622]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[623]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[130]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[131]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[132]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[133]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[134]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[135]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[141]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[142]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[143]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[146]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[147]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[148]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[149]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[150]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[151]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[290]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[291]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[292]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[293]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[294]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[295]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[301]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[302]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[303]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[306]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/write_data[307]' (inputs\cnc3_runtime_events.v:19) (optimized to 0)
+'events/banks[0].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[0].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[1].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[2].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[3].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[4].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[5].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[6].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[130]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[131]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[132]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[133]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[134]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[135]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[141]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[142]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[143]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[146]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[147]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[148]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[149]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[150]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'events/banks[7].memory/forward_data[151]' (inputs\cnc3_event_bank.v:8) (optimized to 0)
+'state_machine/qualification_class[0]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[1]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[2]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[3]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[4]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[5]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[6]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'state_machine/qualification_class[7]' (inputs\cnc3_runtime_state.v:73) (optimized to 0)
+'transport/expected_bits[0]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/body_bits[0]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/tx_shift[0]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/expected_bits[1]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/expected_bits[2]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/expected_bits[3]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/expected_bits[4]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/expected_bits[5]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/expected_bits[6]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/body_bits[1]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/body_bits[2]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/body_bits[3]' (inputs\cnc3_spi_transport_stateful.v:27) (optimized to 0)
+'transport/tx_shift[1]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[2]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[3]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[4]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[5]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[6]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[7]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[8]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[9]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[10]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[11]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[12]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[13]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[14]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[15]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[16]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[17]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[18]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[19]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[20]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[21]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[22]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[23]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[24]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[25]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[26]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[27]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[28]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[29]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[30]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'transport/tx_shift[31]' (inputs\cnc3_spi_transport_stateful.v:30) (optimized to 0)
+'encoder_counts[0][24]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][25]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][26]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][27]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][28]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][29]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][30]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[0][31]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][24]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][25]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][26]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][27]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][28]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][29]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][30]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[1][31]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][24]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][25]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][26]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][27]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][28]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][29]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][30]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[2][31]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][24]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][25]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][26]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][27]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][28]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][29]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][30]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'encoder_counts[3][31]' (inputs\cnc3_runtime_sim.v:103) (unreachable)
+'transport/body_bits[10]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/expected_bits[10]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/expected_bits[7]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[9]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[8]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[7]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[6]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[5]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'transport/body_bits[4]' (inputs\cnc3_spi_transport_stateful.v:27) (merged to equivalence)
+'state_machine/proof_domains[2]' (inputs\cnc3_runtime_state.v:76) (merged to equivalence)
+'state_machine/proof_domains[0]' (inputs\cnc3_runtime_state.v:76) (merged to equivalence)
+'installed_mask[9]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[8]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[7]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[6]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[5]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[4]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[3]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[2]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[1]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'installed_mask[0]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'snapshot_fb' (inputs\cnc3_runtime_sim.v:79) (merged to equivalence)
+'installed_mask[11]' (inputs\cnc3_runtime_sim.v:94) (merged to equivalence)
+'opi_rearm[2]' (inputs\cnc3_runtime_sim.v:28) (merged to equivalence)
+'opi_rearm[0]' (inputs\cnc3_runtime_sim.v:28) (merged to equivalence)
+### ### Sequential Elements Trimming Report (end) ### ### ### 
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                                                FFs       ADDs         LUTs      RAMs DSP/MULTs
+--------------------------------------------          ---       ----         ----      ---- ---------
+cnc3_runtime_sim:cnc3_runtime_sim               11030(19)   2153(15)   24973(252)     64(0)      1(0)
+ +provider:cnc3_runtime_provider                 200(200)     20(20)     342(342)      0(0)      0(0)
+ +transport:cnc3_spi_transport_stateful        4534(4534)   143(143)   4813(4813)      0(0)      0(0)
+ +admission:cnc3_rate_admission_serial           110(110)     48(48)     456(456)      0(0)      0(0)
+ +alarm_filter:cnc3_alarm_filter                   97(97)       8(8)       87(87)      0(0)      0(0)
+ +state_machine:cnc3_runtime_state             1782(1782)     78(78)   3047(3047)      0(0)      1(1)
+ +events:cnc3_runtime_events                   2504(1336)     53(53) 13001(12969)     64(0)      0(0)
+  +banks[0].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[1].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[2].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[3].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[4].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[5].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[6].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+  +banks[7].memory:cnc3_event_bank               146(146)       0(0)         4(4)      8(8)      0(0)
+ +motors[0].generator:cnc3_stepgen_runtime       123(123)   149(149)     269(269)      0(0)      0(0)
+ +motors[1].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[2].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[3].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[4].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[5].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[6].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[7].generator:cnc3_stepgen_runtime       123(123)   149(149)     210(210)      0(0)      0(0)
+ +motors[8].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[9].generator:cnc3_stepgen_runtime       123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[10].generator:cnc3_stepgen_runtime      123(123)   149(149)     209(209)      0(0)      0(0)
+ +motors[11].generator:cnc3_stepgen_runtime      123(123)   149(149)     209(209)      0(0)      0(0)
+ +encoders[0].encoder:cnc3_encoder_runtime         77(77)       0(0)     104(104)      0(0)      0(0)
+ +encoders[1].encoder:cnc3_encoder_runtime         77(77)       0(0)     103(103)      0(0)      0(0)
+ +encoders[2].encoder:cnc3_encoder_runtime         77(77)       0(0)     101(101)      0(0)      0(0)
+ +encoders[3].encoder:cnc3_encoder_runtime         77(77)       0(0)       98(98)      0(0)      0(0)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### DSP Usage Report (begin) ### ### ### 
+
+ No DSP in design
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++-----+----------+------------+----------------+
+|Clock|Flip-Flops|Memory Ports|Multipliers/DSPs|
++-----+----------+------------+----------------+
+|clk  |    11030 |        128 |              0 |
++-----+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	451
+OUTPUT PORTS    : 	2380
+
+EFX_ADD                 : 	2153
+EFX_LUT4                : 	24973
+   1-2  Inputs          : 	4699
+   3    Inputs          : 	6638
+   4    Inputs          : 	13636
+EFX_MULT                : 	1
+EFX_FF                  : 	11030
+EFX_RAM_5K              : 	64
+EFX_GBUFCE              : 	1
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 228s
+Elapsed synthesis time : 229s

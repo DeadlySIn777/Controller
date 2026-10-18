@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "time_utc": "2026-09-30T22:54:06.616790+00:00",
+  "status": "frozen native circuit candidate",
+  "tests": [
+    {
+      "name": "analog_output",
+      "count": 38,
+      "passed": true,
+      "log_sha256": "6af3dc82ab85681116a28a8a520f58feceb2ab9be48a1a8c4fa894e2343f3526"
+    },
+    {
+      "name": "acc_control",
+      "count": 38,
+      "passed": true,
+      "log_sha256": "7b704152bcb962d55f7e644ca1fc97d0ca0c2ef7d0dbc74af7fd7c67f0601e58"
+    },
+    {
+      "name": "process",
+      "count": 35,
+      "passed": true,
+      "log_sha256": "8985b89f255f4bb29bd519e9164d5c0da62f23291864ebecd712741103660aa7"
+    },
+    {
+      "name": "io_control",
+      "count": 38,
+      "passed": true,
+      "log_sha256": "cd6c27e93b289fed25946e276e2abc25e98be958c9f15ef801b339f06a036f74"
+    },
+    {
+      "name": "operator",
+      "count": 43,
+      "passed": true,
+      "log_sha256": "4a14dda5994979c497331a9e3fd73e2c08319c5905480a3b69e0a79ab204d2d6"
+    },
+    {
+      "name": "do",
+      "count": 36,
+      "passed": true,
+      "log_sha256": "d68410ec3384bb7f9e7c7bd6a8992ee841d85dcd965ed5e98f306c9270a6d20d"
+    },
+    {
+      "name": "di",
+      "count": 28,
+      "passed": true,
+      "log_sha256": "1952e056b1a6152d592a6b6148ee148ca636b11c627452749b164cb6cfee4fa3"
+    },
+    {
+      "name": "motors",
+      "count": 24,
+      "passed": true,
+      "log_sha256": "4202840a02f23bb3f2cc0c96fc4c5a91ea7d6fbdb5063f751c52dfc8453dd656"
+    }
+  ],
+  "fresh_test_count": 280,
+  "input_hash_count": 71,
+  "changed_inputs": [],
+  "manufacturing_ready": false,
+  "parent_integrated": false,
+  "target_firmware_compiled": false,
+  "option_bytes_provisioned": false,
+  "physical_qualified": false,
+  "physical_footprints": 143,
+  "purchased_fitted_parts": 143,
+  "unique_electrical_pads": 468,
+  "native_ERC": {
+    "errors": 0,
+    "warnings": 8,
+    "ignored_checks": [],
+    "warnings_justified": "strict exact8 isolated-COM ground-name heuristic warnings; islands intentionally not LOGIC_GND"
+  },
+  "nativeXML_independent_checks": "PASS",
+  "native_footprints_loaded": 143,
+  "boundary_file": "hardware/motherboard_analog_output/boundary-map.json",
+  "engineering_gates": [
+    "Native target firmware including real DAC register transactions, actual ADS terminal/rail/reference readback freshness, and option-byte hardware watchdog must be implemented.",
+    "4MHz twoDACwrites=12us wiretime within20usapply; twoinputreadbacks=24us separate,36uscombined within59.6usprocessing window. Isolation round-trip/CS gaps/MCU scheduling and frozenwhole160.4uscommit require loaded proof.",
+    "12Vregulator headroom, effectiveC,LDOthermal,current budget,inputdrop,0\u201355Cprecision,2kohmload andcalibration remain qualification.",
+    "Photorelay worst-case release,total20msinhibit,cablecapacitive/inductive/short/ESD behavior andallpartialpowerstates require prototype measurements.",
+    "Actual contact drive voltage is observed but not contact proof; terminal readback must report invalid/stale rather than zero when ADC/bus/power fails.",
+    "Typedphysicalterminal/chassis/return routing andmoduleheight/PCBcreepage must be reconciled by parentboard.",
+    "Shared I2C addresses0x48/0x49 reserved; qualifiedLEDaddresses andhostVIL/offset/capacitance/clock-stretch conditions remain required."
+  ],
+  "contract_correction": "AD5683RBRMZ-3 realinputregister SDO +LDACLOW copiesDAC, actualADSterminalADC;4MHz12uswrite/24usreadback wiretime only"
+}

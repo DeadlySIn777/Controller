@@ -1,0 +1,3 @@
+from pathlib import Path
+s=Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U26-cell-r190.py').read_text().replace('ROOT94-health-U26-cell-r190','ROOT94-health-U26-cell-r195').replace('xy((334.5,191))','xy((333.5,188))').replace('xy((335.3375,190.225))','xy((334.3375,187.225))').replace('pv=(336.0875,191);gv=(336.8875,191);og=(332.9125,191)','pv=(335.0875,188);gv=(335.8875,188);og=(331.9125,188)').replace('(336.3375,191.95)','(335.3375,188.95)').replace('(336.3375,190.05)','(335.3375,187.05)')
+Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U26-cell-r195.py').write_text(s)

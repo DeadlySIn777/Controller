@@ -1,0 +1,3037 @@
+{
+ "_doc": [
+  "Rail model for tools/verify/pdn_ir.py (DC IR drop on the real copper) and tools/verify/thermal_board.py.",
+  "Every rail of tools/power_widths.json has an entry. Names use the table spelling ('/'); the solver matches the board's '{slash}' spelling.",
+  "sources: pads held at the nominal voltage (regulator / switch / eFuse OUT pins, shunt output pads, inductor output pads, or the input connector pin).",
+  "loads: per reference designator. 'pins' = list of pad numbers or '*' (all pads of that ref on the rail). 'w' = relative weight (A) used to distribute",
+  "the case total over the loads; 'amps' = absolute current (not scaled). A group's current is split EQUALLY over its pads (no tie through the part:",
+  "conservative, avoids inventing a conduction path through a component). 'budget_mv' on a load overrides the rail budget for that load.",
+  "auto_power_in_a: every power_in pad on the rail not listed as a source or load gets this weight (DRAFT logic allowance); passives and inputs draw 0.",
+  "cases: 'design' = loads scaled so their sum equals total_a (default: power_widths.json amps). Extra cases list absolute currents.",
+  "Budgets are DRAFT unless 'budget_class' says otherwise; the justification is in 'budget_basis'. Citations: keys of the 'citations' table.",
+  "Loads are design assumptions taken from the documents cited, NOT measurements."
+ ],
+ "citations": {
+  "PW": "Z:/pcb-runs/claude-finish/tools/power_widths.json (rail design current 'amps' and trunk width)",
+  "LC": "Z:/pcb-runs/claude-finish/tools/fix/load_currents.json 'refs' table (per-ref design-assumption currents, role notes; not measurements)",
+  "OPD_SBC": "Z:/pcb-runs/OPERATOR-DECISIONS-2026-10-03.md, section 'Coordinator decision 2026-10-04 ~02:25: SBC_5V IR drop (B-PWRB-01)': DRAFT budget SBC_5V drop from U11012's output to J15001's SBC pins <= 100 mV at 3.6 A",
+  "SBCENV": "Controller repo hardware/sbc_power/design-envelope.json 'bounds': input_v 4.85-5.15 V, sbc_running_current_a 3.0, switch_resistance_screening_ohm 0.008, trace_contact_resistance_max_ohm 0.015",
+  "PEREADME": "Controller repo hardware/motherboard_power_entry/README.md: 'CORE_5V and MOTION_5V_RAW are fixed 5 V converters with 4.95-5.05 V regulation before distribution losses'; SBC_5V 'candidate planning reserve is 3.6 A'; 'TPS7A1633 field regulators carry a 20 mA reservation per bank'",
+  "PE_MF": "Controller repo hardware/motherboard_power_entry/design.json 'motor_feeds': normal_load_a A 0.8976 / B 0.4488, input_fixed_v 4.95-5.05, total_switch_and_distribution_loss_max_v 0.0203624",
+  "PE_INH": "Controller repo hardware/motherboard_power_entry/design.json 'inherited_requirements': aux5_load_a A 0.128 / B 0.064, aux24_load_a A 0.148 / B 0.074, aux24_limit_max_a A 0.3 / B 0.2, field24_requirement_v 18-30",
+  "PE_ENT": "Controller repo hardware/motherboard_power_entry/design.json 'entries': nominal_input_requirement_v 18-30; guaranteed_ilim_testpoint_a CORE 4.185-4.815, FIELD_A/B 5.58-6.42",
+  "PE_GATES": "Controller repo hardware/motherboard_power_entry/design.json 'engineering_gates': 'Field5 fixed regulation/tolerance + AUX5 limiter/distribution losses must meet 4.86919887 V worst UV arming threshold'",
+  "EPA_VC": "Controller repo research/expanded-power/analysis.json 'voltage_compatibility': cm4_module_input_min_v 4.75, cm4_module_input_max_v 5.25",
+  "PB": "Controller repo hardware/power-budget.csv rows: sbc_budget 3 A, io3v3_input 0.37 A, esp3v3_input 0.6 A, core1v2_input 0.28 A, encoder_supply 0.4 A (two ports at 0.2 A each), fpga_core 0.8 A reservation",
+  "T20": "Efinix Trion T20 Data Sheet v6.0, Table 69 Recommended Operating Conditions: VCC core 1.15 / 1.2 / 1.25 V 'applied to the voltage taken at the device pins'; TJ industrial -40..100 C (Controller repo research/fpga-core/trion20-ds-v6.0.pdf)",
+  "TPS62901": "TI TPS62901 product page (https://www.ti.com/product/TPS62901, read 2026-10-10): 'Up to 1A continuous output current', VIN 3-17 V",
+  "LMR36506": "TI LMR36506 datasheet, Electrical Characteristics 'Initial VOUT voltage accuracy for 5 V FPWM mode' 4.93 / 5 / 5.07 V (Controller repo research/field-power/lmr36506.pdf)",
+  "TPS22990": "TI TPS22990 datasheet SLVSDK1C, 7.5 Electrical Characteristics RON (VIN 5 V) 3.9 typ / 4.8 max mOhm at 25 C, 5.7 max -40..85 C, 6 max -40..105 C (Controller repo research/sbc-power/tps22990.pdf)",
+  "TPS2553": "TI TPS255xx datasheet Rev. F, Electrical Characteristics rDS(on) DBV 85 typ / 95 max mOhm at 25 C, 135 max -40..125 C (Controller repo hardware/encoder_power/tps2553-1-datasheet.pdf, p7)",
+  "TPS7A16": "TI TPS7A16 datasheet SBVS171F, Features 'Output Current: 100 mA'; 6.4 Thermal Information DGN RthetaJA 66.2, psiJB 34.3 C/W (agent-work/pdn-thermal/datasheets/tps7a16.pdf)",
+  "USB2": "USB 2.0 Specification section 7.2.1 / Table 7-7: VBUS at a high-power port 4.75-5.25 V (value from memory, not re-fetched in this run)",
+  "GENERIC_LOGIC": "DRAFT engineering allowance: CMOS logic/isolator/converter supply pins on these rails tolerate at least +/-5 % (e.g. 74LVC family 1.65-5.5 V, ISO77xx 2.25-5.5 V class) so 2 % of nominal is reserved for copper; not derived from one datasheet line",
+  "EPA_C5": "Controller repo research/expanded-power/analysis.json integrated_options/8/normal/core5_current_a = 5.660 A (8-motor normal CORE 5 V converter load; assumptions.input_efficiency 0.85 not guaranteed)",
+  "LM706X0": "TI LM70660/LM706A0 datasheet SNVSCD4 (Sept 2024), Controller repo research/core-converter/lm70660.pdf: p1 'Typical Efficiency VOUT = 5V, fSW = 400kHz' (read from the plot: VIN 24 V ~93.6 % at 4.5-5.7 A, ~92.5 % at 2.5 A; VIN 36 V ~92.0 % at 5.7 A, ~89.6 % at 2.5 A); 5.4 Thermal Information psiJB 11.6 C/W (JESD 51-7, 4-layer); 5.3 TJ operating -40..150 C",
+  "TPS2663_TH": "TI TPS2663x datasheet SLVSE94G (research/power-entry/tps2663.pdf): 6.5 RON IN-OUT max 34.5 mOhm at TJ 25 C, 45 mOhm at 85 C, 53 mOhm -40..125 C (0.6-6 A); IQ(ON) 1.7 mA max; B_GATE clamp 8.3-14 V above IN_SYS; 6.4 Thermal Information RGE psiJB 10.2 C/W; 6.3 recommended TJ max 125 C",
+  "CSD19537": "TI CSD19537Q3 datasheet SLPS549B (research/power-entry/csd19537q3.pdf): RDS(on) max 16.6 mOhm at VGS 6 V, 14.5 at 10 V (ID 10 A, 25 C); Fig. 5-8 normalized RDS(on) vs TC, VGS 6 V curve read as 1.31 at 75 C, ~1.5 at 100 C, ~1.7 at 125 C, ~1.92 at 150 C; 5.2 RthetaJC 1.5 C/W; TJ -55..150 C",
+  "FUSE997": "Littelfuse 0997005.WXN product page (MINI 997 series, 5 A, 58 VDC; values as returned by a web search 2026-10-11, page itself 403): typical cold resistance 17.75 mOhm, typical voltage drop 129 mV (rated current), maximum recommended environmental temperature 125 C. No resistance data found for 099707.5WXN (7.5 A)",
+  "TPS22990_TH": "TI TPS22990 datasheet SLVSDK1C (research/sbc-power/tps22990.pdf): 7.4 Thermal Information DML psiJB 17 C/W; 7.1 maximum junction temperature 125 C; 10.1.3 'limited to below 125 C'",
+  "TPS7A16_TH": "TI TPS7A16 datasheet SBVS171F (agent-work/pdn-thermal/datasheets/tps7a16.pdf): 6.4 Thermal Information DGN psiJB 34.3 C/W; 6.3 TJ -40..125 C; IQ 5 uA",
+  "TPS6290X": "TI TPS62901 datasheet SLVSFS7A (research/logic-power/tps62901.pdf; TPS6290x family): Fig. 7-19 (VOUT 1.2 V, 2.2 uH, 1 MHz) ~87 % at 0.8 A from VIN 5 V; Fig. 7-11 (VOUT 3.3 V, 2.2 uH, 1 MHz) ~95 % at 0.5 A from VIN 5 V (1 uH / 2.5 MHz not plotted for 3.3 V: DRAFT 90 %); 5.4 Thermal Information psiJB 24.7 C/W (JEDEC); maximum operating TJ 150 C (thermal section)",
+  "LMR36506_TH": "TI LMR36506 datasheet SNVSBB6C (research/field-power/lmr36506.pdf): 6.3 load current 0-0.6 A; Features '90% peak efficiency at 400kHz (24 VIN, 3.3 VOUT fixed)' (DRAFT 85 % used); 6.4 Thermal Information psiJB 25.9 C/W; TJ -40..150 C",
+  "TMR4": "TRACOPOWER TMR 4WI datasheet (2020-11-12) and tracopower.com model pages, as returned by web searches 2026-10-11 (PDF itself 403): efficiency 83 % (TMR 4-2412WI 12 V/333 mA, 4-2413WI 15 V/266 mA, 4-2415WI 24 V/166 mA); no-load input current 20 mA typ (24 Vin models); -40..+70 C without derating, 85 C maximum",
+  "T20PKG": "Efinix Trion Packaging User Guide v5.3, Table 11 Device/Package Thermal Resistance (Controller repo research/motion-card-mechanical/trion-packaging-ug-v5.3.pdf p56): FBGA256 13 x 13 thetaJB 31.57 C/W (row T13/T20; 6.41 C/W in the T20/T35 row), thetaJA still air 24.24",
+  "AM26C31": "TI AM26C31 datasheet SLLS103P (research/mc-motor-buffers/am26c31.pdf): VOD 2.0 min / 3.1 typ V at RL 100 ohm; ICC 3 mA max (inputs at 2.4/0.5 V); Thermal Information PW psiJB 53.1 C/W; TJ 150 C (absolute maximum)",
+  "TPS274C65": "TI TPS274C65 datasheet SLVSFZ2C (reports/board-completion-20260930/field-io-source-review/sources/tps274c65-SLVSFZ2C.pdf): RON per channel 72 mOhm at TJ 25 C, 110 mOhm at 125 C; VS current 0.9 mA max all channels on; Thermal Information RHA psiJB 7.6 C/W; electrical characteristics TJ -40..125 C",
+  "IS2_DO": "Controller repo docs/MOTHERBOARD_IS2.md section 4: TPS274C65ASRHAR 0.5 A/channel and 2 A/four-output-group continuous limits",
+  "TPS1H000": "TI TPS1H000-Q1 datasheet SLVSDO6E (agent-work/pdn-thermal/datasheets/tps1h000-q1.pdf): RCL = VCL,th x KCL / IOUT (application example 0.8 x 600 / 0.5 A = 960 ohm) so RCL 9530 ohm (R19038/R14421) limits ~50 mA; I(op) 5 mA; RON 1 ohm class; Thermal Information DGN psiJB 21.5 C/W; TJ -40..150 C",
+  "PE_CORE7A": "Controller repo reports/motherboard-power-entry-20260930/core7a-r04/receipt-r04.json: ordinary_normal_load_screen_a 6.637 A for CORE_5V, CORE_board_envelope_a 7 (CORE_board_7A_physically_qualified false; load-screen efficiency and reservations are assumptions); hardware/motherboard_power_entry/README.md: 'The legitimate normal-load screen is 6.637 A'"
+ },
+ "defaults": {
+  "auto_power_in_a": 0.005,
+  "budget_class": "DRAFT"
+ },
+ "rails": {
+  "/motherboard_power_entry/CORE_24V_INPUT": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "J11001",
+     "pins": [
+      "1"
+     ],
+     "note": "input terminal pin (24 V entry)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "F11001",
+     "pins": [
+      "1"
+     ],
+     "w": 3.61,
+     "note": "fuse holder input (pass-through)"
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum input requirement (PE_ENT); downstream converters accept >= 4.5 V so the copper budget limits loss/heat, not function",
+   "cite": [
+    "PW",
+    "PE_ENT"
+   ]
+  },
+  "/motherboard_power_entry/C_RAW": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "F11001",
+     "pins": [
+      "2"
+     ],
+     "note": "fuse holder output"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11001",
+     "pins": [
+      "1",
+      "2",
+      "3"
+     ],
+     "w": 3.61,
+     "note": "CSD19537Q3 reverse-polarity FET source pins (pass-through)"
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum input requirement (PE_ENT)",
+   "cite": [
+    "PW",
+    "PE_ENT",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/C_IN": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11001",
+     "pins": [
+      "5"
+     ],
+     "note": "FET drain land"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11002",
+     "pins": [
+      "1",
+      "2"
+     ],
+     "w": 3.61,
+     "note": "TPS26630 IN pins (pass-through)"
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum input requirement (PE_ENT)",
+   "cite": [
+    "PW",
+    "PE_ENT",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/CORE_24V_PROTECTED": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11002",
+     "pins": [
+      "17",
+      "18"
+     ],
+     "note": "TPS26630 OUT (eFuse exit)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11007",
+     "pins": "*",
+     "w": 1.1,
+     "note": "LM706A0 CORE buck VIN pins"
+    },
+    {
+     "ref": "U11008",
+     "pins": "*",
+     "w": 0.65,
+     "note": "LM70660 MOTION buck VIN pins"
+    },
+    {
+     "ref": "U14601",
+     "pins": "*",
+     "w": 0.22
+    },
+    {
+     "ref": "U14619",
+     "pins": "*",
+     "w": 0.22
+    },
+    {
+     "ref": "U14701",
+     "pins": "*",
+     "w": 0.22
+    },
+    {
+     "ref": "U14702",
+     "pins": "*",
+     "w": 0.22
+    },
+    {
+     "ref": "U14703",
+     "pins": "*",
+     "w": 0.22
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum input requirement (PE_ENT); LM706x0 VIN 4.5-65 V and TMR 4 W converters have > 5 V functional margin",
+   "cite": [
+    "PW",
+    "PE_ENT",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FIELD_A_24V_INPUT": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "J11003",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "F11002",
+     "pins": [
+      "1"
+     ],
+     "w": 5.08
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum field input requirement (PE_INH field24_requirement_v)",
+   "cite": [
+    "PW",
+    "PE_INH"
+   ]
+  },
+  "/motherboard_power_entry/FA_RAW": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "F11002",
+     "pins": [
+      "2"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11003",
+     "pins": [
+      "1",
+      "2",
+      "3"
+     ],
+     "w": 5.08
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FA_IN": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11003",
+     "pins": [
+      "5"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11004",
+     "pins": [
+      "1",
+      "2"
+     ],
+     "w": 5.08
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FIELD_A_24V_PROTECTED": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11004",
+     "pins": [
+      "17",
+      "18"
+     ],
+     "note": "TPS26630 OUT (eFuse exit)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U10004",
+     "pins": "*",
+     "w": 1.6,
+     "note": "TPS274C65 quad high-side VS"
+    },
+    {
+     "ref": "U10009",
+     "pins": "*",
+     "w": 1.6
+    },
+    {
+     "ref": "U11009",
+     "pins": [
+      "4"
+     ],
+     "w": 0.3,
+     "note": "LMR36506 FIELD_5V buck VIN"
+    },
+    {
+     "ref": "U11015",
+     "pins": [
+      "1"
+     ],
+     "w": 0.3,
+     "note": "TPS26624 AUX24 A, limit max 0.3 A (PE_INH)"
+    },
+    {
+     "ref": "U11016",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2,
+     "note": "TPS26624 AUX24 B, limit max 0.2 A (PE_INH)"
+    },
+    {
+     "ref": "U11017",
+     "pins": [
+      "8"
+     ],
+     "w": 0.02,
+     "note": "TPS7A1633 20 mA reservation (PEREADME)"
+    },
+    {
+     "ref": "U14026",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U14027",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of the 18 V minimum field input (PE_INH); the field static-arming window 19-29 V vs 18-30 V input is an existing open gate (PE gates)",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC",
+    "PEREADME"
+   ]
+  },
+  "/motherboard_power_entry/FIELD_B_24V_INPUT": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "J11005",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "F11003",
+     "pins": [
+      "1"
+     ],
+     "w": 5.32
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH"
+   ]
+  },
+  "/motherboard_power_entry/FB_RAW": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "F11003",
+     "pins": [
+      "2"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11005",
+     "pins": [
+      "1",
+      "2",
+      "3"
+     ],
+     "w": 5.32
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FB_IN": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11005",
+     "pins": [
+      "5"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11006",
+     "pins": [
+      "1",
+      "2"
+     ],
+     "w": 5.32
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FIELD_B_24V_PROTECTED": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11006",
+     "pins": [
+      "17",
+      "18"
+     ],
+     "note": "TPS26630 OUT (eFuse exit)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U10017",
+     "pins": "*",
+     "w": 1.6
+    },
+    {
+     "ref": "U10022",
+     "pins": "*",
+     "w": 1.6
+    },
+    {
+     "ref": "U19004",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U19005",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U19006",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U19007",
+     "pins": [
+      "8"
+     ],
+     "w": 0.9,
+     "note": "TPS1H000 Imax 0.9 A (product page)"
+    },
+    {
+     "ref": "U19018",
+     "pins": [
+      "8"
+     ],
+     "w": 0.9
+    },
+    {
+     "ref": "U19028",
+     "pins": [
+      "4"
+     ],
+     "w": 0.3
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "LC"
+   ]
+  },
+  "/mc_local_power/CORE_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "R11022",
+     "pins": [
+      "2"
+     ],
+     "note": "5 mOhm shunt output pad (CORE buck output after the sense resistor)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11012",
+     "pins": [
+      "3",
+      "11"
+     ],
+     "w": 3.0,
+     "budget_mv": 70,
+     "note": "TPS22990 SBC switch VIN + VIN thermal pad; SBC running 3.0 A (SBCENV, PB)"
+    },
+    {
+     "ref": "U2002",
+     "pins": [
+      "6"
+     ],
+     "w": 0.37,
+     "note": "TPS62902 IO_3V3 buck input (PB io3v3_input)"
+    },
+    {
+     "ref": "U2001",
+     "pins": [
+      "6"
+     ],
+     "w": 0.28,
+     "note": "TPS62901 CORE_1V2 buck input (PB core1v2_input)"
+    },
+    {
+     "ref": "U16001",
+     "pins": [
+      "1"
+     ],
+     "w": 0.6,
+     "note": "TPS2553 ESP supply (PB esp3v3_input)"
+    },
+    {
+     "ref": "U14812",
+     "pins": [
+      "9"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U14813",
+     "pins": [
+      "9"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U17017",
+     "pins": [
+      "28"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U17018",
+     "pins": [
+      "28"
+     ],
+     "w": 0.01
+    }
+   ],
+   "auto_power_in_a": 0.005,
+   "cases": {
+    "sbc_3p6": {
+     "note": "SBC chain case: U11012 at the 3.6 A SBC planning reserve, other loads at their design weights (unscaled)",
+     "override": {
+      "U11012": 3.6
+     },
+     "absolute": true
+    },
+    "epa_8motor_normal": {
+     "note": "expanded-power analysis 8-motor normal CORE 5 V load 5.66 A (EPA_C5), loads scaled from their design weights",
+     "total_a": 5.66
+    },
+    "pe_normal_screen": {
+     "note": "motherboard power-entry CORE normal-load screen 6.637 A (PE_CORE7A), loads scaled from their design weights",
+     "total_a": 6.637
+    }
+   },
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V for logic loads (74AHCT VCC >= 4.5 V leaves 450 mV from the 4.95 V regulation floor, PEREADME); U11012 VIN budget 70 mV = 4.95 V regulation floor - 4.75 V CM input minimum (EPA_VC) - 100 mV SBC_5V budget (OPD_SBC) - 8 mOhm x 3.6 A switch drop (SBCENV)",
+   "cite": [
+    "PW",
+    "PEREADME",
+    "EPA_VC",
+    "OPD_SBC",
+    "SBCENV",
+    "PB",
+    "LC",
+    "EPA_C5",
+    "PE_CORE7A"
+   ]
+  },
+  "/motherboard_power_entry/SBC_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U11012",
+     "pins": [
+      "8",
+      "9",
+      "10"
+     ],
+     "note": "TPS22990 VOUT pins"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "J15001",
+     "pins": [
+      "77",
+      "79",
+      "81",
+      "83",
+      "85",
+      "87"
+     ],
+     "w": 3.0,
+     "note": "CM 5 V pins, SBC running current 3.0 A (SBCENV)"
+    },
+    {
+     "ref": "U15026",
+     "pins": [
+      "1"
+     ],
+     "w": 0.5,
+     "note": "TPS2553 USB port switch input (0.5 A USB 2.0 port class)"
+    },
+    {
+     "ref": "U15018",
+     "pins": [
+      "11"
+     ],
+     "w": 0.05,
+     "note": "TPD12S016 HDMI 5 V"
+    }
+   ],
+   "cases": {
+    "operator_3p6": {
+     "note": "operator DRAFT budget case: 3.6 A delivered to J15001's SBC pins (OPD_SBC), other loads off",
+     "only": {
+      "J15001": 3.6
+     },
+     "absolute": true,
+     "budget_mv": 100,
+     "budget_class": "DRAFT (operator decision 2026-10-04 B-PWRB-01)"
+    }
+   },
+   "budget_mv": 100,
+   "budget_class": "DRAFT (operator decision 2026-10-04 B-PWRB-01)",
+   "budget_basis": "Operator/coordinator DRAFT: <= 100 mV from U11012 output to J15001 SBC pins at 3.6 A (OPD_SBC); older envelope allowed 15 mOhm trace+contact (SBCENV)",
+   "cite": [
+    "PW",
+    "OPD_SBC",
+    "SBCENV",
+    "PEREADME",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/MOTION_5V_RAW": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "R11030",
+     "pins": [
+      "2"
+     ],
+     "note": "6 mOhm shunt output pad (MOTION buck output)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11010",
+     "pins": [
+      "3",
+      "11"
+     ],
+     "w": 0.8976,
+     "budget_mv": 10,
+     "note": "TPS22990 motor feed A VIN + thermal pad (PE_MF normal load)"
+    },
+    {
+     "ref": "U11011",
+     "pins": [
+      "3",
+      "11"
+     ],
+     "w": 0.4488,
+     "budget_mv": 10,
+     "note": "TPS22990 motor feed B (PE_MF)"
+    },
+    {
+     "ref": "U14020",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14021",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14022",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14023",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14024",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14025",
+     "pins": [
+      "1"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U14407",
+     "pins": [
+      "1"
+     ],
+     "w": 0.3,
+     "note": "LM66100 -> PWM_5V_INTERNAL"
+    }
+   ],
+   "cases": {
+    "feed_normal": {
+     "note": "motor-feed chain case: U11010 0.8976 A, U11011 0.4488 A (PE_MF), other loads at design weights (unscaled)",
+     "absolute": true
+    }
+   },
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V for encoder supplies (TPS2553 VIN 2.5-6.5 V); motor-feed switch inputs 10 mV = half of the 20.36 mV switch+distribution budget (PE_MF), the chain record carries the full budget",
+   "cite": [
+    "PW",
+    "PE_MF",
+    "PB",
+    "TPS2553",
+    "LC"
+   ]
+  },
+  "/motherboard_motors/MOTOR_5V_A": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U11010",
+     "pins": [
+      "8",
+      "9",
+      "10"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U6001",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6002",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6003",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6004",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6033",
+     "pins": [
+      "1"
+     ],
+     "w": 0.5,
+     "note": "TPS22918 load switch"
+    },
+    {
+     "ref": "U6041",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U6051",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    }
+   ],
+   "cases": {
+    "feed_normal": {
+     "note": "motor-feed chain case at the PE_MF normal load 0.8976 A",
+     "total_a": 0.8976
+    }
+   },
+   "budget_mv": 10,
+   "budget_basis": "DRAFT: half of the 20.36 mV motor-feed switch+distribution budget (PE_MF); the chain record checks the whole path",
+   "cite": [
+    "PW",
+    "PE_MF",
+    "PB",
+    "LC"
+   ]
+  },
+  "/motherboard_motors/MOTOR_5V_B": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U11011",
+     "pins": [
+      "8",
+      "9",
+      "10"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U6005",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6006",
+     "pins": [
+      "16"
+     ],
+     "w": 0.2
+    },
+    {
+     "ref": "U6034",
+     "pins": [
+      "1"
+     ],
+     "w": 0.5
+    },
+    {
+     "ref": "U6045",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U6052",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    }
+   ],
+   "cases": {
+    "feed_normal": {
+     "note": "motor-feed chain case at the PE_MF normal load 0.4488 A",
+     "total_a": 0.4488
+    }
+   },
+   "budget_mv": 10,
+   "budget_basis": "DRAFT: half of the 20.36 mV motor-feed budget (PE_MF)",
+   "cite": [
+    "PW",
+    "PE_MF",
+    "LC"
+   ]
+  },
+  "/motherboard_power_entry/FIELD_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "L11003",
+     "pins": [
+      "2"
+     ],
+     "note": "LMR36506 output inductor, output side"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U11013",
+     "pins": [
+      "1"
+     ],
+     "w": 0.128,
+     "note": "TPS2553 AUX5 A input (PE_INH aux5 A)"
+    },
+    {
+     "ref": "U11014",
+     "pins": [
+      "1"
+     ],
+     "w": 0.064,
+     "note": "TPS2553 AUX5 B input"
+    },
+    {
+     "ref": "U9007",
+     "pins": [
+      "3"
+     ],
+     "w": 0.01
+    }
+   ],
+   "budget_mv": 20,
+   "budget_basis": "DRAFT: 4.93 V LMR36506 minimum (LMR36506) - 4.869 V worst UV arming threshold (PE_GATES) = 60.8 mV for FIELD_5V copper + TPS2553 drop + AUX_5V copper; 20 mV each copper section, the chain record checks the total",
+   "cite": [
+    "PW",
+    "LMR36506",
+    "PE_GATES",
+    "PE_INH",
+    "TPS2553"
+   ]
+  },
+  "/motherboard_motors/AUX_24V_A": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11015",
+     "pins": [
+      "10"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "JD01",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD02",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD03",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD04",
+     "pins": "*",
+     "w": 0.25
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V; design load is 0.148 A and the TPS26624 limit 0.3 A max (PE_INH): the 1.0 A table value is conservative",
+   "cite": [
+    "PW",
+    "PE_INH"
+   ]
+  },
+  "/motherboard_motors/AUX_24V_B": {
+   "nominal_v": 24.0,
+   "sources": [
+    {
+     "ref": "U11016",
+     "pins": [
+      "10"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "JD05",
+     "pins": "*",
+     "w": 0.5
+    },
+    {
+     "ref": "JD06",
+     "pins": "*",
+     "w": 0.5
+    }
+   ],
+   "budget_mv": 180,
+   "budget_basis": "DRAFT: 1 % of 18 V (PE_INH limit 0.2 A max)",
+   "cite": [
+    "PW",
+    "PE_INH"
+   ]
+  },
+  "/motherboard_motors/AUX_5V_A": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U11013",
+     "pins": [
+      "6"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "JD01",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD02",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD03",
+     "pins": "*",
+     "w": 0.25
+    },
+    {
+     "ref": "JD04",
+     "pins": "*",
+     "w": 0.25
+    }
+   ],
+   "cases": {
+    "aux_design": {
+     "note": "inherited AUX5 A design load 0.128 A (PE_INH)",
+     "total_a": 0.128
+    }
+   },
+   "budget_mv": 20,
+   "budget_basis": "DRAFT: share of the 60.8 mV FIELD_5V/AUX5 window (LMR36506, PE_GATES)",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "PE_GATES",
+    "LMR36506"
+   ]
+  },
+  "/motherboard_motors/AUX_5V_B": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U11014",
+     "pins": [
+      "6"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "JD05",
+     "pins": "*",
+     "w": 0.5
+    },
+    {
+     "ref": "JD06",
+     "pins": "*",
+     "w": 0.5
+    }
+   ],
+   "cases": {
+    "aux_design": {
+     "note": "inherited AUX5 B design load 0.064 A (PE_INH)",
+     "total_a": 0.064
+    }
+   },
+   "budget_mv": 20,
+   "budget_basis": "DRAFT: share of the 60.8 mV FIELD_5V/AUX5 window",
+   "cite": [
+    "PW",
+    "PE_INH",
+    "PE_GATES",
+    "LMR36506"
+   ]
+  },
+  "/CORE_1V2": {
+   "nominal_v": 1.2,
+   "sources": [
+    {
+     "ref": "L2001",
+     "pins": [
+      "2"
+     ],
+     "note": "TPS62901 output inductor, output side"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U1001",
+     "pins": "*",
+     "w": 1.0,
+     "note": "T20F256 VCC / VCCA balls"
+    }
+   ],
+   "cases": {
+    "reservation_0p8": {
+     "note": "FPGA core reservation 0.8 A (PB fpga_core)",
+     "total_a": 0.8
+    }
+   },
+   "budget_mv": 20,
+   "budget_basis": "DRAFT: T20 VCC 1.15-1.25 V at the device pins (T20) = 50 mV below nominal; 12 mV regulator setpoint allowance (+/-1 % class, not fetched) and 18 mV ripple/transient allowance leave 20 mV for copper. NOTE: the 1.5 A table current exceeds TPS62901's 1 A continuous rating (TPS62901)",
+   "cite": [
+    "PW",
+    "T20",
+    "TPS62901",
+    "PB"
+   ]
+  },
+  "/motherboard_compute/CM_AUX_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "J15001",
+     "pins": [
+      "84",
+      "86"
+     ],
+     "note": "CM 3.3 V output pins"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U15012",
+     "pins": [
+      "1"
+     ],
+     "w": 0.3,
+     "note": "TPS2553 SD port switch"
+    },
+    {
+     "ref": "U15018",
+     "pins": [
+      "24"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U15027",
+     "pins": [
+      "5"
+     ],
+     "w": 0.001
+    }
+   ],
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "LC",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_do/DOA_FIELD_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "U11017",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U10004",
+     "pins": [
+      "4"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U10009",
+     "pins": [
+      "4"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U10003",
+     "pins": [
+      "16"
+     ],
+     "w": 0.005
+    }
+   ],
+   "cases": {
+    "ldo_reservation": {
+     "note": "TPS7A1633 20 mA reservation (PEREADME)",
+     "total_a": 0.02
+    }
+   },
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC); the 0.5 A table current is 5x the TPS7A16 100 mA rating (TPS7A16): very conservative",
+   "cite": [
+    "PW",
+    "PEREADME",
+    "TPS7A16",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_do/DOB_FIELD_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "U11018",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U10017",
+     "pins": [
+      "4"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U10022",
+     "pins": [
+      "4"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U10016",
+     "pins": [
+      "16"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U19026",
+     "pins": [
+      "8"
+     ],
+     "w": 0.001
+    }
+   ],
+   "cases": {
+    "ldo_reservation": {
+     "note": "TPS7A1633 20 mA reservation (PEREADME)",
+     "total_a": 0.02
+    }
+   },
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "PEREADME",
+    "TPS7A16",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_analog_input/AI_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U14741",
+     "pins": [
+      "1"
+     ],
+     "note": "TPS7A2650 OUT"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14734",
+     "pins": [
+      "9",
+      "30",
+      "34"
+     ],
+     "w": 0.02,
+     "note": "ADS8684 AVDD/DVDD"
+    },
+    {
+     "ref": "U14712",
+     "pins": [
+      "2"
+     ],
+     "w": 0.002
+    }
+   ],
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "LC",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_analog_input/AI_15V": {
+   "nominal_v": 15.0,
+   "sources": [
+    {
+     "ref": "U14702",
+     "pins": [
+      "6"
+     ],
+     "note": "TMR 4-2413WI +VOUT"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14713",
+     "pins": [
+      "4"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U14715",
+     "pins": [
+      "7"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U14720",
+     "pins": [
+      "7"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U14725",
+     "pins": [
+      "7"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U14730",
+     "pins": [
+      "7"
+     ],
+     "w": 0.01
+    },
+    {
+     "ref": "U14736",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    }
+   ],
+   "budget_mv": 150,
+   "budget_basis": "DRAFT: 1 % of 15 V",
+   "cite": [
+    "PW"
+   ]
+  },
+  "/motherboard_analog_output/AO0_12V": {
+   "nominal_v": 12.0,
+   "sources": [
+    {
+     "ref": "U14601",
+     "pins": [
+      "6"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14602",
+     "pins": [
+      "8"
+     ],
+     "w": 0.03
+    },
+    {
+     "ref": "U14613",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U14603",
+     "pins": [
+      "5"
+     ],
+     "w": 0.001
+    }
+   ],
+   "budget_mv": 120,
+   "budget_basis": "DRAFT: 1 % of 12 V",
+   "cite": [
+    "PW"
+   ]
+  },
+  "/motherboard_analog_output/AO1_12V": {
+   "nominal_v": 12.0,
+   "sources": [
+    {
+     "ref": "U14619",
+     "pins": [
+      "6"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14620",
+     "pins": [
+      "8"
+     ],
+     "w": 0.03
+    },
+    {
+     "ref": "U14631",
+     "pins": [
+      "5"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U14621",
+     "pins": [
+      "5"
+     ],
+     "w": 0.001
+    }
+   ],
+   "budget_mv": 120,
+   "budget_basis": "DRAFT: 1 % of 12 V",
+   "cite": [
+    "PW"
+   ]
+  },
+  "/motherboard_analog_output/AO0_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U14602",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14608",
+     "pins": [
+      "1"
+     ],
+     "w": 0.002
+    },
+    {
+     "ref": "U14605",
+     "pins": [
+      "16"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U14615",
+     "pins": [
+      "3"
+     ],
+     "w": 0.002
+    }
+   ],
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_analog_output/AO1_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U14620",
+     "pins": [
+      "1"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14626",
+     "pins": [
+      "1"
+     ],
+     "w": 0.002
+    },
+    {
+     "ref": "U14623",
+     "pins": [
+      "16"
+     ],
+     "w": 0.005
+    },
+    {
+     "ref": "U14633",
+     "pins": [
+      "3"
+     ],
+     "w": 0.002
+    }
+   ],
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_process/PWM_5V_INTERNAL": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "U14407",
+     "pins": [
+      "6"
+     ],
+     "note": "LM66100 VOUT"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14414",
+     "pins": [
+      "1"
+     ],
+     "w": 0.15
+    },
+    {
+     "ref": "U14419",
+     "pins": [
+      "8"
+     ],
+     "w": 0.15
+    }
+   ],
+   "budget_mv": 100,
+   "budget_basis": "DRAFT: 2 % of 5 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "LC",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_comms/CAN_CTRL_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "U14801",
+     "pins": [
+      "6"
+     ],
+     "note": "TPS22918 VOUT"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U14806",
+     "pins": [
+      "14"
+     ],
+     "w": 0.02,
+     "note": "MCP2518FD"
+    },
+    {
+     "ref": "U14807",
+     "pins": [
+      "4"
+     ],
+     "w": 0.01
+    }
+   ],
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_compute/SD_PORT_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "U15012",
+     "pins": [
+      "6"
+     ]
+    }
+   ],
+   "loads": [
+    {
+     "ref": "J15003",
+     "pins": [
+      "4"
+     ],
+     "w": 0.3,
+     "note": "microSD VDD"
+    }
+   ],
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "LC",
+    "GENERIC_LOGIC"
+   ]
+  },
+  "/motherboard_compute/USB_PORT_5V": {
+   "nominal_v": 5.0,
+   "sources": [
+    {
+     "ref": "R15053",
+     "pins": [
+      "2"
+     ],
+     "note": "0.1 Ohm current-sense resistor, port side"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "J15005",
+     "pins": [
+      "1"
+     ],
+     "w": 1.0,
+     "note": "USB-A VBUS"
+    }
+   ],
+   "budget_mv": 50,
+   "budget_basis": "DRAFT: VBUS >= 4.75 V at the port (USB2); the 0.1 Ohm sense resistor and TPS2553 drop already consume most of the 250 mV window, so the copper share is 50 mV",
+   "cite": [
+    "PW",
+    "USB2",
+    "LC"
+   ]
+  },
+  "/motherboard_esp_socket/ESP_MODULE_3V3": {
+   "nominal_v": 3.3,
+   "sources": [
+    {
+     "ref": "J16001",
+     "pins": [
+      "1",
+      "2"
+     ],
+     "note": "ESP32-S3-DevKitC 3V3 pins (the DevKit's own LDO output)"
+    }
+   ],
+   "loads": [
+    {
+     "ref": "U16003",
+     "pins": [
+      "5"
+     ],
+     "w": 0.01
+    }
+   ],
+   "total_a": 0.02,
+   "total_basis": "No regulator on this net: the DevKit feeds it, the board only loads it with one buffer and pull-ups. 20 mA DRAFT instead of the 0.5 A width class of power_widths.json.",
+   "budget_mv": 66,
+   "budget_basis": "DRAFT: 2 % of 3.3 V (GENERIC_LOGIC)",
+   "cite": [
+    "PW",
+    "LC",
+    "GENERIC_LOGIC"
+   ]
+  }
+ },
+ "chains": {
+  "SBC_5V_delivery": {
+   "note": "CORE_5V shunt output -> U11012 VIN, TPS22990 RON, U11012 VOUT -> J15001 SBC pins, at 3.6 A",
+   "segments": [
+    {
+     "rail": "/mc_local_power/CORE_5V",
+     "case": "sbc_3p6",
+     "to_ref": "U11012"
+    },
+    {
+     "device": "TPS22990 RON (SBCENV screening 8 mOhm)",
+     "ohm": 0.008,
+     "amps": 3.6
+    },
+    {
+     "rail": "/motherboard_power_entry/SBC_5V",
+     "case": "operator_3p6",
+     "to_ref": "J15001"
+    }
+   ],
+   "budget_mv": 200,
+   "budget_basis": "4.95 V CORE_5V regulation floor (PEREADME) - 4.75 V CM input minimum (EPA_VC)",
+   "cite": [
+    "PEREADME",
+    "EPA_VC",
+    "SBCENV",
+    "OPD_SBC"
+   ]
+  },
+  "MOTOR_FEED_A": {
+   "note": "MOTION_5V_RAW shunt output -> U11010 VIN, TPS22990 RON, MOTOR_5V_A -> worst AM26C31",
+   "segments": [
+    {
+     "rail": "/motherboard_power_entry/MOTION_5V_RAW",
+     "case": "feed_normal",
+     "to_ref": "U11010"
+    },
+    {
+     "device": "TPS22990 RON max -40..105 C (TPS22990)",
+     "ohm": 0.006,
+     "amps": 0.8976
+    },
+    {
+     "rail": "/motherboard_motors/MOTOR_5V_A",
+     "case": "feed_normal",
+     "to_ref": "*"
+    }
+   ],
+   "budget_mv": 20.3624,
+   "budget_class": "project budget (design.json)",
+   "budget_basis": "PE_MF total_switch_and_distribution_loss_max_v 0.0203624 V at normal load",
+   "cite": [
+    "PE_MF",
+    "TPS22990"
+   ]
+  },
+  "MOTOR_FEED_B": {
+   "note": "MOTION_5V_RAW shunt output -> U11011 VIN, TPS22990 RON, MOTOR_5V_B -> worst AM26C31",
+   "segments": [
+    {
+     "rail": "/motherboard_power_entry/MOTION_5V_RAW",
+     "case": "feed_normal",
+     "to_ref": "U11011"
+    },
+    {
+     "device": "TPS22990 RON max -40..105 C (TPS22990)",
+     "ohm": 0.006,
+     "amps": 0.4488
+    },
+    {
+     "rail": "/motherboard_motors/MOTOR_5V_B",
+     "case": "feed_normal",
+     "to_ref": "*"
+    }
+   ],
+   "budget_mv": 20.3624,
+   "budget_class": "project budget (design.json)",
+   "budget_basis": "PE_MF total_switch_and_distribution_loss_max_v 0.0203624 V at normal load",
+   "cite": [
+    "PE_MF",
+    "TPS22990"
+   ]
+  },
+  "FIELD_AUX5_A": {
+   "note": "FIELD_5V inductor output -> U11013 IN, TPS2553 rDS(on), AUX_5V_A -> JD01..JD04",
+   "segments": [
+    {
+     "rail": "/motherboard_power_entry/FIELD_5V",
+     "case": "design",
+     "to_ref": "U11013"
+    },
+    {
+     "device": "TPS2553 rDS(on) max -40..125 C (TPS2553)",
+     "ohm": 0.135,
+     "amps": 0.128
+    },
+    {
+     "rail": "/motherboard_motors/AUX_5V_A",
+     "case": "aux_design",
+     "to_ref": "*"
+    }
+   ],
+   "budget_mv": 60.8,
+   "budget_basis": "4.93 V LMR36506 minimum (LMR36506) - 4.86919887 V worst UV arming threshold (PE_GATES)",
+   "cite": [
+    "LMR36506",
+    "PE_GATES",
+    "TPS2553",
+    "PE_INH"
+   ]
+  }
+ },
+ "hot_parts": [
+  {
+   "ref": "U11007",
+   "value": "LM706A0RRXR",
+   "role": "CORE 5 V buck (24 V -> CORE_5V)",
+   "model": "efficiency",
+   "vout": 5.0,
+   "iout_a": 6.637,
+   "eta": 0.92,
+   "ic_share": 1.0,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 11.6,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/mc_local_power/CORE_5V"
+   ],
+   "cite": [
+    "LM706X0",
+    "PE_CORE7A",
+    "EPA_C5"
+   ],
+   "basis": "6.637 A (PE_CORE7A ordinary normal-load screen; > EPA_C5 5.66 A and the 4.5 A width-table class) at 5 V, efficiency 92.0 % = the VIN 36 V curve of LM706X0 at 6.6 A (conservative for the 18-30 V input); all converter loss (switches, inductor, sense) put in the IC (conservative for T_J)",
+   "limit_basis": "TJ operating max 150 C (LM706X0 5.3)"
+  },
+  {
+   "ref": "U11008",
+   "value": "LM70660RRXR",
+   "role": "MOTION 5 V buck",
+   "model": "efficiency",
+   "vout": 5.0,
+   "iout_a": 2.5,
+   "eta": 0.896,
+   "ic_share": 1.0,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 11.6,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/motherboard_power_entry/MOTION_5V_RAW"
+   ],
+   "cite": [
+    "LM706X0",
+    "PW"
+   ],
+   "basis": "2.5 A (power_widths MOTION_5V_RAW) at 5 V, efficiency 89.6 % (VIN 36 V curve at 2.5 A, LM706X0), all loss in the IC",
+   "limit_basis": "TJ operating max 150 C (LM706X0 5.3)"
+  },
+  {
+   "ref": "U11009",
+   "value": "LMR36506R5RPER",
+   "role": "field 5 V buck",
+   "model": "efficiency",
+   "vout": 5.0,
+   "iout_a": 0.6,
+   "eta": 0.85,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 25.9,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FIELD_A_24V_PROTECTED",
+    "/motherboard_power_entry/FIELD_5V"
+   ],
+   "cite": [
+    "LMR36506_TH"
+   ],
+   "basis": "0.6 A = the LMR36506 rated load (its design loads are ~0.2 A: conservative), DRAFT efficiency 85 % (below the 90 % peak of LMR36506_TH)",
+   "limit_basis": "TJ max 150 C (LMR36506_TH)"
+  },
+  {
+   "ref": "U19028",
+   "value": "LMR36506R5RPER",
+   "role": "field 5 V buck",
+   "model": "efficiency",
+   "vout": 5.0,
+   "iout_a": 0.6,
+   "eta": 0.85,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 25.9,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED"
+   ],
+   "cite": [
+    "LMR36506_TH"
+   ],
+   "basis": "0.6 A = the LMR36506 rated load (its design loads are ~0.2 A: conservative), DRAFT efficiency 85 % (below the 90 % peak of LMR36506_TH)",
+   "limit_basis": "TJ max 150 C (LMR36506_TH)"
+  },
+  {
+   "ref": "U2001",
+   "value": "TPS62901RPJR",
+   "role": "CORE_1V2 buck (FPGA core)",
+   "model": "efficiency",
+   "vout": 1.2,
+   "iout_a": 0.8,
+   "eta": 0.87,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 24.7,
+   "tj_max_c": 150,
+   "rails": [
+    "/mc_local_power/CORE_5V",
+    "/CORE_1V2"
+   ],
+   "cite": [
+    "TPS6290X",
+    "PB"
+   ],
+   "basis": "0.8 A FPGA core reservation (PB fpga_core) at 1.2 V, efficiency 87 % (TPS6290X Fig. 7-19, VIN 5 V)",
+   "limit_basis": "TJ max 150 C (TPS6290X)"
+  },
+  {
+   "ref": "U2002",
+   "value": "TPS62902RPJR",
+   "role": "IO_3V3 buck",
+   "model": "efficiency",
+   "vout": 3.3,
+   "iout_a": 0.505,
+   "eta": 0.9,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 24.7,
+   "tj_max_c": 150,
+   "rails": [
+    "/mc_local_power/CORE_5V"
+   ],
+   "cite": [
+    "TPS6290X",
+    "PB"
+   ],
+   "basis": "input 0.37 A x 5 V (PB io3v3_input) -> 0.505 A at 3.3 V with DRAFT 90 % efficiency (TPS6290X Fig. 7-11 shows ~95 % with 2.2 uH)",
+   "limit_basis": "TJ max 150 C (TPS6290X)"
+  },
+  {
+   "ref": "U11002",
+   "value": "TPS26630RGER",
+   "role": "entry eFuse",
+   "model": "i2r",
+   "i_a": 3.61,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0345
+    ],
+    [
+     85,
+     0.045
+    ],
+    [
+     125,
+     0.053
+    ]
+   ],
+   "extra_w": 0.051,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 10.2,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/motherboard_power_entry/C_IN"
+   ],
+   "cite": [
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "3.61 A (power_widths eFuse-limit class of the entry) x RON max vs TJ (TPS2663_TH: 34.5 mOhm 25 C, 45 mOhm 85 C, 53 mOhm 125 C) + IQ 1.7 mA x 30 V",
+   "limit_basis": "recommended TJ max 125 C (TPS2663_TH 6.3)"
+  },
+  {
+   "ref": "U11004",
+   "value": "TPS26630RGER",
+   "role": "entry eFuse",
+   "model": "i2r",
+   "i_a": 5.08,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0345
+    ],
+    [
+     85,
+     0.045
+    ],
+    [
+     125,
+     0.053
+    ]
+   ],
+   "extra_w": 0.051,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 10.2,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_A_24V_PROTECTED",
+    "/motherboard_power_entry/FA_IN"
+   ],
+   "cite": [
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "5.08 A (power_widths eFuse-limit class of the entry) x RON max vs TJ (TPS2663_TH: 34.5 mOhm 25 C, 45 mOhm 85 C, 53 mOhm 125 C) + IQ 1.7 mA x 30 V",
+   "limit_basis": "recommended TJ max 125 C (TPS2663_TH 6.3)"
+  },
+  {
+   "ref": "U11006",
+   "value": "TPS26630RGER",
+   "role": "entry eFuse",
+   "model": "i2r",
+   "i_a": 5.32,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0345
+    ],
+    [
+     85,
+     0.045
+    ],
+    [
+     125,
+     0.053
+    ]
+   ],
+   "extra_w": 0.051,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 10.2,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED",
+    "/motherboard_power_entry/FB_IN"
+   ],
+   "cite": [
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "5.32 A (power_widths eFuse-limit class of the entry) x RON max vs TJ (TPS2663_TH: 34.5 mOhm 25 C, 45 mOhm 85 C, 53 mOhm 125 C) + IQ 1.7 mA x 30 V",
+   "limit_basis": "recommended TJ max 125 C (TPS2663_TH 6.3)"
+  },
+  {
+   "ref": "U11001",
+   "value": "CSD19537Q3T",
+   "role": "reverse-blocking FET of the entry",
+   "model": "i2r",
+   "i_a": 3.61,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0166
+    ],
+    [
+     75,
+     0.021746
+    ],
+    [
+     100,
+     0.0249
+    ],
+    [
+     125,
+     0.02822
+    ],
+    [
+     150,
+     0.031872
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "theta_JC (to the soldered drain pad)",
+   "psi_c_per_w": 1.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/C_RAW"
+   ],
+   "cite": [
+    "CSD19537",
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "3.61 A x RDS(on) max at VGS 6 V (below the >= 8.3 V B_GATE drive) x the Fig. 5-8 temperature factor (CSD19537)",
+   "limit_basis": "TJ max 150 C (CSD19537)"
+  },
+  {
+   "ref": "U11003",
+   "value": "CSD19537Q3T",
+   "role": "reverse-blocking FET of the entry",
+   "model": "i2r",
+   "i_a": 5.08,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0166
+    ],
+    [
+     75,
+     0.021746
+    ],
+    [
+     100,
+     0.0249
+    ],
+    [
+     125,
+     0.02822
+    ],
+    [
+     150,
+     0.031872
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "theta_JC (to the soldered drain pad)",
+   "psi_c_per_w": 1.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FA_RAW"
+   ],
+   "cite": [
+    "CSD19537",
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "5.08 A x RDS(on) max at VGS 6 V (below the >= 8.3 V B_GATE drive) x the Fig. 5-8 temperature factor (CSD19537)",
+   "limit_basis": "TJ max 150 C (CSD19537)"
+  },
+  {
+   "ref": "U11005",
+   "value": "CSD19537Q3T",
+   "role": "reverse-blocking FET of the entry",
+   "model": "i2r",
+   "i_a": 5.32,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0166
+    ],
+    [
+     75,
+     0.021746
+    ],
+    [
+     100,
+     0.0249
+    ],
+    [
+     125,
+     0.02822
+    ],
+    [
+     150,
+     0.031872
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "theta_JC (to the soldered drain pad)",
+   "psi_c_per_w": 1.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FB_RAW"
+   ],
+   "cite": [
+    "CSD19537",
+    "TPS2663_TH",
+    "PW"
+   ],
+   "basis": "5.32 A x RDS(on) max at VGS 6 V (below the >= 8.3 V B_GATE drive) x the Fig. 5-8 temperature factor (CSD19537)",
+   "limit_basis": "TJ max 150 C (CSD19537)"
+  },
+  {
+   "ref": "F11001",
+   "value": "Keystone 3568 + Littelfuse 0997 MINI fuse",
+   "role": "entry fuse",
+   "model": "i2r",
+   "i_a": 3.61,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0258
+    ],
+    [
+     125,
+     0.0258
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (fuse-holder pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 125,
+   "coverage": "PARTIAL",
+   "rails": [],
+   "cite": [
+    "FUSE997",
+    "PW"
+   ],
+   "basis": "3.61 A x 5 A fuse: 129 mV / 5 A = 25.8 mOhm (voltage-drop resistance at rated current, hotter than the 17.75 mOhm cold value)",
+   "limit_basis": "maximum recommended environmental temperature 125 C (FUSE997) applied to the holder pads; fuse-element temperature and current re-rating with temperature are not modelled"
+  },
+  {
+   "ref": "F11002",
+   "value": "Keystone 3568 + Littelfuse 0997 MINI fuse",
+   "role": "entry fuse",
+   "model": "i2r",
+   "i_a": 5.08,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0258
+    ],
+    [
+     125,
+     0.0258
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (fuse-holder pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 125,
+   "coverage": "PARTIAL",
+   "rails": [],
+   "cite": [
+    "FUSE997",
+    "PW"
+   ],
+   "basis": "5.08 A x 7.5 A fuse: no cited data; the 5 A part's 25.8 mOhm used (DRAFT, conservative for a higher-rated fuse of the same series)",
+   "limit_basis": "maximum recommended environmental temperature 125 C (FUSE997) applied to the holder pads; fuse-element temperature and current re-rating with temperature are not modelled"
+  },
+  {
+   "ref": "F11003",
+   "value": "Keystone 3568 + Littelfuse 0997 MINI fuse",
+   "role": "entry fuse",
+   "model": "i2r",
+   "i_a": 5.32,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0258
+    ],
+    [
+     125,
+     0.0258
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (fuse-holder pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 125,
+   "coverage": "PARTIAL",
+   "rails": [],
+   "cite": [
+    "FUSE997",
+    "PW"
+   ],
+   "basis": "5.32 A x 7.5 A fuse: as F11002 (DRAFT)",
+   "limit_basis": "maximum recommended environmental temperature 125 C (FUSE997) applied to the holder pads; fuse-element temperature and current re-rating with temperature are not modelled"
+  },
+  {
+   "ref": "R11022",
+   "value": "5 mOhm 1.5 W",
+   "role": "CORE_5V sense shunt",
+   "model": "i2r",
+   "i_a": 6.637,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.005
+    ],
+    [
+     125,
+     0.005
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": null,
+   "rails": [
+    "/mc_local_power/CORE_5V"
+   ],
+   "cite": [
+    "PE_CORE7A"
+   ],
+   "basis": "6.637 A x 5 mOhm (schematic value)",
+   "limit_basis": "no cited Susumu KRL3216 terminal-temperature limit in hand"
+  },
+  {
+   "ref": "R11030",
+   "value": "6 mOhm 1.5 W",
+   "role": "MOTION_5V_RAW sense shunt",
+   "model": "i2r",
+   "i_a": 2.5,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.006
+    ],
+    [
+     125,
+     0.006
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": null,
+   "rails": [
+    "/motherboard_power_entry/MOTION_5V_RAW"
+   ],
+   "cite": [
+    "PW"
+   ],
+   "basis": "2.5 A x 6 mOhm",
+   "limit_basis": "no cited Susumu KRL3216 terminal-temperature limit in hand"
+  },
+  {
+   "ref": "R15053",
+   "value": "0.1 ohm",
+   "role": "USB port sense resistor",
+   "model": "i2r",
+   "i_a": 1.0,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.1
+    ],
+    [
+     125,
+     0.1
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "none (pad temperature)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": null,
+   "rails": [
+    "/motherboard_compute/USB_PORT_5V"
+   ],
+   "cite": [
+    "PW"
+   ],
+   "basis": "1.0 A (power_widths USB_PORT_5V) x 0.1 ohm",
+   "limit_basis": "no cited WSL0805 limit in hand"
+  },
+  {
+   "ref": "U11012",
+   "value": "TPS22990DMLR",
+   "role": "5 V load switch",
+   "model": "i2r",
+   "i_a": 3.6,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0048
+    ],
+    [
+     85,
+     0.0057
+    ],
+    [
+     105,
+     0.006
+    ],
+    [
+     125,
+     0.0066
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 17.0,
+   "tj_max_c": 125,
+   "rails": [
+    "/mc_local_power/CORE_5V",
+    "/motherboard_power_entry/SBC_5V"
+   ],
+   "cite": [
+    "TPS22990",
+    "TPS22990_TH",
+    "OPD_SBC",
+    "PE_MF"
+   ],
+   "basis": "3.6 A x RON max (TPS22990: 4.8 mOhm 25 C, 5.7 to 85 C, 6.0 to 105 C; 6.6 at 125 C extrapolated)",
+   "limit_basis": "TJ max 125 C (TPS22990_TH)"
+  },
+  {
+   "ref": "U11010",
+   "value": "TPS22990DMLR",
+   "role": "5 V load switch",
+   "model": "i2r",
+   "i_a": 0.8976,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0048
+    ],
+    [
+     85,
+     0.0057
+    ],
+    [
+     105,
+     0.006
+    ],
+    [
+     125,
+     0.0066
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 17.0,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/MOTION_5V_RAW",
+    "/motherboard_motors/MOTOR_5V_A"
+   ],
+   "cite": [
+    "TPS22990",
+    "TPS22990_TH",
+    "OPD_SBC",
+    "PE_MF"
+   ],
+   "basis": "0.8976 A x RON max (TPS22990: 4.8 mOhm 25 C, 5.7 to 85 C, 6.0 to 105 C; 6.6 at 125 C extrapolated)",
+   "limit_basis": "TJ max 125 C (TPS22990_TH)"
+  },
+  {
+   "ref": "U11011",
+   "value": "TPS22990DMLR",
+   "role": "5 V load switch",
+   "model": "i2r",
+   "i_a": 0.4488,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.0048
+    ],
+    [
+     85,
+     0.0057
+    ],
+    [
+     105,
+     0.006
+    ],
+    [
+     125,
+     0.0066
+    ]
+   ],
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 17.0,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/MOTION_5V_RAW",
+    "/motherboard_motors/MOTOR_5V_B"
+   ],
+   "cite": [
+    "TPS22990",
+    "TPS22990_TH",
+    "OPD_SBC",
+    "PE_MF"
+   ],
+   "basis": "0.4488 A x RON max (TPS22990: 4.8 mOhm 25 C, 5.7 to 85 C, 6.0 to 105 C; 6.6 at 125 C extrapolated)",
+   "limit_basis": "TJ max 125 C (TPS22990_TH)"
+  },
+  {
+   "ref": "U11017",
+   "value": "TPS7A1633DGNR",
+   "role": "field 3.3 V LDO from 24 V",
+   "model": "ldo",
+   "vin": 30.0,
+   "vout": 3.3,
+   "iout_a": 0.02,
+   "iq_a": 5e-06,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 34.3,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_A_24V_PROTECTED",
+    "/motherboard_do/DOA_FIELD_3V3"
+   ],
+   "cite": [
+    "TPS7A16_TH",
+    "PEREADME",
+    "PE_INH"
+   ],
+   "basis": "(30 V max field input (PE_INH 18-30 V) - 3.3 V) x 20 mA reservation (PEREADME)",
+   "limit_basis": "TJ max 125 C (TPS7A16_TH)"
+  },
+  {
+   "ref": "U11018",
+   "value": "TPS7A1633DGNR",
+   "role": "field 3.3 V LDO from 24 V",
+   "model": "ldo",
+   "vin": 30.0,
+   "vout": 3.3,
+   "iout_a": 0.02,
+   "iq_a": 5e-06,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 34.3,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED",
+    "/motherboard_do/DOB_FIELD_3V3"
+   ],
+   "cite": [
+    "TPS7A16_TH",
+    "PEREADME",
+    "PE_INH"
+   ],
+   "basis": "(30 V max field input (PE_INH 18-30 V) - 3.3 V) x 20 mA reservation (PEREADME)",
+   "limit_basis": "TJ max 125 C (TPS7A16_TH)"
+  },
+  {
+   "ref": "U14602",
+   "value": "TPS7A1650DGNR",
+   "role": "AO 5 V LDO from 12 V",
+   "model": "ldo",
+   "vin": 12.0,
+   "vout": 5.0,
+   "iout_a": 0.009,
+   "iq_a": 5e-06,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 34.3,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_analog_output/AO0_12V",
+    "/motherboard_analog_output/AO0_5V"
+   ],
+   "cite": [
+    "TPS7A16_TH"
+   ],
+   "basis": "(12 - 5) V x 9 mA (sum of the rail_model loads)",
+   "limit_basis": "TJ max 125 C (TPS7A16_TH)"
+  },
+  {
+   "ref": "U14620",
+   "value": "TPS7A1650DGNR",
+   "role": "AO 5 V LDO from 12 V",
+   "model": "ldo",
+   "vin": 12.0,
+   "vout": 5.0,
+   "iout_a": 0.009,
+   "iq_a": 5e-06,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 34.3,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_analog_output/AO1_12V",
+    "/motherboard_analog_output/AO1_5V"
+   ],
+   "cite": [
+    "TPS7A16_TH"
+   ],
+   "basis": "(12 - 5) V x 9 mA (sum of the rail_model loads)",
+   "limit_basis": "TJ max 125 C (TPS7A16_TH)"
+  },
+  {
+   "ref": "U14601",
+   "value": "TMR 4-2412WI",
+   "role": "isolated analog supply module",
+   "model": "fixed",
+   "p_w": 0.5685,
+   "pads": "*",
+   "psi_name": "none (board temperature at the module pins)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 70,
+   "coverage": "PARTIAL",
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/motherboard_analog_output/AO0_12V"
+   ],
+   "cite": [
+    "TMR4"
+   ],
+   "basis": "no-load input 20 mA x 24 V + 0.432 W out x (1/0.83 - 1) (load from the rail_model loads; DRAFT)",
+   "limit_basis": "70 C operating temperature without derating (TMR4) applied to the board temperature at the module pins (module air temperature not modelled)"
+  },
+  {
+   "ref": "U14619",
+   "value": "TMR 4-2412WI",
+   "role": "isolated analog supply module",
+   "model": "fixed",
+   "p_w": 0.5685,
+   "pads": "*",
+   "psi_name": "none (board temperature at the module pins)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 70,
+   "coverage": "PARTIAL",
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/motherboard_analog_output/AO1_12V"
+   ],
+   "cite": [
+    "TMR4"
+   ],
+   "basis": "no-load input 20 mA x 24 V + 0.432 W out x (1/0.83 - 1) (load from the rail_model loads; DRAFT)",
+   "limit_basis": "70 C operating temperature without derating (TMR4) applied to the board temperature at the module pins (module air temperature not modelled)"
+  },
+  {
+   "ref": "U14701",
+   "value": "TMR 4-2412WI",
+   "role": "isolated analog supply module",
+   "model": "fixed",
+   "p_w": 0.5341,
+   "pads": "*",
+   "psi_name": "none (board temperature at the module pins)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 70,
+   "coverage": "PARTIAL",
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED"
+   ],
+   "cite": [
+    "TMR4"
+   ],
+   "basis": "no-load input 20 mA x 24 V + 0.264 W out x (1/0.83 - 1) (load from the rail_model loads; DRAFT)",
+   "limit_basis": "70 C operating temperature without derating (TMR4) applied to the board temperature at the module pins (module air temperature not modelled)"
+  },
+  {
+   "ref": "U14702",
+   "value": "TMR 4-2413WI",
+   "role": "isolated analog supply module",
+   "model": "fixed",
+   "p_w": 0.649,
+   "pads": "*",
+   "psi_name": "none (board temperature at the module pins)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 70,
+   "coverage": "PARTIAL",
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED",
+    "/motherboard_analog_input/AI_15V"
+   ],
+   "cite": [
+    "TMR4"
+   ],
+   "basis": "no-load input 20 mA x 24 V + 0.825 W out x (1/0.83 - 1) (load from the rail_model loads; DRAFT)",
+   "limit_basis": "70 C operating temperature without derating (TMR4) applied to the board temperature at the module pins (module air temperature not modelled)"
+  },
+  {
+   "ref": "U14703",
+   "value": "TMR 4-2415WI",
+   "role": "isolated analog supply module",
+   "model": "fixed",
+   "p_w": 0.5292,
+   "pads": "*",
+   "psi_name": "none (board temperature at the module pins)",
+   "psi_c_per_w": 0.0,
+   "tj_max_c": 70,
+   "coverage": "PARTIAL",
+   "rails": [
+    "/motherboard_power_entry/CORE_24V_PROTECTED"
+   ],
+   "cite": [
+    "TMR4"
+   ],
+   "basis": "no-load input 20 mA x 24 V + 0.24 W out x (1/0.83 - 1) (load from the rail_model loads; DRAFT)",
+   "limit_basis": "70 C operating temperature without derating (TMR4) applied to the board temperature at the module pins (module air temperature not modelled)"
+  },
+  {
+   "ref": "U1001",
+   "value": "T20F256I4",
+   "role": "FPGA",
+   "model": "fixed",
+   "p_w": 1.16,
+   "pads": "*",
+   "psi_name": "theta_JB",
+   "psi_c_per_w": 31.57,
+   "tj_max_c": 100,
+   "rails": [
+    "/CORE_1V2"
+   ],
+   "cite": [
+    "T20",
+    "T20PKG",
+    "PB"
+   ],
+   "basis": "core 1.2 V x 0.8 A reservation (PB fpga_core) + DRAFT 0.2 W I/O = 1.16 W (no Efinix power-estimator run for this design)",
+   "limit_basis": "industrial TJ max 100 C (T20 Table 69); theta_JB 31.57 C/W is the larger FBGA256 value of T20PKG"
+  },
+  {
+   "ref": "U6001",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_A"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U6002",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_A"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U6003",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_A"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U6004",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_A"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U6005",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_B"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U6006",
+   "value": "AM26C31IPWR",
+   "role": "STEP/DIR differential line driver",
+   "model": "fixed",
+   "p_w": 0.25,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 53.1,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_motors/MOTOR_5V_B"
+   ],
+   "cite": [
+    "AM26C31"
+   ],
+   "basis": "DRAFT: 4 outputs driving 100 ohm differential at VOD 3.1 V typ: 4 x (5 - 3.1) V x 31 mA = 0.24 W + ICC 3 mA x 5 V",
+   "limit_basis": "TJ 150 C (AM26C31 absolute maximum)"
+  },
+  {
+   "ref": "U10004",
+   "value": "TPS274C65ASRHAR",
+   "role": "quad smart high-side DO switch",
+   "model": "i2r",
+   "i_a": 1.0,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.072
+    ],
+    [
+     125,
+     0.11
+    ]
+   ],
+   "extra_w": 0.027,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 7.6,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_A_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS274C65",
+    "IS2_DO"
+   ],
+   "basis": "4 channels x 0.5 A (IS2_DO 2 A group) -> 4 x 0.25 A^2 x RON(TJ) = 1 A^2 x RON (TPS274C65: 72 mOhm 25 C, 110 mOhm 125 C) + 30 V x 0.9 mA",
+   "limit_basis": "TJ 125 C (TPS274C65 electrical-characteristics range)"
+  },
+  {
+   "ref": "U10009",
+   "value": "TPS274C65ASRHAR",
+   "role": "quad smart high-side DO switch",
+   "model": "i2r",
+   "i_a": 1.0,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.072
+    ],
+    [
+     125,
+     0.11
+    ]
+   ],
+   "extra_w": 0.027,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 7.6,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_A_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS274C65",
+    "IS2_DO"
+   ],
+   "basis": "4 channels x 0.5 A (IS2_DO 2 A group) -> 4 x 0.25 A^2 x RON(TJ) = 1 A^2 x RON (TPS274C65: 72 mOhm 25 C, 110 mOhm 125 C) + 30 V x 0.9 mA",
+   "limit_basis": "TJ 125 C (TPS274C65 electrical-characteristics range)"
+  },
+  {
+   "ref": "U10017",
+   "value": "TPS274C65ASRHAR",
+   "role": "quad smart high-side DO switch",
+   "model": "i2r",
+   "i_a": 1.0,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.072
+    ],
+    [
+     125,
+     0.11
+    ]
+   ],
+   "extra_w": 0.027,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 7.6,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS274C65",
+    "IS2_DO"
+   ],
+   "basis": "4 channels x 0.5 A (IS2_DO 2 A group) -> 4 x 0.25 A^2 x RON(TJ) = 1 A^2 x RON (TPS274C65: 72 mOhm 25 C, 110 mOhm 125 C) + 30 V x 0.9 mA",
+   "limit_basis": "TJ 125 C (TPS274C65 electrical-characteristics range)"
+  },
+  {
+   "ref": "U10022",
+   "value": "TPS274C65ASRHAR",
+   "role": "quad smart high-side DO switch",
+   "model": "i2r",
+   "i_a": 1.0,
+   "r_ohm_vs_tj": [
+    [
+     25,
+     0.072
+    ],
+    [
+     125,
+     0.11
+    ]
+   ],
+   "extra_w": 0.027,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 7.6,
+   "tj_max_c": 125,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS274C65",
+    "IS2_DO"
+   ],
+   "basis": "4 channels x 0.5 A (IS2_DO 2 A group) -> 4 x 0.25 A^2 x RON(TJ) = 1 A^2 x RON (TPS274C65: 72 mOhm 25 C, 110 mOhm 125 C) + 30 V x 0.9 mA",
+   "limit_basis": "TJ 125 C (TPS274C65 electrical-characteristics range)"
+  },
+  {
+   "ref": "U19007",
+   "value": "TPS1H000AQDGNRQ1",
+   "role": "current-limited high-side switch",
+   "model": "fixed",
+   "p_w": 0.155,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 21.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS1H000"
+   ],
+   "basis": "I(op) 5 mA x VS 30 V + (50 mA RCL limit)^2 x 2 ohm (hot RON class)",
+   "limit_basis": "TJ 150 C (TPS1H000)"
+  },
+  {
+   "ref": "U19018",
+   "value": "TPS1H000AQDGNRQ1",
+   "role": "current-limited high-side switch",
+   "model": "fixed",
+   "p_w": 0.155,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 21.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_power_entry/FIELD_B_24V_PROTECTED"
+   ],
+   "cite": [
+    "TPS1H000"
+   ],
+   "basis": "I(op) 5 mA x VS 30 V + (50 mA RCL limit)^2 x 2 ohm (hot RON class)",
+   "limit_basis": "TJ 150 C (TPS1H000)"
+  },
+  {
+   "ref": "U14419",
+   "value": "TPS1H000AQDGNRQ1",
+   "role": "current-limited high-side switch",
+   "model": "fixed",
+   "p_w": 0.03,
+   "pads": "*",
+   "psi_name": "psi_JB",
+   "psi_c_per_w": 21.5,
+   "tj_max_c": 150,
+   "rails": [
+    "/motherboard_process/PWM_5V_INTERNAL"
+   ],
+   "cite": [
+    "TPS1H000"
+   ],
+   "basis": "I(op) 5 mA x VS 5 V + (50 mA RCL limit)^2 x 2 ohm (hot RON class)",
+   "limit_basis": "TJ 150 C (TPS1H000)"
+  }
+ ],
+ "_doc_hot_parts": [
+  "hot_parts: parts whose dissipation thermal_board.py injects into their own pads (side layer). model: efficiency (vout x iout x (1/eta - 1) x ic_share), i2r (i_a^2 x R(T_J) table + extra_w), ldo ((vin - vout) x iout + vin x iq), fixed (p_w). T_J = mean model temperature of the heated pads + psi_c_per_w x P; tj_max_c = datasheet limit (null = not judged). rails: the part's power rails; NOT_ROUTED loads on them make the part record NOT_ROUTED unless it already FAILs. All currents are design assumptions (cited), not measurements."
+ ]
+}

@@ -1,0 +1,73 @@
+{
+  "status": "INDEPENDENT_FUNCTIONAL_REVIEW_PASS_FOR_DISCONNECTED_SIM2_ONLY",
+  "created_utc": "2026-10-18T04:07:08.408640+00:00",
+  "selected_sources": {
+    "cnc3_runtime_events.v": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\event-producer-fifo-r1\\cnc3_runtime_events.v",
+      "SHA256": "4d21b8af4ca2decc10d872361fb033fcaecb939b14ff4d62d959609cdc2f30d6",
+      "canonical_before_SHA256": "ddb1cf8325d3cb89a441d6fa878d7ffe40e82835504289cbe76e0da9b0590c51"
+    },
+    "cnc3_event_bank.v": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\efinity-memory-inference-r1\\registered-bypass\\cnc3_event_bank.v",
+      "SHA256": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+      "canonical_before_SHA256": "65fa79532ac564c58d878b7e2b804de11e5af7e85b1157638d7823645aa92659"
+    },
+    "cnc3_spi_transport_stateful.v": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\cnc3_spi_transport_stateful.v",
+      "SHA256": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+      "canonical_before_SHA256": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47"
+    }
+  },
+  "qualification_receipts": {
+    "root_differential": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\event-producer-fifo-r1\\behavior-receipt.json",
+      "SHA256": "5395a6ce469061ec96721aa604a5e4a457c201b79446aaa7b6aed7384ed31cff"
+    },
+    "independent_supplement": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\receipt.json",
+      "SHA256": "185d52a407219bc8460f1c0e759c5d196689c30a0c569bc6a175890d3a102504"
+    },
+    "semantic_mutations": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\mutations\\receipt.json",
+      "SHA256": "f1e286ed6f24a0b0adc4ac051d8a000430114a7e7c6f90032a6c1ba423219342"
+    },
+    "unchanged_runtime_suite": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\event-producer-fifo-r1\\full-runtime-independent-r1\\receipt.json",
+      "SHA256": "2b514edb45372e6546a0d73f1debcfc0fa6f2f3b4b45a47442f42906d030f2d8"
+    },
+    "transport_differential_and_suite_packet": {
+      "path": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\transport-cmd-alignment-r1\\reviewable-transport-overlay-packet.json",
+      "SHA256": "7eb91cfb4c55973516523f142ae10af689409dcbf5c19b0e275592f1889b5917"
+    }
+  },
+  "exact_normalization": {
+    "selected_candidate_equals_root_differential_top_rename_only": true,
+    "canonical_original_equals_root_differential_top_rename_only": true
+  },
+  "independent_harness_review": {
+    "root_matrix_nonvacuous": true,
+    "seeding_global_and_local_pointers_counts_and_records_reviewed": true,
+    "root_scope": "110592 boundary vectors, 695104 cycles, 28164819 normalized live-record comparisons; all producer-valid masks, eight write-bank offsets, free slots 0..8, sequence 254/255/1, ACK/no-ACK and natural/random execution",
+    "supplement_scope": "120 boundary cases, 11181 cycles, 2726 post-commit checks, 263949 live-record comparisons, 490 admissions; every producer full256 plus ACK+append, rotated interleaved heads, pointer wrap and complete drain, stale tags, empty/pending clear and async reset, X/Z payload",
+    "controls": "Three separately compiled semantic mutants fail the focused behavioral oracle: missing global prefetch guard, sequence replacing global slot tag, and capacity255",
+    "unchanged_full_suite": "1190 actual SPI/runtime checks; events9; event storage11; provider7; default-deny10000 cycles"
+  },
+  "substantive_source_review": [
+    "Original conditional temp_count/temp_wr/temp_sequence admission, producer order, exact-full and same-cycle ACK arithmetic retained; each fixed producer writes at most one record per cycle.",
+    "Global slot tag is eight-bit rd/wr identity, separate from event sequence modulo255. Per-producer counts are nine bits and all are jointly bounded by the original global256 count.",
+    "Global prefetched_rd guard, producer count/local prefetched pointer, pending-write masks and synchronous write-first forwarding preserve head timing. Arrays are not reset; metadata masks stale/uninitialized data.",
+    "Probe/index/fault generation, snapshots, delivered ACK eligibility, overflow, clear/reset and capture selector semantics remain qualified by old/new functional and four-state tests.",
+    "Transport retains all RX/completed-frame/TX-snapshot/header buffers. CMD alignment changes the shift position and corresponding taps; public protocol and malformed-frame policy are unchanged.",
+    "Original event bank registered write-first bypass remains behavior-equivalent and separately RAM-inferred. The new producer banks are internal to the selected events file; no canonical public port change."
+  ],
+  "adoption_review": {
+    "substantive_functional_reason_to_block_disconnected_SIM2_source_adoption_found": false,
+    "conditional_next_gate": "Parent exact full-core native mapping and post-map bank checks; exact canonical-before guards, byte backups and provenance update at adoption.",
+    "limits_and_features_reduced": false,
+    "production_adopted": false,
+    "physical_provider_wrapper_complete": false,
+    "physical_IO_PNR_timing_hardware_programming_or_manufacturing_claim": false,
+    "scope": "Current sources are still disconnected SIM2. Functional regression and native mapping do not qualify a physical provider, package implementation or timing."
+  },
+  "canonical_sources_unchanged_at_review": true
+}

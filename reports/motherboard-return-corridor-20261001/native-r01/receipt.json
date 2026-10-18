@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "tool_sha256": "ae44bbaf5ba31fb4bbe0f1bf7f532f5a07ef5f6546ca82523b760a27379c1aa7",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_check_return_corridors.py": "ae44bbaf5ba31fb4bbe0f1bf7f532f5a07ef5f6546ca82523b760a27379c1aa7",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_route_selected_additive.py": "8452a2853854d86baa88b90b2658117781b7e5c1076886a603da67b450d02b97",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tests\\test_motherboard_return_corridors.py": "8db0cf47e73d9c96a315cd1d7d315a005d436660c753ff3f1b708df5a04937ba",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-return-zoning-20260930\\return-corridor-native-tests-r02.txt": "0136b10c8becac22430b6228a8ad1b5f6f3b688c8e4478b51ff42dd9679b15ad"
+  },
+  "fixture_scope": "actual standalone six-layer native geometry; not a manufactured controller or a full-board route",
+  "focused_native_tests": {
+    "reported": 9,
+    "passed": 9,
+    "evidence": "inputs/return-corridor-native-tests-r02.txt"
+  },
+  "native_cases": [
+    {
+      "kind": "healthy",
+      "expected_acceptance": true,
+      "accepted": true,
+      "rejection": null,
+      "board_sha256": "3071b232dd42a73bf0d0e0e7e9075f5272ef6101a22e68158b484e427773bb86",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 0,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": {
+        "passed": true,
+        "new_copper_items_checked": 3,
+        "items": [
+          {
+            "uuid": "145e74b2-1810-4a82-88dc-fab6e30d4e35",
+            "reference_net": "/LOGIC_GND",
+            "reference_layer": "In1.Cu",
+            "full_geometric_projected_corridor_covered": true,
+            "explicit_endpoint_antipad_vias": [
+              "75ef7e89-83a3-4ec7-a36f-f96b5554d341"
+            ]
+          },
+          {
+            "uuid": "6812d8fa-c03e-44db-bc67-affdcc063a5e",
+            "reference_net": "/LOGIC_GND",
+            "reference_layer": "In4.Cu",
+            "full_geometric_projected_corridor_covered": true,
+            "explicit_endpoint_antipad_vias": [
+              "75ef7e89-83a3-4ec7-a36f-f96b5554d341"
+            ]
+          },
+          {
+            "signal_via_uuid": "75ef7e89-83a3-4ec7-a36f-f96b5554d341",
+            "return_net": "/LOGIC_GND",
+            "return_stitches": [
+              {
+                "uuid": "06174e3a-8c5c-4082-9405-181643f31c6b",
+                "distance_mm": 0.85,
+                "source_pad_anchors": [
+                  {
+                    "reference": "G1",
+                    "pin": "1",
+                    "pad_uuid": "689abc53-c33e-4cc5-ae4d-a6cf3b9ed938"
+                  }
+                ]
+              }
+            ],
+            "intended_reference_layers": [
+              "In1.Cu",
+              "In4.Cu"
+            ],
+            "bounded_antipad_radius_mm": {
+              "In4.Cu": 0.57,
+              "In1.Cu": 0.57
+            },
+            "continuous_reference_annulus_width_mm": 0.2,
+            "polygon_discretization_allowance_mm": 0.02
+          }
+        ],
+        "endpoint_exception_scope": "exact reviewed same-net signal through-vias only",
+        "real_source_pad_and_same_connected_reference_piece_required": true,
+        "measured_return_impedance": false,
+        "physical_signal_integrity_qualified": false,
+        "no_source_or_pcb_mutation": true
+      }
+    },
+    {
+      "kind": "name_only",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Signal through-via lacks physically connected same-domain return stitch within1mm",
+      "board_sha256": "a98991053b47fa4149d0d9ddcc5c2566dc15ff9ede4dd6c925fb5d7f540ec937",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 2,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 1,
+      "gate_receipt": null
+    },
+    {
+      "kind": "one_side_open",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Signal through-via lacks physically connected same-domain return stitch within1mm",
+      "board_sha256": "b0c2214ba304305298c1de38920b7493afa48f5add22a1cfaca65fcbc5c0f8b6",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 0,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    },
+    {
+      "kind": "slot",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "New route crosses an unqualified reference boundary, slot or hole: /DATA",
+      "board_sha256": "9e7429cfd57cb146bbfa2c2fd2ff077cd31e94e66ae46e0d647421d4589602f7",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 0,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    },
+    {
+      "kind": "large_hole",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Signal-via antipad lacks a continuous own-return annulus",
+      "board_sha256": "eb4392df6fdb08a12f5ecabdd13d38facbf07db8c7add625b00e18027a15be0a",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 0,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    },
+    {
+      "kind": "wrong_domain",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Signal-via antipad lacks a continuous own-return annulus",
+      "board_sha256": "ad3a92cd800ed2834c71cf08b49a5fb3db80a6873dbc436a3ef22cb506de7548",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 3,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    },
+    {
+      "kind": "wrong_reference",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Actual filled own-reference plane is absent: /LOGIC_GND In4.Cu",
+      "board_sha256": "45f5d172057bbac1629ec60a8975843a7c98b1d26ab9d2e9fbfa71f736d93b86",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 1,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    },
+    {
+      "kind": "too_far",
+      "expected_acceptance": false,
+      "accepted": false,
+      "rejection": "Signal through-via lacks physically connected same-domain return stitch within1mm",
+      "board_sha256": "9e77f5af658d08d8b3f1a22d2e4efc2c2ce0eeff2f5a13f2b9fbd64e1e796332",
+      "project_sha256": "f1a924ca6f9bcf0004057f315f88390d17afe6933f59df4cdfe209b04de509c1",
+      "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+      "actual_native_drc_regular": 0,
+      "actual_native_ignored": [],
+      "native_unconnected_items": 0,
+      "gate_receipt": null
+    }
+  ],
+  "all_cases_as_expected": true,
+  "healthy_native_DRC_regular": 0,
+  "healthy_native_DRC_ignored": [],
+  "original_router_unchanged": true,
+  "live_source_or_pcb_changed": false,
+  "bounded_exception": "only exact same-net signal through-via endpoints with connected own-return stitch<=1mm and filled own-reference annulus/polygon proof",
+  "conservative_requirement": "full0.20mm annulus and full ground-stitch copper projection are required; partial-plane edge contact is deliberately insufficient for this selected router",
+  "source_pad_evidence": "native physically connected numbered copper pads; complete source reconciliation remains mandatory at integration",
+  "full_board_CLI_merge_DRC_and_uncapped_connectivity_not_executed_by_this_fixture": true,
+  "measured_return_impedance": false,
+  "physical_SI_EMC_qualification": false,
+  "manufacturing_ready": false
+}

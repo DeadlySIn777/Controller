@@ -1,0 +1,30 @@
+{
+  "status": "ISOLATED_CMD_ALIGNMENT_CANDIDATE_PREPARED_QUALIFICATION_REQUIRED",
+  "source": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\gateware\\v3\\runtime\\cnc3_spi_transport_stateful.v",
+  "canonical_SHA256": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+  "candidate_SHA256": "c909378cb28cf87c7113b1b92c6cdd82f71e166c64eb87548a8880ba85c9d4cc",
+  "buffers_retained": {
+    "rx_shift": 1408,
+    "completed_frame": 1408,
+    "tx_snapshot": 1392,
+    "first_six_byte_header": 48
+  },
+  "delta": [
+    "CMD incoming bits shift within upper768bits and lower640bits stay0",
+    "CMD trailer compare uses655:640",
+    "CMD streamed rate-word tap uses670:640",
+    "completed frame commit directly copies aligned RX; FB path unchanged"
+  ],
+  "unchanged": [
+    "SPI synchronizers",
+    "CS/timing/overlap guards",
+    "RX/TXCRC16 algorithms and update cycles",
+    "FB innerCRC32C taps",
+    "first48bitrejection header",
+    "TX snapshot/MISO",
+    "completed frame hold/valid cycle",
+    "reset"
+  ],
+  "adopted": false,
+  "physical_fit_timing": "OPEN"
+}

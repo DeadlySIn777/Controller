@@ -1,0 +1,9 @@
+read_verilog -sv prior.v
+chparam -set TIMER_BITS 10 cnc3_stepgen_runtime
+synth_efinix -top cnc3_stepgen_runtime
+tee -o prior-stat.json stat -json
+design -reset
+read_verilog -sv cnc3_stepgen_runtime.v
+chparam -set TIMER_BITS 10 cnc3_stepgen_runtime
+synth_efinix -top cnc3_stepgen_runtime
+tee -o next-stat.json stat -json

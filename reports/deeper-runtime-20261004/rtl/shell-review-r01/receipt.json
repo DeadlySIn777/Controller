@@ -1,0 +1,43 @@
+{
+  "reviewed_utc": "2026-10-04T10:49:12.563585+00:00",
+  "scope": "Independent read-only source review and inert Node harness; not actual browser/physical qualification",
+  "files": {
+    "controller_shell/server.py": "63d172d5d732cd8623721f29f7394965ee097265fe596552b4642573008bf3d6",
+    "controller_shell/web/shell.js": "fbd0d9e8283b3aeb46e0fa3f1ccbeb7986f41925db53ffacc16d904dd9e950e7",
+    "controller_shell/web/workbench-shell.js": "6046318f8ac46b3a046540ac1ae9b3807def96d6cfea1b7417792f8b1c0d84df",
+    "controller_config/web/setup.js": "9496659665091a3f59c727f71398170a25e45835970b36dc60ecad099b7ecfa3",
+    "controller_config/setup_web.py": "f56734e56720ec6d86298bbad3bde498bd3b174482073e4ef6880d9718b41c63"
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "controller_shell/web/workbench-shell.js",
+      "line": 9,
+      "issue": "Home flushes untouched fallback draft, initializing/saving new workspace after read-only readiness/diagnostics visit. Shared setup.js startup marks fallback dirty=1.",
+      "reproduction": "Actual flush and Home handler executed in inert Node VM with untouched uninitialized default draft; calls initialize, save, navigate:/. No real service/files/physical transport invoked.",
+      "recommended": "Track untouched provisional template separately; guard and flush genuine edits only. Automatic setup route must not silently initialize fallback."
+    },
+    {
+      "priority": "P2",
+      "file": "controller_shell/web/shell.js",
+      "line": 57,
+      "issue": "Promise.all error clears timeout without aborting sibling fetch; repeat refresh can accumulate pending read requests.",
+      "recommended": "Abort the controller on completion/failure before clearing timeout."
+    },
+    {
+      "priority": "P2",
+      "file": "controller_shell/web/workbench-shell.js",
+      "line": 23,
+      "issue": "Initial-view observer disconnects after15s without notice; late startup shows default wizard despite requested route.",
+      "recommended": "Preserve pending requested route or show explicit retry notice."
+    }
+  ],
+  "positive_source_findings": [
+    "Shell inherits exact base Host/token/Origin checks; extra assets use exact Host allowlist and inherited security response headers.",
+    "CSP remains same-origin, frame-ancestors none, no inline scripts; shell renders service strings with textContent.",
+    "Read-only shell GET endpoints delegate shared service; no new motion/AI/write APIs added.",
+    "Before status paint, binding matches store_id/epoch/revision/generation/active hash/draft hash; authority guards remain false/inhibited."
+  ],
+  "sent_to_root": true,
+  "code_edits": false
+}

@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "status": "source_backed_placement_proposal_native_DRC_pending",
+  "manufacturing_ready": false,
+  "source_block": "hardware/mc_local_power/design.json",
+  "coordinate_system": "KiCad board millimetres; front side; rotation degrees use native KiCad orientation",
+  "allocated_zone_mm": {"x": [7, 58], "y": [10, 78]},
+  "positions": {
+    "U1": [20, 19, 0],
+    "L1": [16.3, 19.25, 180],
+    "R1": [22.5, 15, 90],
+    "R2": [25.5, 19.25, 270],
+    "R3": [12, 23.5, 270],
+    "C1": [22.6, 19.25, 270],
+    "C2": [15.5, 23.5, 270],
+    "C3": [20, 15, 90],
+    "U2": [45, 19, 0],
+    "L2": [41.3, 19.25, 180],
+    "R5": [47.5, 15, 90],
+    "R6": [50.5, 19.25, 270],
+    "R7": [37, 23.5, 270],
+    "R8": [42, 15, 90],
+    "C4": [47.6, 19.25, 270],
+    "C5": [40.5, 23.5, 270],
+    "C6": [45, 15, 90],
+    "U3": [13, 36, 0],
+    "R21": [11.2, 29.6, 270],
+    "R27": [10.4, 32.6, 180],
+    "R29": [14.5, 29.6, 270],
+    "R35": [15.4, 32.6, 0],
+    "C7": [9.3, 36.75, 180],
+    "U4": [13, 52, 0],
+    "R41": [10.8, 41.6, 270],
+    "R42": [10.8, 45, 270],
+    "R47": [10.4, 48, 180],
+    "R49": [15.5, 39.6, 270],
+    "R50": [15.5, 43, 270],
+    "R51": [15.5, 46.4, 270],
+    "R55": [15.4, 49, 0],
+    "C8": [9.3, 52.75, 180],
+    "U5": [13, 68, 0],
+    "R61": [11.2, 61.6, 270],
+    "R67": [10.4, 64.6, 180],
+    "R69": [14.5, 61.6, 270],
+    "R75": [15.4, 64.6, 0],
+    "C9": [9.3, 68.75, 180],
+    "R101": [18.5, 35.25, 180],
+    "R102": [22, 35.25, 0],
+    "R103": [26, 35.25, 0],
+    "R104": [18.5, 51.25, 180],
+    "R105": [22.5, 51.25, 0],
+    "R106": [18.5, 67.25, 180],
+    "R107": [22.5, 67.25, 0],
+    "R108": [56.3, 68.4, 0],
+    "U6": [52.5, 67, 0],
+    "C10": [56.3, 66.05, 0]
+  },
+  "sources": [
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/tps62901.pdf",
+      "document": "TPS62901 data sheet, section 7.5.1 Layout Guidelines, page 41, figure 7-85",
+      "applied": [
+        "Input capacitors adjacent to VIN/GND; short high-current loop and compact SW copper.",
+        "Inductors to the left of the RPJ9 package with their SW terminals facing pin 2.",
+        "VOS routed separately from SW to the actual local output-capacitor terminal.",
+        "MODE, SS/TR and VSET resistors/capacitors near the IC and return to its quiet local ground.",
+        "Use appropriate VIN/GND thermal copper and vias after stackup and assembly rules are selected."
+      ]
+    },
+    {
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC2962-2963-2964.pdf",
+      "document": "LTC2962/LTC2963/LTC2964 data sheet, Applications Information, page 17, figure 7",
+      "applied": [
+        "Precision supervisors near the short board edge, away from switching inductors.",
+        "Separate low-resistance Kelvin branches for the measured rail and its load ground; reset/reference return current must not create a shared sense-ground voltage.",
+        "Mechanical/solder stress can shift the threshold and temperature coefficient; placement near an edge helps but does not qualify lifetime accuracy.",
+        "No stress-isolation slots proposed until mechanics and card guides are reviewed."
+      ]
+    },
+    {
+      "url": "https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf",
+      "document": "Trion T20 Data Sheet, recommended operating conditions",
+      "applied": [
+        "Core and I/O supervisor sense feed/return must refer to the powered FPGA load, not only the converter terminals; rail voltage limits are defined at device pins."
+      ]
+    }
+  ],
+  "routing_intent": {
+    "switching": [
+      "U1.2 to L1.1 and U2.2 to L2.1 are short horizontal SW paths. Keep this copper small and keep precision sense/control routes out of its near field.",
+      "L1.2 to C2.1 and L2.2 to C5.1 are output paths. Separate Kelvin VOS connections U1.3/C2.1 and U2.3/C5.1 from the switch path.",
+      "C1.1/U1.6 and C4.1/U2.6 form the VIN legs; C1.2/U1.4 and C4.2/U2.4 are the matching short local power-return legs. Adjacent ground vias and a continuous reference plane are still required.",
+      "C2.2 and C5.2 also require low-inductance returns to their respective U1.4/U2.4 power ground through the local ground copper and continuous plane; the ten selected centerlines do not complete these output-current loops.",
+      "Route MODE/SS/VSET to quiet local converter ground, not through high-current capacitor or inductor returns."
+    ],
+    "precision": [
+      "Use a dedicated measured-load rail branch for the top of each divider and a paired low-resistance load-ground return for each divider bottom and LTC ground/EP.",
+      "Keep the high-impedance divider midpoint connections short and separate from SW, reset-current and reference-output routes; do not place switching power-return current in the sense-ground branch.",
+      "C7/C8/C9 adjacent to each supervisor VCC/GND. Preserve a continuous ground plane; do not create disconnected analogue-ground islands.",
+      "The exact FPGA Kelvin pickoff pins and power-plane geometry must be chosen in the integrated PCB."
+    ],
+    "reset": [
+      "U6 is at the right side of the local-power region to approach the FPGA reset logic. C10 adjacent to VCC and R108 adjacent to output.",
+      "MC_RAILS_OK_5V stays the 5V raw U5 reset signal. Only U6 output FPGA_CRESET_N is the qualified 3V3-domain copy.",
+      "The downstream reset AND input remains a separate integrated interface. No additional push-pull driver may connect directly to U6 output."
+    ]
+  },
+  "critical_connections": [
+    {"net": "CORE_1V2_SW", "from": ["U1", "2"], "to": ["L1", "1"], "suggested_centerline_mm": [[19.375, 19.25], [17.485, 19.25]], "purpose": "Short SW path; do not flood the switching node."},
+    {"net": "IO_3V3_SW", "from": ["U2", "2"], "to": ["L2", "1"], "suggested_centerline_mm": [[44.375, 19.25], [42.485, 19.25]], "purpose": "Short SW path; do not flood the switching node."},
+    {"net": "CORE_1V2", "from": ["L1", "2"], "to": ["C2", "1"], "suggested_centerline_mm": [[15.115, 19.25], [15.115, 22.165], [15.5, 22.55]], "purpose": "Output power path; size against actual stackup/load."},
+    {"net": "IO_3V3", "from": ["L2", "2"], "to": ["C5", "1"], "suggested_centerline_mm": [[40.115, 19.25], [40.115, 22.165], [40.5, 22.55]], "purpose": "Output power path; size against actual stackup/load."},
+    {"net": "CORE_1V2", "from": ["U1", "3"], "to": ["C2", "1"], "suggested_centerline_mm": [[19.375, 19.75], [19.375, 22.55], [15.5, 22.55]], "purpose": "Independent VOS Kelvin pickoff to local COUT, separated from SW."},
+    {"net": "IO_3V3", "from": ["U2", "3"], "to": ["C5", "1"], "suggested_centerline_mm": [[44.375, 19.75], [44.375, 22.55], [40.5, 22.55]], "purpose": "Independent VOS Kelvin pickoff to local COUT, separated from SW."},
+    {"net": "CORE_5V", "from": ["U1", "6"], "to": ["C1", "1"], "suggested_centerline_mm": [[20.45, 18.75], [21.625, 18.75], [22.6, 17.775]], "purpose": "Short VIN/CIN connection; verify clearance to EN and quiet signals."},
+    {"net": "CORE_5V", "from": ["U2", "6"], "to": ["C4", "1"], "suggested_centerline_mm": [[45.45, 18.75], [46.625, 18.75], [47.6, 17.775]], "purpose": "Short VIN/CIN connection; verify clearance to EN and quiet signals."},
+    {"net": "LOGIC_GND", "from": ["U1", "4"], "to": ["C1", "2"], "suggested_centerline_mm": [[20.45, 19.75], [21.625, 19.75], [22.6, 20.725]], "purpose": "Short return paired with VIN leg; add qualified adjacent ground vias/plane."},
+    {"net": "LOGIC_GND", "from": ["U2", "4"], "to": ["C4", "2"], "suggested_centerline_mm": [[45.45, 19.75], [46.625, 19.75], [47.6, 20.725]], "purpose": "Short return paired with VIN leg; add qualified adjacent ground vias/plane."}
+  ],
+  "placement_screening": {
+    "status": "PASS",
+    "evidence": "reports/mc-local-power-20260930/placement-envelope-check.json",
+    "method": "KiCad 10 native footprints: standard courtyard, or custom body/pads envelope inflated by 0.25mm; conservative axis-aligned envelope screening",
+    "parts": 48,
+    "overlapping_envelopes": 0,
+    "outside_allocated_zone": 0,
+    "native_combined_board_DRC": "pending_root_integration"
+  },
+  "limitations": [
+    "Placement proposal only; native combined-board courtyard, mechanical and copper DRC must run after import.",
+    "Routing intent is not a complete routed board or physical timing proof.",
+    "Production layer stackup, copper weight, trace ampacity, thermal vias, solder rules and DC-bias-effective capacitance remain unqualified.",
+    "ADI solder-stress observation is not a guaranteed maximum; threshold/lifetime accuracy still requires mounted measurements.",
+    "Connector, guide, screw and FPGA load pickoff locations may require placement adjustment."
+  ]
+}

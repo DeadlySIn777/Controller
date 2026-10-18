@@ -1,0 +1,110 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x80000c1
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          153440 (bytes into file)
+  Flags:                             0x5000200, Version5 EABI, soft-float ABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         6
+  Size of section headers:           40 (bytes)
+  Number of section headers:         21
+  Section header string table index: 19
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .isr_vector       PROGBITS        08000000 010000 0000c0 00   A  0   0  1
+  [ 2] .text             PROGBITS        080000c0 0100c0 00107c 00  AX  0   0  4
+  [ 3] .ARM.exidx        ARM_EXIDX       0800113c 01113c 000010 00  AL  2   0  4
+  [ 4] .data             PROGBITS        20000000 01114c 000000 00   A  0   0  1
+  [ 5] .bss              NOBITS          20000000 020000 000088 00  WA  0   0  4
+  [ 6] .ARM.attributes   ARM_ATTRIBUTES  00000000 020000 000029 00      0   0  1
+  [ 7] .debug_loclists   PROGBITS        00000000 020029 00146c 00      0   0  1
+  [ 8] .debug_abbrev     PROGBITS        00000000 021495 00040b 00      0   0  1
+  [ 9] .debug_info       PROGBITS        00000000 0218a0 00174d 00      0   0  1
+  [10] .debug_rnglists   PROGBITS        00000000 022fed 000193 00      0   0  1
+  [11] .debug_str_o[...] PROGBITS        00000000 023180 0004e0 00      0   0  1
+  [12] .debug_str        PROGBITS        00000000 023660 000986 01  MS  0   0  1
+  [13] .debug_addr       PROGBITS        00000000 023fe6 00016c 00      0   0  1
+  [14] .comment          PROGBITS        00000000 024152 000030 01  MS  0   0  1
+  [15] .debug_frame      PROGBITS        00000000 024184 000104 00      0   0  4
+  [16] .debug_line       PROGBITS        00000000 024288 000e6b 00      0   0  1
+  [17] .debug_line_str   PROGBITS        00000000 0250f3 0001f4 01  MS  0   0  1
+  [18] .symtab           SYMTAB          00000000 0252e8 000280 10     20  25  4
+  [19] .shstrtab         STRTAB          00000000 025568 0000e9 00      0   0  1
+  [20] .strtab           STRTAB          00000000 025651 00010d 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), y (purecode), p (processor specific)
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  LOAD           0x010000 0x08000000 0x08000000 0x000c0 0x000c0 R   0x10000
+  LOAD           0x0100c0 0x080000c0 0x080000c0 0x0107c 0x0107c R E 0x10000
+  LOAD           0x01113c 0x0800113c 0x0800113c 0x00010 0x00010 R   0x10000
+  LOAD           0x020000 0x20000000 0x20000000 0x00000 0x00088 RW  0x10000
+  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0
+  ARM_EXIDX      0x01113c 0x0800113c 0x0800113c 0x00010 0x00010 R   0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .isr_vector 
+   01     .text 
+   02     .ARM.exidx 
+   03     .bss 
+   04     
+   05     .ARM.exidx 
+
+Symbol table '.symtab' contains 40 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 080000c0     0 NOTYPE  LOCAL  DEFAULT    2 $t
+     2: 080000ec     0 NOTYPE  LOCAL  DEFAULT    2 $d
+     3: 00000000     0 FILE    LOCAL  DEFAULT  ABS iol1.c
+     4: 08000d3c  1024 OBJECT  LOCAL  DEFAULT    2 crc_table
+     5: 08000100     0 NOTYPE  LOCAL  DEFAULT    2 $t
+     6: 08000188     0 NOTYPE  LOCAL  DEFAULT    2 $t
+     7: 08000414     0 NOTYPE  LOCAL  DEFAULT    2 $d
+     8: 08000420     0 NOTYPE  LOCAL  DEFAULT    2 $t
+     9: 0800043c     0 NOTYPE  LOCAL  DEFAULT    2 $t
+    10: 0800066c     0 NOTYPE  LOCAL  DEFAULT    2 $d
+    11: 00000000     0 FILE    LOCAL  DEFAULT  ABS target.c
+    12: 08000670     0 NOTYPE  LOCAL  DEFAULT    2 $t
+    13: 0800077d   428 FUNC    LOCAL  DEFAULT    2 spi1_arm
+    14: 0800074c     0 NOTYPE  LOCAL  DEFAULT    2 $d
+    15: 20000000     1 OBJECT  LOCAL  DEFAULT    5 busy
+    16: 20000002     2 OBJECT  LOCAL  DEFAULT    5 edge_base
+    17: 20000004     1 OBJECT  LOCAL  DEFAULT    5 slot_valid
+    18: 20000008    48 OBJECT  LOCAL  DEFAULT    5 node
+    19: 20000038    40 OBJECT  LOCAL  DEFAULT    5 rx
+    20: 0800077c     0 NOTYPE  LOCAL  DEFAULT    2 $t
+    21: 080008e4     0 NOTYPE  LOCAL  DEFAULT    2 $d
+    22: 20000060    40 OBJECT  LOCAL  DEFAULT    5 tx
+    23: 08000928     0 NOTYPE  LOCAL  DEFAULT    2 $t
+    24: 08000cd4     0 NOTYPE  LOCAL  DEFAULT    2 $d
+    25: 08000000     0 NOTYPE  GLOBAL DEFAULT    1 vectors
+    26: 20002000     0 NOTYPE  GLOBAL DEFAULT  ABS _stack_top
+    27: 080000c1     0 FUNC    GLOBAL DEFAULT    2 Reset_Handler
+    28: 080000eb     0 FUNC    GLOBAL DEFAULT    2 Default_Handler
+    29: 08000671   268 FUNC    GLOBAL DEFAULT    2 EXTI4_15_IRQHandler
+    30: 08000929  1044 FUNC    GLOBAL DEFAULT    2 main
+    31: 0800114c     0 NOTYPE  GLOBAL DEFAULT  ABS _sidata
+    32: 20000000     0 NOTYPE  GLOBAL DEFAULT    4 _sdata
+    33: 20000000     0 NOTYPE  GLOBAL DEFAULT    4 _edata
+    34: 20000000     0 NOTYPE  GLOBAL DEFAULT    5 _sbss
+    35: 20000088     0 NOTYPE  GLOBAL DEFAULT    5 _ebss
+    36: 08000101   136 FUNC    GLOBAL DEFAULT    2 iol1_init
+    37: 08000189   664 FUNC    GLOBAL DEFAULT    2 iol1_accept
+    38: 08000421    26 FUNC    GLOBAL DEFAULT    2 iol1_timeout
+    39: 0800043d   564 FUNC    GLOBAL DEFAULT    2 iol1_reply

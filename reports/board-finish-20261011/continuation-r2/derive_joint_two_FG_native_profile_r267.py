@@ -1,0 +1,5 @@
+"""Correct the profile selector to the exact saved pad_connect_mode key."""
+import hashlib,json,runpy
+from pathlib import Path
+H=Path(__file__).resolve().parent;source=H/'emit_joint_two_FG_native_planes_r265.py';code=source.read_text();assert code.count("z['pad_connection_mode']")==1;code=code.replace("z['pad_connection_mode']","z['pad_connect_mode']").replace('profile-r265','profile-r267').replace('R265','R267');target=H/'emit_joint_two_FG_native_planes_r267.py';assert not target.exists();compile(code,str(target),'exec');target.write_text(code)
+p=H/'joint-FG-native-profile-selector-derivation-r267.json';assert not p.exists();p.write_text(json.dumps({'source_SHA256':hashlib.sha256(source.read_bytes()).hexdigest(),'derived_SHA256':hashlib.sha256(target.read_bytes()).hexdigest(),'R265_failure_preserved_before_any_native_chunk_emission':True,'actual_profile_schema_file':'joint-two-FG-profile-schema-r266.json','only_profile_dictionary_selector_corrected':True},indent=1)+'\n');runpy.run_path(str(target),run_name='__main__')

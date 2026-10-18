@@ -1,0 +1,30 @@
+..............F......................................................... [ 67%]
+...................................                                      [100%]
+================================== FAILURES ===================================
+_ MotherboardPowerEntryTests.test_bounded_CORE_delta_preserves_every_existing_pin_and_MOTION_part _
+
+self = <test_motherboard_power_entry.MotherboardPowerEntryTests testMethod=test_bounded_CORE_delta_preserves_every_existing_pin_and_MOTION_part>
+
+    def test_bounded_CORE_delta_preserves_every_existing_pin_and_MOTION_part(self):
+        prior=json.loads((ROOT/'reports/motherboard-power-entry-20260930/core7a-r04/prior-r03/hardware/motherboard_power_entry/design.json').read_text())
+        self.assertEqual(set(self.model['components'])-set(prior['components']),{'C11088'})
+        for ref,p in prior['components'].items():
+            self.assertEqual(self.model['components'][ref]['pins'],p['pins'],ref)
+>           if ref not in {'U11007','R11022','L11001'}:self.assertEqual(self.model['components'][ref],p,ref)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: {'kin[33 chars]t': 'CNC_MB_Fuse:Keystone_3568_M55', 'value': [218 chars]alse} != {'kin[33 chars]t': 'Fuse:Fuseholder_Blade_Mini_Keystone_3568'[229 chars]alse}
+E           - {'footprint': 'CNC_MB_Fuse:Keystone_3568_M55',
+E           + {'footprint': 'Fuse:Fuseholder_Blade_Mini_Keystone_3568',
+E              'fuse_mpn': '0997005.WXN',
+E              'fuse_selection_qualified': False,
+E              'kind': 'F',
+E              'mpn': '3568',
+E              'physical': True,
+E              'pins': {'1': 'CORE_24V_INPUT', '2': 'C_RAW'},
+E              'role': 'C physical fuseholder; fitted fuse is separate BOM item',
+E              'value': 'Keystone3568 / 0997005.WXN'} : F11001
+
+tests\test_motherboard_power_entry.py:91: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_motherboard_power_entry.py::MotherboardPowerEntryTests::test_bounded_CORE_delta_preserves_every_existing_pin_and_MOTION_part
+1 failed, 106 passed in 1.59s

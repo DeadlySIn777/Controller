@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "revision": "core-converter-feasibility-r0.2-sequenced-sbc",
+  "date": "2026-09-28",
+  "status": "schematic_candidate_not_qualified",
+  "manufacturing_ready": false,
+  "scope": "Six-joint/two-encoder core only. No display, AI module, motor power, field supply or expanded eight/four allowance.",
+  "converter": {
+    "mpn": "LM70660RRXR",
+    "datasheet": "https://www.ti.com/lit/ds/symlink/lm70660.pdf",
+    "datasheet_revision": "SNVSCD4 September 2024",
+    "package": "RRX 29-pin 6x6mm VQFN plus controller ground pad30; all die-attach pads require exact vendor mapping",
+    "operating_input_v": [
+      4.5,
+      65
+    ],
+    "absolute_input_max_v": 70,
+    "rated_output_current_a": 6,
+    "fixed_output_v": [
+      4.95,
+      5.05
+    ],
+    "pins": {
+      "1": {
+        "function": "VIN4",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "2": {
+        "function": "VIN5",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "3": {
+        "function": "VIN6",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "4": {
+        "function": "CBOOT",
+        "net": "CORE_BOOT"
+      },
+      "5": {
+        "function": "SW4",
+        "net": "CORE_SW_BOOT"
+      },
+      "6": {
+        "function": "BIAS",
+        "net": "CORE_5V"
+      },
+      "7": {
+        "function": "PG_SYNCOUT",
+        "net": "CORE_5V_PG"
+      },
+      "8": {
+        "function": "PFM_SYNCIN",
+        "net": "CORE_VDDA"
+      },
+      "9": {
+        "function": "EN_UVLO",
+        "net": "C_PGOOD"
+      },
+      "10": {
+        "function": "NC",
+        "net": null
+      },
+      "11": {
+        "function": "ISNS_PLUS",
+        "net": "CORE_ISNS"
+      },
+      "12": {
+        "function": "VOUT_SENSE",
+        "net": "CORE_5V"
+      },
+      "13": {
+        "function": "CONFIG",
+        "net": "CORE_CONFIG"
+      },
+      "14": {
+        "function": "RT",
+        "net": "CORE_RT"
+      },
+      "15": {
+        "function": "EXTCOMP",
+        "net": "CORE_COMP"
+      },
+      "16": {
+        "function": "FB",
+        "net": "CORE_FB_SELECT"
+      },
+      "17": {
+        "function": "AGND",
+        "net": "LOGIC_GND"
+      },
+      "18": {
+        "function": "VDDA",
+        "net": "CORE_VDDA"
+      },
+      "19": {
+        "function": "VCC",
+        "net": "CORE_VCC"
+      },
+      "20": {
+        "function": "SW1",
+        "net": "CORE_SW"
+      },
+      "21": {
+        "function": "SW2",
+        "net": "CORE_SW"
+      },
+      "22": {
+        "function": "SW3",
+        "net": "CORE_SW"
+      },
+      "23": {
+        "function": "PGND1",
+        "net": "LOGIC_GND"
+      },
+      "24": {
+        "function": "PGND2",
+        "net": "LOGIC_GND"
+      },
+      "25": {
+        "function": "PGND3",
+        "net": "LOGIC_GND"
+      },
+      "26": {
+        "function": "PGND4",
+        "net": "LOGIC_GND"
+      },
+      "27": {
+        "function": "VIN1",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "28": {
+        "function": "VIN2",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "29": {
+        "function": "VIN3",
+        "net": "CORE_24V_PROTECTED"
+      },
+      "30": {
+        "function": "PGND_CONTROLLER_PAD",
+        "net": "LOGIC_GND"
+      }
+    },
+    "internal_connection": "SW4 is internally connected to SW1-3. Keep bootstrap return local to pin5; do not add an external long switch-node connection just to merge net names."
+  },
+  "passives": [
+    {
+      "id": "L1",
+      "value": "4.7uH 20%",
+      "mpn": "XAL7070-472MEC",
+      "nets": [
+        "CORE_SW",
+        "CORE_ISNS"
+      ],
+      "qualification": "15.2A Isat means typical30% inductance drop at25C, not a guaranteed hot fault-current rating. Require effective L>=2.632uH over operating peak range as calculation assumption; verify hot saturation and loss."
+    },
+    {
+      "id": "RS1",
+      "value": "6mOhm 1% 1.5W",
+      "mpn": "KRL3216D-C-R006-F-T1",
+      "nets": [
+        "CORE_ISNS",
+        "CORE_5V"
+      ],
+      "qualification": "Kelvin sense to pins11/12; calculation uses2% total resistance allowance including temperature/aging, which requires qualification."
+    },
+    {
+      "id": "CIN1-CIN4",
+      "quantity": 4,
+      "value": "4.7uF100V X7S 10% 1210",
+      "mpn": "CGA6M3X7S2A475K200AE",
+      "nets": [
+        "CORE_24V_PROTECTED",
+        "LOGIC_GND"
+      ],
+      "qualification": "Effective combined capacitance>=10uF over operating DC bias/temperature/aging target; exact bias and ripple qualification open."
+    },
+    {
+      "id": "CINHF1-CINHF2",
+      "quantity": 2,
+      "value": "10nF100V X7R",
+      "mpn": null,
+      "nets": [
+        "CORE_24V_PROTECTED",
+        "LOGIC_GND"
+      ],
+      "qualification": "Close to the two input/power-ground switching loops; MPN and SRF/ESL selection open."
+    },
+    {
+      "id": "COUT1-COUT3",
+      "quantity": 3,
+      "value": "47uF10V X7S 20% 1210",
+      "mpn": "CGA6P1X7S1A476M250AC",
+      "nets": [
+        "CORE_5V",
+        "LOGIC_GND"
+      ],
+      "qualification": "At least61.5uF effective combined is the prior20.5uF-per-part assumption; maxcharge3*47uF*1.20*1.22=206.424uF. Bias qualification remains open."
+    },
+    {
+      "id": "CBST",
+      "value": "47nF25V X7R",
+      "mpn": null,
+      "nets": [
+        "CORE_BOOT",
+        "CORE_SW_BOOT"
+      ]
+    },
+    {
+      "id": "CVCC",
+      "value": "4.7uF16V X7R",
+      "mpn": null,
+      "nets": [
+        "CORE_VCC",
+        "LOGIC_GND"
+      ],
+      "qualification": "Meet TI effective bypass requirement after bias and tolerance; not an external supply output."
+    },
+    {
+      "id": "CVDDA",
+      "value": "100nF16V X7R",
+      "mpn": null,
+      "nets": [
+        "CORE_VDDA",
+        "LOGIC_GND"
+      ]
+    },
+    {
+      "id": "RFBSEL",
+      "value": "24.9k1%",
+      "mpn": null,
+      "nets": [
+        "CORE_FB_SELECT",
+        "CORE_VDDA"
+      ],
+      "purpose": "Latches fixed5V output and5V VCC; not a divider from output."
+    },
+    {
+      "id": "RRT",
+      "value": "49.9k0.1%",
+      "mpn": null,
+      "nets": [
+        "CORE_RT",
+        "LOGIC_GND"
+      ],
+      "purpose": "400/440/480kHz datasheet oscillator test row; extra resistor drift must be included in qualification."
+    },
+    {
+      "id": "RCFG",
+      "value": "29.4k1%",
+      "mpn": null,
+      "nets": [
+        "CORE_CONFIG",
+        "LOGIC_GND"
+      ],
+      "purpose": "Standalone, DRSS off; PG remains status, not synchronization output."
+    },
+    {
+      "id": "RCOMP",
+      "value": "9.53k1%",
+      "mpn": null,
+      "nets": [
+        "CORE_COMP",
+        "CORE_COMP_ZERO"
+      ],
+      "purpose": "External TypeII provisional ~10kHz atminimum483.9uF,~6.54kHz atnominal742uF; stability unproved."
+    },
+    {
+      "id": "CCOMP",
+      "value": "22nF5% C0G",
+      "mpn": null,
+      "nets": [
+        "CORE_COMP_ZERO",
+        "LOGIC_GND"
+      ]
+    },
+    {
+      "id": "CHF",
+      "value": "330pF5% C0G",
+      "mpn": null,
+      "nets": [
+        "CORE_COMP",
+        "LOGIC_GND"
+      ]
+    },
+    {
+      "id": "RENHI",
+      "value": "100k0.1%",
+      "mpn": null,
+      "nets": [
+        "CORE_24V_PROTECTED",
+        "C_PGOOD"
+      ]
+    },
+    {
+      "id": "RENLO",
+      "value": "10k0.1%",
+      "mpn": null,
+      "nets": [
+        "C_PGOOD",
+        "LOGIC_GND"
+      ]
+    },
+    {
+      "id": "RPG",
+      "value": "100k1%",
+      "mpn": null,
+      "nets": [
+        "CORE_5V_PG",
+        "IO_3V3"
+      ],
+      "qualification": "Host status only. Loss ofIO3V3 makes PG state ambiguous; separate system supervision required."
+    },
+    {
+      "id": "CBULK1-CBULK2",
+      "quantity": 2,
+      "value": "330uF16V 20% polymer",
+      "mpn": "16SVPG330M",
+      "nets": [
+        "CORE_5V",
+        "LOGIC_GND"
+      ],
+      "polarity": "pin1positive,pin2negative",
+      "qualification": "Initial+20% and extra+20%life capacitance upper screen950.4uF; lower422.4uF. CatalogESR6.5mOhm each at100-300kHz20C;2xoperatingESRscreen is an assumption, not guaranteedcold/aged/bandwidthperformance. Verifydataandlayout."
+    }
+  ],
+  "enable_contract": {
+    "entry_pgood": "TPS26630 core PGOOD pin16 -> C_PGOOD -> LM70660 pin9",
+    "remove_existing_entry_pullup": "Remove core entry R9 10k from C_PGOOD to IO_3V3. Do not populate it in integrated design; divider otherwise backfeeds the unpowered3V3 rail.",
+    "startup": "PGOOD sinks EN while entry output rises. Once entry FET is enhanced and PGTH valid, PGOOD releases; protected-input divider enables buck without CPU/FPGA/ESP or5V/3V3 dependency. VIN powers internal VCC initially; BIAS changes efficiency only after5V rises.",
+    "boundary": "C_PGOOD is an analog enable/control node, not a3V3 GPIO or independent safety permission. No other pullup or active-high source is permitted.",
+    "unqualified_states": [
+      "PGOOD functional behavior below4.5V IN_SYS, during negative input and while downstream is reverse-fed is not guaranteed by the normal electrical table.",
+      "Reverse-fed5V can violate BIAS<=VIN recommendation. No output reverse-blocking device is included here.",
+      "Negative protected-input excursion must remain above-0.3V at converter pins; existing unresolved output negative clamp remains a blocker.",
+      "No automatic power return may arm machine outputs; this circuit has no machine restart latch."
+    ]
+  },
+  "design_envelope": {
+    "whole_controller_input_v_proposed": [
+      19,
+      30
+    ],
+    "unchanged_ledger_input_v": [
+      18,
+      30
+    ],
+    "reason_original_18v_not_closed": "Converter itself can run below18V; existing analog converter requires18V at its pins and the protected path drops voltage.",
+    "protected_positive_transient_v_reference": 48.4,
+    "transient_reference_is_guaranteed_system_clamp": false,
+    "converter_vin_switching_peak_target_v": 60,
+    "output_steady_state_target_v": [
+      4.85,
+      5.15
+    ],
+    "full_load_transient_target_proven": false,
+    "normal_current_with_encoder_overhead_a": 5.4033876759999995,
+    "simultaneous_encoder_limited_fault_current_a": 5.57048984,
+    "additional_output_peak_reserve_before_6a_a": 0.42951016,
+    "logic_power_revision_reservation_increase_a": 0.04,
+    "logic_power_revision_basis": "hardware/logic_power/design-envelope.json:1.2V0.29A,IO3.3V0.38A,ESP3.3V0.62A atCORE5V replace ledger0.28/0.37/0.60A.",
+    "efficiency_screening_floor": 0.85,
+    "efficiency_floor_guaranteed": false,
+    "analog_input_reservation_a": 0.06,
+    "entry_and_auxiliary_input_reservation_a": 0.005,
+    "series_path_resistance_budget_ohm": 0.2,
+    "proposed_core_source_wiring_capacity_a": 3,
+    "proposed_entry_rilim_ohm": 7500,
+    "entry_rilim_proposal_applied_by_this_file": false,
+    "entry_ilim_screening_ic_fraction": 0.1,
+    "entry_ilim_screening_resistor_fraction": 0.005,
+    "entry_accuracy_warning": "10% is an engineering screening assumption, not a TI guaranteed transfer bound at7.50k. Existing8.20k recommendation is superseded only if root implements and validates the revision.",
+    "soft_start_time_s": [
+      0.0019,
+      0.0028,
+      0.0044
+    ],
+    "startup_condition": "SBC3Abranch is physically disabled whilemainCORE5Vcharges; allotherloads includingtwoencoderfaults are conservatively counted. Aftervalidvoltageanddelay,theSBCswitchslewsitsowncapacitance. Separateboundedcapacitorbudgetsreplaceold350uFglobalassumption. Timing/actualSBCbehaviorstillrequiresqualification.",
+    "inductor_screening_min_h": 2.632e-06,
+    "inductor_screening_max_h": 5.64e-06,
+    "shunt_total_tolerance_fraction_assumed": 0.02,
+    "switching_frequency_hz_datasheet": [
+      400000,
+      440000,
+      480000
+    ],
+    "switching_frequency_hz_with_extra_screening_drift": [
+      398000,
+      482400
+    ],
+    "output_effective_capacitance_f_assumed": 0.0004839,
+    "output_esr_ohm_assumed": 0.007,
+    "sequenced_sbc": {
+      "contract": "hardware/sbc_power/design-envelope.json",
+      "host_current_a": 3,
+      "auxiliary_addition_a": 0.003,
+      "bulk_count": 2,
+      "bulk_nominal_each_f": 0.00033,
+      "bulk_initial_tolerance": 0.2,
+      "bulk_extra_life_capacitance_fraction": 0.2,
+      "bulk_esr_each_ohm_catalog": 0.0065,
+      "bulk_esr_multiplier_assumed": 2,
+      "capacitor_interconnect_esr_ohm_max": 0.0005,
+      "ceramic_count": 3,
+      "ceramic_nominal_each_f": 4.7e-05,
+      "ceramic_effective_each_f_assumed": 2.05e-05,
+      "ceramic_tolerance": 0.2,
+      "ceramic_temperature_fraction": 0.22,
+      "existing_other_main_cap_max_f_assumed": 7.0932e-05,
+      "new_sbc_input_cap_max_f_assumed": 3.5e-06,
+      "ceramic_hf_esr_ohm_assumed": 0.002,
+      "host_cap_max_f": 0.001,
+      "switch_ct_min_f_assumed": 4.7e-07,
+      "switch_ct_fast_factor_assumed": 0.5,
+      "power_sequence_direct_bypass_addition_f_assumed": 5.52e-07
+    },
+    "power_sequence_reservation_addition_a": 0.01
+  },
+  "open_release_gates": [
+    "Exact input/output MLCC effective capacitance, ESR, ripple heating and aging; connected SBC capacitance/current profile.",
+    "Hot inductor saturation and core loss; current-limit delay maximum absent from guaranteed table.",
+    "Measured converter efficiency, junction/copper temperature and regulator stability over supply/load/PFM mode.",
+    "Revisedfull6A unload screen includes initialripple,storage andESR andhasnarrowconditionalmargin; converterresponse/ESR/temperature/latencystillrequirephysicalqualification.",
+    "PGOOD/EN partial-power, negative input, output prebias/backfeed and wiring fault tests.",
+    "Original18V whole-controller input and old2A core source are not approved by this candidate.",
+    "Unknown source foldback/prospective fault current, fuse/TVS coordination and unresolved negative output clamp.",
+    "Pin-to-land mapping for three large die-attach pads; full layout, thermal vias and EMI qualification.",
+    "Small passive MPNs, supply chain pricing/lifetime, PCBWay quotes, full package cost and manufacture files remain unfinished."
+  ]
+}

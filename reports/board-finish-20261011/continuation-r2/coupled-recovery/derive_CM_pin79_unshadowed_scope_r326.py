@@ -1,0 +1,2 @@
+from pathlib import Path
+H=Path(__file__).resolve().parent;dst=H/'freeze_CM_pin79_wall_source_scope_r326.py';assert not dst.exists();s=(H/'freeze_CM_pin79_wall_source_scope_r324.py').read_text().replace('target=K.Point(117.452,201.175)','anchor_point=K.Point(117.452,201.175)').replace('target.x','anchor_point.x').replace('target.y','anchor_point.y').replace('.distance(target)','.distance(anchor_point)').replace('old-F-walls-r324','old-F-walls-r326');dst.write_text(s,encoding='utf-8',newline='\n')

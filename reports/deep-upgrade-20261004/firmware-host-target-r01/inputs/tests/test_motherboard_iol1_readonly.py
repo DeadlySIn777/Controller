@@ -1,0 +1,37 @@
+"""Source negatives complement real ARM builds and executable C/HDL tests."""
+import copy,json,sys,unittest
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tools'))
+from hardware_validate_motherboard_iol1_firmware import validate
+class ReadonlySourceTests(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  cls.target=(ROOT/'firmware/motherboard_iol1_readonly/target.c').read_text()
+  cls.master=(ROOT/'gateware/motherboard_iol1_target_bringup/cnc_iol1_readonly_target_master.v').read_text()
+ def test_actual_source_and_four_native_taps(self):self.assertTrue(validate()['ok'])
+ def test_DIC_initial_and_stale_age_use_the_executable_shared_policy(self):
+  self.assertIn('static volatile uint8_t di_valid;',self.target)
+  self.assertIn('last_di_us=t;di_valid=1;__enable_irq();',self.target)
+  self.assertIn('iol1_observation_age(t,last_di_us,di_valid)',self.target)
+  self.assertIn('node.field_good=di_valid&&(p[8]|p[9])==0;',self.target)
+  self.assertNotIn('(uint16_t)(t-last_di_us)',self.target)
+ def changed(self,a,b):self.assertFalse(validate(target=self.target.replace(a,b))['ok'])
+ def test_no_unconditional_IWDG_runtime_feed(self):self.changed('if(slot_valid&&iol1_accept(&node,rx,transport,now_us()))IWDG','IWDG')
+ def test_DMA_bytes_alone_do_not_prove_partial_tail(self):self.changed('(uint16_t)(count-edge_base)','320')
+ def test_wrong_timer_AF_is_rejected(self):self.changed('af(GPIOB,5,1)','af(GPIOB,5,0)')
+ def test_timer_falling_instead_of_rising_rejected(self):self.changed('TIM3->CCER=TIM_CCER_CC2E;','TIM3->CCER=TIM_CCER_CC2E|TIM_CCER_CC2P;')
+ def test_DIC_missing_input_cannot_be_zero_substituted(self):self.changed('13,14,15,0,1,0,1,2,3','13,14,15,0,1,0,1,2,2')
+ def test_AO_authority_HIGH_rejected(self):self.changed('output(GPIOA,8,0)','output(GPIOA,8,1)')
+ def test_DO_entry_good_not_constant(self):self.changed('node.field_good=do_valid&&input(GPIOB,1)','node.field_good=1')
+ def test_SPI_read_never_turns_on_SWnibble(self):self.changed('(address<<5)','((address<<5)|15)')
+ def test_missing_address0_driver_not_valid_allzero(self):self.changed('v==0x0a','v==0')
+ def test_cleared_fault_evidence_not_discarded(self):self.changed('do_fault_history[i-1]|=batch[i]','do_fault_history[i-1]=batch[i]')
+ def test_analog_missing_is_not_valid_zero_age(self):self.changed('p[12]=0xff;p[13]=0xff','p[12]=0;p[13]=0')
+ def test_timestamp_IRQ_race_not_reintroduced(self):self.changed('__disable_irq();iol1_timeout(&node,now_us());__enable_irq();','iol1_timeout(&node,now_us());')
+ def test_master_doesnot_demand_fake_readback_under_reset(self):self.assertFalse(validate(master=self.master.replace("8'h03","8'h0f"))['ok'])
+ def test_guard_cannot_shrink_to_three_FPGA_ticks(self):self.assertFalse(validate(master=self.master.replace('SETUP_CYCLES = 1000','SETUP_CYCLES = 3'))['ok'])
+ def test_missing_SPI_MISO_speed_setting_rejected(self):self.changed('spi_output_speed(GPIOA,6);','')
+ def test_reset_low_speed_cannot_use_fast_SPI_timing_row(self):self.changed('|(3u<<(2u*b));','|(0u<<(2u*b));')
+ def test_wrong_MOSI_output_speed_pin_rejected(self):self.changed('spi_output_speed(GPIOB,7);','spi_output_speed(GPIOB,6);')
+ def test_timer_input_does_not_gain_gratuitous_output_speed(self):self.changed('spi_output_speed(GPIOA,6);','spi_output_speed(GPIOA,6);spi_output_speed(GPIOB,5);')
+if __name__=='__main__':unittest.main()

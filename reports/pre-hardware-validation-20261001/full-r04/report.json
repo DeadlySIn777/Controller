@@ -1,0 +1,720 @@
+{
+  "schema_version": 1,
+  "started_from": {
+    "source_design": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\design.json",
+    "source_design_sha256": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "source_netlist_sha256": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "board": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\board_review\\revisions\\20261001-26\\motherboard-native-candidate.kicad_pcb",
+    "board_sha256": "81c0d8c2f4cc70140deff90266c92fd693e9c34923da62610eee49305f413226",
+    "runner_sha256": "ca59043c8385e3e9117d825520ff2a90986388cc8b631c1cb8158758259f0f60",
+    "report_local_component_inputs": {
+      "reports/pre-hardware-characterization-20261001/run_dynamic12_r02.py": "84f6f658080c238cfef61ab9bc0c78b19bf7ce959e9e8cee552ec45a345c4a42",
+      "reports/pre-hardware-characterization-20261001/tb_stepgen12_dynamic_r01.sv": "e105d77fcb2aae2a5cdd2bc8cefc71811048c8d787d48bf04e5133d27fcac1e4",
+      "reports/pre-hardware-characterization-20261001/run_encoder4_limits_r01.py": "2763289efb64c5daea5138ddcbf532517dc509e084700269cdb32b8cb1c7755f",
+      "reports/pre-hardware-characterization-20261001/tb_encoder4_limits_r01.sv": "45d0900e289201353e17270cbff80bbc768b8a5569d11e8d76e55628ba095fd0"
+    }
+  },
+  "finished_utc": "2026-10-02T00:41:01.640520+00:00",
+  "mode": "full",
+  "status": "BLOCKED",
+  "stages": [
+    {
+      "name": "cnc3_actual_rtl_transport",
+      "status": "BLOCKED",
+      "evidence_type": "REAL_LINUXCNC_CNC3_ACTUAL_RTL",
+      "reason": "Bounded CNC3 structural RTL transport/codec now exists separately; complete stateful endpoint, HAL/Verilated integration and full machine profile remain absent",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "twelve_joint_simultaneous_machine",
+      "status": "BLOCKED",
+      "evidence_type": "SIMULATED_FULL_MACHINE",
+      "reason": "No integrated twelve-joint CNC3/RTL/mechanics/encoder/full-I/O machine; standalone step generators do not implement it",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "critical_circuit_spice_corners",
+      "status": "BLOCKED",
+      "evidence_type": "SPICE_CORNER_MONTE_CARLO",
+      "reason": "No selected-part-complete SPICE benches/models; ngspice availability alone would not qualify them",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "efinity_vendor_fit_timing",
+      "status": "BLOCKED",
+      "evidence_type": "VENDOR_PLACEMENT_ROUTE_STATIC_TIMING",
+      "reason": "No qualified Efinity project/license/actual source/pin-bank/timing flow; Yosys family synthesis is separate",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "simultaneous_full_load",
+      "status": "BLOCKED",
+      "evidence_type": "LOADED_TARGET_REALTIME",
+      "reason": "No complete target machine coupled to UI/network/ESP/I/O/analog/fieldbus loads; host tests do not prove servo jitter",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "signal_integrity_and_cables",
+      "status": "BLOCKED",
+      "evidence_type": "IBIS_ROUTED_SI",
+      "reason": "Routing/stackup/process/receiver/cable models and loaded timing remain unqualified",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "thermal_current_qualification",
+      "status": "BLOCKED",
+      "evidence_type": "ELECTROTHERMAL_MODEL",
+      "reason": "No complete guaranteed load/copper/contact/enclosure model or physical thermal measurements",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "full_setup_operator_workflow",
+      "status": "BLOCKED",
+      "evidence_type": "END_TO_END_UI_MACHINE",
+      "reason": "Existing host supervisor/configuration cases do not implement provisioning/CAD registration/homing/machining/recovery of every proposed machine",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "physical_qualification",
+      "status": "NOT_RUN",
+      "evidence_type": "PHYSICAL_MEASUREMENT",
+      "reason": "No assembled prototype; no physical electrical/EMC/temperature/20ms measurements",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    },
+    {
+      "name": "host_suite",
+      "status": "PASS",
+      "evidence_type": "HOST_UNIT_CONTRACT_TEST",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\validate_controller.py",
+          "--worker",
+          "host",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\host-cases"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 201.05485139996745,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\host_suite\\command.log",
+        "log_sha256": "d49b02c2c6510e4cb958ee8777dd4c9891d2ec6474c345746d104386aea1f507"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\host-cases\\receipt.json",
+      "artifact_sha256": "5f7741307898d479628f854e1c519ac893fb0c7e14e11fecbc3dad21ed14b1d2"
+    },
+    {
+      "name": "native_test_replay",
+      "status": "PASS",
+      "evidence_type": "NATIVE_KICAD_TEST",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Program Files\\KiCad\\10.0\\bin\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\validate_controller.py",
+          "--worker",
+          "native",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native-cases",
+          "--ids",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native-ids.json"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 127.9549995000707,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native_test_replay\\command.log",
+        "log_sha256": "e7a613b2b7e3e580dd3a93c9514c52fb4dc368a1fa615c9348df3b7fdf2519f5"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native-cases\\receipt.json",
+      "artifact_sha256": "4286d2d893425435771f741b558c88c42a072316bdf0394cd820d55d09991e62"
+    },
+    {
+      "name": "native_source_validation",
+      "status": "PASS",
+      "evidence_type": "SOURCE_PIN_MPN_FOOTPRINT_CHECK",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "tools/hardware_validate_motherboard.py",
+          "--source",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard",
+          "--output",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native-source.json"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 0.5257341000251472,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native_source_validation\\command.log",
+        "log_sha256": "f7c11b846095e61da35bef5b4af9341def41319ef53ef8d5da74130a577ec9b4"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native-source.json",
+      "artifact_sha256": "1c31c0993b18b9dcd671c85ce68861bde19dbe0b9bfad4c774d9ce833468da1f"
+    },
+    {
+      "name": "native_ERC",
+      "status": "PASS",
+      "evidence_type": "NATIVE_KICAD_ERC",
+      "reason": "Regular ERC violations: {'warning': 70}; all warnings/ignored-check records retained; full routing requires uncapped independent connectivity",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+          "sch",
+          "erc",
+          "--format",
+          "json",
+          "--severity-all",
+          "--output",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\erc.json",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\motherboard.kicad_sch"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 11.36024119996,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native_ERC\\command.log",
+        "log_sha256": "bf6569701f23a776750506d65fbb1f6f4fd4ee668b9fec9a8582cabd1e8582aa"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\erc.json",
+      "artifact_sha256": "352f6fbbce1cb30135309ecef4a242ec825440543576345e83db2472508fb0df",
+      "unsuppressed_violations": {
+        "warning": 70
+      },
+      "ignored_checks": [],
+      "complete_routing_qualified": false
+    },
+    {
+      "name": "native_DRC",
+      "status": "PASS",
+      "evidence_type": "NATIVE_KICAD_DRC",
+      "reason": "Regular DRC violations: {}; all warnings/ignored-check records retained; full routing requires uncapped independent connectivity",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+          "pcb",
+          "drc",
+          "--format",
+          "json",
+          "--all-track-errors",
+          "--severity-all",
+          "--output",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\drc.json",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\board_review\\revisions\\20261001-26\\motherboard-native-candidate.kicad_pcb"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 57.686576499952935,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\native_DRC\\command.log",
+        "log_sha256": "1542f73cefb3d9b8c161bb55294f66e92ab382a4be0d73a92993b8c0e21778ec"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\drc.json",
+      "artifact_sha256": "d8017579f4174b4ba6a45954837f11b1f6201a79d5d8b03e9a00efde2191ce62",
+      "unsuppressed_violations": {},
+      "ignored_checks": [],
+      "complete_routing_qualified": false
+    },
+    {
+      "name": "source_physical_connectivity",
+      "status": "PASS",
+      "evidence_type": "NATIVE_SOURCE_CLUSTER_INDEPENDENT_COUNT",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Program Files\\KiCad\\10.0\\bin\\python.exe",
+          "-X",
+          "utf8",
+          "tools/motion_card_routing_inventory.py",
+          "--board",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\board_review\\revisions\\20261001-26\\motherboard-native-candidate.kicad_pcb",
+          "--netlist",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\netlist.xml",
+          "--source-design",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\hardware\\motherboard\\design.json",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\connectivity"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 35.941751300008036,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\source_physical_connectivity\\command.log",
+        "log_sha256": "20fb61a0c7669261e0ece4c1639567256095f7d359ae99b526c87caba371fa79"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\connectivity\\review.json",
+      "artifact_sha256": "eaceb8ea4064f4bb3d009bb0c214c69fd3cb12b7d7d6c3bc22085db3684c2f3a"
+    },
+    {
+      "name": "complete_PCB_routing",
+      "status": "BLOCKED",
+      "evidence_type": "NATIVE_PHYSICAL_CONNECTIVITY",
+      "reason": "3528 uncapped Source-cluster joins remain; independent integrity PASS",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "missing_joins": 3528,
+      "required_integrity_stage": "source_physical_connectivity"
+    },
+    {
+      "name": "watchdog_RTL",
+      "status": "PASS",
+      "evidence_type": "RTL_SIMULATION_LINT_FAMILY_SYNTHESIS",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_check_motherboard_watchdog_rtl.py",
+          "--output-dir",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\watchdog_RTL-evidence"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 93.47279129992239,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\watchdog_RTL\\command.log",
+        "log_sha256": "cb1fc991be1f2897f0ff740cfe1cda1734129a7a052f1a98ea22ebc100a4eba4"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\watchdog_RTL-evidence\\receipt.json",
+      "artifact_sha256": "c4f5231c71af142000f7ca6132252172fd5910f4f689e5ab3a916047826adac0"
+    },
+    {
+      "name": "IOL1_target",
+      "status": "PASS",
+      "evidence_type": "ARM_TARGET_COMPILE_HOST_C_RTL_VPI_FAMILY_SYNTHESIS",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_check_motherboard_iol1_firmware.py",
+          "--output-dir",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\IOL1_target-evidence"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 48.668102699914016,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\IOL1_target\\command.log",
+        "log_sha256": "9d925b463f6e7c27db817ada579f9e1f3c0f660a8ba38fca43173be4871ba79b"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\IOL1_target-evidence\\receipt.json",
+      "artifact_sha256": "67b6ae908bdb88f7e10e1dba97f4d0093165f610498016e41df9dc857fb229cf"
+    },
+    {
+      "name": "isolated_stepgen12_sweep",
+      "status": "PASS",
+      "evidence_type": "ACTUAL_RTL_FAILURE_BOUNDARY_SWEEP",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\characterize_stepgen12.py",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\stepgen12-evidence",
+          "--wsl-distro",
+          "GarciaMechBuilder"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 17.425564999924973,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_stepgen12_sweep\\command.log",
+        "log_sha256": "955f80672a4b3b1126a50b8f13a072a8eb21833efbda02b03754ddf54885fa7f"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\stepgen12-evidence\\receipt.json",
+      "artifact_sha256": "12811f2bee3d426c341ac5b6219ce1f007e927d9a35b5bc5d3ba236af990a016"
+    },
+    {
+      "name": "isolated_stepgen12_dynamic",
+      "status": "PASS",
+      "evidence_type": "ACTUAL_RTL_DYNAMIC_COMPONENT_TEST",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\run_dynamic12_r02.py",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_stepgen12_dynamic-evidence"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 138.46219400002155,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_stepgen12_dynamic\\command.log",
+        "log_sha256": "94667824cbb73406a55a92de64113758c0454daf5d85adf5312e735d814306ac"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_stepgen12_dynamic-evidence\\receipt.json",
+      "artifact_sha256": "dd86ced5a4e86db00bd02291f7e2218597781ba4be6b3ceadbceebf92ec8c520"
+    },
+    {
+      "name": "isolated_encoder4_sweep",
+      "status": "PASS",
+      "evidence_type": "ACTUAL_RTL_IDEAL_DIGITAL_COMPONENT_SWEEP",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-characterization-20261001\\run_encoder4_limits_r01.py",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_encoder4_sweep-evidence"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 2.361962500028312,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_encoder4_sweep\\command.log",
+        "log_sha256": "07a2d25a55dab9368731758dd89b52abe1256a8f24e9b3a035ee43b9f8b73a78"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\isolated_encoder4_sweep-evidence\\receipt.json",
+      "artifact_sha256": "64c762ac3afa44f91df0408021501b9f1c998cb84d9c297c0a7370999e281e67"
+    },
+    {
+      "name": "cnc3_layout_contract",
+      "status": "PASS",
+      "evidence_type": "GENERATED_C_PROTOCOL_LAYOUT_CHECK",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3-layout-inputs\\gateware\\v3\\tools\\gen_c_layout.py",
+          "--check"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 0.2340188999660313,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3_layout_contract\\command.log",
+        "log_sha256": "7b7154c935178ddc172ca2d7f8a25a8bf566d0f45cf2d55c533b649b4efa679a"
+      },
+      "external_input_sha256": {
+        "cnc3": {
+          "README.md": "eb3ddc74a7ed00b0904c770f79a83d0dc3fbaafb691d4a628b1b8a56e1673c2b",
+          "model/cnc3_model.c": "c8e68af8f74b544cc6b186241d4c5d4b12b83edaa555794bf668c8a66fd06ead",
+          "model/cnc3_model.h": "22f6c2e88012cc48b559d1800610ededc47c11a4648314ec6759a1a83de74950",
+          "src/cnc3.c": "cc98bf74f8584e4e0fe7a99654c037be91d41bce1f1ed0507f1714bdadee27f3",
+          "src/cnc3.h": "e6df2b6c1d5a3caa9a2657b450b138409b5c5c48927260234577e806496beb59",
+          "src/cnc3_layout.h": "767732b6ec76d6aadab4ec5bbf865af6e3857da2a4fa1869178889a2316c767c",
+          "src/cnc3_proto.c": "b799bff1af7a571a2940c937cb7e1082cd9ddef3e811ac73915a2218a57096f2",
+          "src/cnc3_proto.h": "5dd63acf274c57278d4af91ec986e2fdbfc3e3088a642bd2f915fc440cf6db22",
+          "src/cnc3_proto_types.h": "4fa0f0835daee5a84000df0d2c8d659a2ed75fb07274c2221e0a4b219e1b0fb9",
+          "src/cnc3_rules.h": "89fb8ee87f09756f7816e5d97264ed6132f0500f401c5790f71c9f741bf82d53",
+          "tests/cnc3_vectors.h": "acc09cbffa86237312578716e499353979b6f0ce8eb4a2793cdc4be8be389078",
+          "tests/test_driver.c": "1261e150ed4ad8b8f33e3e63217d59d279da97683d69a3dd91ace664f0ca291a",
+          "tests/test_proto.c": "bdff9698c4d9d021b920ca3a4eabf5c6c7fe6a6a7788151b07c8d7b62b864ade",
+          "tools/host_tests.sh": "f8f45e266b0357de4efae9e8f9a30f8b66cc67d7b0bf6a74990b1b4ff504ec9a",
+          "tools/host_tests_rootfs.sh": "9d082c14fc2f9329b2b28027c3a8ce20def4655b606967f68c9a4bbbfcd6d6de"
+        },
+        "spec": {
+          "allocations.json": "71789f884730e0b198a7fa0c5249de22a7ea7da2dc63deee13b4ef8d3b3d5eb1",
+          "modules.json": "d9bc85530a921e8db26814abf80dca814d09cb7f15eb951b0c163a25cd9c0597",
+          "protocol.json": "7b99fe71d695dd9dfbecc75da980402169805ed8359626ca24eca2e8bb91bf07",
+          "safety.json": "fbf0fd4adfd697c7ed2c59c9ce157d0b2e4f08af2ef5f191f7b3c224a14a3093",
+          "service.json": "9fd6d264964cad6b81a61bb31872561c3da0677b31772f6584eb818358b4276c",
+          "terminals.json": "44581d93cb1c3e50286722df1dffaf1adfb07e4a7c403255b71277907caf5931"
+        },
+        "gateware/v3": {
+          "README.md": "239b5e873d9766a897abe09a986b89b4dd7e51c3dca563e580f605444c5030ad",
+          "tools/gen_c_layout.py": "f6da5c46d4a7757dcd10dcffddf86acc36cf14e5a76f7805bd0a8dd41c5ffd75",
+          "tools/protocol_v3.py": "53b6a4a097596cda593d2ddc4fae14068efee156f40265654a378c25c928c8ae",
+          "vectors/protocol_v3_vectors.json": "8713c6a5ba1fa373ff5e3dce9293f748410e825d63df8d03dfc9074f43443358"
+        }
+      },
+      "original_external_sources_unchanged": true,
+      "actual_RTL": false,
+      "target_compilation": false
+    },
+    {
+      "name": "cnc3_host_model",
+      "status": "PASS",
+      "evidence_type": "HOST_C_MODEL_ASAN_UBSAN",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "sh",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-r04/cnc3-host-inputs/cnc3/tools/host_tests_rootfs.sh"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 4.280758799985051,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3_host_model\\command.log",
+        "log_sha256": "42d259b081c1451c9e6daf7c79c04ec6831c2d8231e71d9637293dfe5058601a"
+      },
+      "external_input_sha256": {
+        "README.md": "eb3ddc74a7ed00b0904c770f79a83d0dc3fbaafb691d4a628b1b8a56e1673c2b",
+        "model/cnc3_model.c": "c8e68af8f74b544cc6b186241d4c5d4b12b83edaa555794bf668c8a66fd06ead",
+        "model/cnc3_model.h": "22f6c2e88012cc48b559d1800610ededc47c11a4648314ec6759a1a83de74950",
+        "src/cnc3.c": "cc98bf74f8584e4e0fe7a99654c037be91d41bce1f1ed0507f1714bdadee27f3",
+        "src/cnc3.h": "e6df2b6c1d5a3caa9a2657b450b138409b5c5c48927260234577e806496beb59",
+        "src/cnc3_layout.h": "767732b6ec76d6aadab4ec5bbf865af6e3857da2a4fa1869178889a2316c767c",
+        "src/cnc3_proto.c": "b799bff1af7a571a2940c937cb7e1082cd9ddef3e811ac73915a2218a57096f2",
+        "src/cnc3_proto.h": "5dd63acf274c57278d4af91ec986e2fdbfc3e3088a642bd2f915fc440cf6db22",
+        "src/cnc3_proto_types.h": "4fa0f0835daee5a84000df0d2c8d659a2ed75fb07274c2221e0a4b219e1b0fb9",
+        "src/cnc3_rules.h": "89fb8ee87f09756f7816e5d97264ed6132f0500f401c5790f71c9f741bf82d53",
+        "tests/cnc3_vectors.h": "acc09cbffa86237312578716e499353979b6f0ce8eb4a2793cdc4be8be389078",
+        "tests/test_driver.c": "1261e150ed4ad8b8f33e3e63217d59d279da97683d69a3dd91ace664f0ca291a",
+        "tests/test_proto.c": "bdff9698c4d9d021b920ca3a4eabf5c6c7fe6a6a7788151b07c8d7b62b864ade",
+        "tools/host_tests.sh": "f8f45e266b0357de4efae9e8f9a30f8b66cc67d7b0bf6a74990b1b4ff504ec9a",
+        "tools/host_tests_rootfs.sh": "9d082c14fc2f9329b2b28027c3a8ce20def4655b606967f68c9a4bbbfcd6d6de"
+      },
+      "original_external_sources_unchanged": true,
+      "behavioral_endpoint_model": true,
+      "actual_RTL": false,
+      "real_LinuxCNC": false,
+      "copied_runner_path_delta": {
+        "before_sha256": "9d082c14fc2f9329b2b28027c3a8ce20def4655b606967f68c9a4bbbfcd6d6de",
+        "after_sha256": "becd133320736a43f00776b3b457c8f76fba60b9691256b86f436a9317dce497",
+        "unique_lab_work": "pre-hardware-cnc3-bdaa97c92f78094c"
+      }
+    },
+    {
+      "name": "cnc3_structural_RTL",
+      "status": "PASS",
+      "evidence_type": "ACTUAL_CNC3_TRANSPORT_CODEC_RTL_C_ORACLE_FAMILY_SYNTHESIS",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\check_cnc3_rtl.py",
+          "--out",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3-structural-RTL-evidence",
+          "--synthesis"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 18.356435700086877,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3_structural_RTL\\command.log",
+        "log_sha256": "8591d6af7c07fcd99156fe829ae130f6ecb38779af95e3ce395ea6a8737a18cb"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\cnc3-structural-RTL-evidence\\receipt.json",
+      "artifact_sha256": "15c0d3eeb1f7750f708e8f11abeab8a2f59b913a2dc8448e5ea0f459e7294260"
+    },
+    {
+      "name": "historical_linuxcnc_six_two",
+      "status": "PASS",
+      "evidence_type": "REAL_LINUXCNC_VERILATED_CNC1",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "wsl",
+          "-d",
+          "GarciaMechBuilder",
+          "--",
+          "sh",
+          "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-r04/historical-six-two-inputs/run-historical-linuxcnc.sh"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 45.0371068000095,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\historical_linuxcnc_six_two\\command.log",
+        "log_sha256": "a8646fbf9891c755afd9370eaf2203dfcf96f16a1a24323b856804bb42ece096"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\historical-six-two-inputs\\cnc1\\evidence\\linuxcnc.json",
+      "artifact_sha256": "56e4a99708b15c922716556aa80410cbab399d891853a91d6235bcbc3201b704",
+      "original_source_hashes": {
+        "cnc1": {
+          ".gitattributes": "cca5ae41f7baeaec7b95c8377f8a5c88654d13636bcad98fa899be8564d13cc2",
+          ".gitignore": "a177c3b9a43df63d1a12f34e435fff8d26e8a9c0c38f6ae32483b65143080096",
+          "integration.py": "36a04537218eec2071f0fdbb7ff245593a0008f6955386485c6d81227f328e49",
+          "persistent_integration.py": "60d2a75247247297cce0a3ac212db67c373b5cda359a87f0ccc4d30158ce8562",
+          "PROTOCOL_V2.md": "d29bc7fd5b415c46892086cbb94ca7bb5594d21c13af2539750044471e7a0e80",
+          "README.md": "80249194538742986181714fdc5616d112504a9e166496bd85298d4e9fe1e74f",
+          "__init__.py": "241a0afd94ca69a322f28ba6f63c23c25058d04a3f0a8093befd60ff4cde4457",
+          "src/cnc1.c": "0cd2383f705cebafd12dce16c34cb40dd867da0cafe73dc76f6a6d02be44120f",
+          "src/cnc1.h": "0e244ab095a4282c04b879fb5347e4a157b012b8fd75fd50ad26e46a780e3822",
+          "src/hal_cnc1.c": "cf57b67a85b2621da9f6c4b8334011545e03af350712fa1ef9a18fb01d914267",
+          "src/sim_transport.cpp": "10d0d1cd934159bcfa6973a9377a91ff36fc8e8731b7da17f54f5cea57777cd6",
+          "src/spidev_transport.c": "ae97f700c45c52ec2d8c91764eb423e0dccf80599741887fbe8a79eefc1438d3",
+          "src/spidev_transport.h": "7002af2a6c5495e1f8b7291298fea80cfd04c499b23a1918c700f28a6a222129",
+          "tests/test_driver.c": "9416da76fc0d45251908d488a210e50d9f668b691cf77d9b20fc4ec0b5691fb4",
+          "tests/test_evidence_manifests.py": "096325f7c492e9de5e5ad395cb6cdb10ef5167b8f5da189dac0b272399c704f4",
+          "tests/test_spidev.c": "c7965a746fa4051596c29e48912b5a04af4c96219129a47184b553d21f7e6357",
+          "tests/test_spidev_cpp.cpp": "108d16b62a2b12c3401de317f7989c5c228ea73ab941cfd596af2fad8e83843a",
+          "tools/build.sh": "155e8321595a7152e7d749d1b6476df99f2054ce7b4c25916dfc3afbc0670e55",
+          "tools/record_evidence.py": "2bd61294973c4e3a7fbbd391728433c5ecf07afb3a2495e26fb9a4dbc6d506c5",
+          "tools/record_spidev_evidence.py": "fb85bf5c5a3dfc2aad80a30dc9b18a9161f7350fada53f62db207ba19c238ef6",
+          "tools/run_gateware_regression.sh": "9f4c032022c3c8649e11986737d1a1519d20f8a24b1192bc07109f5211b9eeb5",
+          "tools/run_host_tests.py": "c4d00d4ead2d6e48e477c2ac2f4be7ead1026be88245fb2bcdfc968d8cebfcad",
+          "tools/run_linuxcnc.sh": "35cce7601c50508ba3bda4d1e22a778851e0f035291fdb6f99e4ed982017a048",
+          "tools/run_persistent.sh": "28715022892c47c7591cf5bb16c386005d73f807fe2c5ce24bdcf9ad3ef71235",
+          "tools/test_spidev.sh": "953a3b8423dee40e7ef1cb1ce10109359defeaa1dd71518f0f84cdac230ea875",
+          "profiles/sim/controller.ini": "cd27d11266c8e3806b34a9ae904e713c70c6f2c5ff166fb373ff6c094654fbab",
+          "profiles/sim/display-client": "db3d7c2d5b38dff8d1eb55ff4dda2338a16f2c367bcec2e00c52ce37247298f9",
+          "profiles/sim/simulation.hal": "c0d21aaaad564dd01137d6b6f94bcb292c7afc5c7d4a91d9709b70c236b479b8",
+          "profiles/sim/tools.tbl": "e84586dd241db7c3bf3d8553895dfb7721571ef3f253581aca7fa533ed719fba"
+        },
+        "gateware/rtl": {
+          "cnc_encoder.v": "d3b503b1a3ad206904cbe2c8a5ae56d4fdf8c55e6799ca3a3ebc47ff85e2141f",
+          "cnc_endpoint.v": "80522fdac2fca83b3593889dddb137da34346a07e9c3d31773a30a559c74b392",
+          "cnc_spi_frame.v": "5bf27f0cbae0e34c91e3387fe0e0f0f464e85ef6f7f183f00d67ac1c4ce776cd",
+          "cnc_stepgen.v": "ce3e9f1e52ea392c07b63c28c455931618b8e58729389c034a93764ff3fcebac"
+        },
+        "controller_config": {
+          "model.py": "3bcfc8e16e191c1a5855c6187ef9091797d94d8e49042445a72de646ebe6c1ab",
+          "persistent_runtime.py": "71c4dc51431e1c11b2237c034e84eea77178f72cf9a694b5da4d8c9a2a092d74",
+          "recovery.py": "4cb3ac0e0fce4be2dbf4cc072d4d78c25122d5abfcc77d9026aebe585263f95f",
+          "runtime.py": "b00a57d68d4b75ee13d5072e4046716cf8f20807ef8ed6a8a345bbda07e37f24",
+          "service.py": "df59b98ac72d313745e49caf20ee5803092bfc48d93ace24584dee9e823cc23a",
+          "__init__.py": "cbdb33699473c16da288879cc42d6142e18b9adb5857ab9d152c53dc7c29a43e",
+          "__main__.py": "49fe3695426a5daf5af03caf4830e8d47d172e414c5c74257c049bcb1c752d1c"
+        }
+      },
+      "original_sources_unchanged": true,
+      "active_motion_channels": 6,
+      "encoder_channels": 2,
+      "current_twelve_channel_runtime": false,
+      "CNC3": false,
+      "runtime_interfaces": "isolated simulation only; no spidev or machine devices"
+    },
+    {
+      "name": "supervisor_fault_scenarios",
+      "status": "PASS",
+      "evidence_type": "HOST_SUPERVISOR_MODEL",
+      "reason": "Fresh command and exact artifact checked",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false,
+      "execution": {
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-X",
+          "utf8",
+          "-m",
+          "controller_lab.run_scenarios",
+          "--output",
+          "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\supervisor.json"
+        ],
+        "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+        "exit_code": 0,
+        "error": null,
+        "wall_seconds": 0.1433019998949021,
+        "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\supervisor_fault_scenarios\\command.log",
+        "log_sha256": "c059e05345885e6aa0c3ebf693bfbd50f62d4c1628c8f8150801d2e302e0cc99"
+      },
+      "artifact": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\supervisor.json",
+      "artifact_sha256": "d4c5f2148ffd85904e47822dbee4abe223422e790544af7679305b88f1133ca4"
+    },
+    {
+      "name": "input_integrity",
+      "status": "PASS",
+      "evidence_type": "EXACT_SOURCE_HASHES",
+      "reason": "Scoped source and frozen PCB hashes retained",
+      "physical_hardware_connected": false,
+      "hardware_qualified": false
+    }
+  ],
+  "status_counts": {
+    "BLOCKED": 9,
+    "NOT_RUN": 1,
+    "PASS": 17
+  },
+  "source_hashes_unchanged": true,
+  "source_changes": {},
+  "original_source_file_count": 3327,
+  "physical_measurements": false,
+  "manufacturing_ready": false,
+  "complete_machine_validation_passed": false,
+  "historical_evidence_overwritten": false,
+  "capabilities": {
+    "WSL": true,
+    "execution": {
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "sh",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/pre-hardware-validation-20261001/full-r04/capability-inventory.sh"
+      ],
+      "cwd": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller",
+      "exit_code": 0,
+      "error": null,
+      "wall_seconds": 0.5210829999996349,
+      "log": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\pre-hardware-validation-20261001\\full-r04\\capabilities\\command.log",
+      "log_sha256": "ec964e4d60eafa42d20b172fc481679dcfc5f6de18ab0025921b3674c0ebc5dd"
+    },
+    "HOST:python3": "/usr/bin/python3",
+    "HOST:gcc": "/usr/bin/gcc",
+    "HOST:g++": null,
+    "HOST:clang": "/usr/bin/clang",
+    "HOST:ld.lld": "/usr/bin/ld.lld",
+    "HOST:iverilog": "/usr/bin/iverilog",
+    "HOST:vvp": "/usr/bin/vvp",
+    "HOST:verilator": "/usr/bin/verilator",
+    "HOST:ngspice": "/usr/bin/ngspice",
+    "HOST:efx_run": null,
+    "ROOTFS:gcc": "/usr/bin/gcc",
+    "ROOTFS:g++": "/usr/bin/g++",
+    "ROOTFS:yosys": "/usr/bin/yosys",
+    "ROOTFS:halrun": "/usr/bin/halrun",
+    "ROOTFS:linuxcnc": "/usr/bin/linuxcnc",
+    "ROOTFS:ngspice": null,
+    "ROOTFS:efx_run": null
+  }
+}

@@ -1,0 +1,501 @@
+
+Efinity Interface Designer Report
+Version: 2026.1.132
+Date: 2026-10-17 23:03
+
+Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved.
+
+Device: T20F256
+Project: controller_is2_R299_pincheck
+
+Package: 256-ball FBGA (final)
+Timing Model: C4 (final)
+Configuration Mode: active (x1)
+
+---------- Table of Contents (begin) ----------
+   1. Periphery Usage Summary
+   2. Generated Output Files
+   3. I/O Banks Summary
+   4. Global Connection Summary
+   5. Clock Region Usage Summary
+   6. Dual-Function Configuration Pin Usage
+   7. GPIO Usage Summary
+   8. PLL Usage Summary
+   9. LVDS Rx Usage Summary
+   10. LVDS Tx Usage Summary
+   11. Clock Mux Usage Summary
+   12. Configuration Control Usage Summary
+   13. JTAG Usage Summary
+---------- Table of Contents (end) ------------
+
+---------- 1. Periphery Usage Summary (begin) ----------
+clkmux: 2 / 2 (100.0%)
+control: 0 / 1 (0.0%)
+gpio: 103 / 141 (73.05%)
+jtag: 0 / 2 (0.0%)
+lvds_bg: 0 / 1 (0.0%)
+lvds_rx: 13.5 / 14 (96.43%)
+	gpio: 27
+lvds_tx: 2.5 / 13 (19.23%)
+	gpio: 5
+pll: 0 / 5 (0.0%)
+---------- Periphery Usage Summary (end) ----------
+
+---------- 2. Generated Output Files (begin) ----------
+Interface Configuration: controller_is2_R299_pincheck.interface.csv
+Peripheral Block Configuration: controller_is2_R299_pincheck.lpf
+Pinout Report: controller_is2_R299_pincheck.pinout.rpt
+Pinout CSV: controller_is2_R299_pincheck.pinout.csv
+Timing Report: controller_is2_R299_pincheck.pt_timing.rpt
+Timing SDC Template: controller_is2_R299_pincheck.pt.sdc
+Verilog Template: controller_is2_R299_pincheck_template.v
+Option Register File: controller_is2_R299_pincheck_or.ini
+---------- Generated Output Files (end) ----------
+
+---------- 3. I/O Banks Summary (begin) ----------
+
++----------+-------------+
+| I/O Bank | I/O Voltage |
++----------+-------------+
+|    1A    |    3.3 V    |
+|  1B_1C   |    3.3 V    |
+|  1D_1E   |    3.3 V    |
+| 3A_3B_3C |    3.3 V    |
+|  3D_3E   |    3.3 V    |
+|    4A    |    3.3 V    |
+|    4B    |    3.3 V    |
+|    BR    |    1.2 V    |
+|    TL    |    1.2 V    |
+|    TR    |    1.2 V    |
++----------+-------------+
+
+---------- I/O Banks Summary (end) ----------
+
+---------- 4. Global Connection Summary (begin) ----------
+
++--------------+--------------+------+
+|   Pin Name   |   Resource   | Type |
++--------------+--------------+------+
+| FPGA_CLK_50M | GPIOL_24.ALT | GCLK |
++--------------+--------------+------+
+
+---------- Global Connection Summary (end) ----------
+
+---------- 5. Clock Region Usage Summary (begin) ----------
+
++--------------+----------------+
+| Clock Region | Used/Available |
++--------------+----------------+
+|      B       |      0/16      |
+|      L0      |      0/4       |
+|      L1      |      0/4       |
+|      L2      |      0/4       |
+|      R0      |      0/4       |
+|      R1      |      0/4       |
+|      R2      |      0/4       |
+|      T       |      0/16      |
++--------------+----------------+
+
+---------- Clock Region Usage Summary (end) ----------
+
+---------- 6. Dual-Function Configuration Pin Usage (begin) ----------
+
++---------------------+----------+
+|    Instance Name    | Function |
++---------------------+----------+
+|    ARM_LAMP_FPGA    |   CSO    |
+|     FAST_SR_CLK     |  CDI12   |
+|    FAST_SR_LOAD_N   |  CDI13   |
+| FPGA_OUTPUT_REQUEST |   CDI2   |
+|   FPGA_PROGRESS_O   |   CDI3   |
+|     IOL1_L0_CS_N    |  CDI31   |
+|     IOL1_L0_MOSI    |  CDI30   |
+|     IOL1_L0_SCLK    |  CDI29   |
+|     IOL1_L1_CS_N    |  CDI28   |
+|     IOL1_L1_MOSI    |  CDI25   |
+|     IOL1_L1_SCLK    |  CDI24   |
+|     IOL1_L2_CS_N    |  CDI27   |
+|     IOL1_L2_MOSI    |  CDI26   |
+|     IOL1_L2_SCLK    |  CDI23   |
+|     IOL1_L3_CS_N    |  CDI22   |
+|     IOL1_L3_MOSI    |  CDI21   |
+|     IOL1_L3_SCLK    |  CDI20   |
+|     OPI_REARM_M     |   CDI4   |
+|     OPI_REARM_O     |   CDI5   |
+|       PEN0_CMD      |   CDI6   |
+|       PEN1_CMD      |   CDI7   |
+|    PERMIT_OUT_REQ   |   CDI8   |
+|      PWM0_FPGA      |   CDI9   |
+|      PWM1_FPGA      |  CDI10   |
+| WATCHDOG_TRIP_CLEAR |  CDI11   |
++---------------------+----------+
+
+---------- Dual-Function Configuration Pin Usage (end) ----------
+
+---------- 7. GPIO Usage Summary (begin) ----------
+
+Global Unused Setting: input with weak pullup
+
++---------------------+-------------+--------+----------+--------------+----------+----------------------+-----------------------+-------------+
+|    Instance Name    |   Resource  |  Mode  | Register | Clock Region | I/O Bank |     I/O Standard     |        Pad Name       | Package Pin |
++---------------------+-------------+--------+----------+--------------+----------+----------------------+-----------------------+-------------+
+|      ALM0_FPGA      |   GPIOR_93  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |        GPIOR_93       |     B12     |
+|      ALM1_FPGA      |   GPIOR_97  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |        GPIOR_97       |     B13     |
+|      ALM2_FPGA      |   GPIOR_98  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |        GPIOR_98       |     B15     |
+|      ALM3_FPGA      |   GPIOR_99  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |        GPIOR_99       |     C13     |
+|      ALM4_FPGA      |  GPIOR_108  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |       GPIOR_108       |     C16     |
+|      ALM5_FPGA      |  GPIOR_110  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |       GPIOR_110       |     E14     |
+|      ALM6_FPGA      |  GPIOR_111  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |       GPIOR_111       |     F12     |
+|      ALM7_FPGA      |  GPIOR_116  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_116_CTRL15   |     D16     |
+|      ALM8_FPGA      |  GPIOR_117  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_117_CTRL14   |     G13     |
+|      ALM9_FPGA      |  GPIOR_118  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_118_CTRL13   |     F14     |
+|      ALM10_FPGA     |  GPIOR_119  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_119_CTRL12   |     E16     |
+|      ALM11_FPGA     |  GPIOR_120  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_120_CLK15    |     E15     |
+|    ARM_LAMP_FPGA    |   GPIOL_05  | output |          |              |    1A    | 3.3 V LVTTL / LVCMOS |      GPIOL_05_CSO     |      L4     |
+|  CONTACTOR_FB_FPGA  | GPIOB_CLKN0 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_CLKN0      |     M13     |
+|      DIR0_FPGA      |   GPIOL_11  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_11       |      J5     |
+|      DIR1_FPGA      |   GPIOL_15  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_15       |      K3     |
+|      DIR2_FPGA      |   GPIOL_18  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_18       |      K1     |
+|      DIR3_FPGA      |   GPIOL_22  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_22_CTRL2    |      H1     |
+|      DIR4_FPGA      |   GPIOL_25  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_25_CLK1     |      H2     |
+|      DIR5_FPGA      |   GPIOL_27  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_27_CLK3     |      G3     |
+|      DIR6_FPGA      |   GPIOL_29  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_29_CLK5     |      G2     |
+|      DIR7_FPGA      |   GPIOL_33  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_33_CTRL5    |      C1     |
+|      DIR8_FPGA      |   GPIOL_35  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_35_CTRL7    |      F3     |
+|      DIR9_FPGA      |   GPIOL_37  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_37       |      E1     |
+|      DIR10_FPGA     |   GPIOL_42  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_42       |      G4     |
+|      DIR11_FPGA     |   GPIOL_44  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_44       |      B1     |
+|      EN0_N_FPGA     |  GPIOR_139  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_139       |     H12     |
+|      EN1_N_FPGA     |  GPIOR_141  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_141       |     J12     |
+|      EN2_N_FPGA     |  GPIOR_143  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_143       |     L16     |
+|      EN3_N_FPGA     |  GPIOR_144  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_144       |     M15     |
+|      EN4_N_FPGA     |  GPIOR_145  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_145       |     M16     |
+|      EN5_N_FPGA     |  GPIOR_146  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_146       |     P16     |
+|      EN6_N_FPGA     |  GPIOR_147  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_147       |     L15     |
+|      EN7_N_FPGA     |  GPIOR_148  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_148       |     K12     |
+|      EN8_N_FPGA     |  GPIOR_153  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_153       |     N14     |
+|      EN9_N_FPGA     |  GPIOR_154  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_154       |     N16     |
+|     EN10_N_FPGA     |  GPIOR_155  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_155       |     P15     |
+|     EN11_N_FPGA     |  GPIOR_156  | output |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |       GPIOR_156       |     M14     |
+|     ENC0_A_FPGA     |   GPIOL_61  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_61       |      B5     |
+|     ENC0_B_FPGA     |   GPIOL_62  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_62       |      A7     |
+|     ENC0_Z_FPGA     |   GPIOL_63  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_63       |      B7     |
+|     ENC1_A_FPGA     |   GPIOL_64  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_64       |      B6     |
+|     ENC1_B_FPGA     |   GPIOL_65  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_65       |      A6     |
+|     ENC1_Z_FPGA     |   GPIOL_68  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_68       |      E7     |
+|     ENC2_A_FPGA     |   GPIOL_74  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |    GPIOL_74_PLLIN0    |      D9     |
+|     ENC2_B_FPGA     |   GPIOL_75  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |    GPIOL_75_PLLIN1    |      E8     |
+|     ENC2_Z_FPGA     |   GPIOR_76  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_76_PLLIN0    |      C9     |
+|     ENC3_A_FPGA     |   GPIOR_77  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_77_PLLIN1    |     D10     |
+|     ENC3_B_FPGA     |   GPIOR_80  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |        GPIOR_80       |      B9     |
+|     ENC3_Z_FPGA     |   GPIOR_81  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_81_MREFCLK   |     C10     |
+|   EXT_PERMIT_FPGA   |  GPIOR_126  | input  |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |     GPIOR_126_CLK9    |     G16     |
+|  FAST_PORTS_ENABLE  | GPIOB_TXP00 | output |          |              |    4B    | 3.3 V LVTTL / LVCMOS |      GPIOB_TXP00      |      M4     |
+|     FAST_SR_CLK     |   GPIOL_66  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |     GPIOL_66_CDI12    |      A8     |
+|     FAST_SR_DATA    | GPIOB_RXP06 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP06      |     N11     |
+|    FAST_SR_LOAD_N   |   GPIOL_67  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |     GPIOL_67_CDI13    |      C5     |
+|     FPGA_CLK_50M    |   GPIOL_24  | input  |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_24_CLK0     |      H3     |
+| FPGA_ENDPOINT_READY |   GPIOL_51  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_51       |      C4     |
+|  FPGA_INHIBIT_FAULT |   GPIOL_59  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_59       |      A4     |
+|   FPGA_LINK_FAULT   |   GPIOL_57  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_57       |      A3     |
+| FPGA_MOTION_REQUEST |   GPIOL_52  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_52       |      B3     |
+| FPGA_OUTPUT_REQUEST |   GPIOL_12  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_12_CDI2     |      K4     |
+|   FPGA_PROGRESS_M   |   GPIOL_55  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_55       |      E4     |
+|   FPGA_PROGRESS_O   |   GPIOL_13  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_13_CDI3     |      L2     |
+|  FPGA_TIMING_FAULT  |   GPIOL_60  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_60       |      E5     |
+|  FPGA_USER_RESET_N  |   GPIOL_49  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_49       |      D5     |
+| FPGA_WATCHDOG_FAULT |   GPIOL_58  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_58       |      C6     |
+|      FREQ0_FPGA     | GPIOB_CLKP0 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_CLKP0      |     M12     |
+|      FREQ1_FPGA     | GPIOB_RXN00 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN00      |      R9     |
+|  HOST_SPI_CS_CMD_N  | GPIOB_RXN01 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN01      |      M9     |
+|   HOST_SPI_CS_FB_N  |   GPIOL_45  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_45       |      B2     |
+|    HOST_SPI_MISO    |   GPIOL_48  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_48       |      C3     |
+|    HOST_SPI_MOSI    |   GPIOL_47  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_47       |      D4     |
+|    HOST_SPI_SCLK    |   GPIOL_46  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_46       |      D3     |
+|     IOL1_L0_CS_N    |   GPIOR_78  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS | GPIOR_78_EXTFB0_CDI31 |      A9     |
+|     IOL1_L0_MISO    | GPIOB_RXP08 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP08      |     R13     |
+|     IOL1_L0_MOSI    |   GPIOR_79  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS | GPIOR_79_EXTFB1_CDI30 |     A10     |
+|     IOL1_L0_SCLK    |   GPIOR_87  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |     GPIOR_87_CDI29    |     D11     |
+|     IOL1_L1_CS_N    |   GPIOR_88  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |     GPIOR_88_CDI28    |     E11     |
+|     IOL1_L1_MISO    | GPIOB_RXP09 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP09      |     T14     |
+|     IOL1_L1_MOSI    |  GPIOR_104  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_104_CDI25    |     D14     |
+|     IOL1_L1_SCLK    |  GPIOR_105  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_105_CDI24    |     E13     |
+|     IOL1_L2_CS_N    |   GPIOR_94  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |     GPIOR_94_CDI27    |     A15     |
+|     IOL1_L2_MISO    | GPIOB_RXP10 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP10      |     P12     |
+|     IOL1_L2_MOSI    |   GPIOR_95  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |     GPIOR_95_CDI26    |     A13     |
+|     IOL1_L2_SCLK    |  GPIOR_112  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_112_CDI23    |     C15     |
+|     IOL1_L3_CS_N    |  GPIOR_113  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_113_CDI22    |     F13     |
+|     IOL1_L3_MISO    | GPIOB_RXP11 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP11      |     T15     |
+|     IOL1_L3_MOSI    |  GPIOR_122  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS | GPIOR_122_CLK13_CDI21 |     F15     |
+|     IOL1_L3_SCLK    |  GPIOR_123  | output |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS | GPIOR_123_CLK12_CDI20 |     F16     |
+|    MOTION_A_PGOOD   | GPIOB_RXP12 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |   GPIOB_RXP12_EXTFB0  |     P14     |
+|    MOTION_B_PGOOD   | GPIOB_TXN00 | input  |          |              |    4B    | 3.3 V LVTTL / LVCMOS |      GPIOB_TXN00      |      M5     |
+|      MPG_A_FPGA     | GPIOB_RXN02 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN02      |     T10     |
+|      MPG_B_FPGA     | GPIOB_RXN03 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN03      |     N10     |
+|       OPI_OK_A      | GPIOB_RXN04 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN04      |     R11     |
+|       OPI_OK_B      | GPIOB_RXN05 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN05      |     M11     |
+|      OPI_OK_BOE     | GPIOB_RXN06 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN06      |     P11     |
+|      OPI_OK_OUT     | GPIOB_RXN07 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN07      |     R12     |
+|      OPI_OK_TX      | GPIOB_RXN08 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN08      |     P13     |
+|     OPI_REARM_M     |   GPIOL_20  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |  GPIOL_20_CTRL0_CDI4  |      J2     |
+|     OPI_REARM_O     |   GPIOL_21  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |  GPIOL_21_CTRL1_CDI5  |      H5     |
+|      OUT_PERMIT     | GPIOB_RXN09 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN09      |     R14     |
+|       PEN0_CMD      |   GPIOL_31  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |   GPIOL_31_CLK7_CDI6  |      G1     |
+|       PEN1_CMD      |   GPIOL_32  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |  GPIOL_32_CTRL4_CDI7  |      F2     |
+|    PERMIT_OUT_REQ   |   GPIOL_40  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_40_CDI8     |      F5     |
+|      PRB0_FPGA      |  GPIOR_121  | input  |          |              | 3A_3B_3C | 3.3 V LVTTL / LVCMOS |    GPIOR_121_CLK14    |     G12     |
+|      PRB1_FPGA      |  GPIOR_124  | input  |          |              |  3D_3E   | 3.3 V LVTTL / LVCMOS |    GPIOR_124_CLK11    |     G15     |
+|     PROC_PERMIT     | GPIOB_RXN11 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN11      |     R15     |
+| PROCESS_PERMIT_FPGA | GPIOB_RXN10 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXN10      |     N12     |
+|      PWM0_FPGA      |   GPIOL_41  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_41_CDI9     |      C2     |
+|      PWM1_FPGA      |   GPIOL_53  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |     GPIOL_53_CDI10    |      B4     |
+|    RAILS_OK_FPGA    | GPIOB_TXN01 | input  |          |              |    4B    | 3.3 V LVTTL / LVCMOS |      GPIOB_TXN01      |      P4     |
+|    RAW_INHIBIT_N    |   GPIOL_50  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_50       |      A2     |
+|    RESET_ARM_FPGA   | GPIOB_RXN12 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |   GPIOB_RXN12_EXTFB0  |     N13     |
+|  SAFETY_STATUS_FPGA | GPIOB_RXP00 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP00      |      P9     |
+|      STEP0_FPGA     |   GPIOL_02  | output |          |              |    1A    | 3.3 V LVTTL / LVCMOS |        GPIOL_02       |      P2     |
+|      STEP1_FPGA     |   GPIOL_14  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_14       |      J4     |
+|      STEP2_FPGA     |   GPIOL_16  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_16       |      J3     |
+|      STEP3_FPGA     |   GPIOL_19  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_19       |      K2     |
+|      STEP4_FPGA     |   GPIOL_23  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_23_CTRL3    |      L1     |
+|      STEP5_FPGA     |   GPIOL_26  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_26_CLK2     |      H4     |
+|      STEP6_FPGA     |   GPIOL_28  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_28_CLK4     |      G5     |
+|      STEP7_FPGA     |   GPIOL_30  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_30_CLK6     |      F1     |
+|      STEP8_FPGA     |   GPIOL_34  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |     GPIOL_34_CTRL6    |      E2     |
+|      STEP9_FPGA     |   GPIOL_36  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_36       |      D1     |
+|     STEP10_FPGA     |   GPIOL_39  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_39       |      E3     |
+|     STEP11_FPGA     |   GPIOL_43  | output |          |              |  1B_1C   | 3.3 V LVTTL / LVCMOS |        GPIOL_43       |      F4     |
+|     STO_FB_FPGA     | GPIOB_RXP01 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP01      |      N9     |
+|    TAMPER_CLEAR_N   | GPIOB_TXN02 | input  |          |              |    4B    | 3.3 V LVTTL / LVCMOS |      GPIOB_TXN02      |      R4     |
+|      TX_PERMIT      |   GPIOL_56  | input  |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |        GPIOL_56       |      E6     |
+| WATCHDOG_TRIP_CLEAR |   GPIOL_54  | output |          |              |  1D_1E   | 3.3 V LVTTL / LVCMOS |     GPIOL_54_CDI11    |      D6     |
+|   WATCHDOG_TRIP_M   | GPIOB_RXP02 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP02      |      T9     |
+|   WATCHDOG_TRIP_O   | GPIOB_RXP03 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP03      |     P10     |
+|       WD_M_OK       | GPIOB_RXP04 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP04      |     T11     |
+|       WD_O_OK       | GPIOB_RXP05 | input  |          |              |    4A    | 3.3 V LVTTL / LVCMOS |      GPIOB_RXP05      |     M10     |
+|   XF_POWER_ENABLE   | GPIOB_TXP05 | output |          |              |    4B    | 3.3 V LVTTL / LVCMOS |      GPIOB_TXP05      |      M6     |
++---------------------+-------------+--------+----------+--------------+----------+----------------------+-----------------------+-------------+
+
+
+Input GPIO Configuration:
+=========================
+
++---------------------+---------------------+---------------------+-----------------+--------------+-----------------+------+
+|    Instance Name    |      Input Pin      | Alternate Input Pin | Input Clock Pin | Pull Up/Down | Schmitt Trigger | DDIO |
++---------------------+---------------------+---------------------+-----------------+--------------+-----------------+------+
+|      ALM0_FPGA      |      ALM0_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM1_FPGA      |      ALM1_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM2_FPGA      |      ALM2_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM3_FPGA      |      ALM3_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM4_FPGA      |      ALM4_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM5_FPGA      |      ALM5_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM6_FPGA      |      ALM6_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM7_FPGA      |      ALM7_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM8_FPGA      |      ALM8_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM9_FPGA      |      ALM9_FPGA      |                     |                 |     none     |     Disable     | none |
+|      ALM10_FPGA     |      ALM10_FPGA     |                     |                 |     none     |     Disable     | none |
+|      ALM11_FPGA     |      ALM11_FPGA     |                     |                 |     none     |     Disable     | none |
+|  CONTACTOR_FB_FPGA  |  CONTACTOR_FB_FPGA  |                     |                 |     none     |     Disable     |      |
+|     ENC0_A_FPGA     |     ENC0_A_FPGA     |                     |                 |     none     |     Disable     | none |
+|     ENC0_B_FPGA     |     ENC0_B_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC0_Z_FPGA     |     ENC0_Z_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC1_A_FPGA     |     ENC1_A_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC1_B_FPGA     |     ENC1_B_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC1_Z_FPGA     |     ENC1_Z_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC2_A_FPGA     |     ENC2_A_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC2_B_FPGA     |     ENC2_B_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC2_Z_FPGA     |     ENC2_Z_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC3_A_FPGA     |     ENC3_A_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC3_B_FPGA     |     ENC3_B_FPGA     |                     |                 |     none     |     Disable     |      |
+|     ENC3_Z_FPGA     |     ENC3_Z_FPGA     |                     |                 |     none     |     Disable     |      |
+|   EXT_PERMIT_FPGA   |   EXT_PERMIT_FPGA   |                     |                 |     none     |     Disable     | none |
+|     FAST_SR_DATA    |     FAST_SR_DATA    |                     |                 |     none     |     Disable     |      |
+|     FPGA_CLK_50M    |                     |     FPGA_CLK_50M    |                 |     none     |     Disable     | none |
+|  FPGA_USER_RESET_N  |  FPGA_USER_RESET_N  |                     |                 |     none     |     Disable     | none |
+|      FREQ0_FPGA     |      FREQ0_FPGA     |                     |                 |     none     |     Disable     |      |
+|      FREQ1_FPGA     |      FREQ1_FPGA     |                     |                 |     none     |     Disable     |      |
+|  HOST_SPI_CS_CMD_N  |  HOST_SPI_CS_CMD_N  |                     |                 |     none     |     Disable     |      |
+|   HOST_SPI_CS_FB_N  |   HOST_SPI_CS_FB_N  |                     |                 |     none     |     Disable     | none |
+|    HOST_SPI_MOSI    |    HOST_SPI_MOSI    |                     |                 |     none     |     Disable     | none |
+|    HOST_SPI_SCLK    |    HOST_SPI_SCLK    |                     |                 |     none     |     Disable     | none |
+|     IOL1_L0_MISO    |     IOL1_L0_MISO    |                     |                 |     none     |     Disable     |      |
+|     IOL1_L1_MISO    |     IOL1_L1_MISO    |                     |                 |     none     |     Disable     |      |
+|     IOL1_L2_MISO    |     IOL1_L2_MISO    |                     |                 |     none     |     Disable     |      |
+|     IOL1_L3_MISO    |     IOL1_L3_MISO    |                     |                 |     none     |     Disable     |      |
+|    MOTION_A_PGOOD   |    MOTION_A_PGOOD   |                     |                 |     none     |     Disable     |      |
+|    MOTION_B_PGOOD   |    MOTION_B_PGOOD   |                     |                 |     none     |     Disable     |      |
+|      MPG_A_FPGA     |      MPG_A_FPGA     |                     |                 |     none     |     Disable     |      |
+|      MPG_B_FPGA     |      MPG_B_FPGA     |                     |                 |     none     |     Disable     |      |
+|       OPI_OK_A      |       OPI_OK_A      |                     |                 |     none     |     Disable     |      |
+|       OPI_OK_B      |       OPI_OK_B      |                     |                 |     none     |     Disable     |      |
+|      OPI_OK_BOE     |      OPI_OK_BOE     |                     |                 |     none     |     Disable     |      |
+|      OPI_OK_OUT     |      OPI_OK_OUT     |                     |                 |     none     |     Disable     |      |
+|      OPI_OK_TX      |      OPI_OK_TX      |                     |                 |     none     |     Disable     |      |
+|      OUT_PERMIT     |      OUT_PERMIT     |                     |                 |     none     |     Disable     |      |
+|      PRB0_FPGA      |      PRB0_FPGA      |                     |                 |     none     |     Disable     | none |
+|      PRB1_FPGA      |      PRB1_FPGA      |                     |                 |     none     |     Disable     | none |
+|     PROC_PERMIT     |     PROC_PERMIT     |                     |                 |     none     |     Disable     |      |
+| PROCESS_PERMIT_FPGA | PROCESS_PERMIT_FPGA |                     |                 |     none     |     Disable     |      |
+|    RAILS_OK_FPGA    |    RAILS_OK_FPGA    |                     |                 |     none     |     Disable     |      |
+|    RAW_INHIBIT_N    |    RAW_INHIBIT_N    |                     |                 |     none     |     Disable     | none |
+|    RESET_ARM_FPGA   |    RESET_ARM_FPGA   |                     |                 |     none     |     Disable     |      |
+|  SAFETY_STATUS_FPGA |  SAFETY_STATUS_FPGA |                     |                 |     none     |     Disable     |      |
+|     STO_FB_FPGA     |     STO_FB_FPGA     |                     |                 |     none     |     Disable     |      |
+|    TAMPER_CLEAR_N   |    TAMPER_CLEAR_N   |                     |                 |     none     |     Disable     |      |
+|      TX_PERMIT      |      TX_PERMIT      |                     |                 |     none     |     Disable     | none |
+|   WATCHDOG_TRIP_M   |   WATCHDOG_TRIP_M   |                     |                 |     none     |     Disable     |      |
+|   WATCHDOG_TRIP_O   |   WATCHDOG_TRIP_O   |                     |                 |     none     |     Disable     |      |
+|       WD_M_OK       |       WD_M_OK       |                     |                 |     none     |     Disable     |      |
+|       WD_O_OK       |       WD_O_OK       |                     |                 |     none     |     Disable     |      |
++---------------------+---------------------+---------------------+-----------------+--------------+-----------------+------+
+
+Output GPIO Configuration:
+==========================
+
++---------------------+---------------------+------------------+----------------+-----------+------+
+|    Instance Name    |      Output Pin     | Output Clock Pin | Drive Strength | Slew Rate | DDIO |
++---------------------+---------------------+------------------+----------------+-----------+------+
+|    ARM_LAMP_FPGA    |    ARM_LAMP_FPGA    |                  |       1        |  Disable  |      |
+|      DIR0_FPGA      |      DIR0_FPGA      |                  |       1        |  Disable  | none |
+|      DIR1_FPGA      |      DIR1_FPGA      |                  |       1        |  Disable  | none |
+|      DIR2_FPGA      |      DIR2_FPGA      |                  |       1        |  Disable  | none |
+|      DIR3_FPGA      |      DIR3_FPGA      |                  |       1        |  Disable  | none |
+|      DIR4_FPGA      |      DIR4_FPGA      |                  |       1        |  Disable  | none |
+|      DIR5_FPGA      |      DIR5_FPGA      |                  |       1        |  Disable  | none |
+|      DIR6_FPGA      |      DIR6_FPGA      |                  |       1        |  Disable  | none |
+|      DIR7_FPGA      |      DIR7_FPGA      |                  |       1        |  Disable  | none |
+|      DIR8_FPGA      |      DIR8_FPGA      |                  |       1        |  Disable  | none |
+|      DIR9_FPGA      |      DIR9_FPGA      |                  |       1        |  Disable  | none |
+|      DIR10_FPGA     |      DIR10_FPGA     |                  |       1        |  Disable  | none |
+|      DIR11_FPGA     |      DIR11_FPGA     |                  |       1        |  Disable  | none |
+|      EN0_N_FPGA     |      EN0_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN1_N_FPGA     |      EN1_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN2_N_FPGA     |      EN2_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN3_N_FPGA     |      EN3_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN4_N_FPGA     |      EN4_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN5_N_FPGA     |      EN5_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN6_N_FPGA     |      EN6_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN7_N_FPGA     |      EN7_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN8_N_FPGA     |      EN8_N_FPGA     |                  |       1        |  Disable  | none |
+|      EN9_N_FPGA     |      EN9_N_FPGA     |                  |       1        |  Disable  | none |
+|     EN10_N_FPGA     |     EN10_N_FPGA     |                  |       1        |  Disable  | none |
+|     EN11_N_FPGA     |     EN11_N_FPGA     |                  |       1        |  Disable  | none |
+|  FAST_PORTS_ENABLE  |  FAST_PORTS_ENABLE  |                  |       1        |  Disable  |      |
+|     FAST_SR_CLK     |     FAST_SR_CLK     |                  |       1        |  Disable  |      |
+|    FAST_SR_LOAD_N   |    FAST_SR_LOAD_N   |                  |       1        |  Disable  |      |
+| FPGA_ENDPOINT_READY | FPGA_ENDPOINT_READY |                  |       1        |  Disable  | none |
+|  FPGA_INHIBIT_FAULT |  FPGA_INHIBIT_FAULT |                  |       1        |  Disable  | none |
+|   FPGA_LINK_FAULT   |   FPGA_LINK_FAULT   |                  |       1        |  Disable  | none |
+| FPGA_MOTION_REQUEST | FPGA_MOTION_REQUEST |                  |       1        |  Disable  | none |
+| FPGA_OUTPUT_REQUEST | FPGA_OUTPUT_REQUEST |                  |       1        |  Disable  | none |
+|   FPGA_PROGRESS_M   |   FPGA_PROGRESS_M   |                  |       1        |  Disable  | none |
+|   FPGA_PROGRESS_O   |   FPGA_PROGRESS_O   |                  |       1        |  Disable  | none |
+|  FPGA_TIMING_FAULT  |  FPGA_TIMING_FAULT  |                  |       1        |  Disable  | none |
+| FPGA_WATCHDOG_FAULT | FPGA_WATCHDOG_FAULT |                  |       1        |  Disable  | none |
+|    HOST_SPI_MISO    |    HOST_SPI_MISO    |                  |       1        |  Disable  | none |
+|     IOL1_L0_CS_N    |     IOL1_L0_CS_N    |                  |       1        |  Disable  |      |
+|     IOL1_L0_MOSI    |     IOL1_L0_MOSI    |                  |       1        |  Disable  |      |
+|     IOL1_L0_SCLK    |     IOL1_L0_SCLK    |                  |       1        |  Disable  |      |
+|     IOL1_L1_CS_N    |     IOL1_L1_CS_N    |                  |       1        |  Disable  |      |
+|     IOL1_L1_MOSI    |     IOL1_L1_MOSI    |                  |       1        |  Disable  | none |
+|     IOL1_L1_SCLK    |     IOL1_L1_SCLK    |                  |       1        |  Disable  | none |
+|     IOL1_L2_CS_N    |     IOL1_L2_CS_N    |                  |       1        |  Disable  | none |
+|     IOL1_L2_MOSI    |     IOL1_L2_MOSI    |                  |       1        |  Disable  | none |
+|     IOL1_L2_SCLK    |     IOL1_L2_SCLK    |                  |       1        |  Disable  | none |
+|     IOL1_L3_CS_N    |     IOL1_L3_CS_N    |                  |       1        |  Disable  | none |
+|     IOL1_L3_MOSI    |     IOL1_L3_MOSI    |                  |       1        |  Disable  | none |
+|     IOL1_L3_SCLK    |     IOL1_L3_SCLK    |                  |       1        |  Disable  | none |
+|     OPI_REARM_M     |     OPI_REARM_M     |                  |       1        |  Disable  | none |
+|     OPI_REARM_O     |     OPI_REARM_O     |                  |       1        |  Disable  | none |
+|       PEN0_CMD      |       PEN0_CMD      |                  |       1        |  Disable  | none |
+|       PEN1_CMD      |       PEN1_CMD      |                  |       1        |  Disable  | none |
+|    PERMIT_OUT_REQ   |    PERMIT_OUT_REQ   |                  |       1        |  Disable  | none |
+|      PWM0_FPGA      |      PWM0_FPGA      |                  |       1        |  Disable  | none |
+|      PWM1_FPGA      |      PWM1_FPGA      |                  |       1        |  Disable  | none |
+|      STEP0_FPGA     |      STEP0_FPGA     |                  |       1        |  Disable  |      |
+|      STEP1_FPGA     |      STEP1_FPGA     |                  |       1        |  Disable  | none |
+|      STEP2_FPGA     |      STEP2_FPGA     |                  |       1        |  Disable  | none |
+|      STEP3_FPGA     |      STEP3_FPGA     |                  |       1        |  Disable  | none |
+|      STEP4_FPGA     |      STEP4_FPGA     |                  |       1        |  Disable  | none |
+|      STEP5_FPGA     |      STEP5_FPGA     |                  |       1        |  Disable  | none |
+|      STEP6_FPGA     |      STEP6_FPGA     |                  |       1        |  Disable  | none |
+|      STEP7_FPGA     |      STEP7_FPGA     |                  |       1        |  Disable  | none |
+|      STEP8_FPGA     |      STEP8_FPGA     |                  |       1        |  Disable  | none |
+|      STEP9_FPGA     |      STEP9_FPGA     |                  |       1        |  Disable  | none |
+|     STEP10_FPGA     |     STEP10_FPGA     |                  |       1        |  Disable  | none |
+|     STEP11_FPGA     |     STEP11_FPGA     |                  |       1        |  Disable  | none |
+| WATCHDOG_TRIP_CLEAR | WATCHDOG_TRIP_CLEAR |                  |       1        |  Disable  | none |
+|   XF_POWER_ENABLE   |   XF_POWER_ENABLE   |                  |       1        |  Disable  |      |
++---------------------+---------------------+------------------+----------------+-----------+------+
+
+---------- GPIO Usage Summary (end) ----------
+
+---------- 8. PLL Usage Summary (begin) ----------
+
+No PLL was configured
+
+---------- PLL Usage Summary (end) ----------
+
+---------- 9. LVDS Rx Usage Summary (begin) ----------
+
+No LVDS Rx was configured
+
+---------- LVDS Rx Usage Summary (end) ----------
+
+---------- 10. LVDS Tx Usage Summary (begin) ----------
+
+No LVDS Tx was configured
+
+---------- LVDS Tx Usage Summary (end) ----------
+
+---------- 11. Clock Mux Usage Summary (begin) ----------
+
++----------+-----------------+
+| Resource | Output Assigned |
++----------+-----------------+
+| CLKMUX_L |        1        |
++----------+-----------------+
+
+Resource: CLKMUX_L
+
+Clock mux assignment:
+
++-----------------+--------------+----------+--------------+---------+---------+---------+---------+---------+---------+---------+
+|  Input Resource |  Clock Pin   |  Status  |   LCLK[0]    | LCLK[1] | LCLK[2] | LCLK[3] | LCLK[4] | LCLK[5] | LCLK[6] | LCLK[7] |
++-----------------+--------------+----------+--------------+---------+---------+---------+---------+---------+---------+---------+
+|                 |              | Selected | FPGA_CLK_50M |         |         |         |         |         |         |         |
+|   GPIOL_24.IN   | FPGA_CLK_50M |  Routed  |      ^       |         |         |         |    O    |         |         |         |
+|   GPIOL_25.IN   |              |          |              |    O    |         |         |         |    O    |         |         |
+|   GPIOL_26.IN   |              |          |              |         |    O    |         |         |         |    O    |         |
+|   GPIOL_27.IN   |              |          |              |         |         |    O    |         |         |         |    O    |
+|   GPIOL_28.IN   |              |          |      -       |         |         |         |    O    |         |         |         |
+|   GPIOL_29.IN   |              |          |              |    O    |         |         |         |    O    |         |         |
+|   GPIOL_30.IN   |              |          |              |         |    O    |         |         |         |    O    |         |
+|   GPIOL_31.IN   |              |          |              |         |         |    O    |         |         |         |    O    |
+| PLL_TL0.CLKOUT0 |              |          |      -       |         |         |         |         |         |    O    |         |
+| PLL_TL0.CLKOUT1 |              |          |              |    O    |    O    |         |         |         |         |         |
+| PLL_TL0.CLKOUT2 |              |          |              |    O    |    O    |         |         |         |         |         |
+| PLL_TL1.CLKOUT0 |              |          |              |         |         |    O    |         |         |         |    O    |
+| PLL_TL1.CLKOUT1 |              |          |              |         |         |         |    O    |    O    |         |         |
+| PLL_TL1.CLKOUT2 |              |          |              |         |         |         |    O    |    O    |         |         |
++-----------------+--------------+----------+--------------+---------+---------+---------+---------+---------+---------+---------+
+
+*NOTE
+ : No connection from input to mux output
+O: Available input to mux output connection
+^: Input assigned to mux output
+-: Unavailable (used) input to mux output connection
+
+---------- Clock Mux Usage Summary (end) ----------
+
+---------- 12. Configuration Control Usage Summary (begin) ----------
+
+No Configuration Control was configured
+
+---------- Configuration Control Usage Summary (end) ----------
+
+---------- 13. JTAG Usage Summary (begin) ----------
+
+No JTAG was configured
+
+---------- JTAG Usage Summary (end) ----------

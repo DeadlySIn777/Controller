@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "evidence_type": "INDEPENDENT_SOURCE_INSPECTION_ONLY",
+  "reviewer": "/root/motherboard_contract",
+  "recorded_utc": "2026-10-02T00:40:11.797020+00:00",
+  "source_hashes": {
+    "gateware/v3/rtl/cnc3_spi_transport.v": "bf6442612da38a6f59716c224782b21e0653015eed3c7c7f6f8390960953bad1",
+    "gateware/v3/rtl/cnc3_frame_endpoint.v": "704029b30a1397fcb7e6e0da46a8b99973e84e21c7ab655a86974528c956a52d"
+  },
+  "review_text": "Read-only final CNC3 cold-state/scope review found no additional actionable issue in the current transport/endpoint. Reset clears request_valid/frame_valid/data/MISO and MISO OE is physically disabled by rst_n; opposite-CS start is now explicitly rejected at release, both-select is rejected, overflow saturates into invalid, and queue overrun cannot replace a pending unconsumed request. This is source inspection corroborating your tests only, not stateful authority/vendor fit/physical timing proof. Shared inputs remain unchanged.",
+  "independent_review_caught_prior_handoff_defect": true,
+  "actual_compiled_handoff_mutation_receipt": "reports/cnc3-rtl-implementation-20261001/mutation-controls-r03/receipt.json",
+  "stateful_authority_proved": false,
+  "vendor_fit_timing_proved": false,
+  "physical_timing_proved": false
+}

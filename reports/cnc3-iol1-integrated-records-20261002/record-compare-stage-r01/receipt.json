@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "formal_scope": "arbitrary unsigned32-bit x/k comparison equivalence; exact source expressions zeroextended, constants/parameter values unchanged. No state/timing/authority change.",
+  "exact_transform_ledger": [
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "b<33",
+      "new": "!u_ge32({24'd0,b},32'd33)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "b>126",
+      "new": "!u_le32({24'd0,b},32'd126)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[15:8]<=3",
+      "new": "u_le32({24'd0,d[15:8]},32'd3)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[7:0]>=3",
+      "new": "u_ge32({24'd0,d[7:0]},32'd3)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[63:48]<=1",
+      "new": "u_le32({16'd0,d[63:48]},32'd1)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[47:32]>=1",
+      "new": "u_ge32({16'd0,d[47:32]},32'd1)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[31:16]<=3",
+      "new": "u_le32({16'd0,d[31:16]},32'd3)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "d[15:0]>=3",
+      "new": "u_ge32({16'd0,d[15:0]},32'd3)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "index>=27",
+      "new": "u_ge32({26'd0,index},32'd27)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_mbr2_stream_checker.v",
+      "old": "index<=54",
+      "new": "u_le32({26'd0,index},32'd54)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_iol1_record_master.v",
+      "old": "response_age <= 16'd440",
+      "new": "u_le32({16'd0,response_age},32'd440)",
+      "occurrences": 2,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_iol1_record_master.v",
+      "old": "octet(rx_shift,9)<=2",
+      "new": "u_le32({24'd0,octet(rx_shift,9)},32'd2)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_iol1_record_master.v",
+      "old": "octet(rx_shift,9)<=11",
+      "new": "u_le32({24'd0,octet(rx_shift,9)},32'd11)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_iol1_record_master.v",
+      "old": "bit_index >= 32",
+      "new": "u_ge32({23'd0,bit_index},32'd32)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    },
+    {
+      "module": "cnc_iol1_record_master.v",
+      "old": "{ {(32-PERIOD_W){1'b0}},period_count} < PERIOD_CYCLES-1",
+      "new": "!u_ge32({ {(32-PERIOD_W){1'b0}},period_count},PERIOD_CYCLES-1)",
+      "occurrences": 1,
+      "unsigned_zero_extension_explicit": true
+    }
+  ],
+  "exact_inputs": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\record-compare-stage-r01\\cnc_iol1_record_master.v": "1c27040e5579bf007146634a306cd00014a020dea1caf4285ad78bec774cd3dc",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\record-compare-stage-r01\\cnc_mbr2_stream_checker.v": "823c79b57b6e2eff3f07228cae9309b13ed14e272022d3da8b62831248545bca",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\record-compare-stage-r01\\comparator-miter.v": "cd23ddd0571fe5ecd4aa329d50c51dd2338e231b79f70d2675ed013920c5e683",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\record-compare-stage-r01\\prove.ys": "f817040b47c6d7c5f91a09e8700f44907fffcf83355295c020f1e2ae7ce12f7c",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\record-compare-stage-r01\\run.sh": "2fe60b54bbd6db4146bb477215ab42c52a4a5bcaae9c8641415aafb05b0e4d95"
+  },
+  "inputs_unchanged": true,
+  "physical_or_vendor_fit": false
+}

@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "source_hashes": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_alarm_filter.v": "c02ff736f523f44c79940471fbb43f05e0a5d8e1a417a2f3bf2e031f6cc2c39d",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_encoder_runtime.v": "f92a47bc75e7f3b51f8ab445ffa34c91b43a2baf2152e638c7aa8d257908da7b",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_motion_spi.v": "f4650e2af58208cdaeb0d0761bfe899c98ea2b8b141a8de55b323a97b65e4884",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_motion_state.v": "4317ddad0c64fffeadafaee1a35ca74661a26acdace540714b7ffc92e2d171bf",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_rate_admission_serial.v": "209326f95eb8f92f3629d9149147ced49d750eec2edb489552f3e42264e2bc7b",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_spi_transport_stateful.v": "35496db3610c55547aecb756d99f2f13815ce5a599acae557afb9645f9801a47",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\cnc3_stepgen_runtime.v": "d8ee8af8284d056190c42e70d7704ea743c898d3718b2988fffcfa07bf0166a0",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\inputs\\workspace\\gateware\\v3\\rtl\\cnc3_command_validate.v": "4a1bccbc2a7f662b06c84961f1883595fc7098524cfebf631f22fea4b7873f50"
+  },
+  "source_unchanged": true,
+  "baseline_prefix_sha256": "4047a876e9f8633a6ea6bba6d9991211c34595f06e63ca09fb2b61122ad78981",
+  "controls": [
+    {
+      "name": "baseline",
+      "passed": true,
+      "expected_runtime_assertion": null,
+      "log_sha256": "01d9b012ff05859447e2ea9da49a54a53dd268f606fcb7b32ac8ab168cabf22e",
+      "detail": "SPI_ADMISSION_BINDING_PASS checks=1835 actual_rate_cases=67 actual_accepts=214 actual_frame_releases=253\nbinding.sv:152: $finish called at 53563380000 (1ps)\n"
+    },
+    {
+      "name": "admission-unbound-true",
+      "passed": true,
+      "expected_runtime_assertion": "rate admission latched only on current CRC valid release",
+      "log_sha256": "127eb6418b1587a90e700e23c5eb39666a20ed095f6431f065bb9b0aa0b47860",
+      "detail": "BINDING_DIAGNOSTIC op03 input_rate001000001 expected0 actual1 engine_maskffe busy0 poison0 channels12 cases2\nFATAL: binding.sv:38: rate admission latched only on current CRC valid release seq2 fault00000000\n       Time: 22101800000  Scope: tb.check\n"
+    },
+    {
+      "name": "no-new-CS-clear",
+      "passed": true,
+      "expected_runtime_assertion": "physical new CS clears previous admission transaction",
+      "log_sha256": "410357d749f064d8dffa0b3fdccf0bf0d66590e150ea808cb3724f7ad907e291",
+      "detail": "FATAL: binding.sv:38: physical new CS clears previous admission transaction seq0 fault00000000\n       Time: 20769600000  Scope: tb.check\n"
+    }
+  ],
+  "evidence_type": "actual synchronized mode0 SPI reception, CRC/CS release, current-word shared serial admission, stateful commit and actual12 generators",
+  "request_backpressure_queue_integrated": false,
+  "request_processing": "actual one-core-cycle accept/reject; every request_ready is true because no multi-cycle pending consumer exists in this motion scope",
+  "public_structural_endpoint_queue_is_separate": true,
+  "physical_provider_inputs": "explicit ideal simulation only",
+  "HAL_full_IO_pages_vendor_fit_physical_qualification": false
+}

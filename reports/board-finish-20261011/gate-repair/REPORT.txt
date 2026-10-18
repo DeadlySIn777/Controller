@@ -1,0 +1,53 @@
+Staged integration connectivity gate, 11 October 2026
+
+This is an isolated source patch and host test package. It has not been installed
+in Z:/pcb-runs/claude-finish/tools, run against the live queue, or used to adopt a
+board. No native KiCad or GPU work is performed by the controls.
+
+integrate_step.sh differs from the frozen shared original only at the final
+commit boundary. It calls partition_guard.py for every label using PREV_B and
+OUTB plus their PREV_M and OUTM partition receipts, after any existing targeted
+DRC cleanup and re-measurement. A nonzero guard exit rejects before revision or
+working-board copies and before any measurement-directory rename. Its separate
+OUTM/connectivity_guard.json receipt moves with the measurement directory on
+the existing repaired-board commit path. Existing run_queue.sh parent checking,
+producer calls, DRC repair, reports and ledger behavior are preserved verbatim.
+
+The staged strict guard retains exact saved-board hash binding, required refill,
+exact net and per-net pad identity checks, computed partition accounting, no
+connectivity losses and no increase in the native API unconnected count. The
+only guard addition rejects API counts below computed pad-island joins, which
+cannot describe a valid native connectivity receipt. It does not pretend to
+detect every fabricated but internally consistent receipt; receipts still must
+come from the trusted native measurement flow.
+
+Host tests exercise the real guard CLI with the exact extracted final shell
+block. Revision/working-board copies, measurement renames, removal and read-only
+marking are instrumented mocks; old ledger, board, revision and report sentinels
+remain unchanged. Tests reject net gains with losses for five label classes,
+crossed partitions, changed pad/net identity, impossible or regressed API,
+malformed receipts, stale saved boards and missing receipts. Both applied and
+post-cleanup OUTB/OUTM paths are tested. The entire staged script passes bash -n;
+an exact source comparison proves all other script text is unchanged.
+
+Authentic saved native receipt replay, hash-bound to saved revision boards:
+  r05 -> repaired/committed r06: PASS, 4 completed, 0 lost, API 1380 -> 1376.
+  r06 -> historical r07: FAIL, 29 completed, 17 lost, API 1376 -> 1364.
+The latter shows that an improving total must not hide lost connections. This
+prospective guard does not repair r07's already-existing 17 losses, choose a new
+baseline, rewrite historical reports, or rewrite the old integration ledger.
+
+DRC and electrical qualification remain separate. Root identified a CLI DRC
+log saying it failed to fetch the schematic netlist for parity tests because an
+annotated schematic was unavailable in the measured copy. An empty raw
+schematic_parity category is therefore not proof that parity ran. This package
+records that limitation; explicit source/native netlist parity must be checked
+separately before claiming final parity evidence. This patch preserves the
+existing DRC flow and is not a replacement DRC, electrical or manufacture gate.
+
+Run controls:
+  C:/Python314/python.exe -B reports/board-finish-20261011/gate-repair/run_host_controls.py
+
+Read staged.patch, stage-receipt.json, host-receipt.json and host-tests.log for
+the exact diff, hashes, timing, saved-result replay and test evidence. Root owns
+review and any later atomic installation while the integration queue is idle.

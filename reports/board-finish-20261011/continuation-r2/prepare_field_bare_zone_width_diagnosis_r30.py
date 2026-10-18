@@ -1,0 +1,6 @@
+"""Read-only .15mm zone-feature face diagnostic; never emits sub-.20 tracks."""
+import hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent;s=H/'diagnose_field_bare_face_masks_r29.py';o=H/'diagnose_field_bare_zone_width_r30.py';text=s.read_text();a='.buffer(-.1-.000020),1e-6);faces=';assert text.count(a)==1;text=text.replace(a,'.buffer(-.075-.000020),1e-6);faces=')
+a="   for _,inner,s,face in sorted(options,key=lambda x:x[:2]):";assert text.count(a)==1;text=text.replace(a,"   # Diagnostic only: .15 zone-feature reachability is not a .15 track permission.\n   continue\n"+a).replace('R29_OUTER_FACE_GEOMETRY','R30_ZONE_FEATURE_FACE_GEOMETRY').replace('R28_SITE_MEETING','R30_ZONE_FEATURE_SITE_MEETING');assert not o.exists();compile(text,str(o),'exec');o.write_text(text)
+(H/'field-bare-zone-width-diagnosis-r30-derivation.json').write_text(json.dumps({'source_sha256':hashlib.sha256(s.read_bytes()).hexdigest(),'derived_sha256':hashlib.sha256(o.read_bytes()).hexdigest(),'read_only_width_reachability_diagnostic':True,'general_track_minimum_remains_0p20':True,'no_candidate_source_trial_or_Cu_emission_can_run':True,'only_center_face_erosion_matches_existing_zone_min_feature_0p15':True,'all_foreign_electrical_planner_hole_SMD_area_guards_unchanged':True,'native_jobs':0,'board_written':False},indent=1)+'\n')

@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "revision": "is1-watchdogs-r0.1",
+  "status": "standalone_review_candidate_not_qualified",
+  "manufacturing_ready": false,
+  "assembly_integrated": false,
+  "physical_qualification": false,
+  "complete_permission_chain": false,
+  "startup_defaults_qualified": false,
+  "boundary": {
+    "kind": "internal_review_only",
+    "fitted_connector": false,
+    "nets": [
+      "IO_3V3",
+      "LOGIC_GND",
+      "FPGA_MOTION_REQUEST",
+      "FPGA_OUTPUT_REQUEST",
+      "FPGA_PROGRESS_M",
+      "FPGA_PROGRESS_O",
+      "WD_M_OK",
+      "WD_O_OK"
+    ]
+  },
+  "rails": {
+    "IO_3V3": {
+      "nominal_v": 3.3,
+      "review_range_v": [
+        3.14,
+        3.465
+      ]
+    },
+    "ground": "LOGIC_GND"
+  },
+  "components": {
+    "U1": {
+      "value": "TPS3851G18SDRBT",
+      "mpn": "TPS3851G18SDRBT",
+      "footprint": "CNC_IS1:TPS3851_DRB8",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_M_CWD",
+        "4": "LOGIC_GND",
+        "5": "FPGA_MOTION_REQUEST",
+        "6": "WD_M_WDI_BUF",
+        "7": "WD_M_HEALTH_RAW",
+        "8": "WD_M_HEALTH_RAW",
+        "9": "LOGIC_GND"
+      },
+      "no_connect": [
+        "3"
+      ],
+      "role": "M_independent_timer"
+    },
+    "U3": {
+      "value": "SN74LVC1G34DBVR",
+      "mpn": "SN74LVC1G34DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "2": "FPGA_PROGRESS_M",
+        "3": "LOGIC_GND",
+        "4": "WD_M_WDI_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [
+        "1"
+      ],
+      "role": "M_WDI_rail_buffer"
+    },
+    "U2": {
+      "value": "TPS3851G18SDRBT",
+      "mpn": "TPS3851G18SDRBT",
+      "footprint": "CNC_IS1:TPS3851_DRB8",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_O_CWD",
+        "4": "LOGIC_GND",
+        "5": "FPGA_OUTPUT_REQUEST",
+        "6": "WD_O_WDI_BUF",
+        "7": "WD_O_HEALTH_RAW",
+        "8": "WD_O_HEALTH_RAW",
+        "9": "LOGIC_GND"
+      },
+      "no_connect": [
+        "3"
+      ],
+      "role": "O_independent_timer"
+    },
+    "U4": {
+      "value": "SN74LVC1G34DBVR",
+      "mpn": "SN74LVC1G34DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "2": "FPGA_PROGRESS_O",
+        "3": "LOGIC_GND",
+        "4": "WD_O_WDI_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [
+        "1"
+      ],
+      "role": "O_WDI_rail_buffer"
+    },
+    "U5": {
+      "value": "SN74LVC2G17DBVR",
+      "mpn": "SN74LVC2G17DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_HEALTH_RAW",
+        "2": "LOGIC_GND",
+        "3": "WD_O_HEALTH_RAW",
+        "4": "WD_O_OK",
+        "5": "IO_3V3",
+        "6": "WD_M_OK"
+      },
+      "no_connect": [],
+      "role": "separate_health_Schmitt_channels"
+    },
+    "C1": {
+      "value": "3.3nF C0G 50V 5%",
+      "mpn": "CL10C332JB8NNNC",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_CWD",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 3.3e-09,
+      "tolerance": 0.05,
+      "dielectric": "C0G",
+      "voltage_v": 50
+    },
+    "C2": {
+      "value": "3.3nF C0G 50V 5%",
+      "mpn": "CL10C332JB8NNNC",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_CWD",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 3.3e-09,
+      "tolerance": 0.05,
+      "dielectric": "C0G",
+      "voltage_v": 50
+    },
+    "C3": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U1"
+    },
+    "C4": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U2"
+    },
+    "C5": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U3"
+    },
+    "C6": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U4"
+    },
+    "C7": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U5"
+    },
+    "R1": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_M_HEALTH_RAW"
+      },
+      "no_connect": [],
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R2": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_O_HEALTH_RAW"
+      },
+      "no_connect": [],
+      "resistance_ohm": 10000,
+      "tolerance": 0.01
+    },
+    "R3": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R4": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_OUTPUT_REQUEST",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R5": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_PROGRESS_M",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R6": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_WDI_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R7": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_PROGRESS_O",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R8": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_WDI_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R9": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_OK",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "R10": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_OK",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01
+    },
+    "B1": {
+      "value": "INTERNAL REVIEW BOUNDARY",
+      "mpn": "",
+      "footprint": "",
+      "physical": false,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "FPGA_MOTION_REQUEST",
+        "4": "FPGA_OUTPUT_REQUEST",
+        "5": "FPGA_PROGRESS_M",
+        "6": "FPGA_PROGRESS_O",
+        "7": "WD_M_OK",
+        "8": "WD_O_OK"
+      },
+      "no_connect": [],
+      "role": "diagram_boundary_only_no_fitted_connector"
+    }
+  },
+  "watchdog_contract": {
+    "timer_count": 2,
+    "independent_timing_capacitors": true,
+    "shared_supply_and_ground": true,
+    "mpn": "TPS3851G18SDRBT",
+    "timing_cap_mpn": "CL10C332JB8NNNC",
+    "timing_cap_f": 3.3e-09,
+    "timing_cap_tolerance": 0.05,
+    "standard_timing": true,
+    "set1_low_disables_timer": true,
+    "wdi_falling_edge_only": true,
+    "required_pulse_high_us": 1,
+    "legacy_toggle_compatible": false,
+    "mr": "unconnected_internal_pullup_per_frozen_IS1",
+    "health": "RESET_WDO_wired_AND_then_separate_Schmitt",
+    "timing_analysis_owner": "tools/is1_watchdog_analysis.py",
+    "physical_20ms_proof": false,
+    "FPGA_startup_LOW_qualified": false,
+    "FPGA_conditioning_review_required": true,
+    "SET1_driven_LOW_logic_standard_qualified": false
+  },
+  "primary_pin_sources": [
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/tps3851.pdf",
+      "revision": "SBVS300B June 2025",
+      "pages": "3 physical pins; DRB0008A mechanical/land pattern"
+    },
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g34.pdf",
+      "revision": "SCES519O October 2025",
+      "pages": "3 DBV physical pins"
+    },
+    {
+      "url": "https://www.ti.com/lit/ds/symlink/sn74lvc2g17.pdf",
+      "revision": "SCES381N January 2015",
+      "pages": "3 DBV physical pins"
+    }
+  ],
+  "frozen_spec": {
+    "revision": "IS-1",
+    "path": "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\04-safety-power-timing.md",
+    "sha256": "6ddd6aba07b5e064dd0d9408cec4717e3128189233f016cfbf530e44d380f830"
+  },
+  "primary_source_sha256": {
+    "research/is1-watchdogs/cl10c332jb8nnnc.html": "1ea6234965efc542b805632a37db0dbec386026da7025bbb03d0891acb13f013",
+    "research/is1-watchdogs/sn74lvc1g34.pdf": "04384d3a3cf65b2b3f83cc2d04c19b660c3d6a423af6a863e8de3ddf45ccecb3",
+    "research/is1-watchdogs/sn74lvc1g34.txt": "aba0ca052a92fb96738be0e06e8c00c027c6865fd6a1cf48aa59b359775fb523",
+    "research/is1-watchdogs/sn74lvc2g17.pdf": "624dbe55679d2fed4123b0d7708cd0d295efcc78de395e71a0caf5cd13cbc216",
+    "research/is1-watchdogs/sn74lvc2g17.txt": "65d7940a262e585093e52670dcd31592c224d39920a6b4647d5158474f914cf3",
+    "research/is1-watchdogs/sources.json": "0dc81d147c974d65477e732f28f0cb209a776844c46d24f965ac5daaaecd1f3c",
+    "research/is1-watchdogs/tps3851-revb.pdf": "293159a68e80dcf91e5997338200f304aea393d128bc072899d1f0265580fed1",
+    "research/is1-watchdogs/tps3851-revb.txt": "37b85eb8c02be12caca6b8e9b42e5f0181a0e220e4bba1a57a974d235dbead7b"
+  },
+  "footprint_scope": "TI_DRB0008A_copper_only_stencil_thermal_routing_unqualified",
+  "unqualified": [
+    "complete_permission_chain",
+    "sticky_fault_latches",
+    "FPGA_progress_pulse_implementation",
+    "T20_GPIO_configuration_pullup_vs_100k_request_progress_pulldown",
+    "SET1_driven_LOW_logic_standard_margin",
+    "loaded_CWD_leakage_at_temperature_humidity",
+    "brownout_slew",
+    "partial_power",
+    "pin_input_thresholds_with_actual_driver",
+    "external_loads_and_health_propagation",
+    "physical_20ms_fault_to_inhibit",
+    "machine_stop_response",
+    "PCB_stencil_thermal_guarding_routing",
+    "production_cost_and_release"
+  ]
+}

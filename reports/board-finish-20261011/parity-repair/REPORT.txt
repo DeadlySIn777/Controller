@@ -1,0 +1,113 @@
+Explicit source/native parity preparation, 11 October 2026
+
+ROOT106 portable source inspection and explicit native API parity PASS.
+Candidate:
+  Z:/pcb-runs/claude-finish/agent-work/codex-recovery-20261011/candidate.kicad_pcb
+  SHA256 53838149db4378929875b9862681b790a3a7ed975ee5530c4af975abbeb7df64
+Exported sch.net:
+  SHA256 df5f6cc6dbc7fa5d657fde31cd516927de84e5abcdfcb8c336eebd74ae32c65c
+
+root106/ contains read-only board, 27 reachable schematic files, exported
+netlist, project/library-table source files and exact copies of netlist_parity.py
+and pcbtext.py. inputs.json records every original and snapshot hash. The
+source hierarchy graph is closed. final-s2 and final-s3 schematic files are
+byte-identical; final-s2, final-s3 and integrate sch.net are byte-identical.
+Saved-export metadata points to final-s2/motherboard.kicad_sch, 9 October
+21:06:09, Eeschema 10.0.4. A newly authorized native schematic export from the
+exact frozen 27-file hierarchy has now passed semantic comparison to that
+export; see root106/source-export/receipt.json. Component, net membership,
+pin function/type and node assignments are identical; dates and source paths
+are metadata. Fresh export SHA256:
+  c5768f23d89c253513e1eaa81ff8b52135d26834ae7b894248b6c245bae41640
+It took 5.2 seconds under existing shared heavy.sh; no ERC/DRC/refill/GPU work.
+The prior 3171 ERC warnings remain unchanged and open.
+
+The portable precheck uses the frozen netlist_parity.py parser functions and
+lossless pcbtext.py splitting to inspect only board footprints/pads. All 2717
+components match ref/footprint/value; all 9590 exported nodes match all 9609
+associated physical pads, including repeated pad numbers; board has 9950 pads
+in total and 2384 exported nets. It rejects contradictory nodes, missing or
+extra components, changed component identity, normalized-name collisions and
+netted physical pads without a source node. No mismatches were found. Source
+component references, symbol UUIDs, values and footprints independently match
+the same 2717 export components across all 27 schematic files. The 357 placed
+symbols explicitly marked on_board=no are individually recorded as nonphysical
+source boundaries; they are absent from the physical export as intended.
+
+This portable check does not inspect copper touching no-net pads, native pad
+geometry, routing connectivity, zone refill, DRC, electrical limits or physical
+measurements. Native API parity is separate evidence and has now completed:
+  ROOT106 recovery5383: PASS, 44.983 seconds, shared KiCad slot.
+    raw native report SHA256
+    031bef159c7a53fb6e188eedc77acc7774fec39c8c580a9a266166d56eedb9a4
+  c03 composite8f1e: PASS, 46.674 seconds, shared KiCad slot.
+    candidate SHA256
+    8f1e03225429422199edc52c3c1ceb476818948c7a5f920e7d71b7cc8d7640c9
+    raw native report SHA256
+    c71f077c5b5bad598d65c24a9c8d8f7455387f4b169c9918d39b0f09b26a825d
+Both native reports match all 2717 components/2384 nets/9590 nodes/9609 physical
+pads; parity_defects=0 and no no-net pad track/via touches. Each explicit native
+settings-manager project load and BOARD.SetProject binding was confirmed, and
+candidate/source/netlist/settings/library clone hashes were checked unchanged.
+This is PCB API source parity and fresh schematic export provenance, not routing
+or electrical qualification and not execution of CLI DRC schematic parity.
+
+run_native_parity.py takes generic --board and --out arguments. On a new output
+it first freezes the exact board/source inputs and performs the portable checks.
+On an already prepared output it verifies all snapshot hashes and requested
+board identity. Then, only when root schedules it, it takes the test-only KiCad
+slot (or --slot shared/main when root schedules that existing slot) and invokes
+the exact frozen tools/quality/netlist_parity.py with
+--no-connectivity. It loads the board read-only, without a requested connectivity
+rebuild, zone refill, DRC or board save. Tool exit, elapsed time, report hash and
+all frozen hashes are recorded; no source adoption is performed. --with-project
+creates an exact candidate/integration project/library clone and uses the
+separate native_bound_entry.py adapter to call SettingsManager.LoadProject and
+BOARD.SetProject. The unchanged parity tool then runs against that binding; the
+project is unloaded with saving disabled. The original tool is not patched.
+
+Important API tool behavior: netlist_parity.py intentionally exits 0 even for
+mismatches. The wrapper therefore additionally requires parity_ok, integer zero
+defect/category counts, no contradictory node assignments, exact board/export
+hashes and exact inventory agreement with the portable precheck. It fails
+closed on a missing report field or inconsistent schema. It records the API
+check as source/native inspection and never equates it with CLI schematic DRC
+parity. The host controls use a historical native report only as a synthetic
+schema fixture, not as native evidence for ROOT106.
+
+Why current DRC project copies have no schematic:
+  tools/step_measure.sh copies .kicad_pro.good -> board.kicad_pro, board.kicad_dru,
+  fp-lib-table, sch.net and *.pretty. There is no .kicad_sch copy operation.
+  sch.net alone does not provide the annotated schematic hierarchy expected by
+  the CLI parity path. The observed DRC log saying it failed to fetch the netlist
+  makes an empty schematic_parity category unexecuted evidence, not a PASS.
+
+Safe source-copy plan, without changing the shared measure script:
+  1. Create a fresh isolated project directory after current frozen checks finish.
+  2. Retain the annotated project stem "motherboard": copy the 27 schematic
+     files verbatim, with motherboard.kicad_sch as root. Source instances are
+     annotated under project "motherboard"; avoid casually renaming the root.
+  3. Copy the chosen immutable candidate as motherboard.kicad_pcb. Copy the
+     actual integration board.kicad_pro.good and board.kicad_dru bytes as
+     motherboard.kicad_pro and motherboard.kicad_dru, plus integration
+     fp-lib-table and its actual *.pretty folders. Copy the source sym-lib-table
+     and exact source/export snapshot for explicit parity comparison. Record
+     and compare hashes; retain the native-rule bytes used by current checks.
+  4. In a scheduled slot, explicitly export that frozen motherboard schematic
+     to a new netlist and compare its semantic component/node table to sch.net.
+     Do not replace the old export or shared resources. Then use explicit API
+     parity on the actual final candidate. If CLI DRC parity is also requested,
+     preserve its complete log and establish it ran rather than inferring this
+     from an empty category. Any missing annotation or source discrepancy must
+     remain an open gate.
+
+Commands (the second starts a native job; root must schedule it):
+  C:/Python314/python.exe -B reports/board-finish-20261011/parity-repair/run_host_controls.py
+  C:/Python314/python.exe -B reports/board-finish-20261011/parity-repair/run_native_parity.py --board <exact-candidate> --out <new-child-output> --expected-board-sha256 <exact-hash> --with-project --slot shared
+
+Future composite candidates use --board <exact-final-board> --out <new child of
+parity-repair> --expected-board-sha256 <exact hash>. A partial preparer attempt
+was retained under root106-prepare-incomplete after a Windows path-key error;
+it has no inputs.json and is not valid evidence. root106 is the complete set.
+Existing root106/c03 native outputs are immutable evidence; the runner rejects
+overwriting an already-used native output. Fresh candidates require new outputs.

@@ -1,0 +1,925 @@
+{
+  "schema_version": 1,
+  "revision": "mc-permission-r0.2",
+  "manufacturing_ready": false,
+  "scope": "Physical gate/latch implementation of IS-1 section 6.2 equations; upstream qualification and card output drivers remain separate.",
+  "interface_revision": "IS-1 logic with proposed IS-2 GPIO startup-pull conditioning",
+  "components": {
+    "U1": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "MC_RAILS_OK",
+        "3": "CDONE_QUALIFIED",
+        "6": "DIC_OK_QUALIFIED",
+        "4": "BASE_FIRST"
+      },
+      "role": "base qualification, first stage",
+      "physical": true
+    },
+    "U2": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "BASE_FIRST",
+        "3": "EXT_PERMIT_3V3",
+        "6": "TAMPER_CLEAR_N",
+        "4": "BASE_OK"
+      },
+      "role": "base qualification, second stage",
+      "physical": true
+    },
+    "U3": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "BASE_OK",
+        "2": "WD_M_OK",
+        "7": "RAW_INHIBIT_N",
+        "5": "RAW_INHIBIT_N",
+        "6": "FPGA_ENDPOINT_READY",
+        "3": "LATCH_CLEAR_M_N"
+      },
+      "role": "motion raw inhibit and asynchronous clear",
+      "physical": true
+    },
+    "U4": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "BASE_OK",
+        "3": "WD_O_OK",
+        "6": "FPGA_ENDPOINT_READY",
+        "4": "LATCH_CLEAR_O_N"
+      },
+      "role": "output asynchronous clear",
+      "physical": true
+    },
+    "U5": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "ARM_M_Q",
+        "6": "LATCH_CLEAR_M_N",
+        "7": "IO_3V3"
+      },
+      "role": "motion rising-request arm latch",
+      "physical": true
+    },
+    "U6": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "FPGA_OUTPUT_REQUEST",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "ARM_O_Q",
+        "6": "LATCH_CLEAR_O_N",
+        "7": "IO_3V3"
+      },
+      "role": "output rising-request arm latch",
+      "physical": true
+    },
+    "U7": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "ARM_M_Q",
+        "3": "FPGA_MOTION_REQUEST",
+        "6": "RAW_INHIBIT_N",
+        "4": "TX_PERMIT"
+      },
+      "role": "final motion permission",
+      "physical": true
+    },
+    "U8": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "ARM_O_Q",
+        "3": "FPGA_OUTPUT_REQUEST",
+        "6": "OUTPUT_RAW_OK",
+        "4": "OUT_PERMIT"
+      },
+      "role": "final output permission",
+      "physical": true
+    },
+    "U9": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "BASE_OK",
+        "2": "WD_O_OK",
+        "7": "OUTPUT_RAW_OK",
+        "5": "TX_PERMIT",
+        "6": "PERMIT_OUT_REQ",
+        "3": "PERMIT_OUT_DRIVE"
+      },
+      "role": "output watchdog and safety-output request gate",
+      "physical": true
+    },
+    "U10": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "TX_PERMIT",
+        "3": "OUT_PERMIT",
+        "6": "PROCESS_PERMIT_EXT_3V3",
+        "4": "PROC_PERMIT"
+      },
+      "role": "independent process permission",
+      "physical": true
+    },
+    "U11": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_TX",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_TX",
+        "6": "TX_PERMIT",
+        "7": "IO_3V3"
+      },
+      "role": "sticky accepted motion-output interruption",
+      "physical": true
+    },
+    "U12": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_OUT",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_OUT",
+        "6": "OUT_PERMIT",
+        "7": "IO_3V3"
+      },
+      "role": "sticky accepted general-output interruption",
+      "physical": true
+    },
+    "U13": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_BOE",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_BOE",
+        "6": "BANK_B_BUFFER_ENABLE_QUALIFIED",
+        "7": "IO_3V3"
+      },
+      "role": "sticky qualified bank-B buffer interruption",
+      "physical": true
+    },
+    "U14": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_M_FALL_CLK",
+        "2": "WD_M_TRIP_D",
+        "3": "WD_M_TRIP_N",
+        "5": "WD_M_TRIP_Q",
+        "6": "WD_M_TRIP_CLEAR_N",
+        "7": "IO_3V3"
+      },
+      "role": "M sticky actual-SET1-qualified watchdog falling-edge trip",
+      "physical": true
+    },
+    "U15": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_O_FALL_CLK",
+        "2": "WD_O_TRIP_D",
+        "3": "WD_O_TRIP_N",
+        "5": "WD_O_TRIP_Q",
+        "6": "WD_O_TRIP_CLEAR_N",
+        "7": "IO_3V3"
+      },
+      "role": "O sticky actual-SET1-qualified watchdog falling-edge trip",
+      "physical": true
+    },
+    "U16": {
+      "kind": "LVC2G04",
+      "mpn": "SN74LVC2G04DBVR",
+      "value": "SN74LVC2G04DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "WD_M_OK",
+        "6": "WD_M_FALL_CLK",
+        "3": "WD_O_OK",
+        "4": "WD_O_FALL_CLK"
+      },
+      "role": "invert watchdog health for falling-edge capture",
+      "physical": true
+    },
+    "U17": {
+      "kind": "LVC2G32",
+      "mpn": "SN74LVC2G32DCUR",
+      "value": "SN74LVC2G32DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_M_TRIP_Q",
+        "2": "WD_M_SET1_BUF",
+        "7": "WD_M_TRIP_D",
+        "5": "WD_O_TRIP_Q",
+        "6": "WD_O_SET1_BUF",
+        "3": "WD_O_TRIP_D"
+      },
+      "role": "sticky trip feedback OR actual timer SET1",
+      "physical": true
+    },
+    "U18": {
+      "kind": "LVC2G04",
+      "mpn": "SN74LVC2G04DBVR",
+      "value": "SN74LVC2G04DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "WD_REARM_M",
+        "6": "WD_M_RECORD_CLEAR_N",
+        "3": "WD_REARM_O",
+        "4": "WD_O_RECORD_CLEAR_N"
+      },
+      "role": "invert deliberate active-HIGH trip-record clear strobes",
+      "physical": true
+    },
+    "U19": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "MC_RAILS_OK",
+        "2": "WD_M_RECORD_CLEAR_N",
+        "7": "WD_M_TRIP_CLEAR_N",
+        "5": "MC_RAILS_OK",
+        "6": "WD_O_RECORD_CLEAR_N",
+        "3": "WD_O_TRIP_CLEAR_N"
+      },
+      "role": "power-reset and explicit trip-record asynchronous clear",
+      "physical": true
+    },
+    "C1": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U1 local decoupling",
+      "physical": true
+    },
+    "C2": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U2 local decoupling",
+      "physical": true
+    },
+    "C3": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U3 local decoupling",
+      "physical": true
+    },
+    "C4": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U4 local decoupling",
+      "physical": true
+    },
+    "C5": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U5 local decoupling",
+      "physical": true
+    },
+    "C6": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U6 local decoupling",
+      "physical": true
+    },
+    "C7": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U7 local decoupling",
+      "physical": true
+    },
+    "C8": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U8 local decoupling",
+      "physical": true
+    },
+    "C9": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U9 local decoupling",
+      "physical": true
+    },
+    "C10": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10 local decoupling",
+      "physical": true
+    },
+    "C11": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U11 local decoupling",
+      "physical": true
+    },
+    "C12": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U12 local decoupling",
+      "physical": true
+    },
+    "C13": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U13 local decoupling",
+      "physical": true
+    },
+    "C14": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U14 local decoupling",
+      "physical": true
+    },
+    "C15": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U15 local decoupling",
+      "physical": true
+    },
+    "C16": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U16 local decoupling",
+      "physical": true
+    },
+    "C17": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U17 local decoupling",
+      "physical": true
+    },
+    "C18": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U18 local decoupling",
+      "physical": true
+    },
+    "C19": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U19 local decoupling",
+      "physical": true
+    },
+    "R1": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_ENDPOINT_READY",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R2": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_TX",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R3": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_OUT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R4": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_BOE",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R5": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "WD_REARM_M",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R6": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "WD_REARM_O",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R7": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PERMIT_OUT_REQ",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R8": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "MC_RAILS_OK",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R9": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "CDONE_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R10": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIC_OK_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R11": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EXT_PERMIT_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R12": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "TAMPER_CLEAR_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R13": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PROCESS_PERMIT_EXT_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R14": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "BANK_B_BUFFER_ENABLE_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R15": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "TX_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R16": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OUT_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R17": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PROC_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "R18": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PERMIT_OUT_DRIVE",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true
+    },
+    "B1": {
+      "kind": "B1",
+      "value": "INTERNAL REVIEW BOUNDARY",
+      "mpn": "",
+      "footprint": "",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "MC_RAILS_OK",
+        "4": "CDONE_QUALIFIED",
+        "5": "DIC_OK_QUALIFIED",
+        "6": "EXT_PERMIT_3V3",
+        "7": "TAMPER_CLEAR_N",
+        "8": "WD_M_OK",
+        "9": "WD_O_OK",
+        "10": "FPGA_ENDPOINT_READY",
+        "11": "FPGA_MOTION_REQUEST",
+        "12": "FPGA_OUTPUT_REQUEST",
+        "13": "PROCESS_PERMIT_EXT_3V3",
+        "14": "PERMIT_OUT_REQ",
+        "15": "BANK_B_BUFFER_ENABLE_QUALIFIED",
+        "16": "OPI_REARM_TX",
+        "17": "OPI_REARM_OUT",
+        "18": "OPI_REARM_BOE",
+        "19": "WD_REARM_M",
+        "20": "WD_REARM_O",
+        "21": "WD_M_SET1_BUF",
+        "22": "WD_O_SET1_BUF"
+      },
+      "physical": false,
+      "role": "logical input boundary"
+    },
+    "B2": {
+      "kind": "B2",
+      "value": "INTERNAL REVIEW BOUNDARY",
+      "mpn": "",
+      "footprint": "",
+      "pins": {
+        "1": "RAW_INHIBIT_N",
+        "2": "TX_PERMIT",
+        "3": "OUT_PERMIT",
+        "4": "PROC_PERMIT",
+        "5": "PERMIT_OUT_DRIVE",
+        "6": "OPI_OK_TX",
+        "7": "OPI_OK_OUT",
+        "8": "OPI_OK_BOE",
+        "9": "WD_M_TRIP_N",
+        "10": "WD_O_TRIP_N"
+      },
+      "physical": false,
+      "role": "logical output boundary"
+    }
+  },
+  "boundary_inputs": [
+    "IO_3V3",
+    "LOGIC_GND",
+    "MC_RAILS_OK",
+    "CDONE_QUALIFIED",
+    "DIC_OK_QUALIFIED",
+    "EXT_PERMIT_3V3",
+    "TAMPER_CLEAR_N",
+    "WD_M_OK",
+    "WD_O_OK",
+    "FPGA_ENDPOINT_READY",
+    "FPGA_MOTION_REQUEST",
+    "FPGA_OUTPUT_REQUEST",
+    "PROCESS_PERMIT_EXT_3V3",
+    "PERMIT_OUT_REQ",
+    "BANK_B_BUFFER_ENABLE_QUALIFIED",
+    "OPI_REARM_TX",
+    "OPI_REARM_OUT",
+    "OPI_REARM_BOE",
+    "WD_REARM_M",
+    "WD_REARM_O",
+    "WD_M_SET1_BUF",
+    "WD_O_SET1_BUF"
+  ],
+  "boundary_outputs": [
+    "RAW_INHIBIT_N",
+    "TX_PERMIT",
+    "OUT_PERMIT",
+    "PROC_PERMIT",
+    "PERMIT_OUT_DRIVE",
+    "OPI_OK_TX",
+    "OPI_OK_OUT",
+    "OPI_OK_BOE",
+    "WD_M_TRIP_N",
+    "WD_O_TRIP_N"
+  ],
+  "operating_supply_v": [
+    3.14,
+    3.465
+  ],
+  "sources": {
+    "research/machine-permission/sn74lvc1g11.pdf": "ffd953703273b43844eae23cfbf31cfc801a3b9443f2c863d49dde62f5a9232b",
+    "research/machine-permission/sn74lvc1g11-permission-pin-source.txt": "0bf675398781cff72b417742499e92780e66e6ce781d498158b0591038b5b736",
+    "research/machine-permission/sn74lvc2g08.pdf": "75dff6a7b9ba988865b776e0f7c5dd2855f13f64f05bfcda3b1baec886007199",
+    "research/machine-permission/sn74lvc2g08-permission-pin-source.txt": "0bc8cc5ef2176facc84ff62c0054b6dac1333e81a0ba321beeb09d2d40114dfd",
+    "research/machine-permission/sn74lvc2g74.pdf": "19bc881b14bac1dd02c9a5c9a184d09b2482eab053fb5e7706897ab42c023bea",
+    "research/machine-permission/sn74lvc2g74-permission-pin-source.txt": "a2946366f157d352344cbfb851c937d6dd780c565cf644f92ffcdea963ed21fe",
+    "research/machine-permission/sn74lvc2g04.pdf": "a70afa4e4d049ffaa382fe75d22c438fe2350de13923c54cdebe7e2b08df1b6e",
+    "research/machine-permission/sn74lvc2g04-permission-pin-source.txt": "909823d024c8111b7852612c511e71fdc8e0401bdbb7480b3fbe261424b4391d",
+    "research/machine-permission/sn74lvc2g32.pdf": "6a22b3c7445d250e3e9e4f335e5bc9cff1aee0b3d3a1184a9a4a62f32b48f71c",
+    "research/machine-permission/sn74lvc2g32-permission-pin-source.txt": "71f6e04bdec1937d6fa6d63d03e6f5bc83600fa440f8f8e03a6fc13ce6417c8b"
+  },
+  "watchdog_trip_contract": {
+    "event": "falling_WD_OK_edge_samples_actual_SET1",
+    "sticky_feedback": true,
+    "physical_SET1_inputs": [
+      "WD_M_SET1_BUF",
+      "WD_O_SET1_BUF"
+    ],
+    "record_clear_strobes_active_high": [
+      "WD_REARM_M",
+      "WD_REARM_O"
+    ],
+    "clear_only_after_record_stored_and_while_disarmed": "implementation_requirement_not_verified",
+    "power_clear_input": "MC_RAILS_OK",
+    "loaded_edge_and_reset_timing_qualified": false
+  },
+  "open_gates": [
+    "Qualified DIC presence/PGOOD filtering, CDONE qualification and positive tamper-clear generation remain upstream boundaries.",
+    "Bank-B qualified buffer-enable term is an input; actual Ioff buffer gating remains unimplemented.",
+    "PERMIT_OUT_DRIVE is logic only; no photorelay or field contact is implemented in this block.",
+    "Physical reset/clock recovery and removal pulses, full runtime/self-test integration and loaded timing require qualification.",
+    "Trip capture requires actual SET1 setup/hold at inverted WD_OK rising edges; coincident edges remain unqualified.",
+    "WD_REARM_M/O are explicit record-clear strobes; logic owner must issue them only after storage while disarmed, not as healthy-state rearm levels.",
+    "Proposed 4.7k GPIO pulls require versioned interface reconciliation, not an in-place IS-1 edit."
+  ]
+}

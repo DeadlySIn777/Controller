@@ -1,0 +1,144 @@
+{
+  "passed": true,
+  "scope": "Read-only normative requirements/C-model divergence review to guide separately staged stateful RTL; source inspection only",
+  "input_sha256": {
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\cnc3\\model\\cnc3_model.c": "c8e68af8f74b544cc6b186241d4c5d4b12b83edaa555794bf668c8a66fd06ead",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\cnc3\\model\\cnc3_model.h": "22f6c2e88012cc48b559d1800610ededc47c11a4648314ec6759a1a83de74950",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\cnc3\\src\\cnc3_proto.c": "b799bff1af7a571a2940c937cb7e1082cd9ddef3e811ac73915a2218a57096f2",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\cnc3\\src\\cnc3.c": "cc98bf74f8584e4e0fe7a99654c037be91d41bce1f1ed0507f1714bdadee27f3",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\01-protocol-and-schedule.md": "2730d33874d0faad2a987b857189fe7fb8ceb8ec4a818fc07a4476953ef75300",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\interface-spec\\04-safety-power-timing.md": "6ddd6aba07b5e064dd0d9408cec4717e3128189233f016cfbf530e44d380f830",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\docs\\MOTION_EXPANSION_8_TO_12.md": "742fbb3aa52dba49cb41a38fc8178a1aeac32d6aa04848813f6197bfe59fda8c",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\spec\\protocol.json": "7b99fe71d695dd9dfbecc75da980402169805ed8359626ca24eca2e8bb91bf07",
+    "C:\\Users\\Gluis\\claude-worktrees\\controller-interface-spec\\spec\\safety.json": "fbf0fd4adfd697c7ed2c59c9ce157d0b2e4f08af2ef5f191f7b3c224a14a3093"
+  },
+  "findings": [
+    {
+      "id": "configure_transaction",
+      "normative": [
+        "01-protocol-and-schedule.md:91",
+        "MOTION_EXPANSION_8_TO_12.md:151-153"
+      ],
+      "model": [
+        "cnc3_model.c:168-190"
+      ],
+      "required": "Accept replaces configuration atomically, increments real generation/stores CRC and clears session; require a new SYNC. Every rejected CONFIGURE clears config_valid, required_mask and both alarm masks but preserves last accepted generation/CRC/hash for diagnosis. Failed preconditions must not leave an older usable configuration.",
+      "observed": "Model retains session after acceptance, models generation as config_valid in feedback, clears only alarm_trip_mask on semantic rejection and bypasses all configuration clearing for rejected state/sequence preconditions. Structural frame rejection latches LINK only."
+    },
+    {
+      "id": "sync_qualification",
+      "normative": [
+        "01-protocol-and-schedule.md:86"
+      ],
+      "model": [
+        "cnc3_model.c:191-199"
+      ],
+      "required": "Require disarmed, IO disabled, actual qualification complete, no power-cycle fault and released inhibit. New nonzero session resets shared sequence and clearable latches, restarts faulted IOL1 epochs; never sets continuity.",
+      "observed": "Model checks disarmed/new session/no power-cycle fault only; it has no IO/qualification/inhibit/IOL1 provider state."
+    },
+    {
+      "id": "arm_real_providers",
+      "normative": [
+        "01-protocol-and-schedule.md:87",
+        "01-protocol-and-schedule.md:117-119",
+        "MOTION_EXPANSION_8_TO_12.md:147"
+      ],
+      "model": [
+        "cnc3_model.c:200-221"
+      ],
+      "required": "Enforce actual tripping alarm, required encoder validity, motion-critical ports, both measured watchdog test passes since powerup/card change, qualified reset release consumed once, contactor off/STO expected/reset not held. Refusal must use the specified fault/event semantics.",
+      "observed": "Model ARM does not check selftest_ok or any external provider. configure_ok also does not prove current installed class/provider health."
+    },
+    {
+      "id": "selftest_actual_fall_recovery",
+      "normative": [
+        "01-protocol-and-schedule.md:98",
+        "04-safety-power-timing.md:230"
+      ],
+      "model": [
+        "cnc3_model.c:254-260"
+      ],
+      "required": "Select M or O, reject overlap, force every specified safe output/request while testing, record real external watchdog fall in 9.06-13.37ms, fault on early/late/no fall and wait actual recovery before ARM. Pass flags are independent and invalidated by powerup/motion-card change. PERMIT_OUT remains physically open.",
+      "observed": "Model sets one selftest_ok bit immediately, representing both feedback pass bits; it has no measured edge/window/recovery state."
+    },
+    {
+      "id": "clean_disarm",
+      "normative": [
+        "01-protocol-and-schedule.md:89",
+        "04-safety-power-timing.md:189-190"
+      ],
+      "model": [
+        "cnc3_model.c:240-246"
+      ],
+      "required": "Stop new STEP starts, drain current configured high AND low spacing AND DIR hold, then lower motion request; preserve continuity only for a clean stop. Require actual OPI fall within10us after request drop; stuck path latches fault and refuses next ARM. Accepted with faults latched.",
+      "observed": "Model immediately clears armed_mask/rates, has no pulse-spacing/hold/drain state or OPI provider."
+    },
+    {
+      "id": "fault_continuity",
+      "normative": [
+        "04-safety-power-timing.md:188-191"
+      ],
+      "model": [
+        "cnc3_model.c:34-50"
+      ],
+      "required": "Any fault disarm while armed clears continuity for every armed channel, including zero-rate channels; domain OPI interruptions apply the specified domain mask and disarm all. Reset/reconfiguration/installed-mask changes clear continuity.",
+      "observed": "Model latch clears only armed channels with nonzero rate; no domain OPI providers are modeled."
+    },
+    {
+      "id": "atomic_update_and_io",
+      "normative": [
+        "01-protocol-and-schedule.md:88-97"
+      ],
+      "model": [
+        "cnc3_model.c:222-239",
+        "cnc3_model.c:261-267"
+      ],
+      "required": "Commit all12 rates plus complete output image atomically at accepted UPDATE; unmasked rates zero, clamps and IO validation; IO-disabled payload zero. Exact progress_m/progress_o and independent motion/IO watchdog feeds follow accepted opcode semantics.",
+      "observed": "Model updates rates only, IO_DISABLE only advances sequence, and other IO commands are unsupported. This is an explicit host-double scope limit, not a complete endpoint oracle."
+    },
+    {
+      "id": "deadline_and_progress",
+      "normative": [
+        "01-protocol-and-schedule.md:87-88",
+        "04-safety-power-timing.md:221-230"
+      ],
+      "model": [
+        "cnc3_model.c:65-68",
+        "cnc3_model.c:218-238"
+      ],
+      "required": "Implement exact5ms elapsed deadline and50tick progress pulses from actual accepted commands only; feedback/NOP never feed. External watchdog containment remains separate physical proof. Document start/deadline tick convention.",
+      "observed": "Model checks elapsed > WATCHDOG_TICKS, permits one extra tick at equality, and simulates timestamp updates rather than physical progress widths."
+    },
+    {
+      "id": "shared_no_wrap_sequence",
+      "normative": [
+        "01-protocol-and-schedule.md:81"
+      ],
+      "model": [
+        "cnc3_model.c:133-134",
+        "cnc3_proto.c:131-136",
+        "cnc3.c:310"
+      ],
+      "required": "One shared nonzero sequence across both CS; explicit no-wrap state guard and exhaust-before-new-session behavior. Sequence-zero read opcodes do not advance.",
+      "observed": "Model next_sequence uses uint32 last+1 without explicit exhaustion check, BUT the structural validator rejects stateful sequence0 and driver has exhaustion guard. This is a normative explicit RTL/test obligation, not evidence of externally accepted model wrap."
+    },
+    {
+      "id": "qualification_and_feedback_truth",
+      "normative": [
+        "01-protocol-and-schedule.md:154",
+        "MOTION_EXPANSION_8_TO_12.md:187"
+      ],
+      "model": [
+        "cnc3_model.c:15-21",
+        "cnc3_model.c:76-95",
+        "cnc3_model.c:96-118"
+      ],
+      "required": "Installed mask and ready/qualification/effective-permission fields must derive real current providers, including tamper/power-cycle latches; no fixed healthy fixture can confer actuator authority. Keep provider unknown/invalid explicit.",
+      "observed": "Model initializes installed8/12 and advertises qualification bit unconditionally; the host simulation scope cannot replace real hardware input qualification."
+    }
+  ],
+  "confirmed_external_model_sequence_wrap_bug": false,
+  "executed_RTL_or_physical_qualification": false,
+  "shared_source_modified": false,
+  "no_actuator_authority_granted_by_review": true
+}

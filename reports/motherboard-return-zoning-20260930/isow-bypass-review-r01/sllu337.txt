@@ -1,0 +1,1023 @@
+User’s Guide
+ISOW1432 Isolated RS-485/RS-422 Transceiver With 
+Integrated DC-DC Converter Evaluation Module
+ABSTRACT
+This user's guide describes the evaluation module (EVM) for an isolated RS-485 transceiver with integrated 
+DC-DC converter. This EVM helps designers evaluate the device performance for fast development and analysis 
+of data transmission systems using the ISOW1432 device in a 20-pin DFM package.
+CAUTION
+This evaluation module is made available for isolator parameter performance evaluation only and is 
+not intended for isolation voltage testing. To prevent damage to the EVM, any voltage applied as 
+supply to LDO inputs must be maintained within 0 V to 12 V range and voltage applied to device 
+device supply or data input/output pins must be maintained within 0 V to 5.5 V range as specified in 
+datasheet section "Recommonded Operating Conditions".
+Table of Contents
+1 Introduction.............................................................................................................................................................................2
+2 Functional Block Diagram and Pin Configuration of ISOW1432........................................................................................3
+2.1 Functional Block Diagram and Pin Configuration...............................................................................................................3
+3 EVM Schematic.......................................................................................................................................................................4
+4 EVM 3D Diagram and PCB Layout........................................................................................................................................ 7
+5 Bill of Materials..................................................................................................................................................................... 10
+6 EVM Setup and Operation....................................................................................................................................................12
+7 Support Resources...............................................................................................................................................................13
+List of Figures
+Figure 2-1. ISOW1432 Functional Block Diagram.......................................................................................................................3
+Figure 2-2. ISOW1432 Pin Configuration.................................................................................................................................... 3
+Figure 3-1. ISOW1432DFMEVM Schematic - Power..................................................................................................................4
+Figure 3-2. ISOW1432DFMEVM Schematic - Isolator................................................................................................................ 5
+Figure 3-3. ISOW1432DFMEVM Schematic - RS-485 Bus.........................................................................................................6
+Figure 4-1. ISOW1432DFMEVM PCB 3D diagram..................................................................................................................... 7
+Figure 4-2. ISOW1432DFMEVM PCB Layout - Top Layer..........................................................................................................8
+Figure 4-3. ISOW1432DFMEVM PCB Layout - Bottom Layer.................................................................................................... 9
+Figure 6-1. Basic EVM Setup.................................................................................................................................................... 12
+List of Tables
+Table 5-1. Bill of Materials..........................................................................................................................................................10
+Table 6-1. Jumper Configuration................................................................................................................................................13
+Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+www.ti.com
+Table of Contents
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+1
+Copyright © 2021 Texas Instruments Incorporated
+
+1 Introduction
+ISOW1432 is a galvanically-isolated differential line transceiver with a built-in isolated DC-DC converter for 
+TIA/EIA RS-485 and RS-422 applications. Both signal and power paths are isolated per UL1577 and are 
+qualified for reinforced isolation per VDE, CSA and CQC. These devices do not require any external components 
+other than bypass capacitors to realize an isolated RS-485 port. The low-emissions, isolated DC/DC converter 
+ensures the final system is capable of meeting CISPR 32 radiated emissions limit lines with just two ferrite 
+beads.
+The device is ideal for long distance communications. Isolation breaks the ground loop between the 
+communicating nodes, allowing for a much larger common-mode voltage range. It supports a maximum datarate 
+of 12 Mbps. It can operate from a single supply voltage of 3 V to 5.5 V by connecting VIO and VDD together 
+on PCB. If lower logic levels are required, these devices support 1.71 V to 5.5 V logic supply (VIO) that can be 
+independent from the power converter supply (VDD) of 3 V to 5.5 V. These devices support a wide operating 
+ambient temperature range from –40°C to 105°C and are available in 20-pin DFM (SOIC footprint compatible 
+package) offering a minimum of 8 mm creepage and clearance.
+ISOW1432DFMEVM can be used to evaluate different system parameters of the devices. Test signals and 
+sequences can be applied to the device and different performance characteristics can be observed such as 
+propagation delay, power consumption, and different bus and driver conditions. Users can evaluate these 
+parameters in their own lab environment.
+The EVM has footprints named DNI for additional components that are not needed to test the standard 
+functionality. Add components to these footprints for evaluation and to get specific system requirements. Refer to 
+this users guide for the basic functionality that can be assessed with the EVM.
+Introduction
+www.ti.com
+2
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+2 Functional Block Diagram and Pin Configuration of ISOW1432
+2.1 Functional Block Diagram and Pin Configuration
+Figure 2-1 shows functional block diagram of isolated full-duplex RS-485 transceiver with integrated DC-DC 
+converter, ISOW1432. Figure 2-2 shows the pin configuration of the ISOW1432 in the 20-pin DFM package.
+Figure 2-1. ISOW1432 Functional Block Diagram
+VIO
+D
+DE
+R
+RE
+GNDIO
+OUT
+EN/FLT
+VDD
+GND1
+A
+B
+Z
+Y
+VISOIN
+GISOIN
+IN
+MODE
+VISOOUT
+GND2
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+20
+19
+18
+17
+16
+15
+14
+13
+12
+11
+I S O L A T I O N
+Figure 2-2. ISOW1432 Pin Configuration
+www.ti.com
+Functional Block Diagram and Pin Configuration of ISOW1432
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+3
+Copyright © 2021 Texas Instruments Incorporated
+
+3 EVM Schematic
+Figure 3-1, Figure 3-2 and Figure 3-3 show the ISOW1432DFMEVM schematic.
+GND1
+1uF
+C5
+10uF
+C4
+VDD_1
+Supply decoupling capacitors
+LTC6908-1; D input
+0.1uF
+C13
+1uF
+C12
+GND1
+TLV1117[LDO for VCC
+_1]
+0.1uF
+C18
+1uF
+C17
+V_BAT
+TLV1117[GPIOSupply]
+R3
+DNP
+R4
+DNP
+DIV
+GND1
+GND1
+GND1
+V+
+1
+GND
+2
+SET
+3
+MOD
+4
+OUT2
+5
+OUT1
+6
+U1
+LTC6908HS6-1#TR MPBF
+SET
+DIV
+GND1
+GND1
+SET
+CLK_OUT
+10uF
+C11
+V_BAT
+2
+1
+P1
+TSW-102-26-T-S
+VDD_IO
+10uF
+C16
+GND1
+VDD_1
+V_BAT
+GND1
+VDD_IO
+TP2
+5010
+GND1
+1uF
+C2
+10uF
+C1
+VDD_IO
+VDD1_OSC
+VDD1_OSC
+VDD1_OSC
+VDD1_OSC
+16V
+0.1µF
+C3
+ADJ
+1
+OUT
+2
+IN
+3
+OUT
+4
+LM317MDCY
+U3
+V_BAT
+GND1
+ADJ
+1
+OUT
+2
+IN
+3
+OUT
+4
+LM317MDCY
+U2
+GND1
+TP1
+5010
+TP3
+5011
+16V
+47µF
+C9
+25V
+1uF
+C10
+16V
+47µF
+C14
+25V
+1uF
+C15
+16.5k
+R1
+402k
+R30
+1
+2
+3
+4
+J8
+TSM-102-01-L-DV
+12.7
+R2
+1nF
+100V
+C8
+16V
+0.1µF
+C7
+1
+2
+J6
+1751248
+V_BAT_OUT
+G_BAT
+G_BAT
+V_BAT_OUT
+GND1
+V_BAT
+L1
+782633601
+L6
+782633601
+390pF
+50V
+C27
+390pF
+50V
+C26
+Power Input
+50V
+0.01µF
+C6
+GND1
+1
+2
+3
+4
+J1
+TSM-102-01-L-DV
+1
+2
+3
+4
+5
+6
+J2
+61000621121
+GND1
+732
+R8
+732
+R9
+390
+R7
+390
+R10
+102
+R11
+240
+R6
+240
+R5
+DIV
+For LTC6908-1
+RSET = 16.5k for 12Mbps
+RSET = 402k for 500Kbps
+Figure 3-1. ISOW1432DFMEVM Schematic - Power
+EVM Schematic
+www.ti.com
+4
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+A
+D
+DE
+R
+REB
+GND_IO
+GPIO_OUT
+EN_DC_DC
+VDD_1
+GND1
+GISO_OUT
+VISO_OUT
+MODE
+GPIO_IN
+VISO_IN
+Y
+Z
+B
+A
+R
+TP9
+5010
+GND1
+GPIO_OUT
+TP10
+5010
+GISO_OUT
+VISO_OUT
+10uF
+C23
+PCB Keep out area
+VISO_IN
+1uF
+C24
+Connected to GISOIN plane
+Connected to VISOIN plane
+Order maintained fromLeft to right
+10uF
+C22
+2
+1
+3
+P5
+TSW-103-07-F-S
+D
+GND_IO
+GND1
+CLK_OUT
+Jumper/Resistor connections
+VISOOUT to VISOIN connection
+1uF
+C21
+D
+TP11
+5010
+GND2
+VISO_IN
+TP12
+5010
+16V
+0.1µF
+C25
+2
+1
+3
+P2
+TSW-103-07-F-S
+DE
+VDD_IO
+GND1
+2
+1
+3
+P3
+TSW-103-07-F-S
+GND1
+VDD_IO
+R
+REB
+1
+2
+3
+J7
+1727023
+D
+GND1
+2
+1
+3
+P7
+TSW-103-07-F-S
+EN_DC_DC
+GND1
+VDD_IO
+2
+1
+3
+P8
+TSW-103-07-F-S
+GND1
+VDD_IO
+GPIO_OUT
+MODE
+DNP
+R25
+2
+1
+3
+P6
+TSW-103-07-F-S
+GND2
+VISO_IN
+GPIO_IN
+VDD
+9
+RE
+5
+A
+20
+B
+19
+D
+2
+DE
+3
+EN/FLT
+8
+IN
+14
+MODE
+13
+OUT
+7
+R
+4
+VIO
+1
+VISOIN
+16
+VISOOUT
+12
+Y
+17
+Z
+18
+GNDIO
+6
+GND1
+10
+GND2
+11
+GISOIN
+15
+ISOW1432DFM
+U4
+VDD_IO
+TP6
+5011
+GND2
+TP7
+5011
+GISO_IN
+GND2
+TP8
+5011
+GND1
+VISO_OUT
+GISO_OUT
+Jumper/Resistor connections
+0
+R34
+ISOW1432
+L5
+MPZ1005S331ETD25
+L4
+MPZ1005S331ETD25
+50V
+0.01µF
+C20
+GND2
+Figure 3-2. ISOW1432DFMEVM Schematic - Isolator
+www.ti.com
+EVM Schematic
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC Converter Evaluation Module
+5
+Copyright © 2021 Texas Instruments Incorporated
+
+A_CMC
+B_CMC
+Controlled
+impedance line
+C19
+GRM1885C2A101JA01D
+GND2
+Split term
+DS2
+LTST-C190GKT
+GND1
+VDD_1
+DS3
+LTST-C190GKT
+GND1
+VDD_IO
+DS1
+LTST-C190GKT
+GND2
+VISO_IN
+ISORS485 loading conditions
+Supply indicator
+VISO_IN
+GND2
+VISO_IN
+GND2
+VCM
+Y
+Y_CMC
+Z_CMC
+Y_CMC
+Z
+Z_CMC
+3
+2
+1
+4
+L2
+DNP
+Y_Final
+Z_Final
+Y_Final
+Z_Final
+GND2
+A_CMC
+B_CMC
+GND2
+B
+B_CMC
+A
+A_CMC
+3
+2
+1
+4
+L3
+DNP
+1
+2
+3
+J4
+1727023
+1
+2
+3
+J3
+1727023
+1
+2
+J5
+1751248
+GND2
+GPIO_IN
+910
+R16
+910
+R12
+120
+R14
+DNI
+TP4
+5011
+GND2
+910
+R20
+910
+R22
+120
+R21
+0
+R33
+0
+R35
+0
+R32
+0
+R31
+4.70k
+R17
+4.70k
+R18
+4.70k
+R19
+60.4
+R15
+60.4
+R13
+Figure 3-3. ISOW1432DFMEVM Schematic - RS-485 Bus
+EVM Schematic
+www.ti.com
+6
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+4 EVM 3D Diagram and PCB Layout
+Figure 4-1 shows 3D diagram of ISOW1432DFMEVM. Figure 4-2 and Figure 4-3 show the PCB layout of 
+ISOW1432DFMEVM, respectively.
+Figure 4-1. ISOW1432DFMEVM PCB 3D diagram
+www.ti.com
+EVM 3D Diagram and PCB Layout
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+7
+Copyright © 2021 Texas Instruments Incorporated
+
+Figure 4-2. ISOW1432DFMEVM PCB Layout - Top Layer
+EVM 3D Diagram and PCB Layout
+www.ti.com
+8
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+Figure 4-3. ISOW1432DFMEVM PCB Layout - Bottom Layer
+www.ti.com
+EVM 3D Diagram and PCB Layout
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+9
+Copyright © 2021 Texas Instruments Incorporated
+
+5 Bill of Materials
+Table 5-1 shows the bill of materials for ISOW1432DFMEVM.
+Table 5-1. Bill of Materials
+Item
+Designator
+Description
+Manufacturer
+PartNumber
+1
+C1, C4, C11, C16, C22, C23 CAP, CERM, 10 uF, 35 V, +/- 10%, X5R, 0805
+MuRata
+GRM21BR6YA106KE43L
+2
+C2, C5, C12, C17, C21, C24 CAP, CERM, 1 uF, 50 V, +/- 10%, X5R, 0603
+Samsung Electro-
+Mechanics
+CL10A105KA8NNNC
+3
+C3, C7, C25
+CAP, CERM, 0.1 µF, 16 V,+/- 10%, X7R, 0402
+Walsin
+CL05B104KO5NNNC
+4
+C6, C20
+CAP, CERM, 0.01 µF, 50 V,+/- 10%, X7R, 0402
+Walsin
+0402B103K500CT
+5
+C9, C14
+CAP, CERM, 47 µF, 16 V,+/- 10%, X5R, 1210
+Samsung Electro-
+Mechanics
+CL32A476KOJNNNE
+6
+C10, C15
+CAP, CERM, 1 uF, 50 V, +/- 10%, X5R, 0603
+Samsung Electro-
+Mechanics
+CL10A105KA8NNNC
+7
+C13, C18
+CAP, CERM, 0.1 uF, 25 V, +/- 5%, X7R, 0603
+AVX
+06033C104JAT2A
+8
+C19
+CAP 100pF 50V ±5% 0603
+MuRata
+GCG1885G1H101JA01D
+9
+C26, C27
+CAP, CERM, 390 pF, 100 V, +/- 10%, X7R, 0603
+MuRata
+GCM1885C2A391JA16D
+10
+DS1, DS2, DS3
+LED Uni-Color Green, 100 mW, 5 V, -55 to 85 degC, 
+2-Pin SMD, RoHS, Tape and Reel
+LTST-C190GKT
+11
+H1, H2, H3, H4
+Bumpon, Hemisphere, 0.44 X 0.20, Clear
+3M
+SJ-5303 (CLEAR)
+12
+J1, J8
+Header, 2.54mm, 2x2, Gold, SMT
+Samtec
+TSM-102-01-L-DV
+13
+J2
+Header, 2.54mm, 3x2, Gold, SMT
+Wurth Elektronik
+61000621121
+14
+J3, J4, J7
+Terminal Block Receptacle, 3x1, 3.81mm, R/A, TH
+Phoenix Contact
+1727023
+15
+J5, J6
+Conn Term Block, 2POS, 3.5mm, TH
+Phoenix Contact
+1751248
+16
+L1, L6
+Ferrite Bead, 600 ohm @ 100 MHz, 1 A, 0603
+Wurth Elektronik
+782633601
+17
+L4, L5
+Ferrite Bead, 330 ohm @ 100 MHz, 0.7 A, 0402
+TDK
+MPZ1005S331ETD25
+18
+LBL1
+Thermal Transfer Printable Labels, 0.650" W x 
+0.200" H - 10,000 per roll
+Brady
+THT-14-423-10
+19
+P1
+Samtec
+TSW-102-26-T-S
+20
+P2, P3, P5, P6, P7, P8
+Samtec
+TSW-103-07-F-S
+21
+R1
+RES, 16.5 k, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-0716K5L
+22
+R2
+RES, 12.7, 1%, 0.1 W, AEC-Q200 Grade 0, 0603
+Vishay-Dale
+CRCW060312R7FKEA
+23
+R5, R6
+RES, 240, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07240RL
+24
+R7, R10
+RES, 390, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07390RL
+25
+R8, R9
+RES, 732, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07732RL
+26
+R11
+RES, 102, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07102RL
+27
+R13, R15
+RES, 60.4, 1%, 0.125 W, AEC-Q200 Grade 0, 0805
+Vishay-Dale
+CRCW080560R4FKEA
+28
+R17, R18, R19
+RES, 4.70 k, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-074K7L
+29
+R21
+RES, 120, 1%, 0.4 W, 0805
+Rohm
+ESR10EZPF1200
+30
+R30
+RES, 402 k, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07402KL
+31
+R31, R32, R33, R34, R35
+RES, 0, 1%, 0.1 W, AEC-Q200 Grade 0, 0603
+Stackpole 
+Electronics Inc
+RMCF0603ZT0R00
+32
+SH-J3, SH-J4, SH-J5, SH-
+J6, SH-J8
+Shunt, 100mil, Gold plated, Black
+Samtec
+SNT-100-BK-G
+33
+TP1, TP2, TP9, TP10, TP11, 
+TP12
+Test Point, Multipurpose, Red, TH
+Keystone
+5010
+34
+TP3, TP4, TP6, TP7, TP8
+Test Point, Multipurpose, Black, TH
+Keystone
+5011
+35
+U1
+Micropower, Regulated Charge Pump with 
+Shutdown, 2.7 to 5.5 V Vin, 5 V Vout, 6-pin SOT23 
+(S6-6), -40 to 85 degC, Pb-Free
+Linear Technology LTC6908HS6-1#TRMPBF
+36
+U2, U3
+3/4 Pin 500mA Adjustable Positive Voltage 
+Regulator, DCY0004A (SOT-223-4)
+Texas Instruments LM317MDCY
+Bill of Materials
+www.ti.com
+10
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+Table 5-1. Bill of Materials (continued)
+Item
+Designator
+Description
+Manufacturer
+PartNumber
+37
+U4
+Reinforced 5-kVRMS Isolated RS-485/RS-422 
+Transceiver With Integrated Low Emissions DC-DC 
+Converter
+Texas Instruments ISOW1432DFM
+38
+C8
+CAP, CERM, 1000 pF, 100 V, +/- 10%, X7R, 0603
+MuRata
+GRM188R72A102KA01D
+39
+L2, L3, R3, R4
+100µH @ 100kHz 2 Line Common Mode Choke 
+Surface Mount 5.8 kOhms @ 10MHz 150mA DCR 
+2Ohm, 0402 (1005 Metric) Chip Resistor
+TDK
+40
+R12, R16, R20, R22
+RES, 910, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-07910RL
+41
+R14
+RES, 120, 1%, 0.4 W, 0805
+Rohm
+ESR10EZPF1200
+42
+R25
+RES, 49.9, 1%, 0.1 W, 0603
+Yageo
+RC0603FR-0749R9L
+43
+SH-J1, SH-J2, SH-J7, SH-
+J9
+Shunt, 100mil, Gold plated, Black
+Samtec
+SNT-100-BK-G
+www.ti.com
+Bill of Materials
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+11
+Copyright © 2021 Texas Instruments Incorporated
+
+6 EVM Setup and Operation
+Figure 6-1 shows the basic setup of the EVM with only a single power supply needed to evaluate isolator 
+performance.
+Use voltages that are within the range given in the device data sheet. The LDOs on the EVM will provide VDD as 
+configured by their jumpers. The supply voltage to the EVM should ideally be between 8 V and 12 V. ISOW1432 
+will generate the isolated power for VISOOUT that is connected to VISOOIN on the EVM.
+The EVM features an on-board oscillator device that can be used to provide a clock signal to D pin of 
+ISOW1432. The oscillator is bridged to the D input through the Jumper P1 and can be configured to output 
+12 Mbps or 500 kbps by changing the configuration of J8. Utilizing the on-board oscillator is recommended if 
+conducting any emissions testing on the EVM.
+There are two LDOs on the EVM to provide VDD and VIO voltages separately. One can change the LDO output 
+voltage by reconfiguring the jumpers on J1 and J2. J1 controls the output voltage of the LDO supplying VDD and 
+can be 3.3 V or 5 V. J2 controls the output voltage of the LDO supplying Vio and can be 1.8 V, 3.3 V, or 5 V.
+J4 and J3 are the terminals that provide access to the A/B and Z/Y bus lines, respectively. These can be used to 
+connect to other RS-485 devices.
+A.
+Normal transceiver operation requires both the driver and the receiver sections to be active. Set the receiver enable pin ( RE) to logic 
+low and the driver enable pin (DE) to logic high to enable both the driver and receiver.
+Figure 6-1. Basic EVM Setup
+Table 6-1 shows the information on jumper configuration for basic tests.
+EVM Setup and Operation
+www.ti.com
+12
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+SLLU337 – JUNE 2021
+Submit Document Feedback
+Copyright © 2021 Texas Instruments Incorporated
+
+Table 6-1. Jumper Configuration
+Connection
+Label
+Description
+J1
+3.3 V, 5 V
+Connect this jumper to choose the desired VDD voltage of either 3.3 V or 5 V.
+J2
+1.8 V, 3.3 V, 5 V
+Connect this jumper to choose the desired VIO voltage of 1.8 V, 3.3 V, or 5 V.
+J8
+J8
+Connect this jumper to choose the desired oscillator switching frequency
+P1
+VDD IO, VDD OSC
+Connect this jumper to power on and enable the oscillator.
+P2
+VDD IO, DE, GND1
+Connect this jumper between the middle pin and GND1 to tie the DE pin low. The driver input is 
+disabled when the DE pin is low. Connect this jumper between the middle pin and VDD IO to tie the DE 
+pin high. The driver input is enabled when the DE pin is high. Tie the DE pin to VDD IO for full operation 
+tests.
+P3
+VDD IO, RE, GND1
+Connect this jumper between the middle pin and GND1 to tie the RE pin low. The receiver is enabled 
+when the RE pin is low. Tie the RE pin to GND1 for full operation tests. Connect this jumper between 
+the middle pin and VDD IO to tie the RE pin high. The receiver is disabled when the RE pin is high.
+P7
+VDD IO, EN, GND1 Connect this jumper between the middle pin and GND1 to disable the DC-DC converter. Leave jumper 
+off or conencted to VDD IO to enable DC-DC converter.
+7 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+www.ti.com
+Support Resources
+SLLU337 – JUNE 2021
+Submit Document Feedback
+ISOW1432 Isolated RS-485/RS-422 Transceiver With Integrated DC-DC 
+Converter Evaluation Module
+13
+Copyright © 2021 Texas Instruments Incorporated
+
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATA SHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you 
+will fully indemnify TI and its representatives against, any claims, damages, costs, losses, and liabilities arising out of your use of these 
+resources.
+TI’s products are provided subject to TI’s Terms of Sale or other applicable terms available either on ti.com or provided in conjunction with 
+such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable warranties or warranty disclaimers for 
+TI products.
+TI objects to and rejects any additional or different terms you may have proposed. IMPORTANT NOTICE
+Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+Copyright © 2022, Texas Instruments Incorporated

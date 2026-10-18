@@ -1,0 +1,1759 @@
+1
+2
+3
+4
+5
+6
+7
+8
+D PACKAGE
+(TOP VIEW)
+VCCA
+GND
+SDAA
+SCLA
+VCCB
+EN
+SDAB
+SCLB
+DGK PACKAGE
+(TOP VIEW)
+1
+8
+VCCA
+VCCB
+4
+5
+GND
+EN
+3
+6
+SDAA
+SDAB
+2
+7
+SCLA
+SCLB
+Product
+Folder
+Sample &
+Buy
+Technical
+Documents
+Tools &
+Software
+Support &
+Community
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+PCA9517 Level-Translating I2C Bus Repeater
+Not Recommended for New Designs
+1
+Features
+2
+Description
+This dual bidirectional I2C buffer is operational at
+1•
+Two-Channel Bidirectional Buffer
+2.7 V to 5.5 V.
+•
+I2C Bus and SMBus Compatible
+The
+PCA9517
+is
+a
+BiCMOS
+integrated
+circuit
+•
+Operating Supply Voltage Range of 0.9 V to 5.5 V
+intended for I2C bus and SMBus systems. It can also
+on A Side
+provide
+bidirectional
+voltage-level
+translation
+(up-
+•
+Operating Supply Voltage Range of 2.7 V to 5.5 V
+translation/down-translation)
+between
+low
+voltages
+on B Side
+(down to 0.9 V) and higher voltages (2.7 V to 5.5 V)
+in mixed-mode applications. This device enables I2C
+•
+Voltage-Level Translation From 0.9 V to 5.5 V and
+and similar bus systems to be extended, without
+2.7 V to 5.5 V
+degradation of performance even during level shifting.
+•
+Footprint and Function Replacement for
+The PCA9517 buffers both the serial data (SDA) and
+PCA9515A
+the serial clock (SCL) signals on the I2C bus, thus
+•
+Active-High Repeater-Enable Input
+allowing two buses of 400-pF bus capacitance to be
+•
+Open-Drain I2C I/O
+connected in an I2C application. This device can also
+•
+5.5-V Tolerant I2C and Enable Input Support
+be used to isolate two halves of a bus for voltage and
+Mixed-Mode Signal Operation
+capacitance.
+•
+Lockup-Free Operation
+The PCA9517 has two types of drivers—A-side
+drivers and B-side drivers. All inputs and I/Os are
+•
+Accommodates Standard Mode and Fast Mode
+overvoltage tolerant to 5.5 V, even when the device is
+I2C Devices and Multiple Masters
+unpowered (VCCB and/or VCCA = 0 V).
+•
+Powered-Off High-Impedance I2C Pins
+The PCA9517 doesnot support clock stretching and
+•
+400-kHz Fast I2C Bus
+arbitration across the repeater.
+•
+Latch-Up Performance Exceeds 100 mA Per
+JESD 78, Class II
+Device Information(1)
+•
+ESD Protection Exceeds JESD 22
+PART NUMBER
+PACKAGE
+BODY SIZE (NOM)
+–
+2000-V Human-Body Model (A114-A)
+SOIC (8)
+4.90 mm × 3.91 mm
+PCA9517
+–
+200-V Machine Model (A115-A)
+VSSOP (8)
+3.00 mm × 3.00 mm
+–
+1000-V Charged-Device Model (C101)
+(1) For all available packages, see the orderable addendum at
+the end of the datasheet.
+1
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+Table of Contents
+1
+Features.................................................................. 1
+7
+Parameter Measurement Information .................. 8
+2
+Description ............................................................. 1
+8
+Detailed Description .............................................. 9
+8.1
+Functional Block Diagram ......................................... 9
+3
+Revision History..................................................... 2
+8.2
+Feature Description................................................. 10
+4
+Description (Continued)........................................ 3
+8.3
+Device Functional Modes........................................ 12
+5
+Pin Configuration and Functions......................... 4
+9
+Application and Implementation ........................ 12
+6
+Specifications......................................................... 4
+9.1
+Typical Application ................................................. 12
+6.1
+Absolute Maximum Ratings ..................................... 4
+10
+Device and Documentation Support ................. 15
+6.2
+Handling Ratings....................................................... 4
+10.1
+Trademarks........................................................... 15
+6.3
+Recommended Operating Conditions....................... 5
+10.2
+Electrostatic Discharge Caution............................ 15
+6.4
+Thermal Information.................................................. 5
+10.3
+Glossary................................................................ 15
+6.5
+Electrical Characteristics........................................... 6
+11
+Mechanical, Packaging, and Orderable
+6.6
+Timing Requirements................................................ 6
+Information ........................................................... 15
+6.7
+I2C Interface Timing Requirements........................... 7
+3
+Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision D (March 2012) to Revision E
+Page
+•
+Added Clock Stretching Errata section. ............................................................................................................................... 10
+•
+Added Load Dependent Undershoot Errata section............................................................................................................. 10
+•
+Added Glitch/Noise Susceptibility Errata section.................................................................................................................. 11
+•
+Added Load Susceptibility Errata section............................................................................................................................. 11
+Changes from Revision B (May 2010) to Revision C
+Page
+•
+Deleted all references to arbitration and clock stretching support. This does not effect min/max specifications. ................ 1
+2
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+4
+Description (Continued)
+The B-side drivers operate from 2.7 V to 5.5 V and behave like the drivers in the PCA9515A. The output low
+level for this internal buffer is approximately 0.5 V, but the input voltage must be 70 mV or more below the output
+low level when the output internally is driven low. The higher-voltage low signal is called a buffered low. When
+the B-side I/O is driven low internally, the low is not recognized as a low by the input. This feature prevents a
+lockup condition from occurring when the input low condition is released.
+This type of design on the B side prevents it from being used in series with the PCA9515A and another
+PCA9517 (B side). This is because these devices do not recognize buffered low signals as a valid low and do
+not propagate it as a buffered low again.
+The A-side drivers operate from 0.9 V to 5.5 V and drive more current. They do not require the buffered low
+feature (or the static offset voltage). This means that a low signal on the B side translates to a nearly 0-V low on
+the A side, which accommodates smaller voltage swings of lower-voltage logic. The output pulldown on the
+A side drives a hard low, and the input level is set at 0.3 VCCA to accommodate the need for a lower low level in
+systems where the low-voltage-side supply voltage is as low as 0.9 V.
+The A side of two or more PCA9517s can be connected together to allow a star topography, with the A side on
+the common bus. Also, the A side can be connected directly to any other buffer with static- or dynamic-offset
+voltage. Multiple PCA9517s can be connected in series, A side to B side, with no buildup in offset voltage and
+with only time-of-flight delays to consider.
+The PCA9517 drivers are enabled when VCCA is above 0.8 V and VCCB is above 2.5 V.
+The PCA9517 has an active-high enable (EN) input with an internal pullup to VCCB, which allows the user to
+select when the repeater is active. This can be used to isolate a badly behaved slave on power-up reset. It
+should never change state during an I2C operation, because disabling during a bus operation hangs the bus, and
+enabling part way through a bus cycle could confuse the I2C parts being enabled. The EN input should change
+state only when the global bus and repeater port are in an idle state, to prevent system failures.
+The PCA9517 includes a power-up circuit that keeps the output drivers turned off until VCCB is above 2.5 V and
+the VCCA is above 0.8 V. VCCB and VCCA can be applied in any sequence at power up. After power up and with
+the EN high, a low level on the A side (below 0.3 VCCA) turns the corresponding B-side driver (either SDA or
+SCL) on and drives the B side down to approximately 0.5 V. When the A side rises above 0.3 VCCA, the B-side
+pulldown driver is turned off and the external pullup resistor pulls the pin high. When the B side falls first and
+goes below 0.3 VCCB, the A-side driver is turned on and the A side pulls down to 0 V. The B-side pulldown is not
+enabled unless the B-side voltage goes below 0.4 V. If the B-side low voltage does not go below 0.5 V, the A-
+side driver turns off when the B-side voltage is above 0.7 VCCB. If the B-side low voltage goes below 0.4 V, the B-
+side pulldown driver is enabled, and the B side is able to rise to only 0.5 V until the A side rises above 0.3 VCCA.
+Then the B side continues to rise, being pulled up by the external pullup resistor. VCCA is only used to provide the
+0.3 VCCA reference to the A-side input comparators and for the power-good-detect circuit. The PCA9517 logic
+and all I/Os are powered by the VCCB pin.
+As with the standard I2C system, pullup resistors are required to provide the logic-high levels on the buffered
+bus. The PCA9517 has standard open-collector configuration of the I2C bus. The size of these pullup resistors
+depends on the system, but each side of the repeater must have a pullup resistor. The device is designed to
+work with Standard mode and Fast mode I2C devices in addition to SMBus devices. Standard mode I2C devices
+only specify 3 mA in a generic I2C system, where Standard mode devices and multiple masters are possible.
+Under certain conditions, higher termination currents can be used.
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+3
+Product Folder Links: PCA9517
+1
+2
+3
+4
+5
+6
+7
+8
+D PACKAGE
+(TOP VIEW)
+VCCA
+GND
+SDAA
+SCLA
+VCCB
+EN
+SDAB
+SCLB
+DGK PACKAGE
+(TOP VIEW)
+1
+8
+VCCA
+VCCB
+4
+5
+GND
+EN
+3
+6
+SDAA
+SDAB
+2
+7
+SCLA
+SCLB
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+5
+Pin Configuration and Functions
+Pin Functions
+PIN
+DESCRIPTION
+NAME
+NO.
+VCCA
+1
+A-side supply voltage (0.9 V to 5.5 V)
+SCLA
+2
+Serial clock bus, A side. Connect to VCCA through a pullup resistor.
+SDAA
+3
+Serial data bus, A side. Connect to VCCA through a pullup resistor.
+GND
+4
+Supply ground
+EN
+5
+Active-high repeater enable input
+SDAB
+6
+Serial data bus, B side. Connect to VCCB through a pullup resistor.
+SCLB
+7
+Serial clock bus, B side. Connect to VCCB through a pullup resistor.
+VCCB
+8
+B-side and device supply voltage (2.7 V to 5.5 V)
+6
+Specifications
+6.1
+Absolute Maximum Ratings(1)
+over operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCCB
+Supply voltage range
+–0.5
+7
+V
+VCCA
+Supply voltage range
+–0.5
+7
+V
+VI
+Enable input voltage range(2)
+–0.5
+7
+V
+VI/O
+I2C bus voltage range(2)
+–0.5
+7
+V
+IIK
+Input clamp current
+VI < 0
+–50
+mA
+IOK
+Output clamp current
+VO < 0
+–50
+Continuous output current
+±50
+mA
+IO
+Continuous current through VCC or GND
+±100
+mA
+(1)
+Stresses beyond those listed under "absolute maximum ratings" may cause permanent damage to the device. These are stress ratings
+only, and functional operation of the device at these or any other conditions beyond those indicated under "recommended operating
+conditions" is not implied. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2)
+The input negative-voltage and output voltage ratings may be exceeded if the input and output current ratings are observed.
+6.2
+Handling Ratings
+MIN
+MAX
+UNIT
+Tstg
+Storage temperature range
+–65
+150
+°C
+Human body model (HBM), per ANSI/ESDA/JEDEC JS-001, all
+0
+2000
+pins(1)
+V(ESD)
+Electrostatic discharge
+V
+Charged device model (CDM), per JEDEC specification
+0
+1000
+JESD22-C101, all pins(2)
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+4
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+6.3
+Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+VCCA
+Supply voltage, A-side bus
+0.9(1)
+5.5
+V
+VCCB
+Supply voltage, B-side bus
+2.7
+5.5
+V
+SDAA, SCLA
+0.7 × VCCA
+5.5
+VIH
+High-level input voltage
+SDAB, SCLB
+0.7 × VCCB
+5.5
+V
+EN
+0.7 × VCCB
+5.5
+SDAA, SCLA
+–0.5
+0.28 × VCCA
+VIL
+Low-level input voltage
+SDAB, SCLB
+–0.5(2)
+0.3 × VCCB
+V
+EN
+–0.5
+0.3 × VCCB
+VCCB = 2.7 V
+6
+IOL
+Low-level output current
+mA
+VCCB = 3 V
+6
+TA
+Operating free-air temperature
+–40
+85
+°C
+(1)
+Low-level supply voltage
+(2)
+VIL specification is for the first low level seen by the SDAB and SCLB lines. VILc is for the second and subsequent low levels seen by the
+SDAB and SCLB lines.
+6.4
+Thermal Information
+PCA9517
+THERMAL METRIC(1)
+D
+DGK
+UNIT
+8 PINS
+8 PINS
+RθJA
+Junction-to-ambient thermal resistance
+97
+172
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the IC Package Thermal Metrics application report, SPRA953.
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+5
+Product Folder Links: PCA9517
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+6.5
+Electrical Characteristics
+VCCB = 2.7 V to 5.5 V, GND = 0 V, TA = –40°C to 85°C (unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+VCCB
+MIN
+TYP
+MAX
+UNIT
+VIK
+Input clamp voltage
+II = –18 mA
+2.7 V to 5.5 V
+–1.2
+V
+IOL = 100 μA or 6 mA,
+SDAB, SCLB
+0.45
+0.52
+0.7
+Low-level output
+VILA = VILB = 0 V
+VOL
+2.7 V to 5.5 V
+V
+voltage
+SDAA, SCLA
+IOL = 6 mA
+0.1
+0.2
+Low-level input voltage
+VOL – VILc
+below low-level output
+SDAB, SCLB
+2.7 V to 5.5 V
+70
+mV
+voltage
+SDA and SCL low-level
+VILC
+SDAB, SCLB
+2.7 V to 5.5 V
+–0.5
+0.4
+V
+input voltage contention
+Both channels low,
+SDAA = SCLA = GND and
+ICC
+Quiescent supply current for VCCA
+SDAB = SCLB = open, or
+1
+mA
+SDAA = SCLA = open and
+SDAB = SCLB = GND
+Both channels high,
+SDAA = SCLA = VCCA and
+1.5
+4
+SDAB = SCLB = VCCB and
+EN = VCCB
+Both channels low,
+SDAA = SCLA = GND and
+ICC
+Quiescent supply current
+5.5 V
+mA
+SDAB = SCLB = open, or
+1.5
+5
+SDAA = SCLA = open and
+SDAB = SCLB = GND
+In contention,
+SDAA = SCLA = GND and
+1.5
+5
+SDAB = SCLB = GND
+VI = VCCB
+±1
+SDAB, SCLB
+VI = 0.2 V
+10
+VI = VCCB
+±1
+II
+Input leakage current
+SDAA, SCLA
+2.7 V to 5.5 V
+μA
+VI = 0.2 V
+10
+VI = VCCB
+±1
+EN
+VI = 0.2 V
+–10
+–30
+SDAB, SCLB
+10
+High-level output
+IOH
+VO = 3.6 V
+2.7 V to 5.5 V
+μA
+leakage current
+SDAA, SCLA
+10
+EN
+VI = 3 V or 0 V
+3.3 V
+6
+7
+CI
+Input capacitance
+3.3 V
+6
+9
+pF
+SCLA, SCLB
+VI = 3 V or 0 V
+0 V
+6
+8
+3.3 V
+6
+9
+Input/output
+CIO
+SDAA, SDAB
+VI = 3 V or 0 V
+pF
+capacitance
+0 V
+6
+8
+6.6
+Timing Requirements
+over recommended operating free-air temperature range (unless otherwise noted)
+MIN
+MAX
+UNIT
+tsu
+Setup time, EN high before Start condition(1)
+100
+ns
+th
+Hold time, EN high after Stop condition(1)
+100
+ns
+(1)
+EN should change state only when the global bus and the repeater port are in an idle state.
+6
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+6.7
+I2C Interface Timing Requirements
+VCCB = 2.7 V to 5.5 V, GND = 0 V, TA = –40°C to 85°C (unless otherwise noted)
+FROM
+TO
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP(1)
+MAX UNIT
+(INPUT)
+(OUTPUT)
+SDAB, SCLB(2)
+SDAA, SCLA(2)
+100
+169
+255
+(see Figure 4)
+(see Figure 4)
+tPLZ
+Propagation delay
+ns
+SDAA, SCLA(3)
+SDAB, SCLB(3)
+25
+67
+110
+(see Figure 3)
+(see Figure 3)
+VCCA ≤2.7 V
+15
+68(4)
+110
+(see Figure 2)
+2.7 V ≤VCCA ≤3 V
+SDAB, SCLB
+SDAA, SCLA
+20
+79
+130
+(see Figure 2)
+tPZL
+Propagation delay
+ns
+VCCA ≥3 V
+10
+103(5)
+300
+(see Figure 2)
+SDAA, SCLA(3)
+SDAB, SCLB(3)
+45
+118
+230
+(see Figure 3)
+(see Figure 3)
+B side to A side
+1
+6
+30
+(see Figure 3)
+tTLH
+Transition time
+20%
+80%
+ns
+A side to B side
+20
+31
+170
+(see Figure 2)
+VCCA ≤2.7 V
+1
+3(6)
+105
+(see Figure 3)
+2.7 V ≤VCCA ≤3 V
+B side to A side
+1
+6
+120
+(see Figure 2)
+tTHL
+Transition time
+80%
+20%
+ns
+VCCA ≥3 V
+1
+25(7)
+175
+(see Figure 3)
+A side to B side
+1
+12
+90
+(see Figure 2)
+(1)
+Typical values were measured with VCCA = VCCB = 2.7 V at TA = 25°C, unless otherwise noted.
+(2)
+The tPLH delay data from B to A side is measured at 0.5 V on the B side to 0.5 VCCA on the A side when VCCA is less than 2 V, and
+1.5 V on the A side if VCCA is greater than 2 V.
+(3)
+The proportional delay data from A to B side is measured at 0.3 VCCA on the A side to 1.5 V on the B side.
+(4)
+Typical value measured with VCCA = 0.9 V at TA = 25°C
+(5)
+Typical value measured with VCCA = 5.5 V at TA = 25°C
+(6)
+Typical value measured with VCCA = 0.9 V at TA = 25°C
+(7)
+Typical value measured with VCCA = 5.5 V at TA = 25°C
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+7
+Product Folder Links: PCA9517
+0.3 VCCA
+INPUT
+OUTPUT
+3 V
+80%
+20%
+1.5 V
+1.5 V
+80%
+20%
+0.3 VCCA
+VCCA
+VCCA
+tPZL
+tPLZ
+3 V
+0.1 V
+1.5 V
+1.5 V
+INPUT
+OUTPUT
+1.2 V
+VOL
+tPZL
+tPLZ
+80%
+20%
+0.6 V
+0.6 V
+80%
+20%
+tTHL
+tTLH
+t
+/t
+PLZ
+PZL
+TEST
+S1
+CL = 57 pF
+(see Note C)
+S1
+GND
+PULSE
+GENERATOR
+DUT
+RT
+(see Note B)
+TEST CIRCUIT FOR OPEN-DRAIN OUTPUT
+R
+(see Note A)
+L
+VCC
+VCC
+VIN
+VOUT
+VCC
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+7
+Parameter Measurement Information
+A.
+RL = 167 Ωon the A side and 1.35 kΩon the B side
+B.
+RT termination resistance should be equal to ZOUT of pulse generators.
+C.
+CL includes probe and jig capacitance.
+D.
+All input pulses are supplied by generators having the following characteristics: PRR ≤10 MHz, ZO = 50 Ω,
+slew rate ≥1 V/ns.
+E.
+The outputs are measured one at a time, with one transition per measurement.
+F.
+tPLH and tPHL are the same as tpd.
+G.
+tPLZ and tPHZ are the same as tdis.
+H.
+tPZL and tPZH are the same as ten.
+Figure 1. Test Circuit
+Figure 2. Waveform 1 – Propagation Delay and Transition Times for B Side to A Side
+Figure 3. Waveform 2 – Propagation Delay and Transition Times for A Side to B Side
+8
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+SDAB
+SCLB
+SCLA
+SDAA
+EN
+VCCB
+Pullup
+Resistor
+GND
+1
+8
+VCCA
+VCCB
+4
+3
+2
+5
+6
+7
+tPLH
+INPUT
+SDAB, SCLB
+OUTPUT
+SCLA, SDAA
+50% is V
+is less than 2 V
+1.5 V if V
+is greater than 2 V
+CCA
+CCA
+0.5 V
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+Parameter Measurement Information (continued)
+Figure 4. Waveform 3
+8
+Detailed Description
+8.1
+Functional Block Diagram
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+9
+Product Folder Links: PCA9517
+SDAA
+SDAB
+SCL
+Rise time accelerator pulling SDAB high
+after SDAA overshoots past 500mV
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+8.2
+Feature Description
+8.2.1
+Clock Stretching Errata
+Description
+Due to the static offset on the B-side and the possibility of an overshoot above 500mV during events like clock
+stretching, the device should not be used with rise time accelerators on the B-side.
+Figure 5. Waveform of Clock Stretching with Rise Time Accelerator on the Bus
+System Impact
+An incorrect logic state will be transferred to circuits, creating an I2C communication failure on the bus.
+System Workaround
+Usage of the TCA9517 is recommended.
+There are two possible workarounds to avoid an I2C communication failure:
+•
+Removing rise-time accelerators from the B-side bus
+•
+Adding a larger capacitive load to the bus will limit the overshoot
+8.2.2
+Load Dependent Undershoot Errata
+Description
+There is a case in which a combination of weak pull-up resistance and light bus loading will cause
+communication failure through the bus due to undershoot. During a low-to-high transition, when the B-side
+releases from its 500mV VOL, an undershoot below VILC can occur. In this event, the A-side will recognize this
+as a valid low coming from the B-side, causing the A-side to be pulled down by the buffer. The A-side being
+improperly pulled down by the buffer will trigger the B-side to be pulled low. Since the B-side will be pulled to
+500mV, this will not force the A-side to stay low. As the A-side begins transitioning high again, the issue will
+repeat itself.
+System Impact
+An incorrect logic state will be transferred to circuits, creating an I2C communication failure on the bus.
+System Workaround
+Usage of the TCA9517 is recommended.
+There are two possible workarounds to avoid an I2C communication failure:
+•
+Removing rise-time accelerators from the B-side bus
+•
+Adding a larger capacitive load to the bus will limit the overshoot
+10
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+SDAA
+SDAB
+SDAB releasing improperly after a high-to-
+low transition on SDAA
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+Feature Description (continued)
+8.2.3
+Glitch/Noise Susceptibility Errata
+Description
+During the event of a glitch on the SDA/SCL line on one side of the buffer, this glitch can be propagated through
+and widened by the device during transfer to the other side of the buffer
+System Impact
+The widened glitch can be recognized as a valid transmission logic, causing a communication failure on the I2C
+bus
+System Workaround
+Usage of the TCA9517 is recommended.
+Ensure glitch free SDA/SCL lines.
+8.2.4
+Load Susceptibility Errata
+Description
+There is a possibility of a race condition of the internal logic of the device that can arise due to bus loading.
+Within a narrow window, dependent on the following parameters, the internal latch controlling the direction of
+transfer is set in the wrong state after a falling edge on SCLA/SDAA
+•
+Pull-up resistance
+•
+Bus capacitance
+•
+Temperature
+This window location will shift based on the combination of these parameters, therefore cannot be bounded. The
+typical bus capacitance window is observed to be ~2pF wide for a given pull-up resistance and at a given
+temperature. The typical temperature window for a given pull-up resistance and bus capacitance is observed to
+be ~0.8°C wide. This phenomenon can be exacerbated by noise/glitching on the bus.
+System Impact
+An incorrect logic state will be transferred through the device creating an I2C communication failure on the bus
+(Figure 6). The bus has the potential to lock under certain external conditions.
+Figure 6. Load Susceptibility Failure Signature
+System Workaround
+Usage of the TCA9517 is recommended.
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+11
+Product Folder Links: PCA9517
+BUS B
+PCA9517
+SDA
+SDAB
+SDA
+SCL
+SCLB
+SCL
+EN
+BUS A
+3.3 V
+SDAA
+SCLA
+VCCA
+VCCB
+10 kW
+1.2 V
+SLAVE
+400 kHz
+BUS
+MASTER
+400 kHz
+10 kW
+10 kW
+10 kW
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+8.3
+Device Functional Modes
+Table 1. Function Table
+INPUT
+FUNCTION
+EN
+L
+Outputs disabled
+SDAA = SDAB
+H
+SCLA = SCLB
+9
+Application and Implementation
+9.1
+Typical Application
+A typical application is shown in Figure 7. In this example, the system master is running on a 3.3-V I2C bus, and
+the slave is connected to a 1.2-V bus. Both buses run at 400 kHz. Master devices can be placed on either bus.
+Figure 7. Typical Application
+12
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+PCA9517
+SDA
+SDA
+SCL
+SCLA
+SCL
+EN
+VCCA
+VCCB
+SDAB
+SCLB
+10 kΩ
+10 kΩ
+10 kΩ
+10 kΩ
+PCA9517
+SDAA
+SDA
+SCLA
+SCL
+EN
+SDAB
+SCLB
+10 kΩ
+10 kΩ
+PCA9517
+SDAA
+SDA
+SCLA
+SCL
+EN
+SDAB
+SCLB
+10 kΩ
+10 kΩ
+BUS
+MASTER
+SLAVE
+400 kHz
+SLAVE
+400 kHz
+SLAVE
+400 kHz
+SDAA
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+Typical Application (continued)
+Figure 8. Typical Star Application
+9.1.1
+Design Requirements
+The PCA9517 is 5-V tolerant, so it does not require any additional circuitry to translate between 0.9-V to 5.5-V
+bus voltages and 2.7-V to 5.5-V bus voltages.
+When the A side of the PCA9517 is pulled low by a driver on the I2C bus, a comparator detects the falling edge
+when it goes below 0.3 VCCA and causes the internal driver on the B side to turn on, causing the B side to pull
+down to about 0.5 V. When the B side of the PCA9517 falls, first a CMOS hysteresis-type input detects the
+falling edge and causes the internal driver on the A side to turn on and pull the A-side pin down to ground. In
+order to illustrate what would be seen in a typical application, refer to Figure 9 and Figure 10. If the bus master in
+Figure 7 were to write to the slave through the PCA9517, waveforms shown in Figure 9 would be observed on
+the A bus. This looks like a normal I2C transmission, except that the high level may be as low as 0.9 V, and the
+turn on and turn off of the acknowledge signals are slightly delayed.
+On the B-side bus of the PCA9517, the clock and data lines would have a positive offset from ground equal to
+the VOL of the PCA9517. After the eighth clock pulse, the data line is pulled to the VOL of the slave device, which
+is very close to ground in this example. At the end of the acknowledge, the level rises only to the low level set by
+the driver in the PCA9517 for a short delay, while the A-bus side rises above 0.3 VCCA and then continues high.
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+13
+Product Folder Links: PCA9517
+9th CLOCK PULSE — ACKNOWLEDGE
+V
+OF SLAVE
+OL
+2 V/DIV
+SCL
+SDA
+V
+OF PCA9517
+OL
+9th CLOCK PULSE — ACKNOWLEDGE
+0.5 V/DIV
+SCL
+SDA
+PCA9517
+SDA
+SDAA
+SCL
+SCLA
+EN
+SDAB
+SCLB
+10 kΩ
+10 kΩ
+VCCB
+PCA9517
+SDAA
+SCLA
+EN
+SDAB
+SCLB
+10 kΩ
+PCA9517
+SDAA
+SCLA
+EN
+SDAB
+SCLB
+10 kΩ
+SDA
+SCL
+10 kΩ
+SLAVE
+400 kHz
+BUS
+MASTER
+10 kΩ
+10 kΩ
+10 kΩ
+Not Recommended for New Designs
+PCA9517
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+www.ti.com
+Typical Application (continued)
+9.1.2
+Detailed Design Procedure
+Multiple PCA9517 A sides can be connected in a star configuration, allowing all nodes to communicate with each
+other.
+Figure 9. Typical Series Application
+Multiple PCA9517s can be connected in series as long as the A side is connected to the B side. I2C bus slave
+devices can be connected to any of the bus segments. The number of devices that can be connected in series is
+limited by repeater delay/time-of-flight considerations on the maximum bus speed requirements.
+Figure 10. Bus A (0.9-V to 5.5-V Bus) Waveform
+Figure 11. Bus B (2.7-V to 5.5-V Bus) Waveform
+14
+Submit Documentation Feedback
+Copyright © 2007–2014, Texas Instruments Incorporated
+Product Folder Links: PCA9517
+Not Recommended for New Designs
+PCA9517
+www.ti.com
+SCPS157E –DECEMBER 2007–REVISED JUNE 2014
+10
+Device and Documentation Support
+10.1
+Trademarks
+All trademarks are the property of their respective owners.
+10.2
+Electrostatic Discharge Caution
+These devices have limited built-in ESD protection. The leads should be shorted together or the device placed in conductive foam
+during storage or handling to prevent electrostatic damage to the MOS gates.
+10.3
+Glossary
+SLYZ022 — TI Glossary.
+This glossary lists and explains terms, acronyms, and definitions.
+11
+Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+Copyright © 2007–2014, Texas Instruments Incorporated
+Submit Documentation Feedback
+15
+Product Folder Links: PCA9517
+PACKAGE OPTION ADDENDUM
+www.ti.com
+10-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+PCA9517DGKR
+NRND
+Production
+VSSOP (DGK) | 8
+2500 | LARGE T&R
+Yes
+NIPDAU | NIPDAUAG
+Level-1-260C-UNLIM
+-40 to 85
+(7EA, 7EE, 7EF)
+PCA9517DGKR.A
+NRND
+Production
+VSSOP (DGK) | 8
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+(7EA, 7EE, 7EF)
+PCA9517DGKRG4
+NRND
+Production
+VSSOP (DGK) | 8
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+(7EA, 7EE, 7EF)
+PCA9517DR
+NRND
+Production
+SOIC (D) | 8
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+PD517
+PCA9517DR.A
+NRND
+Production
+SOIC (D) | 8
+2500 | LARGE T&R
+Yes
+NIPDAU
+Level-1-260C-UNLIM
+-40 to 85
+PD517
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+24-Jul-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+PCA9517DGKR
+VSSOP
+DGK
+8
+2500
+330.0
+12.4
+5.3
+3.4
+1.4
+8.0
+12.0
+Q1
+PCA9517DR
+SOIC
+D
+8
+2500
+330.0
+12.4
+6.4
+5.2
+2.1
+8.0
+12.0
+Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+24-Jul-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+PCA9517DGKR
+VSSOP
+DGK
+8
+2500
+364.0
+364.0
+27.0
+PCA9517DR
+SOIC
+D
+8
+2500
+353.0
+353.0
+32.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+6X 0.65
+2X
+1.95
+8X 0.38
+0.25
+5.05
+4.75 TYP
+SEATING
+PLANE
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+1.1 MAX
+0.23
+0.13
+B
+3.1
+2.9
+NOTE 4
+A
+3.1
+2.9
+NOTE 3
+0.7
+0.4
+VSSOP - 1.1 mm max height
+DGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+1
+4
+5
+8
+0.13
+C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-187.
+ 
+PowerPAD is a trademark of Texas Instruments.
+A  20
+DETAIL A
+TYPICAL
+SCALE  4.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+VSSOP - 1.1 mm max height
+DGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+NOTES: (continued)
+ 
+  6. Publication IPC-7351 may have alternate designs. 
+  7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+  8. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+      on this view. It is recommended that vias under paste be filled, plugged or tented.
+  9. Size of metal pad may vary due to creepage requirement.
+ 
+TM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 15X
+SYMM
+SYMM
+1
+4
+5
+8
+SEE DETAILS
+15.000
+METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METAL
+EXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+VSSOP - 1.1 mm max height
+DGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+NOTES: (continued)
+ 
+11. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+      design recommendations.   
+12. Board assembly site may have different recommendations for stencil design.
+ 
+TM
+SOLDER PASTE EXAMPLE
+ SCALE: 15X
+SYMM
+SYMM
+1
+4
+5
+8
+www.ti.com
+PACKAGE OUTLINE
+C
+.228-.244 TYP
+[5.80-6.19]
+.069 MAX
+[1.75]     
+6X .050
+[1.27]
+8X .012-.020
+     [0.31-0.51]
+2X
+.150
+[3.81]
+.005-.010 TYP
+[0.13-0.25]
+0 - 8
+.004-.010
+[0.11-0.25]
+.010
+[0.25]
+.016-.050
+[0.41-1.27]
+4X (0 -15 )
+A
+.189-.197
+[4.81-5.00]
+NOTE 3
+B
+.150-.157
+[3.81-3.98]
+NOTE 4
+4X (0 -15 )
+(.041)
+[1.04]
+SOIC - 1.75 mm max height
+D0008A
+SMALL OUTLINE INTEGRATED CIRCUIT
+4214825/C   02/2019
+NOTES: 
+ 
+1. Linear dimensions are in inches [millimeters]. Dimensions in parenthesis are for reference only. Controlling dimensions are in inches.
+    Dimensioning and tolerancing per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed .006 [0.15] per side. 
+4. This dimension does not include interlead flash.
+5. Reference JEDEC registration MS-012, variation AA.
+ 
+1
+8
+.010 [0.25]
+C A B
+5
+4
+PIN 1 ID AREA
+SEATING PLANE
+.004 [0.1] C
+ SEE DETAIL A
+DETAIL A
+TYPICAL
+SCALE  2.800
+www.ti.com
+EXAMPLE BOARD LAYOUT
+.0028 MAX
+[0.07]
+ALL AROUND
+.0028 MIN
+[0.07]
+ALL AROUND
+ 
+(.213)
+[5.4]
+6X (.050 )
+[1.27]
+8X (.061 )
+[1.55]
+8X (.024)
+[0.6]
+(R.002 ) TYP
+[0.05]
+SOIC - 1.75 mm max height
+D0008A
+SMALL OUTLINE INTEGRATED CIRCUIT
+4214825/C   02/2019
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+METAL
+SOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+SOLDER MASK DETAILS
+EXPOSED
+METAL
+OPENING
+SOLDER MASK
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+EXPOSED
+METAL
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:8X
+SYMM
+1
+4
+5
+8
+SEE
+DETAILS
+SYMM
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (.061 )
+[1.55]
+8X (.024)
+[0.6]
+6X (.050 )
+[1.27]
+(.213)
+[5.4]
+(R.002 ) TYP
+[0.05]
+SOIC - 1.75 mm max height
+D0008A
+SMALL OUTLINE INTEGRATED CIRCUIT
+4214825/C   02/2019
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON .005 INCH [0.125 MM] THICK STENCIL
+SCALE:8X
+SYMM
+SYMM
+1
+4
+5
+8
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2025, Texas Instruments Incorporated
+Last updated 10/2025

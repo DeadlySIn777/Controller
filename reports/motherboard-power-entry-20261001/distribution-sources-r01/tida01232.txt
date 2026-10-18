@@ -1,0 +1,1425 @@
+Primary Power 
+Supply
+LDO 1
+LDO 2
+LDO x-1
+LDO x
+Ballast
+Resistor
+Board 1
+Board n
+Load
+Copyright © 2017, Texas Instruments Incorporated
+1
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+TI Designs: TIDA-01232
+High-Current, Low-Noise Parallel LDO Reference Design
+Description
+This parallel LDO reference design showcases the
+TPS7A85 low-noise, low-dropout linear regulator
+(LDO) in a parallel configuration, which is capable of
+sourcing 3.5 A per LDO or 7 A per board. Additional
+design flexibility includes the ability to stack this design
+to meet the current requirements of an application.
+Resources
+TIDA-01232
+Design Folder
+TPS7A85
+Product Folder
+ASK Our E2E Experts
+Features
+•
+Output Current: Up to 7 A per Board (Two
+TPS7A85 LDOs per Board)
+•
+Low Dropout Voltage: 200 mV (Typical)
+•
+Low Noise Output: 3.33 μVRMS(10 Hz to 100 kHz for
+One LDO) When Paralleling Eight LDOs
+•
+High Output Accuracy: 1% (Over Line, Load, and
+Temperature)
+Applications
+•
+Powering FPGAs and DSPs
+•
+Post DC-DC Power Filtering
+•
+Servers
+An IMPORTANT NOTICE at the end of this TI reference design addresses authorized use, intellectual property matters and other
+important disclaimers and information.
+System Description
+www.ti.com
+2
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+1
+System Description
+Low-noise low-dropout regulators (LDO) are required in many applications to ensure that power supply
+noise does not couple into the signal chain. The requirements for current continue to increase as new
+high-speed analog-to-digital converters (ADCs), digital-to-analog converters (DACs), and clocking circuitry
+increase data speed and bandwidth. Using a single LDO for the supply is not always possible due to
+device availability and power dissipation limitations. The TIDA-01232 reference design solves this issue by
+using multiple LDOs configured to share current in parallel. The current sharing is achieved by using a
+single low-value ballast resistor, which can be designed as a copper trace on the resistor of a printed-
+circuit board (PCB).
+This circuit uses the high-current LDO, TPS7A85, which is a 4-A device. Every board is populated with
+two TPS7A85 devices and can provide up to 7 A of current. The boards are designed so that multiple
+boards can be stacked on top of each other. For example, if a second board is stacked on top of the first
+board, the solution can provide up to 14 A.
+1.1
+Key System Specifications
+(1)
+Required for VIN < 1.4 V, recommended for VIN < 2.2 V for best dropout.
+(2)
+The delta between VNOMINAL to VOUT is greater due to the resistance from the connectors in between the boards.
+Table 1. Key System Specifications
+PARAMETER
+SPECIFICATIONS
+Input power rail, VIN
+VOUT + 200 mV (typical)
+Bias power rail(1), VBIAS
+3.0 V to 6.5 V
+Maximum output current, IOUT
+3.5 A multiplied by the number of LDOs (7 A per board)
+Output voltage range, VOUT
+0.8 V to 3.95 V (using ANY-OUT™)
+Optimized for output Voltage, VOUT
+0.8 V
+Ballast resistor, RBALLAST
+5 mΩ
+Maximum voltage drop across ballast resistor(2), VBALLAST
+20 mV
+RBALLAST
+RFB1
+RFB2
+GND
+Power 
+Supply
+Simplified LDO
+VOUT
+FB
+NR/SS
+VIN
++
+±
+VREF
+GND
+RBALLAST
+RFB1
+RFB2
+GND
+Simplified LDO
+VOUT
+FB
+NR/SS
+VIN
++
+±
+VREF
+GND
+GND
+GND
+GND
+GND
+Load
+Copyright © 2017, Texas Instruments Incorporated
+www.ti.com
+System Overview
+3
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+2
+System Overview
+2.1
+Block Diagram
+Figure 1. Two LDOs With Ballast Resistors
+outMaxTotal
+outTotMin
+outNom
+Vout
+Ballast
+Rballast
+I
+V
+V
+(1
+E
+)
+R
+(1
+E
+)
+n
+ 
+u
+
+
+u
+u
+
+outNom
+Vout
+Ballast
+outMaxSingle
+outMaxTotal
+V
+(2 E
+)
+R
+2
+I
+I
+u
+u
+ 
+u
+
+ref
+Vout
+Vref
+Rfb
+outNom
+V
+E
+E
+2
+(1
+)
+E
+V
+ 
+ u
+
+u
+System Overview
+www.ti.com
+4
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+(1)
+Vref is equal to VFB
+(2)
+This formula applies to an ideal solution meaning that there are no other resistance elements on the current path, such as a via.
+2.2
+Design Considerations
+2.2.1
+Theory of Operation
+2.2.1.1
+Ballast Resistor
+This solution uses ballast resistors. Ballast resistors provide an easy way to connect multiple voltage
+sources together to supply power to a common load. Critical for this method is to minimize the voltage
+difference at the output of each individual LDO. As LDO accuracy improves, the designer can reduce the
+size of the ballast resistor.
+Every LDO has its own voltage reference and each independent reference is slightly different from every
+other independent reference; therefore, to achieve the smallest possible error, this solution connects these
+voltages together through the NR/SS pin. The remaining error sources are the feedback resistor network,
+the ballast resistor, the internal output field-effect transistor (FET), and the amplifier. Section 2.2.2 and
+Section 3.1.1 provide further detail on how this solution minimizes sources of error.
+The following formulas in Equation 1 and Equation 2 are used to size the ballast resistor:
+(1)
+where,
+•
+EVout is the maximum expected error of the LDO output,
+•
+EVref is the maximum expected error of the LDO internal reference,
+•
+Vref
+(1) is the reference voltage of the LDO,
+•
+ERfb is the maximum expected error of the feedback resistors.
+(2)
+where,
+•
+RBallast is the ballast resistor,
+•
+VoutNom is the nominal LDO output,
+•
+EVout is the maximum expected error of the LDO output,
+•
+IoutMaxSingle is the current limit of a single LDO,
+•
+IoutMaxTotal is the maximum current of the system.
+Minimize the error and the ballast resistor by using the same LDO (TPS7A85) for each of the LDOs
+paralleled. To further reduce the error, chose an LDO that has the NR/SS voltage (reference voltage)
+routed to a pin.
+Use the following formula in Equation 3 to determine if the output of this solution delivers a high enough
+voltage:
+(3)
+where,
+•
+VoutTotMin is the minimum output of the solution (voltage at load) (2),
+•
+VoutNom is the nominal LDO output,
+•
+EVout is the maximum expected error of the LDO output,
+•
+IoutMaxTotal is the maximum current of the system,
+•
+RBallast is the ballast resistor,
+•
+ERballast is the maximum expected error due to the ballast resistor tolerance,
+•
+n is the number of parallel LDOs.
+www.ti.com
+System Overview
+5
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+Designers may be tempted to move the point where the feedback is connected to the output after the
+ballast resistor and let the LDO regulate this voltage. The issue here is that the effect of the ballast the
+resistor would be eliminated and the LDOs would no longer share the load current.
+When the resistor is defined for two LDOs, the same resistor must be used to add additional LDOs. As
+long as the LDOs are the same, the biggest output difference does not change; therefore, the ballast
+resistor remains the same.
+2.2.2
+Component Selection
+2.2.2.1
+LDO Selection
+The criteria for the LDO is as follows:
+•
+High accuracy output
+•
+ANY-OUT™feedback resistors
+•
+High current
+•
+NR/SS pin
+ANY-OUT™feedback resistors provide an advantage in accuracy over traditional adjustable LDOs with
+external resistor networks. Traditionally, external resistor dividers are not included in the accuracy
+specification of an LDO. ANY-OUT™feedback resistors are internal to the LDO and are matched so that
+the ratio of the resistor divider is accurate. This matching allows the ANY-OUT™feedback resistors to be
+included in the overall accuracy specification of the LDO, which makes a 1% LDO with ANY-OUT™more
+accurate than a traditional 1% adjustable LDO with external feedback resistors.
+The NR/SS pin allows for minimizing the error of the voltage reference, which narrows down the range of
+the outputs between the LDOs. Section 3.1.1 provides additional information.
+The 4-A, high-precision LDO TPS7A85 meets the criteria, which is the reason it has been chosen for this
+design.
+2.2.3
+Connector Selection
+The PCB was designed to be stacked upon itself, which is achieved by using 100-mil connectors.
+The parts listed in Table 2 are used for this reference design:
+Table 2. Connector Part Number by Function
+FUNCTION
+PART NUMBER
+Output
+SSQ-104-03-G-D
+ANY-OUT™
+SSQ-106-03-G-D
+GND, NR/SS
+SSQ-102-03-G-S
+(1)
+Capacitor designators refer to the Schematics.
+(2)
+Capacitors C1, C9, and C13 were not populated.
+2.2.4
+Capacitor Selection
+This reference design uses local capacitors for the input (C1 through C4, C13 through C16) (1), local output
+capacitors (C7, C18), feed forward capacitors (C6, C17), as well as global output capacitors (C9 through
+C12) (2). TI advises to follow the recommendations of the data sheet for capacitor selection. Designers can
+typically find this information in the “Application and Implementation” sections of data sheets.
+System Overview
+www.ti.com
+6
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+2.3
+Highlighted Products
+2.3.1
+TPS7A85
+The TPS7A85 is a low-noise (4.4 µVRMS), low-dropout linear regulator (LDO) capable of sourcing 4 A with
+only 240 mV of maximum dropout. The device output voltage is pin-programmable from 0.8 V to 3.95 V
+and adjustable from 0.8 V to 5.0 V using an external resistor divider.
+The combination of low-noise (4.4 µVRMS), high power supply rejection ratio (PSRR), and high output
+current capability makes the TPS7A85 ideal to power noise-sensitive components such as those used in
+high-speed communications, video, medical, or test and measurement applications. The high performance
+of the TPS7A85 limits power-supply-generated phase noise and clock jitter, which make this device ideal
+for powering high-performance serializer and deserializer (SerDes), ADCs, DACs, and RF components.
+RF amplifiers specifically benefit from the high performance and 5.0-V output capability of the device.
+The exceptional accuracy (1% over line, load, and temperature), remote sensing, excellent transient
+performance, and soft-start capabilities of the TPS7A85 ensure optimal system performance for digital
+loads that require low-input voltage, low-output (LILO) voltage operation, such as application-specific
+integrated circuits (ASICs), field-programmable gate arrays (FPGAs), and digital signal processors
+(DSPs) .
+The versatility of the TPS7A85 makes it a popular choice for many demanding applications.
+Vout
+Number of Units
+VNR/SS
+Number of Units
+ref
+Vout
+Vref
+Rfb
+outNom
+Rfb
+outNom
+Rfb
+outNom
+outNom
+V
+0.8 V
+E
+E
+2
+(1
+)
+E
+(V
+1%)
+2
+(1
+)
+E
+(V
+1%)
+2
+(1
+1)
+E
+V
+1%
+0.8 V
+0.01
+8mV
+V
+0.8 V
+ 
+
+u
+
+u
+ 
+u
+
+u
+
+u
+ 
+u
+
+u
+
+u
+ 
+u
+ 
+u
+ 
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+7
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+3
+Hardware, Testing Requirements, and Test Results
+3.1
+Hardware
+3.1.1
+Ballast Resistor Implementation
+This subsection serves as a guideline for designing a PCB ballast resistor. Section 2.2.1.1 describes the
+formulas used.
+Because no target VoutMin has been established for this design, the iterative part to reach a target voltage
+can be skipped.
+For this calculation VoutNom = 0.8 V, which results in the following EVout in Equation 4:
+(4)
+The error of 8 mV is specified for a single LDO over the full temperature range including the tolerance of
+the voltage reference as well as the tolerance of the internal feedback resistors, amplifier, and FET. For
+this reference design, the NR/SS pins are shorted together; therefore, the voltage references of each
+individual LDO are also shorted to each other. As such, the accuracy of the output remains 1% but the
+voltage difference between the individual LDOs will be closer to each other.
+Measurements prove that the VOUT of the LDOs with the same VREF are closer to each other than the
+calculated 8 mV. Figure 2 shows such a measurement. For example, if the VNR/SS is in the blue range, VOUT
+is most likely to fall within the blue marked range of the upper histogram. The same principle applies to the
+range marked in red. By connecting these two reference voltages together, the VREF at the error amplifier
+input will be somewhere in between these two voltages. The movement of VREF also influences the output
+and moves the range in between the two marked ranges.
+Figure 2. Histogram of VNR/SS Compared to VOUT
+Trace Width (mil)
+Trace Resistance (:)
+Temperature (qC)
+0
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+0
+0
+0.005
+10
+0.01
+20
+0.015
+30
+0.02
+40
+0.025
+50
+0.03
+60
+0.035
+70
+0.04
+80
+0.045
+90
+0.05
+100
+Rtrace
+Ttrace
+Target Resistance (5 m:)
+19 mil Reference
+Area
+Width
+Thickness
+Length
+A
+0
+I
+R
+A
+(1
+(T
+T ))
+u U
+ 
+u
+ D u
+
+outNom
+Vout
+Ballast
+outMaxSingle
+outMaxTotal
+V
+(2 E
+)
+0.8 V
+2
+0.75 mV
+R
+2.4 m
+2
+I
+I
+2
+4A
+7.5 A
+u
+u
+u
+u
+ 
+ 
+ 
+:
+u
+
+u
+
+Hardware, Testing Requirements, and Test Results
+www.ti.com
+8
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+After testing various NR/SS voltages at VoutNom = 0.8 V, the typical range of VOUT for each VNR/SS pin did not
+surpass 1.5 mV, which would otherwise result in an EVout of ±0.75 mV.
+Using this output range means that the following ballast resistor would be required:
+(5)
+For some additional margin and to be able to change the VoutNom up to 1.6 V, this value is set to 5 mΩ.
+Choosing IoutMaxTotal = 7.5 A is an iterative procedure for evaluating the size and length of the PCB resistor.
+After defining the value for the ballast resistor, the next step is to design the PCB trace dimensions to
+match this resistive value. Equation 6 shows how to calculate the resistance of a PCB trace:
+(6)
+where,
+•
+R is the trace resistor of the PCB in Ω,
+•
+l is the length of the trace in meters,
+•
+ρ is the resistivity in Ω meters ρcopper = 16.8 × 10–9 Ωm,
+•
+A is the vertical area of trace in square meters,
+•
+α is the temperature coefficient in °C–1 αcopper = 3.9 x 10–3°C–1,
+•
+T is the ambient temperature T0 = 25°C.
+Figure 3 shows the PCB trace dimensions.
+Figure 3. PCB Trace Dimensions
+Use the diagrams of the trace resistance as a function of the trace width to find a reasonable length verse
+width ratio. The temperature is considered as well and added to the individual plots to avoid burning the
+trace (see Figure 4).
+Figure 4. 400-mil Length PCB Trace Width versus Trace Resistance (Ω)
+1
+1
+b
+0.44
+4A
+C
+0.725
+I
+3.5A
+T
+24.5 C
+k
+A
+0.048
+(2.8 mil
+19 mil)
+§
+·
+§
+·
+'
+ 
+ 
+ 
+q
+¨
+¸
+¨
+¸
+¨
+¸
+¨
+¸
+u
+u
+u
+©
+¹
+©
+¹
+1
+1
+b
+0.44
+4A
+C
+0.725
+I
+4 A
+T
+33.2 C
+k
+A
+0.048
+(2.8 mil
+19 mil)
+§
+·
+§
+·
+'
+ 
+ 
+ 
+q
+¨
+¸
+¨
+¸
+¨
+¸
+¨
+¸
+u
+u
+u
+©
+¹
+©
+¹
+5
+8
+3
+A
+0
+2
+10
+2
+2
+I
+(400 mil
+2.54
+10
+(m/ mil))
+(1.68
+10
+)
+m
+R
+A
+(1
+(T
+T ))
+3.9
+10
+((2.8
+19) mil
+6.45
+10
+(m / mil ))
+(1
+(25
+25) C)
+C
+
+
+
+
+u U
+u
+u
+u
+u
+:
+ 
+ 
+u
+ D u
+
+u
+u
+u
+u
+u
+
+u
+
+q
+q
+1
+b
+c
+I
+T
+k
+A
+§
+·
+'
+ ¨
+¸
+¨
+¸
+u
+©
+¹
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+9
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+Equation 7 shows the formula for the temperature per IPC-2221:
+(7)
+where,
+•
+ΔT is the temperature difference,
+•
+I is the current through the trace,
+•
+A is the vertical area of trace in square mil,
+•
+b is 0.44,
+•
+c is 0.725,
+•
+k is 0.024 for an internal PCB layer and 0.048 for an external PCB layer.
+Figure 4 shows that with a trace width of 19 mil, a length of 400 mil and a thickness of 2 oz should match
+the desired 5 mΩ. The following calculations of the trace and temperature reinforce the findings of this
+plot:
+(8)
+(9)
+(10)
+Per the calculations, with a 2-oz (2.8-mil) thick copper trace at ambient temperature (25°C), the trace
+should have a 19-mil width and 400-mil length to reach the desired 5-mΩ ballast resistor.
+Hardware, Testing Requirements, and Test Results
+www.ti.com
+10
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+3.2
+Testing and Results
+3.2.1
+Test Setup
+The scope shots in this section show the typical values. The boards are powered by VIN = 1.1 V, VBIAS =
+4.5 V unless otherwise noted. The power supply used for VIN was the Chroma 62006P-100-25. The scope
+shots were taken with the LeCroy WaveSurfer 454. Each board has two LDOs in parallel. Multiples of two
+LDOs are added by stacking boards: four LDOs is two boards stacked, six LDOs is three boards stacked,
+and so forth.
+3.2.2
+Test Results
+3.2.2.1
+Start-Up
+For the following scope shots blue is VIN, green is VOUT, red is IIN, and magenta is VEN.
+The following scope shots are for two LDOs (one board).
+Figure 5. Start-up—Two LDOs, 6 A
+Figure 6. Start-up—Two LDOs, 6 A (Zoomed in)
+Figure 7. Shutdown—Two LDOs, 6 A
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+11
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+The following scope shots are for six LDOs (three boards).
+Figure 8. Start-up—Six LDOs, No Load
+Figure 9. Start-up—Six LDOs, 6 A
+Figure 10. Start-up—Six LDOs, 24 A
+Figure 11. Start-up—Six LDOs, 24 A (Zoomed in)
+Figure 12. Shutdown—Six LDOs, 24 A
+Hardware, Testing Requirements, and Test Results
+www.ti.com
+12
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+If the system is started into a full load, TI recommends to first establish VBIAS and VIN and then turn the
+devices ON using the enable pin. Use a supervisor or a microcontroller to perform this action. The reason
+for these steps is to relieve the supply and avoid the high load drop VIN under VUVLO – VHYS, which causes
+the LDOs to shut down again. The ringing at the falling edges is caused by the inductance of the load (in
+this case a 1-m long cable) and the inductance of the cable connecting the boards to the power supply. If
+VIN spikes higher than VUVLO while shutting down, the LDOs may try to power up again.
+Figure 13. Enable Start-up—Six LDOs, 24 A
+Figure 14. Enable Shutdown—Six LDOs, 24 A
+Figure 15. Enable Start-up—No Load
+3.2.2.2
+Noise
+The following graphs show the noise performance of two, four, and eight parallel LDOs. A resistive load of
+0.123 Ω is used for all three examples, which results in a total current load of approximately 6.5 A when
+the output is set to 0.8 V.
+The two main considerations for these graphs are as follows: First, the peaks on the upper end of the
+frequency are a result of the internal charge pump of the LDO. See the subsection regarding charge pump
+noise in TPS7A85 High-Current (4 A), High-Accuracy (1%), Low-Noise (4.4 μVRMS), LDO Voltage
+Regulator for further details[3]. Second, the noise keeps decreasing for each LDO added in parallel, which
+is similar to when amplifiers are set in parallel. By paralleling amplifiers, the noise can be improved by the
+ratio of sqrt(2) for each time the number of amplifiers is doubled.
+Frequency (Hz)
+Noise (PV/—Hz)
+1E+1
+1E+2
+1E+3
+1E+4
+1E+5
+1E+6
+1E+7
+0.001
+0.002
+0.003
+0.005
+0.01
+0.02
+0.03
+0.05
+0.1
+0.2
+0.3
+0.5
+1
+One LDO
+Two LDOs
+Four LDOs
+Eight LDOs
+Frequency (Hz)
+Noise (PV/—Hz)
+1E+1
+1E+2
+1E+3
+1E+4
+1E+5
+1E+6
+1E+7
+0.001
+0.002
+0.003
+0.005
+0.01
+0.02
+0.03
+0.05
+0.1
+0.2
+0.3
+0.5
+Frequency (Hz)
+Noise (PV/—Hz)
+1E+1
+1E+2
+1E+3
+1E+4
+1E+5
+1E+6
+1E+7
+0.001
+0.002
+0.003
+0.005
+0.01
+0.02
+0.03
+0.05
+0.1
+0.2
+0.3
+0.5
+Frequency (Hz)
+Noise (PV/—Hz)
+1E+1
+1E+2
+1E+3
+1E+4
+1E+5
+1E+6
+1E+7
+0.001
+0.002
+0.003
+0.005
+0.01
+0.02
+0.03
+0.05
+0.1
+0.2
+0.3
+0.5
+1
+Frequency (Hz)
+Noise (PV/—Hz)
+1E+1
+1E+2
+1E+3
+1E+4
+1E+5
+1E+6
+1E+7
+0.001
+0.002
+0.003
+0.005
+0.01
+0.02
+0.03
+0.05
+0.1
+0.2
+0.3
+0.5
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+13
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+Figure 16. Output Noise—One LDO (Noise10 Hz – 100 kHz =
+7.69 μVRMS)
+Figure 17. Output Noise—Two Parallel LDOs (Noise10 Hz –
+100 kHz = 5.98 μVRMS)
+Figure 18. Output Noise—Four Parallel LDOs (Noise10 Hz –
+100 kHz = 4.32 μVRMS)
+Figure 19. Output Noise—Eight Parallel LDOs (Noise10 Hz –
+100 kHz = 3.33 μVRMS)
+Figure 20. Output Noise
+Iout (A)
+Current Imbalance Percent Error (%)
+0
+2
+4
+6
+8
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+Error Curves for Board 3
+Iout (A)
+Current of Individual LDO (A)
+0
+1
+2
+3
+4
+5
+6
+7
+0
+0.8
+1.6
+2.4
+3.2
+4
+LDO 1
+LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+1
+2
+3
+4
+5
+6
+7
+0
+0.8
+1.6
+2.4
+3.2
+4
+LDO 1
+LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+1
+2
+3
+4
+5
+6
+7
+0
+0.8
+1.6
+2.4
+3.2
+4
+LDO 1
+LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+1
+2
+3
+4
+5
+6
+7
+0
+0.8
+1.6
+2.4
+3.2
+4
+LDO 1
+LDO 2
+Hardware, Testing Requirements, and Test Results
+www.ti.com
+14
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+3.2.2.3
+Sharing Performance
+For the error plot, the board (or boards) with the worst sharing performance were selected to show the
+worst case.
+The following graphs have two LDOs (one board).
+Figure 21. Sharing Board 1
+Figure 22. Sharing Board 2
+Figure 23. Sharing Board 3
+Figure 24. Sharing Board 4
+Figure 25. Sharing Error Board 3
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 2 LDO 1
+Board 2 LDO 2
+Board 4 LDO 1
+Board 4 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 4 LDO 1
+Board 4 LDO 2
+Board 3 LDO 1
+Board 3 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 4 LDO 1
+Board 4 LDO 2
+Board 1 LDO 1
+Board 1 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 2 LDO 1
+Board 2 LDO 2
+Board 3 LDO 1
+Board 3 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 1 LDO 1
+Board 1 LDO 2
+Board 2 LDO 1
+Board 2 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+2
+4
+6
+8
+10
+12
+14
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 3 LDO 1
+Board 3 LDO 2
+Board 1 LDO 1
+Board 1 LDO 2
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+15
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+The following error plots have four LDOs (two boards in parallel).
+Figure 26. Sharing Boards 1 and 2
+Figure 27. Sharing Boards 1 and 3
+Figure 28. Sharing Boards 1 and 4
+Figure 29. Sharing Boards 2 and 3
+Figure 30. Sharing Boards 2 and 4
+Figure 31. Sharing Boards 3 and 4
+Iout (A)
+Current Imbalance Percent Error (%)
+0
+4
+8
+12
+16
+20
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+Error Curves for Boards 1, 3, and 4
+Iout (A)
+Current of Individual LDO (A)
+0
+3
+6
+9
+12
+15
+18
+21
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 3 LDO 1
+Board 3 LDO 2
+Board 1 LDO 1
+Board 1 LDO 2
+Board 2 LDO 1
+Board 2 LDO 2
+Iout (A)
+Current of Individual LDO (A)
+0
+3
+6
+9
+12
+15
+18
+21
+0
+0.8
+1.6
+2.4
+3.2
+4
+Board 3 LDO 1
+Board 3 LDO 2
+Board 1 LDO 1
+Board 1 LDO 2
+Board 4 LDO 1
+Board 4 LDO 2
+Iout (A)
+Current Imbalance Percent Error (%)
+0
+3
+6
+9
+12
+15
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+Error Curves for Boards 1 and 4
+Hardware, Testing Requirements, and Test Results
+www.ti.com
+16
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+Figure 32. Sharing Error Boards 1 and 4
+The following error plots have six LDOs (three boards in parallel).
+Figure 33. Sharing Boards 1, 2, and 3
+Figure 34. Sharing Boards 1, 3, and 4
+Figure 35. Sharing Error Boards 1, 3, and 4
+www.ti.com
+Hardware, Testing Requirements, and Test Results
+17
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+3.2.2.4
+Load Transients
+The following scope shots show the load transient with IOUT_MAX = 23 A in red and VOUT in blue. The
+difference between input GND and output GND was subtracted from VOUT to reduce the GND bounce at
+the output of the system. Note that three boards in parallel = six LDOs.
+The ringing on Figure 37 results from the inductance in the cables. Expect this ringing to be much flatter or
+even disappear if the load is on the same PCB as the LDOs.
+Figure 36. Load Transient 0 A to 23 A
+Figure 37. Load Transient 23 A to 0 A
+Figure 38. Load Transient 23 A
+3.2.3
+Comparison to TIDU421
+Table 3 shows a quick overview comparing two reference designs: TIDA-01232 and TIDU421. In
+summary, TI recommends the TIDA-01232 reference design if a very-high-current, low-noise voltage
+source is required and the TIDU421 reference design if high accuracy at the output is required.
+Table 3. Comparison Table
+PARAMETER
+TIDA-01232
+TIDU421
+LDOs parallel
+Tested up to eight
+Designed for two LDOs
+Load regulations
+Voltage drop over ballast resistor
+Direct load regulation
+Additional components
+PCB resistance
+Amplifier and shunt
+Maximum tested current
+23 A (six LDOs)
+6 A (two LDOs)
+Design Files
+www.ti.com
+18
+TIDUCS7–August 2017
+Submit Documentation Feedback
+Copyright © 2017, Texas Instruments Incorporated
+High-Current, Low-Noise Parallel LDO Reference Design
+4
+Design Files
+4.1
+Schematics
+To download the schematics, see the design files at TIDA-01232.
+4.2
+Bill of Materials
+To download the bill of materials (BOM), see the design files at TIDA-01232.
+4.3
+PCB Layout Recommendations
+The available PCB design files correspond to “Rev B” of the schematics and layout. The changes to “Rev
+A” are as follows:
+•
+The PCB ballast resistor has been changed from a longer, multi-layer design to a shorter single-layer
+design. The resistance of the PCB trace has not been changed and remains at 5 mΩ.
+•
+The BIAS, VIN, and GND test points have been moved to the edge of the board for easier access when
+boards are stacked together.
+•
+Zener diodes have been added to clamp input as well as output voltages to prevent damaging the
+device due to voltage peaks generated by the high currents and the inductance of the cables. Zener
+diodes have also been used and populated in “Rev A”.
+•
+Minor changes have been made on the silkscreen
+4.3.1
+Layout Prints
+To download the layer plots, see the design files at TIDA-01232.
+4.4
+Altium Project
+To download the Altium project files, see the design files at TIDA-01232.
+4.5
+Gerber Files
+To download the Gerber files, see the design files at TIDA-01232.
+4.6
+Assembly Drawings
+To download the assembly drawings, see the design files at TIDA-01232.
+5
+Related Documentation
+1. Texas Instruments, Ballast Resistors Allow Load Sharing Between Two Paralleled DC/DC Converters,
+Application Report (SLVA250)
+2. Texas Instruments, TI Precision Designs: Verified Design 6A Current-Sharing Dual LDO, TI Precision
+Design (TIDU421)
+3. Texas Instruments, TPS7A85 High-Current (4 A), High-Accuracy (1%), Low-Noise (4.4 µVRMS), LDO
+Voltage Regulator, TPS7A85 Data Sheet (SBVS267)
+5.1
+Trademarks
+ANY-OUT is a trademark of Texas Instruments.
+6
+About the Author
+NICOLÁS ROMÁN is an application engineer who did a rotation in a rotation in the Linear Power business
+unit. His final deployment will be as a field application engineer in the TI office in Zürich Switzerland.
+Nicolás graduated with a BSc FHO in Electrical Engineering at the HSR in Rapperswil, Switzerland (a
+University of applied science).
+IMPORTANT NOTICE FOR TI DESIGN INFORMATION AND RESOURCES
+Texas Instruments Incorporated (‘TI”) technical, application or other design advice, services or information, including, but not limited to,
+reference designs and materials relating to evaluation modules, (collectively, “TI Resources”) are intended to assist designers who are
+developing applications that incorporate TI products; by downloading, accessing or using any particular TI Resource in any way, you
+(individually or, if you are acting on behalf of a company, your company) agree to use it solely for this purpose and subject to the terms of
+this Notice.
+TI’s provision of TI Resources does not expand or otherwise alter TI’s applicable published warranties or warranty disclaimers for TI
+products, and no additional obligations or liabilities arise from TI providing such TI Resources. TI reserves the right to make corrections,
+enhancements, improvements and other changes to its TI Resources.
+You understand and agree that you remain responsible for using your independent analysis, evaluation and judgment in designing your
+applications and that you have full and exclusive responsibility to assure the safety of your applications and compliance of your applications
+(and of all TI products used in or for your applications) with all applicable regulations, laws and other applicable requirements. You
+represent that, with respect to your applications, you have all the necessary expertise to create and implement safeguards that (1)
+anticipate dangerous consequences of failures, (2) monitor failures and their consequences, and (3) lessen the likelihood of failures that
+might cause harm and take appropriate actions. You agree that prior to using or distributing any applications that include TI products, you
+will thoroughly test such applications and the functionality of such TI products as used in such applications. TI has not conducted any
+testing other than that specifically described in the published documentation for a particular TI Resource.
+You are authorized to use, copy and modify any individual TI Resource only in connection with the development of applications that include
+the TI product(s) identified in such TI Resource. NO OTHER LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE TO
+ANY OTHER TI INTELLECTUAL PROPERTY RIGHT, AND NO LICENSE TO ANY TECHNOLOGY OR INTELLECTUAL PROPERTY
+RIGHT OF TI OR ANY THIRD PARTY IS GRANTED HEREIN, including but not limited to any patent right, copyright, mask work right, or
+other intellectual property right relating to any combination, machine, or process in which TI products or services are used. Information
+regarding or referencing third-party products or services does not constitute a license to use such products or services, or a warranty or
+endorsement thereof. Use of TI Resources may require a license from a third party under the patents or other intellectual property of the
+third party, or a license from TI under the patents or other intellectual property of TI.
+TI RESOURCES ARE PROVIDED “AS IS” AND WITH ALL FAULTS. TI DISCLAIMS ALL OTHER WARRANTIES OR
+REPRESENTATIONS, EXPRESS OR IMPLIED, REGARDING TI RESOURCES OR USE THEREOF, INCLUDING BUT NOT LIMITED TO
+ACCURACY OR COMPLETENESS, TITLE, ANY EPIDEMIC FAILURE WARRANTY AND ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF ANY THIRD PARTY INTELLECTUAL
+PROPERTY RIGHTS.
+TI SHALL NOT BE LIABLE FOR AND SHALL NOT DEFEND OR INDEMNIFY YOU AGAINST ANY CLAIM, INCLUDING BUT NOT
+LIMITED TO ANY INFRINGEMENT CLAIM THAT RELATES TO OR IS BASED ON ANY COMBINATION OF PRODUCTS EVEN IF
+DESCRIBED IN TI RESOURCES OR OTHERWISE. IN NO EVENT SHALL TI BE LIABLE FOR ANY ACTUAL, DIRECT, SPECIAL,
+COLLATERAL, INDIRECT, PUNITIVE, INCIDENTAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES IN CONNECTION WITH OR
+ARISING OUT OF TI RESOURCES OR USE THEREOF, AND REGARDLESS OF WHETHER TI HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+You agree to fully indemnify TI and its representatives against any damages, costs, losses, and/or liabilities arising out of your non-
+compliance with the terms and provisions of this Notice.
+This Notice applies to TI Resources. Additional terms apply to the use and purchase of certain types of materials, TI products and services.
+These include; without limitation, TI’s standard terms for semiconductor products http://www.ti.com/sc/docs/stdterms.htm), evaluation
+modules, and samples (http://www.ti.com/sc/docs/sampterms.htm).
+Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+Copyright © 2017, Texas Instruments Incorporated

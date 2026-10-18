@@ -1,0 +1,3513 @@
+{
+  "schema_version": 1,
+  "revision": "motion-card-r0.1-proposed-IS2",
+  "manufacturing_ready": false,
+  "interface_agreed": false,
+  "frozen_IS1_unchanged": true,
+  "scope": "PROPOSED IS-2 MC CIRCUIT CANDIDATE: FPGA, autonomous local rails, conditioned dual watchdogs and permission/OPI/trip latches.\nThis connects physical source circuits; it does not implement the missing Ioff buffers, presence filters, identity, slot-status register, flash restore or connectors.\nMC_RAILS_OK uses qualified destination-rail FPGA_CRESET_N, not MC_RAILS_OK_5V. CDONE qualification uses delayed FPGA_USER_RESET_N; timing is unqualified.\nLegacy progress ball is proposed as FPGA_PROGRESS_M; A2 is the independent RAW_INHIBIT_N input. CNC1 pulse generation and remaining GPIO allocation are not implemented by the historical bitstream.\nNative schematic ERC is distinct from PCB DRC, vendor FPGA fit and measurements. NOT FOR MANUFACTURE.",
+  "components": {
+    "U1001": {
+      "value": "T20F256I4 / CANDIDATE PIN ALLOCATION",
+      "mpn": "T20F256I4",
+      "footprint": "CNC_Motion:T20F256_Efinix_NSMD",
+      "pins": {
+        "R1": "FPGA_CDONE",
+        "P1": "FPGA_LOCAL_RESET_N",
+        "P3": "FPGA_FLASH_CS_N",
+        "M3": "FPGA_FLASH_CCK_SOURCE",
+        "P2": "STEP0_FPGA",
+        "N3": "FPGA_CFG_CSI",
+        "L3": "FPGA_FLASH_MOSI",
+        "N1": "FPGA_FLASH_MISO",
+        "M2": "FPGA_JTAG_TCK",
+        "K5": "FPGA_JTAG_TDI",
+        "L5": "FPGA_JTAG_TDO",
+        "M1": "FPGA_JTAG_TMS",
+        "J5": "DIR0_FPGA",
+        "J4": "STEP1_FPGA",
+        "K3": "DIR1_FPGA",
+        "J3": "STEP2_FPGA",
+        "K1": "DIR2_FPGA",
+        "K2": "STEP3_FPGA",
+        "H1": "DIR3_FPGA",
+        "L1": "STEP4_FPGA",
+        "H3": "FPGA_CLK_50M",
+        "H2": "DIR4_FPGA",
+        "H4": "STEP5_FPGA",
+        "G3": "DIR5_FPGA",
+        "G5": "STEP6_FPGA",
+        "G2": "DIR6_FPGA",
+        "F1": "STEP7_FPGA",
+        "C1": "DIR7_FPGA",
+        "E2": "STEP8_FPGA",
+        "F3": "DIR8_FPGA",
+        "D1": "STEP9_FPGA",
+        "E1": "DIR9_FPGA",
+        "E3": "STEP10_FPGA",
+        "G4": "DIR10_FPGA",
+        "F4": "STEP11_FPGA",
+        "B1": "DIR11_FPGA",
+        "B2": "HOST_SPI_CS_N",
+        "D3": "HOST_SPI_SCLK",
+        "D4": "HOST_SPI_MOSI",
+        "C3": "HOST_SPI_MISO",
+        "D5": "FPGA_USER_RESET_N",
+        "A2": "RAW_INHIBIT_N",
+        "C4": "FPGA_ENDPOINT_READY",
+        "B3": "FPGA_MOTION_REQUEST",
+        "E4": "FPGA_PROGRESS_M",
+        "E6": "TX_PERMIT",
+        "A3": "FPGA_LINK_FAULT",
+        "C6": "FPGA_WATCHDOG_FAULT",
+        "A4": "FPGA_INHIBIT_FAULT",
+        "E5": "FPGA_TIMING_FAULT",
+        "B5": "ENC0_A_FPGA",
+        "A7": "ENC0_B_FPGA",
+        "B7": "ENC0_Z_FPGA",
+        "B6": "ENC1_A_FPGA",
+        "A6": "ENC1_B_FPGA",
+        "E7": "ENC1_Z_FPGA",
+        "D7": "FPGA_CFG_CBSEL1",
+        "C7": "FPGA_CFG_CBSEL0",
+        "B8": "FPGA_CFG_NSTATUS",
+        "D9": "ENC2_A_FPGA",
+        "E8": "ENC2_B_FPGA",
+        "C9": "ENC2_Z_FPGA",
+        "D10": "ENC3_A_FPGA",
+        "B9": "ENC3_B_FPGA",
+        "C10": "ENC3_Z_FPGA",
+        "B10": "HOME0_FPGA",
+        "B11": "HOME1_FPGA",
+        "A11": "HOME2_FPGA",
+        "C12": "HOME3_FPGA",
+        "C11": "HOME4_FPGA",
+        "D12": "HOME5_FPGA",
+        "C14": "HOME6_FPGA",
+        "D13": "HOME7_FPGA",
+        "B16": "HOME8_FPGA",
+        "A14": "HOME9_FPGA",
+        "E12": "HOME10_FPGA",
+        "B14": "HOME11_FPGA",
+        "B12": "ALM0_FPGA",
+        "B13": "ALM1_FPGA",
+        "B15": "ALM2_FPGA",
+        "C13": "ALM3_FPGA",
+        "C16": "ALM4_FPGA",
+        "E14": "ALM5_FPGA",
+        "F12": "ALM6_FPGA",
+        "D16": "ALM7_FPGA",
+        "G13": "ALM8_FPGA",
+        "F14": "ALM9_FPGA",
+        "E16": "ALM10_FPGA",
+        "E15": "ALM11_FPGA",
+        "G12": "PROBE_FPGA",
+        "G15": "TOOLSETTER_FPGA",
+        "H13": "DOOR_STATUS_FPGA",
+        "G16": "PROTECTIVE_STATUS_FPGA",
+        "G14": "SPINDLE_FAULT_FPGA",
+        "H14": "SPINDLE_READY_FPGA",
+        "H15": "FEED_HOLD_FPGA",
+        "H16": "CYCLE_START_FPGA",
+        "J15": "LUBE_STATUS_FPGA",
+        "K14": "SPARE_FPGA",
+        "H12": "DRIVE_ENABLE0_FPGA_RESERVED",
+        "J12": "DRIVE_ENABLE1_FPGA_RESERVED",
+        "L16": "DRIVE_ENABLE2_FPGA_RESERVED",
+        "M15": "DRIVE_ENABLE3_FPGA_RESERVED",
+        "M16": "DRIVE_ENABLE4_FPGA_RESERVED",
+        "P16": "DRIVE_ENABLE5_FPGA_RESERVED",
+        "L15": "DRIVE_ENABLE6_FPGA_RESERVED",
+        "K12": "DRIVE_ENABLE7_FPGA_RESERVED",
+        "R16": "FPGA_CFG_CBUS2",
+        "L14": "FPGA_CFG_CBUS1",
+        "K13": "FPGA_CFG_CBUS0",
+        "N14": "DRIVE_ENABLE8_FPGA_RESERVED",
+        "N16": "DRIVE_ENABLE9_FPGA_RESERVED",
+        "P15": "DRIVE_ENABLE10_FPGA_RESERVED",
+        "M14": "DRIVE_ENABLE11_FPGA_RESERVED",
+        "L12": "FPGA_CFG_TEST_N",
+        "E9": "CORE_1V2",
+        "F8": "CORE_1V2",
+        "F9": "CORE_1V2",
+        "J6": "CORE_1V2",
+        "J7": "CORE_1V2",
+        "K9": "CORE_1V2",
+        "K11": "CORE_1V2",
+        "F7": "CORE_1V2",
+        "G11": "CORE_1V2",
+        "K6": "IO_3V3",
+        "H6": "IO_3V3",
+        "H7": "IO_3V3",
+        "F6": "IO_3V3",
+        "G6": "IO_3V3",
+        "E10": "IO_3V3",
+        "F10": "IO_3V3",
+        "F11": "IO_3V3",
+        "J10": "IO_3V3",
+        "J11": "IO_3V3",
+        "L10": "IO_3V3",
+        "L11": "IO_3V3",
+        "L6": "IO_3V3",
+        "L7": "IO_3V3",
+        "A1": "LOGIC_GND",
+        "A12": "LOGIC_GND",
+        "A16": "LOGIC_GND",
+        "A5": "LOGIC_GND",
+        "D15": "LOGIC_GND",
+        "D2": "LOGIC_GND",
+        "G10": "LOGIC_GND",
+        "G7": "LOGIC_GND",
+        "G8": "LOGIC_GND",
+        "G9": "LOGIC_GND",
+        "H10": "LOGIC_GND",
+        "H11": "LOGIC_GND",
+        "H8": "LOGIC_GND",
+        "H9": "LOGIC_GND",
+        "J1": "LOGIC_GND",
+        "J16": "LOGIC_GND",
+        "J8": "LOGIC_GND",
+        "J9": "LOGIC_GND",
+        "K10": "LOGIC_GND",
+        "K7": "LOGIC_GND",
+        "K8": "LOGIC_GND",
+        "L8": "LOGIC_GND",
+        "L9": "LOGIC_GND",
+        "N15": "LOGIC_GND",
+        "N2": "LOGIC_GND",
+        "R10": "LOGIC_GND",
+        "R7": "LOGIC_GND",
+        "T1": "LOGIC_GND",
+        "T13": "LOGIC_GND",
+        "T16": "LOGIC_GND",
+        "T4": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "package": "FBGA256 13x13mm 0.8mm pitch",
+      "footprint_status": "manufacturer_pad_geometry_candidate_not_process_qualified",
+      "source_block": "fpga_core",
+      "source_reference": "U1"
+    },
+    "U1002": {
+      "value": "W25Q32JVSSIQ / x1 SPI",
+      "mpn": "W25Q32JVSSIQ",
+      "footprint": "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm",
+      "pins": {
+        "1": "FPGA_FLASH_CS_N",
+        "2": "FPGA_FLASH_MISO",
+        "3": "FPGA_FLASH_IO2",
+        "4": "LOGIC_GND",
+        "5": "FPGA_FLASH_MOSI",
+        "6": "FPGA_FLASH_CCK",
+        "7": "FPGA_FLASH_IO3",
+        "8": "IO_3V3"
+      },
+      "status": "candidate_not_qualified",
+      "package": "SOIC8 208mil",
+      "capacity_bits": 33554432,
+      "source_block": "fpga_core",
+      "source_reference": "U2"
+    },
+    "Y1001": {
+      "value": "ASE-50.000MHZ-L-C-T",
+      "mpn": "ASE-50.000MHZ-L-C-T",
+      "footprint": "",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND",
+        "3": "FPGA_CLK_SOURCE",
+        "4": "IO_3V3"
+      },
+      "status": "candidate_not_qualified",
+      "package": "3.2x2.5mm 4pad",
+      "footprint_status": "manufacturer_land_pattern_pending",
+      "frequency_hz": 50000000,
+      "frequency_stability_ppm": 50,
+      "supply_v": [
+        3.135,
+        3.465
+      ],
+      "supply_current_max_a": 0.019,
+      "startup_max_s": 0.002,
+      "source_block": "fpga_core",
+      "source_reference": "Y1"
+    },
+    "U1003": {
+      "value": "SN74LVC1G08DCKR / RESET AND",
+      "mpn": "SN74LVC1G08DCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "pins": {
+        "1": "FPGA_CRESET_N",
+        "2": "FPGA_SERVICE_RUN_N",
+        "3": "LOGIC_GND",
+        "4": "FPGA_LOCAL_RESET_N",
+        "5": "IO_3V3"
+      },
+      "status": "candidate_not_qualified",
+      "package": "DCK5 SC70",
+      "source_block": "fpga_core",
+      "source_reference": "U3"
+    },
+    "U1004": {
+      "value": "74LVC1G17GW / CDONE DELAY SCHMITT",
+      "mpn": "74LVC1G17GW",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "pins": {
+        "2": "FPGA_USER_RESET_RC",
+        "3": "LOGIC_GND",
+        "4": "FPGA_USER_RESET_DELAYED",
+        "5": "IO_3V3"
+      },
+      "status": "candidate_not_qualified",
+      "package": "SOT353-1",
+      "role": "post_configuration_reset_delay",
+      "source_block": "fpga_core",
+      "source_reference": "U4"
+    },
+    "U1005": {
+      "value": "SN74LVC1G08DCKR / USER RESET AND",
+      "mpn": "SN74LVC1G08DCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "pins": {
+        "1": "FPGA_USER_RESET_DELAYED",
+        "2": "FPGA_SERVICE_RUN_N",
+        "3": "LOGIC_GND",
+        "4": "FPGA_USER_RESET_N",
+        "5": "IO_3V3"
+      },
+      "status": "candidate_not_qualified",
+      "package": "DCK5 SC70",
+      "role": "post_configuration_reset_gate",
+      "source_block": "fpga_core",
+      "source_reference": "U5"
+    },
+    "R1001": {
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_CLK_SOURCE",
+        "2": "FPGA_CLK_50M"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 33,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R1"
+    },
+    "R1002": {
+      "value": "33R 1%",
+      "mpn": "CRCW060333R0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_FLASH_CCK_SOURCE",
+        "2": "FPGA_FLASH_CCK"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 33,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R2"
+    },
+    "R1003": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CDONE"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R3"
+    },
+    "R1004": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_CSI"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R4"
+    },
+    "R1005": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_TEST_N"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R5"
+    },
+    "R1006": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_FLASH_CS_N"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R6"
+    },
+    "R1007": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_CBUS2"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R7"
+    },
+    "R1008": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_CBUS1"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R8"
+    },
+    "R1009": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_CBUS0"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R9"
+    },
+    "R1010": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_JTAG_TCK"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R10"
+    },
+    "R1011": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_JTAG_TDI"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R11"
+    },
+    "R1012": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_JTAG_TMS"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R12"
+    },
+    "R1013": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_JTAG_TDO"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R13"
+    },
+    "R1014": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_FLASH_IO2"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R14"
+    },
+    "R1015": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_FLASH_IO3"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R15"
+    },
+    "R1016": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_SERVICE_RUN_N"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R16"
+    },
+    "R1017": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_CFG_NSTATUS"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R17"
+    },
+    "R1018": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_CFG_CBSEL0",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R18"
+    },
+    "R1019": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_CFG_CBSEL1",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R19"
+    },
+    "R1020": {
+      "value": "47000R 1%",
+      "mpn": "CRCW060347K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "FPGA_LOCAL_RESET_N"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 47000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R20"
+    },
+    "R1021": {
+      "value": "1000R 1%",
+      "mpn": "CRCW06031K00FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_LOCAL_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 1000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R21"
+    },
+    "R1022": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_CDONE",
+        "2": "FPGA_USER_RESET_RC"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R22"
+    },
+    "R1023": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_ENDPOINT_READY",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R23"
+    },
+    "R1024": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R24"
+    },
+    "R1025": {
+      "value": "10000R 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_PROGRESS_M",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "power_70c_w": 0.1,
+      "source_block": "fpga_core",
+      "source_reference": "R25"
+    },
+    "C1001": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "E9",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C1"
+    },
+    "C1002": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F8",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C2"
+    },
+    "C1003": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F9",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C3"
+    },
+    "C1004": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "J6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C4"
+    },
+    "C1005": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "J7",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C5"
+    },
+    "C1006": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "K9",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C6"
+    },
+    "C1007": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "K11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C7"
+    },
+    "C1008": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F7",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C8"
+    },
+    "C1009": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "G11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C9"
+    },
+    "C1010": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "K6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C10"
+    },
+    "C1011": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "H6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C11"
+    },
+    "C1012": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "H7",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C12"
+    },
+    "C1013": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C13"
+    },
+    "C1014": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "G6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C14"
+    },
+    "C1015": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "E10",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C15"
+    },
+    "C1016": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F10",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C16"
+    },
+    "C1017": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C17"
+    },
+    "C1018": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "J10",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C18"
+    },
+    "C1019": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "J11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C19"
+    },
+    "C1020": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "L10",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C20"
+    },
+    "C1021": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "L11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C21"
+    },
+    "C1022": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "L6",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C22"
+    },
+    "C1023": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "L7",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C23"
+    },
+    "C1024": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "VCC cluster",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C24"
+    },
+    "C1025": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "K11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C25"
+    },
+    "C1026": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "F7",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C26"
+    },
+    "C1027": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "G11",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C27"
+    },
+    "C1028": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "1A",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C28"
+    },
+    "C1029": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "1B_1C",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C29"
+    },
+    "C1030": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "1D_1E",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C30"
+    },
+    "C1031": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "3A_3B_3C",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C31"
+    },
+    "C1032": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "3D_3E",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C32"
+    },
+    "C1033": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "4A",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C33"
+    },
+    "C1034": {
+      "value": "4.7uF 16V X7R",
+      "mpn": "885012207053",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 4.7e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "4B",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C34"
+    },
+    "C1035": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "U2",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C35"
+    },
+    "C1036": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "U2",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C36"
+    },
+    "C1037": {
+      "value": "0.01uF 16V X7R",
+      "mpn": "885012206040",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-08,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "Y1",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C37"
+    },
+    "C1038": {
+      "value": "0.1uF 16V X7R",
+      "mpn": "885012206046",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-07,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "U3",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C38"
+    },
+    "C1039": {
+      "value": "1uF 16V X7R",
+      "mpn": "885012206052",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_USER_RESET_RC",
+        "2": "LOGIC_GND"
+      },
+      "status": "candidate_not_qualified",
+      "capacitance_f": 1e-06,
+      "voltage_v": 16,
+      "tolerance": 0.1,
+      "temperature_change": 0.15,
+      "placement_target": "post-CDONE reset delay",
+      "mpn_status": "primary_datasheet_verified_dc_bias_and_lifecycle_review_pending",
+      "source_block": "fpga_core",
+      "source_reference": "C39"
+    },
+    "U2001": {
+      "value": "TPS62901RPJR",
+      "mpn": "TPS62901RPJR",
+      "footprint": "CNC_MC_Power:TPS62901_RPJ9",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_PG_OD",
+        "2": "CORE_1V2_SW",
+        "3": "CORE_1V2",
+        "4": "LOGIC_GND",
+        "5": "CORE_1V2_EN",
+        "6": "CORE_5V",
+        "7": "CORE_1V2_MODE",
+        "8": "CORE_1V2_SS",
+        "9": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U1"
+    },
+    "L2001": {
+      "value": "2.2uH",
+      "mpn": "XGL4020-222MEC",
+      "footprint": "CNC_MC_Power:XGL4020",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_SW",
+        "2": "CORE_1V2"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "L1"
+    },
+    "R2001": {
+      "value": "76.8k 1%",
+      "mpn": "CRCW060376K8FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_MODE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R1"
+    },
+    "R2002": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_EN",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R2"
+    },
+    "R2003": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R3"
+    },
+    "C2001": {
+      "value": "10uF 25V X7R 10%",
+      "mpn": "C3216X7R1E106K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C1"
+    },
+    "C2002": {
+      "value": "22uF 10V X7S 20%",
+      "mpn": "C2012X7S1A226M125AC",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C2"
+    },
+    "C2003": {
+      "value": "6.8nF 50V C0G 5%",
+      "mpn": "GRM1885C1H682JA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_SS",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C3"
+    },
+    "U2002": {
+      "value": "TPS62901RPJR",
+      "mpn": "TPS62901RPJR",
+      "footprint": "CNC_MC_Power:TPS62901_RPJ9",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_PG_OD",
+        "2": "IO_3V3_SW",
+        "3": "IO_3V3",
+        "4": "LOGIC_GND",
+        "5": "IO_3V3_EN",
+        "6": "CORE_5V",
+        "7": "IO_3V3_MODE",
+        "8": "IO_3V3_SS",
+        "9": "IO_3V3_VSET"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U2"
+    },
+    "L2002": {
+      "value": "1uH",
+      "mpn": "XGL4020-102MEC",
+      "footprint": "CNC_MC_Power:XGL4020",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_SW",
+        "2": "IO_3V3"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "L2"
+    },
+    "R2005": {
+      "value": "32.4k 1%",
+      "mpn": "CRCW060332K4FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_MODE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R5"
+    },
+    "R2006": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_EN",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R6"
+    },
+    "R2007": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R7"
+    },
+    "R2008": {
+      "value": "301k 1%",
+      "mpn": "CRCW0603301KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_VSET",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R8"
+    },
+    "C2004": {
+      "value": "10uF 25V X7R 10%",
+      "mpn": "C3216X7R1E106K160AB",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C4"
+    },
+    "C2005": {
+      "value": "22uF 10V X7S 20%",
+      "mpn": "C2012X7S1A226M125AC",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C5"
+    },
+    "C2006": {
+      "value": "6.8nF 50V C0G 5%",
+      "mpn": "GRM1885C1H682JA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_SS",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C6"
+    },
+    "U2003": {
+      "value": "LTC2962HUD#TRPBF",
+      "mpn": "LTC2962HUD#TRPBF",
+      "footprint": "CNC_MC_Power:LTC2962_UD16",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "CORE_5V",
+        "3": "LOGIC_GND",
+        "4": "CORE_5V",
+        "5": "MC_SEQ_REF1",
+        "6": "MC_SEQ_REF1",
+        "7": "LOGIC_GND",
+        "8": "MC_SEQ_REF1",
+        "9": "MC_SEQ_REF1",
+        "10": "CORE_5V",
+        "11": "LOGIC_GND",
+        "12": "MC_SEQ_5V_OK",
+        "13": "CORE_5V",
+        "14": "CORE_5V",
+        "15": "CORE_5V_OV_SENSE",
+        "16": "CORE_5V_UV_SENSE",
+        "17": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U3"
+    },
+    "R2021": {
+      "value": "87.9k 0.01% 5ppm",
+      "mpn": "PLT0603Z8792LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "CORE_5V_UV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R21"
+    },
+    "R2027": {
+      "value": "10k 0.01% 5ppm",
+      "mpn": "PLT0603Z1002LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V_UV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R27"
+    },
+    "R2029": {
+      "value": "92.1k 0.01% 5ppm",
+      "mpn": "PLT0603Z9212LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "CORE_5V_OV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R29"
+    },
+    "R2035": {
+      "value": "10k 0.01% 5ppm",
+      "mpn": "PLT0603Z1002LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V_OV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R35"
+    },
+    "C2007": {
+      "value": "100nF 25V X7R 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C7"
+    },
+    "U2004": {
+      "value": "LTC2962HUD#TRPBF",
+      "mpn": "LTC2962HUD#TRPBF",
+      "footprint": "CNC_MC_Power:LTC2962_UD16",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "MC_SEQ_5V_OK",
+        "3": "LOGIC_GND",
+        "4": "CORE_5V",
+        "5": "MC_SEQ_REF2",
+        "6": "MC_SEQ_REF2",
+        "7": "LOGIC_GND",
+        "8": "MC_SEQ_REF2",
+        "9": "MC_SEQ_REF2",
+        "10": "CORE_5V",
+        "11": "LOGIC_GND",
+        "12": "IO_3V3_EN",
+        "13": "CORE_5V",
+        "14": "CORE_5V",
+        "15": "CORE_1V2_OV_SENSE",
+        "16": "CORE_1V2_UV_SENSE",
+        "17": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U4"
+    },
+    "R2041": {
+      "value": "1.07k 0.01% 5ppm",
+      "mpn": "PLT0603Z1071LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "MC_SEQ_UV2_1"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R41"
+    },
+    "R2042": {
+      "value": "261 0.01% 5ppm",
+      "mpn": "PLT0603Z2610LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MC_SEQ_UV2_1",
+        "2": "CORE_1V2_UV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R42"
+    },
+    "R2047": {
+      "value": "1k 0.01% 5ppm",
+      "mpn": "PLT0603Z1001LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_UV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R47"
+    },
+    "R2049": {
+      "value": "1.15k 0.01% 5ppm",
+      "mpn": "PLT0603Z1151LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2",
+        "2": "MC_SEQ_OV2_1"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R49"
+    },
+    "R2050": {
+      "value": "316 0.01% 5ppm",
+      "mpn": "PLT0603Z3160LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MC_SEQ_OV2_1",
+        "2": "MC_SEQ_OV2_2"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R50"
+    },
+    "R2051": {
+      "value": "4.02 1% 100ppm",
+      "mpn": "CRCW06034R02FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MC_SEQ_OV2_2",
+        "2": "CORE_1V2_OV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R51"
+    },
+    "R2055": {
+      "value": "1k 0.01% 5ppm",
+      "mpn": "PLT0603Z1001LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_OV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R55"
+    },
+    "C2008": {
+      "value": "100nF 25V X7R 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C8"
+    },
+    "U2005": {
+      "value": "LTC2962HUD#TRPBF",
+      "mpn": "LTC2962HUD#TRPBF",
+      "footprint": "CNC_MC_Power:LTC2962_UD16",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "IO_3V3_EN",
+        "3": "LOGIC_GND",
+        "4": "CORE_5V",
+        "5": "MC_SEQ_REF3",
+        "6": "MC_SEQ_REF3",
+        "7": "LOGIC_GND",
+        "8": "MC_SEQ_REF3",
+        "9": "MC_SEQ_REF3",
+        "10": "CORE_5V",
+        "11": "LOGIC_GND",
+        "12": "MC_RAILS_OK_5V",
+        "13": "CORE_5V",
+        "14": "CORE_5V",
+        "15": "IO_3V3_OV_SENSE",
+        "16": "IO_3V3_UV_SENSE",
+        "17": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U5"
+    },
+    "R2061": {
+      "value": "54.5k 0.01% 5ppm",
+      "mpn": "PLT0603Z5452LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "IO_3V3_UV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R61"
+    },
+    "R2067": {
+      "value": "10k 0.01% 5ppm",
+      "mpn": "PLT0603Z1002LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_UV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R67"
+    },
+    "R2069": {
+      "value": "57.5k 0.01% 5ppm",
+      "mpn": "PLT0603Z5752LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "IO_3V3_OV_SENSE"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R69"
+    },
+    "R2075": {
+      "value": "10k 0.01% 5ppm",
+      "mpn": "PLT0603Z1002LST1",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_OV_SENSE",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R75"
+    },
+    "C2009": {
+      "value": "100nF 25V X7R 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C9"
+    },
+    "R2101": {
+      "value": "3.3k 1%",
+      "mpn": "CRCW06033K30FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "MC_SEQ_5V_OK"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R101"
+    },
+    "R2102": {
+      "value": "3.3k 1%",
+      "mpn": "CRCW06033K30FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MC_SEQ_5V_OK",
+        "2": "CORE_1V2_EN"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R102"
+    },
+    "R2103": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_1V2_EN",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R103"
+    },
+    "R2104": {
+      "value": "6.8k 1%",
+      "mpn": "CRCW06036K80FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "IO_3V3_EN"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R104"
+    },
+    "R2105": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3_EN",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R105"
+    },
+    "R2106": {
+      "value": "47k 1%",
+      "mpn": "CRCW060347K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "CORE_5V",
+        "2": "MC_RAILS_OK_5V"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R106"
+    },
+    "R2107": {
+      "value": "470k 1%",
+      "mpn": "CRCW0603470KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "MC_RAILS_OK_5V",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R107"
+    },
+    "R2108": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_CRESET_N",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "R108"
+    },
+    "U2006": {
+      "value": "SN74LVC1G17DBVR",
+      "mpn": "SN74LVC1G17DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "2": "MC_RAILS_OK_5V",
+        "3": "LOGIC_GND",
+        "4": "FPGA_CRESET_N",
+        "5": "IO_3V3"
+      },
+      "no_connect": [
+        "1"
+      ],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "U6"
+    },
+    "C2010": {
+      "value": "100nF 25V X7R 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "status": "candidate_not_qualified",
+      "source_block": "mc_local_power",
+      "source_reference": "C10"
+    },
+    "U3001": {
+      "value": "TPS3851G18SDRBT",
+      "mpn": "TPS3851G18SDRBT",
+      "footprint": "CNC_IS1:TPS3851_DRB8",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_M_CWD",
+        "4": "LOGIC_GND",
+        "5": "WD_M_SET1_BUF",
+        "6": "WD_M_WDI_BUF",
+        "7": "WD_M_HEALTH_RAW",
+        "8": "WD_M_HEALTH_RAW",
+        "9": "LOGIC_GND"
+      },
+      "no_connect": [
+        "3"
+      ],
+      "role": "M_independent_timer",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U1"
+    },
+    "U3003": {
+      "value": "SN74LVC1G34DBVR",
+      "mpn": "SN74LVC1G34DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "2": "FPGA_PROGRESS_M",
+        "3": "LOGIC_GND",
+        "4": "WD_M_WDI_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [
+        "1"
+      ],
+      "role": "M_WDI_rail_buffer",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U3"
+    },
+    "U3006": {
+      "value": "SN74LVC1G08DCKR",
+      "mpn": "SN74LVC1G08DCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "FPGA_USER_RESET_N",
+        "3": "LOGIC_GND",
+        "4": "WD_M_SET1_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [],
+      "role": "M_SET1_reset_guard_and_rail_driver",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U6"
+    },
+    "U3002": {
+      "value": "TPS3851G18SDRBT",
+      "mpn": "TPS3851G18SDRBT",
+      "footprint": "CNC_IS1:TPS3851_DRB8",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_O_CWD",
+        "4": "LOGIC_GND",
+        "5": "WD_O_SET1_BUF",
+        "6": "WD_O_WDI_BUF",
+        "7": "WD_O_HEALTH_RAW",
+        "8": "WD_O_HEALTH_RAW",
+        "9": "LOGIC_GND"
+      },
+      "no_connect": [
+        "3"
+      ],
+      "role": "O_independent_timer",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U2"
+    },
+    "U3004": {
+      "value": "SN74LVC1G34DBVR",
+      "mpn": "SN74LVC1G34DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "physical": true,
+      "pins": {
+        "2": "FPGA_PROGRESS_O",
+        "3": "LOGIC_GND",
+        "4": "WD_O_WDI_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [
+        "1"
+      ],
+      "role": "O_WDI_rail_buffer",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U4"
+    },
+    "U3007": {
+      "value": "SN74LVC1G08DCKR",
+      "mpn": "SN74LVC1G08DCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_OUTPUT_REQUEST",
+        "2": "FPGA_USER_RESET_N",
+        "3": "LOGIC_GND",
+        "4": "WD_O_SET1_BUF",
+        "5": "IO_3V3"
+      },
+      "no_connect": [],
+      "role": "O_SET1_reset_guard_and_rail_driver",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U7"
+    },
+    "U3005": {
+      "value": "SN74LVC2G17DBVR",
+      "mpn": "SN74LVC2G17DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_HEALTH_RAW",
+        "2": "LOGIC_GND",
+        "3": "WD_O_HEALTH_RAW",
+        "4": "WD_O_OK",
+        "5": "IO_3V3",
+        "6": "WD_M_OK"
+      },
+      "no_connect": [],
+      "role": "separate_health_Schmitt_channels",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "U5"
+    },
+    "C3001": {
+      "value": "3.3nF C0G 50V 5%",
+      "mpn": "CL10C332JB8NNNC",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_CWD",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 3.3e-09,
+      "tolerance": 0.05,
+      "dielectric": "C0G",
+      "voltage_v": 50,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C1"
+    },
+    "C3002": {
+      "value": "3.3nF C0G 50V 5%",
+      "mpn": "CL10C332JB8NNNC",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_CWD",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 3.3e-09,
+      "tolerance": 0.05,
+      "dielectric": "C0G",
+      "voltage_v": 50,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C2"
+    },
+    "C3003": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U1",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C3"
+    },
+    "C3004": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U2",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C4"
+    },
+    "C3005": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U3",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C5"
+    },
+    "C3006": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U4",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C6"
+    },
+    "C3007": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U5",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C7"
+    },
+    "C3008": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U6",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C8"
+    },
+    "C3009": {
+      "value": "100nF X7R 25V 10%",
+      "mpn": "GRM188R71E104KA01D",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "capacitance_f": 1e-07,
+      "tolerance": 0.1,
+      "dielectric": "X7R",
+      "voltage_v": 25,
+      "decouples": "U7",
+      "source_block": "watchdog_conditioning",
+      "source_reference": "C9"
+    },
+    "R3001": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_M_HEALTH_RAW"
+      },
+      "no_connect": [],
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R1"
+    },
+    "R3002": {
+      "value": "10k 1%",
+      "mpn": "CRCW060310K0FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "IO_3V3",
+        "2": "WD_O_HEALTH_RAW"
+      },
+      "no_connect": [],
+      "resistance_ohm": 10000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R2"
+    },
+    "R3003": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R3"
+    },
+    "R3004": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_OUTPUT_REQUEST",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R4"
+    },
+    "R3005": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_PROGRESS_M",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R5"
+    },
+    "R3006": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_WDI_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R6"
+    },
+    "R3007": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_PROGRESS_O",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R7"
+    },
+    "R3008": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_WDI_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R8"
+    },
+    "R3009": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_OK",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R9"
+    },
+    "R3010": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_OK",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R10"
+    },
+    "R3011": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_M_SET1_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R11"
+    },
+    "R3012": {
+      "value": "100k 1%",
+      "mpn": "CRCW0603100KFKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "WD_O_SET1_BUF",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 100000,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R12"
+    },
+    "R3013": {
+      "value": "4.7k 1%",
+      "mpn": "CRCW06034K70FKEA",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "physical": true,
+      "pins": {
+        "1": "FPGA_USER_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "no_connect": [],
+      "resistance_ohm": 4700,
+      "tolerance": 0.01,
+      "source_block": "watchdog_conditioning",
+      "source_reference": "R13"
+    },
+    "U4001": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "FPGA_CRESET_N",
+        "3": "FPGA_USER_RESET_N",
+        "6": "DIC_OK_QUALIFIED",
+        "4": "BASE_FIRST"
+      },
+      "role": "base qualification, first stage",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U1"
+    },
+    "U4002": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "BASE_FIRST",
+        "3": "EXT_PERMIT_3V3",
+        "6": "TAMPER_CLEAR_N",
+        "4": "BASE_OK"
+      },
+      "role": "base qualification, second stage",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U2"
+    },
+    "U4003": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "BASE_OK",
+        "2": "WD_M_OK",
+        "7": "RAW_INHIBIT_N",
+        "5": "RAW_INHIBIT_N",
+        "6": "FPGA_ENDPOINT_READY",
+        "3": "LATCH_CLEAR_M_N"
+      },
+      "role": "motion raw inhibit and asynchronous clear",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U3"
+    },
+    "U4004": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "BASE_OK",
+        "3": "WD_O_OK",
+        "6": "FPGA_ENDPOINT_READY",
+        "4": "LATCH_CLEAR_O_N"
+      },
+      "role": "output asynchronous clear",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U4"
+    },
+    "U4005": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "FPGA_MOTION_REQUEST",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "ARM_M_Q",
+        "6": "LATCH_CLEAR_M_N",
+        "7": "IO_3V3"
+      },
+      "role": "motion rising-request arm latch",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U5"
+    },
+    "U4006": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "FPGA_OUTPUT_REQUEST",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "ARM_O_Q",
+        "6": "LATCH_CLEAR_O_N",
+        "7": "IO_3V3"
+      },
+      "role": "output rising-request arm latch",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U6"
+    },
+    "U4007": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "ARM_M_Q",
+        "3": "FPGA_MOTION_REQUEST",
+        "6": "RAW_INHIBIT_N",
+        "4": "TX_PERMIT"
+      },
+      "role": "final motion permission",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U7"
+    },
+    "U4008": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "ARM_O_Q",
+        "3": "FPGA_OUTPUT_REQUEST",
+        "6": "OUTPUT_RAW_OK",
+        "4": "OUT_PERMIT"
+      },
+      "role": "final output permission",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U8"
+    },
+    "U4009": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "BASE_OK",
+        "2": "WD_O_OK",
+        "7": "OUTPUT_RAW_OK",
+        "5": "TX_PERMIT",
+        "6": "PERMIT_OUT_REQ",
+        "3": "PERMIT_OUT_DRIVE"
+      },
+      "role": "output watchdog and safety-output request gate",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U9"
+    },
+    "U4010": {
+      "kind": "LVC1G11",
+      "mpn": "SN74LVC1G11DBVR",
+      "value": "SN74LVC1G11DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "TX_PERMIT",
+        "3": "OUT_PERMIT",
+        "6": "PROCESS_PERMIT_EXT_3V3",
+        "4": "PROC_PERMIT"
+      },
+      "role": "independent process permission",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U10"
+    },
+    "U4011": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_TX",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_TX",
+        "6": "TX_PERMIT",
+        "7": "IO_3V3"
+      },
+      "role": "sticky accepted motion-output interruption",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U11"
+    },
+    "U4012": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_OUT",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_OUT",
+        "6": "OUT_PERMIT",
+        "7": "IO_3V3"
+      },
+      "role": "sticky accepted general-output interruption",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U12"
+    },
+    "U4013": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "OPI_REARM_BOE",
+        "2": "IO_3V3",
+        "3": null,
+        "5": "OPI_OK_BOE",
+        "6": "BANK_B_BUFFER_ENABLE_QUALIFIED",
+        "7": "IO_3V3"
+      },
+      "role": "sticky qualified bank-B buffer interruption",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U13"
+    },
+    "U4014": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_M_FALL_CLK",
+        "2": "WD_M_TRIP_D",
+        "3": "WD_M_TRIP_N",
+        "5": "WD_M_TRIP_Q",
+        "6": "WD_M_TRIP_CLEAR_N",
+        "7": "IO_3V3"
+      },
+      "role": "M sticky actual-SET1-qualified watchdog falling-edge trip",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U14"
+    },
+    "U4015": {
+      "kind": "LVC2G74",
+      "mpn": "SN74LVC2G74DCUR",
+      "value": "SN74LVC2G74DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_O_FALL_CLK",
+        "2": "WD_O_TRIP_D",
+        "3": "WD_O_TRIP_N",
+        "5": "WD_O_TRIP_Q",
+        "6": "WD_O_TRIP_CLEAR_N",
+        "7": "IO_3V3"
+      },
+      "role": "O sticky actual-SET1-qualified watchdog falling-edge trip",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U15"
+    },
+    "U4016": {
+      "kind": "LVC2G04",
+      "mpn": "SN74LVC2G04DBVR",
+      "value": "SN74LVC2G04DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "WD_M_OK",
+        "6": "WD_M_FALL_CLK",
+        "3": "WD_O_OK",
+        "4": "WD_O_FALL_CLK"
+      },
+      "role": "invert watchdog health for falling-edge capture",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U16"
+    },
+    "U4017": {
+      "kind": "LVC2G32",
+      "mpn": "SN74LVC2G32DCUR",
+      "value": "SN74LVC2G32DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "WD_M_TRIP_Q",
+        "2": "WD_M_SET1_BUF",
+        "7": "WD_M_TRIP_D",
+        "5": "WD_O_TRIP_Q",
+        "6": "WD_O_SET1_BUF",
+        "3": "WD_O_TRIP_D"
+      },
+      "role": "sticky trip feedback OR actual timer SET1",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U17"
+    },
+    "U4018": {
+      "kind": "LVC2G04",
+      "mpn": "SN74LVC2G04DBVR",
+      "value": "SN74LVC2G04DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pins": {
+        "2": "LOGIC_GND",
+        "5": "IO_3V3",
+        "1": "WD_REARM_M",
+        "6": "WD_M_RECORD_CLEAR_N",
+        "3": "WD_REARM_O",
+        "4": "WD_O_RECORD_CLEAR_N"
+      },
+      "role": "invert deliberate active-HIGH trip-record clear strobes",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U18"
+    },
+    "U4019": {
+      "kind": "LVC2G08",
+      "mpn": "SN74LVC2G08DCUR",
+      "value": "SN74LVC2G08DCUR",
+      "footprint": "Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+      "pins": {
+        "4": "LOGIC_GND",
+        "8": "IO_3V3",
+        "1": "FPGA_CRESET_N",
+        "2": "WD_M_RECORD_CLEAR_N",
+        "7": "WD_M_TRIP_CLEAR_N",
+        "5": "FPGA_CRESET_N",
+        "6": "WD_O_RECORD_CLEAR_N",
+        "3": "WD_O_TRIP_CLEAR_N"
+      },
+      "role": "power-reset and explicit trip-record asynchronous clear",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "U19"
+    },
+    "C4001": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U1 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C1"
+    },
+    "C4002": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U2 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C2"
+    },
+    "C4003": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U3 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C3"
+    },
+    "C4004": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U4 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C4"
+    },
+    "C4005": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U5 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C5"
+    },
+    "C4006": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U6 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C6"
+    },
+    "C4007": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U7 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C7"
+    },
+    "C4008": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U8 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C8"
+    },
+    "C4009": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U9 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C9"
+    },
+    "C4010": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U10 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C10"
+    },
+    "C4011": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U11 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C11"
+    },
+    "C4012": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U12 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C12"
+    },
+    "C4013": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U13 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C13"
+    },
+    "C4014": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U14 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C14"
+    },
+    "C4015": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U15 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C15"
+    },
+    "C4016": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U16 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C16"
+    },
+    "C4017": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U17 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C17"
+    },
+    "C4018": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U18 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C18"
+    },
+    "C4019": {
+      "kind": "C",
+      "mpn": "GRM188R71E104KA01D",
+      "value": "100nF X7R 25V 10%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pins": {
+        "1": "IO_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "U19 local decoupling",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "C19"
+    },
+    "R4001": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_ENDPOINT_READY",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R1"
+    },
+    "R4002": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_TX",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R2"
+    },
+    "R4003": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_OUT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R3"
+    },
+    "R4004": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OPI_REARM_BOE",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R4"
+    },
+    "R4005": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "WD_REARM_M",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R5"
+    },
+    "R4006": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "WD_REARM_O",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R6"
+    },
+    "R4007": {
+      "kind": "R",
+      "mpn": "CRCW06034K70FKEA",
+      "value": "4700R 1%",
+      "resistance_ohm": 4700,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PERMIT_OUT_REQ",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R7"
+    },
+    "R4008": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_CRESET_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R8"
+    },
+    "R4009": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "FPGA_USER_RESET_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R9"
+    },
+    "R4010": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "DIC_OK_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R10"
+    },
+    "R4011": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "EXT_PERMIT_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R11"
+    },
+    "R4012": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "TAMPER_CLEAR_N",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R12"
+    },
+    "R4013": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PROCESS_PERMIT_EXT_3V3",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R13"
+    },
+    "R4014": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "BANK_B_BUFFER_ENABLE_QUALIFIED",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R14"
+    },
+    "R4015": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "TX_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R15"
+    },
+    "R4016": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "OUT_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R16"
+    },
+    "R4017": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PROC_PERMIT",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R17"
+    },
+    "R4018": {
+      "kind": "R",
+      "mpn": "CRCW060310K0FKEA",
+      "value": "10000R 1%",
+      "resistance_ohm": 10000,
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pins": {
+        "1": "PERMIT_OUT_DRIVE",
+        "2": "LOGIC_GND"
+      },
+      "role": "defined-low boundary/output",
+      "physical": true,
+      "source_block": "mc_permission",
+      "source_reference": "R18"
+    }
+  },
+  "source_sha256": {
+    "hardware/fpga_core/fpga_core.kicad_sch": "0cc3707c89904625b35e36e7dbfab8e4975abf577a276ab6315aee267f9983e7",
+    "hardware/fpga_core/design.json": "a70449cb5e2cea8525b55611011bd599d7fe054f2209a5d7eed9edabd057827f",
+    "hardware/fpga_core/bom.csv": "4837710dfdb1a1b5552bf9a40af4716497f456df2a406604215333127fe0836b",
+    "hardware/fpga_core/netlist.xml": "4362bbcd540fef71adee19fc5f533c3e59a99b1a405ea916f24621e201ea9cc2",
+    "hardware/fpga_core/FPGA.kicad_sym": "dafdec0df9f117d456ef4212f406d57871a81cfa040bf7fa9363b15d94e5b46f",
+    "hardware/mc_local_power/mc_local_power.kicad_sch": "8ac64c191dbf948cfd8dc45a3752e77d34bade8e7671f4db2133313a26bc8325",
+    "hardware/mc_local_power/design.json": "a2c6a650d1e82e05e5739ef1712ba909da76ee1d678df0433247a86c89af781b",
+    "hardware/mc_local_power/bom.csv": "e14c21bd0e5bff07f7fad55086b125d59af52031360c6b8727219d0d6131db2b",
+    "hardware/mc_local_power/netlist.xml": "84cfee753b5a36aed5edb947c5850d99eee465b310ca841abf811ca0ef60f958",
+    "hardware/mc_local_power/CNC.kicad_sym": "e93e30534ab541b04b149681f107a14baee48757ed4304026a01935d4ff67686",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/is1_watchdogs.kicad_sch": "0f6fd5126e1063513ae165a3fbe1770e9e6b2bb465517d04060a775117d13919",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/design.json": "f6448f96f9f8573898cef2f9beeb72111c098a1ff56e5f8adc962134abb75df4",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/bom.csv": "ce391ac449d52773b4a15c9c3e43b9738fb205df333c58fbfbf6af7d71cc98b7",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/netlist.xml": "653d16c14214a5159899162b2fd4124fccbead8cc363e8c0de6992c86b19fe54",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/CNC.kicad_sym": "e5de250f2ed23ab67d355708941de6dfaf49c1456061392b5c374426b892b3cc",
+    "hardware/mc_permission/mc_permission.kicad_sch": "75d72a2db002b31aa2a8c13cc3a8b19a7fc9345f694fa6fd1aa8c736359141f8",
+    "hardware/mc_permission/design.json": "520b0db784548628b6e2cbec9676891952620d172232fefd6015ed6202ee89f9",
+    "hardware/mc_permission/bom.csv": "ef264105f4664fc16564c327b03c979c537832d8d493051c1e4227d1da7e6414",
+    "hardware/mc_permission/netlist.xml": "4154b42462f7a43a40ba47f7b2012076e6bbb1f6da2b1b74d6ccbc8bba32e2ee",
+    "hardware/mc_permission/CNC.kicad_sym": "2413138fcfa8b4e61b0edaf82212d2f43a355abd9854ab675c82e30381cf54b3",
+    "hardware/mc_local_power/CNC_MC_Power.pretty/LTC2962_UD16.kicad_mod": "f3a4b440e151cdf7ae3f27c490a8cb33aed56c171abf1d05e4b3b33ca0f82e4e",
+    "hardware/mc_local_power/CNC_MC_Power.pretty/TPS62901_RPJ9.kicad_mod": "8ea4ebfc2fb0f07c5559be871440dc18eb7ebe4f50da91b4c4f8ed8c524c8a1e",
+    "hardware/mc_local_power/CNC_MC_Power.pretty/XGL4020.kicad_mod": "13272aef45599d3260751101bb33b8b6f3f66876aa56aa15dddfd708300e429a",
+    "hardware/is1_watchdogs/startup_conditioning_r0_2/CNC_IS1.pretty/TPS3851_DRB8.kicad_mod": "2a268aea69b27e18dcbc479f091624d72586374bd53f1c5f17cef8c2123840d5",
+    "hardware/motion_card/CNC_Motion.pretty/T20F256_Efinix_NSMD.kicad_mod": "9f584fb156e1f44d6da58dbd67d8e094531336ad2fb861d5c1f0f814f67ce6b5",
+    "hardware/motion_card/3dmodels/T20F256_source_envelope.wrl": "d2610d014e61c32bf5029643a16724285f62e7b6a136663e003277fc8b2ce353"
+  },
+  "physical_qualification": false,
+  "eight_twelve_runtime_qualified": false
+}

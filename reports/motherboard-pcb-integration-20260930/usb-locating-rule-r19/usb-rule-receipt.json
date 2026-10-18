@@ -1,0 +1,17 @@
+{
+  "board_sha256": "de1d11a4f7a701f7b348318892f4ee6e3ee39412c91195cc39ede9959c062f72",
+  "rules_sha256": "85e37c9aef7eed6dd2192b5dc9c876ce7938706781a9a4bc32db87757ae86b85",
+  "parent_board_sha256": "de1d11a4f7a701f7b348318892f4ee6e3ee39412c91195cc39ede9959c062f72",
+  "native_DRC_regular": 0,
+  "ignored_checks": [],
+  "all_copper_and_physical_pads_preserved": true,
+  "uncapped_missing_joins": 5291,
+  "exact_rule": "\n# Exact GCT USB4105-GF-A recommended land: own .65mm locating holes\n# to adjacent own outer GND lands have nominal .1944mm copper separation.\n# PCBWay published special minimum NP-hole/copper .15mm; required .18mm\n# applies ONLY to these own-pad pairs. All other .25mm rules remain.\n(rule \"GCT USB4105 own locating hole to outer ground lands\"\n  (condition \"A.memberOfFootprint('J15006') && B.memberOfFootprint('J15006') && ((A.Pad_Type == 'NPTH, mechanical' && A.Hole_Size_X == 0.65mm && (B.Pad_Number == 'A1' || B.Pad_Number == 'A12' || B.Pad_Number == 'B1' || B.Pad_Number == 'B12')) || (B.Pad_Type == 'NPTH, mechanical' && B.Hole_Size_X == 0.65mm && (A.Pad_Number == 'A1' || A.Pad_Number == 'A12' || A.Pad_Number == 'B1' || A.Pad_Number == 'B12')))\")\n  (constraint hole_clearance (min 0.18mm)))\n",
+  "primary_sources": [
+    "https://gct.co/connector/usb4105",
+    "https://www.pcbway.com/pcb_prototype/PCB_Manufacturing_tolerances.html",
+    "https://docs.kicad.org/10.0/en/pcbnew/pcbnew.html"
+  ],
+  "qualification": "Exact manufacturer land retained; .18mm special capability must be explicitly accepted in PCBWay fabrication DFM/quote. No physical mating or manufacturing approval claimed.",
+  "manufacturing_ready": false
+}

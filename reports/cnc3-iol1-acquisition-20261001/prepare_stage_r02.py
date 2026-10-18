@@ -1,0 +1,35 @@
+from pathlib import Path
+import hashlib,json,shutil
+HERE=Path(__file__).resolve().parent
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def main():
+ old=HERE/'stage-r01';out=HERE/'stage-r02'
+ if out.exists():raise RuntimeError('fresh stage required')
+ before={p.relative_to(old).as_posix():sha(p) for p in old.rglob('*') if p.is_file()}
+ shutil.copytree(old,out)
+ p=out/'cnc_iol1_acquisition_master.v';s=p.read_text()
+ s=s.replace('output reg frame_seen, output reg header_crc_good, output reg [319:0] checked_frame,','output reg frame_seen, output reg header_crc_good, output wire [319:0] checked_frame,')
+ s=s.replace('reg [31:0] period_count;','localparam integer PERIOD_W = PERIOD_CYCLES>1?$clog2(PERIOD_CYCLES):1;\n    localparam integer GUARD_W = SETUP_CYCLES>HOLD_CYCLES?(SETUP_CYCLES>1?$clog2(SETUP_CYCLES):1):(HOLD_CYCLES>1?$clog2(HOLD_CYCLES):1);\n    reg [PERIOD_W-1:0] period_count;')
+ s=s.replace('reg [31:0] guard_count;','reg [GUARD_W-1:0] guard_count;')
+ s=s.replace('assign link_synced = synced;','assign checked_frame = rx_shift;\n    assign link_synced = synced;')
+ s=s.replace('header_crc_good <= 0; checked_frame <= 0;','header_crc_good <= 0;')
+ s=s.replace('header_crc_good <= header_good; checked_frame <= rx_shift;','header_crc_good <= header_good;')
+ s=s.replace('period_count < PERIOD_CYCLES-1','{ {(32-PERIOD_W){1\'b0}},period_count} < PERIOD_CYCLES-1')
+ s=s.replace('guard_count == SETUP_CYCLES-1','{ {(32-GUARD_W){1\'b0}},guard_count} == SETUP_CYCLES-1')
+ s=s.replace('guard_count == HOLD_CYCLES-1','{ {(32-GUARD_W){1\'b0}},guard_count} == HOLD_CYCLES-1')
+ p.write_text(s,encoding='utf8',newline='\n')
+ p=out/'cnc_iol1_diagnostic_acquisition.v';s=p.read_text()
+ s=s.replace('reg [31:0] now_us;','')
+ s=s.replace('reg [31:0] previous_release_us[0:3],reply_elapsed_us[0:3];','reg [15:0] residence_us[0:3],reply_elapsed_us[0:3];')
+ s=s.replace('wire [32:0] age_sum[0:3];','wire [16:0] age_sum[0:3];')
+ s=s.replace("{17'b0,reported_age[a]}+{1'b0,reply_elapsed_us[a]}","{1'b0,reported_age[a]}+{1'b0,reply_elapsed_us[a]}")
+ s=s.replace('us_div<=0;now_us<=0;previous_cs<=15;','us_div<=0;previous_cs<=15;')
+ s=s.replace("previous_release_us[i]<=0;reply_elapsed_us[i]<=32'hffffffff;","residence_us[i]<=16'hffff;reply_elapsed_us[i]<=16'hffff;")
+ s=s.replace('us_div<=0;now_us<=now_us+1;','us_div<=0;')
+ s=s.replace("if(cs_n[i]&&!previous_cs[i])begin\n                    reply_elapsed_us[i]<=release_seen[i]?now_us-previous_release_us[i]+1:32'hffffffff;\n                    previous_release_us[i]<=now_us;release_seen[i]<=1;","if(us_div==49&&residence_us[i]!=16'hffff)residence_us[i]<=residence_us[i]+1;\n                if(cs_n[i]&&!previous_cs[i])begin\n                    reply_elapsed_us[i]<=release_seen[i]&&residence_us[i]!=16'hffff ? residence_us[i]+16'd1 : 16'hffff;\n                    residence_us[i]<=0;release_seen[i]<=1;")
+ s=s.replace("age_sum[i]>=33'd65535","age_sum[i]>=17'd65535")
+ s=s.replace("age_sum[i]<={1'b0,STALE_US[31:0]}","{15'b0,age_sum[i]}<=STALE_US")
+ p.write_text(s,encoding='utf8',newline='\n')
+ (out/'stage-transition.json').write_text(json.dumps({'before_sha256':before,'purpose':'exact stable reply-wire storage reused only during checked-frame pulse; saturating measured us residence and bounded period/guard counters; no rate or authority change','after_sha256':{str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file()}},indent=2)+'\n')
+ print(out)
+if __name__=='__main__':main()

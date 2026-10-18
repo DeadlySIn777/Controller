@@ -1,0 +1,6 @@
+from pathlib import Path
+s=Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U20-cell-r181.py').read_text().replace('ROOT94-health-U20-cell-r181','ROOT94-health-U20-cell-r184')
+s=s.replace("ret=set(frozen['retired']);t=parse", "ret=set(frozen['retired']);original_ps={(f.GetReference(),p.GetNumber()):p for f in original.GetFootprints()for p in f.Pads()if p.GetNumber()};control_source={}\nfor pn in['1','3']:\n n=original_ps['U11020',pn].GetNetname();other=[p for p in original.GetPads()if p.GetNetname()==n and p.GetParentFootprint().GetReference()!='U11020'];assert len(other)==1 and other[0].GetParentFootprint().GetReference()=='U11019';control_source[pn]=(other[0].GetParentFootprint().GetReference(),other[0].GetNumber());ret|={t.m_Uuid.AsString()for t in original.GetTracks()if t.GetNetname()==n}\nt=parse")
+s=s.replace("[('1',(343.8625,174.35)),('3',(343.1625,176.65)),('4',(346.85,175.65)),('6',(344.85,174.135)),('5',(345.3375,175))]", "[('1',mm(ps[control_source['1']].GetPosition())),('3',mm(ps[control_source['3']].GetPosition())),('4',(346.85,175.65)),('6',(344.85,174.135)),('5',(345.3375,175))]")
+s=s.replace('padding=5,max_nodes=45000','padding=15,max_nodes=180000')
+Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/health-U20-cell-r184.py').write_text(s)

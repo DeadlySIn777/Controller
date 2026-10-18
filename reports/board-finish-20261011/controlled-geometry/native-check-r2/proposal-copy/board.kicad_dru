@@ -1,0 +1,194 @@
+(version 1)
+# Nominal 0.8mm-pitch diagonal pad/via clearance = 0.140685mm.
+# Only FPGA pad / conventional via pairs use this dimensional rule.
+(rule "T20 conventional BGA pad-via clearance"
+  (condition "(A.memberOfFootprint('U1001') && B.Type == 'Via') || (B.memberOfFootprint('U1001') && A.Type == 'Via')")
+  (constraint clearance (min 0.125mm)))
+(rule "BGA conventional via dimensions"
+  (condition "A.Type == 'Via'")
+  (constraint hole_size (min 0.20mm))
+  (constraint annular_width (min 0.15mm)))
+
+# PCBWay six-layer normal-process inner-hole isolation >=8mil.
+(rule "Six-layer inner drill to copper separation"
+  (layer inner)
+  (constraint hole_clearance (min 0.205mm)))
+
+# Exact GCT USB4105-GF-A recommended land: own .65mm locating holes
+# to adjacent own outer GND lands have nominal .1944mm copper separation.
+# PCBWay published special minimum NP-hole/copper .15mm; required .18mm
+# applies ONLY to these own-pad pairs. All other .25mm rules remain.
+(rule "GCT USB4105 own locating hole to outer ground lands"
+  (condition "A.memberOfFootprint('J15006') && B.memberOfFootprint('J15006') && ((A.Pad_Type == 'NPTH, mechanical' && A.Hole_Size_X == 0.65mm && (B.Pad_Number == 'A1' || B.Pad_Number == 'A12' || B.Pad_Number == 'B1' || B.Pad_Number == 'B12')) || (B.Pad_Type == 'NPTH, mechanical' && B.Hole_Size_X == 0.65mm && (A.Pad_Number == 'A1' || A.Pad_Number == 'A12' || A.Pad_Number == 'B1' || A.Pad_Number == 'B12')))")
+  (constraint hole_clearance (min 0.18mm)))
+
+# Four exact low-current control escapes only; PCBWay advanced DFM/price pending.
+(rule "Four exact converter control escapes"
+  (condition "A.Type == 'Via' && ((A.NetName == '/motherboard_power_entry/C_PGOOD' && A.Position_X == -1.000000mm && A.Position_Y == -1.000000mm) || (A.NetName == '/motherboard_power_entry/CORE_CORE_CONFIG' && A.Position_X > 262.2445mm && A.Position_X < 262.2455mm && A.Position_Y > 111.6995mm && A.Position_Y < 111.7005mm) || (A.NetName == '/motherboard_power_entry/C_PGOOD' && A.Position_X == -1.000000mm && A.Position_Y == -1.000000mm) || (A.NetName == '/motherboard_power_entry/MOTION_CORE_CONFIG' && A.Position_X > 294.1945mm && A.Position_X < 294.1955mm && A.Position_Y > 132.2345mm && A.Position_Y < 132.2355mm))")
+  (constraint via_diameter (min 0.40mm) (max 0.40mm))
+  (constraint hole_size (min 0.20mm) (max 0.20mm))
+  (constraint annular_width (min 0.10mm)))
+
+# Maintain the previous effective .20 minimum everywhere outside exact necks.
+(rule "Effective general track minimum remains .20" (condition "A.Type == 'Track' || A.Type == 'Arc'") (constraint track_width (min 0.20mm)))
+(rule "U1001 exact assigned F signal necks only" (layer "F.Cu")
+ (condition "A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core{slash}FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_N' || A.NetName == '/fpga_core{slash}HOST_SPI_MISO' || A.NetName == '/fpga_core{slash}HOST_SPI_MOSI' || A.NetName == '/fpga_core{slash}HOST_SPI_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L0_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L0_MISO' || A.NetName == '/fpga_core{slash}IOL1_L0_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L0_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L1_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L1_MISO' || A.NetName == '/fpga_core{slash}IOL1_L1_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L1_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L2_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L2_MISO' || A.NetName == '/fpga_core{slash}IOL1_L2_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L2_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L3_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L3_MISO' || A.NetName == '/fpga_core{slash}IOL1_L3_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L3_SCLK')")
+ (constraint track_width (min 0.15mm) (max 0.15mm))
+ (constraint track_segment_length (max 1.0mm)))
+
+# =============================================================================
+# P1v2 isolation rules - generated 2026-10-03 by Z:/pcb-runs/reviews/rules-v2/build_rules.py.
+# ROOT106: everything above this banner is the ROOT104 .kicad_dru with only the four exact converter-escape
+# via positions moved with their units (claude-finish/relayout/scripts/make_project.py, ROOT106); originally: the ROOT104 .kicad_dru (sha256 06b0a3a2986ae95e55a812323851572c5e1cc9a7434e9b92b40c2cdf193a02b5).
+# KiCad: a later matching rule wins, so these appended rules only ever replace looser values
+# (existing clearance minima [0.125] mm, board setup clearances [0.0, 0.15] mm, all < 0.6 mm).
+# ADOPTED for ROOT105 (commit-root105, 2026-10-03) and regenerated for ROOT106: the zone filler and DRC enforce these rules.
+# =============================================================================
+
+# (a) Galvanic cross-domain copper clearance, all copper layers (operator decisions 2 and 3, 2026-10-03).
+# Domains: Z:/pcb-runs/domains/grouped-domains.json (sha256 7f08303db2a035e8...), one net class per galvanic
+# domain: 9 major domains (44 ISO1212 SUB islands grouped under their parent FIELD_A/FIELD_B, exemptions.json)
+# + 15 CONTACT domains kept separate pending the operator question in Z:/pcb-runs/domains/DECISIONS.md D2:
+# DOM_CONTACT_EN0_COM, DOM_CONTACT_EN10_COM, DOM_CONTACT_EN11_COM, DOM_CONTACT_EN1_COM, DOM_CONTACT_EN2_COM, DOM_CONTACT_EN3_COM, DOM_CONTACT_EN4_COM, DOM_CONTACT_EN5_COM, DOM_CONTACT_EN6_COM, DOM_CONTACT_EN7_COM, DOM_CONTACT_EN8_COM, DOM_CONTACT_EN9_COM, DOM_CONTACT_PEN0_1, DOM_CONTACT_PEN1_1, DOM_CONTACT_PERMIT_OUT_1.
+# Value: max(0.6 mm engineering minimum [stackup request key uncoated_SELV_interdomain_engineering_clearance_mm],
+# barrier requirement from barriers.json required_clearance_mm_by_layer). Measured: every one of the
+# 91 cross-domain barriers requires [0.6] mm on every layer, barrier_overrides is empty,
+# so 0 pair-specific barrier rules are emitted after the per-class rules.
+# Form: one rule per class with hasNetclass() (KiCad 10: 'A.NetClass != Default' is always false for the
+# composite class "DOM_X,Default" - v1 hazard).
+# NC pads (repair round 1): every on-board unconnected-* net is in a class too (nc-pad-domains.json): the class of its
+# footprint's galvanic domain (585 nets; nearest own pad for multi-domain footprints), or NC_ISOLATE
+# (12 nets, potential undetermined), which keeps 0.6 mm from every other net (rule after the class rules).
+# Only net-less copper (NetName '') is excluded; ROOT104 has none (nc-pad-domains.json census: 0 net-less copper
+# pads/tracks/vias/zones/graphics; its net-less pads are bare NPTH holes).
+# No (layer) clause: the rule applies on F.Cu, In1.Cu, In2.Cu, In3.Cu, In4.Cu and B.Cu, and to plated barrels on
+# layers where a via/pad is not flashed (KiCad measures the hole shape there with this clearance).
+(rule "P1v2 galvanic 0.6mm: DOM_LOGIC vs other domains"
+  (condition "A.hasNetclass('DOM_LOGIC') && !B.hasNetclass('DOM_LOGIC') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_FIELD_B vs other domains"
+  (condition "A.hasNetclass('DOM_FIELD_B') && !B.hasNetclass('DOM_FIELD_B') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_FIELD_A vs other domains"
+  (condition "A.hasNetclass('DOM_FIELD_A') && !B.hasNetclass('DOM_FIELD_A') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_AI vs other domains"
+  (condition "A.hasNetclass('DOM_AI') && !B.hasNetclass('DOM_AI') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_AO0 vs other domains"
+  (condition "A.hasNetclass('DOM_AO0') && !B.hasNetclass('DOM_AO0') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_AO1 vs other domains"
+  (condition "A.hasNetclass('DOM_AO1') && !B.hasNetclass('DOM_AO1') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CAN vs other domains"
+  (condition "A.hasNetclass('DOM_CAN') && !B.hasNetclass('DOM_CAN') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_RS485 vs other domains"
+  (condition "A.hasNetclass('DOM_RS485') && !B.hasNetclass('DOM_RS485') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CHASSIS vs other domains"
+  (condition "A.hasNetclass('DOM_CHASSIS') && !B.hasNetclass('DOM_CHASSIS') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN0_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN0_COM') && !B.hasNetclass('DOM_CONTACT_EN0_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN10_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN10_COM') && !B.hasNetclass('DOM_CONTACT_EN10_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN11_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN11_COM') && !B.hasNetclass('DOM_CONTACT_EN11_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN1_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN1_COM') && !B.hasNetclass('DOM_CONTACT_EN1_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN2_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN2_COM') && !B.hasNetclass('DOM_CONTACT_EN2_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN3_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN3_COM') && !B.hasNetclass('DOM_CONTACT_EN3_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN4_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN4_COM') && !B.hasNetclass('DOM_CONTACT_EN4_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN5_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN5_COM') && !B.hasNetclass('DOM_CONTACT_EN5_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN6_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN6_COM') && !B.hasNetclass('DOM_CONTACT_EN6_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN7_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN7_COM') && !B.hasNetclass('DOM_CONTACT_EN7_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN8_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN8_COM') && !B.hasNetclass('DOM_CONTACT_EN8_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_EN9_COM vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_EN9_COM') && !B.hasNetclass('DOM_CONTACT_EN9_COM') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_PEN0_1 vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_PEN0_1') && !B.hasNetclass('DOM_CONTACT_PEN0_1') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_PEN1_1 vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_PEN1_1') && !B.hasNetclass('DOM_CONTACT_PEN1_1') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 galvanic 0.6mm: DOM_CONTACT_PERMIT_OUT_1 vs other domains"
+  (condition "A.hasNetclass('DOM_CONTACT_PERMIT_OUT_1') && !B.hasNetclass('DOM_CONTACT_PERMIT_OUT_1') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+(rule "P1v2 NC isolate 0.6mm: NC_ISOLATE vs every other net"
+  (condition "A.hasNetclass('NC_ISOLATE') && B.NetName != ''")
+  (constraint clearance (min 0.6mm)))
+
+# (a2) Pair-specific barrier values above 0.6 mm: none required (see netclasses.json pair_clearance).
+
+# (b) TMR4WI isolated DC/DC converter keepouts (U14601, U14619, U14701, U14702, U14703), unchanged from v1
+# (Z:/pcb-runs/reviews/rules/rules.kicad_dru). Traco TMR 4WI datasheet p.4: "Avoid routing PCB traces under the
+# converter." INFERENCE geometry: rule areas TMR4WI_KEEPOUT_<ref> = courtyard + 0.6 mm/side, all copper
+# layers (tmr4wi-keepout-areas.sexp); the converter's own pads and own nets are exempt.
+(rule "P1v2 TMR4WI U14601 keepout: no unrelated copper under converter"
+  (condition "A.intersectsArea('TMR4WI_KEEPOUT_U14601') && !A.memberOfFootprint('U14601') && A.NetName != '/LOGIC_GND' && A.NetName != '/motherboard_analog_output/AO0_12V' && A.NetName != '/motherboard_analog_output{slash}AO0_COM' && A.NetName != '/motherboard_power_entry{slash}CORE_24V_PROTECTED'")
+  (constraint disallow track via zone))
+(rule "P1v2 TMR4WI U14619 keepout: no unrelated copper under converter"
+  (condition "A.intersectsArea('TMR4WI_KEEPOUT_U14619') && !A.memberOfFootprint('U14619') && A.NetName != '/LOGIC_GND' && A.NetName != '/motherboard_analog_output/AO1_12V' && A.NetName != '/motherboard_analog_output{slash}AO1_COM' && A.NetName != '/motherboard_power_entry{slash}CORE_24V_PROTECTED'")
+  (constraint disallow track via zone))
+(rule "P1v2 TMR4WI U14701 keepout: no unrelated copper under converter"
+  (condition "A.intersectsArea('TMR4WI_KEEPOUT_U14701') && !A.memberOfFootprint('U14701') && A.NetName != '/LOGIC_GND' && A.NetName != '/motherboard_analog_input/AI_5V_PREREG_12V' && A.NetName != '/motherboard_analog_input{slash}AI_AGND' && A.NetName != '/motherboard_power_entry{slash}CORE_24V_PROTECTED'")
+  (constraint disallow track via zone))
+(rule "P1v2 TMR4WI U14702 keepout: no unrelated copper under converter"
+  (condition "A.intersectsArea('TMR4WI_KEEPOUT_U14702') && !A.memberOfFootprint('U14702') && A.NetName != '/LOGIC_GND' && A.NetName != '/motherboard_analog_input/AI_15V' && A.NetName != '/motherboard_analog_input{slash}AI_AGND' && A.NetName != '/motherboard_power_entry{slash}CORE_24V_PROTECTED'")
+  (constraint disallow track via zone))
+(rule "P1v2 TMR4WI U14703 keepout: no unrelated copper under converter"
+  (condition "A.intersectsArea('TMR4WI_KEEPOUT_U14703') && !A.memberOfFootprint('U14703') && A.NetName != '/LOGIC_GND' && A.NetName != '/motherboard_analog_input/AI_24V_RAW' && A.NetName != '/motherboard_analog_input{slash}AI_AGND' && A.NetName != '/motherboard_power_entry{slash}CORE_24V_PROTECTED'")
+  (constraint disallow track via zone))
+
+# (c) Documented component exemptions (ROOT105/ROOT106): pad-to-pad pairs INSIDE ONE footprint whose fixed package/land
+# geometry places pins of two galvanic domains closer than 0.6 mm (rules-v2 class (c)). Only own-pad pairs of
+# the named footprint are exempt; every other item keeps the 0.6 mm rule. Evidence: claude-finish/relayout/work/run-*/exemptions.json.
+(rule "ROOT105 component exemption J15006: own pads only (fixed package land pattern: own pins of different galvanic domains < 0.6 mm)"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad' && A.memberOfFootprint('J15006') && B.memberOfFootprint('J15006')")
+  (constraint clearance (min 0.150mm)))
+
+# PROPOSED ONLY: ROOT106 c05 35um outer geometry; no native validation or fab release.
+# Only outer geometry is staged. All controlled In3 planning remains HELD_REFERENCE_RETURN.
+# Original rules remain the exact byte prefix. No isolation or via constraint is changed.
+(rule "PROVISIONAL IMP_50 outer width" (layer outer)
+ (condition "(A.Type == 'Track' || A.Type == 'Arc') && A.hasNetclass('IMP_50') && !(A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core{slash}FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_N' || A.NetName == '/fpga_core{slash}HOST_SPI_MISO' || A.NetName == '/fpga_core{slash}HOST_SPI_MOSI' || A.NetName == '/fpga_core{slash}HOST_SPI_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L0_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L0_MISO' || A.NetName == '/fpga_core{slash}IOL1_L0_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L0_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L1_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L1_MISO' || A.NetName == '/fpga_core{slash}IOL1_L1_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L1_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L2_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L2_MISO' || A.NetName == '/fpga_core{slash}IOL1_L2_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L2_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L3_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L3_MISO' || A.NetName == '/fpga_core{slash}IOL1_L3_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L3_SCLK'))")
+ (constraint track_width (min 0.375mm) (opt 0.385mm) (max 0.395mm)))
+(rule "PROVISIONAL DIFF_90 outer width" (layer outer)
+ (condition "(A.Type == 'Track' || A.Type == 'Arc') && A.hasNetclass('DIFF_90') && !(A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core{slash}FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_N' || A.NetName == '/fpga_core{slash}HOST_SPI_MISO' || A.NetName == '/fpga_core{slash}HOST_SPI_MOSI' || A.NetName == '/fpga_core{slash}HOST_SPI_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L0_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L0_MISO' || A.NetName == '/fpga_core{slash}IOL1_L0_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L0_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L1_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L1_MISO' || A.NetName == '/fpga_core{slash}IOL1_L1_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L1_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L2_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L2_MISO' || A.NetName == '/fpga_core{slash}IOL1_L2_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L2_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L3_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L3_MISO' || A.NetName == '/fpga_core{slash}IOL1_L3_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L3_SCLK'))")
+ (constraint track_width (min 0.410mm) (opt 0.420mm) (max 0.430mm)))
+(rule "PROVISIONAL DIFF_90 outer coupled gap" (layer outer)
+ (condition "A.hasNetclass('DIFF_90') && A.inDiffPair('*')")
+ (constraint diff_pair_gap (min 0.470mm) (opt 0.480mm) (max 0.490mm)))
+(rule "PROVISIONAL DIFF_100 outer width" (layer outer)
+ (condition "(A.Type == 'Track' || A.Type == 'Arc') && A.hasNetclass('DIFF_100') && !(A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core{slash}FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_N' || A.NetName == '/fpga_core{slash}HOST_SPI_MISO' || A.NetName == '/fpga_core{slash}HOST_SPI_MOSI' || A.NetName == '/fpga_core{slash}HOST_SPI_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L0_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L0_MISO' || A.NetName == '/fpga_core{slash}IOL1_L0_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L0_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L1_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L1_MISO' || A.NetName == '/fpga_core{slash}IOL1_L1_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L1_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L2_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L2_MISO' || A.NetName == '/fpga_core{slash}IOL1_L2_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L2_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L3_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L3_MISO' || A.NetName == '/fpga_core{slash}IOL1_L3_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L3_SCLK'))")
+ (constraint track_width (min 0.300mm) (opt 0.310mm) (max 0.320mm)))
+(rule "PROVISIONAL DIFF_100 outer coupled gap" (layer outer)
+ (condition "A.hasNetclass('DIFF_100') && A.inDiffPair('*')")
+ (constraint diff_pair_gap (min 0.275mm) (opt 0.285mm) (max 0.295mm)))
+(rule "PROVISIONAL DIFF_120 outer width" (layer outer)
+ (condition "(A.Type == 'Track' || A.Type == 'Arc') && A.hasNetclass('DIFF_120') && !(A.Type == 'Track' && A.Width < 0.20mm && A.enclosedByArea('U1001_LITERAL_SIGNAL_NECKS') && (A.NetName == '/FPGA_CRESET_N' || A.NetName == '/FPGA_USER_RESET_N' || A.NetName == '/fpga_core{slash}FPGA_CDONE' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL0' || A.NetName == '/fpga_core/FPGA_CFG_CBSEL1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS0' || A.NetName == '/fpga_core/FPGA_CFG_CBUS1' || A.NetName == '/fpga_core/FPGA_CFG_CBUS2' || A.NetName == '/fpga_core/FPGA_CFG_CSI' || A.NetName == '/fpga_core/FPGA_CFG_NSTATUS' || A.NetName == '/fpga_core/FPGA_CFG_TEST_N' || A.NetName == '/fpga_core/FPGA_CLK_50M' || A.NetName == '/fpga_core/FPGA_FLASH_CCK_SOURCE' || A.NetName == '/fpga_core/FPGA_FLASH_CS_N' || A.NetName == '/fpga_core/FPGA_FLASH_MISO' || A.NetName == '/fpga_core/FPGA_FLASH_MOSI' || A.NetName == '/fpga_core/FPGA_LOCAL_RESET_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_CMD_N' || A.NetName == '/fpga_core{slash}HOST_SPI_CS_N' || A.NetName == '/fpga_core{slash}HOST_SPI_MISO' || A.NetName == '/fpga_core{slash}HOST_SPI_MOSI' || A.NetName == '/fpga_core{slash}HOST_SPI_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L0_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L0_MISO' || A.NetName == '/fpga_core{slash}IOL1_L0_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L0_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L1_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L1_MISO' || A.NetName == '/fpga_core{slash}IOL1_L1_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L1_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L2_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L2_MISO' || A.NetName == '/fpga_core{slash}IOL1_L2_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L2_SCLK' || A.NetName == '/fpga_core{slash}IOL1_L3_CS_N' || A.NetName == '/fpga_core{slash}IOL1_L3_MISO' || A.NetName == '/fpga_core{slash}IOL1_L3_MOSI' || A.NetName == '/fpga_core{slash}IOL1_L3_SCLK'))")
+ (constraint track_width (min 0.200mm) (opt 0.200mm) (max 0.210mm)))
+(rule "PROVISIONAL DIFF_120 outer coupled gap" (layer outer)
+ (condition "A.hasNetclass('DIFF_120') && A.inDiffPair('*')")
+ (constraint diff_pair_gap (min 0.255mm) (opt 0.265mm) (max 0.275mm)))

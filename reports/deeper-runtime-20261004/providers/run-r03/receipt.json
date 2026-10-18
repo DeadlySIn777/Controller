@@ -1,0 +1,178 @@
+{
+  "status": "FAIL",
+  "utc": "2026-10-04T09:40:34.373255+00:00",
+  "source_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\virtual_provider.hpp": "e619b3be2090bcbd5cbe5fe42bc2795a1f37ac9881fd7cf5e47a0a2bea205a90",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\test_providers.cpp": "7513d767aa48eefd79585457832d7092b3e88ab2de7625d5d5cdee86b5cdda74",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\deeper-runtime-20261004\\providers\\run_tests.py": "abfd4f181c721578ede817feeda8cc95c5db0077b4c4eb43f45ba0248fa44fa5"
+  },
+  "executions": [
+    {
+      "stage": "create-rootfs-work",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "mkdir",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-806e14f76ce94a56b8304f8d8e510641"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "copy-rootfs-inputs",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "-r",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r03/inputs",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-806e14f76ce94a56b8304f8d8e510641/inputs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "compiler-version",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/inputs/test_providers.cpp",
+        "-o",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-artifact-copy",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "cp",
+        "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-806e14f76ce94a56b8304f8d8e510641/providers-normal",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r03/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/inputs/test_providers.cpp",
+        "-o",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/providers-sanitized"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "chroot",
+        "/root/.cache/controller-lab-linuxcnc/rootfs",
+        "/work/provider-806e14f76ce94a56b8304f8d8e510641/providers-sanitized"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "scope": "Copied standalone C++ SIM provider/plant execution; not continuous HAL/RTL or physical qualification",
+  "physical_authority": false,
+  "production_profile_complete": false,
+  "device_connections": 0,
+  "paid_API_calls": 0,
+  "frozen_wire_protocol_modified": false,
+  "rootfs_work": "/root/.cache/controller-lab-linuxcnc/rootfs/work/provider-806e14f76ce94a56b8304f8d8e510641",
+  "normal": {
+    "status": "PASS",
+    "checks": 428,
+    "groups": 7,
+    "motors": 12,
+    "encoders": 4,
+    "DI": 24,
+    "DO": 16,
+    "physical_authority": false
+  },
+  "error": "sanitizer-run produced unexpected exit 1",
+  "artifact_sha256": {
+    "compiler-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compiler-version.stdout.log": "532ce90ca8dca2c4376343b503d7054ab7be4245a44efc5de9c45c722fbabee9",
+    "copy-rootfs-inputs.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "copy-rootfs-inputs.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-rootfs-work.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-rootfs-work.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputs\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "inputs\\test_providers.cpp": "7513d767aa48eefd79585457832d7092b3e88ab2de7625d5d5cdee86b5cdda74",
+    "inputs\\virtual_provider.hpp": "e619b3be2090bcbd5cbe5fe42bc2795a1f37ac9881fd7cf5e47a0a2bea205a90",
+    "normal-artifact-copy.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-artifact-copy.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stdout.log": "371707ac41dbd438933c5d339fc9b79b418e082396e08621493d4d6bda44ae01",
+    "providers-normal": "0812f266a7e06d88429733d97ae998d422540825ce92dfdc13df1e343c326d44",
+    "sanitizer-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitizer-run.stderr.log": "c75099e647f17db1be03bf19dc8443a130ad7757be6380b1bfa2185d00cc59c6",
+    "sanitizer-run.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

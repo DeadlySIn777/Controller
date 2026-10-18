@@ -1,0 +1,50 @@
+"""Freeze exact native byte replay; no native job or candidate PCB file.
+
+In-memory splice proves every unlisted original chunk, footprint (including
+all pads), board header/tail and zone definition stays byte-identical.
+"""
+from pathlib import Path
+import sys,json,pickle,hashlib,time
+from decimal import Decimal
+H=Path(__file__).resolve().parent;ROOT=H.parent
+for d in(H,ROOT/'field-power',ROOT/'sbc-power'):sys.path.insert(0,str(d))
+import audit_DIC_C1022_actual_R250_full77_and_signals_r258 as K
+OUT=H/'AO1-R20-exact-MON3-VREF-b177-minimal-current-native-replay-r22'
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+hs=lambda b:hashlib.sha256(b).hexdigest()
+def put(n,o):(OUT/n).write_text(json.dumps(o,indent=1,allow_nan=False)+'\n')
+def iu(v):
+ x=Decimal(str(v))*1000000;assert x==x.to_integral_value();return int(x)
+def main():
+ st=time.monotonic();assert not OUT.exists();OUT.mkdir();pins={}
+ def pin(p,s=None):
+  p=Path(p);v=sha(p);assert s is None or s==v;pins[str(p.resolve())]=v;return p
+ src=pin(ROOT/'field-power/FIELD-ROOT-Q0-DIC-DI6-exact-R157-native-diagnostic-stage-r753/FIELD-ROOT-Q0-DIC-DI6-known-failure-diagnostic.kicad_pcb','7bddce003de3ac2324be5a6ac442e6b662b92915908d4b79e6209d40a098b8a2');raw=src.read_bytes();ident=K.A.N.SourceNets(raw);pf=pin(H/'AO1-MON3-VREF-and-only-b177-5V-native-width-endpoint-source-detour-r19/MON3-VREF-plus-exact-b177-5V-controlled-detour-NOMINEE.pkl','d35097754a50017d6d4b17d4388dbced44c63547b39fbddbcda31b8a78cf4181');p=pickle.loads(pf.read_bytes());audit=pin(H/'AO1-MON3-VREF-b177-5V-source-complete-independent-host-audit-r20/receipt.json','8e1213a3a723bf7fd9c006183b9ba90d11e70420ea46bde4e0c268375fda8b58');a=json.loads(audit.read_bytes());assert a['verdict'].startswith('SCOPED_AO1_MON3_VREF_b177_5V_ALL_HOST_SOURCE_CONTACT_REFERENCE_PASS');joint=pin(H/'AO1-R20-two-ground-peer-packets-joint-new-Cu-r21/receipt.json');j=json.loads(joint.read_bytes());assert j['errors']==0 and j['ours_new_items']==16 and j['peer_ground_tracks']==8
+ expectedfile=pin(ROOT/'combined-R753-all-Cu-explicit-retained-actual-via-scope-r300/all-copper-expected.json','13a6a92d39e33f05a38107c7b9348c29847239671ee5b4c0ffa48a89536dead3');expected=json.loads(expectedfile.read_bytes());poses=pin(ROOT/'combined-R753-one-full-native-fill-cached-DRC-r299/native-full/before-native-all-FP-pad-pose.json','ffa3ff0880c004a6c4ad443b60bed9015a8094a04c952bdd56d09ec60d59b91d');pose=json.loads(poses.read_bytes());oldmask=pin(ROOT/'R155-known-reference-native-diagnostic-r157/measure/actual-full-refill-via-flashes.json','b64eb5a7ceab4c162699943ed5444554a93c7564cd391eb7dec4ce6e68512ce1');masks=json.loads(oldmask.read_bytes())['vias']
+ head,chunks,tail=K.C.pcbtext.split(raw);assert head+b''.join(chunks)+tail==raw;uid=K.C.pcbtext.chunk_uuid;kind=K.C.pcbtext.chunk_kind;old={uid(ch):ch for ch in chunks if uid(ch)};deleted=p['deleted_original_chunks'];added=p['exact_new_chunks'];assert len(deleted)==4 and len(added)==16 and set(added).isdisjoint(old);assert deleted=={u:old[u]for u in deleted};assert all(kind(ch)=='segment'and b'(locked yes)'in ch for ch in deleted.values());ident.assert_chunks(added)
+ for u,ch in added.items():assert uid(ch)==u and kind(ch)in('segment','via')
+ newchunks=[ch for ch in chunks if uid(ch)not in deleted]+[added[u]for u in sorted(added)];replay=head+b''.join(newchunks)+tail;new={uid(ch):ch for ch in newchunks if uid(ch)};assert set(new)==(set(old)-set(deleted))|set(added);identity=[]
+ for u,ch in old.items():
+  if u in deleted:continue
+  assert new[u]==ch;identity.append({'UUID':u,'kind':kind(ch),'SHA256':hs(ch)})
+ assert [ch for ch in newchunks if kind(ch)=='footprint']==[ch for ch in chunks if kind(ch)=='footprint'];assert [ch for ch in newchunks if kind(ch)=='zone']==[ch for ch in chunks if kind(ch)=='zone'];h2,cs2,t2=K.C.pcbtext.split(replay);assert h2==head and t2==tail and cs2==newchunks
+ currentvia={u for u,e in expected['copper'].items()if e['kind']=='via'};newvia={u for u,ch in added.items()if kind(ch)=='via'};assert set(masks)<=currentvia and not currentvia&set(deleted);assert len(newvia)==2;assert all(new[u]==old[u]for u in currentvia);maskledger=[{'UUID':u,'retained_stage_definition_SHA256':hs(old[u]),'actual_R157_before_flashes':masks.get(u),'current_stage_new_R753_via_mask':'OPEN; actual full R299 result required'if u not in masks else None}for u in sorted(currentvia)];put('all-retained-old-stage-via-definitions-and-observed-mask-scope.json',maskledger)
+ rows=[];adds=[];dels=[];adds_expected={};fieldbyuid={t['uuid']:t for t in p['tracks']+p['vias']}
+ def geometry(u,ch):
+  item=K.A.G.parse(u,ch,{});net=ident.raw(item['net']);assert net.encode()in ch;row={'UUID':u,'kind':item['kind'],'raw_net':net,'locked_yes':b'(locked yes)'in ch}
+  if item['kind']=='segment':row|={'layer':item['layer'],'start_IU':[iu(x)for x in item['a']],'end_IU':[iu(x)for x in item['b']],'width_IU':iu(item['w'])}
+  else:row|={'at_IU':[iu(x)for x in item['at']],'diameter_IU':iu(item['d']),'drill_IU':iu(item['drill']),'native_declared_layers':['F.Cu','B.Cu'],'actual_FlashLayer_required_pending':list(K.LAYERS)}
+  return row
+ for action,data in(('remove',deleted),('add',added)):
+  for u,ch in sorted(data.items()):
+   path=OUT/(u+'.'+action+'.exact-native-chunk');path.write_bytes(ch);row=geometry(u,ch)|{'action':action,'exact_chunk_file':str(path.resolve()),'exact_chunk_SHA256':sha(path)};rows.append(row);(dels if action=='remove'else adds).append(row)
+   if action=='add':adds_expected[u]=row
+ put('all-unlisted-original-native-chunk-byte-identity.json',identity);put('exact-four-remove-sixteen-add-ordered-native-replay-rows.json',rows)
+ sg=next(v for v in p['vias']if K.L.norm(v['net'])=='/motherboard_analog_output/AO1_VREF');ret=next(v for v in p['vias']if K.L.norm(v['net'])=='/motherboard_analog_output/AO1_COM');normalprofile=[]
+ nativebefore=pin(ROOT/'field-power/R753-actual-FULL-before-FULL-after-independent-source-contact-reference-r763/actual-full-R157-before-model.pkl','dbeba66691d45ee12206f77e5060b4c845681014d19b3d9e633e9aed08a2b0c2');c=pickle.loads(nativebefore.read_bytes())
+ for z in c['zones']:
+  if K.L.norm(z['net'])=='/motherboard_analog_output/AO1_COM':normalprofile.append({'native_source_zone_UUID':z['uuid'],'local_clearance_mm':z['clearance_mm'],'layers':list(z['fills']),'source_profile_unchanged':True})
+ own={'new_SIGNAL_only_UUID':sg['uuid'],'exact_SIGNAL_at_mm':[sg['x'],sg['y']],'new_SIGNAL_diameter_drill_mm':[.5,.2],'owned_source_reference_cap_radius_mm':.525,'normal_SOURCE_COM_native_antipad_nominal_radius_mm':.5,'SOURCE_COM_native_local_profile_clearance_mm':.25,'proven_source_body_layers':{'F.Cu':'In1.Cu','B.Cu':'In4.Cu'},'actual_normal_native_source_refill_AND_new_all6_masks':'OPEN; must be measured, no forced flags/manual filled arrays','return_UUID':ret['uuid'],'return_at_mm':[ret['x'],ret['y']],'ordinary_pair_and_finite_actual_before_source_annulus_proof':a['ordinary_pair'],'all_old_stage_via_definitions_unchanged':True,'no_old_or_neighbor_hole_cap_borrowed':True,'MON_or_POWER_owned_hole_caps':[],'SOURCE_COM_native_zone_profiles':normalprofile};put('two-new-ordinary-vias-owned-source-antipad-and-retained-mask-contract.json',own)
+ manifest={'schema':'AO1_CURRENT_NATIVE_EXACT_CHUNK_REPLAY_WITH_HOST_SCOPE_AND_NATIVE_GATES_SEPARATE','baseline_file':str(src.resolve()),'baseline_SHA256':sha(src),'exact_operation_rows_file':str((OUT/'exact-four-remove-sixteen-add-ordered-native-replay-rows.json').resolve()),'exact_operation_rows_SHA256':sha(OUT/'exact-four-remove-sixteen-add-ordered-native-replay-rows.json'),'remove_rows':dels,'add_rows':adds,'ordered_replay_rule':'Keep all original chunks in original order except exact four removed UUIDs; append sixteen new chunks in sorted UUID order; preserve original header and tail bytes. Peer ground packets are separate sparse inputs.','in_memory_replay_SHA256':hs(replay),'native_original_chunks_unchanged_except_four_controlled_tracks':True,'all_native_FP_and_nested_pad_chunks_byte_identical':True,'all_zone_definitions_and_profile_chunks_byte_identical':True,'header_SHA256':hs(head),'tail_SHA256':hs(tail),'native_before_pose_file':str(poses.resolve()),'native_before_pose_SHA256':sha(poses),'footprint_count':len(pose['footprints']),'native_pad_count':len(pose['pads']),'all_retained_native_via_UIDs':len(currentvia),'observed_R157_via_masks_retained':len(masks),'new_vias':2,'new_signal_layer_segments':2,'new_POWER_track_count':2,'POWER_width_mm':.3,'POWER_endpoint_native_lock_retained':True,'only_owned_original_MON3_and_b177_5V_retired':sorted(deleted),'whole_host_model_overlay_allowed':False,'original_filled_polygon_arrays_edit_or_force_flash_allowed':False,'HOST_scope_receipt_file':str(audit.resolve()),'HOST_scope_receipt_SHA256':sha(audit),'peer_new_new_joint_receipt_SHA256':sha(joint),'peer_ground_source_reference_audit':'OPEN with recoveryr3','SOURCE_actual_full_before_vs_full_AFTER_CPP_and_all_old_joins_DRC':'OPEN; root stages disposable joint native board after exact R299 results','full_signed_current_mesh_voltage_derating_inductive_loop_analog_noise_SI_thermal_physical_manufacturing':'OPEN; conditional added series resistance retained separately','native_jobs':0,'board_written':False,'adopted':False};put('minimal-exact-AO1-current-native-replay-manifest.json',manifest)
+ assert src.read_bytes()==raw;assert all(sha(f)==s for f,s in pins.items());receipt={'verdict':'EXACT_MINIMAL_CURRENT_STAGE_AO1_NATIVE_REPLAY_FROZEN_HOST_SCOPE_PASS_NATIVE_CURRENT_SI_OPEN','manifest_file':str((OUT/'minimal-exact-AO1-current-native-replay-manifest.json').resolve()),'manifest_SHA256':sha(OUT/'minimal-exact-AO1-current-native-replay-manifest.json'),'delete_count':4,'add_count':16,'unchanged_original_UUID_chunks':len(identity),'all_native_FPs_pads_header_tail_profiles_unlisted_chunks_literal_identity':True,'retained_old_stage_via_definitions':len(currentvia),'observed_R157_masks':len(masks),'no_native_jobs_or_candidate_board_or_adoption':True,'input_SHA256':pins,'elapsed_seconds':time.monotonic()-st};put('receipt.json',receipt);print(json.dumps(receipt),flush=True)
+if __name__=='__main__':main()

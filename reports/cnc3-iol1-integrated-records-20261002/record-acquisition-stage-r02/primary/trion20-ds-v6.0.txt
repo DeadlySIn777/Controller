@@ -1,0 +1,8021 @@
+T20 Data Sheet
+DST20-v6.0
+November 2025
+www.efinixinc.com
+Copyright © 2025. All rights reserved. Efinix, the Efinix logo, the Titanium logo, the Topaz logo, Quantum, Trion, and Efinity are trademarks of Efinix,
+Inc. All other trademarks and service marks are the property of their respective owners. All specifications subject to change without notice.
+
+T20 Data Sheet
+Contents
+Introduction..................................................................................................................................... 4
+Features............................................................................................................................................4
+Available Package Options.............................................................................................................................................5
+Device Core Functional Description................................................................................................6
+XLR Cell..............................................................................................................................................................................6
+Logic Cell...........................................................................................................................................................................7
+Embedded Memory.........................................................................................................................................................7
+Multipliers.......................................................................................................................................................................... 8
+Global Clock Network..................................................................................................................................................... 8
+Clock and Control Distribution Network..............................................................................................................8
+Global Clock Location (W80, Q100F3, Q144, F169, and F256)........................................................................9
+Global Clock Location (F324 and F400).............................................................................................................10
+Device Interface Functional Description.......................................................................................12
+Interface Block Connectivity.........................................................................................................................................12
+General-Purpose I/O Logic and Buffer....................................................................................................................... 13
+Complex I/O Buffer...............................................................................................................................................15
+Double-Data I/O.................................................................................................................................................... 16
+I/O Banks.........................................................................................................................................................................18
+PLL.................................................................................................................................................................................... 19
+LVDS................................................................................................................................................................................23
+LVDS TX...................................................................................................................................................................24
+LVDS RX.................................................................................................................................................................. 26
+MIPI...................................................................................................................................................................................27
+MIPI TX.................................................................................................................................................................... 28
+MIPI RX....................................................................................................................................................................34
+D-PHY Timing Parameters.................................................................................................................................... 39
+DDR DRAM......................................................................................................................................................................41
+DDR Interface Designer Settings........................................................................................................................ 45
+SPI Flash Memory...........................................................................................................................................................50
+Power Up Sequence...................................................................................................................... 52
+Power Supply Current Transient...................................................................................................................................53
+Unused Resources and Features................................................................................................................................. 53
+Configuration.................................................................................................................................54
+Supported Configuration Modes.................................................................................................................................55
+Mask-Programmable Memory Option.........................................................................................................................55
+DC and Switching Characteristics (W80, Q100F3, Q144, F169, and F256).................................56
+DC and Switching Characteristics (F324 and F400)..................................................................... 61
+LVDS I/O Electrical and Timing Specifications..............................................................................67
+ESD Performance...........................................................................................................................68
+MIPI Electrical Specifications and Timing.....................................................................................69
+MIPI Power-Up Timing...................................................................................................................................................71
+MIPI Reset Timing.......................................................................................................................................................... 71
+PLL Timing and AC Characteristics............................................................................................... 72
+Configuration Timing.................................................................................................................... 74
+SPI Active.........................................................................................................................................................................75
+SPI Passive....................................................................................................................................................................... 76
+www.efinixinc.com
+
+T20 Data Sheet
+JTAG.................................................................................................................................................................................78
+Maximum tUSER for SPI Active and Passive Modes....................................................................................................80
+Pinout Description.........................................................................................................................81
+Pin States......................................................................................................................................................................... 86
+Efinity Software Support...............................................................................................................87
+T20 Interface Floorplans............................................................................................................... 88
+Ordering Codes.............................................................................................................................93
+Revision History.............................................................................................................................94
+www.efinixinc.com
+
+T20 Data Sheet
+Introduction
+The T20 FPGA features the high-density, low-power Eﬁnix® Quantum® architecture
+wrapped with an I/O interface for easy integration. With a high I/O to logic ratio and
+diﬀerential I/O support, T20 FPGAs supports a variety of applications that need wide
+I/O connectivity. The T20 also includes a MIPI D-PHY with a built-in, royalty-free
+CSI-2 controller, which is the most popular camera interface used in the mobile industry.
+Additionally, T20 FPGAs support a DDR3, LPDDR3, LPDDR2 PHY with memory
+controller hard IP that provides faster access to data stored in memory. The carefully tailored
+combination of core resources and I/O provides enhanced capability for applications such as
+embedded vision, voice and gesture recognition, intelligent sensor hubs, power management,
+and LED drivers.
+Features
+•
+High-density, low-power Quantum® architecture
+•
+Built on SMIC 40 nm process
+•
+Core leakage current as low as 6.8 mA(1)
+•
+FPGA interface blocks
+— GPIO
+— PLL
+— LVDS 800 Mbps per lane with up to 20 TX pairs and 26 RX pairs
+— MIPI DPHY with CSI-2 controller hard IP, 1.5 Gbps per lane
+— DDR3, LPDDR3, LPDDR2 x16 PHY with memory controller hard IP, up to 1066
+Mbps
+•
+Programmable high-performance I/O
+— Supports 1.8, 2.5, and 3.3 V single-ended I/O standards and interfaces
+•
+Flexible on-chip clocking
+— 16 low-skew global clock signals can be driven from oﬀ-chip external clock signals or
+PLL synthesized clock signals
+— PLL support
+•
+Flexible device conﬁguration
+— Standard SPI interface (active, passive, and daisy chain)
+— JTAG interface
+— Optional Mask Programmable Memory (MPM) capability
+•
+Fully supported by the Eﬁnity® software, an RTL-to-bitstream compiler
+Table 1: T20 FPGA Resources
+LEs(2)
+Global Clock
+Networks
+Global Control
+Networks
+Embedded
+Memory (kbits)
+Embedded
+Memory Blocks
+(5 Kbits)
+Embedded
+Multipliers
+19,728
+Up to 16
+Up to 16
+1044.48
+204
+36
+(1) Typical leakage current for F256 package only.
+(2) Logic capacity in equivalent LE counts.
+www.efinixinc.com
+4
+
+T20 Data Sheet
+Table 2: T20 Package-Dependent Resources
+Resource
+W80
+Q100F3
+Q144
+F169
+F256
+F324
+F400
+Available GPIO(3)
+33
+65
+97
+73
+195
+130
+230
+Global clocks from
+GPIO pins
+4
+4
+6
+4
+16
+5
+16
+Global controls from
+GPIO pins
+4
+5
+8
+3
+16
+5
+16
+PLLs
+3
+5
+5
+5
+5
+7
+7
+LVDS
+–
+4 TX pairs
+4 RX pairs
+6 TX pairs
+6 RX pairs
+8 TX pairs
+12 RX
+pairs
+13 TX
+pairs
+13 RX
+pairs
+20 TX
+pairs
+26 RX
+pairs
+20 TX
+pairs
+26 RX
+pairs
+MIPI DPHY with CSI-2
+controller
+(4 data lanes, 1 clock
+lane)
+1 TX
+instance
+1 RX
+instance
+–
+–
+2 TX
+instances
+2 RX
+instances
+–
+2 TX
+instances
+2 RX
+instances
+–
+DDR3/LPDDR3/
+LPDDR2 PHY with
+memory controller
+–
+–
+–
+–
+–
+1 block (x8
+or x16 DQ
+widths)
+1 block (x8
+or x16 DQ
+widths)
+Learn more:  Refer to the Trion Packaging User Guide for the package outlines and markings.
+Available Package Options
+Table 3: Available Packages
+Package
+Dimensions (mm x mm)
+Pitch (mm)
+80-ball WLCSP
+4.5 x 3.6
+0.4
+144-pin LQFP
+20 x 20
+0.5
+100-pin LQFP
+14 x 14
+0.5
+169-ball FBGA
+9 x 9
+0.65
+256-ball FBGA
+13 x 13
+0.8
+324-ball FBGA
+12 x 12
+0.65
+400-ball FBGA
+16 x 16
+0.8
+(3) The LVDS I/O pins are dual-purpose. The full number of GPIO are available when all LVDS I/O pins are in GPIO mode.
+GPIO and LVDS as GPIO supports different features. See Table 13: Supported Features for GPIO and LVDS as GPIO  on
+page 14.
+www.efinixinc.com
+5
+
+T20 Data Sheet
+Device Core Functional Description
+T20 FPGAs feature an eXchangeable Logic and Routing (XLR) cell that Eﬁnix has optimized
+for a variety of applications. Trion® FPGAs contain three building blocks constructed from
+XLR cells: logic elements, embedded memory blocks, and multipliers. Each FPGA in the
+Trion® family has a custom number of building blocks to ﬁt speciﬁc application needs. As
+shown in the following ﬁgure, the FPGA includes I/O ports on all four sides, as well as
+columns of XLR cells, memory, and multipliers. A control block within the FPGA handles
+conﬁguration.
+Figure 1: T20 FPGA Block Diagram
+Device Interface
+Embedded Memory
+Multiplier
+Device Interface
+Device Interface
+Device Interface
+XLR Cells and Routing
+I/O Ports from Core to Device Interface
+Note: The number and locations of rows and 
+columns are  shown for illustration purposes 
+only. The actual number and  position depends 
+on the core.
+Each Device Contains Unique
+Interface Blocks such as GPIO
+and PLL
+Quantum Fabric
+XLR Cell
+The eXchangeable Logic and Routing (XLR) cell is the basic building block of the Quantum®
+architecture. The Eﬁnix XLR cell combines logic and routing and supports both functions
+interchangeably. This unique innovation greatly enhances the transistor ﬂexibility and
+utilization rate, thereby reducing transistor counts and silicon area signiﬁcantly.
+www.efinixinc.com
+6
+
+T20 Data Sheet
+Logic Cell
+The logic cell comprises a 4-input LUT or a full adder plus a register (ﬂipﬂop). You can
+program each LUT as any combinational logic function with four inputs. You can conﬁgure
+multiple logic cells to implement arithmetic functions such as adders, subtractors, and
+counters.
+Figure 2: Logic Cell Block Diagram
+4-Input LUT
+Adder
+Flipflop
+I[3:0]
+Clock
+Clock Enable
+Preset/Reset
+Carry In
+LUT Out
+Carry Out
+Register Out
+Embedded Memory
+The core has 5-kbit high-speed, synchronous, embedded SRAM memory blocks. Memory
+blocks can operate as single-port RAM, simple dual-port RAM, true dual-port RAM, FIFOs,
+or ROM. You can initialize the memory content during conﬁguration. The Eﬁnity® software
+includes a memory cascading feature to connect multiple blocks automatically to form a
+larger array. This feature enables you to instantiate deeper or wider memory modules.
+Note:  The block RAM content is random and undefined if it is not initialized.
+The memory read and write ports have the following modes for addressing the memory
+(depth x width):
+256 x 16
+1024 x 4
+4096 x 1
+512 x 10
+512 x 8
+2048 x 2
+256 x 20
+1024 x 5
+The read and write ports support independently conﬁgured data widths.
+Figure 3: Embedded Memory Block Diagram (True Dual-Port Mode)
+Embedded
+Memory
+Write Data A [9:0]
+Address A [11:0]
+Write Enable A
+Clock A
+Clock Enable A
+Read Data A [9:0]
+Write Data B [9:0]
+Address B [11:0]
+Write Enable B
+Clock B
+Clock Enable B
+Read Data B [9:0]
+www.efinixinc.com
+7
+
+T20 Data Sheet
+Multipliers
+The FPGA has high-performance multipliers that support 18 x 18 ﬁxed-point multiplication.
+Each multiplier takes two signed 18-bit input operands and generates a signed 36-bit output
+product. The multiplier has optional registers on the input and output ports.
+Figure 4: Multiplier Block Diagram
+Multiplier
+Operand A [17:0]
+Operand B [17:0]
+Clock
+Clock Enable A
+Set/Reset A
+Clock Enable B
+Set/Reset B
+Multiplier Output [35:0]
+Clock Enable Output
+Set/Reset Output
+Global Clock Network
+The Quantum® core fabric supports up to 16 global clock (GCLK) signals feeding 16 pre-built
+global clock networks. Global clock pins (GPIO), PLL outputs, and core-generated clocks can
+drive the global clock network
+The global clock networks are balanced clock trees that feed all FPGA modules. Each
+network has dedicated clock-enable logic to save power by disabling the clock tree at the
+root. The logic dynamically enables/disables the network and guarantees no glitches at the
+output.
+Figure 5: Global Clock Network
+GCLK [8:15]
+GCLK [0:7]
+Binary Clock Tree
+Distribution
+Clock and Control Distribution Network
+The global clock network is distributed through the device to provide clocking for the
+core's LEs, memory, multipliers, and I/O blocks. Designers can access the T20 global
+clock network using the global clock GPIO pins, PLL outputs, and core-generated clocks.
+Similarly, the T20 has GPIO pins (the number varies by package) that the designer can
+conﬁgure as control inputs to access the high-fanout network connected to the LE's set, reset,
+and clock enable signals.
+Learn more:  Refer to the T20 Pinout for information on the location and names of these pins.
+www.efinixinc.com
+8
+
+T20 Data Sheet
+Global Clock Location
+(W80, Q100F3, Q144, F169, and F256)
+Table 4: Left Clock Input from GPIO Pins
+Function
+Name
+Resource
+Name
+GCLK[0]
+GCLK[1]
+GCLK[2]
+GCLK[3]
+GCLK[4]
+GCLK[5]
+GCLK[6]
+GCLK[7]
+CLK0
+GPIOL_24
+–
+–
+–
+–
+–
+–
+CLK1
+GPIOL_25
+–
+–
+–
+–
+–
+–
+CLK2
+GPIOL_26
+–
+–
+–
+–
+–
+–
+CLK3
+GPIOL_27
+–
+–
+–
+–
+–
+–
+CLK4
+GPIOL_28
+–
+–
+–
+–
+–
+–
+CLK5
+GPIOL_29
+–
+–
+–
+–
+–
+–
+CLK6
+GPIOL_30
+–
+–
+–
+–
+–
+–
+CLK7
+GPIOL_31
+–
+–
+–
+–
+–
+–
+Table 5: Left Clock from PLL OUTCLK Signal
+PLL
+Reference
+CLKOUT
+GCLK[0]
+GCLK[1]
+GCLK[2]
+GCLK[3]
+GCLK[4]
+GCLK[5]
+GCLK[6]
+GCLK[7]
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TL0
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TL1
+CLKOUT2
+–
+–
+–
+–
+–
+–
+Table 6: Right Clock Input from GPIO Pins
+Function
+Name
+Resource
+Name
+GCLK[8]
+GCLK[9] GCLK[10] GCLK[11] GCLK[12] GCLK[13] GCLK[14] GCLK[15]
+CLK0
+GPIOR_127
+–
+–
+–
+–
+–
+–
+CLK1
+GPIOR_126
+–
+–
+–
+–
+–
+–
+CLK2
+GPIOR_125
+–
+–
+–
+–
+–
+–
+CLK3
+GPIOR_124
+–
+–
+–
+–
+–
+–
+CLK4
+GPIOR_123
+–
+–
+–
+–
+–
+–
+CLK5
+GPIOR_122
+–
+–
+–
+–
+–
+–
+CLK6
+GPIOR_121
+–
+–
+–
+–
+–
+–
+CLK7
+GPIOR_120
+–
+–
+–
+–
+–
+–
+Table 7: Right Clock from PLL OUTCLK Signal
+PLL
+Reference
+CLKOUT
+GCLK[8]
+GCLK[9] GCLK[10] GCLK[11] GCLK[12] GCLK[13] GCLK[14] GCLK[15]
+PLL_TR0
+CLKOUT0
+–
+–
+–
+–
+–
+–
+www.efinixinc.com
+9
+
+T20 Data Sheet
+PLL
+Reference
+CLKOUT
+GCLK[8]
+GCLK[9] GCLK[10] GCLK[11] GCLK[12] GCLK[13] GCLK[14] GCLK[15]
+CLKOUT1
+–
+–
+–
+–
+–
+–
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TR1
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_BR0
+CLKOUT2
+–
+–
+–
+–
+–
+–
+Global Clock Location (F324 and F400)
+Table 8: Left Clock Input from GPIO Pins
+Function
+Name
+Resource
+Name
+GCLK[0]
+GCLK[1]
+GCLK[2]
+GCLK[3]
+GCLK[4]
+GCLK[5]
+GCLK[6]
+GCLK[7]
+CLK0
+GPIOL_66
+–
+–
+–
+–
+–
+–
+CLK1
+GPIOL_67
+–
+–
+–
+–
+–
+–
+CLK2
+GPIOL_68
+–
+–
+–
+–
+–
+–
+CLK3
+GPIOL_69
+–
+–
+–
+–
+–
+–
+CLK4
+GPIOL_70
+–
+–
+–
+–
+–
+–
+CLK5
+GPIOL_71
+–
+–
+–
+–
+–
+–
+CLK6
+GPIOL_72
+–
+–
+–
+–
+–
+–
+CLK7
+GPIOL_73
+–
+–
+–
+–
+–
+–
+Table 9: Left Clock from PLL OUTCLK Signal
+PLL
+Reference
+CLKOUT
+GCLK[0]
+GCLK[1]
+GCLK[2]
+GCLK[3]
+GCLK[4]
+GCLK[5]
+GCLK[6]
+GCLK[7]
+CLKOUT0
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+PLL_BL0
+CLKOUT2
+–
+–
+–
+–
+–
+–
+www.efinixinc.com
+10
+
+T20 Data Sheet
+Table 10: Right Clock Input from GPIO Pins
+Function
+Name
+Resource
+Name
+GCLK[8]
+GCLK[9] GCLK[10] GCLK[11] GCLK[12] GCLK[13] GCLK[14] GCLK[15]
+CLK0
+GPIOR_133
+–
+–
+–
+–
+–
+–
+–
+CLK1
+GPIOR_132
+–
+–
+–
+–
+–
+–
+–
+CLK2
+GPIOR_131
+–
+–
+–
+–
+–
+–
+–
+CLK3
+GPIOR_130
+–
+–
+–
+–
+–
+–
+–
+CLK4
+GPIOR_129
+–
+–
+–
+–
+–
+–
+–
+CLK5
+GPIOR_128
+–
+–
+–
+–
+–
+–
+–
+CLK6
+GPIOR_127
+–
+–
+–
+–
+–
+–
+–
+CLK7
+GPIOR_126
+–
+–
+–
+–
+–
+–
+–
+Table 11: Right Clock from PLL OUTCLK Signal
+PLL
+Reference
+CLKOUT
+GCLK[8]
+GCLK[9] GCLK[10] GCLK[11] GCLK[12] GCLK[13] GCLK[14] GCLK[15]
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TR0
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TR1
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_TR2
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_BR0
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_BR1
+CLKOUT2
+–
+–
+–
+–
+–
+–
+CLKOUT0
+–
+–
+–
+–
+–
+–
+–
+CLKOUT1
+–
+–
+–
+–
+–
+–
+PLL_BR2
+CLKOUT2
+–
+–
+–
+–
+–
+–
+–
+www.efinixinc.com
+11
+
+T20 Data Sheet
+Device Interface Functional Description
+The device interface wraps the core and routes signals between the core and the device
+I/O pads through a signal interface. Because they use the ﬂexible Quantum® architecture,
+devices in the Trion® family support a variety of interfaces to meet the needs of diﬀerent
+applications.
+Learn more:  The following sections describe the available device interface features in T20 FPGAs. Refer
+to the Trion Interfaces User Guide for details on the Efinity® Interface Designer settings.
+Interface Block Connectivity
+The FPGA core fabric connects to the interface blocks through a signal interface. The
+interface blocks then connect to the package pins. The core connects to the interface blocks
+using three types of signals:
+•
+Input—Input data or clock to the FPGA core
+•
+Output—Output from the FPGA core
+•
+Clock output—Clock signal from the core clock tree
+Figure 6: Interface Block and Core Connectivity
+FPGA
+Signal
+Interface
+Core
+Interface
+Block
+Input
+Output
+Clock Output
+Interface
+Block
+GPIO
+Input
+Output
+Clock Output
+Interface
+Block
+Input
+Output
+Clock Output
+Interface
+Block
+Input
+Output
+Clock Output
+GPIO blocks are a special case because they can operate in several modes. For example, in
+alternate mode the GPIO signal can bypass the signal interface and directly feed another
+interface block. So a GPIO conﬁgured as an alternate input can be used as a PLL reference
+clock without going through the signal interface to the core.
+When designing for Trion® FPGAs, you create an RTL design for the core and also conﬁgure
+the interface blocks. From the perspective of the core, outputs from the core are inputs to the
+interface block and inputs to the core are outputs from the interface block.
+The Eﬁnity netlist always shows signals from the perspective of the core, so some signals do
+not appear in the netlist:
+•
+GPIO used as reference clocks are not present in the RTL design, they are only visible in
+the interface block conﬁguration of the Eﬁnity® Interface Designer.
+www.efinixinc.com
+12
+
+T20 Data Sheet
+•
+The FPGA clock tree is connected to the interface blocks directly. Therefore, clock
+outputs from the core to the interface are not present in the RTL design, they are only
+part of the interface conﬁguration (this includes GPIO conﬁgured as output clocks).
+The following sections describe the diﬀerent types of interface blocks. Signals and block
+diagrams are shown from the perspective of the interface, not the core.
+General-Purpose I/O Logic and Buffer
+The GPIO support the 3.3 V LVTTL and 1.8 V, 2.5 V, and 3.3 V LVCMOS I/O standards.
+The GPIOs are grouped into banks. Each bank has its own VCCIO that sets the bank voltage
+for the I/O standard.
+Each GPIO consists of I/O logic and an I/O buﬀer. I/O logic connects the core logic to the
+I/O buﬀers. I/O buﬀers are located at the periphery of the device.
+The I/O logic comprises three register types:
+•
+Input—Capture interface signals from the I/O before being transferred to the core logic
+•
+Output—Register signals from the core logic before being transferred to the I/O buﬀers
+•
+Output enable—Enable and disable the I/O buﬀers when I/O used as output
+Table 12: GPIO Modes
+GPIO Mode
+Description
+Input
+Only the input path is enabled; optionally registered. If registered, the input path uses the input
+clock to control the registers (positively or negatively triggered).
+Select the alternate input path to drive the alternate function of the GPIO. The alternate path
+cannot be registered.
+In DDIO mode, two registers sample the data on the positive and negative edges of the input
+clock, creating two data streams.
+Output
+Only the output path is enabled; optionally registered. If registered, the output path uses the
+output clock to control the registers (positively or negatively triggered).
+The output register can be inverted.
+In DDIO mode, two registers capture the data on the positive and negative edges of the output
+clock, multiplexing them into one data stream.
+Bidirectional
+The input, output, and OE paths are enabled; optionally registered. If registered, the input clock
+controls the input register, the output clock controls the output and OE registers. All registers can
+be positively or negatively triggered. Additionally, the input and output paths can be registered
+independently.
+The output register can be inverted.
+Clock output
+Clock output path is enabled.
+www.efinixinc.com
+13
+
+T20 Data Sheet
+Table 13: Supported Features for GPIO and LVDS as GPIO
+LVDS as GPIO are LVDS pins that act as GPIOs instead of the LVDS function.
+Package
+GPIO
+LVDS as GPIO
+W80
+DDIO
+Schmitt Trigger
+Variable Drive Strength
+Pull-up
+Pull-down
+Slew Rate
+–
+Q100F3
+Q144
+F169
+F256
+DDIO
+Schmitt Trigger
+Variable Drive Strength
+Pull-up
+Pull-down
+Slew Rate
+Pull-up
+F324
+F400
+DDIO
+Schmitt Trigger
+Variable Drive Strength
+Pull-up
+Pull-down
+Slew Rate
+Variable Drive Strength
+Pull-up
+Slew Rate
+Important:  Efinix® recommends that you limit the number of LVDS as GPIO set as output and
+bidirectional to 16 (Q100F3, Q144, F169 and F256) or 14 (F324 and F400)  per bank to avoid switching
+noise. The Efinity software issues a warning if you exceed the recommended limit.
+www.efinixinc.com
+14
+
+T20 Data Sheet
+Complex I/O Buffer
+Figure 7: I/O Interface Block
+11
+00
+01
+10
+11
+00
+01
+10
+Pull-Up
+Resistor
+Pull-Down
+Resistor
+IO
+I/O Block
+OE
+OUTCLK
+O[1]
+I[0]
+INCLK
+I/O Logic
+OE
+IN
+ALT
+I/O Buffer
+Note (1)
+1
+0
+IN
+IN
+0
+1
+I[1]
+OUT
+0
+1
+OUT
+0
+1
+OUT
+O[0]
+1. GPIO pins using LVDS resources do not have a pull-down resistor.
+Note:  LVDS as GPIO do not have double data I/O (DDIO).
+Table 14: GPIO Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Description
+I[1:0]
+Output
+Input data from the GPIO pad to the core fabric.
+I[0] is the normal input to the core. In DDIO mode, I[0] is the data captured on the
+positive clock edge (HI pin name in the Interface Designer) and I[1] is the data
+captured on the negative clock edge (LO pin name in the Interface Designer).
+ALT
+Output
+Alternative input connection (in the Interface Designer, Register Option is none).
+Alternative connections are GCLK, GCTRL, PLL_CLKIN, and MIPI_CLKIN.(4)
+O[1:0]
+Input
+Output data to GPIO pad from the core fabric.
+O[0] is the normal output from the core. In DDIO mode, O[0] is the data output on
+the positive clock edge (HI pin name in the Interface Designer) and O[1] is the data
+output on the negative clock edge (LO pin name in the Interface Designer).
+OE
+Input
+Output enable from core fabric to the I/O block. Can be registered.
+OUTCLK
+Input
+Core clock that controls the output and OE registers. This clock is not visible in the
+user netlist unless you instantiate an EFX_GPIO_V2 primitive.
+INCLK
+Input
+Core clock that controls the input registers. This clock is not visible in the user netlist
+unless you instantiate an EFX_GPIO_V2 primitive.
+(4) MIPI_CLKIN is only available in packages that support MIPI.
+www.efinixinc.com
+15
+
+T20 Data Sheet
+Table 15: GPIO Pads
+Signal
+Direction
+Description
+IO
+Bidirectional
+GPIO pad.
+Double-Data I/O
+T20 FPGAs support double data I/O (DDIO) on certain input and output registers. In this
+mode, the DDIO register captures data on both positive and negative clock edges. The core
+receives 2 bit wide data from the interface.
+In normal mode, the interface receives or sends data directly to or from the core on the
+positive and negative clock edges. In resync mode, the interface resynchronizes the data to
+pass both signals on the positive clock edge only.
+Not all GPIO support DDIO; additionally, LVDS as GPIO (that is, single ended I/O) do not
+support DDIO functionality.
+Note:  The Resource Assigner in the Efinity® Interface Designer shows which GPIO support DDIO.
+Figure 8: DDIO Input Timing Waveform
+DATA1
+DATA2
+DATA3
+DATA4
+DATA5
+DATA6
+DATA7
+DATA8
+DATA1
+DATA3
+DATA5
+DATA7
+DATA2
+DATA4
+DATA6
+DATA8
+DATA1
+DATA3
+DATA5
+DATA7
+DATA2
+DATA4
+DATA6
+DATA8
+GPIO Input
+Clock
+IN0
+IN1
+IN0
+IN1
+Normal Mode
+Resync Mode
+In resync mode, the IN1 data captured on the falling clock edge is delayed one half clock cycle.
+In the Interface Designer, IN0 is the HI pin name and IN1 is the LO pin name.
+www.efinixinc.com
+16
+
+T20 Data Sheet
+Figure 9: DDIO Output Timing Waveform
+GPIO Output
+Clock
+Normal Mode
+DATA2
+OUT0
+OUT1
+DATA1
+DATA2
+DATA3
+DATA4
+DATA5
+DATA6
+DATA7
+DATA4
+DATA6
+DATA8
+DATA1
+DATA3
+DATA5
+DATA7
+DATA8
+GPIO Output
+Clock
+Resync Mode
+DATA2
+OUT0
+OUT1
+DATA1
+DATA2
+DATA3
+DATA4
+DATA5
+DATA6
+DATA7
+DATA4
+DATA6
+DATA8
+DATA1
+DATA3
+DATA5
+DATA7
+DATA8
+In the Interface Designer, OUT0 is the HI pin name and OUT1 is the LO pin name.
+www.efinixinc.com
+17
+
+T20 Data Sheet
+I/O Banks
+Eﬁnix FPGAs have input/output (I/O) banks for general-purpose usage. Each I/O bank has
+independent power pins. The number and voltages supported vary by FPGA and package.
+The number of banks and the voltages they support vary by package.
+Some I/O banks are merged at the package level by sharing VCCIO pins. Merged banks have
+underscores (_) between banks in the name (e.g., 1B_1C means 1B and 1C are connected).
+Table 16: I/O Banks by Package
+Package
+I/O Banks
+Voltage (V)
+Banks with
+DDIO Support
+Merged Banks
+WP80
+1A-1E, 3A-3E
+1.8, 2.5, 3.3
+1B, 1D, 3C, 3D, 3E
+1B_1C_1D_1E,
+3A_3B_3C,
+3D_3E_4A_4B
+1A - 1E, 3A - 3E
+1.8, 2.5, 3.3
+1B, 1C, 1D,
+3B, 3C, 3D, 3E
+1A_1B_1C, 1D_1E,
+3B_3C, 3D_3E
+Q100F3
+4A, 4B
+3.3
+–
+–
+1A - 1E, 3A - 3E
+1.8, 2.5, 3.3
+1B, 1C, 1D,
+3B, 3C, 3D, 3E
+1C_1D, 3B_3C
+Q144
+4A, 4B
+3.3
+–
+–
+1A - 1E, 3A - 3E
+1.8, 2.5, 3.3
+1B, 1C, 1D,
+3B, 3C, 3D, 3E
+1B_1C_1D,
+3A_3B, 3C_3D_3E
+F169
+4A, 4B
+3.3
+–
+–
+1A - 1E, 3A - 3E
+1.8, 2.5, 3.3
+1B, 1C, 1D,
+3B, 3C, 3D, 3E
+1B_1C, 1D_1E.
+3A_3B_3C, 3D_3E
+F256
+4A, 4B
+3.3
+–
+–
+F324
+1A - 1E, 2A - 2C, 3A
+- 3C, 4A, 4B, TR, BR
+1.8, 2.5, 3.3
+1A - 1E, 3C, TR, BR
+1B_1C, 1D_1E,
+3C_TR_BR
+F400
+1A - 1E, 2A - 2C,
+3C, 4A, 4B, TR, BR
+1.8, 2.5, 3.3
+1A - 1E, 3C, TR, BR
+3C_TR
+Learn more:  Refer to the T20 Pinout for information on the I/O bank assignments.
+www.efinixinc.com
+18
+
+T20 Data Sheet
+PLL
+The T20 has 3, 5, or 7 available PLLs (depending on the package) to synthesize clock
+frequencies.
+Note:  You can cascade the PLLs in T20 FPGAs. To avoid the PLL losing lock, Efinix recommends that you
+do not cascade more than two PLLs.
+You can use the PLL to compensate for clock skew/delay via external or internal feedback to
+meet timing requirements in advanced application. The PLL reference clock has up to four
+sources. You can dynamically select the PLL reference clock with the CLKSEL port. (Hold
+the PLL in reset when dynamically selecting the reference clock source.)
+One of the PLLs can use an LVDS RX buﬀer to input it’s reference clock.
+The PLL consists of a pre-divider counter (N counter), a feedback multiplier counter (M
+counter), a post-divider counter (O counter), and output divider.
+Note:  Refer to T20 Interface Floorplans on page 88 for the location of the PLLs on the die. Refer to
+Table 123: General Pinouts on page 81 for the PLL reference clock resource assignment.
+Figure 10: PLL Block Diagram
+M
+Counter
+PLL
+Phase
+Frequency
+Detector
+Charge
+Pump
+Loop
+Filter
+Voltage
+Control
+Oscillator
+Output
+Divider (C)
+O
+Counter
+CLKOUT0
+LOCKED
+RSTN
+FVCO
+FPLL
+FOUT
+FPFD
+Phase
+Shift
+Output
+Divider (C)
+CLKOUT1
+Phase
+Shift
+Output
+Divider (C)
+CLKOUT2
+Phase
+Shift
+N
+Counter
+CLKIN[3]
+CLKIN[2]
+CLKIN[1]
+CLKIN[0]
+FIN
+CLKSEL[1]
+CLKSEL[0]
+FBK
+Local feedback
+Internal feedback
+The counter settings deﬁne the PLL output frequency:
+www.efinixinc.com
+19
+
+T20 Data Sheet
+Internal Feedback Mode Local and Core Feedback Mode
+Where:
+FPFD = FIN / N
+FVCO = FPFD x M
+FOUT = (FIN x M) / (N x O
+x C)
+FPLL = FVCO / O
+FPFD = FIN / N
+FVCO = (FPFD x M x O x CFBK ) (5)
+FOUT = (FIN x M x CFBK) / (N x
+C)
+FPLL = FVCO / O
+FVCO is the voltage control oscillator frequency
+FOUT is the output clock frequency
+FIN is the reference clock frequency
+FPFD is the phase frequency detector input frequency
+FPLL is the post-divider PLL frequency
+C is the output divider
+O is the post-divider
+M is the multiplier
+N is the pre-divider
+CFBK is the output divider for CLKOUT0
+Note:  FIN must be within the values stated in PLL Timing and AC Characteristics  on page 72.
+Figure 11: PLL Interface Block Diagram
+Trion FPGA
+Core
+PLL
+Block
+GPIO
+Block(s)
+PLL Signals
+Reference
+Clock
+Table 17: PLL Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Description
+CLKIN[3:0]
+Input
+Reference clocks driven by I/O pads or core clock tree.
+CLKSEL[1:0]
+Input
+You can dynamically select the reference clock from one of the clock in pins.
+RSTN
+Input
+Active-low PLL reset signal. When asserted, this signal resets the PLL; when de-
+asserted, it enables the PLL. De-assert only when the CLKIN signal is stable.
+Connect this signal in your design to power up or reset the PLL. Assert the RSTN
+pin for a minimum pulse of 10 ns to reset the PLL. Assert RSTN when dynamically
+changing the selected PLL reference clock.
+FBK
+Input
+Connect to a clock out interface pin when the PLL feedback mode is not internal.
+CLKOUT0
+CLKOUT1
+CLKOUT2
+Output
+PLL output. The designer can route these signals as input clocks to the core's GCLK
+network.
+(5) (M x O x CFBK) must be ≤ 255.
+www.efinixinc.com
+20
+
+T20 Data Sheet
+Signal
+Direction
+Description
+LOCKED(6)
+Output
+Goes high when PLL achieves lock; goes low when a loss of lock is detected;
+remains at previous state if the CLKIN goes discontinuous. Connect this signal in
+your design to monitor the lock status.
+This signal is not synchronized to any clock and the minimum high or low pulse
+width of the lock signal may be smaller than the CLKOUT’s period.
+Table 18: PLL Interface Designer Settings - Properties Tab
+Parameter
+Choices
+Notes
+Instance Name
+User defined
+PLL Resource
+The resource listing depends on the FPGA you choose.
+External
+PLL reference clock comes from external source through the REFCLK pin.
+Select the available external clock.
+Dynamic
+PLL reference clock comes from up to four possible sources (external and
+core), and are controlled by the clock select bus. Specify the clock selector
+and core clock names.
+Clock Source
+Core
+PLL reference clock comes from the core. Specify the core clock pin name.
+Automated
+Clock
+Calculation
+Pressing this button launches the PLL Clock Caclulation window. The
+calculator helps you define PLL settings in an easy-to-use graphical
+interface.
+(6) The circuitry that generates the lock signal relies on a reference clock edge to transition the lock signal. A sudden removal
+of the reference clock will result in there being no positive clock edge with which to change the lock state from 1 back to
+0. Therefore, the lock signal will remain on 1.
+www.efinixinc.com
+21
+
+T20 Data Sheet
+Table 19: PLL Interface Designer Settings - Manual Configuration Tab
+Parameter
+Choices
+Notes
+Reset Pin Name
+User defined
+Locked Pin Name User defined
+Internal
+PLL feedback is internal to the PLL resulting in no known phase
+relationship between clock in and clock out.
+Local
+PLL feedback is local to the PLL. Aligns the clock out phase with clock in.
+Feedback Mode
+Core
+PLL feedback is from the core. The feedback clock is defined by the
+COREFBK connection, and must be one of the three PLL output clocks.
+Aligns the clock out phase with clock in and removes the core clock delay.
+Reference clock
+Frequency (MHz)
+User defined
+Multiplier (M)
+1 - 255 (integer)
+M counter.
+Pre Divider (N)
+1 - 15 (integer)
+N counter.
+Post Divider (O)
+1, 2, 4, 8
+O counter. The value must be 2 or higher if you enable more than 1 PLL
+output.
+Clock 0, Clock 1,
+Clock 2
+On, off
+Use these checkboxes to enable or disable clock 0, 1, and 2.
+Pin Name
+User defined
+Specify the pin name for clock 0, 1, or 2.
+Divider (C)
+1 to 256
+Output divider.
+Phase Shift
+(Degree)
+0, 45, 90, 135,
+180, or 270
+Phase shift CLKOUT by 45°, 90°, 135°, 180°, or 270°. The phase shifts are
+supported with the following C divider settings:
+C divider = 2 : 90°, 180°, and 270°
+C divider = 4 : 45°, 90°, and 135°
+C divider = 6 : 90°
+To phase shift 225°, select 45° and invert the clock at the destination.
+To phase shift 315°, select 135° and invert the clock at the destination.
+Use as Feedback
+On, off
+Table 20: PLL Reference Clock Resource Assignments (W80)
+PLL
+REFCLK1
+REFCLK2
+PLL_TR0
+GPIOR_76_PLLIN0
+GPIOR_77_PLLIN1
+PLL_TR1
+GPIOR_76_PLLIN0
+GPIOR_77_PLLIN1
+PLL_TL0
+GPIOL_74_PLLIN0
+N/A
+Table 21: PLL Reference Clock Resource Assignments (Q100F3, Q144, F169 and F256)
+PLL
+REFCLK1
+REFCLK2
+PLL_BR0
+Differential: GPIOB_CLKP0, GPIOB_CLKN0
+Single Ended: GPIOB_CLKP0
+GPIOR_157_PLLIN
+PLL_TR0
+GPIOR_76_PLLIN0
+GPIOR_77_PLLIN1
+PLL_TR1
+GPIOR_76_PLLIN0
+GPIOR_77_PLLIN1
+PLL_TL0
+GPIOL_74_PLLIN0
+GPIOL_75_PLLIN1
+PLL_TL1
+GPIOL_74_PLLIN0
+GPIOL_75_PLLIN1
+www.efinixinc.com
+22
+
+T20 Data Sheet
+Table 22: PLL Reference Clock Resource Assignments (F324)
+PLL
+REFCLK0
+REFCLK1
+PLL_BL0
+GPIOL_15_PLLIN0
+–
+PLL_BR0(7)
+GPIOR_138_PLLIN0
+Single-ended: GPIOB_TXP09_CLK0
+PLL_BR1
+GPIOR_139_PLLIN1
+Single-ended: GPIOB_TXP15_CLK1_CDI15
+PLL_BR2
+GPIOR_140_PLLIN2
+Single-ended: GPIOB_TXP19_CLK2
+PLL_TR0
+GPIOR_118_PLLIN0
+Differential: GPIOT_RXP08_CLKP0, GPIOT_RXN08_CLKN0
+Single-ended: GPIOT_RXP08_CLKP0
+PLL_TR1
+GPIOR_119_PLLIN1
+Differential: GPIOT_RXP17_CLKP1, GPIOT_RXN17_CLKN1
+Single-ended: GPIOT_RXP17_CLKP1
+PLL_TR2
+GPIOR_120_PLLIN2
+Differential: GPIOT_RXP25_CLKP2, GPIOT_RXN25_CLKN2
+Single-ended: GPIOT_RXP25_CLKP2
+Table 23: PLL Reference Clock Resource Assignments (F400)
+PLL
+REFCLK0
+REFCLK1
+PLL_BL0
+GPIOL_15_PLLIN0
+GPIOL_19_PLLN1
+PLL_BR0(7)
+GPIOR_138_PLLIN0
+Single-ended: GPIOB_TXP09_CLK0
+PLL_BR1
+GPIOR_139_PLLIN1
+Single-ended: GPIOB_TXP15_CLK1_CDI15
+PLL_BR2
+GPIOR_140_PLLIN2
+Single-ended: GPIOB_TXP19_CLK2
+PLL_TR0
+GPIOR_118_PLLIN0
+Differential: GPIOT_RXP08_CLKP0, GPIOT_RXN08_CLKN0
+Single-ended: GPIOT_RXP08_CLKP0
+PLL_TR1
+GPIOR_119_PLLIN1
+Differential: GPIOT_RXP17_CLKP1, GPIOT_RXN17_CLKN1
+Single-ended: GPIOT_RXP17_CLKP1
+PLL_TR2
+GPIOR_120_PLLIN2
+Differential: GPIOT_RXP25_CLKP2, GPIOT_RXN25_CLKN2
+Single-ended: GPIOT_RXP25_CLKP2
+ LVDS
+The LVDS hard IP transmitters and receivers operate independently.
+•
+LVDS TX consists of LVDS transmitter and serializer logic.
+•
+LVDS RX consists of LVDS receiver, on-die termination, and de-serializer logic.
+The T20 has up to three PLLs for use with the LVDS receiver.
+Note:  You can use the LVDS TX and LVDS RX channels as 3.3 V single-ended GPIO pins, which support a
+weak pull-up but do not support a Schmitt trigger or variable drive strength. When using LVDS as GPIO,
+make sure to leave at least 2 pairs of unassigned LVDS pins between any GPIO and LVDS pins. This rule
+applies for pins on each side of the device (top, bottom, left, right). This separation reduces noise. The
+Efinity software issues an error if you do not leave this separation.
+The LVDS hard IP has these features:
+•
+Up to 800 Mbps for LVDS data transmit or receive
+•
+Supports serialization and deserialization factors: 8:1, 7:1, 6:1, 5:1, 4:1, 3:1, and 2:1
+•
+Ability to disable serialization and deserialization
+(7) PLL_BR0 can be used as the PHY clock for DDR DRAM block.
+www.efinixinc.com
+23
+
+T20 Data Sheet
+•
+Source synchronous clock output edge-aligned with data for LVDS transmitter and
+receiver
+•
+100 Ω on-die termination resistor for the LVDS receiver
+Note:  The LVDS RX supports the sub-lvds, slvs, HiVcm, RSDS and 3.3 V LVPECL differential I/O standards
+with a transfer rate of up to 800 Mbps.
+LVDS TX
+Figure 12: LVDS TX Interface Block Diagram
+Trion FPGA
+Serializer
+TXP
+TXN
+PLL
+Core
+SLOWCLK
+FASTCLK
+O[n:0]
+Transmitter
+LVDS TX
+Table 24: LVDS TX Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Notes
+O[n-1:0]
+Input
+Parallel output data where n is the serialization factor.
+A width of 1 bypasses the serializer.
+FASTCLK
+Input
+Fast clock to serialize the data to the LVDS pads.
+SLOWCLK
+Input
+Slow clock to latch the incoming data from the core.
+Table 25: LVDS TX Pads
+Pad
+Direction
+Description
+TXP
+Output
+Differential P pad.
+TXN
+Output
+Differential N pad.
+Important:  For QFP100F3 packages, do not toggle the CCK pin when any LVDS TX is used.
+www.efinixinc.com
+24
+
+T20 Data Sheet
+The following waveform shows the relationship between the fast clock, slow clock, TX data
+going to the pad, and byte-aligned data from the core.
+Figure 13: LVDS Timing Example Serialization Width of 8
+O[7:0]
+TX Pad
+FASTCLK
+SLOWCLK
+A[7:0]
+OUT is byte-aligned data passed from the core on the rising edge of SLOWCLK.
+A
+0
+A
+1
+A
+2
+A
+3
+A
+4
+A
+5
+A
+6
+A
+7
+B
+0
+B
+1
+B
+2
+B
+3
+B
+4
+B
+5
+B
+6
+B
+7
+C
+0
+C
+1
+C
+2
+C
+3
+C
+4
+C
+5
+C
+6
+C
+7
+B[7:0]
+C[7:0]
+Figure 14: LVDS Timing Data and Clock Relationship Width of 8 (Parallel Clock Division=1)
+TX Data
+TX Clock
+A
+0
+A
+1
+A
+2
+A
+3
+A
+4
+A
+5
+A
+6
+A
+7
+B
+0
+B
+1
+B
+2
+B
+3
+B
+4
+B
+5
+B
+6
+B
+7
+C
+0
+C
+1
+C
+2
+C
+3
+C
+4
+C
+5
+C
+6
+C
+7
+Figure 15: LVDS Timing Data and Clock Relationship Width of 7 (Parallel Clock Division=1)
+TX Data
+TX Clock
+A
+0
+A
+1
+A
+2
+A
+3
+A
+4
+A
+5
+A
+6
+B
+0
+B
+1
+B
+2
+B
+3
+B
+4
+B
+5
+B
+6
+C
+0
+C
+1
+C
+2
+C
+3
+C
+4
+C
+5
+C
+6
+Note:  For LVDS TX interfaces with multiple LVDS TX lanes and an LVDS TX reference clock output, use the
+LVDS TX blocks from the same side of the FPGA to minimize skew between data lanes and TX reference
+clock output.
+Table 26: LVDS TX Settings in Efinity® Interface Designer
+Parameters
+Choices
+Notes
+Instance Name
+User defined
+LVDS Resource
+Resource list
+Choose a resource.
+Mode
+serial data output
+or reference
+clock output
+serial data output—Simple output buffer or serialized output.
+reference clock output—Use the transmitter as a clock output. When
+choosing this mode, the Serialization Width you choose should
+match the serialization for the rest of the LVDS bus.
+Parallel Clock
+Division
+1, 2
+1—The output clock from the LVDS TX lane is parallel clock frequency.
+2—The output clock from the TX lane is half of the parallel clock
+frequency.
+Enable Serialization
+On or off
+When off, the serializer is bypassed and the LVDS buffer is used as a
+normal output.
+Serialization Width
+2, 3, 4, 5, 6, 7, or 8
+Supports 8:1, 7:1, 6:1, 5:1, 4:1, 3:1, and 2:1. Specify the serial clock
+and parallel clock.
+Output Pin/Bus
+Name
+User defined
+Output pin or bus that feeds the LVDS transmitter parallel data. The
+width should match the serialization factor.
+www.efinixinc.com
+25
+
+T20 Data Sheet
+Parameters
+Choices
+Notes
+Output Enable Pin
+Name
+User defined
+Use with serial data output mode.
+Only available when serialization is disabled.
+Reduce VOD Swing
+On or off
+When true, enables reduced output swing (similar to slow slew rate).
+Output Load
+QFP144:
+5, 7, or 10
+All others:
+3, 5, 7, or 10
+Output load in pF. Use an output load of 7 pF or higher to achieve
+the maximum supported toggle rate. See Table 80: Maximum Toggle
+Rate on page 59.
+LVDS RX
+Figure 16: LVDS RX Interface Block Diagram
+Trion FPGA
+Deserializer
+RXP1
+RXN1
+PLL
+Core
+SLOWCLK
+FASTCLK
+I[n:0]
+Receiver
+1. There is a ~30k Ω internal weak pull-up to VCCIO (3.3V).
+2. Only available for an LVDS RX resource in bypass mode
+    (deserialization width is 1).
+LVDS RX
+ALT2
+PLL
+Table 27: LVDS RX Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Notes
+I[n-1:0]
+Output
+Parallel input data where n is the de-serialization factor.
+A width of 1 bypasses the deserializer.
+ALT
+Output
+Alternative input, only available for an LVDS RX resource in bypass
+mode (deserialization width is 1; alternate connection type). Alternative
+connections are PLL_CLKIN.
+FASTCLK
+Input
+Fast clock to de-serialize the data from the LVDS pads.
+SLOWCLK
+Input
+Slow clock to latch the incoming data to the core.
+Table 28: LVDS RX Pads
+Pad
+Direction
+Description
+RXP
+Input
+Differential P pad.
+RXN
+Input
+Differential N pad.
+Note:  You need an external DC-biased circuit if the incoming LVDS signals are AC-coupled. Refer to
+Trion Hardware Design Checklist and Guidelines page of the Support Center for more information.
+www.efinixinc.com
+26
+
+T20 Data Sheet
+The following waveform shows the relationship between the fast clock, slow clock, RX data
+coming in from the pad, and byte-aligned data to the core.
+Figure 17: LVDS RX Timing Example Serialization Width of 8
+I[7:0]
+RX Pad
+FASTCLK
+SLOWCLK
+A[7:0]
+I is byte-aligned data passed to the core on the rising edge of SLOWCLK.
+A
+0
+A
+1
+A
+2
+A
+3
+A
+4
+A
+5
+A
+6
+A
+7
+B
+0
+B
+1
+B
+2
+B
+3
+B
+4
+B
+5
+B
+6
+B
+7
+C
+0
+C
+1
+C
+2
+C
+3
+C
+4
+C
+5
+C
+6
+C
+7
+B[7:0]
+C[7:0]
+Note:  For LVDS RX interfaces with multiple LVDS RX lanes and an LVDS RX clock input, use the LVDS RX
+blocks from the same side of the FPGA to minimize skew between data lanes and RX clock input.
+Table 29: LVDS RX Settings in Efinity® Interface Designer
+Parameter
+Choices
+Notes
+Instance Name
+User defined
+LVDS Resource
+Resource list
+Choose a resource.
+Connection Type
+normal, pll_clkin
+normal—Regular RX function.
+pll_clkin—Use the PLL CLKIN alternate function of the LVDS RX
+resource.
+Input Pin/Bus Name
+User defined
+Input pin or bus that feeds the LVDS transmitter parallel data. The
+width should match the deserialization factor.
+Enable
+Deserialization
+On or off
+When off, the de-serializer is bypassed and the LVDS buffer is used
+as a normal input. Specify the serial clock and parallel clock.
+Deserialization
+Width
+2, 3, 4, 5, 6, 7, or 8
+Supports 8:1, 7:1, 6:1, 5:1, 4:1, 3:1, and 2:1.
+Enable On-Die
+Termination
+On or off
+When on, enables an on-die 100-ohm resistor.
+Static Mode Delay
+Setting
+0 - 63
+Choose the amount of static delay, each step adds approximately
+25 ps of delay.
+MIPI
+The MIPI CSI-2 interface is the most widely used camera interface for mobile.(8). You can use
+this interface to build single- or multi-camera designs for a variety of applications.
+T20 FPGAs include one or two (depending on the package) hardened MIPI D-PHY blocks
+(4 data lanes and 1 clock lane) with MIPI CSI-2 IP blocks. The MIPI RX and MIPI TX can
+operate independently with dedicated I/O banks.
+Note:  The MIPI D-PHY and CSI-2 controller are hard blocks; users cannot bypass the CSI-2 controller to
+access the D-PHY directly for non-CSI-2 applications.
+(8) Source: MIPI Alliance https://www.mipi.org/specifications/csi-2
+www.efinixinc.com
+27
+
+T20 Data Sheet
+The MIPI TX/RX interface supports the MIPI CSI-2 speciﬁcation v1.3 and the MIPI D-PHY
+speciﬁcation v1.1. It has the following features:
+•
+Programmable data lane conﬁguration supporting 1, 2, or 4 lanes
+•
+High-speed mode supports up to 1.5 Gbps data rates per lane
+•
+Operates in continuous and non-continuous clock modes
+•
+64 bit pixel interface for cameras
+•
+Supports Ultra-Low Power State (ULPS)
+Table 30: MIPI Supported Data Types
+Supported
+Data Type
+Format
+RAW
+RAW6, RAW7, RAW8, RAW10, RAW12, RAW14
+YUV
+YUV420 8-bit (legacy), YUV420 8-bit, YUV420 10-bit, YUV420 8-bit (CSPS), YUV420 10-bit
+(CSPS), YUV422 8-bit, YUV422 10-bit
+RGB
+RGB444, RGB555, RGB565, RGB666, RGB888
+User Defined
+8 bit format
+With more than one MIPI TX and RX blocks, Trion® FPGAs support a variety of video
+applications.
+Figure 18: MIPI Example System
+MIPI TX
+The MIPI TX is a transmitter interface that translates video data from the Trion® core into
+packetized data sent over the HSSI interface to the board. Five high-speed diﬀerential pin
+pairs (four data, one clock), each of which represent a lane, connect to the board. Control and
+video signals connect from the MIPI interface to the core.
+www.efinixinc.com
+28
+
+T20 Data Sheet
+Figure 19: MIPI TX x4 Block Diagram
+REF_CLK
+PIXEL_CLK
+ESC_CLK
+DPHY_RSTN
+RSTN
+LANES[1:0]
+TXDP/N4
+TXDP/N3
+TXDP/N2
+TXDP/N1
+TXDP/N0
+TX CSI-2
+Controller
+TX
+DPHY
+PPI
+Interface
+VSYNC
+HSYNC
+VALID
+HRES[15:0]
+DATA[63:0]
+TYPE[5:0]
+FRAME_MODE
+VC[1:0]
+ULPS_CLK_ENTER[3:0]
+ULPS_CLK_EXIT[3:0]
+ULPS_ENTER[4:0]
+ULPS_EXIT[4:0]
+Control
+Video
+Pads
+MIPI TX Block
+The control signals determine the clocking and how many transceiver lanes are used. All
+control signals are required except the two reset signals. The reset signals are optional,
+however, you must use both signals or neither.
+The MIPI block requires an escape clock (ESC_CLK) for use when the MIPI interface is in
+escape (low-power) mode, which runs between 11 and 20 MHz.
+Note:  Efinix recommends that you set the escape clock frequency as close to 20 MHz as possible.
+The video signals receive the video data from the core. The MIPI interface block encodes is
+and sends it out through the MIPI D-PHY lanes.
+Figure 20: MIPI TX Interface Block Diagram
+Core
+MIPI
+Block
+GPIO
+Block
+Reference
+Clock
+Control and
+Video Signals
+Trion FPGA
+TXDP/N4
+TXDP/N3
+TXDP/N2
+TXDP/N1
+TXDP/N0
+MREFCLK
+www.efinixinc.com
+29
+
+T20 Data Sheet
+Table 31: MIPI TX Control Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Clock Domain
+Description
+REF_CLK
+Input
+N/A
+Reference clock for the internal MIPI TX PLL used
+to generate the transmitted data. The FPGA has a
+dedicated GPIO resource (MREFCLK) that you must
+configure to provide the reference clock. All of the MIPI
+TX blocks share this resource.
+The frequency is set using Interface Designer
+configuration options.
+PIXEL_CLK
+Input
+N/A
+Clock used for transferring data from the core to the
+MIPI TX block. The frequency is based on the number
+of lanes and video format.
+ESC_CLK
+Input
+N/A
+Slow clock for escape mode (11 - 20 MHz).
+DPHY_RSTN
+Input
+N/A
+(Optional) Reset for the D-PHY logic, active low. Reset
+with the controller.
+See MIPI Reset Timing.
+RSTN
+Input
+N/A
+(Optional) Reset for the CSI-2 controller logic, active
+low. Typically, you reset the controller with the PHY.
+(See MIPI Reset Timing.)
+However, when dynamically changing the horizontal
+resolution, you only need to trigger RSTN.
+(See TX Requirements for Dynamically Changing the
+Horizontal Resolution).
+LANES[1:0]
+Input
+PIXEL_CLK
+Determines the number of lanes enabled. Can only be
+changed during reset.
+00: lane 0
+01: lanes 0 and 1
+11: all lanes
+www.efinixinc.com
+30
+
+T20 Data Sheet
+Table 32: MIPI TX Video Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Clock Domain
+Description
+VSYNC
+Input
+PIXEL_CLK
+Vertical sync.
+HSYNC
+Input
+PIXEL_CLK
+Horizontal sync.
+VALID
+Input
+PIXEL_CLK
+Valid signal.
+HRES[15:0]
+Input
+PIXEL_CLK
+Horizontal resolution. Can only be changed when
+VSYNC is low, and should be stable for at least one TX
+pixel clock cycle before VSYNC goes high.
+DATA[63:0]
+Input
+PIXEL_CLK
+Video data; the format depends on the data type. New
+data arrives on every pixel clock.
+TYPE[5:0]
+Input
+PIXEL_CLK
+Video data type. Can only be changed when HSYNC is
+low, and should be stable for at least one TX pixel clock
+cycle before HSYNC goes high.
+FRAME_MODE
+Input
+PIXEL_CLK
+Selects frame format. (9)
+0: general frame
+1: accurate frame
+Can only be changed during reset.
+VC[1:0]
+Input
+PIXEL_CLK
+Virtual channel (VC). Can only be changed when
+VSYNC is low, and should be stable at least one TX
+pixel clock cycle before VSYNC goes high.
+ULPS_CLK_ENTER
+Input
+PIXEL_CLK
+Place the clock lane into ULPS mode. Should not be
+active at the same time as ULPS_CLK_EXIT. Each high
+pulse should be at least 5 μs.
+ULPS_CLK_EXIT
+Input
+PIXEL_CLK
+Remove clock lane from ULPS mode. Should not be
+active at the same time as ULPS_CLK_ENTER. Each high
+pulse should be at least 5 μs.
+ULPS_ENTER[3:0]
+Input
+PIXEL_CLK
+Place the data lane into ULPS mode. Should not be
+active at the same time as ULPS_EXIT[3:0]. Each high
+pulse should be at least 5 μs.
+ULPS_EXIT[3:0]
+Input
+PIXEL_CLK
+Remove the data lane from ULPS mode. Should not be
+active at the same time as ULPS_ENTER[3:0]. Each high
+pulse should be at least 5 μs.
+Table 33: MIPI TX Pads
+Pad
+Direction
+Description
+TXDP[4:0]
+Output
+MIPI transceiver P pads.
+TXDN[4:0]
+Output
+MIPI transceiver N pads.
+(9) Refer to the MIPI Camera Serial Interface 2 (MIPI CSI-2) for more information about frame formats.
+www.efinixinc.com
+31
+
+T20 Data Sheet
+Table 34: MIPI TX Settings in Efinity® Interface Designer
+Tab
+Parameter
+Choices
+Notes
+PHY Bandwidth (Mbps)
+80.00 - 1500.00
+Choose one of the possible PHY bandwidth
+values.
+Frequency (reference
+clock)
+6, 12, 19.2, 25, 26,
+27, 38.4, or 52 MHz
+Reference clock frequency.
+Base
+Enable Continuous
+PHY Clocking
+On or Off
+Turns continuous clock mode on or off.
+Escape Clock Pin Name
+User defined
+Invert Escape Clock
+On or Off
+Pixel Clock Pin Name
+User defined
+Control
+Invert Pixel Clock
+On or Off
+Lane
+Mapping
+TXD0, TXD1, TXD2,
+TXD3, TXD4
+clk, data0, data1,
+data2, or data3
+Map the physical lane to a clock or data lane.
+Clock Timer
+TCLK-POST
+TCLK-TRAIL
+TCLK-PREPARE
+TCLK-ZERO
+Varies depending on
+the PHY frequency
+Changes the MIPI transmitter timing parameters
+per the DPHY specification. Refer to D-PHY
+Timing Parameters on page 39.
+Escape Clock
+Frequency (MHz)
+User defined
+Specify a number between 11 and 20 MHz.
+TCLK-PRE
+Varies depending
+on the escape
+clock frequency
+Changes the MIPI transmitter timing parameters
+per the DPHY specification. Refer to D-PHY
+Timing Parameters on page 39.
+Data Timer
+Timing
+THS-PREPARE
+THS-ZERO
+THS-PTRAIL
+Varies depending on
+the PHY frequency
+Changes the MIPI transmitter timing parameters
+per the DPHY specification. Refer to D-PHY
+Timing Parameters on page 39.
+www.efinixinc.com
+32
+
+T20 Data Sheet
+MIPI TX Video Data TYPE[5:0] Settings
+The video data type can only be changed when HSYNC is low.
+Table 35: MIPI TX TYPE[5:0]
+TYPE[5:0]
+Data Type
+Pixel Data Bits
+per Pixel Clock
+Pixels per Clock
+Bits per Pixel
+Maximum Data
+Pixels per Line
+0x20
+RGB444
+48
+4
+12
+2,880
+0x21
+RGB555
+60
+4
+15
+2,880
+0x22
+RGB565
+64
+4
+16
+2,880
+0x23
+RGB666
+54
+3
+18
+2,556
+0x24
+RGB888
+48
+2
+24
+1,920
+0x28
+RAW6
+60
+10
+6
+7,680
+0x29
+RAW7
+56
+8
+7
+6,576
+0x2A
+RAW8
+64
+8
+8
+5,760
+0x2B
+RAW10
+60
+6
+10
+4,608
+0x2C
+RAW12
+60
+5
+12
+3,840
+0x2D
+RAW14
+56
+4
+14
+3,288
+0x18
+YUV420 8 bit
+Odd line: 64
+Even line: 64
+Odd line: 8
+Even line: 4
+Odd line: 8
+Even line: 8, 24
+2,880
+0x19
+YUV420 10 bit
+Odd line: 60
+Even line: 40
+Odd line: 6
+Even line: 2
+Odd line: 10
+Even line: 10, 30
+2,304
+0x1A
+Legacy
+YUV420 8 bit
+48
+4
+8, 16
+3,840
+0x1C
+YUV420 8
+bit (CSPS)
+Odd line: 64
+Even line: 64
+Odd line: 8
+Even line: 4
+Odd line: 8
+Even line: 8, 24
+2,880
+0x1D
+YUV420 10
+bit (CSPS)
+Odd line: 60
+Even line: 40
+Odd line: 6
+Even line: 2
+Odd line: 10
+Even line: 10, 30
+2,304
+0x1E
+YUV422 8 bit
+64
+4
+8, 24
+2,880
+0x1F
+YUV422 10 bit
+40
+2
+10, 30
+2,304
+0x30 - 37
+User
+defined 8 bit
+64
+8
+8
+5,760
+www.efinixinc.com
+33
+
+T20 Data Sheet
+MIPI RX
+The MIPI RX is a receiver interface that translates HSSI signals from the board to video data
+in the Trion® core. Five high-speed diﬀerential pin pairs (one clock, four data), each of which
+represent a lane, connect to the board. Control, video, and status signals connect from the
+MIPI interface to the core.
+Figure 21: MIPI RX x4 Block Diagram
+CAL_CLK
+PIXEL_CLK
+DPHY_RSTN
+RSTN
+VC_ENA[3:0]
+LANES[1:0]
+RXDP/N4
+RXDP/N3
+RXDP/N2
+RXDP/N1
+RXDP/N0
+RX CSI-2
+Controller
+RX
+DPHY
+PPI
+Interface
+VSYNC[3:0]
+HSYNC[3:0]
+VALID
+CNT[3:0]
+DATA[63:0]
+TYPE[5:0]
+VC[1:0]
+ERROR[17:0]
+CLEAR
+ULPS_CLK
+ULPS[3:0]
+MIPI RX Block
+Control
+Video
+Status
+Pads
+The control signals determine the clocking, how many transceiver lanes are used, and how
+many virtual channels are enabled. All control signals are required except the two reset
+signals. The reset signals are optional, however, you must use both signals or neither.
+The video signals send the decoded video data to the core. All video signals must fully
+support the MIPI standard.
+The status signals provide optional status and error information about the MIPI RX interface
+operation.
+Figure 22: MIPI RX Interface Block Diagram
+Trion FPGA
+Core
+MIPI
+Block
+Control, Video,
+and Status Signals
+RXDP/N4
+RXDP/N3
+RXDP/N2
+RXDP/N1
+RXDP/N0
+www.efinixinc.com
+34
+
+T20 Data Sheet
+Table 36: MIPI RX Control Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Clock Domain
+Notes
+CAL_CLK
+Input
+N/A
+Used for D-PHY calibration; must be between 80 and 120
+MHz.
+PIXEL_CLK
+Input
+N/A
+Clock used for transferring data to the core from the MIPI
+RX block. The frequency based on the number of lanes and
+video format.
+DPHY_RSTN
+Input
+N/A
+(Optional) Reset for the D-PHY logic, active low. Must be
+used if RSTN is used.
+See MIPI Reset Timing.
+RSTN
+Input
+N/A
+(Optional) Reset for the CSI-2 controller logic, active low.
+Must be used if DPHY_RSTN is used.
+See MIPI Reset Timing.
+VC_ENA[3:0]
+Input
+PIXEL_CLK
+Enables different VC channels by setting their index high.
+LANES[1:0]
+Input
+PIXEL_CLK
+Determines the number of lanes enabled:
+00: lane 0
+01: lanes 0 and 1
+11: all lanes
+Can only be set during reset.
+Table 37: MIPI RX Video Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Clock Domain
+Notes
+VSYNC[3:0]
+Output
+PIXEL_CLK
+Vsync bus. High if vsync is active for this VC.
+HSYNC[3:0]
+Output
+PIXEL_CLK
+Hsync bus. High if hsync is active for this VC
+VALID
+Output
+PIXEL_CLK
+Valid signal.
+CNT[3:0]
+Output
+PIXEL_CLK
+Number of valid pixels contained in the pixel data.
+DATA[63:0]
+Output
+PIXEL_CLK
+Video data, format depends on data type. New data every
+pixel clock.
+TYPE[5:0]
+Output
+PIXEL_CLK
+Video data type.
+VC[1:0]
+Output
+PIXEL_CLK
+Virtual channel (VC).
+Table 38: MIPI RX Status Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Signal
+Interface
+Clock Domain
+Notes
+ERROR[17:0]
+Output
+IN
+PIXEL_CLK
+Error bus register. Refer to Table 39: MIPI RX
+Error Signals (ERROR[17:0]) on page 36 for
+details.
+CLEAR
+Input
+OUT
+PIXEL_CLK
+Reset the error registers.
+ULPS_CLK
+Output
+IN
+PIXEL_CLK
+High when the clock lane is in the Ultra-Low-
+Power State (ULPS).
+ULPS[3:0]
+Output
+IN
+PIXEL_CLK
+High when the lane is in the ULPS mode.
+www.efinixinc.com
+35
+
+T20 Data Sheet
+Table 39: MIPI RX Error Signals (ERROR[17:0])
+Bit
+Name
+Description
+0
+ERR_ESC
+Escape Entry Error. Asserted when an unrecognized escape entry
+command is received.
+1
+CRC_ERROR_VC0
+CRC Error VC0. Set to 1 when a checksum error occurs.
+2
+CRC_ERROR_VC1
+CRC Error VC1. Set to 1 when a checksum error occurs.
+3
+CRC_ERROR_VC2
+CRC Error VC2. Set to 1 when a checksum error occurs.
+4
+CRC_ERROR_VC3
+CRC Error VC3. Set to 1 when a checksum error occurs.
+5
+HS_RX_TIMEOUT_ERR
+HS RX Timeout Error. The protocol should time out when no EoT is
+received within a certain period in HS RX mode.
+6
+ECC_1BIT_ERROR
+ECC Single Bit Error. Set to 1 when there is a single bit error.
+7
+ECC_2BIT_ERROR
+ECC 2 Bit Error. Set to 1 if there is a 2 bit error in the packet.
+8
+ECCBIT_ERROR
+ECC Error. Asserted when an error exists in the ECC.
+9
+ECC_NO_ERROR
+ECC No Error. Asserted when an ECC is computed with a result zero. This
+bit is high when the receiver is receiving data correctly.
+10
+FRAME_SYNC_ERROR
+Frame Sync Error. Asserted when a frame end is not paired with a frame
+start on the same virtual channel.
+11
+INVLD_PKT_LEN
+Invalid Packet Length. Set to 1 if there is an invalid packet length.
+12
+INVLD_VC
+Invalid VC ID. Set to 1 if there is an invalid CSI VC ID.
+13
+INVALID_DATA_TYPE
+Invalid Data Type. Set to 1 if the received data is invalid.
+14
+ERR_FRAME
+Error In Frame. Asserted when VSYNC END received when CRC error is
+present in the data packet.
+15
+CONTROL_ERR
+Control Error. Asserted when an incorrect line state sequence is detected.
+16
+SOT_ERR
+Start-of-Transmission (SoT) Error. Corrupted high-speed SoT leader
+sequence while proper synchronization can still be achieved.
+17
+SOT_SYNC_ERR
+SoT Synchronization Error. Corrupted high-speed SoT leader sequence
+while proper synchronization cannot be expected.
+Note:  If error report is all logic low, there is an EOT or a contention error. Check the physical connection
+of MIPI lanes or adjust the EXIT and TRAIL parameters according to the MIPI Utility.
+www.efinixinc.com
+36
+
+T20 Data Sheet
+Table 40: MIPI RX Pads
+Pad
+Direction
+Description
+RXDP[4:0]
+Input
+MIPI transceiver P pads.
+RXDN[4:0]
+Input
+MIPI transceiver N pads.
+Table 41: MIPI RX Settings in Efinity® Interface Designer
+Tab
+Parameter
+Choices
+Notes
+DPHY Calibration Clock
+Pin Name
+User defined
+Invert DPHY Calibration
+Clock
+On or Off
+Pixel Clock Pin Name
+User defined
+Control
+Invert Pixel Clock
+On or Off
+Status
+Enable Status
+On or Off
+Indicate whether you want to use the status pins.
+RXD0, RXD1, RXD2,
+RXD3, RXD4
+clk, data0, data1,
+data2, or data3
+Map the physical lane to a clock or data lane.
+Lane
+Mapping
+Swap P&N Pin
+On or Off
+Reverse the P and N pins for the physical lane.
+Calibration Clock Freq
+(MHz)
+User defined
+Specify a number between 80 and 120 MHz.
+Clock Timer (TCLK-SETTLE)
+40 - 2,590 ns
+Changes the MIPI receiver timing parameters per
+the DPHY specification. Refer to D-PHY Timing
+Parameters on page 39.
+Timing
+Data Timer (THS-SETTLE)
+40 - 2,590 ns
+Changes the MIPI receiver timing parameters per
+the DPHY specification. Refer to D-PHY Timing
+Parameters on page 39.
+www.efinixinc.com
+37
+
+T20 Data Sheet
+MIPI RX Video Data TYPE[5:0] Settings
+The video data type can only be changed when HSYNC is low.
+Table 42: MIPI RX TYPE[5:0]
+TYPE[5:0]
+Data Type
+Pixel Data Bits
+per Pixel Clock
+Pixels per Clock
+Bits per Pixel
+Maximum Data
+Pixels per Line
+0x20
+RGB444
+48
+4
+12
+2,880
+0x21
+RGB555
+60
+4
+15
+2,880
+0x22
+RGB565
+64
+4
+16
+2,880
+0x23
+RGB666
+54
+3
+18
+2,556
+0x24
+RGB888
+48
+2
+24
+1,920
+0x28
+RAW6
+48
+8
+6
+7,680
+0x29
+RAW7
+56
+8
+7
+6,576
+0x2A
+RAW8
+64
+8
+8
+5,760
+0x2B
+RAW10
+40
+4
+10
+4,608
+0x2C
+RAW12
+48
+4
+12
+3,840
+0x2D
+RAW14
+56
+4
+14
+3,288
+0x18
+YUV420 8 bit
+Odd line: 64
+Even line: 64
+Odd line: 8
+Even line: 4
+Odd line: 8
+Even line: 8, 24
+2,880
+0x19
+YUV420 10 bit
+Odd line: 40
+Even line: 40
+Odd line: 4
+Even line: 2
+Odd line: 10
+Even line: 10, 30
+2,304
+0x1A
+Legacy YUV420 8 bit
+48
+4
+8, 16
+3,840
+0x1C
+YUV420 8 bit (CSPS)
+Odd line: 64
+Even line: 64
+Odd line: 8
+Even line: 4
+Odd line: 8
+Even line: 8, 24
+2,880
+0x1D
+YUV420 10 bit (CSPS)
+Odd line: 40
+Even line: 40
+Odd line: 4
+Even line: 2
+Odd line: 10
+Even line: 10, 30
+2,304
+0x1E
+YUV422 8 bit
+64
+4
+8, 24
+2,880
+0x1F
+YUV422 10 bit
+40
+2
+10, 30
+2,304
+0x30 - 37
+User defined 8 bit
+64
+8
+8
+5,760
+www.efinixinc.com
+38
+
+T20 Data Sheet
+D-PHY Timing Parameters
+During CSI-2 data transmission, the MIPI D-PHY alternates between low power mode and
+high-speed mode. The D-PHY speciﬁcation deﬁnes timing parameters to facilitate the correct
+hand-shaking between the MIPI TX and MIPI RX during mode transitions.
+You set the timing parameters to correspond to the speciﬁcations of your hardware in the
+Eﬁnity® Interface Designer.
+•
+RX parameters—TCLK-SETTLE, THS-SETTLE (see Table 36: MIPI RX Control Signals
+(Interface to FPGA Fabric) on page 35)
+•
+TX parameters—TCLK-POST, TCLK-TRAIL, TCLK-PREPARE, TCLK-ZERO, TCLK-PRE, THS-
+PREPARE, THS-ZERO, THS-TRAIL (see Table 34: MIPI TX Settings in Eﬁnity Interface
+Designer on page 32)
+Figure 23: High-Speed Data Transmission in Bursts Waveform
+VIDTH(max)
+VIL(max)
+Dp/Dn
+CLK
+Disconnect
+Terminator
+VIH(min)
+VTERM-EN(max)
+THS-PREPARE
+THS-ZERO
+TLPX
+TD-TERM-EN
+THS-SETTLE
+LP-00
+LP-01
+LP-11 (1)
+Capture First
+Data Bit
+THS-TRAIL
+LP-11
+THS-EXIT
+TEOT
+THS-SKIP
+TREOT
+Note:
+1. To enter high-speed mode, the D-PHY goes through states LP-11, LP-01, and LP-00. The D-PHY generates LP-11 to exit high-speed mode.
+Last Packet of Data
+Data
+SoT
+SoT
+SoT
+SoT
+EoT
+LPS
+LPS
+LPS
+EoT
+EoT
+EoT
+PH
+PF
+FE
+FS
+Long Packet
+Frame Blanking
+Frame End Packet
+Frame Start Packet
+First Packet of Data
+Long Packet
+Data
+PH
+PF
+Figure 24: Switching the Clock Lane between Clock Transmission and Low Power Mode Waveform
+TD-TERM-EN
+Data Lane
+Clock Lane
+Disconnect Terminator
+Dp/Dn
+Dp/Dn
+Disconnect
+Terminator
+THS-SETTLE
+TCLK-PREPARE
+THS-EXIT
+TCLK-TRAIL
+THS-SKIP
+TCLK-MISS
+TCLK-POST
+TEOT
+TCLK-SETTLE
+TCLK-TERM-EN
+TCLK-PRE
+TCLK-ZERO
+TLPX
+TLPX
+THS-PREPARE
+VIL(max)
+VIH(min)
+VIL(max)
+VIH(min)
+www.efinixinc.com
+39
+
+T20 Data Sheet
+Table 43: D-PHY Timing Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+TCLK-POST
+Time that the transmitter continues to
+send HS clock after the last associated
+Data Lane has transitioned to LP Mode.
+Interval is defined as the period from the
+end of THS-TRAIL to the beginning of TCLK-
+TRAIL.
+60 ns + 52*UI
+–
+–
+ns
+TCLK-PRE
+Time that the HS clock shall be driven by
+the transmitter prior to any associated
+Data Lane beginning the transition from
+LP to HS mode.
+8
+–
+–
+UI
+TCLK-PREPARE
+Time that the transmitter drives the
+Clock Lane LP-00 Line state immediately
+before the HS-0 Line state starting the HS
+transmission.
+38
+–
+95
+ns
+TCLK-SETTLE
+Time interval during which the HS
+receiver should ignore any Clock Lane HS
+transitions, starting from the beginning of
+TCLK-PREPARE.
+95
+–
+300
+ns
+TCLK-TRAIL
+Time that the transmitter drives the HS-0
+state after the last payload clock bit of a
+HS transmission burst.
+60
+–
+–
+ns
+TCLK-PREPARE +
+TCLK-ZERO
+TCLK-PREPARE + time that the transmitter
+drives the HS-0 state prior to starting the
+Clock.
+300
+–
+–
+ns
+THS-PREPARE
+Time that the transmitter drives the
+Data Lane LP-00 Line state immediately
+before the HS-0 Line state starting the HS
+transmission
+40 ns + 4*UI
+–
+85 ns + 6*UI
+ns
+THS-SETTLE
+Time interval during which the HS receiver
+shall ignore any Data Lane HS transitions,
+starting from the beginning of THS-PREPARE.
+The HS receiver shall ignore any Data
+Lane transitions before the minimum
+value, and the HS receiver shall respond
+to any Data Lane transitions after the
+maximum value.
+85 ns + 6*UI
+–
+145 ns + 10*UI
+ns
+THS-TRAIL
+Time that the transmitter drives the
+flipped differential state after last payload
+data bit of a HS transmission burst.
+max( n*8*UI, 60
+ns + n*4*UI)(10)
+–
+–
+ns
+TLPX
+Transmitted length of any Low-Power state
+period
+50
+–
+–
+ns
+THS-PREPARE +
+THS-ZERO
+THS-PREPARE + time that the transmitter
+drives the HS-0 state prior to transmitting
+the Sync sequence.
+145 ns + 10*UI
+–
+–
+ns
+(10) Where n = 1 in Forward-direction HS mode and n = 4 for Reverse-direction HS mode.
+www.efinixinc.com
+40
+
+T20 Data Sheet
+DDR DRAM
+Some T20 FPGAs have a x16 DDR PHY interface supporting DDR3, DDR3L, LPDDR3,
+and LPDDR2 as well as a memory controller hard IP block. The DDR PHY supports data
+rates up to 1066 Mbps per lane. The memory controller provides two 128 bit AXI buses to
+communicate with the FPGA core.
+Note:  The DDR PHY and controller are hard blocks; you cannot bypass the DDR DRAM memory controller
+to access the PHY directly for non-DDR memory controller applications.
+Table 44: DDR DRAM Performance
+DDR DRAM Interface
+Voltage (V)
+Maximum Data Rate (Mbps) per Lane
+DDR3
+1.5
+1066
+DDR3L
+1.35
+1066
+LPDDR3
+1.2
+1066
+LPDDR2
+1.2
+1066
+Figure 25: DDR DRAM Block Diagram
+DDR PHY Block
+CLKIN
+BID_x[7:0]
+BREADY_x
+BVALID_x
+AXI Shared
+Read/Write
+Address Channel
+AXI Write
+Response 
+Channel
+ACLK_x
+Where:
+n is 7 or 15
+x is 0 or 1
+PHY
+AXI Global Signals
+AADDR_x[31:0]
+ABURST_x[1:0]
+AID_x[7:0]
+ALEN_x[7:0]
+ALOCK_x[1:0]
+AREADY_x
+ASIZE_x[2:0]
+ATYPE_x
+AVALID_x
+RDATA_x[127:0]
+RID_x[7:0]
+RLAST_x
+RREADY_x
+RRESP_x[1:0]
+RVALID_x
+AXI Read
+Data Channel
+WDATA_x[127:0]
+WID_x[7:0]
+WLAST_x
+WREADY_x
+WSTRB_x[15:0]
+WVALID_x
+AXI Write
+Data Channel
+DDR_A[15:0]
+DDR_BA[2:0]
+DDR_CAS_N
+DDR_CKE
+DDR_CK
+DDR_CK_N
+DDR_CS_N
+DDR_DQ[n:0]
+DDR_DM[1:0]
+DDR_DQS_N[1:0]
+DDR_DQS[1:0]
+DDR_ODT
+DDR_RAS_N
+DDR_RST_N
+DDR_WE_N
+DDR_VREF
+DDR_ZQ
+Pads
+DDR3
+LPDDR3
+LPDDR3
+PHY
+DDR
+Memory
+Controller
+CFG_SCL_IN
+CFG_SDA_IN
+CFG_SDA_OEN
+I2C
+CFG_SEQ_RST
+CFG_SEQ_START
+Startup
+Sequencer
+CFG_RST_N
+Reset
+www.efinixinc.com
+41
+
+T20 Data Sheet
+The DDR DRAM block supports an I2C calibration bus that can read/write the DDR
+conﬁguration registers. You can use this bus to ﬁne tune the DDR PHY for high
+performance.
+Figure 26: DDR DRAM Interface Block Diagram
+Core
+DDR
+Block
+PLL
+Block
+Reference Clock
+PHY and AXI
+Signals
+Trion FPGA
+GPIO
+Block(s)
+Reference Clock
+Table 45: PHY Signals (Interface to FPGA Fabric)
+Signal Direction Clock Domain
+Description
+CLKIN
+Input
+N/A
+High-speed clock to drive the DDR PHY. A PLL must generate this clock. The
+clock runs at half of the PHY data rate (for example, 800 Mbps requires a 400
+MHz clock).
+The DDR DRAM block uses the PLL_BR0 CLKOUT0 resource as the PHY clock.
+The PLL reference clock must be driven by I/O pads. The Eﬁnity® software issues a warning
+if you do not connect the reference clock to an I/O pad. (Using the clock tree may induce
+additional jitter and degrade the DDR performance.) Refer to PLL on page 19 for more
+information about the PLL block.
+Important:  Efinix strongly recommends that you do not use any LVDS pins (either single-ended I/O
+or differential pair) as the primary clock to drive the PLL_BR0 or the DDR interface will not be initialized
+during the configuration phase. Make sure to incorporate a user reset and instantiate the DDR Hard
+Memory Controller-Reset IP to initialize the DDR interface in user mode. Contact Efinix support if you need
+LVDS pins as the primary clock for the PLL_BR0 DDR interface
+Table 46: AXI Global Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Clock Domain
+Description
+ACLK_0, ACLK_1
+Input
+N/A
+AXI clock inputs.
+www.efinixinc.com
+42
+
+T20 Data Sheet
+Table 47: AXI Shared Read/Write Signals (Interface to FPGA Fabric)
+Signal
+x is 0 or 1
+Direction
+Clock
+Domain
+Description
+AADDR_x[31:0]
+Input
+ACLK_x
+Address. ATYPE defines whether it is a read or write address. It gives
+the address of the first transfer in a burst transaction.
+ABURST_x[1:0]
+Input
+ACLK_x
+Burst type. The burst type and the size determine how the address
+for each transfer within the burst is calculated.
+AID_x[7:0]
+Input
+ACLK_x
+Address ID. This signal identifies the group of address signals.
+Depends on ATYPE, the ID can be for a read or write address group.
+ALEN_x[7:0]
+Input
+ACLK_x
+Burst length. This signal indicates the number of transfers in a burst.
+ALOCK_x[1:0]
+Input
+ACLK_x
+Lock type. This signal provides additional information about the
+atomic characteristics of the transfer.
+AREADY_x
+Output
+ACLK_x
+Address ready. This signal indicates that the slave is ready to accept
+an address and associated control signals.
+ASIZE_x[2:0]
+Input
+ACLK_x
+Burst size. This signal indicates the size of each transfer in the burst.
+ATYPE_x
+Input
+ACLK_x
+This signal distinguishes whether is it is a read or write operation. 0
+= read and 1 = write.
+AVALID_x
+Input
+ACLK_x
+Address valid. This signal indicates that the channel is signaling
+valid address and control information.
+Table 48: AXI Write Response Channel Signals (Interface to FPGA Fabric)
+Signal
+x is 0 or 1
+Direction
+Clock
+Domain
+Description
+BID_x[7:0]
+Output
+ACLK_x
+Response ID tag. This signal is the ID tag of the write response.
+BREADY_x
+Input
+ACLK_x
+Response ready. This signal indicates that the master can accept a
+write response.
+BVALID_x
+Output
+ACLK_x
+Write response valid. This signal indicates that the channel is
+signaling a valid write response.
+Table 49: AXI Read Data Channel Signals (Interface to FPGA Fabric)
+Signal
+x is 0 or 1
+Direction
+Clock
+Domain
+Description
+RDATA_x[127:0]
+Output
+ACLK_x
+Read data.
+RID_x[7:0]
+Output
+ACLK_x
+Read ID tag. This signal is the identification tag for the read data
+group of signals generated by the slave.
+RLAST_x
+Output
+ACLK_x
+Read last. This signal indicates the last transfer in a read burst.
+RREADY_x
+Input
+ACLK_x
+Read ready. This signal indicates that the master can accept the
+read data and response information.
+RRESP_x[1:0]
+Output
+ACLK_x
+Read response. This signal indicates the status of the read transfer.
+RVALID_x
+Output
+ACLK_x
+Read valid. This signal indicates that the channel is signaling the
+required read data.
+www.efinixinc.com
+43
+
+T20 Data Sheet
+Table 50: AXI Write Data Channel Signals (Interface to FPGA Fabric)
+Signal
+x is 0 or 1
+Direction
+Clock
+Domain
+Description
+WDATA_x[127:0]
+Input
+ACLK_x
+Write data.
+WID_x[7:0]
+Input
+ACLK_x
+Write ID tag. This signal is the ID tag of the write data transfer.
+WLAST_x
+Input
+ACLK_x
+Write last. This signal indicates the last transfer in a write burst.
+WREADY_x
+Output
+ACLK_x
+Write ready. This signal indicates that the slave can accept the write
+data.
+WSTRB_x[15:0]
+Input
+ACLK_x
+Write strobes. This signal indicates which byte lanes hold valid data.
+There is one write strobe bit for each eight bits of the write data bus.
+WVALID_x
+Input
+ACLK_x
+Write valid. This signal indicates that valid write data and strobes are
+available.
+Table 51: DDR DRAM I2C Interface Signals
+Signal
+Direction
+Description
+CFG_SCL_IN
+Input
+Clock input.
+CFG_SDA_IN
+Input
+Data input.
+CFG_SDA_OEN
+Output
+SDA output enable.
+Table 52: DDR DRAM Startup Sequencer Signals
+Signal
+Direction
+Description
+CFG_SEQ_RST
+Input
+Active-high DDR configuration controller reset.
+CFG_SEQ_START
+Input
+Start the DDR configuration controller.
+Table 53: DDR DRAM Reset Signal
+Signal
+Direction
+Description
+CFG_RST_N
+Input
+Active-low master DDR DRAM reset. After you de-assert RST_N, you need
+to reconfigure and initialize before performing memory operations.
+www.efinixinc.com
+44
+
+T20 Data Sheet
+Table 54: DDR DRAM Pads
+Signal
+Direction
+Description
+DDR_A[15:0]
+Output
+Address signals to the memories.
+DDR_BA[2:0]
+Output
+Bank signals to/from the memories.
+DDR_CAS_N
+Output
+Active-low column address strobe signal to the memories.
+DDR_CKE
+Output
+Active-high clock enable signals to the memories.
+DDR_CK
+Output
+Active-high clock signals to/from the memories. The clock to the
+memories and to the memory controller must be the same clock
+frequency and phase.
+DDR_CK_N
+Output
+Active-low clock signals to/from the memories.The clock to the memories
+and to the memory controller must be the same clock frequency and
+phase.
+DDR_CS_N
+Output
+Active-low chip select signals to the memories.
+DDR_DQ[n:0]
+Bidirectional
+Data bus to/from the memories. For writes, the pad drives these signals.
+For reads, the memory drives these signals. These signals are connected
+to the DQ inputs on the memories. n is 7 or 15 depending on the DQ
+Width Configuration setting.
+DDR_DM[n]
+Output
+Active-high data-mask signals to the memories. n is 0 or 1:0 depending on
+the DQ width.
+DDR_DQS_N[n:0]
+Bidirectional
+DDR_DQS[n:0]
+Bidirectional
+Differential data strobes to/from the memories. For writes, the pad
+drives these signals. For reads, the memory drives these signals. These
+signals are connected to the DQS inputs on the memories. n is 0 or 1:0
+depending on the DQ width.
+DDR_ODT
+Output
+ODT signal to the memories.
+DDR_RAS_N
+Output
+Active-low row address strobe signal to the memories.
+DDR_RST_N
+Output
+Active-low reset signals to the memories.
+DDR_WE_N
+Output
+Active-low write enable strobe signal to the memories.
+DDR_VREF
+Bidirectional
+Reference voltage.
+DDR_ZQ
+Bidirectional
+ZQ calibration pin.
+DDR Interface Designer Settings
+The following tables describe the settings for the DDR block in the Interface Designer.
+Table 55: Base Tab
+Parameter
+Choices
+Notes
+DDR Resource
+None, DDR_0
+Only one resource available.
+Instance Name
+User defined
+Indicate the DDR instance name. This name is the prefix for all
+DDR signals.
+Memory Type
+DDR3, LPDDR2, LPDDR3
+Choose the memory type you want to use.
+www.efinixinc.com
+45
+
+T20 Data Sheet
+Table 56: Configuration Tab
+Parameter
+Choices
+Notes
+Select Preset
+The Select Preset button opens a list of popular DDR memory
+configurations. Choose a preset to populate the configuration
+choices.
+If you do not want to use a preset, you can specify the memory
+configuration manually.
+DQ Width
+x8, x16
+DQ bus width.
+Type
+DDR3, LPDDR2, LPDDR3
+Memory type.
+Enable Advanced
+Density Setting
+On, Off
+If you do not want to use the available density from the
+Density parameter, you can set the memory row and column
+width.
+Row Width
+0 - 99
+Specify the memory row width.
+Column Width
+0 - 99
+Specify the memory column width.
+DDR3
+Speed Grade
+1066E, 1066F,
+1066G, 800D, 800E
+Memory speed.
+Width
+x8, x16
+Memory width.
+Density
+1G, 2G, 4G, 8G
+Memory density in bits.
+LPDDR2
+Speed Grade
+400, 533, 667, 800, 1066
+Memory speed.
+Width
+x16
+Memory width.
+Density
+256M, 512M, 1G, 2G, 4G
+Memory density in bits.
+LPDDR3
+Speed Grade
+800, 1066
+Memory speed.
+Width
+x16
+Memory width.
+Density
+4G, 8G
+Memory density in bits.
+Table 57: Advanced Options Tab - FPGA Setting Subtab
+Parameter
+Choices
+Notes
+FPGA Input Termination
+FPGA Output Termination
+Varies depending
+on the memory type
+Specify the termination value for the FPGA input/
+output pins.
+www.efinixinc.com
+46
+
+T20 Data Sheet
+Table 58: Advanced Options Tab - Memory Mode Register Settings Subtab
+Parameter
+Choices
+Notes
+DDR3
+Burst Length
+8
+Specify the burst length (only 8 is supported).
+DLL Precharge Power
+Down
+On, Off
+Specify whether the DLL in the memory device is off
+or on during precharge power-down.
+Memory Auto Self-
+Refresh
+Auto, Manual
+Turn on or off auto-self refresh feature in memory
+device.
+Memory CAS Latency
+(CL)
+5 - 14
+Specify the number of clock cycle between read
+command and the availability of output data at the
+memory device.
+Memory Write CAS
+Latency (CWL)
+5 - 12
+Specify the number of clock cycle from the
+releasing of the internal write to the latching of the
+first data in at the memory device.
+Memory Dynamic ODT
+(Rtt_WR)
+Off, RZQ/2, RZQ/4
+Specify the mode of dynamic ODT feature of
+memory device.
+Memory Input
+Termination (Rtt_nom)
+Off, RZQ/2, RZQ/4,
+RZQ/6, RZQ/8, RZQ/12
+Specify the input termination value of the memory
+device.
+Memory Output
+Termination
+RZQ/6, RZQ/7
+Specify the output termination value of the memory
+device.
+Read Burst Type
+Interleaved, Sequential
+Specify whether accesses within a give burst are in
+sequential or interleaved order.
+Sef-Refresh Temperature
+Extended, Normal
+Specify whether the self refresh temperature is
+normal or extended mode.
+LPDDR2
+FPGA Input Termination
+(Ω)
+120, Off
+Specify the input termination of the FPGA device.
+Used in non-JEDEC standard only.
+Note:  Enabling this option leads to higher
+power consumption.
+Burst Length
+8
+Specify the burst length (only 8 is supported).
+Output Drive Strength
+34.3, 40, 48, 60, 80, 120
+Specify the output termination value of memory
+device.
+Read Burst Type
+Interleaved, Sequential
+Specify whether accesses within a given burst are in
+sequential or interleaved order.
+Read/Write Latency
+RL=3/WL=1, RL=4/WL=2
+RL=5/WL=2, RL=6/WL=3
+RL=7/WL=4, RL=8/WL=4
+Specify the read/write latency of the memory
+device.
+LPDDR3
+DQ ODT
+Disable, RZQ1, RZQ2, RZQ4
+Specify the input termination value of memory
+device.
+Output Drive Strength
+34.3
+34.3 pull-down/40 pull up
+34.3 pull-down/48 pull up
+40
+40 pull down/48 pull up
+48
+Specify the output termination value of memory
+device.
+www.efinixinc.com
+47
+
+T20 Data Sheet
+Parameter
+Choices
+Notes
+Read/Write Latency
+RL=3/WL=1, RL=6/WL=3
+RL=8/WL=4, RL=9/WL=5
+Specify the read/write latency of the memory
+device.
+Table 59: Advanced Options Tab - Memory Timing Settings Subtab
+Parameter
+Choices
+Notes
+tFAW, Four Bank Active Window (ns)
+tRAS, Active to Precharge Command Period (ns)
+tRC, Active to Actrive or REF Command Period (ns)
+tRCD, Active to Read or Write Delay (ns)
+tREFI, Average Periodic Refresh Interval (ns)
+tRFC, Refresh to Active or Refresh to Refresh Delay (ns)
+tRP, Precharge Command Period (ns)
+tRRD, Active to Active Command Period (ns)
+tRTP, Internal Read to Precharge Delay (ns)
+tWTR, Internal Write to Read Command Delay (ns)
+User defined
+Enter the timing parameters from
+the memory device's data sheet.
+Table 60: Advanced Options Tab - Controller Settings Subtab
+Parameter
+Choices
+Notes
+Controller to Memory
+Address Mapping
+BANK-ROW-COL
+ROW-BANK-COL
+ROW-COL_HIGH-BANK-COL_LOW
+Specify the mapping between the address of AXI
+interface and column, row, and bank address of
+memory device.
+Enable Auto Power
+Down
+Active, Off, Pre-Charge
+Specify whether to allow automatic entry into
+power-down mode (pre-charge or active) after a
+specific amount of idle time.
+Enable Self Refresh
+Controls
+No, Yes
+Specify whether to enable automatic entry into self-
+refresh mode after specific amount of idle period.
+Table 61: Advanced Options Tab - Gate Delay Tuning Settings Subtab
+Parameter
+Choices
+Notes
+Enable Gate Delay Override
+On or off
+Turning this option on allows you to fine-tine the
+gate-delay values. This is an expert only setting.
+Gate Coarse Delay Tuning
+0 - 5
+Gate Fine Delay Tuning
+0 - 255
+www.efinixinc.com
+48
+
+T20 Data Sheet
+Table 62: Control Tab
+Option
+Notes
+Disable Control
+When selected, this option disables calibration and user reset.
+Enable Calibration
+Turn on to enable optional PHY calibration pins (master reset, SCL, and SDA pins).
+Efinix recommends that you use the default pin names. The names are prefixed with
+the instance name you specified in the Base tab. These pins connect to the DDR Hard
+Memory Controller - Calibration and Reset IP core.
+Enable User Reset
+Turn on to enable optional reset pins (master reset and sequencer start/reset). Efinix
+recommends that you use the default pin names. The names are prefixed with the
+instance name you specified in the Base tab. These pins connect to the DDR Hard
+Memnory Controller - Reset IP core.
+Enable Reset and
+Calibration
+Turn on to enable the pins for calibration and user reset. These pins connect to the DDR
+Hard Memory Controller - Calibration and Reset IP core.
+Table 63: AXI 0 and AXI 1 Tabs
+Parameter
+Choices
+Notes
+Enable Target 0
+Enable Target 1
+On or off
+Turn on to enable the AXI 0 interface.
+Turn on to enable the AXI 1 interface.
+AXI Clock Input Pin name
+User defined
+Specify the name of the AXI input clock pin.
+Invert AXI Clock Input
+On or off
+Turn on to invert the AXI clock.
+Shared Read/Write Address Channel tab
+Write Response Channel tab
+Read Data Channel tab
+Write Data Channel tab
+User defined
+This tab defines the AXI signal names.
+Efinix recommends that you use the default
+names. The signals are prefixed with the
+instance name you specified in the Base
+tab.
+www.efinixinc.com
+49
+
+T20 Data Sheet
+SPI Flash Memory
+The QFP100F3 packages include a T20 FPGA and a SPI ﬂash memory. The SPI ﬂash
+memory has a density of 16 Mbits and a clock rate of up to 20 MHz. In active conﬁguration
+mode, the FPGA is conﬁgured using the conﬁguration bitstream in the SPI ﬂash memory.
+Typically you can ﬁt two compressed bitstream images into the QFP100F3 SPI ﬂash.
+The SPI ﬂash memory's VCC is powered by VCCIO1A_1B_1C.
+In SPI active conﬁguration mode, the FPGA is conﬁgured using a bitstream stored in the
+SPI ﬂash device. During conﬁguration, the maximum clock frequency for the ﬂash device is
+speciﬁed in SPI Active on page 75. When the FPGA is in user mode, you can access the
+ﬂash at the ﬂash device's maximum clock frequency (although diﬀerent SPI ﬂash commands
+may have diﬀerent maximum clock frequencies).
+When a conﬁguration bitstream is stored in the SPI ﬂash and the SPI active hardware
+connection is properly established, the SPI active conﬁguration can automatically start after
+the power-up. In QFP100F3 packages you are only required to connect the SS_N pin to the
+SPI_CS_N pin for the SPI active conﬁguration to start automatically. This is additional to
+other required conﬁguration pin settings depending on the conﬁguration mode you select.
+Learn more:  Refer to the AN 006: Configuring Trion FPGAs for detailed configuration requirements.
+You can also use the SPI ﬂash to store user data during user mode. To read or write the SPI
+ﬂash during user mode, you must create the SPI ﬂash interface block in the Eﬁnity Interface
+Designer.
+Learn more:  Refer to Trion Interfaces User Guide for more information about using the SPI flash interface
+block in the Efinity Interface Designer.
+Important:  You can only use the internal SPI flash in user mode if no LVDS TX is used.
+Figure 27: Connections between FPGA and SPI Flash Device inside the Package
+SS_N
+CCK
+CDI0
+CDI1
+CDI2
+CDI3
+T20
+CS_N
+CLOCK
+MOSI
+MISO
+WP_N
+HOLD_N
+SPI Flash
+QFP100F3
+GPIOL_00_SS_N
+GPIOL_01_CCK
+GPIOL_08_CDI0
+GPIOL_09_CDI1
+GPIOL_12_CDI2
+GPIOL_13_CDI3
+SPI_CS_N
+www.efinixinc.com
+50
+
+T20 Data Sheet
+Table 64: SPI Flash Memory Signals (Interface to FPGA Fabric)
+Signal
+Direction
+Description
+SCLK
+Input
+Clock output to SPI flash memory.
+MOSI
+Input
+Data output to SPI flash memory.
+MISO
+Output
+Data input from SPI flash memory.
+WP_N
+Input
+Active-low write protect signal.
+HOLD_N
+Input
+Active-low hold signal.
+SPI_CS_N
+Input
+Active-low SPI flash memory chip select.
+www.efinixinc.com
+51
+
+T20 Data Sheet
+Power Up Sequence
+Eﬁnix® recommends the following power up sequence when powering Trion® FPGAs:
+Figure 28: Trion® FPGAs Power Up Sequence
+VCC
+VCCA_xx
+VCC12A_MIPI_TX
+VCC12A_MIPI_RX
+VCC25A_MIPI
+tMIPI_POWER
+CRESET_N
+All VCCIO
+tCRESET_N
+Max 10 ms
+Header and Data
+5
+tDMIN
+JTAG
+Configuration
+SPI
+Passive
+TCK
+TMS
+CCK
+CDI
+1
+2
+3
+4
+1. Power up VCC and VCCA_xx ﬁrst.
+2. When VCC and VCCA_xx are stable, power up all VCCIO pins. There is no speciﬁc
+timing delay between the VCCIO pins.
+3. Apply power to VCC12A_MIPI_TX, VCC12A_MIPI_RX, and VCC25A_MIPI at least
+tMIPI_POWER after VCC is stable.
+Important:  Ensure the power ramp rate is within VCCIO/10 V/ms to 10 V/ms.
+4. After all power supplies are stable, hold CRESET_N low for a duration of tCRESET_N
+before asserting CRESET_N from low to high to trigger active SPI programming (the
+FPGA loads the conﬁguration data from an external ﬂash device).
+5. FPGA conﬁguration can begin after there has been a tDMIN minimum delay after
+CRESET_N goes high (see SPI Passive and JTAG for the delay speciﬁcation).
+When you are not using the GPIO, MIPI, DDR or PLL resources, connect the pins as shown
+in the following table.
+Note:  Refer to Configuration Timing on page 74 and MIPI Power-Up Timing on page 71 for timing
+information.
+www.efinixinc.com
+52
+
+T20 Data Sheet
+Power Supply Current Transient
+You may observe an inrush current on the dedicated power rail during power-up. You must
+ensure that the power supplies selected in your board meets the current requirement during
+power-up and the estimated current during user mode. Use the Power Estimator to calculate
+the estimated current during user mode.
+Table 65: Maximum Power Supply Current Transient
+Power Supply
+Package
+Maximum Power
+Supply Current
+Transient(11)(12)
+Unit
+W80, Q100F3,
+Q144, F169, F256
+35
+mA
+VCC
+F324, F400
+57
+mA
+Unused Resources and Features
+Table 66: Connection Requirements for Unused Resources
+Unused Resource
+Pin
+Note
+GPIO Bank
+VCCIOxx
+Connect to either 1.8 V, 2.5 V, or 3.3 V.
+PLL
+VCCA_PLL
+Connect to VCC.
+VCC12A_MIPI_TX
+Connect to VCC (1.2 V).
+VCC12A_MIPI_RX
+Connect to VCC (1.2 V).
+MIPI
+VCC25A_MIPI
+Connect to VCC (1.2 V).
+VCCIO_DDR
+Floating. Leave unconnected.
+DDR
+DDR_VREF
+Connect to ground.
+(11) Inrush current for other power rails are not significant in Trion® FPGAs.
+(12) Measured at room temperature.
+www.efinixinc.com
+53
+
+T20 Data Sheet
+Configuration
+The T20 FPGA contains volatile Conﬁguration RAM (CRAM). The user must conﬁgure the
+CRAM for the desired logic function upon power-up and before the FPGA enters normal
+operation. The FPGA's control block manages the conﬁguration process and uses a bitstream
+to program the CRAM. The Eﬁnity® software generates the bitstream, which is design
+dependent. You can conﬁgure the T20 FPGA(s) in SPI active, SPI passive, or JTAG mode.
+Learn more:  Refer to AN 006: Configuring Trion FPGAs for details on the dedicated configuration pins
+and how to configure FPGA(s).
+Figure 29: High-Level Configuration Options
+Board
+SPI Flash
+SPI Active Mode
+Controller
+Processor
+Microcontroller
+JTAG
+Interface
+SPI Passive Mode
+Controller
+JTAG Mode
+Controller
+Configuration
+Manager
+User
+Logic
+Control Block
+Trion FPGA
+SPI Data
+JTAG
+In active mode, the FPGA controls the conﬁguration process. An oscillator circuit within the
+FPGA provides the conﬁguration clock. The bitstream is typically stored in an external serial
+ﬂash device, which provides the bitstream when the FPGA requests it.
+The control block sends out the instruction and address to read the conﬁguration data. First,
+it issues a release from power-down instruction to wake up the external SPI ﬂash. Then, it
+waits for at least 30 μs before issuing a fast read command to read the content of SPI ﬂash
+from address 24h’000000.
+In passive mode, the FPGA is the slave and relies on an external master to provide the
+control, bitstream, and clock for conﬁguration. Typically the master is a microcontroller or
+another FPGA in active mode.
+In JTAG mode, you conﬁgure the FPGA via the JTAG interface.
+www.efinixinc.com
+54
+
+T20 Data Sheet
+Supported Configuration Modes
+Table 67: T20 Configuration Modes by Package
+Configuration
+Mode
+Width
+WLCSP80,
+F169
+Q100F3,
+Q144
+F256
+F324, F400
+x1
+(13)
+x2
+Active
+x4
+x1
+x2
+x4
+x8
+x16
+Passive
+x32
+JTAG
+x1
+Learn more:  Refer to AN 006: Configuring Trion FPGAs for more information.
+Mask-Programmable Memory Option
+The T20 FPGA is equipped with one-time programmable MPM. With this feature, you use
+on-chip MPM instead of an external serial ﬂash device to conﬁgure the FPGA. This option
+is for systems that require an ultra-small factor and the lowest cost structure such that an
+external serial ﬂash device is undesirable and/or not required at volume production. MPM is
+a one-time factory programmable option that requires a Non-Recurring Engineering (NRE)
+payment. To enable MPM, submit your design to our factory; our Applications Engineers
+(AEs) convert your design into a single conﬁguration mask to be specially fabricated.
+(13) This package does not support active SPI multi-image configuration in x1 mode. Instead, use x2 or x4, or alternatively,
+use the internal reconfiguration feature as described in AN 010: Using the Internal Reconfiguration Feature to Remotely
+Update Trion FPGAs.
+www.efinixinc.com
+55
+
+T20 Data Sheet
+DC and Switching Characteristics (W80,
+Q100F3, Q144, F169, and F256)
+Note:  Speed grade Q4 is only available in F169 packages. Speed grades C3, C4, and C4L are not
+available in W80 packages.
+Table 68: Absolute Maximum Ratings 
+Conditions beyond those listed may cause permanent damage to the device. Device operation at the absolute
+maximum ratings for extended periods of time has adverse effects on the device.
+Symbol
+Description
+Min
+Max
+Units
+VCC
+Core power supply
+-0.5
+1.42
+V
+I/O bank power supply
+-0.5
+4.6
+V
+VCCIO
+I/O bank 1A_1B_1C power supply (QFP100F3)
+-0.5
+4.1
+V
+VCCA_PLL
+PLL analog power supply
+-0.5
+1.42
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+-0.5
+2.75
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.2 V TX analog power supply for MIPI
+-0.5
+1.42
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.2 V RX analog power supply for MIPI
+-0.5
+1.42
+V
+VIN
+I/O input voltage
+-0.5
+4.6
+V
+IIN
+Maximum current through any pin in a powered
+or unpowered bank when forward biasing the
+clamp diode.(15)
+–
+10
+mA
+Operating junction temperature
+-40
+125
+°C
+TJ
+Operating junction temperature (QFP100F3)
+-40
+105
+°C
+TSTG
+Storage temperature, ambient
+-55
+150
+°C
+(14) Supply voltage specification applied to the voltage taken at the device pins with respect to ground, not at the power supply.
+(15) Should not exceed a total of 120 mA per bank.
+www.efinixinc.com
+56
+
+T20 Data Sheet
+Table 69: Recommended Operating Conditions (C3, C4, Q4, and I4 Speed Grades) (14)
+Symbol
+Description
+Min
+Typ
+Max
+Units
+VCC
+Core power supply
+1.15
+1.2
+1.25
+V
+1.8 V I/O bank power supply
+1.71
+1.8
+1.89
+V
+2.5 V I/O bank power supply
+2.38
+2.5
+2.63
+V
+VCCIO
+3.3 V I/O bank power supply
+3.14
+3.3
+3.47
+V
+VCCA_PLL
+PLL analog power supply
+1.15
+1.2
+1.25
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+2.38
+2.5
+2.63
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.2 V TX analog power supply for MIPI
+1.15
+1.2
+1.25
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.2 V RX analog power supply for MIPI
+1.15
+1.2
+1.25
+V
+VIN
+I/O input voltage(16)
+-0.3
+–
+VCCIO
++ 0.3
+V
+TJCOM
+Operating junction temperature, commercial
+0
+–
+85
+°C
+TJIND
+Operating junction temperature, industrial
+-40
+–
+100
+°C
+TJAUT
+Operating junction temperature, automotive
+-40
+–
+105
+°C
+Table 70: Recommended Operating Conditions (C4L and I4L Speed Grades) (14)
+Symbol
+Description
+Min
+Typ
+Max
+Units
+VCC
+Core power supply
+1.05
+1.1
+1.15
+V
+1.8 V I/O bank power supply
+1.71
+1.8
+1.89
+V
+2.5 V I/O bank power supply
+2.38
+2.5
+2.63
+V
+VCCIO
+3.3 V I/O bank power supply
+3.14
+3.3
+3.47
+V
+VCCA_PLL
+PLL analog power supply
+1.05
+1.1
+1.15
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+2.38
+2.5
+2.63
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.1 V TX analog power supply for MIPI
+1.05
+1.1
+1.15
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.1 V RX analog power supply for MIPI
+1.05
+1.1
+1.15
+V
+VIN
+I/O input voltage(17)
+-0.3
+–
+VCCIO
++ 0.3
+V
+TJCOM
+Operating junction temperature, commercial
+0
+–
+85
+°C
+TJIND
+Operating junction temperature, industrial
+-40
+–
+100
+°C
+(16) Values applicable to both input and tri-stated output configuration.
+(17) Values applicable to both input and tri-stated output configuration.
+www.efinixinc.com
+57
+
+T20 Data Sheet
+Table 71: Power Supply Ramp Rates
+Symbol
+Description
+Min
+Max
+Units
+tRAMP
+Power supply ramp rate for all supplies.
+VCCIO/10
+10
+V/ms
+Table 72: Single-Ended I/O DC Electrical Characteristics
+VIL (V)
+VIH (V)
+VOL (V)
+VOH (V)
+I/O Standard
+Min
+Max
+Min
+Max
+Max
+Min
+3.3 V LVCMOS
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.2
+VCCIO - 0.2
+3.3 V LVTTL
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.4
+2.4
+2.5 V LVCMOS
+-0.3
+0.7
+1.7
+VCCIO + 0.3
+0.5
+1.8
+1.8 V LVCMOS
+-0.3
+0.35 * VCCIO
+0.65 * VCCIO
+VCCIO + 0.3
+0.45
+VCCIO - 0.45
+Table 73: Single-Ended I/O and Dedicated Configuration Pins Schmitt Trigger Buffer Characteristic
+Voltage (V)
+VT+ (V) Schmitt
+Trigger Low-to-
+High Threshold
+VT- (V) Schmitt
+Trigger High-to-
+Low Threshold
+Input Leakage
+Current (μA)
+Tri-State Output
+Leakage
+Current (μA)
+3.3
+1.73
+1.32
+±10
+±10
+2.5
+1.37
+1.01
+±10
+±10
+1.8
+1.05
+0.71
+±10
+±10
+Table 74: Single-Ended I/O Buffer Drive Strength Characteristics
+Junction temperature at TJ = 25 °C, power supply at nominal voltage.
+CDONE has a drive strength of 1.
+I/O Standard
+3.3 V
+2.5 V
+1.8 V
+Drive Strength
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+1
+14.4
+8.0
+9.1
+8.0
+5.1
+4.4
+2
+19.1
+10.5
+12.2
+10.5
+6.8
+5.8
+3
+23.9
+13.3
+15.2
+13.4
+8.6
+7.3
+4
+28.7
+15.8
+18.2
+15.9
+10.3
+8.6
+Table 75: Single-Ended I/O Internal Weak Pull-Up and Pull-Down Resistance
+CDONE and CRESET_N also have an internal weak pull-up with these values.
+Internal Pull-Up
+Internal Pull-Down
+I/O Standard
+Min
+Typ
+Max
+Min
+Typ
+Max
+Units
+3.3 V LVTTL/LVCMOS
+27
+40
+65
+30
+47
+83
+kΩ
+2.5 V LVCMOS
+35
+55
+120
+37
+62
+118
+kΩ
+1.8 V LVCMOS
+70
+90
+200
+80
+99
+300
+kΩ
+www.efinixinc.com
+58
+
+T20 Data Sheet
+Table 76: LVDS Pins Configured as Single-Ended I/O DC Electrical Characteristics
+VIL (V)
+VIH (V)
+VOL (V)
+VOH (V)
+I/O Standard
+Min
+Max
+Min
+Max
+Max
+Min
+3.3 V LVCMOS
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.2
+VCCIO - 0.2
+3.3 V LVTTL
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.4
+2.4
+Table 77: LVDS Pins Configured as Single-Ended I/O Buffer Drive Strength Characteristics
+Junction temperature at TJ = 25 °C, power supply at nominal voltage, device in nominal process (TT).
+Drive Strength
+I/O Standard
+IOH(mA)
+IOL(mA)
+3.3 V
+37.6
+22
+Table 78: LVDS Pins Configured as Single-Ended I/O DC Electrical Characteristics
+Voltage (V)
+Input Leakage Current (μA)
+Tri-State Output Leakage Current (μA)
+3.3
+±10
+±10
+Table 79: LVDS Pins Configured as Single-Ended I/O Internal Weak Pull-Up Resistance
+Internal Pull-Up
+I/O Standard
+Min
+Typ
+Max
+Units
+3.3 V LVTTL/LVCMOS
+27
+40
+65
+kΩ
+Table 80: Maximum Toggle Rate
+Efinix recommends that you perform simulations using the IBIS model to determine the maximum toggle rate for
+your design.
+I/O Standard
+Package
+Max Toggle Rate
+Units
+3.3 V LVTTL/LVCMOS
+All
+400
+Mbps
+2.5 V LVCMOS
+All
+400
+Mbps
+1.8 V LVCMOS
+All
+400
+Mbps
+All others
+800
+Mbps
+LVDS
+QFP100F3, QFP144
+600
+Mbps
+www.efinixinc.com
+59
+
+T20 Data Sheet
+Table 81: Single-Ended I/O and LVDS Pins Configured as Single-Ended I/O Rise and Fall Time
+Data are based on the following IBIS simulation setup:
+•
+Weakest drive strength model
+•
+Typical simulation corner setting
+•
+RLC circuit with 6.6 pF capacitance, 16.6 nH inductance, 0.095 ohm resistance, and 25 °C temperature
+Note:  For a more accurate data, you need to perform the simulation with your own circuit.
+Rise Time (TR)
+Fall Time (TF)
+I/O Standard
+Slow Slew
+Rate Enabled
+Slow Slew
+Rate Disabled
+Slow Slew
+Rate Enabled
+Slow Slew
+Rate Disabled
+Units
+3.3 V LVTTL/LVCMOS
+1.13
+1.02
+1.24
+1.17
+ns
+2.5 V LVCMOS
+1.4
+1.3
+1.44
+1.31
+ns
+1.8 V LVCMOS
+2.14
+2.01
+2.05
+1.85
+ns
+LVDS pins configured as 3.3 V
+LVTTL/LVCMOS
+0.45
+0.44
+ns
+Table 82: Block RAM Characteristics
+Speed Grade
+Symbol
+Description
+C3, C4L, I4L
+C4, I4, Q4
+Units
+fMAX
+Block RAM maximum frequency.
+310
+400
+MHz
+Table 83: Multiplier Block Characteristics
+Speed Grade
+Symbol
+Description
+C3, C4L, I4L
+C4, I4, Q4
+Units
+fMAX
+Multiplier block maximum frequency.
+310
+400
+MHz
+www.efinixinc.com
+60
+
+T20 Data Sheet
+DC and Switching Characteristics
+(F324 and F400)
+Table 84: Absolute Maximum Ratings 
+Conditions beyond those listed may cause permanent damage to the device. Device operation at the absolute
+maximum ratings for extended periods of time has adverse effects on the device.
+Symbol
+Description
+Min
+Max
+Units
+VCC
+Core power supply
+-0.5
+1.42
+V
+VCCIO
+I/O bank power supply
+-0.5
+4.6
+V
+VCCA_PLL
+PLL analog power supply
+-0.5
+1.42
+V
+VCCIO_DDR
+DDR power supply
+-0.5
+1.65
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+-0.5
+2.75
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.2 V TX analog power supply for MIPI
+-0.5
+1.42
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.2 V RX analog power supply for MIPI
+-0.5
+1.42
+V
+VIN
+I/O input voltage
+-0.5
+4.6
+V
+IIN
+Maximum current through any pin in
+a powered or unpowered bank when
+forward biasing the clamp diode.(19)
+–
+10
+mA
+TJ
+Operating junction temperature
+-40
+125
+°C
+TSTG
+Storage temperature, ambient
+-55
+150
+°C
+(18) Supply voltage specification applied to the voltage taken at the device pins with respect to ground, not at the power supply.
+(19) Should not exceed a total of 120 mA per bank.
+www.efinixinc.com
+61
+
+T20 Data Sheet
+Table 85: Recommended Operating Conditions (C3, C4,  and I4 Speed Grades)(18)
+Symbol
+Description
+Min
+Typ
+Max
+Units
+VCC
+Core power supply
+1.15
+1.2
+1.25
+V
+1.8 V I/O bank power supply
+1.71
+1.8
+1.89
+V
+2.5 V I/O bank power supply
+2.38
+2.5
+2.63
+V
+VCCIO
+3.3 V I/O bank power supply
+3.14
+3.3
+3.47
+V
+DDR3
+1.425
+1.5
+1.575
+V
+DDR3L
+1.283
+1.35
+1.45
+V
+LPDDR3
+1.14
+1.2
+1.3
+V
+VCCIO_DDR
+LPDDR2
+1.14
+1.2
+1.3
+V
+VCCA_PLL
+PLL analog power supply
+1.15
+1.2
+1.25
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+2.38
+2.5
+2.63
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.2 V TX analog power supply for MIPI
+1.15
+1.2
+1.25
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.2 V RX analog power supply for MIPI
+1.15
+1.2
+1.25
+V
+VIN
+I/O input voltage(20)
+-0.3
+–
+VCCIO
++ 0.3
+V
+TJCOM
+Operating junction temperature, commercial
+0
+–
+85
+°C
+TJIND
+Operating junction temperature, industrial
+-40
+–
+100
+°C
+(20) Values applicable to both input and tri-stated output configuration.
+www.efinixinc.com
+62
+
+T20 Data Sheet
+Table 86: Recommended Operating Conditions (C4L and I4L Speed Grades) (18)
+Symbol
+Description
+Min
+Typ
+Max
+Units
+VCC
+Core power supply
+1.05
+1.1
+1.15
+V
+1.8 V I/O bank power supply
+1.71
+1.8
+1.89
+V
+2.5 V I/O bank power supply
+2.38
+2.5
+2.63
+V
+VCCIO
+3.3 V I/O bank power supply
+3.14
+3.3
+3.47
+V
+DDR3
+1.425
+1.5
+1.575
+V
+DDR3L
+1.283
+1.35
+1.45
+V
+LPDDR3
+1.14
+1.2
+1.3
+V
+VCCIO_DDR
+LPDDR2
+1.14
+1.2
+1.3
+V
+VCCA_PLL
+PLL analog power supply
+1.05
+1.1
+1.15
+V
+VCC25A_MIPI0
+VCC25A_MIPI1
+2.5 V analog power supply for MIPI
+2.38
+2.5
+2.63
+V
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+1.2 V TX analog power supply for MIPI
+1.05
+1.1
+1.15
+V
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+1.2 V RX analog power supply for MIPI
+1.05
+1.1
+1.15
+V
+VIN
+I/O input voltage(21)
+-0.3
+–
+VCCIO
++ 0.3
+V
+TJCOM
+Operating junction temperature, commercial
+0
+–
+85
+°C
+TJIND
+Operating junction temperature, industrial
+-40
+–
+100
+°C
+Table 87: Power Supply Ramp Rates
+Symbol
+Description
+Min
+Max
+Units
+tRAMP
+Power supply ramp rate for all
+supplies.
+VCCIO/10
+10
+V/ms
+(21) Values applicable to both input and tri-stated output configuration.
+www.efinixinc.com
+63
+
+T20 Data Sheet
+Table 88: Single-Ended I/O DC Electrical Characteristics
+VIL (V)
+VIH (V)
+VOL (V)
+VOH (V)
+I/O Standard
+Min
+Max
+Min
+Max
+Max
+Min
+3.3 V LVCMOS
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.2
+VCCIO - 0.2
+3.3 V LVTTL
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.4
+2.4
+2.5 V LVCMOS
+-0.3
+0.7
+1.7
+VCCIO + 0.3
+0.5
+1.8
+1.8 V LVCMOS
+-0.3
+0.35 * VCCIO
+0.65 * VCCIO
+VCCIO + 0.3
+0.45
+VCCIO - 0.45
+Table 89: Single-Ended I/O and Dedicated Configuration Pins Schmitt Trigger Buffer Characteristic
+Voltage (V)
+VT+ (V) Schmitt
+Trigger Low-to-
+High Threshold
+VT- (V) Schmitt
+Trigger High-to-
+Low Threshold
+Input Leakage
+Current (μA)
+Tri-State Output
+Leakage
+Current (μA)
+3.3
+1.73
+1.32
+±10
+±10
+2.5
+1.37
+1.01
+±10
+±10
+1.8
+1.05
+0.71
+±10
+±10
+Table 90: Single-Ended I/O Buffer Drive Strength Characteristics
+Junction temperature at TJ = 25 °C, power supply at nominal voltage.
+CDONE has a drive strength of 1.
+I/O Standard
+3.3 V
+2.5 V
+1.8 V
+Drive Strength
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+1
+14.4
+8.0
+9.1
+8.0
+5.1
+4.4
+2
+19.1
+10.5
+12.2
+10.5
+6.8
+5.8
+3
+23.9
+13.3
+15.2
+13.4
+8.6
+7.3
+4
+28.7
+15.8
+18.2
+15.9
+10.3
+8.6
+Table 91: Single-Ended I/O Internal Weak Pull-Up and Pull-Down Resistance
+CDONE and CRESET_N also have an internal weak pull-up with these values.
+Internal Pull-Up
+Internal Pull-Down
+I/O Standard
+Min
+Typ
+Max
+Min
+Typ
+Max
+Units
+3.3 V LVTTL/LVCMOS
+27
+40
+65
+30
+47
+83
+kΩ
+2.5 V LVCMOS
+35
+55
+120
+37
+62
+118
+kΩ
+1.8 V LVCMOS
+70
+90
+200
+80
+99
+300
+kΩ
+www.efinixinc.com
+64
+
+T20 Data Sheet
+Table 92: LVDS Pins Configured as Single-Ended I/O DC Electrical Characteristics
+VIL (V)
+VIH (V)
+VOL (V)
+VOH (V)
+I/O Standard
+Min
+Max
+Min
+Max
+Max
+Min
+3.3 V LVCMOS
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.2
+VCCIO - 0.2
+3.3 V LVTTL
+-0.3
+0.8
+2
+VCCIO + 0.3
+0.4
+2.4
+2.5 V LVCMOS
+-0.3
+0.7
+1.7
+VCCIO + 0.3
+0.5
+1.8
+1.8 V LVCMOS
+-0.3
+0.35 * VCCIO
+0.65 * VCCIO
+VCCIO + 0.3
+0.45
+VCCIO - 0.45
+Table 93: LVDS Pins Configured as Single-Ended I/O DC Electrical Characteristics
+Voltage (V)
+Input Leakage Current (μA)
+Tri-State Output Leakage Current (μA)
+3.3
+±10
+±10
+Table 94: LVDS Pins Configured as Single-Ended I/O Buffer Drive Strength Characteristics
+Junction temperature at TJ = 25 °C, power supply at nominal voltage.
+I/O Standard
+3.3 V
+2.5 V
+1.8 V
+Drive Strength
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+IOH (mA)
+IOL (mA)
+1
+14.4
+8.0
+9.1
+8.0
+5.1
+4.4
+2
+19.1
+10.5
+12.2
+10.5
+6.8
+5.8
+3
+23.9
+13.3
+15.2
+13.4
+8.6
+7.3
+4
+28.7
+15.8
+18.2
+15.9
+10.3
+8.6
+Table 95: LVDS Pins Configured as Single-Ended I/O Internal Weak Pull-Up Resistance
+Internal Pull-Up
+I/O Standard
+Min
+Typ
+Max
+Units
+3.3 V LVTTL/LVCMOS
+27
+40
+65
+kΩ
+2.5 V LVCMOS
+35
+55
+95
+kΩ
+1.8 V LVCMOS
+53
+90
+167
+kΩ
+www.efinixinc.com
+65
+
+T20 Data Sheet
+Table 96: Single-Ended I/O and LVDS Pins Configured as Single-Ended I/O Rise and Fall Time
+Data are based on the following IBIS simulation setup:
+•
+Weakest drive strength model
+•
+Typical simulation corner setting
+•
+RLC circuit with 6.6 pF capacitance, 16.6 nH inductance, 0.095 ohm resistance, and 25 °C temperature
+Note:  For a more accurate data, you need to perform the simulation with your own circuit.
+Rise Time (TR)
+Fall Time (TF)
+I/O Standard
+Slow Slew
+Rate Enabled
+Slow Slew
+Rate Disabled
+Slow Slew
+Rate Enabled
+Slow Slew
+Rate Disabled
+Units
+3.3 V LVTTL/LVCMOS
+1.13
+1.02
+1.24
+1.17
+ns
+2.5 V LVCMOS
+1.4
+1.3
+1.44
+1.31
+ns
+1.8 V LVCMOS
+2.14
+2.01
+2.05
+1.85
+ns
+LVDS pins configured as 3.3 V
+LVTTL/LVCMOS
+0.45
+0.44
+ns
+Table 97: Maximum Toggle Rate
+Efinix recommends that you perform simulations using the IBIS model to determine the maximum toggle rate for
+your design.
+I/O Standard
+Max Toggle Rate
+Units
+3.3 V LVTTL/LVCMOS
+400
+Mbps
+2.5 V LVCMOS
+400
+Mbps
+1.8 V LVCMOS
+400
+Mbps
+LVDS
+800
+Mbps
+Table 98: Block RAM Characteristics
+Speed Grade
+Symbol
+Description
+C3, C4L, I4L
+C4, I4
+Units
+fMAX
+Block RAM maximum frequency.
+310
+400
+MHz
+Table 99: Multiplier Block Characteristics
+Speed Grade
+Symbol
+Description
+C3, C4L, I4L
+C4, I4
+Units
+fMAX
+Multiplier block maximum frequency.
+310
+400
+MHz
+www.efinixinc.com
+66
+
+T20 Data Sheet
+LVDS I/O Electrical and Timing Specifications
+The LVDS pins comply with the EIA/TIA-644 electrical speciﬁcations.
+Note:  The LVDS RX supports the sub-lvds, slvs, HiVcm, RSDS and 3.3 V LVPECL differential I/O standards
+with a transfer rate of up to 800 Mbps.
+Table 100: LVDS I/O Electrical Specifications
+Parameter
+Description
+Test Conditions/
+Options
+Min
+Typ
+Max
+Unit
+VCCIO
+LVDS I/O Supply Voltage
+–
+2.97
+3.3
+3.63
+V
+LVDS TX
+Reduce VOD Swing
+option disabled
+250
+350
+450
+mV
+VOD
+Output Differential Voltage
+Reduce VOD Swing
+option enabled
+150
+200
+250
+mV
+Δ VOD
+Change in VOD
+–
+–
+–
+50
+mV
+VOCM
+Output Common Mode Voltage
+RT = 100 Ω
+1,125
+1,250
+1,375
+mV
+Δ VOCM
+Change in VOCM
+–
+–
+–
+50
+mV
+VOH
+Output High Voltage
+RT = 100 Ω
+–
+–
+1475
+mV
+VOL
+Output Low Voltage
+RT = 100 Ω
+925
+–
+–
+mV
+ISAB
+Output Short Circuit Current
+–
+–
+–
+24
+mA
+LVDS RX
+VID
+Input Differential Voltage
+–
+100
+–
+600
+mV
+VICM
+Input Common Mode Voltage
+–
+100
+–
+2,000
+mV
+VTH
+Differential Input Threshold
+–
+-100
+–
+100
+mV
+IIL
+Input Leakage Current
+–
+–
+–
+20
+μA
+Figure 30: LVDS RX I/O Electrical Specification Waveform
+-ve
+0 V
++ve
+VID
+VICM
+www.efinixinc.com
+67
+
+T20 Data Sheet
+Table 101: LVDS Timing Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+tLVDS_CPA
+LVDS TX reference clock phase accuracy
+-5
+–
++5
+%
+LVDS TX lane-to-lane skew (edge-aligned)
+–
+–
+200
+ps
+tLVDS_skew
+LVDS TX lane-to-lane skew (center-aligned)
+–
+–
+250
+ps
+tLVDS_SU
+LVDS RX Data to CLK setup time
+344
+–
+–
+ps
+tLVDS_HD
+LVDS RX Data to CLK hold time
+344
+–
+–
+ps
+Figure 31: LVDS RX Timing (Center-Aligned)
+Data Lane
+Clock Lane
+1 x UI
+n x UI
+TSU(0)
+THD(0)
+TSU
+THD
+TSU
+THD
+Figure 32: LVDS RX Timing (Edge-Aligned)
+Data Lane
+Clock Lane
+0.5 UI
+1.5 UI
+(n + 0.5) UI
+TSU(0)
+THD(0)
+TSU
+THD
+TSU
+THD
+ESD Performance
+Refer to the Trion Reliability Report for ESD performance data.
+www.efinixinc.com
+68
+
+T20 Data Sheet
+MIPI Electrical Specifications and Timing
+The MIPI D-PHY transmitter and receiver are compliant to the MIPI Alliance Speciﬁcation
+for D-PHY Revision 1.1.
+Table 102: High–Speed MIPI D–PHY Transmitter (TX) DC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+VCMTX
+High–speed transmit static common–mode voltage
+150
+200
+250
+mV
+|Δ VCMTX(1,0)|
+VCMTX mismatch when output is Differential–1 or
+Differential–0
+–
+–
+5
+mV
+|VOD|
+High–speed transmit differential voltage
+140
+200
+270
+mV
+|Δ VOD|
+VOD mismatch when output is Differential–1 or
+Differential–0
+–
+–
+14
+mV
+VOHHS
+High–speed output high voltage
+–
+–
+360
+mV
+ZOS
+Single ended output impedance
+40
+50
+60
+Ω
+Δ ZOS
+Single ended output impedance mismatch
+–
+–
+20
+%
+Table 103: High–Speed MIPI D–PHY Transmitter (TX) AC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+ΔVCMTX(HF)
+Common-level variations above 450 MHz
+–
+–
+15
+mVRMS
+ΔVCMTX(LF)
+Common-level variations between 50 to 450 MHz
+–
+–
+25
+mVPEAK
+Rise and fall time < 1.0 Gbps
+–
+–
+0.3
+UI
+Rise and fall time > 1.0 Gbps
+–
+–
+0.35
+UI
+tR and tF
+Rise and fall time > 1.5 Gbps
+–
+–
+0.4
+UI
+Table 104: Low–Power MIPI D–PHY Transmitter (TX) DC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+VOH
+Thevenin output high level
+0.95
+1.2
+1.3
+V
+VOL
+Thevenin output low level
+–50
+–
+50
+mV
+ZOLP
+Output impedance of low–power transmitter
+110
+–
+–
+Ω
+www.efinixinc.com
+69
+
+T20 Data Sheet
+Table 105: Low-Power MIPI D–PHY Transmitter (TX) AC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+TRLP/TFLP
+15%-85% rise time and fall time
+–
+–
+25
+ns
+TREOT
+30%-85% rise time and fall time
+–
+–
+35
+ns
+Pulse width of first LP exclusive-OR clock pulse
+after Stop state or last pulse before Stop state
+40
+–
+–
+ns
+TLP-PULSE-TX
+Pulse width of all other pulses
+–
+20
+–
+ns
+TLP-PER-TX
+Period of the LP exclusive-OR clock
+90
+–
+–
+ns
+Slew rate at CLOAD = 50 pF < 1.5 Gbps
+30
+–
+150
+mV/ns
+δV/δtSR
+Slew rate at CLOAD = 50 pF > 1.5 Gbps
+25
+–
+150
+mV/ns
+Table 106: High–Speed MIPI D–PHY Receiver (RX) DC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+VCMRX(DC)
+Common mode voltage high–speed receive mode
+70
+–
+330
+mV
+ZID
+Differential input impedance
+80
+100
+120
+Ω
+Table 107: High–Speed MIPI D–PHY Receiver (RX) AC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+ΔVCMRX(HF)
+Common-point interference above 450 MHz
+–
+–
+50
+mV
+ΔVCMRX(LF)
+Common-point interference between 50 MHz to
+450 MHz
+–
+–
+25
+mV
+VIDTH
+Differential input high threshold
+–
+–
+40
+mV
+VIDTL
+Differential input low threshold
+–40
+–
+–
+mV
+VIHHS
+Single–ended input high voltage
+–
+–
+460
+mV
+VILHS
+Single–ended input low voltage
+–40
+–
+–
+mV
+VTERM–EN
+Single–ended threshold for high–speed termination
+enable
+–
+–
+450
+mV
+CCP
+Common-point termination
+–
+–
+60
+pF
+Table 108: Low–Power MIPI D–PHY Receiver (RX) DC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+VIH
+Logic 1 input voltage
+740
+–
+–
+mV
+VIL
+Logic 0 input voltage, not in ULP state
+–
+–
+550
+mV
+VIL–ULPS
+Logic 0 input voltage, ULP state
+–
+–
+300
+mV
+VHYST
+Input hysteresis
+25
+–
+–
+mV
+www.efinixinc.com
+70
+
+T20 Data Sheet
+Table 109: Low-Power MIPI D–PHY Receiver (RX) AC Specifications
+Parameter
+Description
+Min
+Typ
+Max
+Unit
+TMIN-RX
+Minimum pulse width response
+20
+–
+–
+ns
+VINT
+Peak interference amplitude
+–
+–
+200
+mV
+fINT
+Interference frequency
+450
+–
+–
+MHz
+MIPI Power-Up Timing
+Apply power to VCC12A_MIPIx_TX, VCC12A_MIPIx_RX, , and VCC25A_MIPIx at least
+tMIPI_POWER after VCC is stable. See Power Up Sequence on page 52 for a power-up sequence
+diagram.
+Table 110: MIPI Timing
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+tMIPI_POWER
+Minimum time after VCC is stable before
+powering MIPI power supplies.
+1
+–
+–
+μs
+MIPI Reset Timing
+The MIPI RX and TX interfaces have two reset signals (DPHY_RSTN and RSTN) to reset the
+D-PHY controller logic. These signals are active low, and you should use them together to
+reset the MIPI interface.
+The following waveform illustrates the minimum time required to reset the MIPI interface.
+Figure 33: DPHY_RSTN and RSTN Timing Diagram
+DPHY_RSTN
+RX or TX Data
+tINIT_A 100 us Minimum
+RSTN
+tINIT_D 1 clk Minimum
+Table 111: MIPI Timing
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+tINIT_A
+Minimum time between the rising edge of
+DPHY_RSTN and the start of MIPI RX or TX data.
+100
+–
+–
+μs
+tINIT_D
+Minimum time between the rising edge of
+RSTN and the start of MIPI RX or TX data.
+1
+–
+–
+clk
+www.efinixinc.com
+71
+
+T20 Data Sheet
+PLL Timing and AC Characteristics
+The following tables describe the PLL timing and AC characteristics.
+Table 112: PLL Timing (C3, C4, Q4, and I4)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+Input clock frequency from core.
+10
+–
+330
+MHz
+Input clock frequency from GPIO.
+10
+–
+200
+MHz
+FIN
+(22)
+Input clock frequency from LVDS.
+10
+–
+400
+MHz
+FOUT
+Output clock frequency.
+0.24
+–
+500
+MHz
+FOUT
+Output clock frequency for PLL BR0 CLKOUT0 (DDR
+PHY input clock). F324 and F400 packages only.
+0.24
+–
+533
+MHz
+PLL VCO frequency for internal feedback mode.
+500
+–
+1,600
+MHz
+FVCO
+PLL VCO frequency for local and core feedback mode
+500
+–
+3,600
+MHz
+Post-divider PLL VCO frequency if all output divider
+values <= 64
+62.5
+–
+1,800
+MHz
+FPLL
+Post-divider PLL VCO frequency if any of the output
+divider value > 64
+62.5
+–
+1,400
+MHz
+FPFD
+Phase frequency detector input frequency.
+10
+–
+100
+MHz
+Table 113: PLL Timing (C4L and I4L)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+Input clock frequency from core.
+10
+–
+330
+MHz
+Input clock frequency from GPIO.
+10
+–
+200
+MHz
+FIN
+(22)
+Input clock frequency from LVDS.
+10
+–
+400
+MHz
+FOUT
+Output clock frequency.
+0.24
+–
+500
+MHz
+FOUT
+Output clock frequency for PLL BR0 CLKOUT0 (DDR
+PHY input clock). F324 and F400 packages only.
+0.24
+–
+533
+MHz
+PLL VCO frequency for internal feedback mode.
+500
+–
+1,600
+MHz
+FVCO
+PLL VCO frequency for local and core feedback mode
+500
+–
+3,200
+MHz
+Post-divider PLL VCO frequency if all output divider
+values <= 64
+62.5
+–
+1,600
+MHz
+FPLL
+Post-divider PLL VCO frequency if any of the output
+divider value > 64
+62.5
+–
+1,200
+MHz
+FPFD
+Phase frequency detector input frequency.
+10
+–
+100
+MHz
+(22) When using the Dynamic clock source mode, the maximum input clock frequency is limited by the slowest clock
+frequency of the assigned clock source. For example, the maximum input clock frequency of a Dynamic clock source
+mode from core and GPIO is 200 MHz.
+www.efinixinc.com
+72
+
+T20 Data Sheet
+Table 114: PLL AC Characteristics(23)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+tDT
+Output clock duty cycle.
+40
+50
+60
+%
+tOPJIT (PK - PK)
+(24)
+Output clock period jitter (PK-PK).
+–
+–
+200
+ps
+PLL input clock from GPIO, HIGH/LOW
+pulse width.
+2.25
+–
+–
+ns
+tPLL_HLW
+PLL input clock from LVDS, HIGH/LOW
+pulse width.
+1.13
+–
+–
+ns
+tILJIT (PK - PK)
+Input clock long-term jitter (PK-PK)
+–
+–
+800
+ps
+tLOCK
+PLL lock-in time.
+–
+–
+0.5
+ms
+(23) Test conditions at 3.3 V and room temperature.
+(24) The output jitter specification applies to the PLL jitter when an input jitter of 20 ps is applied.
+www.efinixinc.com
+73
+
+T20 Data Sheet
+Configuration Timing
+The T20 FPGA has the following conﬁguration timing speciﬁcations. Refer to
+AN 006: Conﬁguring Trion FPGAs for detailed conﬁguration information.
+Table 115: Timing Parameters for All Modes (WLCSP80, Q100F3, Q144, F169, and F256 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+tCRESET_N
+Minimum creset_n low pulse width required to
+trigger re-configuration.
+320
+–
+–
+ns
+tUSER
+Minimum configuration duration after CDONE
+goes high before entering user mode.(25)(26)
+Test condition at 10 kΩ pull-up resistance and
+10 pF output loading on CDONE pin.
+12
+–
+(27)
+μs
+Table 116: Timing Parameters for All Modes (F324 and F400 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+tCRESET_N
+Minimum creset_n low pulse width required to
+trigger re-configuration.
+320
+–
+–
+ns
+tUSER
+Minimum configuration duration after CDONE
+goes high before entering user mode.(25)(26)
+Test condition at 10 kΩ pull-up resistance and
+10 pF output loading on CDONE pin.
+25
+–
+(27)
+μs
+(25) The FPGA may go into user mode before tUSER has elapsed. However, Efinix recommends that you keep the system
+interface to the FPGA in reset until tUSER has elapsed.
+(26) For JTAG programming, the min tUSER configuration time is required after CDONE goes high and FPGA receives the
+ENTERUSER instruction from JTAG host (TAP controller in UPDATE_IR state).
+(27) See Maximum tUSER for SPI Active and Passive Modes on page 80
+www.efinixinc.com
+74
+
+T20 Data Sheet
+SPI Active
+Figure 34: SPI Active Mode (x1) Timing Sequence
+CRESET_N
+SS_N
+User Mode
+CCK
+User Mode
+CDI0
+W
+R
+SA
+Du
+User Mode
+CDI1
+H
+D D
+D D
+User Mode
+CSO
+User Mode
+CDONE
+tCRESET_N
+tDMIN
+Max. 1 µs
+Programming
+User Mode
+SPI Channel
+Legend:
+D: Data
+Du: Dummy
+H: Header
+SA: Start Address
+W: Wake Up
+R: Read
+tUSER
+tH
+tSU
+The JTAG pins must be inactive during SPI active configuration.
+Table 117: Active Mode Timing Parameters
+Symbol
+Parameter
+Frequency
+Min
+Typ
+Max
+Units
+DIV4(29)
+14
+20
+26
+MHz
+fMAX_M
+Active mode configuration clock
+frequency.(28)
+DIV8
+7
+10
+13
+MHz
+tSU
+Setup time. Test condition at 3.3 V I/O
+standard and 0 pF output loading.
+–
+7.5
+–
+–
+ns
+tH
+Hold time. Test condition at 3.3 V I/O
+standard and 0 pF output loading.
+–
+1
+–
+–
+ns
+tDMIN
+Minimum time between deassertion of
+CRESET_N to first valid configuration
+data.
+–
+1.2
+–
+–
+μs
+Note:  Refer to Power Up Sequence on page 52 for details on the power-up requirements.
+(29) For Q100F3 packages, the total CLOAD connected to each SPI pin must be less than 25 pF.
+(28) For parallel daisy chain x2 and x4, the active configuration clock frequency, fMAX_M, must be set to DIV4.
+www.efinixinc.com
+75
+
+T20 Data Sheet
+SPI Passive
+Figure 35: SPI Passive Mode (x1) Timing Sequence
+Legend:
+D: Data
+H: Header
+CRESET_N
+SS_N
+User Mode
+CCK
+User Mode
+CDI0
+H
+D
+D
+D
+D
+D
+D
+D
+D
+D
+D
+D
+User Mode
+CSO
+User Mode
+CDONE
+tCRESET_N
+Max. 1 µs
+SPI Channel
+tDMIN
+tUSER
+D
+Min. 100
+CCK Cycles
+tH
+tSU
+tCLKL
+tCLKH
+Programming
+User Mode
+The JTAG pins must be inactive during SPI passive configuration.
+Table 118: Passive Mode Timing Parameters (W80, Q100F3, Q144, F169, and F256 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+Passive mode X1 configuration clock
+frequency.
+–
+–
+25
+MHz
+Passive mode X2, X4 or X8 configuration
+clock frequency.
+–
+–
+50
+MHz
+fMAX_S
+Passive mode X16 or X32 configuration
+clock frequency.
+–
+–
+100
+MHz
+tCLKH
+Configuration clock pulse width high.
+0.48*1/
+fMAX_S
+–
+–
+ns
+tCLKL
+Configuration clock pulse width low.
+0.48*1/
+fMAX_S
+–
+–
+ns
+tSU
+Setup time.
+6
+–
+–
+ns
+tH
+Hold time.
+1
+–
+–
+ns
+tDMIN
+Minimum time between deassertion of
+CRESET_N to first valid configuration data.
+1.2
+–
+–
+μs
+www.efinixinc.com
+76
+
+T20 Data Sheet
+Table 119: Passive Mode Timing Parameters (F324 and F400 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+Passive mode X1 configuration clock
+frequency.
+–
+–
+25
+MHz
+Passive mode X2, X4 or X8 configuration
+clock frequency.
+–
+–
+50
+MHz
+fMAX_S
+Passive mode X16 or X32 configuration
+clock frequency.
+–
+–
+100
+MHz
+tCLKH
+Configuration clock pulse width high.
+0.48*1/
+fMAX_S
+–
+–
+ns
+tCLKL
+Configuration clock pulse width low.
+0.48*1/
+fMAX_S
+–
+–
+ns
+tSU
+Setup time.
+6.5
+–
+–
+ns
+tH
+Hold time.
+1
+–
+–
+ns
+tDMIN
+Minimum time between deassertion of
+CRESET_N to first valid configuration data.
+1.2
+–
+–
+μs
+Note:  Refer to Power Up Sequence on page 52 for details on the power-up requirements.
+www.efinixinc.com
+77
+
+T20 Data Sheet
+JTAG
+Figure 36: JTAG Programming Waveform (WLCSP80, Q100F3, Q144, F169, and F256 Packages)
+Legend: S. DR: Shift DR
+CRESET_N
+TCK
+TMS
+S. DR
+S. IR
+TDI
+P
+D0
+D2 D3 D4 D5
+Dn
+-2
+Dn
+-1
+EU
+TDO
+D1 D2 D3 D4 D5
+Dn
+-2
+Dn
+-1
+CSO
+User Mode
+CDONE
+tCRESET_N
+Min. 4,000
+TCK Cycles
+1 TCK 
+Latency
+Programming
+User Mode
+JTAG Channel
+S. IR: Shift IR
+EU: ENTERUSER
+P: PROGRAM
+tDMIN
+tUSER
+S. DR
+D0
+D1
+tTDIH
+tTDISU
+tTMSH
+tTMSSU
+tTCKTDO
+The SPI bus must be inactive during JTAG configuration.
+Important:  Refer to Power Up Sequence on page 52 for power-up details.
+Table 120: JTAG Mode Timing Parameters (W80, Q100F3, Q144, F169, and F256 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+fTCK
+TCK frequency.
+–
+–
+25
+MHz
+tTDISU
+TDI setup time.
+3.5
+–
+–
+ns
+tTDIH
+TDI hold time.
+1
+–
+–
+ns
+tTMSSU
+TMS setup time.
+3
+–
+–
+ns
+tTMSH
+TMS hold time.
+1
+–
+–
+ns
+tTCKTDO
+TCK falling edge to TDO output.
+–
+–
+10.5(30)
+ns
+tDMIN
+Minimum time between deassertion of
+CRESET_N to first valid configuration data.
+1.2
+–
+–
+μs
+(30) 0 pf output loading.
+www.efinixinc.com
+78
+
+T20 Data Sheet
+Figure 37: JTAG Programming Waveform (F324 and F400 Packages)
+Legend:
+S. DR: Shift DR
+JTAG Channel
+S. IR: Shift IR
+EU: ENTERUSER
+P: PROGRAM
+TCK
+TMS
+S.DR
+S.IR
+TDI
+P
+D0
+D2 D3 D4 D5
+Dn
+-2
+Dn
+-1
+EU
+TDO
+D1 D2 D3 D4 D5
+Dn
+-2
+Dn
+-1
+CSO
+User Mode
+CDONE
+1 TCK 
+Latency
+Programming
+User Mode
+Min. 100 
+TCK Cycles
+tUSER
+D1
+D0
+S.DR
+tTDIH
+tTDISU
+tTMSH
+tTMSSU
+tTCKTDO
+The SPI bus must be inactive during JTAG configuration.
+Important:  Refer to Power Up Sequence on page 52 for power-up details.
+Table 121: JTAG Mode Timing Parameters (F324 and F400 Packages)
+Symbol
+Parameter
+Min
+Typ
+Max
+Units
+fTCK
+TCK frequency.
+–
+–
+25
+MHz
+tTDISU
+TDI setup time.
+3.5
+–
+–
+ns
+tTDIH
+TDI hold time.
+2.5
+–
+–
+ns
+tTMSSU
+TMS setup time.
+3
+–
+–
+ns
+tTMSH
+TMS hold time.
+2.5
+–
+–
+ns
+tTCKTDO
+TCK falling edge to TDO output.
+–
+–
+10.5
+ns
+tDMIN
+Minimum time between deassertion of
+CRESET_N to first valid configuration data.
+1.2
+–
+–
+μs
+Note:  Refer to Power Up Sequence on page 52 for details on the power-up requirements.
+www.efinixinc.com
+79
+
+T20 Data Sheet
+Maximum tUSER for SPI Active and Passive
+Modes
+The following waveform illustrates the minimum and maximum values for tUSER.
+A
+B
+CDONE
+FPGA
+Configuration
+Mode
+User
+Mode
+tUSER
+tUSER_MIN
+•
+Point A—User-deﬁned trigger point to start counter on tUSER
+•
+Point B—VIH (with Schmitt Trigger) of Trion I/Os
+The maximum tUSER value can be derived based on the following formula:
+Table 122: tUSER Maximum
+Configuration Setup
+tUSER Maximum
+Single Trion FPGA
+Slave FPGA in a dual-Trion FPGA SPI chain
+tUSER = t(from A to B) + tUSER_MIN
+Master FPGA in a dual-Trion FPGA SPI chain
+tUSER = (1344 / SPI_WIDTH) * CCK period + tUSER_MIN + t(from A to B)
+www.efinixinc.com
+80
+
+T20 Data Sheet
+Pinout Description
+The following tables describe the pinouts for power, ground, conﬁguration, and interfaces.
+Table 123: General Pinouts
+Function
+Group
+Direction
+Description
+VCC
+Power
+–
+Core power supply.
+VCCA_xx
+Power
+–
+PLL analog power supply. xx indicates location:
+TL: Top left, TR: Top right, BR: bottom right
+VCCIOxx
+Power
+–
+I/O pin power supply. xx indicates the bank location:
+1A: Bank 1A, 3E: Bank 3E
+4A: Bank 4A (only for 3.3 V) , 4B: Bank 4B (only for 3.3 V)
+VCCIOxx_yy_zz
+Power
+–
+Power for I/O banks that are shorted together. xx, yy, and zz are
+the bank locations. For example:
+VCCIO1B_1C shorts banks 1B and 1C
+VCCIO3C_TR_BR shorts banks 3C, TR, and BR
+GND
+Ground
+–
+Ground.
+CLKn
+Alternate
+Input
+Global clock network input. n is the number.
+The number of inputs is package dependent.
+CTRLn
+Alternate
+Input
+Global network input used for high fanout and global reset. n is
+the number. The number of inputs is package dependent.
+PLLIN
+Alternate
+Input
+PLL reference clock resource. There are 5 PLL reference clock
+resource assignments. Assign the reference clock resource
+based on the PLL you are using.
+MREFCLK
+Alternate
+Input
+MIPI TX PLL reference clock source.
+GPIOx_n
+GPIO
+I/O
+General-purpose I/O for user function. User I/O pins are single-
+ended.
+x: Indicates the bank (L or R)
+n: Indicates the GPIO number.
+GPIOx_n_yyy
+GPIOx_n_yyy_zzz
+GPIOx_zzzn
+GPIO
+Multi-
+Function
+I/O
+Multi-function, general-purpose I/O. These pins are single
+ended. If these pins are not used for their alternate function, you
+can use them as user I/O pins.
+x: Indicates the bank; left (L), right (R), or bottom (B).
+n: Indicates the GPIO number.
+yyy, yyy_zzz: Indicates the alternate function.
+zzzn: Indicates LVDS TX or RX and number.
+TXNn, TXPn
+LVDS
+I/O
+LVDS transmitter (TX). n: Indicates the number.
+RXNn, RXPn
+LVDS
+I/O
+LVDS receiver (RX). n: Indicates the number.
+CLKNn, CLKPn
+LVDS
+I/O
+Dedicated LVDS receiver clock input. n: Indicates the number.
+RXNn_EXTFBn
+RXPn_EXTFBn
+LVDS
+I/O
+LVDS PLL external feedback. n: Indicates the number.
+REF_RES
+–
+–
+REF_RES is a reference resistor to generate constant current for
+LVDS TX. Connect a 12 kΩ resistor with a tolerance of ±1% to
+the REF_RES pin with respect to ground. If none of the pins in a
+bank are used for LVDS, leave this pin floating.
+www.efinixinc.com
+81
+
+T20 Data Sheet
+Table 124: Dedicated Configuration Pins
+These pins cannot be used as general-purpose I/O after configuration.
+All the pins are in internal weak pull-up during configuration except for TCK and TDO.
+Pins
+Direction
+Description
+External Weak
+Pull- Up/
+Pull Down
+Requirement
+CDONE
+I/O
+Configuration done status pin. CDONE is an open drain output;
+connect it to an external pull-up resistor to VCCIO. When
+CDONE = 1, the configuration is complete and the FPGA
+enters user mode. You can hold CDONE low and release it to
+synchronize the FPGAs entering user mode.
+Pull up
+CRESET_N
+Input
+Active-low FPGA reset and re-configuration trigger.
+Pulse CRESET_N low for a duration of tcreset_N before releasing
+CRESET_N from low to high to initiate FPGA re-configuration.
+This pin does not perform a system reset.
+Pull up
+TCK
+Input
+JTAG test clock input (TCK). The rising edge loads signals
+applied at the TAP input pins (TMS and TDI). The falling edge
+clocks out signals through the TAP TDO pin.
+Pull up
+TMS
+Input
+JTAG test mode select input (TMS). The I/O sequence on this
+input controls the test logic operation . The signal value typically
+changes on the falling edge of TCK. TMS has an internal weak
+pull-up; when it is not driven by an external source, the test logic
+perceives a logic 1.
+Pull up
+TDI
+Input
+JTAG test data input (TDI). Data applied at this serial input is fed
+into the instruction register or into a test data register depending
+on the sequence previously applied at TMS. Typically, the signal
+applied at TDI changes state following the falling edge of TCK
+while the registers shift in the value received on the rising edge.
+Like TMS, TDI has an internal weak pull-up; when it is not driven
+from an external source, the test logic perceives a logic 1.
+Pull up
+TDO
+Output
+JTAG test data output (TDO). This serial output from the test
+logic is fed from the instruction register or a test data register
+depending on the sequence previously applied at TMS. The shift
+out content is based on the issued instruction. The signal driven
+through TDO changes state following the falling edge of TCK.
+When data is not being shifted through the device, TDO is set to
+an inactive drive state (e.g., high-impedance).
+Pull up
+Note:  All dedicated configuration pins have Schmitt Trigger buffer. See Table 73: Single-Ended I/O and
+Dedicated Configuration Pins Schmitt Trigger Buffer Characteristic on page 58 for the Schmitt Trigger
+buffer specifications.
+www.efinixinc.com
+82
+
+T20 Data Sheet
+Table 125: Dual-Purpose Configuration Pins
+In user mode (after configuration), you can use these dual-purpose pins as general I/O.
+Pins
+Direction
+Description
+Use External
+Weak Pull-Up
+CBUS[2:0]
+Input
+Configuration bus width select. CBUS has an internal weak
+pull-up. However, Efinix recommends that you use an external
+pull-up accordingly. See Selecting the Configuration Mode in
+AN 006: Configuring Trion FPGAs.
+Pull up or
+pull down(31)
+CBSEL[1:0]
+Input
+Multi-image configuration selection pin. This function is not
+applicable to single-image bitstream configuration or internal
+reconfiguration (remote update).
+Connect CBSEL[1:0] to the external resistors for the image you
+want to use:
+00 for image 1
+01 for image 2
+10 for image 3
+11 for image 4
+0: Connect to an external weak pull down.
+1: Connect to an external weak pull up.
+Pull up or
+pull down (32)
+CCK
+I/O
+Passive SPI input configuration clock or active SPI output
+configuration clock (active low). Includes an internal weak pull-up.
+Important:  The CCK pin in Q100F3 packages are only
+available in user mode when the LVDS TX resources are
+not in use. The CCK pin should not be toggled when any
+LVDS TX is used.
+Optional(33)
+CDIn
+I/O
+n is a number from 0 to 31 depending on the SPI configuration.
+0: Passive serial data input or active serial output.
+1: Passive serial data output or active serial input.
+n: Parallel I/O.
+In multi-bit daisy chain connection, the CDI (31:0) connects to the
+data bus in parallel.
+Optional(33)
+CSI
+Input
+Chip select.
+0: The FPGA is not selected or enabled and will not be
+configured.
+1: Selects the FPGA for all configuration modes. CSI must remain
+high throughout all configuration modes.
+Pull up
+CSO
+Output
+Chip select output. Selects the next device for cascading
+configuration.
+N/A
+NSTATUS
+Output
+Status (active low).
+Indicates a configuration error. When the FPGA drives this pin
+low, it indicates either an ID mismatch or a failed bitstream CRC
+check. Refer to Table 129: I/O Pin States on page 86.
+N/A
+(31) Optional for x1 mode.
+(32) Not applicable to single-image or remote update.
+(33) Optional unless pull-up is required by external load.
+www.efinixinc.com
+83
+
+T20 Data Sheet
+Pins
+Direction
+Description
+Use External
+Weak Pull-Up
+SS_N
+Input
+SPI configuration mode select. The FPGA senses the value of
+SS_N when it comes out of reset (i.e., CRESET_N transitions from
+low to high).
+0: SPI Passive mode; connect to external weak pull down.
+1: SPI Active mode; connect to external weak pull up.
+In active configuration mode, SS_N is an active-low chip select to
+the flash device (CDI0 - CDI3).
+Optional(33)
+TEST_N
+Input
+Active-low test mode enable signal. Set to 1 to disable test mode.
+During all configuration modes, rely on the external weak pull-up
+or drive this pin high.
+Pull up
+www.efinixinc.com
+84
+
+T20 Data Sheet
+Table 126: MIPI Pinouts (Dedicated)
+n Indicates the number. L indicates the lane
+Function
+Group
+Direction
+Description
+VCC25A_MIPI0
+VCC25A_MIPI1
+Power
+–
+MIPI 2.5 V analog power supply.
+VCC12A_MIPI0_TX
+VCC12A_MIPI1_TX
+Power
+–
+MIPI 1.2 V TX analog power supply.
+VCC12A_MIPI0_RX
+VCC12A_MIPI1_RX
+Power
+–
+MIPI 1.2 V RX analog power supply.
+GNDA_MIPI
+Ground
+–
+Ground for MIPI analog power supply.
+MIPIn_TXDPL
+MIPIn_TXDNL
+MIPI
+I/O
+MIPI differential transmit data lane.
+MIPIn_RXDPL
+MIPIn_RXDNL
+MIPI
+I/O
+MIPI differential receive data lane.
+MREFCLK
+Clock
+Input
+MIPI PLL reference clock source.
+Table 127: DDR Pinouts (Dedicated)
+n indicates the number.
+Function
+Direction
+Description
+VCCIO_DDR
+–
+DDR power supply.
+DDR_A[n]
+Output
+Address signals to the memories.
+DDR_BA[n]
+Output
+Bank signals to the memories.
+DDR_CAS_N
+Output
+Active-low column address strobe signal to the memories.
+DDR_CKE
+Output
+Active-high clock enable signals to the memories.
+DDR_CK
+DDR_CK_N
+Output
+Differential clock output pins to the memories.
+DDR_CS_N
+Output
+Active-low chip select signals to the memories.
+DDR_DQ[n]
+I/O
+Data bus to/from the memories.
+DDR_DM[n]
+Output
+Active-high data-mask signals to the memories.
+DDR_DQS_N[n]
+I/O
+Differential data strobes to/from the memories.
+DDR_DQS[n]
+I/O
+Differential data strobes to/from the memories.
+DDR_ODT
+Output
+ODT signal to the memories.
+DDR_RAS_N
+Output
+Active-low row address strobe signal to the memories.
+DDR_RST_N
+Output
+Active-low reset signals to the memories.
+DDR_WE_N
+Output
+Active-low write enable strobe signal to the memories.
+DDR_VREF
+I/O
+Reference voltage.
+DDR_ZQ
+I/O
+ZQ calibration pin.
+www.efinixinc.com
+85
+
+T20 Data Sheet
+Table 128: SPI Flash Memory Pin
+Function
+Direction
+Description
+SPI_CS_N
+Input
+Active-low internal SPI flash memory chip select. Available in QFP100F3
+packages only.
+Pin States
+GPIO pins have as internal pull up/down (see Figure 7: I/O Interface Block on page 15),
+and LVDS pins used as GPIO have a weak pull up. The following table shows the pin state
+during reset, conﬁguration, and when unused in user mode.
+Note:  For the DDR pin states, refer to the Trion DDR DRAM Block User Guide.
+Table 129: I/O Pin States
+Pin Type
+During Reset
+(CRESET_N Low)
+During Configuration
+(CRESET_N High,
+CDONE Low)
+When Unused in
+User Mode (Default)
+User Pins
+GPIO
+Input tri-state with weak pull
+up.
+Input tri-state with weak pull
+up.
+Input tri-state with weak pull
+up.(34)
+LVDS used as
+GPIO
+Input tri-state with no weak
+pull up or pull down.
+Input tri-state with no weak
+pull up or pull down.
+Input tri-state with weak pull
+up.
+Dual-Purpose Configuration Pins
+CSO
+0
+0(35)
+Input tri-state with weak pull
+up.
+NSTATUS
+1
+1(36)
+Input tri-state with weak pull
+up.
+CCK
+Input tri-state with weak pull
+up.
+SPI active output clock. SPI
+passive input with weak pull
+up.
+Input tri-state with weak pull
+up.
+CDI0
+Input tri-state with weak pull
+up.
+SPI active output. SPI passive
+input with weak pull up.
+Input tri-state with weak pull
+up.
+As shown in Power Up Sequence on page 52, CRESET_N must be kept low during power
+up.
+Note:  Refer to the following tables for details:
+Table 75: Single-Ended I/O Internal Weak Pull-Up and Pull-Down Resistance on page 58
+Table 91: Single-Ended I/O Internal Weak Pull-Up and Pull-Down Resistance on page 64
+(34) You can change it to weak pull-down in the Interface Designer.
+(35) CSO is driven to 1 when the bitstream is done transmitting (CDONE = 1).
+(36) NSTATUS is driven to 0 if the FPGA detects an invalid bitstream (e.g., CRC error).
+www.efinixinc.com
+86
+
+T20 Data Sheet
+Efinity Software Support
+The Eﬁnity® software provides a complete tool ﬂow from RTL design to bitstream
+generation, including synthesis, place-and-route, and timing analysis. The software has a
+graphical user interface (GUI) that provides a visual way to set up projects, run the tool ﬂow,
+and view results. The software also has a command-line ﬂow and Tcl command console.
+The Eﬁnity® software supports simulation ﬂows using the ModelSim, NCSim, or free
+iVerilog simulators. An integrated hardware Debugger with Logic Analyzer and Virtual I/
+O debug cores helps you probe signals in your design. The software-generated bitstream ﬁle
+conﬁgures the T20 FPGA. The software supports the Verilog HDL, SystemVerilog, and
+VHDL languages.
+www.efinixinc.com
+87
+
+T20 Data Sheet
+T20 Interface Floorplans
+Note:  The numbers in the floorplan figures indicate the GPIO and LVDS number ranges. Some packages
+may not have all GPIO or LVDS pins in the range bonded out. Refer to the T20 Pinout for information on
+which pins are available in each package.
+Figure 38: Floorplan Diagram for FPGAs in W80 Packages (with MIPI)
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+Dimensions not to scale
+43
+10
+1B
+27
+28
+1C
+44
+61
+1D
+62
+75
+1E
+76
+89
+3A
+3E
+158
+141
+3D
+123
+124
+3C
+90
+3B
+107
+108
+143
+TL
+TR
+BR
+PLL_TL0
+PLL_TR0
+PLL_TR1
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+9
+BL
+2A
+2B
+MIPI block
+RX
+MIPI
+TX
+www.efinixinc.com
+88
+
+T20 Data Sheet
+Figure 39: Floorplan Diagram for Q100F3 and Q144 Packages
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+Dimensions not to scale
+43
+10
+1B
+27
+28
+1C
+44
+61
+1D
+62
+75
+1E
+76
+89
+3A
+3E
+158
+141
+3D
+123
+124
+3C
+90
+3B
+107
+108
+143
+TL
+TR
+BR
+PLL_TL0
+PLL_TL1
+PLL_TR0
+PLL_TR1
+PLL_BR0 (1)
+Note:
+1. PLL_BR0 has an LVDS 
+reference clock
+0
+12
+4B
+LVDS TX
+0
+12
+4A
+LVDS RX
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+LVDS block
+LVDS clock
+9
+BL
+www.efinixinc.com
+89
+
+T20 Data Sheet
+Figure 40: Floorplan Diagram for FPGAs in F169 Packages (with MIPI)
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+Dimensions not to scale
+43
+10
+1B
+27
+28
+1C
+44
+61
+1D
+62
+75
+1E
+76
+89
+3A
+3E
+158
+141
+3D
+123
+124
+3C
+90
+3B
+107
+108
+143
+TL
+TR
+BR
+PLL_TL0
+PLL_TL1
+PLL_TR0
+PLL_TR1
+PLL_BR0 (1)
+Note:
+1. PLL_BR0 has an LVDS 
+reference clock
+0
+12
+4B
+LVDS TX
+0
+12
+4A
+LVDS RX
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+LVDS block
+LVDS clock
+9
+BL
+2A
+2B
+MIPI block
+TX
+RX
+MIPI 0
+TX
+RX
+MIPI 1
+www.efinixinc.com
+90
+
+T20 Data Sheet
+Figure 41: Floorplan Diagram for FPGAs in F256 Packages
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+Dimensions not to scale
+43
+10
+1B
+27
+28
+1C
+44
+61
+1D
+62
+75
+1E
+76
+89
+3A
+3E
+158
+141
+3D
+123
+124
+3C
+90
+3B
+107
+108
+143
+TL
+TR
+BR
+PLL_TL0
+PLL_TL1
+PLL_TR0
+PLL_TR1
+PLL_BR0 (1)
+Note:
+1. PLL_BR0 has an LVDS 
+reference clock
+0
+12
+4B
+LVDS TX
+0
+12
+4A
+LVDS RX
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+LVDS block
+LVDS clock
+9
+BL
+www.efinixinc.com
+91
+
+T20 Data Sheet
+Figure 42: Floorplan Diagram for FPGAs in F324 Packages (with DDR and MIPI)
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+66
+14
+1B
+24
+62
+1C
+72
+75
+1D
+3A
+TL
+TR
+BR
+PLL_TR1 (1)
+PLL_TR0 (1)
+PLL_BR1 (1)
+Note:
+1. Can be used as an LVDS 
+reference clock.
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+LVDS block
+LVDS data or clock
+13
+BL
+MIPI block
+PLL_BL0
+1E
+102
+109
+LVDS RX
+118
+121
+PLL_TR2 (1)
+TX
+RX
+3B
+LVDS TX
+0
+9
+4B
+10
+19
+4A
+PLL_BR2 (1)
+PLL_BR0 (1)
+Dimensions not to scale
+TX
+RX
+MIPI 0
+MIPI 1
+3D
+DDR block
+0
+8
+2A
+9
+17
+2B
+18
+25
+2C
+7
+16
+24
+135
+3C
+125
+140 138
+Figure 43: Floorplan Diagram for FPGAs in F400 Packages (with DDR)
+Right
+Left
+1A
+0
+Quantum
+Core Fabric
+69
+14
+1B
+45
+46
+1C
+70
+93
+1D
+TL
+TR
+BR
+PLL_TR1 (1)
+PLL_TR0 (1)
+PLL_BR1 (1)
+Note:
+1. Can be used as an LVDS 
+reference clock.
+I/O bank
+GPIO blocks
+Dedicated blocks
+PLL reference clock
+LVDS block
+LVDS data or clock
+13
+BL
+PLL_BL0
+1E
+94
+117
+LVDS RX
+118
+121
+PLL_TR2 (1)
+LVDS TX
+0
+9
+4B
+10
+19
+4A
+PLL_BR2 (1)
+PLL_BR0 (1)
+Dimensions not to scale
+3D
+DDR block
+0
+8
+2A
+9
+17
+2B
+18
+25
+2C
+7
+16
+24
+137
+3C
+122
+141 138
+www.efinixinc.com
+92
+
+T20 Data Sheet
+Ordering Codes
+Refer to the Trion Selector Guide for the full listing of T20 ordering codes.
+www.efinixinc.com
+93
+
+T20 Data Sheet
+Revision History
+Table 130: Revision History
+Date
+Version
+Description
+November 2025
+6.0
+Added details about the maximum clock rate for the SPI flash device in
+QFP100F3 packages.
+Updated Unused Resources and Features on page 53. (DOC-2610)
+Updated SPI Flash Memory on page 50.
+Updated CBSEL[1:0] in Table 125: Dual-Purpose Configuration Pins on
+page 83.
+April 2025
+5.10
+Fixed typo in Table 117: Active Mode Timing Parameters on page 75.
+(DOC-2500)
+April 2025
+5.9
+Correction to MIPI Power-Up Timing on page 71.
+Updated LVDS used as GPIO state in Pin States topic.
+Updated configuration timing waveforms. (DOC-2325)
+Corrected MIPI reset timing diagram. (DOC-2323)
+Moved information about unused resources to Unused Resources and
+Features on page 53.
+November 2024
+5.8
+Fixed typo in Table 125: Dual-Purpose Configuration Pins on page 83.
+(DOC-2038)
+Footnote added to Table 17: PLL Signals (Interface to FPGA Fabric) on
+page 20. (DOC-1939)
+Corrected merged banks for F324 package (see I/O Banks  on page 18).
+Updated GPIO interface pin names (IN to I and OUT to O). (DOC-2086)
+Removed Dynamic Enable Pin Name from Table 29: LVDS RX Settings in
+Efinity Interface Designer on page 27. Pin does not exist in Trion family.
+(PT-2355)
+Added Pin States topic. (DOC-2087)
+SPI and JTAG pins should not be active at the same time for configuration.
+(DOC-2046)
+Renamed package prefix to match Efinity software (e.g., BGA changesd to
+F).
+February 2024
+5.7
+Updated SPI passive timing waveform.
+Added note about external DC-biased circuit is required if the incoming
+LVDS signals are AC-coupled and link to Trion Hardware Design Checklist
+and Guidelines. (DOC-1532)
+MIPI D-PHY specification is v1.1. (DOC-1610)
+October 2023
+5.6
+Added note about maximum CLOAD for SPI pins for DIV4 SPI active mode
+in QFP100F3 packages. (DOC-1423)
+October 2023
+5.5
+Added LVDS RX Static Mode Delay Setting. (DOC-1473)
+Updated the characterized load in Maximum Toggle Rate table.
+(DOC-1468)
+Updated 2.5 V and 1.8 LVCMOS Single-Ended I/O Internal Weak Pull-Up
+and Pull-Down Resistance. (DOC-1476)
+Updated absolute maximum ratings for VCCIO1A_1B_1C and TJ, removed
+preliminary notes, and updated SPI flash block topic for in QFP100F3
+packages. (DOC-1503)
+www.efinixinc.com
+94
+
+T20 Data Sheet
+Date
+Version
+Description
+September 2023
+5.4
+Updated maximum LVDS toggle rate for QFP144 and QFP100F3
+packages. (DOC-1447)
+Updated CCK pin description. (DOC-1447)
+June 2023
+5.3
+Updated SPI Flash Memory Signals table.
+June 2023
+5.2
+Removed tLVDS_DT and tINDT specs, and replaced with tPLL_HLW and
+tLVDS_CPA. (DOC-1189)
+Updated PLL LOCKED signal description. (DOC-1208)
+Corrected tCLKH and tCLKL in F324 and F400 SPI Passive specs, and fTCK in
+WLCSP80, QFP100F3, QFP144, F169, and F256 JTAG specs. (DOC-1304)
+April 2023
+5.1
+Added support for Q100F3 packages.
+Corrected tLVDS_SU and tLVDS_HD specs (DOC-1070)
+Updated PLL RSTN signal description about de-asserting only when CLKIN
+is stable. (DOC-1226)
+February 2023
+5.0
+Updated tLVDS_skew specs. (DOC-1111)
+Updated tLVDS_SU specs (DOC-1070)
+Updated power up sequence diagram. (DOC-954)
+Added note to use LVDS blocks from the same side to minimize skew.
+(DOC-1150)
+Updated Advanced PLL Settings table descriptions. (DOC-945)
+November 2022
+4.9
+Added note recommending up to only 2 cascading PLLs. (DOC-931)
+Corrected IOH and IOL in buffer drive strength characteristic specifications.
+(DOC-933)
+Updated FVCO, FPLL, and FPFD PLL Timing parameter specifications and PLL
+Interface Designer Settings - Manual Configuration Tab notes. (DOC-1019)
+Added tLVDS_SU, tLVDS_HD specs and LVDS RX timing waveforms.
+September 2022
+4.8
+Removed PLL_EXTFB from alternative input. (DOC-849)
+Updated output clock frequency for BR0 CLKOUT0 specs. (DOC-271)
+Updated Advanced PLL LOCKED signal description. (DOC-763)
+April 2022
+4.7
+Added note about not using LVDS RX as a reference clock resource to
+drive the PLL BR0. (DOC-768)
+Updated test condition load to maximum load in Maximum Toggle Rate
+Table. (DOC-781)
+Updated Connection Requirements for Unused Resources table by
+specifying VCC value. (DOC-770)
+Updated note about leaving at least 2 pairs of unassigned LVDS pins
+between any GPIO and LVDS in the same device side. (DOC-769)
+March 2022
+4.6
+Corrected tH and tSU parameter label in SPI Passive Mode (x1) Timing
+Sequence figure.
+Updated behaviour description for GPIO and LVDS as GPIO pins during
+configuration, and unused GPIO pins during user mode. (DOC-720)
+Added note about the block RAM content is random and undefined if it is
+not initialized. (DOC-729)
+Updated DDR description in features list. (DOC-733)
+Updated power supply ramp rate and power up sequence diagram.
+(DOC-631)
+January 2022
+4.5
+Added LVDS Pins Configured as Single-Ended I/O Buffer Drive Strength
+Characteristics for WLCSP80, QFP144, F169, and F256 packages.
+January 2022
+4.4
+Corrected power supply ramp rate. (DOC-699)
+www.efinixinc.com
+95
+
+T20 Data Sheet
+Date
+Version
+Description
+January 2022
+4.3
+Removed LVDS Pins Configured as Single-Ended I/O Buffer Drive Strength
+Characteristics for WLCSP80, QFP144, F169, and F256 packages.
+(DOC-679)
+Added Output Differential Voltage with Reduce VOD Swing option
+enabled specs. (DOC-648)
+Added maximum I/O pin input current, IIN, and maximum per bank specs.
+(DOC-652)
+Added PLL input clock duty cycle, tINDT, specs. (DOC-661)
+Updated CDONE pin direction as bidirectional. (DOC-672)
+November 2021
+4.2
+Added storage temperature, TSTG spec. (DOC-560)
+Updated maximum JTAG mode TCK frequency, fTCK. (DOC-574)
+Updated CSI pin description. (DOC-546)
+Updated LVDS Pins Configured as Single-Ended I/O Buffer Drive Strength
+specifications. (DOC-578)
+Update LVDS standard compliance which is TIA/EIA-644. (DOC-592)
+Updated tCLKH and tCLKL, and corrected SPI Passive Mode (x1) Timing
+Sequence waveform. (DOC-590)
+Updated REF_RES_xx description. (DOC-602, DOC-605)
+Updated Maximum Toggle Rate table. (DOC-630)
+Updated minimum Power Supply Ramp Rates. (DOC-631)
+September 2021
+4.1
+Added Single-Ended I/O and LVDS Pins Configured as Single-Ended I/O
+Rise and Fall Time specs. (DOC-522)
+Added note to Active mode configuration clock frequency stating that for
+parallel daisy chain x2 and x4 configuration, fMAX_M, must be set to DIV4.
+(DOC-528)
+Added Global Clock Location topic. (DOC-532)
+Added Maximum tUSER for SPI Active and Passive Modes topic. (DOC-535)
+August 2021
+4.0
+Added internal weak pull-up and pull-down resistor specs. (DOC-485)
+Updated table title for Single-Ended I/O Schmitt Trigger Buffer
+Characteristic. (DOC-507)
+Added note in Pinout Description stating all dedicated configuration pins
+have Schmitt Trigger buffer. (DOC-507)
+Added QFP144 package option. (DOC-497)
+June 2021
+3.10
+Updated CRESET_N pin description. (DOC-450)
+April 2021
+3.9
+Updated PLL specs; tILJIT (PK - PK) and tDT. (DOC-403)
+Added note stating C3, C4, and C4L speed grades are not available in
+WLCSP80 package.
+Added note about limiting number of LVDS as GPIO output and
+bidirectional per I/O bank to avoid switching noise. (DOC-411)
+March 2021
+3.8
+Added LVDS TX reference clock output duty cycle and lane-to-lane skew
+specs. (DOC-416)
+March 2021
+3.7
+Added automotive speed grade (Q4) specs for F169 package. (DOC-399)
+February 2021
+3.6
+Corrected LVDS TX Settings in Efinity® Interface Designer Output Load
+default value. (DOC-375)
+Updated Density parameter description and added 256Mb to choice to
+LPDDR2 in DDR Interface Designer Settings. (DOC-377)
+Added I/O input voltage, VIN specification. (DOC-389)
+Added LVDS TX data and timing relationship waveform. (DOC-359)
+Added LVDS RX I/O electrical specification waveform. (DOC-346)
+www.efinixinc.com
+96
+
+T20 Data Sheet
+Date
+Version
+Description
+December 2020
+3.5
+Added data for C4L and I4L DC speed grades.
+Added WLCSP80 package option. (DOC-330)
+Updated the notes for Output Load parameter in LVDS TX Settings in
+Efinity Interface Designer. (DOC-309)
+Added a table to Power Up Sequence topic describing pin connection
+when PLL, GPIO, MIPI, or DDR is not used. (DOC-325)
+Updated NSTATUS pin description. (DOC-335)
+Updated PLL reference clock input note by asking reader to refer to PLL
+Timing and AC Characteristics. (DOC-336)
+Added other PLL input clock frequency sources in PLL Timing and AC
+Characteristics. (DOC-336)
+Removed OE and RST from LVDS block as they are not supported in
+software. (DOC-328)
+For the DDR reference clock, the software issues a warning (instead of
+error) if you do not connect the reference clock to an I/O pad. (DOC-264)
+September 2020
+3.4
+Updated pinout links.
+Corrected speed grades for single-ended I/O and LVDS configured as
+single-ended I/O fMAX.
+August 2020
+3.3
+Update MIPI TX and RX Interface Block Diagram to include signal names.
+Updated REF_CLK description for clarity.
+August 2020
+3.3
+Updated tUSER timing parameter values and added a note about the
+conditions for the values.
+Updated description for GPIO pins state during configuration to exclude
+LVDS as GPIO.
+Added fMAX for single-ended I/O and LVDS configured as single-ended I/
+O.
+Added maximum power supply current transient during power-up.
+Correct the VDDIO_DDR to VCCIO_DDR.
+www.efinixinc.com
+97
+
+T20 Data Sheet
+Date
+Version
+Description
+July 2020
+3.2
+Removed preliminary note from DC and switching characteristics and MIPI
+electrical specifications and timing. These specifications are final.
+Added VDDIO_DDR absolute maximum ratings.
+Added VDDIO_DDR recommended operating conditions.
+Updated timing parameter symbols in boundary scan timing waveform to
+reflect JTAG mode parameter symbols.
+Added table of supported GPIO features.
+Updated the maximum FVCO for PLL to 1,600 MHz.
+Updated the C divider requirement for the 90 degrees phase shift in the
+PLL Interface Designer Settings - Manual Configuration Tab.
+Updated the DDR DRAM reset signal from RST_N to CFG_RST_N.
+Corrected DDR DRAM block diagram by adding DDR_CK signal.
+Updated minimum setup time for passive configuration mode for F324
+package to 6.5 ns.
+Renamed TL_CORNER, BL_CORNER, TR_CORNER, and BR_CORNER as
+TL, BL, TR, and BR respectively.
+Updated LVDS electrical specifications note about RX differential I/O
+standard support and duplicated the note in LVDS functional description.
+Added note to LVDS RX interface block diagram.
+Removed all instances of DDR3U.
+Added note about MIPI power recommended power-up sequence.
+Updated power up sequence description about holding CRESET_N low.
+Updated floorplan diagram for FPGAs in F324 and F400 packages.
+Added I/O bank information for F400 package.
+Renamed PLLCLK pin as PLL_CLKIN.
+Added PLL_EXTFB and MIPI_CLKIN as an alternative input in GPIO signals
+table for complex I/O buffer.
+Updated PLL names in PLL reference clock resource assignments.
+Added PLL reference clock resource assignments for F400 package.
+Updated Memory CAS Latency (CL) choices in Advanced Options tab -
+Memory Mode register settings subtab.
+Updated Output Drive Strength choices for LPDDR2 in Advanced Options
+tab - Memory Mode register settings subtab.
+Corrected Enable Target 1 parameter notes in AXI 0 and AXI 1 tabs.
+Removed restriction on CLKOUT1 and CLKOUT2 when CLKIN is used to
+drive the DDR on CLKOUT0 in DDR DRAM PHY signals table.
+Added note stating that low core leakage current (6.7 mA typical) is
+applicable to F256 package only.
+Updated available GPIO, global clocks from GPIO pins, and global
+controls from GPIO pins for F400 package.
+Updated typical leakage current to 6.8 mA and add a note stating it is
+applicable to F256 package.
+www.efinixinc.com
+98
+
+T20 Data Sheet
+Date
+Version
+Description
+February 2020
+3.1
+Added fMAX for DSP blocks and RAM blocks.
+Added JTAG timing parameters for T20 FPGAs in F324 packages.
+In MIPI RX and TX interface description, updated maximum data pixels for
+RAW10 data type.
+Added MIPI reset timing information.
+Added Trion power-up sequence. MIPI power-up moved to this topic.
+VCC12A_MIPI_TX, VCC12A_MIPI_RX maximum recommended operating
+condition changed to 1.25 V.
+Added a note to the Supported Configuration Modes topic to clarify that
+T20 F324 FPGAs do not support multi-image configuration in SPI active x1
+mode.
+Added the maximum PLL output clock speed for PLL BR0 CLKOUT0 (DDR
+PHY input clock).
+Corrected the read and write signal directions in the DDR block diagram.
+Corrected write strobe bus width.
+Added number of global clocks and controls that can come from GPIO
+pins to package resources table.
+December 2019
+3.0
+Updated DDR block description.
+Updated PLL Interface Designer settings.
+Removed MIPI data type bit settings. Refer to AN 015: Designing with the
+Trion MIPI Interface for the bit settings.
+Removed DIV1 and DIV2 active mode configuration frequencies; they are
+not supported.
+Added note to LVDS electrical specifications about RX differential I/O
+standard support.
+October 2019
+2.1
+Added explanation that 2 unassigned pairs of LVDS pins should be
+located between and GPIO and LVDS pins in the same bank.
+Updated the reference clock pin assignments for TL_PLL0 and TL_PLL1.
+Added waveforms for configuration timing.
+Clarified I/O bank information.
+August 2019
+2.0
+Updated MIPI interface description.
+Under Ordering Codes, added link to Trion FPGA Selector Guide.
+May 2019
+1.0
+Updated MIPI description, DC characteristics, and pin information.
+Updated DDR description.
+Updated timing specifications.
+Added information on the signal interface.
+January 2019
+0.5
+Added information on DDIO support.
+December 2018
+0.4
+Updated package options.
+November 2018
+0.3
+Added GNDA_xx (PLL analog ground) to pinout.
+Change VSSxxA_MIPI pinout to GNDxxA_MIPI.
+Updated PLL block diagram and clarified feedback paths.
+Added floorplan information.
+Updated pinout table.
+October 2018
+0.2
+Updated I/O logic and buffer topic for DDR mode.
+Updated LVDS serialization factors.
+Indicated which I/O banks support DDR mode.
+October 2018
+0.1
+Initial release.
+www.efinixinc.com
+99

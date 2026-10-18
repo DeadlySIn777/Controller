@@ -1,0 +1,98 @@
+{
+  "status": "SOURCE_INSPECTED",
+  "date": "2026-10-01",
+  "exact_fitted_MCUs": {
+    "U13001": {
+      "mpn": "STM32G031C8T6",
+      "footprint": "Package_QFP:LQFP-48_7x7mm_P0.5mm"
+    },
+    "U13004": {
+      "mpn": "STM32G031K8T6",
+      "footprint": "Package_QFP:LQFP-32_7x7mm_P0.8mm"
+    },
+    "U13008": {
+      "mpn": "STM32G031K8T6",
+      "footprint": "Package_QFP:LQFP-32_7x7mm_P0.8mm"
+    },
+    "U14501": {
+      "mpn": "STM32G031C8T6",
+      "footprint": "Package_QFP:LQFP-48_7x7mm_P0.5mm"
+    }
+  },
+  "electrical_source_design_sha256": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+  "facts": [
+    {
+      "primary": "https://www.st.com/resource/en/datasheet/stm32g031g4.pdf",
+      "document": "DS12992 Rev4 June2025",
+      "pages": [
+        1,
+        13,
+        66,
+        67,
+        122
+      ],
+      "fitted_x8_memory": {
+        "flash_bytes": 65536,
+        "SRAM_bytes": 8192
+      },
+      "flash64bit_program_typ_max_us": [
+        85,
+        125
+      ],
+      "page_erase_typ_max_ms": [
+        22,
+        40
+      ],
+      "endurance_cycles": 10000,
+      "endurance_TA_C": [
+        -40,
+        105
+      ],
+      "retention_after10000cycles_at55C_years": 30,
+      "characterization_not_production_test": true
+    },
+    {
+      "primary": "https://www.st.com/resource/en/reference_manual/rm0444-stm32g0x1-advanced-armbased-32bit-mcus-stmicroelectronics.pdf",
+      "document": "RM0444 Rev6",
+      "sections": [
+        "3.3.1/Table9",
+        "3.3.8",
+        "3.5.3",
+        "41.1"
+      ],
+      "pages": [
+        71,
+        72,
+        79,
+        90,
+        1368
+      ],
+      "page_bytes": 2048,
+      "aligned_program_doubleword_bytes": 8,
+      "programmed_word_requires_erase_before_nonzero_reprogram": true,
+      "ECC_bits_per64bitword": 8,
+      "UID_readonly_base": "0x1fff7590",
+      "UID_bytes": 12,
+      "WRP_granularity_bytes": 2048
+    }
+  ],
+  "primary_retrieval": "Manufacturer web extraction independently read; direct binary downloads timed out, preserved sources-r01/receipt.json. No invented retained PDF hash.",
+  "partition": {
+    "application": "0x08000000..0x0800EFFF",
+    "application_bytes": 61440,
+    "factory_slot0": "0x0800F000..0x0800F7FF",
+    "factory_slot1": "0x0800F800..0x0800FFFF",
+    "independent_erase_pages": [
+      30,
+      31
+    ],
+    "record_bytes": 512,
+    "commit_doubleword_offset": 504
+  },
+  "runtime_flash_erase_or_program_implemented": false,
+  "factory_SWD_provisioning_executed": false,
+  "WRP_or_RDP_or_BOR_or_IWDG_options_provisioned": false,
+  "firmware_update_loader_implemented": false,
+  "factory_plan": "Program only inactive independent erased page, 63 content doublewords, read/validate content, then finalCRC+commit doubleword504, read/verify full record; preserve old committed page. Factory only, outputs withheld. Protect/read back pages30/31 with actual WRP configuration after provisioning; option provisioning and power interruption remain hardware gates.",
+  "torn_flash_model": "Prefix and final doubleword byte interruptions in software; no claim of atomic flash writes/ECC brownout or full bootloader proof."
+}

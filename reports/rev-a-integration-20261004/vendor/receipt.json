@@ -1,0 +1,200 @@
+{
+  "status": "BLOCKED",
+  "evidence_class": "VENDOR_QUALIFICATION_BLOCKED_NOT_FPGA_PASS",
+  "actual_device": "T20F256I4",
+  "device_scope": "Current and adopted Source26/CAD30 candidate U1001; industrial temperature designator I, speed grade4, FBGA256 13x13mm0.8mm. No device substitution.",
+  "utc": "2026-10-04T07:45:54.944296+00:00",
+  "executed_vendor_flow": false,
+  "executed_vendor_synthesis": false,
+  "executed_vendor_place_route": false,
+  "executed_vendor_static_timing": false,
+  "FPGA_PASS": false,
+  "manufacturing_ready": false,
+  "physical_qualification": false,
+  "bitstream_generated": false,
+  "hardware_programmed": false,
+  "license_state": "NOT_DEMONSTRATED",
+  "license_contents_read_printed_hashed_or_transmitted": false,
+  "tool_search_scope": {
+    "windows": {
+      "PATH_commands": [
+        "efx_run.bat",
+        "efx_run.py",
+        "efx_run",
+        "efinity",
+        "yosys",
+        "wsl",
+        "rg"
+      ],
+      "uninstall_registry": "HKLM64/HKLM32/HKCU",
+      "directory_roots": [
+        "C:\\",
+        "C:\\Users\\Gluis",
+        "C:\\Program Files",
+        "C:\\Program Files (x86)",
+        "C:\\Users\\Gluis\\AppData\\Local"
+      ],
+      "maximum_depth": 2,
+      "visited_directories": 51024,
+      "permission_errors_count": 4416,
+      "vendor_named_matches": []
+    },
+    "WSL": {
+      "inspected_distro": "GarciaMechBuilder",
+      "PATH_commands": [
+        "efx_run.py",
+        "efx_run",
+        "efinity",
+        "yosys",
+        "yosys-abc",
+        "iverilog",
+        "verilator",
+        "python3",
+        "chroot",
+        "unshare"
+      ],
+      "directory_roots": [
+        "/opt",
+        "/usr/local",
+        "/home",
+        "/root"
+      ],
+      "maximum_depth": 5,
+      "visited_directories": 315,
+      "vendor_named_installation_directories": [],
+      "other_listed_distro_not_inspected": "docker-desktop"
+    },
+    "limitations": "Bounded installation discovery. No exhaustive global absence claim, no license-secret read or activation attempt."
+  },
+  "tool_finding": "No Efinity executable, registered installation or vendor installation directory discovered on inspected execution surfaces. Existing isolated Yosys0.52/ABC/family models are distinct.",
+  "project_finding": {
+    "recognized_vendor_project_or_applied_constraint_count": 0,
+    "searched_roots": [
+      "gateware",
+      "hardware",
+      "reports",
+      "tools"
+    ],
+    "xml_headers_examined": 623,
+    "complete_adopted_IS2_CNC3_motherboard_top": false
+  },
+  "pin_finding": {
+    "native_balls_accounted": 256,
+    "native_connected_GPIO_including_configuration": 147,
+    "user_function_GPIO_including_clock": 135,
+    "reserved_configuration_GPIO": 12,
+    "unconnected_GPIO": 48,
+    "VCCIO_source_pad_count": 14,
+    "VCCIO_source_rail": "IO_3V3",
+    "vendor_Interface_Designer_checked": false,
+    "bank_IO_standard_pad_default_legality_qualified": false,
+    "source_dictionary_omissions": "20 unused LVDS GPIO +REF_RES; native netlist explicitly unconnected, full256-ball ledger preserved"
+  },
+  "timing_finding": {
+    "nominal_clock_hz": 50000000,
+    "nominal_clock_period_ns": 20,
+    "clock_ball": "H3",
+    "manufacturer_clock_pin": "GPIOL_24_CLK0",
+    "clock_bank": "BANK1B",
+    "clock_source": "ASE-50.000MHZ-L-C-T through33R source resistor",
+    "applied_SDC_found": false,
+    "external_IO_delay_CDC_reset_constraints_qualified": false,
+    "routed_setup_hold_recovery_removal_checked": false,
+    "physical_clock_measured": false
+  },
+  "executed_family_mapping_only": {
+    "status": "PASS",
+    "tool": "Yosys0.52 synth_efinix",
+    "source": "Five current gateware/v3/rtl Verilog sources",
+    "top": "cnc3_frame_endpoint",
+    "primitive_counts_not_vendor_utilization": {
+      "EFX_ADD": 2882,
+      "EFX_FF": 5889,
+      "EFX_GBUFCE": 1,
+      "EFX_LUT4": 7020
+    },
+    "port_count": 25,
+    "port_bit_positions": 4287,
+    "scope": "Structural CRC/frame validation/packing boundary with wide internal buses; no complete stateful twelve-motion/provider/IS2 board top",
+    "receipt": "structural-family-r01/receipt.json",
+    "receipt_sha256": "dd4d034732c774f2d2c17e26290ca28f1c5ed7d2a098b350ad990dff2b77409a"
+  },
+  "separate_current_IOL1_mapping": {
+    "receipt": "../rtl/current-iol1-r01/receipt.json",
+    "receipt_sha256": "58c5dfd4685262bb757eb2d9000c2acb4e0e589f1611abeaa32ec8e0bd5238bb",
+    "scope": "Historical six-motion/two-encoder plus four read-only IOL1 lanes; not complete twelve-axis IS2; actual C/HDL replay is separately classified"
+  },
+  "blockers": [
+    "No Efinity executable found in PATH, program registry or bounded Windows/WSL installation discovery.",
+    "No recognized Efinity project, Interface Designer pad project or applied SDC file in scoped workspace.",
+    "No adopted complete current IS2 CNC3 top; structural endpoint and report-local motion/IOL1/CAP3 candidates have distinct omissions.",
+    "Exact pad/rail/function ledger exists as source inspection; vendor interface legality, output defaults and CDC/timing constraints are unqualified."
+  ],
+  "actionable_unblocking_work": [
+    "Make real T20-supporting Efinity install/version/patch and validated local entitlement available",
+    "Adopt complete source-bound IS2 CNC3 physical motherboard wrapper with truthful providers",
+    "Create real T20F256I4 Interface Designer pad/bank/config/default project from exact native ledger",
+    "Complete justified primary/externalIO/reset/CDC constraints, then run actual interface/map/pnr/static timing and inspect all reports"
+  ],
+  "source_ledger_hashes": {
+    "hardware/motherboard/design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "hardware/motherboard/netlist.xml": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "hardware/motherboard/bom.csv": "750b0ea766fb02215ce63c6a9e3a530900d23450f3f801922152f9b7369beec3",
+    "hardware/motherboard/fpga-allocation-applied.json": "a233de4649106ca6d19861c09a523dff33a02a455b870dca92b745029f8fa119",
+    "hardware/motherboard/fpga-allocation-proposal.json": "178e6bc4b0f25e612be55e9727caea295c746b34d07f701f3bbfe3f80c5f7f05",
+    "hardware/board_review/revisions/20261002-30/source-inputs/design.json": "6ec697f7ab420648de187b963b35825a695c3af00d25a9efd5844a8c908a8cb8",
+    "hardware/board_review/revisions/20261002-30/source-inputs/netlist.xml": "9f2c3c7b1e1b8f8cf108d0460dd0f709033f6ebdbf7f7a1b596abf1190eec633",
+    "hardware/board_review/revisions/20261002-30/source-inputs/bom.csv": "750b0ea766fb02215ce63c6a9e3a530900d23450f3f801922152f9b7369beec3",
+    "research/fpga-core/pins-official.json": "440a239049e98e102acd0cbf295d7762820a25a20e364465b08348957e2bf256",
+    "research/fpga-core/t20-pinout.xlsx": "bfbdc850656904043631e562ca1d26073ffa0ff3d191b7b1f21c0fd174b6db93",
+    "research/fpga-core/trion20-ds-v6.0.pdf": "78ed824b7c2fc1d7b991a7739db583aec455a8eb6e95f17fe656317a5d4c0519",
+    "docs/MOTHERBOARD_IS2.md": "70af4ce615fde0452a01f8fa4d18e5be48c72a46daa0405fd71062d76829e8c7",
+    "docs/MOTION_EXPANSION_8_TO_12.md": "c2d15563d18c23d99b3c6a628ce7cca15f4c6b38b12fe9e2214c5baa0ce8857d",
+    "research/fpga-core/ase.pdf": "5f5a3070e85cac34ace32dc6dfbec8066f5b09e63e19ca7084fb208296e261f1",
+    "research/fpga-core/ase.txt": "b3e045cb6c308324a743b251fe410be8af632505a9e7f53b869802c1d1988bce",
+    "gateware/v3/rtl/cnc3_command_validate.v": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af",
+    "gateware/v3/rtl/cnc3_feedback_pack.v": "0028215f2d6851af7077d52f8eb8084dd8137afa0b8be540d23da713897b4900",
+    "gateware/v3/rtl/cnc3_frame_endpoint.v": "704029b30a1397fcb7e6e0da46a8b99973e84e21c7ab655a86974528c956a52d",
+    "gateware/v3/rtl/cnc3_spi_transport.v": "bf6442612da38a6f59716c224782b21e0653015eed3c7c7f6f8390960953bad1",
+    "gateware/v3/rtl/cnc3_status_pack.v": "638b9003b5994642797a39500e09e4a8fb1a48366d488a405a4b20e68fd9a8a8"
+  },
+  "source_unchanged_at_finalization": true,
+  "evidence_artifact_sha256": {
+    "audit_vendor.py": "1da226dcf693002f74296a7ec521df8b99283cc3853bdda3e9db5bb6274c83f4",
+    "audit_wsl.py": "a79b77e8664eaa98566884597c60790e5b5689340b1af4a1157242f73ed9bdcc",
+    "finalize_vendor.py": "0d14e720af1f030d24bf9eeac84fc5a0bd1fe4c99c947d6d175d07c09f5364c3",
+    "README.md": "2f39cfb74cd78cd8147bf2e02083a9d92e6a9bff1bf0ff298533888b2bbb8497",
+    "preflight-r01/adopted-source26-cad30-board-inspection.json": "bfb51f5f21a265ebbed5f4a0cefc5056f04cef82cfb08bc08913c1e991a7219e",
+    "preflight-r01/current-source-board-inspection.json": "bfb51f5f21a265ebbed5f4a0cefc5056f04cef82cfb08bc08913c1e991a7219e",
+    "preflight-r01/project-artifacts.json": "3ac7c69d8716f32a5d3d6fa2b0ccd6048e998327d4ba554bff9ce952d2cd1a74",
+    "preflight-r01/receipt.json": "df46ceb3a132948ece80efba2667b9f41dc348c613d2542072f3b9645d793cf0",
+    "preflight-r01/windows-inventory.json": "d87b544f863afd8a403c1f0862f6dd73526271eace9659329ed476fa573bc9f4",
+    "preflight-r01/wsl-inventory.json": "ebffda60f522cb6f40e0b8fe2e9a041cf06d222c0d0f0af58251f93f0dd3b465",
+    "preflight-r02/adopted-source26-cad30-board-inspection.json": "59dbce6a49bc042faf7ec1e83b614849f3edf4f1c57fe81709d1c5ede67ead04",
+    "preflight-r02/current-source-board-inspection.json": "59dbce6a49bc042faf7ec1e83b614849f3edf4f1c57fe81709d1c5ede67ead04",
+    "preflight-r02/project-artifacts.json": "3ac7c69d8716f32a5d3d6fa2b0ccd6048e998327d4ba554bff9ce952d2cd1a74",
+    "preflight-r02/receipt.json": "fc71e97c33148048693b3622b9d42bf2ed460b6ce8f8c67649a8f14fc95ace1a",
+    "preflight-r02/windows-inventory.json": "d87b544f863afd8a403c1f0862f6dd73526271eace9659329ed476fa573bc9f4",
+    "preflight-r02/wsl-inventory.json": "ebffda60f522cb6f40e0b8fe2e9a041cf06d222c0d0f0af58251f93f0dd3b465",
+    "preflight-r03/adopted-source26-cad30-board-inspection.json": "59dbce6a49bc042faf7ec1e83b614849f3edf4f1c57fe81709d1c5ede67ead04",
+    "preflight-r03/current-source-board-inspection.json": "59dbce6a49bc042faf7ec1e83b614849f3edf4f1c57fe81709d1c5ede67ead04",
+    "preflight-r03/project-artifacts.json": "3ac7c69d8716f32a5d3d6fa2b0ccd6048e998327d4ba554bff9ce952d2cd1a74",
+    "preflight-r03/receipt.json": "fe5cc399ea009e9d64939aae0e9ca495b5071f58d19089099345f738ddd392bf",
+    "preflight-r03/windows-inventory.json": "d87b544f863afd8a403c1f0862f6dd73526271eace9659329ed476fa573bc9f4",
+    "preflight-r03/wsl-inventory.json": "851fa108b149fde117c0051fcc5acaad8715d78bc4f28370f406c99068418075",
+    "structural-family-r01/cnc3_frame_endpoint_efinix.json": "206500d57e19d0b0c27d566b2225312cba628e52d788c82a3f262cae3ccc0cd7",
+    "structural-family-r01/command.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "structural-family-r01/mapped-stat.json": "d9a8ae20541e87869d60ab66522206a8f2ccb2e07bebac15c0ecba97f9b46f21",
+    "structural-family-r01/receipt.json": "dd4d034732c774f2d2c17e26290ca28f1c5ed7d2a098b350ad990dff2b77409a",
+    "structural-family-r01/run.sh": "a85c7a4b7914e8a5befbebb3e463686f761d34c14e14adee1391dc1595441557",
+    "structural-family-r01/structural-stat.json": "301914aea0abe2ecea59441611cb03f72121491da16e3d1917d8e1e25676730b",
+    "structural-family-r01/synth.ys": "21c96b1cfb0af628aec9e79e8f7c2e2edf7d8f6970b6814ce2875a7b8ec28e8a",
+    "structural-family-r01/synthesis.log": "909a3ca1841b32617ce1125c3b589f389e6452038096404eb6dfd7042a98f886",
+    "structural-family-r01/yosys-version.txt": "239d92e36e753a9dff4e79d97878ed5d55304b675d411895ec57508bc134e28e",
+    "structural-family-r01/inputs/rtl/cnc3_command_validate.v": "b6a59910aeff0bc40678018e86fd8accd42619bc01b65b8e483f17ab609e78af",
+    "structural-family-r01/inputs/rtl/cnc3_feedback_pack.v": "0028215f2d6851af7077d52f8eb8084dd8137afa0b8be540d23da713897b4900",
+    "structural-family-r01/inputs/rtl/cnc3_frame_endpoint.v": "704029b30a1397fcb7e6e0da46a8b99973e84e21c7ab655a86974528c956a52d",
+    "structural-family-r01/inputs/rtl/cnc3_spi_transport.v": "bf6442612da38a6f59716c224782b21e0653015eed3c7c7f6f8390960953bad1",
+    "structural-family-r01/inputs/rtl/cnc3_status_pack.v": "638b9003b5994642797a39500e09e4a8fb1a48366d488a405a4b20e68fd9a8a8"
+  }
+}

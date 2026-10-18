@@ -1,0 +1,28 @@
+{
+ "base_sha256": "c01d850f33d4a8af678e9fb304fd6b834eddbc1868c98cf475ba86fef382fb0f",
+ "derived_sha256": "acc23ca44b45edbf8928b5adce769b08e65eaece278192ffc76a0634d345371b",
+ "changes": [
+  {
+   "old": "legal=from_wkb((base/'In2.Cu-legal.wkb').read_bytes());points",
+   "new": "legal=from_wkb((base/'In2.Cu-legal.wkb').read_bytes());replays=[]\n for role in('shape','zone_outline_shape'):\n  old=q[role].wkb;q[role]=set_precision(q[role],1e-6,mode='pointwise');assert q[role].wkb==old;replays.append({'only_documented_NEW_CORE_UUID':q['uuid'],'role':role,'WKB_unchanged':True,'grid_mm':1e-6,'WKB_sha256':digest(q[role])})\n points"
+  },
+  {
+   "old": "physical=native.difference(ownholes);assert native.is_valid",
+   "new": "native=set_precision(unary_union([q['zone_outline_shape'],native]),1e-6);assert legal.covers(native),'expanded original-route union escaped unchanged legal region';physical=native.difference(ownholes);assert native.is_valid"
+  },
+  {
+   "old": "CORE-wider-owned-FAG-In2-notch-feed-proposal-r102",
+   "new": "CORE-wider-owned-FAG-In2-notch-feed-proposal-r103"
+  },
+  {
+   "old": "'new_affected_FAG_return_notch_all77_source_native_guard_body_reference_full_current_mesh':'OPEN'",
+   "new": "'new_affected_FAG_return_notch_all77_source_native_guard_body_reference_full_current_mesh':'OPEN','only_generated_old_plane_tags_replayed_WKB_exact':replays,'failed_R102_overlay_without_tag_replay_rejected_before_model':True"
+  },
+  {
+   "old": "'R102_CORE_NEW_ENVELOPE_ONLY'",
+   "new": "'R103_CORE_NEW_ENVELOPE_ONLY'"
+  }
+ ],
+ "no_native_or_unowned_coordinate_precision_change": true,
+ "prior_constructive_route_reused_not_stale_whole_model": true
+}

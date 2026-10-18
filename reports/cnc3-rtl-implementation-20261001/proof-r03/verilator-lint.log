@@ -1,0 +1,317 @@
+- V e r i l a t i o n   R e p o r t: Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260428
+- Verilator: Built from 0.219 MB sources in 4 modules, into 0.883 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.134 s (elab=0.012, cvt=0.057, bld=0.000); cpu 0.101 s on 1 threads; allocated 25.336 MB
+%Warning-TIMESCALEMOD: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:4:8: Timescale missing on this module as other modules have it (IEEE 1800-2023 3.14.2.3)
+    4 | module cnc3_command_validate(input wire [1407:0] frame, input wire cs_fb,
+      |        ^~~~~~~~~~~~~~~~~~~~~
+                       /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_spi_transport.v:7:8: ... Location of module with timescale
+    7 | module cnc3_spi_transport (
+      |        ^~~~~~~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/TIMESCALEMOD?v=5.048
+                       ... Use "/* verilator lint_off TIMESCALEMOD */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:4:50: Bits of signal are not used: 'frame'[15:0]
+                                                                                                                                                                   : ... note: In instance 'cnc3_frame_endpoint.validate'
+    4 | module cnc3_command_validate(input wire [1407:0] frame, input wire cs_fb,
+      |                                                  ^~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.048
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:42:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   42 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+                   ... For warning description see https://verilator.org/warn/UNSIGNED?v=5.048
+                   ... Use "/* verilator lint_off UNSIGNED */" and lint_on around source to disable this message.
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:42:64: Comparison is constant due to limited range
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   42 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+                   ... For warning description see https://verilator.org/warn/CMPCONST?v=5.048
+                   ... Use "/* verilator lint_off CMPCONST */" and lint_on around source to disable this message.
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:43:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   43 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:43:64: Comparison is constant due to limited range
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   43 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:82:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   82 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:82:64: Comparison is constant due to limited range
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   82 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:83:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   83 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:83:64: Comparison is constant due to limited range
+                                                                                                                                                                : ... note: In instance 'cnc3_frame_endpoint.validate'
+   83 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:122:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  122 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:122:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  122 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:123:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  123 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:123:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  123 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:147:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  147 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:147:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  147 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:148:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  148 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:148:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  148 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:187:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  187 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:187:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  187 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:188:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  188 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:188:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  188 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:207:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  207 | if (result==0 && (!((frame[1279 -: 8] >= 0 && frame[1279 -: 8] <= 3)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:263:38: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  263 | if (result==0 && (!((frame[399 -: 8] >= 0 && frame[399 -: 8] <= 0) || (frame[399 -: 8] >= 1 && frame[399 -: 8] <= 1)))) result=8'd15;
+      |                                      ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:264:38: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  264 | if (result==0 && (!((frame[391 -: 8] >= 0 && frame[391 -: 8] <= 15)))) result=8'd15;
+      |                                      ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:276:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  276 | if (result==0 && (!((frame[1271 -: 8] >= 0 && frame[1271 -: 8] <= 3)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:277:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  277 | if (result==0 && (!((frame[1263 -: 8] >= 0 && frame[1263 -: 8] <= 7)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:281:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  281 | if (result==0 && (!((frame[1279 -: 8] >= 0 && frame[1279 -: 8] <= 0)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:284:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  284 | if (result==0 && (!((frame[1135 -: 8] >= 0 && frame[1135 -: 8] <= 0)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:290:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  290 | if (result==0 && (!((frame[1263 -: 8] >= 0 && frame[1263 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:290:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  290 | if (result==0 && (!((frame[1263 -: 8] >= 0 && frame[1263 -: 8] <= 255)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:291:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  291 | if (result==0 && (!((frame[1255 -: 8] >= 0 && frame[1255 -: 8] <= 11) || (frame[1255 -: 8] >= 16 && frame[1255 -: 8] <= 27) || (frame[1255 -: 8] >= 32 && frame[1255 -: 8] <= 32) || (frame[1255 -: 8] >= 255 && frame[1255 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:291:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  291 | if (result==0 && (!((frame[1255 -: 8] >= 0 && frame[1255 -: 8] <= 11) || (frame[1255 -: 8] >= 16 && frame[1255 -: 8] <= 27) || (frame[1255 -: 8] >= 32 && frame[1255 -: 8] <= 32) || (frame[1255 -: 8] >= 255 && frame[1255 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:292:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  292 | if (result==0 && (!((frame[1247 -: 8] >= 0 && frame[1247 -: 8] <= 11) || (frame[1247 -: 8] >= 16 && frame[1247 -: 8] <= 27) || (frame[1247 -: 8] >= 32 && frame[1247 -: 8] <= 32) || (frame[1247 -: 8] >= 255 && frame[1247 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:292:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  292 | if (result==0 && (!((frame[1247 -: 8] >= 0 && frame[1247 -: 8] <= 11) || (frame[1247 -: 8] >= 16 && frame[1247 -: 8] <= 27) || (frame[1247 -: 8] >= 32 && frame[1247 -: 8] <= 32) || (frame[1247 -: 8] >= 255 && frame[1247 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:293:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  293 | if (result==0 && (!((frame[1239 -: 8] >= 0 && frame[1239 -: 8] <= 11) || (frame[1239 -: 8] >= 16 && frame[1239 -: 8] <= 27) || (frame[1239 -: 8] >= 32 && frame[1239 -: 8] <= 32) || (frame[1239 -: 8] >= 255 && frame[1239 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:293:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  293 | if (result==0 && (!((frame[1239 -: 8] >= 0 && frame[1239 -: 8] <= 11) || (frame[1239 -: 8] >= 16 && frame[1239 -: 8] <= 27) || (frame[1239 -: 8] >= 32 && frame[1239 -: 8] <= 32) || (frame[1239 -: 8] >= 255 && frame[1239 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:294:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  294 | if (result==0 && (!((frame[1231 -: 8] >= 0 && frame[1231 -: 8] <= 11) || (frame[1231 -: 8] >= 16 && frame[1231 -: 8] <= 27) || (frame[1231 -: 8] >= 32 && frame[1231 -: 8] <= 32) || (frame[1231 -: 8] >= 255 && frame[1231 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:294:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  294 | if (result==0 && (!((frame[1231 -: 8] >= 0 && frame[1231 -: 8] <= 11) || (frame[1231 -: 8] >= 16 && frame[1231 -: 8] <= 27) || (frame[1231 -: 8] >= 32 && frame[1231 -: 8] <= 32) || (frame[1231 -: 8] >= 255 && frame[1231 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:296:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  296 | if (result==0 && (!((frame[1215 -: 8] >= 0 && frame[1215 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:296:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  296 | if (result==0 && (!((frame[1215 -: 8] >= 0 && frame[1215 -: 8] <= 255)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:297:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  297 | if (result==0 && (!((frame[1207 -: 8] >= 0 && frame[1207 -: 8] <= 11) || (frame[1207 -: 8] >= 16 && frame[1207 -: 8] <= 27) || (frame[1207 -: 8] >= 32 && frame[1207 -: 8] <= 32) || (frame[1207 -: 8] >= 255 && frame[1207 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:297:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  297 | if (result==0 && (!((frame[1207 -: 8] >= 0 && frame[1207 -: 8] <= 11) || (frame[1207 -: 8] >= 16 && frame[1207 -: 8] <= 27) || (frame[1207 -: 8] >= 32 && frame[1207 -: 8] <= 32) || (frame[1207 -: 8] >= 255 && frame[1207 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:298:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  298 | if (result==0 && (!((frame[1199 -: 8] >= 0 && frame[1199 -: 8] <= 11) || (frame[1199 -: 8] >= 16 && frame[1199 -: 8] <= 27) || (frame[1199 -: 8] >= 32 && frame[1199 -: 8] <= 32) || (frame[1199 -: 8] >= 255 && frame[1199 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:298:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  298 | if (result==0 && (!((frame[1199 -: 8] >= 0 && frame[1199 -: 8] <= 11) || (frame[1199 -: 8] >= 16 && frame[1199 -: 8] <= 27) || (frame[1199 -: 8] >= 32 && frame[1199 -: 8] <= 32) || (frame[1199 -: 8] >= 255 && frame[1199 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:299:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  299 | if (result==0 && (!((frame[1191 -: 8] >= 0 && frame[1191 -: 8] <= 11) || (frame[1191 -: 8] >= 16 && frame[1191 -: 8] <= 27) || (frame[1191 -: 8] >= 32 && frame[1191 -: 8] <= 32) || (frame[1191 -: 8] >= 255 && frame[1191 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:299:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  299 | if (result==0 && (!((frame[1191 -: 8] >= 0 && frame[1191 -: 8] <= 11) || (frame[1191 -: 8] >= 16 && frame[1191 -: 8] <= 27) || (frame[1191 -: 8] >= 32 && frame[1191 -: 8] <= 32) || (frame[1191 -: 8] >= 255 && frame[1191 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:300:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  300 | if (result==0 && (!((frame[1183 -: 8] >= 0 && frame[1183 -: 8] <= 11) || (frame[1183 -: 8] >= 16 && frame[1183 -: 8] <= 27) || (frame[1183 -: 8] >= 32 && frame[1183 -: 8] <= 32) || (frame[1183 -: 8] >= 255 && frame[1183 -: 8] <= 255)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:300:227: Comparison is constant due to limited range
+                                                                                                                                                                  : ... note: In instance 'cnc3_frame_endpoint.validate'
+  300 | if (result==0 && (!((frame[1183 -: 8] >= 0 && frame[1183 -: 8] <= 11) || (frame[1183 -: 8] >= 16 && frame[1183 -: 8] <= 27) || (frame[1183 -: 8] >= 32 && frame[1183 -: 8] <= 32) || (frame[1183 -: 8] >= 255 && frame[1183 -: 8] <= 255)))) result=8'd15;
+      |                                                                                                                                                                                                                                   ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:302:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  302 | if (result==0 && (!((frame[1167 -: 8] >= 0 && frame[1167 -: 8] <= 15)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:305:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  305 | if (result==0 && (!((frame[1135 -: 8] >= 0 && frame[1135 -: 8] <= 15)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:344:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  344 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:344:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  344 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:345:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  345 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:345:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  345 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:382:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  382 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:382:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  382 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:383:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  383 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:383:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  383 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:422:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  422 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:422:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  422 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:423:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  423 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:423:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  423 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:462:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  462 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:462:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  462 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:463:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  463 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:463:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  463 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:481:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  481 | if (result==0 && (!((frame[1279 -: 8] >= 0 && frame[1279 -: 8] <= 3)))) result=8'd15;
+      |                                       ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:509:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  509 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:509:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  509 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:510:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  510 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:510:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  510 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:548:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  548 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:548:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  548 | if (result==0 && (!((frame[831 -: 16] >= 0 && frame[831 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~
+%Warning-UNSIGNED: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:549:39: Comparison is constant due to unsigned arithmetic
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  549 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                       ^~
+%Warning-CMPCONST: /mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/cnc3-rtl-implementation-20261001/stage-r01/rtl/cnc3_command_validate.v:549:64: Comparison is constant due to limited range
+                                                                                                                                                                 : ... note: In instance 'cnc3_frame_endpoint.validate'
+  549 | if (result==0 && (!((frame[815 -: 16] >= 0 && frame[815 -: 16] <= 65535)))) result=8'd15;
+      |                                                                ^~

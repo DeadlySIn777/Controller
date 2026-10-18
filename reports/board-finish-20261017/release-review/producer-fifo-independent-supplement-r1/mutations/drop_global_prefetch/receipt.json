@@ -1,0 +1,58 @@
+{
+  "mutation": "drop_global_prefetch",
+  "status": "EXPECTED_BEHAVIORAL_REGRESSION_DETECTED",
+  "successful_compile_required": true,
+  "expected_failure_marker": "public/global/filter event state differs",
+  "executions": [
+    {
+      "phase": "compile",
+      "exit": 0,
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "iverilog",
+        "-g2012",
+        "-s",
+        "producer_fifo_supplement_tb",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/mutation.vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/original_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/candidate_diff.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/cnc3_event_bank.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/supplement_tb.sv"
+      ],
+      "log_SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "execute",
+      "exit": 1,
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/producer-fifo-independent-supplement-r1/mutations/drop_global_prefetch/mutation.vvp"
+      ],
+      "log_SHA256": "7d33187b50c0536b761af431f7a23b447176c1e926d327e727c7cb6f0c54646c"
+    }
+  ],
+  "changed_expression": {
+    "before": "count!=0 && prefetched_rd==rd && |producer_head_valid",
+    "after": "count!=0 && |producer_head_valid"
+  },
+  "input_SHA256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\mutations\\drop_global_prefetch\\original_diff.v": "dee554aee848a3fbdfb7a61d81b1cc91b06021aafdf41e4d1ba943d12fdba561",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\mutations\\drop_global_prefetch\\candidate_diff.v": "74d18b7833be0de73634ceffcefb7db0619153a2f9ac0525534053dbc727d303",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\mutations\\drop_global_prefetch\\cnc3_event_bank.v": "6f034f17c2f70c7161ad13dc605e7ab484844bd71688f6af04bc4bbe46a43841",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\board-finish-20261017\\release-review\\producer-fifo-independent-supplement-r1\\mutations\\drop_global_prefetch\\supplement_tb.sv": "6b47407aab993cfde3808423b3074af81a9f73d6b086ca23098ebdf681b7facc"
+  }
+}

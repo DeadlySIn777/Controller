@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": 1840,
+  "host_ideal_digital_checks": 342,
+  "motor_paths": 36,
+  "TX_paths": 2,
+  "bank_A_paths": 25,
+  "bank_B_paths": 13,
+  "physical_parts": 124,
+  "evidence_class": "primary source + native netlist/ERC + host ideal digital + static numerical screening",
+  "static_bias_screen": {
+    "evidence": "static divider/leakage screening, not analog simulation/measurement",
+    "assumptions": {
+      "rail_bounds_v": [
+        3.14,
+        3.465
+      ],
+      "strong_pull_ohm": 4700,
+      "strong_pull_tolerance": 0.01,
+      "T20_weak_up_min_ohm": 27000,
+      "T20_weak_down_min_ohm": 30000,
+      "T20_tristate_abs_uA": 10,
+      "TI244A_input_Ioff_abs_uA_full125C": 20,
+      "TI2G126_input_abs_uA": 5,
+      "TI2G126_Ioff_abs_uA": 10,
+      "AM26C31I_input_abs_uA": 1,
+      "LVC07A_input_abs_uA": 5,
+      "receiver_pull_tolerance_assumed": 0.01,
+      "powered_receiver_rail_bounds_required": [
+        3.14,
+        3.465
+      ]
+    },
+    "FPGA_tristate_STEP_DIR_worst_high_v": 0.6392233911865688,
+    "FPGA_tristate_EN_N_worst_low_v": 2.588070912596771,
+    "qualified_BOE_floating_worst_high_v": 0.37976,
+    "MC_off_receiver_EN_N_A_worst_low_v": 2.8875,
+    "MC_off_receiver_EN_N_B_worst_low_v": 2.9885,
+    "MC_off_receiver_STEP_DIR_A_worst_high_v": 0.2121,
+    "MC_off_receiver_STEP_DIR_B_worst_high_v": 0.1111,
+    "FPGA_single_pin_pull_plus_weak_pull_plus_buffer_leak_max_mA": 0.8930141843971631,
+    "FPGA_TX_fanout_two_buffers_pull_plus_weak_pull_plus_leak_max_mA": 0.8980141843971631,
+    "qualified_BOE_driver_PD_plus_13OE_OPI_FPGA_input_leak_max_mA": 0.8246808510638298,
+    "buffer_output_fitted_PD_single_max_mA": 0.35,
+    "buffer_output_with_required_receiver_PD_max_mA": 0.701,
+    "buffer_EN_N_active_low_receiver_bias_max_mA": 0.355,
+    "all_36_FPGA_pulls_simultaneous_upper_load_mA": 32.14851063829787,
+    "buffer_quiescent_rail_input_conditions_only_max_mA": 0.23,
+    "buffer_incremental_supply_current_for_nonrail_inputs_or_switching_bounded": false,
+    "loaded_GPIO_drive_strength_over_temperature_qualified": false,
+    "transient_power_sequence_qualified": false,
+    "passed_static_inactive_threshold_screen": true
+  },
+  "physical_measurement": false,
+  "complete_MC_isolation": false,
+  "manufacturing_ready": false,
+  "open_gates": [
+    "No complete MC or connector contact/net map.",
+    "DIC/OPI/MIA/MX4 qualification, receiver pull-ups/drive enable and differential drivers remain separate.",
+    "33ohm source-series values need routing, IBIS and loaded-edge qualification.",
+    "Static divider/leakage screening is not dynamic power sequencing, TTL transition or thermal qualification.",
+    "4.7k startup defaults and extra physical buffering loads need integrated power/BOM review.",
+    "The same qualifiedOE copper net must clear OPI_BOE in parent integration; the latch is not in this block.",
+    "All other card-bound MC outputs need separate Ioff completion."
+  ]
+}

@@ -1,0 +1,1335 @@
+PAGE 1
+Product Sample & Technical Tools & Support &
+Folder Buy Documents Software Community
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015
+SN74LVC2G17 Dual Schmitt-Trigger Buffer
+1 Features 3 Description
+• Schmitt-Triggerinputsprovidehysteresis This dual Schmitt-Trigger buffer is designed for 1.65-
+1 Vto5.5-VV operation.
+• AvailableintheTexasInstruments CC
+NanoFree™Package The SN74LVC2G17 device contains two buffers and
+performs the Boolean function Y = A. The device
+• Supports5-VV Operation
+CC functions as two independent buffers, but because of
+• InputsAcceptVoltagesto5.5V
+Schmitt action, it may have different input threshold
+• Maxt of5.4nsat3.3V levels for positive-going (V ) and negative-going
+pd T+
+(V )signals.
+• LowPowerConsumption,10-μAMaxI T–
+CC
+• ±24-mAOutputDriveat3.3V NanoFree™ package technology is a major
+breakthrough in IC packaging concepts, using the die
+• TypicalV (OutputGroundBounce)
+OLP
+asthepackage.
+<0.8VatV =3.3V,T =25°C
+CC A
+• TypicalV (OutputV Undershoot) This device is fully specified for partial-power-down
+OHV OH
+>2VatV CC =3.3V,T A =25°C applications using I off . The I off circuitry disables the
+outputs, preventing damaging current backflow
+• I SupportsLiveInsertion,Partial-Power-Down
+off throughthedevicewhenitispowereddown.
+ModeOperationandBack-DriveProtection
+• Latch-UpPerformanceExceeds100mA DeviceInformation(1)
+PerJESD78,ClassII
+PARTNUMBER PACKAGE(PIN) BODYSIZE
+• ESDProtectionExceedsJESD22 SOT-23(6) 2.90mm×1.60mm
+– 2000-VHuman-BodyModel SC70(6) 2.00mm×1.25mm
+– 1000-VCharged-DeviceModel SN74LVC2G17 SON(6) 1.45mm×1.00mm
+SON(6) 1.00mm×1.00mm
+2 Applications
+DSBGA(6) 1.41mm×0.91mm
+• AVReceivers (1) For all available packages, see the orderable addendum at
+theendofthedatasheet.
+• AudioDocks:Portable
+• Blu-rayPlayersandHomeTheater
+• MP3Players/Recorders
+• PersonalDigitalAssistants(PDAs)
+• Power:Telecom/ServerAC/DCSupply:Single
+Controller:AnalogandDigital
+• SolidStateDrives(SSDs):ClientandEnterprise
+• TVs: LCD/DigitalandHigh-Definition(HDTVs)
+• Tablets:Enterprise
+• VideoAnalytics:Server
+• WirelessHeadsets,Keyboards,andMice
+4 Simplified Schematic
+1 6
+1A 1Y
+3 4
+2A2 Y
+1
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectualpropertymattersandotherimportantdisclaimers.PRODUCTIONDATA.
+
+PAGE 2
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+Table of Contents
+1 Features.................................................................. 1 9 DetailedDescription.............................................. 8
+2 Applications........................................................... 1 9.1 Overview...................................................................8
+3 Description............................................................. 1 9.2 FunctionalBlockDiagram.........................................8
+4 SimplifiedSchematic............................................. 1 9.3 FeatureDescription...................................................8
+9.4 DeviceFunctionalModes..........................................8
+5 RevisionHistory..................................................... 2
+10 ApplicationandImplementation.......................... 9
+6 PinConfigurationandFunctions......................... 3
+10.1 ApplicationInformation ..........................................9
+7 Specifications......................................................... 4
+10.2 TypicalPowerButtonCircuit..................................9
+7.1 AbsoluteMaximumRatings......................................4
+11 PowerSupplyRecommendations..................... 10
+7.2 ESDRatings..............................................................4
+12 Layout................................................................... 10
+7.3 RecommendedOperatingConditions.......................4
+7.4 ThermalInformation..................................................5 12.1 LayoutGuidelines.................................................10
+7.5 ElectricalCharacteristics..........................................5 12.2 LayoutExample....................................................11
+7.6 SwitchingCharacteristics,–40°Cto85°C................6 13 DeviceandDocumentationSupport................. 12
+7.7 SwitchingCharacteristics,–40°Cto125°C..............6 13.1 Trademarks...........................................................12
+7.8 OperatingCharacteristics..........................................6 13.2 ElectrostaticDischargeCaution............................12
+7.9 TypicalCharacteristics..............................................6 13.3 Glossary................................................................12
+8 ParameterMeasurementInformation..................7 14 Mechanical,Packaging,andOrderable
+Information........................................................... 12
+5 Revision History
+ChangesfromRevisionM(November2013)toRevisionN Page
+• AddedApplications,DeviceInformationtable,PinFunctionstable,ESDRatingstable,ThermalInformationtable,
+TypicalCharacteristics,FeatureDescriptionsection,DeviceFunctionalModes,ApplicationandImplementation
+section,PowerSupplyRecommendationssection,Layoutsection,DeviceandDocumentationSupportsection,and
+Mechanical,Packaging,andOrderableInformationsection.................................................................................................. 1
+ChangesfromRevisionL(September2013)toRevisionM Page
+• Updateddocumentformatting................................................................................................................................................ 1
+• ChangedMAXoperatingtemperatureto125°CinRecommendedOperatingConditionstable. ......................................... 4
+ChangesfromRevisionK(July2012)toRevisionL Page
+• UpdateddocumenttonewTIdatasheetformat.................................................................................................................... 1
+• AddedESDwarning............................................................................................................................................................. 12
+ChangesfromRevisionJ(June2012)toRevisionK Page
+• Updatedpinoutgraphic......................................................................................................................................................... 3
+2 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 3
+SN74LVC2G17
+www.ti.com SCES381N–JANUARY2002–REVISEDJANUARY2015
+6 Pin Configuration and Functions
+DBV PACKAGE DCK PACKAGE YZPPACKAGE DRYPACKAGE DSF PACKAGE
+(TOPVIEW) (TOPVIEW) (BOTTOM VIEW) (TOPVIEW) (TOPVIEW)
+1A 1 6 1Y 1A 1 6 1Y 2A 3 4 2Y 1A 1 6 1Y 1A 1 6 1Y
+GND 2 5 VCC GN 1 D A 1 2 6 5 V 1Y CC GND 2 5 VCC GND 2 5 VCC
+2A 3 4 2Y
+GND 2 5 VCC 2A 3 4 2Y
+2A 3 4 2Y
+2A 3 4 2Y
+PinFunctions
+PIN
+TYPE DESCRIPTION
+NAME NO.
+1A 1 I Input1
+1Y 6 O Output1
+2A 3 I Input2
+2Y 4 O Output2
+GND 2 — Ground
+VCC 5 — PowerPin
+Copyright©2002–2015,TexasInstrumentsIncorporated SubmitDocumentationFeedback 3
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 4
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+7 Specifications
+7.1 Absolute Maximum Ratings
+overoperatingfree-airtemperaturerange(unlessotherwisenoted)(1)
+MIN MAX UNIT
+V Supplyvoltagerange –0.5 6.5 V
+CC
+V Inputvoltagerange(2) –0.5 6.5 V
+I
+V Voltagerangeappliedtoanyoutputinthehigh-impedanceorpower-offstate(2) –0.5 6.5 V
+O
+V Voltagerangeappliedtoanyoutputinthehighorlowstate(2)(3) –0.5 V +0.5 V
+O CC
+I Inputclampcurrent V <0 –50 mA
+IK I
+I Outputclampcurrent V <0 –50 mA
+OK O
+I Continuousoutputcurrent ±50 mA
+O
+ContinuouscurrentthroughV orGND ±100 mA
+CC
+T Junctiontemperatureunderbias 150 °C
+J
+T Storagetemperaturerange –65 150 °C
+stg
+(1) StressesbeyondthoselistedunderAbsoluteMaximumRatingsmaycausepermanentdamagetothedevice.Thesearestressratings
+only,andfunctionaloperationofthedeviceattheseoranyotherconditionsbeyondthoseindicatedunderRecommendedOperating
+Conditionsisnotimplied.Exposuretoabsolute-maximum-ratedconditionsforextendedperiodsmayaffectdevicereliability.
+(2) Theinputnegative-voltageandoutputvoltageratingsmaybeexceedediftheinputandoutputcurrentratingsareobserved.
+(3) ThevalueofV isprovidedintheRecommendedOperatingConditionstable.
+CC
+7.2 ESD Ratings
+VALUE UNIT
+Human-BodyModel(HBM),perANSI/ESDA/JEDECJS-001,allpins(2) 2000 V
+V ESD (1) Charged-DeviceModel(CDM),perJEDECspecificationJESD22-C101,all
+pins(3) 1000 V
+(1) Electrostaticdischarge(ESD)tomeasuredevicesensitivityandimmunitytodamagecausedbyassemblylineelectrostaticdischargesin
+tothedevice.
+(2) JEDECdocumentJEP155statesthat500-VHBMallowssafemanufacturingwithastandardESDcontrolprocess.
+(3) JEDECdocumentJEP157statesthat250-VCDMallowssafemanufacturingwithastandardESDcontrolprocess.
+7.3 Recommended Operating Conditions
+overoperatingfree-airtemperaturerange(unlessotherwisenoted)(1)
+MIN MAX UNIT
+V Supplyvoltage Operating 1.65 5.5 V
+CC
+V Inputvoltage 0 5.5 V
+I
+V Outputvoltage 0 V V
+O CC
+V =1.65V –4
+CC
+V =2.3V –8
+CC
+I High-leveloutputcurrent –16 mA
+OH
+V =3V
+CC
+–24
+V =4.5V –32
+CC
+V =1.65V 4
+CC
+V =2.3V 8
+CC
+I Low-leveloutputcurrent 16 mA
+OL
+V =3V
+CC
+24
+V =4.5V 32
+CC
+T Operatingfree-airtemperature –40 125 °C
+A
+(1) AllunusedinputsofthedevicemustbeheldatV orGNDtoensureproperdeviceoperation.RefertotheTIapplicationreport,
+CC
+ImplicationsofSloworFloatingCMOSInputs,literaturenumberSCBA004.
+4 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 5
+SN74LVC2G17
+www.ti.com SCES381N–JANUARY2002–REVISEDJANUARY2015
+7.4 Thermal Information
+SN74LVC2G17
+THERMALMETRIC(1) DBV DCK YZP DRY DSF UNIT
+6PINS
+RθJA Junction-to-ambientthermalresistance(2) 165 259 123 234 300 °C/W
+(1) Formoreinformationabouttraditionalandnewthermalmetrics,seetheICPackageThermalMetricsapplicationreport,SPRA953.
+(2) ThepackagethermalimpedanceiscalculatedinaccordancewithJESD51-7.
+7.5 Electrical Characteristics
+overrecommendedoperatingfree-airtemperaturerange(unlessotherwisenoted)
+–40°Cto85°C –40°Cto125°C
+PARAMETER TESTCONDITIONS VCC
+MIN TYP(1) MAX MIN TYP(1) MAX
+UNIT
+1.65V 0.7 1.4 0.7 1.4
+VT+ 2.3V 1.0 1.7 1.0 1.7
+Positive-going
+3V 1.3 2.0 1.3 2.0 V
+inputthreshold
+voltage 4.5V 1.9 3.1 1.9 3.1
+5.5V 2.2 3.7 2.2 3.7
+1.65V 0.3 0.7 0.3 0.7
+VT– 2.3V 0.4 1 0.4 1.0
+Negative-going
+3V 0.8 1.3 0.8 1.3 V
+inputthreshold
+voltage 4.5V 1.1 2 1.1 2.0
+5.5V 1.4 2.5 1.4 2.5
+1.65V 0.3 0.8 0.3 0.8
+2.3V 0.4 0.9 0.35 0.9
+ΔVT
+Hysteresis 3V 0.4 1.1 0.4 1.1 V
+(VT+–VT–)
+4.5V 0.6 1.3 0.6 1.3
+5.5V 0.7 1.4 0.7 1.4
+IOH=–100μA 1.65Vto5.5V VCC–0.1 VCC–0.1
+IOH=–4mA 1.65V 1.2 1.2
+IOH=–8mA 2.3V 1.9 1.9
+VOH V
+IOH=–16mA 2.4 2.4
+3V
+IOH=–24mA 2.3 2.3
+IOH=–32mA 4.5V 3.8 3.8
+IOL=100μA 1.65Vto5.5V 0.1 0.1
+IOL=4mA 1.65V 0.45 0.45
+IOL=8mA 2.3V 0.3 0.3
+VOL V
+IOL=16mA 0.4 0.4
+3V
+IOL=24mA 0.55 0.55
+IOL=32mA 4.5V 0.55 0.55
+II Ainput VI=5.5VorGND 0to5.5V ±5 ±5 μA
+Ioff VIorVO=5.5V 0 ±10 ±10 μA
+ICC VI=5.5VorGND, IO=0 1.65Vto5.5V 10 10 μA
+ΔICC O
+O
+n
+th
+e
+er
+in
+i
+p
+n
+u
+p
+t
+u
+a
+ts
+t
+a
+V
+t
+C
+V
+C
+C
+–
+C
+0
+o
+.
+r
+6
+G
+V
+N
+,
+D
+3Vto5.5V 500 500 μA
+Ci VI=VCCorGND 3.3V 4 4 pF
+(1) AlltypicalvaluesareatV =3.3V,T =25°C.
+CC A
+Copyright©2002–2015,TexasInstrumentsIncorporated SubmitDocumentationFeedback 5
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 6
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+7.6 Switching Characteristics, –40°C to 85°C
+overrecommendedoperatingfree-airtemperaturerange(unlessotherwisenoted)(seeFigure3)
+–40°Cto85°C
+PARAMETER
+FROM TO VCC=1.8V VCC=2.5V VCC=3.3V VCC=5V
+UNIT
+(INPUT) (OUTPUT) ±0.15V ±0.2V ±0.3V ±0.5V
+MIN MAX MIN MAX MIN MAX MIN MAX
+tpd A Y 3.9 9.3 1.9 5.7 2.2 5.4 1.5 4.3 ns
+7.7 Switching Characteristics, –40°C to 125°C
+overrecommendedoperatingfree-airtemperaturerange(unlessotherwisenoted)(seeFigure3)
+–40°Cto125°C
+PARAMETER
+FROM TO VCC=1.8V VCC=2.5V VCC=3.3V VCC=5V
+UNIT
+(INPUT) (OUTPUT) ±0.15V ±0.2V ±0.3V ±0.5V
+MIN MAX MIN MAX MIN MAX MIN MAX
+tpd A Y 3.9 9.8 1.9 6.2 2.2 5.9 1.5 4.8 ns
+7.8 Operating Characteristics
+T =25°C
+A
+V =1.8V V =2.5V V =3.3V V =5V
+CC CC CC CC
+PARAMETER TESTCONDITIONS UNIT
+TYP TYP TYP TYP
+C Powerdissipationcapacitance f=10MHz 17 18 19 21 pF
+pd
+7.9 Typical Characteristics
+14 10
+VCC=3V,
+VCC=3V,
+TA=25°C
+TA=25°C
+12 s
+– n s OneOutputSwitching e – n 8 OneOutputSwitching
+e m
+Ti
+m 10
+y
+Ti
+y a
+el
+a
+D
+el
+D 8 n 6
+n o
+ati
+o
+g
+ati
+g a
+a 6 p
+p o
+o r
+P r – P 4
+– d
+d 4 p
+p t
+t
+2 2
+0 50 100 150 200 250 300 0 50 100 150 200 250 300
+CL–LoadCapacitance–pF CL–LoadCapacitance–pF
+Figure1.PropagationDelay(LowtoHighTransition) Figure2.PropagationDelay(HightoLowTransition)
+vsLoadCapacitance vsLoadCapacitance
+6 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 7
+SN74LVC2G17
+www.ti.com SCES381N–JANUARY2002–REVISEDJANUARY2015
+8 Parameter Measurement Information
+V
+LOAD
+R S1 Open
+From Output L TEST S1
+Under Test GND
+t /t Open
+C PLH PHL
+(see NoteA) L R L t PLZ /t PZL V LOAD
+t /t GND
+PHZ PZH
+LOAD CIRCUIT
+INPUTS
+V V V C R V
+CC V t/t M LOAD L L D
+I r f
+1.8 V±0.15 V V £2 ns V /2 2 ×V 30 pF 1 kW 0.15 V
+CC CC CC
+2.5 V±0.2 V V £2 ns V /2 2 ×V 30 pF 500W 0.15 V
+CC CC CC
+3.3 V±0.3 V 3 V £2.5 ns 1.5 V 6 V 50 pF 500W 0.3 V
+5 V±0.5 V V £2.5 ns V /2 2 ×V 50 pF 500W 0.3 V
+CC CC CC
+V
+I
+Timing Input V
+M
+0 V
+t
+W
+V I t su t h
+V
+Input V V I
+M M Data Input V V
+M M
+0 V 0 V
+VOLTAGE WAVEFORMS VOLTAGE WAVEFORMS
+PULSE DURATION SETUPAND HOLD TIMES
+Input V M V M V I C O o u n t t p r u o t l V M V M V I
+0 V 0 V
+t t t t
+PLH PHL PZL PLZ
+V Output V /2
+Output V M V M OH W S av 1 e a fo t r V m 1 V M V + V LOAD
+V OL (see Note L O B AD ) OL D V OL
+t t
+PHL PLH t t
+PZH PHZ
+Output V M V M V OH W S a 1 v e a O f t o u G r t m p N u D 2 t V M V OH –V D V OH
+V OL (see Note B) »0 V
+VOLTAGE WAVEFORMS VOLTAGE WAVEFORMS
+PROPAGATION DELAYTIMES ENABLEAND DISABLE TIMES
+INVERTINGAND NONINVERTING OUTPUTS LOW-AND HIGH-LEVELENABLING
+NOTES: A. C includes probe and jig capacitance.
+L
+B. Waveform 1 is for an output with internal conditions such that the output is low, except when disabled by the output control.
+Waveform 2 is for an output with internal conditions such that the output is high, except when disabled by the output control.
+C. All input pulses are supplied by generators having the following characteristics: PRR£10 MHz, Z = 50W.
+O
+D. The outputs are measured one at a time, with one transition per measurement.
+E. t and t are the same as t .
+PLZ PHZ dis
+F. t and t are the same as t .
+PZL PZH en
+G.t and t are the same as t .
+PLH PHL pd
+H. All parameters and waveforms are not applicable to all devices.
+Figure3. LoadCircuitandVoltageWaveforms
+Copyright©2002–2015,TexasInstrumentsIncorporated SubmitDocumentationFeedback 7
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 8
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+9 Detailed Description
+9.1 Overview
+NanoFree™ package technology is a major breakthrough in IC packaging concepts, using the die as the
+package.
+This device is fully specified for partial-power-down applications using I . The I circuitry disables the outputs,
+off off
+preventingdamagingcurrentbackflowthroughthedevicewhenitispowereddown.
+9.2 Functional Block Diagram
+1 6
+1A 1Y
+3 4
+2A2 Y
+9.3 Feature Description
+• 1.65Vto5.5Voperatingvoltagerange
+• Allowsdownvoltagetranslation
+– 5Vto3.3V
+– 5Vor3.3Vto1.8V
+• Inputsacceptvoltagesto5.5V
+– 5-Vtoleranceoninputpin
+• I feature
+off
+– AllowsvoltageontheinputsandoutputswhenV is0V
+CC
+– AbletoreduceleakagewhenV is0V
+CC
+• Schmitt-TriggerInputcanimprovethenoiseimmunitycapability
+9.4 Device Functional Modes
+INPUT OUTPUT
+A Y
+H H
+L L
+8 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 9
+SN74LVC2G17
+www.ti.com SCES381N–JANUARY2002–REVISEDJANUARY2015
+10 Application and Implementation
+NOTE
+Information in the following applications sections is not part of the TI component
+specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+responsible for determining suitability of components for their purposes. Customers should
+validateandtesttheirdesignimplementationtoconfirmsystem functionality.
+10.1 Application Information
+The SN74LVC2G17 device contains two buffers and performs the Boolean function Y = A. The device functions
+as two independent buffers, but because of Schmitt action, it may have different input threshold levels for
+positive-going(V )andnegative-going(V )signals.
+T+ T–
+10.2 Typical Power Button Circuit
+3 V
+3 V
+SN74LVC2G17
+1A 1Y CLK VCC
+GND VCC D PRE
+2A 2Y Q CLR
+MCU
+GND Q
+SN74LVC1G74
+3 V
+Figure4. DevicePower ButtonCircuit
+10.2.1 DesignRequirements
+This device uses CMOS technology and has balanced output drive. Care should be taken to avoid bus
+contention because it can drive currents that would exceed maximum limits. Outputs can be combined to
+producehigherdrivebutthehighdrivewillalsocreatefasteredgesintolightloadssoroutingandloadconditions
+shouldbeconsideredtopreventringing.
+10.2.2 DetailedDesignProcedure
+1. RecommendedInputConditions:
+– Forrisetimeandfalltimespecifications,see(Δt/ΔV)inRecommendedOperatingConditions table.
+– Forspecifiedhighandlowlevels,see(V andV )inRecommendedOperatingConditions table.
+IH IL
+– Inputsareovervoltagetolerantallowingthemtogoashighas5.5VatanyvalidV .
+CC
+2. RecommendOutputConditions:
+– Loadcurrentsshouldnotexceed50mAperoutput and100mAtotalfor thepart.
+– Series resistors on the output may be used if the user desires to slow the output edge signal or limit the
+outputcurrent.
+Copyright©2002–2015,TexasInstrumentsIncorporated SubmitDocumentationFeedback 9
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 10
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+Typical Power Button Circuit (continued)
+10.2.3 ApplicationCurves
+60 100
+TA=25°C,VCC=3V, TA=25°C,VCC=3V,
+40 VIH=3V,VIL=0V, VIH=3V,VIL=0V,
+AllOutputsSwitching 80 AllOutputsSwitching
+20
+60
+0
+A A
+m m
+– –20 – 40
+O H O L
+I I
+–40
+20
+–60
+0
+–80
+–100 –20
+–1 –0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 –0.2 0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4 1.6
+VOH–V VOL–V
+Figure5.OutputCurrentDrive Figure6.OutputCurrentDrive
+vsHIGH-levelOutputVoltage vsLOW-levelOutputVoltage
+11 Power Supply Recommendations
+The power supply can be any voltage between the MIN and MAX supply voltage rating located in the
+RecommendedOperatingConditionstable.
+Each V terminal should have a good bypass capacitor to prevent power disturbance. For devices with a single
+CC
+supply, a 0.1 μF capacitor is recommended. If there are multiple V terminals then 0.01 μF or 0.022 μF
+CC
+capacitors are recommended for each power terminal. It is ok to parallel multiple bypass capacitors to reject
+different frequencies of noise. Multiple bypass capacitors may be paralleled to reject different frequencies of
+noise.Thebypasscapacitorshouldbeinstalledasclosetothepower terminalaspossiblefor thebestresults.
+12 Layout
+12.1 Layout Guidelines
+When using multiple bit logic devices, inputs should not float. In many cases, functions or parts of functions of
+digital logic devices are unused. Some examples are when only two inputs of a triple-input AND gate are used,
+or when only 3 of the 4-buffer gates are used. Such input pins should not be left unconnected because the
+undefinedvoltagesattheoutsideconnectionsresultinundefinedoperationalstates.
+Specified in Figure 7 are rules that must be observed under all circumstances. All unused inputs of digital logic
+devices must be connected to a high or low bias to prevent them from floating. The logic level that should be
+applied to any particular unused input depends on the function of the device. Generally they will be tied to GND
+orV ,whichevermakesmoresenseorismoreconvenient.
+CC
+10 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 11
+SN74LVC2G17
+www.ti.com SCES381N–JANUARY2002–REVISEDJANUARY2015
+12.2 Layout Example
+V CC Input
+Unused Input Output Unused Input Output
+Input
+Figure7. LayoutDiagram
+Copyright©2002–2015,TexasInstrumentsIncorporated SubmitDocumentationFeedback 11
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 12
+SN74LVC2G17
+SCES381N–JANUARY2002–REVISEDJANUARY2015 www.ti.com
+13 Device and Documentation Support
+13.1 Trademarks
+NanoFreeisatrademarkofTexasInstruments.
+Allothertrademarksaretheproperty oftheirrespectiveowners.
+13.2 Electrostatic Discharge Caution
+Thesedeviceshavelimitedbuilt-inESDprotection.Theleadsshouldbeshortedtogetherorthedeviceplacedinconductivefoam
+duringstorageorhandlingtopreventelectrostaticdamagetotheMOSgates.
+13.3 Glossary
+SLYZ022—TI Glossary.
+Thisglossarylistsandexplainsterms,acronymsanddefinitions.
+14 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical packaging and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+thisdocument.Forbrowserbasedversionsofthisdatasheet,refertothelefthandnavigation.
+12 SubmitDocumentationFeedback Copyright©2002–2015,TexasInstrumentsIncorporated
+ProductFolderLinks:SN74LVC2G17
+
+PAGE 13
+PACKAGE OPTION ADDENDUM
+www.ti.com 3-Jul-2026
+PACKAGING INFORMATION
+Orderable part number Status Material type Package | Pins Package qty | Carrier RoHS Lead finish/ MSL rating/ Op temp (°C) Part marking
+(1) (2) (3) Ball material Peak reflow (6)
+(4) (5)
+SN74LVC2G17DBVR Active Production SOT-23 (DBV) | 6 3000 | LARGE T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 (C175, C17F, C17K,
+C17R)
+SN74LVC2G17DBVR.B Active Production SOT-23 (DBV) | 6 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 (C175, C17F, C17K,
+C17R)
+SN74LVC2G17DBVRG4.B Active Production SOT-23 (DBV) | 6 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 (C17F, C17R)
+SN74LVC2G17DBVT Active Production SOT-23 (DBV) | 6 250 | SMALL T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 (C175, C17F, C17K,
+C17R)
+SN74LVC2G17DBVT.B Active Production SOT-23 (DBV) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 (C175, C17F, C17K,
+C17R)
+SN74LVC2G17DBVTG4 Active Production SOT-23 (DBV) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 (C17F, C17R)
+SN74LVC2G17DBVTG4.B Active Production SOT-23 (DBV) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 (C17F, C17R)
+SN74LVC2G17DCKR Active Production SC70 (DCK) | 6 3000 | LARGE T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 (C75, C7F, C7J, C7
+K, C7R)
+SN74LVC2G17DCKR.B Active Production SC70 (DCK) | 6 3000 | LARGE T&R Yes SN Level-1-260C-UNLIM -40 to 125 (C75, C7F, C7J, C7
+K, C7R)
+SN74LVC2G17DCKRE4 Active Production SC70 (DCK) | 6 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DCKRG4 Active Production SC70 (DCK) | 6 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DCKRG4.B Active Production SC70 (DCK) | 6 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DCKT Active Production SC70 (DCK) | 6 250 | SMALL T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 (C75, C7F, C7J, C7
+K, C7R)
+SN74LVC2G17DCKT.B Active Production SC70 (DCK) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 (C75, C7F, C7J, C7
+K, C7R)
+SN74LVC2G17DCKTE4 Active Production SC70 (DCK) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DCKTG4 Active Production SC70 (DCK) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DCKTG4.B Active Production SC70 (DCK) | 6 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C75
+SN74LVC2G17DRYR Active Production SON (DRY) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DRYR.B Active Production SON (DRY) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DRYRG4 Active Production SON (DRY) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DRYRG4.B Active Production SON (DRY) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DSF2 Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DSF2.B Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+Addendum-Page 1
+
+PAGE 14
+PACKAGE OPTION ADDENDUM
+www.ti.com 3-Jul-2026
+Orderable part number Status Material type Package | Pins Package qty | Carrier RoHS Lead finish/ MSL rating/ Op temp (°C) Part marking
+(1) (2) (3) Ball material Peak reflow (6)
+(4) (5)
+SN74LVC2G17DSF2G4 Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DSF2G4.B Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DSFR Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17DSFR.B Active Production SON (DSF) | 6 5000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 C7
+SN74LVC2G17YZPR Active Production DSBGA (YZP) | 6 3000 | LARGE T&R Yes SNAGCU Level-1-260C-UNLIM -40 to 85 (C77, C7N)
+SN74LVC2G17YZPR.B Active Production DSBGA (YZP) | 6 3000 | LARGE T&R Yes SNAGCU Level-1-260C-UNLIM -40 to 85 (C77, C7N)
+(1) Status: For more details on status, see our product life cycle.
+(2) Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+(3) RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+(4) Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+(5) MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+(6) Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+OTHER QUALIFIED VERSIONS OF SN74LVC2G17 :
+Addendum-Page 2
+
+PAGE 15
+PACKAGE OPTION ADDENDUM
+www.ti.com 3-Jul-2026
+•Automotive : SN74LVC2G17-Q1
+•Enhanced Product : SN74LVC2G17-EP
+NOTE: Qualified Version Definitions:
+•Automotive - Q100 devices qualified for high-reliability automotive applications targeting zero defects
+•Enhanced Product - Supports Defense, Aerospace and Medical Applications
+Addendum-Page 3
+
+PAGE 16
+PACKAGE MATERIALS INFORMATION
+www.ti.com 15-Jul-2026
+TAPE AND REEL INFORMATION
+REEL DIMENSIONS TAPE DIMENSIONS
+K0 P1
+W
+B0
+Reel
+Diameter
+Cavity A0
+A0 Dimension designed to accommodate the component width
+B0 Dimension designed to accommodate the component length
+K0 Dimension designed to accommodate the component thickness
+W Overall width of the carrier tape
+P1 Pitch between successive cavity centers
+Reel Width (W1)
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Sprocket Holes
+Q1 Q2 Q1 Q2
+Q3 Q4 Q3 Q4 User Direction of Feed
+Pocket Quadrants
+*All dimensions are nominal
+Device Package Package Pins SPQ Reel Reel A0 B0 K0 P1 W Pin1
+Type Drawing Diameter Width (mm) (mm) (mm) (mm) (mm) Quadrant
+(mm) W1 (mm)
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 178.0 8.4 3.2 3.2 1.4 4.0 8.0 Q3
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 180.0 8.4 3.2 3.2 1.4 4.0 8.0 Q3
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 178.0 9.0 3.23 3.17 1.37 4.0 8.0 Q3
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 180.0 8.4 3.23 3.17 1.37 4.0 8.0 Q3
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 180.0 8.4 3.2 3.2 1.4 4.0 8.0 Q3
+SN74LVC2G17DBVT SOT-23 DBV 6 250 180.0 8.4 3.23 3.17 1.37 4.0 8.0 Q3
+SN74LVC2G17DBVT SOT-23 DBV 6 250 178.0 9.2 3.3 3.23 1.55 4.0 8.0 Q3
+SN74LVC2G17DBVTG4 SOT-23 DBV 6 250 178.0 9.0 3.23 3.17 1.37 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 178.0 9.0 2.4 2.5 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 178.0 8.4 2.25 2.45 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 180.0 8.4 2.41 2.41 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 178.0 9.2 2.4 2.4 1.22 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 178.0 9.0 2.4 2.5 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKR SC70 DCK 6 3000 180.0 8.4 2.3 2.55 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKRG4 SC70 DCK 6 3000 178.0 9.2 2.4 2.4 1.22 4.0 8.0 Q3
+SN74LVC2G17DCKT SC70 DCK 6 250 180.0 8.4 2.41 2.41 1.2 4.0 8.0 Q3
+Pack Materials-Page 1
+
+PAGE 17
+PACKAGE MATERIALS INFORMATION
+www.ti.com 15-Jul-2026
+Device Package Package Pins SPQ Reel Reel A0 B0 K0 P1 W Pin1
+Type Drawing Diameter Width (mm) (mm) (mm) (mm) (mm) Quadrant
+(mm) W1 (mm)
+SN74LVC2G17DCKT SC70 DCK 6 250 178.0 9.0 2.4 2.5 1.2 4.0 8.0 Q3
+SN74LVC2G17DCKT SC70 DCK 6 250 178.0 9.2 2.4 2.4 1.22 4.0 8.0 Q3
+SN74LVC2G17DCKTG4 SC70 DCK 6 250 178.0 9.2 2.4 2.4 1.22 4.0 8.0 Q3
+SN74LVC2G17DRYR SON DRY 6 5000 180.0 9.5 1.15 1.6 0.75 4.0 8.0 Q1
+SN74LVC2G17DRYRG4 SON DRY 6 5000 180.0 9.5 1.15 1.6 0.75 4.0 8.0 Q1
+SN74LVC2G17DSF2 SON DSF 6 5000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q3
+SN74LVC2G17DSF2G4 SON DSF 6 5000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q3
+SN74LVC2G17DSFR SON DSF 6 5000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+SN74LVC2G17YZPR DSBGA YZP 6 3000 178.0 9.2 1.02 1.52 0.63 4.0 8.0 Q1
+Pack Materials-Page 2
+
+PAGE 18
+PACKAGE MATERIALS INFORMATION
+www.ti.com 15-Jul-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm) H
+W L
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 208.0 191.0 35.0
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 210.0 185.0 35.0
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 180.0 180.0 18.0
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 202.0 201.0 28.0
+SN74LVC2G17DBVR SOT-23 DBV 6 3000 210.0 185.0 35.0
+SN74LVC2G17DBVT SOT-23 DBV 6 250 202.0 201.0 28.0
+SN74LVC2G17DBVT SOT-23 DBV 6 250 180.0 180.0 18.0
+SN74LVC2G17DBVTG4 SOT-23 DBV 6 250 180.0 180.0 18.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 180.0 180.0 18.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 208.0 191.0 35.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 202.0 201.0 28.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 180.0 180.0 18.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 180.0 180.0 18.0
+SN74LVC2G17DCKR SC70 DCK 6 3000 210.0 185.0 35.0
+SN74LVC2G17DCKRG4 SC70 DCK 6 3000 180.0 180.0 18.0
+SN74LVC2G17DCKT SC70 DCK 6 250 202.0 201.0 28.0
+SN74LVC2G17DCKT SC70 DCK 6 250 180.0 180.0 18.0
+SN74LVC2G17DCKT SC70 DCK 6 250 180.0 180.0 18.0
+Pack Materials-Page 3
+
+PAGE 19
+PACKAGE MATERIALS INFORMATION
+www.ti.com 15-Jul-2026
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+SN74LVC2G17DCKTG4 SC70 DCK 6 250 180.0 180.0 18.0
+SN74LVC2G17DRYR SON DRY 6 5000 184.0 184.0 19.0
+SN74LVC2G17DRYRG4 SON DRY 6 5000 184.0 184.0 19.0
+SN74LVC2G17DSF2 SON DSF 6 5000 184.0 184.0 19.0
+SN74LVC2G17DSF2G4 SON DSF 6 5000 184.0 184.0 19.0
+SN74LVC2G17DSFR SON DSF 6 5000 184.0 184.0 19.0
+SN74LVC2G17YZPR DSBGA YZP 6 3000 220.0 220.0 35.0
+Pack Materials-Page 4
+
+PAGE 20
+PACKAGE OUTLINE
+DCK0006A SOT - 1.1 max height
+SCALE 5.600
+SMALL OUTLINE TRANSISTOR
+C
+2.4
+1.8 0.1 C
+1.4
+B
+PIN 1 1.1 A 1.1
+0.8
+INDEX AREA
+1
+6
+4X 0.65
+2.15
+1.3
+2 1.85
+4
+3
+0.30
+6X
+0.15
+0.1 C A B 4X 0 -12 0.1 TYP
+0.0
+NNOOTTEE 55
+4X 4 -15
+0.15
+0.22
+GAGE PLANE TYP
+0.08
+8
+TYP 0.46
+0 0.26 TYP SEATING PLANE
+4214835/D 11/2024
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Body dimensions do not include mold flash or protrusion. Mold flash and protrusion shall not exceed 0.15 per side.
+4. Falls within JEDEC MO-203 variation AB.
+www.ti.com
+
+PAGE 21
+EXAMPLE BOARD LAYOUT
+DCK0006A SOT - 1.1 max height
+SMALL OUTLINE TRANSISTOR
+PKG
+6X (0.9)
+1
+6X (0.4) 6
+SYMM
+2
+4X (0.65)
+4
+3
+(R0.05) TYP (2.2)
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:18X
+SOLDER MASK
+SOLDER MASK METAL UNDER
+METAL OPENING
+OPENING SOLDER MASK
+EXPOSED METAL EXPOSED METAL
+0.07 MAX 0.07 MIN
+ARROUND ARROUND
+NON SOLDER MASK SOLDER MASK
+DEFINED DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+4214835/D 11/2024
+NOTES: (continued)
+5. Publication IPC-7351 may have alternate designs.
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+www.ti.com
+
+PAGE 22
+EXAMPLE STENCIL DESIGN
+DCK0006A SOT - 1.1 max height
+SMALL OUTLINE TRANSISTOR
+PKG
+6X (0.9)
+1
+6X (0.4) 6
+SYMM
+2
+4X(0.65)
+4
+3
+(R0.05) TYP
+(2.2)
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 THICK STENCIL
+SCALE:18X
+4214835/D 11/2024
+NOTES: (continued)
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+8. Board assembly site may have different recommendations for stencil design.
+www.ti.com
+
+PAGE 23
+GENERIC PACKAGE VIEW
+DRY 6 USON - 0.6 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+Images above are just a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+4207181/G
+
+PAGE 24
+PACKAGE OUTLINE
+DRY0006A USON - 0.6 mm max height
+SCALE 8.500
+PLASTIC SMALL OUTLINE - NO LEAD
+B 1.05 A
+0.95
+PIN 1 INDEX AREA
+1.5
+1.4
+0.6 MAX C
+SEATING PLANE
+0.05
+0.00 0.08 C
+3X 0.6
+SYMM
+(0.127) TYP
+(0.05) TYP
+3
+4
+4X
+0.5
+SYMM
+2X
+1
+6
+1
+0.25
+6X
+0.15
+0.4
+0.3 0.1 C A B
+0.05 C
+PIN 1 ID
+(OPTIONAL) 0.35
+5X
+0.25
+4222894/A 01/2018
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+www.ti.com
+
+PAGE 25
+EXAMPLE BOARD LAYOUT
+DRY0006A USON - 0.6 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+SYMM
+(0.35)
+5X (0.3)
+1 6
+6X (0.2)
+SYMM
+4X (0.5)
+4
+3
+(R0.05) TYP
+(0.6)
+LAND PATTERN EXAMPLE
+1:1 RATIO WITH PKG SOLDER PADS
+EXPOSED METAL SHOWN
+SCALE:40X
+0.05 MAX 0.05 MIN
+ALL AROUND ALL AROUND
+EXPOSED
+EXPOSED
+METAL
+METAL
+SOLDER MASK METAL METAL UNDER SOLDER MASK
+OPENING SOLDER MASK OPENING
+NON SOLDER MASK
+DEFINED SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+4222894/A 01/2018
+NOTES: (continued)
+3. For more information, see QFN/SON PCB application report in literature No. SLUA271 (www.ti.com/lit/slua271).
+www.ti.com
+
+PAGE 26
+EXAMPLE STENCIL DESIGN
+DRY0006A USON - 0.6 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+SYMM
+(0.35) 5X (0.3)
+1 6
+6X (0.2)
+SYMM
+4X (0.5)
+4
+3
+(R0.05) TYP (0.6)
+SOLDER PASTE EXAMPLE
+BASED ON 0.075 - 0.1 mm THICK STENCIL
+SCALE:40X
+4222894/A 01/2018
+NOTES: (continued)
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+www.ti.com
+
+PAGE 27
+PACKAGE OUTLINE
+DSF0006A X2SON - 0.4 mm max height
+SCALE 10.000
+PLASTIC SMALL OUTLINE - NO LEAD
+1.05
+B A
+0.95
+PIN 1 INDEX AREA
+1.05
+0.95
+0.4 MAX C
+SEATING PLANE
+0.05 C
+(0.11) TYP
+SYMM
+0.05
+0.00
+3
+4
+2X SYMM
+0.7
+4X
+0.35
+6
+1
+0.22
+6X
+0.12
+(0.1)
+PIN 1 ID 0.45 0.07 C B A
+6X
+0.35 0.05 C
+4220597/B 06/2022
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Reference JEDEC registration MO-287, variation X2AAF.
+www.ti.com
+
+PAGE 28
+EXAMPLE BOARD LAYOUT
+DSF0006A X2SON - 0.4 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+6X (0.6)
+(R0.05) TYP
+1
+6X (0.17) 6
+SYMM
+4X (0.35)
+4
+3
+SYMM
+(0.8)
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:40X
+0.07 MIN
+0.07 MAX EXPOSED METAL ALL AROUND
+ALL AROUND
+EXPOSED METAL
+SOLDER MASK
+SOLDER MASK METAL METAL UNDER
+OPENING
+OPENING SOLDER MASK
+NON SOLDER MASK SOLDER MASK
+DEFINED DEFINED
+SOLDER MASK DETAILS
+4220597/B 06/2022
+NOTES: (continued)
+4. For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+www.ti.com
+
+PAGE 29
+EXAMPLE STENCIL DESIGN
+DSF0006A X2SON - 0.4 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+6X (0.6)
+(R0.05) TYP
+1
+6X (0.15) 6
+SYMM
+4X (0.35)
+4
+3
+SYMM
+(0.8)
+SOLDER PASTE EXAMPLE
+BASED ON 0.09 mm THICK STENCIL
+PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+SCALE:40X
+4220597/B 06/2022
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+www.ti.com
+
+PAGE 30
+PACKAGE OUTLINE
+DBV0006A SOT-23 - 1.45 mm max height
+SCALE 4.000
+SMALL OUTLINE TRANSISTOR
+3.0 C
+2.6
+1.75 0.1 C
+1.45 B A
+PIN 1
+INDEX AREA
+1
+6
+2X 0.95
+3.05
+2.75
+1.9 5
+2
+4
+3
+0.50
+6X
+0.25
+0.15
+0.2 C A B (1.1) TYP
+4X 0 -15 0.00
+1.45
+0.90
+4X 4 -15
+0.25
+GAGE PLANE 0.22
+TYP
+0.08
+8
+TYP 0.6
+0 0.3 TYP SEATING PLANE
+4214840/G 08/2024
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Body dimensions do not include mold flash or protrusion. Mold flash and protrusion shall not exceed 0.25 per side.
+4. Leads 1,2,3 may be wider than leads 4,5,6 for package orientation.
+5. Refernce JEDEC MO-178.
+www.ti.com
+
+PAGE 31
+EXAMPLE BOARD LAYOUT
+DBV0006A SOT-23 - 1.45 mm max height
+SMALL OUTLINE TRANSISTOR
+PKG
+6X (1.1)
+1
+6X (0.6)
+6
+SYMM
+2 5
+2X (0.95)
+3 4
+(R0.05) TYP (2.6)
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:15X
+SOLDER MASK
+SOLDER MASK METAL UNDER
+METAL OPENING
+OPENING SOLDER MASK
+EXPOSED METAL EXPOSED METAL
+0.07 MAX 0.07 MIN
+ARROUND ARROUND
+NON SOLDER MASK SOLDER MASK
+DEFINED DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+4214840/G 08/2024
+NOTES: (continued)
+6. Publication IPC-7351 may have alternate designs.
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+www.ti.com
+
+PAGE 32
+EXAMPLE STENCIL DESIGN
+DBV0006A SOT-23 - 1.45 mm max height
+SMALL OUTLINE TRANSISTOR
+PKG
+6X (1.1)
+1
+6X (0.6)
+6
+SYMM
+2 5
+2X(0.95)
+3 4
+(R0.05) TYP
+(2.6)
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE:15X
+4214840/G 08/2024
+NOTES: (continued)
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+9. Board assembly site may have different recommendations for stencil design.
+www.ti.com
+
+PAGE 33
+PACKAGE OUTLINE
+YZP0006 DSBGA - 0.5 mm max height
+SCALE 9.000
+DIE SIZE BALL GRID ARRAY
+B E A
+BALL A1
+CORNER
+D
+0.5 MAX C
+SEATING PLANE
+0.19 BALL TYP 0.05 C
+0.15
+0.5 TYP
+C
+SYMM
+1 D: Max = 1.418 mm, Min =1 .357 mm
+B TYP
+0.5 E: Max = 0.918 mm, Min =0 .857 mm
+TYP
+A
+0.25 1 2
+6X
+0.21 SYMM
+0.015 C A B
+4219524/A 06/2014
+NOTES: NanoFree Is a trademark of Texas Instruments.
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. NanoFreeTM package configuration.
+www.ti.com
+
+PAGE 34
+EXAMPLE BOARD LAYOUT
+YZP0006 DSBGA - 0.5 mm max height
+DIE SIZE BALL GRID ARRAY
+(0.5) TYP
+6X ( 0.225)
+1 2
+A
+(0.5) TYP
+B SYMM
+C
+SYMM
+LAND PATTERN EXAMPLE
+SCALE:40X
+( 0.225) 0.05 MAX 0.05 MIN METAL
+METAL UNDER
+MASK
+SOLDER MASK ( 0.225)
+OPENING SOLDER MASK
+OPENING
+NON-SOLDER MASK
+DEFINED SOLDER MASK
+(PREFERRED) DEFINED
+SOLDER MASK DETAILS
+NOT TO SCALE
+4219524/A 06/2014
+NOTES: (continued)
+4. Final dimensions may vary due to manufacturing tolerance considerations and also routing constraints.
+For more information, see Texas Instruments literature number SBVA017 (www.ti.com/lit/sbva017).
+www.ti.com
+
+PAGE 35
+EXAMPLE STENCIL DESIGN
+YZP0006 DSBGA - 0.5 mm max height
+DIE SIZE BALL GRID ARRAY
+(0.5) TYP
+6X ( 0.25)
+(R0.05) TYP
+1 2
+A
+(0.5)
+TYP
+B SYMM
+METAL
+TYP
+C
+SYMM
+SOLDER PASTE EXAMPLE
+BASED ON 0.1 mm THICK STENCIL
+SCALE:40X
+4219524/A 06/2014
+NOTES: (continued)
+5. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release.
+www.ti.com
+
+PAGE 36
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

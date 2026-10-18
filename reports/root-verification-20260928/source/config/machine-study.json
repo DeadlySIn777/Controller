@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "requirements_status": "illustrative_unconfirmed",
+  "units": {
+    "linear_distance": "mm",
+    "linear_speed": "mm/min",
+    "shaft_speed": "rev/min",
+    "pulse_duration": "us",
+    "reaction_and_update_time": "ms",
+    "linear_acceleration": "mm/s^2",
+    "network_capacity": "Mbit/s",
+    "data_size": "byte"
+  },
+  "assumptions": [
+    "Every machine, speed, resolution, limit and network parameter below is an illustrative engineering input, not a confirmed user requirement or a measured device capability.",
+    "One commanded step pulse advances the drive by one configured input increment; drive electronic gearing is already included in drive_input_pulses_per_motor_rev.",
+    "motor_revs_per_output_rev is motor revolutions divided by output revolutions. Linear output_mm_per_rev describes screw lead or belt travel per output revolution.",
+    "All joints are assumed to reach their configured maxima simultaneously for the aggregate upper-demand example. Direction-change timing, pulse quantization, reversals and acceleration scheduling are excluded.",
+    "Quadrature lines are decoded at four counts per line; decoded counts and single-channel rising pulses receive no extra factor of four.",
+    "The modeled wired packet slot uses explicitly configured byte counts, including padding and interpacket gap. It assumes no VLAN, encryption, tunneling, fragmentation, retransmission or additional traffic.",
+    "Stopping examples assume constant speed during the stated reaction interval and immediate constant deceleration afterward; they are not measured stops, worst-case bounds, safety distances or an emergency-stop design."
+  ],
+  "scenarios": [
+    {
+      "name": "illustrative_router",
+      "description": "Unconfirmed four-joint router with two independent gantry motors; each physical motor consumes its own pulse channel.",
+      "assumed_aggregate_step_pulses_per_second_limit": 1000000,
+      "joints": [
+        {"name": "X", "kind": "linear", "drive_input_pulses_per_motor_rev": 4000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 10, "maximum_speed_mm_min": 18000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 200000},
+        {"name": "Y_left", "kind": "linear", "drive_input_pulses_per_motor_rev": 4000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 10, "maximum_speed_mm_min": 18000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 200000},
+        {"name": "Y_right", "kind": "linear", "drive_input_pulses_per_motor_rev": 4000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 10, "maximum_speed_mm_min": 18000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 200000},
+        {"name": "Z", "kind": "linear", "drive_input_pulses_per_motor_rev": 4000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 6000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 200000}
+      ],
+      "network": {
+        "link_capacity_mbit_s": 100,
+        "capacity_mode": "full_duplex",
+        "ip_mtu_bytes": 1500,
+        "overhead_bytes": {"ethernet_header": 14, "ethernet_fcs": 4, "preamble_and_sfd": 8, "interpacket_gap": 12, "ip_header": 20, "transport_header": 8, "minimum_ethernet_payload": 46},
+        "streams": [
+          {"name": "example_setpoints", "direction": "host_to_controller", "payload_bytes_per_packet": 128, "packets_per_update": 1, "update_period_ms": 1},
+          {"name": "example_feedback", "direction": "controller_to_host", "payload_bytes_per_packet": 128, "packets_per_update": 1, "update_period_ms": 1}
+        ]
+      },
+      "stopping_examples": [
+        {"name": "rapid_idealized_10ms_reaction", "speed_mm_min": 18000, "assumed_reaction_time_ms": 10, "assumed_constant_deceleration_mm_s2": 1500},
+        {"name": "rapid_idealized_100ms_reaction", "speed_mm_min": 18000, "assumed_reaction_time_ms": 100, "assumed_constant_deceleration_mm_s2": 1500}
+      ]
+    },
+    {
+      "name": "illustrative_mill",
+      "description": "Unconfirmed three linear joints plus a geared rotary joint; deliberately stresses an assumed pulse-width limit.",
+      "assumed_aggregate_step_pulses_per_second_limit": 1000000,
+      "joints": [
+        {"name": "X", "kind": "linear", "drive_input_pulses_per_motor_rev": 10000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 12000, "minimum_pulse_high_us": 2.5, "minimum_pulse_low_us": 2.5, "assumed_output_rate_limit_hz": 500000, "encoder_shaft": "motor", "encoder": {"signal_definition": "quadrature_lines_per_rev", "resolution_per_rev": 2500, "assumed_count_rate_limit_hz": 2000000}},
+        {"name": "Y", "kind": "linear", "drive_input_pulses_per_motor_rev": 10000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 12000, "minimum_pulse_high_us": 2.5, "minimum_pulse_low_us": 2.5, "assumed_output_rate_limit_hz": 500000, "encoder_shaft": "motor", "encoder": {"signal_definition": "quadrature_lines_per_rev", "resolution_per_rev": 2500, "assumed_count_rate_limit_hz": 2000000}},
+        {"name": "Z", "kind": "linear", "drive_input_pulses_per_motor_rev": 10000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 6000, "minimum_pulse_high_us": 2.5, "minimum_pulse_low_us": 2.5, "assumed_output_rate_limit_hz": 500000},
+        {"name": "A", "kind": "rotary", "drive_input_pulses_per_motor_rev": 2000, "motor_revs_per_output_rev": 20, "maximum_output_speed_rpm": 30, "minimum_pulse_high_us": 2.5, "minimum_pulse_low_us": 2.5, "assumed_output_rate_limit_hz": 500000}
+      ],
+      "spindle_encoders": [
+        {"name": "spindle", "maximum_speed_rpm": 12000, "encoder": {"signal_definition": "quadrature_lines_per_rev", "resolution_per_rev": 1024, "index_pulses_per_rev": 1, "assumed_count_rate_limit_hz": 2000000}}
+      ],
+      "network": {
+        "link_capacity_mbit_s": 100,
+        "capacity_mode": "full_duplex",
+        "ip_mtu_bytes": 1500,
+        "overhead_bytes": {"ethernet_header": 14, "ethernet_fcs": 4, "preamble_and_sfd": 8, "interpacket_gap": 12, "ip_header": 20, "transport_header": 8, "minimum_ethernet_payload": 46},
+        "streams": [
+          {"name": "example_setpoints", "direction": "host_to_controller", "payload_bytes_per_packet": 256, "packets_per_update": 1, "update_period_ms": 0.25},
+          {"name": "example_feedback", "direction": "controller_to_host", "payload_bytes_per_packet": 256, "packets_per_update": 1, "update_period_ms": 0.25}
+        ]
+      },
+      "stopping_examples": [
+        {"name": "rapid_idealized_10ms_reaction", "speed_mm_min": 12000, "assumed_reaction_time_ms": 10, "assumed_constant_deceleration_mm_s2": 1000}
+      ]
+    },
+    {
+      "name": "illustrative_lathe",
+      "description": "Unconfirmed two-joint lathe; separate spindle encoder inputs compare quadrature lines with one rising pulse per revolution.",
+      "assumed_aggregate_step_pulses_per_second_limit": 500000,
+      "joints": [
+        {"name": "X", "kind": "linear", "drive_input_pulses_per_motor_rev": 8000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 6000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 250000},
+        {"name": "Z", "kind": "linear", "drive_input_pulses_per_motor_rev": 8000, "motor_revs_per_output_rev": 1, "output_mm_per_rev": 5, "maximum_speed_mm_min": 9000, "minimum_pulse_high_us": 2, "minimum_pulse_low_us": 2, "assumed_output_rate_limit_hz": 250000}
+      ],
+      "spindle_encoders": [
+        {"name": "spindle_quadrature_example", "maximum_speed_rpm": 6000, "encoder": {"signal_definition": "quadrature_lines_per_rev", "resolution_per_rev": 2048, "index_pulses_per_rev": 1, "assumed_count_rate_limit_hz": 1000000}},
+        {"name": "spindle_single_pulse_comparison", "maximum_speed_rpm": 6000, "encoder": {"signal_definition": "single_channel_rising_pulses_per_rev", "resolution_per_rev": 1, "assumed_count_rate_limit_hz": 1000000}}
+      ],
+      "network": {
+        "link_capacity_mbit_s": 100,
+        "capacity_mode": "full_duplex",
+        "ip_mtu_bytes": 1500,
+        "overhead_bytes": {"ethernet_header": 14, "ethernet_fcs": 4, "preamble_and_sfd": 8, "interpacket_gap": 12, "ip_header": 20, "transport_header": 8, "minimum_ethernet_payload": 46},
+        "streams": [
+          {"name": "example_setpoints", "direction": "host_to_controller", "payload_bytes_per_packet": 128, "packets_per_update": 1, "update_period_ms": 0.5},
+          {"name": "example_feedback", "direction": "controller_to_host", "payload_bytes_per_packet": 192, "packets_per_update": 1, "update_period_ms": 0.5}
+        ]
+      },
+      "stopping_examples": [
+        {"name": "Z_rapid_idealized_10ms_reaction", "speed_mm_min": 9000, "assumed_reaction_time_ms": 10, "assumed_constant_deceleration_mm_s2": 1000}
+      ]
+    }
+  ]
+}

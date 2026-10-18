@@ -1,0 +1,12 @@
+read_verilog cnc3_alarm_filter.v cnc3_encoder_runtime.v cnc3_motion_spi.v cnc3_motion_state.v cnc3_spi_transport_stateful.v cnc3_stepgen_runtime.v cnc3_spi_transport.v cnc3_command_validate.v
+hierarchy -check -top cnc3_motion_spi
+proc
+check -assert
+select -assert-none t:$dlatch t:$adlatch t:$dlatchsr
+tee -o structural-stat.json stat -json
+synth_efinix -top cnc3_motion_spi
+delete t:$scopeinfo
+check -assert -mapped
+select -assert-none t:EFX_LATCH t:$_DLATCH_* t:$dlatch t:$adlatch t:$dlatchsr
+tee -o mapped-stat.json stat -json
+write_json cnc3_motion_spi_efinix.json

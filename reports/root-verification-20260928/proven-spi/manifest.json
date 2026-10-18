@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-28",
+  "scope": "Linux spidev laboratory backend, all successful device operations mocked; no physical measurements",
+  "checks": {
+    "normal_assertions": 892,
+    "asan_ubsan_assertions": 892,
+    "cpp_header_c_object_link": "passed",
+    "physical_device_opens": 0
+  },
+  "source_sha256": {
+    "cnc1/src/spidev_transport.h": "7002af2a6c5495e1f8b7291298fea80cfd04c499b23a1918c700f28a6a222129",
+    "cnc1/src/spidev_transport.c": "ae97f700c45c52ec2d8c91764eb423e0dccf80599741887fbe8a79eefc1438d3",
+    "cnc1/tests/test_spidev.c": "c7965a746fa4051596c29e48912b5a04af4c96219129a47184b553d21f7e6357",
+    "cnc1/tests/test_spidev_cpp.cpp": "108d16b62a2b12c3401de317f7989c5c228ea73ab941cfd596af2fad8e83843a",
+    "cnc1/tools/test_spidev.sh": "2f2647786b8ee62fc538bc5c0fb19e03e6093ef8142cf567631c8f4fb0e9e84f",
+    "reports/SPI_TRANSPORT_IMPLEMENTATION.md": "9122556b50f9149ceb9a7a71a41ff4d8d582a1faf5aacd34e5db9f728391b554",
+    "cnc1/src/cnc1.h": "601b8a46765ec904f0e9a4096830d5c92b605ffc0fccc58cc4ccc3ff19369b2b"
+  },
+  "compiled_common_header": {
+    "path": "cnc1/evidence/spidev/build-cnc1.h",
+    "sha256": "601b8a46765ec904f0e9a4096830d5c92b605ffc0fccc58cc4ccc3ff19369b2b",
+    "current_common_header_matches": true,
+    "current_common_header_sha256": "601b8a46765ec904f0e9a4096830d5c92b605ffc0fccc58cc4ccc3ff19369b2b",
+    "note": "Copied from isolated rootfs work/spidev-lab/src/cnc1.h after successful current-header normal+ASan/UBSan+C++ link regression."
+  },
+  "evidence_sha256": {
+    "cnc1/evidence/spidev/tests.log": "e295f643ec55d331ea6feecfbe136dfd23edbc376c7f24efc6c97a9e395e04f2",
+    "cnc1/evidence/spidev/build-packages.tsv": "9beca216ca1cd6870d397a57dfa2746b5b44981eb7759f9301da9d42d17a4cf7",
+    "cnc1/evidence/spidev/initial-sanitizer-environment.log": "34b19403c7f6ece51d2ae420da7911139dbe637d9bc5976935535facb743abaa",
+    "cnc1/evidence/spidev/build-cnc1.h": "601b8a46765ec904f0e9a4096830d5c92b605ffc0fccc58cc4ccc3ff19369b2b",
+    "cnc1/evidence/spidev/before-persistent-header/archive-index.json": "4aee03925f9c5ad809a6112c8877df970a87e202745e7d0af1b09d11a644d03d",
+    "cnc1/evidence/spidev/intermediate-header-regression.log": "e295f643ec55d331ea6feecfbe136dfd23edbc376c7f24efc6c97a9e395e04f2"
+  },
+  "binary_sha256": {
+    "cnc1/evidence/spidev/binaries/test_spidev": "4a9debb4003da58014943703e2850b71a8401536c5da7bd6e0d6a25b1b01452e",
+    "cnc1/evidence/spidev/binaries/test_spidev_cpp": "3bf7f8fc9224a3a00c6b82cc0ebe11b8598fce7aaa41eeadafa175508ff7625c",
+    "cnc1/evidence/spidev/binaries/test_spidev_sanitized": "afd7a3b04707b4da469bf398a56d124f2cda4e294c67faa1c981271a145290dc",
+    "cnc1/evidence/spidev/binaries/spidev_transport.o": "81992ba9ec8844ebd950b215139920dc3885552cf434f1ec79179ae398e8a138"
+  },
+  "limitations": [
+    "Synchronous ioctl has no enforced completion deadline.",
+    "Advisory flock is cooperative ownership, not system-wide exclusion.",
+    "No default HAL profile loads this backend.",
+    "No target electrical, timing, device-tree or machine qualification."
+  ],
+  "initial_failure": "Sanitizer initially could not inspect /proc in isolated rootfs. Launcher corrected by mounting proc in private namespaces; both final test runs passed. The retained initial-sanitizer-environment.log was produced from an earlier revision of cnc1/tests/test_spidev.c (840 assertions, all passed before LeakSanitizer aborted); the test source was extended to 892 assertions before the recorded 892-assertion runs, so that log does not correspond to the test_spidev.c hash in source_sha256 and is kept only as the failed-environment record.",
+  "recorded_utc": "2026-09-28T08:37:43.769387+00:00",
+  "regression": "Rerun against persistence common header and configurable-rootfs launcher; transport/test sources unchanged",
+  "prior_run": {
+    "archive": "cnc1/evidence/spidev/before-persistent-header",
+    "verified_file_count_before_rerun": 14,
+    "prior_compiled_header_sha256": "e88c22d447d22ecb00901f424f6ade263181413e91d5fe9417a6d2bdbb5b2304",
+    "prior_manifest_sha256": "97cbbb5130845c67b80c50b46b51ebd4a02df06fc80a914b1bad80063969e60c"
+  },
+  "intermediate_regression": "intermediate-header-regression.log preserves the first successful header refresh. A launcher change was detected before recording, so the current final run was repeated against the recorded launcher hash."
+}

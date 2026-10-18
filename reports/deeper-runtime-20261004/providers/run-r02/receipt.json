@@ -1,0 +1,109 @@
+{
+  "status": "FAIL",
+  "utc": "2026-10-04T09:39:14.851532+00:00",
+  "source_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\virtual_provider.hpp": "e619b3be2090bcbd5cbe5fe42bc2795a1f37ac9881fd7cf5e47a0a2bea205a90",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\cnc3_runtime\\providers\\test_providers.cpp": "7513d767aa48eefd79585457832d7092b3e88ab2de7625d5d5cdee86b5cdda74",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\deeper-runtime-20261004\\providers\\run_tests.py": "b4b6e07d862c3bfdfdc7a6bce96ae1ad3c0ad1d8dd085bc00ce5f446a341b056"
+  },
+  "executions": [
+    {
+      "stage": "compiler-version",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "clang++",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "clang++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O2",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r02/inputs/test_providers.cpp",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r02/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "normal-run",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r02/providers-normal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "sanitizer-compile",
+      "command": [
+        "wsl",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "clang++",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r02/inputs/test_providers.cpp",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/deeper-runtime-20261004/providers/run-r02/providers-sanitized"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "scope": "Copied standalone C++ SIM provider/plant execution; not continuous HAL/RTL or physical qualification",
+  "physical_authority": false,
+  "production_profile_complete": false,
+  "device_connections": 0,
+  "paid_API_calls": 0,
+  "frozen_wire_protocol_modified": false,
+  "normal": {
+    "status": "PASS",
+    "checks": 428,
+    "groups": 7,
+    "motors": 12,
+    "encoders": 4,
+    "DI": 24,
+    "DO": 16,
+    "physical_authority": false
+  },
+  "error": "sanitizer-compile produced unexpected exit 1",
+  "artifact_sha256": {
+    "compiler-version.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compiler-version.stdout.log": "711983bcfed85232f200277deff64b3024a0e32c21262cc48dd768c785f2cbb9",
+    "inputs\\provider_ledger.hpp": "507af10ab73a3240818a365b78db5444e8b3c5da86d89de7789f1be51e30ce04",
+    "inputs\\test_providers.cpp": "7513d767aa48eefd79585457832d7092b3e88ab2de7625d5d5cdee86b5cdda74",
+    "inputs\\virtual_provider.hpp": "e619b3be2090bcbd5cbe5fe42bc2795a1f37ac9881fd7cf5e47a0a2bea205a90",
+    "normal-compile.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-run.stdout.log": "371707ac41dbd438933c5d339fc9b79b418e082396e08621493d4d6bda44ae01",
+    "providers-normal": "3a0a260efd85805ca063a3ea157d16a7404c73759f1be98d0b8f278a3e8314b2",
+    "sanitizer-compile.stderr.log": "0fc8a0c1425d2105fae20206e594bf8b44b30e32e2122b607cf91c2d38cc2397",
+    "sanitizer-compile.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "source_revision": 26,
+  "facts_are_conditional_device_limits_not_board_signoff": true,
+  "STM32G031": {
+    "primary": "https://www.st.com/resource/en/datasheet/stm32g031g6.pdf",
+    "revision": "DS12992 Rev4 June2025",
+    "SPI_table": {
+      "number": 70,
+      "pages": [
+        88,
+        89,
+        90
+      ],
+      "GPIO_OSPEEDRy": "11",
+      "test_load_pf": 30,
+      "voltage_v": [
+        2.7,
+        3.6
+      ],
+      "voltage_range": 1,
+      "slave_full_duplex_max_mhz": 32,
+      "slave_output_valid_max_ns": 12,
+      "slave_output_access_max_ns": 34,
+      "slave_disable_max_ns": 16,
+      "slave_input_setup_min_ns": 3,
+      "slave_input_hold_min_ns": 2,
+      "master_input_setup_min_ns": 1,
+      "master_input_hold_min_ns": 5,
+      "master_output_valid_max_ns": 5,
+      "SPI_NSS_setup_PCLK_periods": 4,
+      "SPI_NSS_hold_PCLK_periods": 2,
+      "NSS_table_condition": "Slave mode, SPI prescaler2",
+      "production_test_status": "characterization; not tested in production"
+    },
+    "GPIO_table": {
+      "number": 54,
+      "non_FT_c": true,
+      "pages": [
+        74,
+        75
+      ],
+      "current_speed": "11 only fitted SPI outputs; otherGPIOunchanged",
+      "voltage_v": [
+        2.7,
+        3.6
+      ],
+      "max_frequency_mhz_at_50pf": 2,
+      "max_frequency_mhz_at_10pf": 3,
+      "max_rise_fall_ns_at_50pf": 100,
+      "max_rise_fall_ns_at_10pf": 75,
+      "production_test_status": "specified by design; not tested in production",
+      "speed11_max_rise_fall_ns_at_30pf": 5.5,
+      "speed11_max_rise_fall_ns_at_10pf": 2.5,
+      "speed00_is_historical_baseline_for_selected_SPI_outputs": true
+    },
+    "GPIO_input_capacitance": {
+      "table": 51,
+      "page": 71,
+      "typ_pf": 5,
+      "guaranteed_max_pf": null
+    },
+    "PB5_timer": {
+      "AF": 1,
+      "function": "TIM3_CH2",
+      "physical_pin_C8T6": 44,
+      "physical_pin_K8T6": 29,
+      "table": 66,
+      "generic_fEXT_max": "fTIMxCLK/2",
+      "same_table_example_mhz_at_64mhz": 40,
+      "inconsistent_example": true,
+      "conservative_review_at64mhz_mhz": 32,
+      "timer_review_does_not_prove_board_clock_edges": true
+    },
+    "actual_target": {
+      "GPIO_OSPEEDR_write_present": true,
+      "MISO_PA6_AF_set": true,
+      "SPI2_DO_GPIO_AF_set": true,
+      "IOL1_target_hz": 8333333.333333333,
+      "DO_SPI2_target_hz": 4000000,
+      "ACC_SPI2_driver_present": false,
+      "supported_lower_frequency_IOL1_target_profile_present": false,
+      "speed11_limits_are_not_applicable_to_current_speed00": false,
+      "loaded_speed11_load_edge_qualified": false,
+      "current_compiled_speed11_receipt": "reports/motherboard-iol1-firmware-20261001/ospeed-r01/receipt.json",
+      "former_speed00_gap_source_corrected": true
+    }
+  },
+  "Nexperia_74LVC125APW_118": {
+    "primary": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "revision": "Rev12 2May2025",
+    "table": 7,
+    "voltage_v": [
+      3.0,
+      3.6
+    ],
+    "ambient_c": [
+      -40,
+      85
+    ],
+    "test_load_pf": 50,
+    "input_rise_fall_max_ns": 2.5,
+    "tpd_min_ns": 1,
+    "tpd_max_ns": 4.8,
+    "ten_max_ns": 5.4,
+    "tdis_max_ns": 4.6,
+    "same_part_output_skew_max_ns": 1.0,
+    "input_capacitance_typ_pf": 4,
+    "input_capacitance_max_pf": null,
+    "input_transition_limit_ns_per_v": 10,
+    "powered_off_Ioff_supported": true
+  },
+  "TI_SN74LVC1G125DBVR": {
+    "primary": "https://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf",
+    "revision": "SCES223U Aug2026",
+    "table": "5.7",
+    "voltage_v": [
+      3.0,
+      3.6
+    ],
+    "ambient_c": [
+      -40,
+      85
+    ],
+    "test_load_pf": [
+      30,
+      50
+    ],
+    "tpd_max_ns": 4.5,
+    "ten_max_ns": 5.3,
+    "tdis_max_ns": 5.0,
+    "marketing_15pf_3p7ns_not_assumed_for_board": true
+  },
+  "TI_ISO776x": {
+    "primary": "https://www.ti.com/lit/ds/symlink/iso7760.pdf",
+    "revision": "SLLSER1H Jan2024",
+    "test_output_load_pf": 15,
+    "equal3V3_table": "5.16",
+    "equal3V3_tpd_min_ns": 6,
+    "equal3V3_tpd_max_ns": 18.5,
+    "equal3V3_PWD_max_ns": 5.9,
+    "equal3V3_same_direction_skew_max_ns": 4.4,
+    "equal5V_table": "5.15",
+    "equal5V_tpd_max_ns": 17,
+    "equal5V_PWD_max_ns": 5.9,
+    "equal5V_same_direction_skew_max_ns": 4,
+    "actual_AO_AI_mixed3V3_5V_max_tpd_proven": false,
+    "actual_DO_equal3V3_profile_can_use_table_if_voltage_load_edges_hold": true,
+    "default_delay_max_us": 0.3,
+    "default_delay_start_condition": "input supply has fallen below1.7V; not total physical power-fault-to-inhibit time"
+  },
+  "TI_TPS274C65AS": {
+    "primary": "https://www.ti.com/lit/ds/symlink/tps274c65.pdf",
+    "revision": "SLVSFZ2C Feb2024",
+    "section": "6.7",
+    "junction_c": [
+      -40,
+      125
+    ],
+    "test_CSDO_pf": 30,
+    "clock_period_min_ns": 100,
+    "high_min_ns": 45,
+    "low_min_ns": 45,
+    "CS_setup_min_ns": 45,
+    "SDI_setup_min_ns": 15,
+    "SDI_hold_min_ns": 30,
+    "SDO_data_valid_max_ns": 30,
+    "CS_hold_min_ns": 45,
+    "CS_SDO_disable_max_ns": 10,
+    "CS_high_between_transfers_min_ns": 500
+  },
+  "AD5683RBRMZ_3": {
+    "primary": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD5683R_5682R_5681R_5683.pdf",
+    "revision": "RevD",
+    "table": 4,
+    "page": 6,
+    "VLOGIC_on_selected_MSOPless_pin_part": "substitute VDD",
+    "voltage_v": [
+      2.7,
+      5.5
+    ],
+    "temperature_c": [
+      -40,
+      105
+    ],
+    "readback_clock_period_min_ns": 40,
+    "readback_high_min_ns": 20,
+    "readback_low_min_ns": 20,
+    "readback_SYNC_setup_min_ns": 20,
+    "SDI_setup_min_ns": 5,
+    "SDI_hold_min_ns": 5,
+    "readback_SDO_valid_from_rising_max_ns": 35,
+    "SYNC_SDO_disable_max_ns": 60,
+    "readback_SYNC_high_min_ns": 40,
+    "RESET_min_low_ns": 75,
+    "SPI_modes": [
+      1,
+      2
+    ],
+    "input_edge_condition_ns_per_v": 1,
+    "readback_is_input_register_not_independent_DAC_output_latch_or_terminal_measurement": true
+  },
+  "ADS8684AIDBTR": {
+    "primary": "https://www.ti.com/lit/ds/symlink/ads8684a.pdf",
+    "revision": "SBAS680 July2015",
+    "section": "7.8",
+    "table_condition_AVDD_v": 5,
+    "table_condition_DVDD_v": 3,
+    "table_condition_SDO_load_pf": 20,
+    "temperature_c": [
+      -40,
+      125
+    ],
+    "clock_max_mhz": 17,
+    "clock_period_min_ns": 59,
+    "CS_to_first_falling_SCLK_min_ns": 30,
+    "CS_high_min_ns": 30,
+    "SDI_setup_min_ns": 5,
+    "SDI_hold_min_ns": 5,
+    "previous_SDO_hold_after_falling_min_ns": 10,
+    "SDO_setup_before_next_falling_min_ns": 25,
+    "conversion_max_ns": 850,
+    "acquisition_min_ns": 1150,
+    "CS_rising_SDO_HiZ_max_ns": 10,
+    "SDI_physical_pin": 1,
+    "SDO_physical_pin": 36,
+    "SCLK_physical_pin": 37,
+    "CS_physical_pin": 38,
+    "actual_DVDD_is5V_table3V_condition_distinction": true,
+    "actual_MCU_mode_and_pipeline_loaded_proof": false
+  },
+  "T20F256I4_configuration": {
+    "primary": "https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf",
+    "revision": "v6.0",
+    "table": 117,
+    "page": 75,
+    "DIV4_clock_mhz": [
+      14,
+      20,
+      26
+    ],
+    "DIV8_clock_mhz": [
+      7,
+      10,
+      13
+    ],
+    "input_setup_min_ns": 7.5,
+    "input_hold_min_ns": 1,
+    "test_IO_voltage_v": 3.3,
+    "output_test_load_pf": 0,
+    "Q100F3_25pf_note_applies_to_selected_F256": false,
+    "actual_config_header_DIV_selection_proven": false,
+    "actual_package_fit_and_user_mode_GPIO_STA_proven": false
+  },
+  "W25Q32JVSSIQ": {
+    "revision": "RevJ 24Dec2024",
+    "section": "9.6",
+    "clock_max_standard03h_mhz": 50,
+    "clock_max_other_3V0_3V6_mhz": 133,
+    "clock_max_other_2V7_3V0_mhz": 104,
+    "data_setup_min_ns": 1,
+    "data_hold_min_ns": 2,
+    "clock_low_SDO_valid_max_ns": 6,
+    "SDO_hold_min_ns": 1.5,
+    "CS_read_deselect_min_ns": 10,
+    "erase_program_deselect_min_ns": 50,
+    "primary_local_path": "research/fpga-core/w25q32jv.pdf",
+    "web_URL_not_inferred": true
+  },
+  "ASE_50MHz": {
+    "primary": "https://abracon.com/Oscillators/ASEseries.pdf",
+    "actual_part": "ASE-50.000MHZ-L-C-T",
+    "output_load_pf": 15,
+    "rise_fall_max_ns": 4,
+    "rise_fall_min_ns": null,
+    "clock_route_Cload_guarantee": false
+  },
+  "conditional_budget_examples": {
+    "IOL1_half_period_ns": 60,
+    "IOL1_after_two4p8ns_LVC_and_speed11_ST12ns_remaining_ns": 38.4,
+    "IOL1_remaining_must_cover": [
+      "both external flight delays",
+      "source/receiver clock skew",
+      "actual FPGA input setup and clock-to-output STA",
+      "jitter",
+      "RC/line settling",
+      "actual Nexperia \u22642.5ns input transition condition; ST30pF gives5.5ns max even atspeed11"
+    ],
+    "IOL1_example_qualifies_current_speed00": false,
+    "DO4MHz_half_period_ns": 125,
+    "DO_equal3V3_twoISO18p5_driver30_STmaster_setup1_remaining_ns": 57,
+    "DO_remaining_must_cover": [
+      "route flight",
+      "signal rise/fall",
+      "clock skew/PWD",
+      "actual matching capacitive load",
+      "jitter and current GPIO speed"
+    ],
+    "AO4MHz_half_period_ns": 125,
+    "AO_two_conditional18p5_ISO_driver35_buf4p5_STsetup1_remaining_ns": 47.5,
+    "AO_mixed_rail_limits_guaranteed": false,
+    "all_budget_examples_are_conditional_not_acceptance": true,
+    "generic_trace_ps_per_mm": null,
+    "generic_trace_capacitance_pf_per_mm": null,
+    "factory_stackup_extraction_required": true
+  }
+}

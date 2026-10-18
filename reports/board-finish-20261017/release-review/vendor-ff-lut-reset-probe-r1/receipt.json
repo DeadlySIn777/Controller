@@ -1,0 +1,49 @@
+{
+  "status": "FF_FED_LUT_MODEL_STARTUP_DEFECT_REPRODUCED",
+  "models_SHA256": {
+    "C:\\Efinity\\2026.1\\sim_models\\verilog\\efx_ff.v": "aabae51aeb95c17d8e5af262fe5aa21ac7c4fb432c7cbd6991ede0073f2bdee7",
+    "C:\\Efinity\\2026.1\\sim_models\\verilog\\efx_lut4.v": "49f8494172ab8ff1be8f9a487015451e924cff911ab36cfcefe2555fbb06586e"
+  },
+  "vendor_models_modified": false,
+  "executions": [
+    {
+      "phase": "compile",
+      "exit": 0,
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "iverilog",
+        "-g2012",
+        "-s",
+        "ff_lut_reset_probe_tb",
+        "-o",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/vendor-ff-lut-reset-probe-r1/probe.vvp",
+        "/mnt/c/Efinity/2026.1/sim_models/verilog/efx_ff.v",
+        "/mnt/c/Efinity/2026.1/sim_models/verilog/efx_lut4.v",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/vendor-ff-lut-reset-probe-r1/probe_tb.sv"
+      ]
+    },
+    {
+      "phase": "execute",
+      "exit": 0,
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "GarciaMechBuilder",
+        "--",
+        "taskset",
+        "-c",
+        "16,17",
+        "vvp",
+        "/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/vendor-ff-lut-reset-probe-r1/probe.vvp"
+      ]
+    }
+  ],
+  "output": "FF_INIT q=0 nor4=0 expected1 nor3=1\nEXPLICIT_EXTERNAL_X_AND_RESET q=0 nor4=0 expected1 nor3=1\nACTUAL_FF_CHANGE q=f nor4=0 expected0 nor3=0\nRESET_AFTER_ACTUAL_FF_CHANGE q=0 nor4=1 expected1 nor3=1\nFF_FED_LUT_MODEL_STARTUP_DEFECT_REPRODUCED_WITH_RESET_CONTROL\n/mnt/c/Users/Gluis/OneDrive/Documents/ChatGPT/Controller/reports/board-finish-20261017/release-review/vendor-ff-lut-reset-probe-r1/probe_tb.sv:23: $finish called at 7000 (1ps)\n",
+  "scope": "Tiny primitive/model mechanism only; complete mapped event-engine behavior is a separate unclosed gate."
+}

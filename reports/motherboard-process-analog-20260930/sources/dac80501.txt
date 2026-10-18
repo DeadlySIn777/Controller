@@ -1,0 +1,5589 @@
+DACx0501 16-Bit, 14-Bit, and 12-Bit, 1-LSB INL, Voltage-Output DACs
+With Precision Internal Reference
+1 Features
+•
+16-bit performance: 1-LSB INL and DNL (max)
+•
+Low glitch energy: 4 nV–s
+•
+Wide power supply: 2.7 V to 5.5 V
+•
+Buffered output range: 5 V, 2.5 V, or 1.25 V
+•
+Very-low power: 1 mA at 5.5 V
+•
+Integrated 5-ppm/°C (max), 2.5-V precision 
+reference
+•
+Pin-selectable serial interface:
+–
+3-wire, SPI compatible up to 50-MHz
+–
+2-wire, I2C compatible
+•
+Power-on-reset: Zero scale or midscale
+•
+1.62-V VIH with VDD = 5.5 V
+•
+Temperature range: –40°C to +125°C
+•
+Packages: Small 8-pin WSON and 10-pin VSSOP
+2 Applications
+•
+Oscilloscopes and digitizers
+•
+Parametric measurement unit (PMU)
+•
+Data acquisition (DAQ)
+•
+Flat panel display (FPD) shorting bar pattern 
+generator
+•
+Small cell base station
+•
+Analog output module
+•
+Process analytics (pH, gas, concentration, force 
+and humidity)
+•
+Programmable dc power supply
+3 Description
+The 16-bit DAC80501, 14-bit DAC70501, and 12-bit 
+DAC60501 (DACx0501) digital-to-analog converters 
+(DACs) are highly accurate, low-power devices 
+with voltage-output. The DACx0501 are specified 
+monotonic by design, and offer linearity of < 1 LSB. 
+These devices include a 2.5-V, 5-ppm/°C internal 
+reference, giving full-scale output voltage ranges of 
+1.25 V, 2.5 V, or 5 V. The DACx0501 incorporate 
+a power-on-reset (POR) circuit that makes sure the 
+DAC output powers up at zero scale or midscale, and 
+remains at that scale until a valid code is written to 
+the device. These devices consume a low current of 
+1 mA, and include a power-down feature that reduces 
+current consumption to typically 15 µA at 5 V.
+The digital interface of the DACx0501 can be 
+configured to SPI or I2C mode using the SPI2C pin. 
+In SPI mode, the DACx0501 use a versatile 3-wire 
+serial interface that operates at clock rates of up 
+to 50 MHz. In I2C mode, the DACx0501 operate in 
+standard mode (100Kbps), fast mode (400Kbps), and 
+fast mode plus (1.0Mbps).
+Device Information
+PART NUMBER(1)
+RESOLUTION
+PACKAGE(2)
+DAC80501
+16-bit
+WSON (8)
+VSSOP (10)
+DAC70501
+14-bit
+WSON (8)
+VSSOP (10)
+DAC60501
+12-bit
+WSON (8)
+VSSOP (10)
+(1)
+See the Device Comparison Table.
+(2)
+For all available packages, see the package option 
+addendum at the end of the data sheet.
+ 
+VOUT
+DAC 
+Register
+DAC 
+Buffer
+BUF
+Power Down Logic
+Resistive Network
+Interface Logic
+Power On Reset
+VREFIO
+SCLK or SCL
+SDIN or SDA
+SYNC
+AGND
+VDD
+DAC
+Internal 
+Reference
+SPI2C
+ or A0
+Functional Block Diagram
+   DACx0501
++
+±
+RG1
+VREFIO
+Bipolar 
+Output
++
+±
+RG3
+R2
+Signal
+Input
+Signal
+Output
+Serial
+Interface
+OPAMP
+OPAMP
+Offset Trimming With the DACx0501
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Revision History.............................................................. 2
+5 Device Comparison Table...............................................3
+6 Pin Configuration and Functions...................................3
+7 Specifications.................................................................. 4
+7.1 Absolute Maximum Ratings........................................ 4
+7.2 ESD Ratings............................................................... 4
+7.3 Recommended Operating Conditions.........................4
+7.4 Thermal Information....................................................5
+7.5 Electrical Characteristics.............................................5
+7.6 Timing Requirements: SPI Mode................................ 9
+7.7 Timing Requirements: I2C Standard Mode................. 9
+7.8 Timing Requirements: I2C Fast Mode.........................9
+7.9 Timing Requirements: I2C Fast-Mode Plus...............10
+7.10 Timing Diagrams ....................................................10
+7.11 Typical Characteristics.............................................11
+8 Detailed Description......................................................20
+8.1 Overview...................................................................20
+8.2 Functional Block Diagram.........................................20
+8.3 Feature Description...................................................20
+8.4 Device Functional Modes..........................................23
+8.5 Programming............................................................ 23
+8.6 Register Map.............................................................29
+9 Application and Implementation..................................33
+9.1 Application Information............................................. 33
+9.2 Typical Application.................................................... 33
+9.3 Power Supply Recommendations.............................36
+9.4 Layout....................................................................... 36
+10 Device and Documentation Support..........................37
+10.1 Documentation Support.......................................... 37
+10.2 Receiving Notification of Documentation Updates..37
+10.3 Support Resources................................................. 37
+10.4 Trademarks.............................................................37
+10.5 Electrostatic Discharge Caution..............................37
+10.6 Glossary..................................................................37
+11 Mechanical, Packaging, and Orderable 
+Information.................................................................... 37
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision D (February 2020) to Revision E (August 2023)
+Page
+•
+Updated the numbering format for tables, figures, and cross-references throughout the document................. 1
+•
+Added two rows for input current in Absolute Maximum Ratings ...................................................................... 4
+•
+Changed output voltage drift vs time test conditions under Voltage Reference Output from TA = 35ºC, 1900 hr 
+to TA = 25ºC, 1600 hr in the Electrical Characteristics ...................................................................................... 5
+•
+Changed output voltage drift vs time value under Voltage Reference Output from 20 µV to 50 ppm in the 
+Electrical Characteristics ................................................................................................................................... 5
+•
+Changed Figure 7-48, Internal Reference Voltage vs Temperature .................................................................11
+•
+Changed Figure 7-49, Internal Reference Voltage vs Supply Voltage .............................................................11
+•
+Added text to end of paragraph to clarify phase margin in Output Amplifier section........................................21
+•
+Changed text in Internal Reference section for clarity......................................................................................21
+•
+Changed all instances of legacy terminology to controller and target where I2C is mentioned........................ 24
+•
+Changed section 8.6.2, DEVID Register, to clarify and correct reset values....................................................29
+Changes from Revision C (November 2019) to Revision D (February 2020)
+Page
+•
+Changed Figure 29 to remove broken text from x axis (typo)...........................................................................11
+•
+Changed Figures 33, 34 and 35; updated for clarity.........................................................................................11
+Changes from Revision B (August 2019) to Revision C (November 2019)
+Page
+•
+Changed DGS (VSSOP) package from preview to production data (active)......................................................1
+•
+Added TUE parameter for DGS package to electrical characteristics table....................................................... 5
+•
+Added gain error parameter for DGS package to electrical characteristics table...............................................5
+•
+Added full-scale error parameter for DGS package to electrical characteristics table........................................5
+Changes from Revision A (August 2019) to Revision B (August 2019)
+Page
+•
+Changed DAC70501 and DAC60501 devices from preview to production data (active)................................... 1
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+2
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+5 Device Comparison Table
+DEVICE
+RESOLUTION
+REFERENCE
+POWER-ON RESET
+DAC80501Z
+16-bit
+Internal (default) or external
+Zero scale
+DAC80501M
+16-bit
+Internal (default) or external
+Midscale
+DAC70501Z
+14-bit
+Internal (default) or external
+Zero scale
+DAC70501M
+14-bit
+Internal (default) or external
+Midscale
+DAC60501Z
+12-bit
+Internal (default) or external
+Zero scale
+DAC60501M
+12-bit
+Internal (default) or external
+Midscale
+6 Pin Configuration and Functions
+1
+VDD
+10
+ VREFIO
+2
+VOUT
+9
+ NC
+3
+NC
+8
+ SDIN/SDA
+4
+AGND
+7
+ SYNC/A0
+5
+SPI2C
+6
+ SCLK/SCL
+Not to scale
+Figure 6-1. DGS Package, 10-Pin VSSOP 
+(Top View)
+1
+VDD
+8
+ VREFIO
+2
+VOUT
+7
+ SDIN/SDA
+3
+AGND
+6
+ SYNC/A0
+4
+SPI2C
+5
+ SCLK/SCL
+Not to scale
+Figure 6-2. DQF Package, 8-Pin WSON (Top View)
+Table 6-1. Pin Functions
+PIN
+TYPE
+DESCRIPTION
+NAME
+DGS 
+(VSSOP)
+DQF 
+(WSON)
+AGND
+4
+3
+Ground
+Ground reference point for all circuitry on the device.
+NC
+3
+—
+—
+No connection. Leave floating.
+NC
+9
+—
+—
+No connection. Leave floating.
+SCLK/SCL
+6
+5
+Input
+Serial interface clock. SPI or I2C mode.
+SDIN/SDA
+8
+7
+Input/output
+SPI mode: Serial interface data input. Data are clocked into the input shift register on 
+each falling edge of the SCLK pin.
+I2C mode: Data are clocked into or out of the input register. This pin is a bidirectional, 
+SDA drain data line that must be connected to the supply voltage with an external pullup 
+resistor.
+SPI2C
+5
+4
+Input
+Interface select pin.
+Digital interface in SPI mode if SPI2C = 0
+Digital interface in I2C mode if SPI2C = 1
+SPI2C pin must be kept static after device powers up.
+SYNC/A0
+7
+6
+Input
+SPI mode: Active low serial data enable. This input is the frame synchronization signal 
+for the serial data. When the signal goes low, the serial interface input shift register is 
+enabled.
+I2C mode: Four-state address input 0.
+VDD
+1
+1
+Power
+Analog supply voltage (2.7 V to 5.5 V)
+VOUT
+2
+2
+Output
+Analog output voltage from the DAC
+VREFIO
+10
+8
+Input/output When using the internal reference, this pin is the reference output voltage pin (default). 
+Reference input to the device when operating with external reference.
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+3
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7 Specifications
+7.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted)(1)
+MIN
+MAX
+UNIT
+Input voltage
+VDD to AGND
+–0.3
+6
+V
+VREFIO to AGND
+–0.3
+VDD + 0.3
+Digital inputs to AGND
+–0.3
+VDD + 0.3
+Output voltage
+VOUT to AGND
+–0.3
+VDD + 0.3
+V
+Input current
+Current into any digital pins
+–10
+10
+mA
+Current into VDD, AGND, VOUT
+–30
+30
+mA
+Current into VREFIO
+–100
+100
+mA
+TJ
+Junction temperature
+–40
+150
+°C
+Tstg
+Storage temperature
+–65
+150
+°C
+(1)
+Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress 
+ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under 
+Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device 
+reliability.
+7.2 ESD Ratings
+VALUE
+UNIT
+V(ESD)
+Electrostatic discharge
+Human body model (HBM), per ANSI/ESDA/JEDEC 
+JS-001, all pins(1)
+±2000
+V
+Charged device model (CDM), per JEDEC specification 
+JESD22-C101, all pins(2)
+±1000
+(1)
+JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)
+JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+7.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+POWER SUPPLY
+VDD to AGND
+Positive supply voltage to ground
+2.7
+5.5
+V
+DIGITAL INPUTS
+VIH
+Input high voltage
+1.62
+V
+VIL
+Input low voltage
+0.45
+V
+REFERENCE INPUT
+VREFIO to AGND
+2.7 V ≤ VDD < 3.3 V,
+reference divider disabled (REF-DIV bit = 0)
+1.2
+0.5 × (VDD – 0.2)
+V
+VREFIO to AGND
+2.7 V ≤ VDD < 3.3 V, 
+reference divider enabled (REF-DIV bit = 1)
+2.4
+(VDD – 0.2)
+V
+VREFIO to AGND
+3.3 V ≤ VDD ≤ 5.5 V,
+reference divider disabled (REF-DIV bit = 0)
+1.2
+0.5 × VDD
+V
+VREFIO to AGND
+3.3 V ≤ VDD ≤ 5.5 V,
+reference divider enabled (REF-DIV bit = 1)
+2.4
+VDD
+V
+TEMPERATURE
+TA
+Operating temperature
+–40
+125
+°C
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+4
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.4 Thermal Information
+THERMAL METRIC(1)
+DACx0501
+UNIT
+DGS (VSSOP)
+DQF (WSON)
+10 PINS
+8 PINS
+RθJA
+Junction-to-ambient thermal resistance
+170.1
+122.6
+°C/W
+RθJC(top)
+Junction-to-case (top) thermal resistance
+60.5
+58.3
+°C/W
+RθJB
+Junction-to-board thermal resistance
+92.6
+50
+°C/W
+ΨJT
+Junction-to-top characterization parameter
+7.8
+1.5
+°C/W
+ΨJB
+Junction-to-board characterization parameter
+90.7
+49.8
+°C/W
+(1)
+For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application 
+report.
+7.5 Electrical Characteristics
+all minimum and maximum values at TA = –40°C to +125°C; all typical values at TA = 25°C, 2.7 V ≤ VDD ≤ 5.5 V, external 
+or internal VREFIO = 1.25 V to 5.5 V, RLOAD = 2 kΩ to AGND, CLOAD = 200 pF to AGND, and digital inputs at VDD or AGND 
+(unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+STATIC PERFORMANCE
+Resolution
+DAC80501
+16
+Bits
+DAC70501
+14
+DAC60501
+12
+INL
+Integral nonlinearity(1)
+–1
+1
+LSB
+DNL
+Differential nonlinearity(1)
+–1
+1
+LSB
+TUE
+Total unadjusted error(1)
+DAC80501, 
+reference divider disabled (REF-DIV bit = 0)
+–0.08
+–0.02
+0.08
+%FSR
+DAC80501, 
+reference divider enabled (REF-DIV bit = 1)
+–0.06
+0.025
+0.06
+DAC80501, DGS package 
+reference divider enabled (REF-DIV bit = 1)
+–0.07
+0.025
+0.07
+DAC70501, DAC60501
+–0.1
+0.04
+0.1
+Zero code error(1)
+DAC loaded with zero scale code
+–1.5
+0.5
+1.5
+mV
+Zero code error temperature 
+coefficient(1)
+±2
+µV/°C
+Offset error(1)
+–1.5
+0.5
+1.5
+mV
+Offset error temperature 
+coefficient (1)
+±2
+µV/°C
+Gain error(1)
+DAC80501,
+reference divider disabled (REF-DIV bit = 0)
+–0.08
+–0.02
+0.08
+%FSR
+DAC80501,
+reference divider enabled (REF-DIV bit = 1)
+–0.06
+0.025
+0.06
+DAC80501, DGS package 
+reference divider enabled (REF-DIV bit = 1)
+–0.07
+0.025
+0.07
+DAC70501, DAC60501
+–0.1
+0.04
+0.1
+Gain error temperature 
+coefficient(1)
+±1
+ppm 
+FSR/°C
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+5
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.5 Electrical Characteristics (continued)
+all minimum and maximum values at TA = –40°C to +125°C; all typical values at TA = 25°C, 2.7 V ≤ VDD ≤ 5.5 V, external 
+or internal VREFIO = 1.25 V to 5.5 V, RLOAD = 2 kΩ to AGND, CLOAD = 200 pF to AGND, and digital inputs at VDD or AGND 
+(unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Full-scale error(1)
+DAC80501, DAC loaded with full scale, 
+reference divider disabled (REF-DIV bit = 0)
+–0.08
+–0.02
+0.08
+%FSR
+DAC80501, DAC loaded with full scale, 
+reference divider enabled (REF-DIV bit = 1)
+–0.06
+0.025
+0.06
+DAC80501, DGS package 
+reference divider enabled (REF-DIV bit = 1)
+–0.07
+0.025
+0.07
+DAC70501, DAC60501
+–0.1
+0.04
+0.1
+Full-scale error temperature 
+coefficient(1)
+±2
+ppm 
+FSR/°C
+OUTPUT CHARACTERISTICS
+VO
+Output voltage
+BUFF-GAIN bit set to 1, REF-DIV bit set to 0
+0
+2 × 
+VREFIO
+V
+BUFF-GAIN bit set to 1, REF-DIV bit set to 1
+0
+VREFIO
+BUFF-GAIN bit set to 0, REF-DIV bit set to 1
+0
+0.5 × 
+VREFIO
+RLOAD
+Resistive load(2)
+VDD = 2.7 V
+0.25
+kΩ
+VDD = 5.5 V
+0.5
+CLOAD
+Capacitive load(2)
+RLOAD = infinite
+2
+nF
+RLOAD = 2 kΩ
+10
+Load regulation
+DAC at midscale, –10 mA ≤ IOUT ≤ 10 mA
+80
+µV/mA
+Short circuit current
+Full scale output shorted to AGND
+30
+mA
+Zero output shorted to VDD
+30
+Output voltage headroom
+to VDD, DAC at full code, IOUT = 10 mA 
+(sourcing)
+0.3
+0.1
+V
+Output voltage footroom
+to AGND, DAC at zero code, IOUT = 10 mA 
+(sinking)
+0.3
+V
+ZO
+DC small signal output 
+impedance
+DAC at midscale
+0.1
+Ω
+DAC at code 256
+10
+DAC at code 65279
+10
+Power supply rejection ratio (DC)
+DAC at midscale; VDD = 5 V ± 10%
+0.15
+mV/V
+Output voltage drift vs time
+TA = 35°C, VOUT = midscale, 1900 hr
+20
+ppm of 
+FSR
+VOLTAGE REFERENCE INPUT
+ZVREFIO
+Reference input impedance 
+(VREFIO)
+100
+kΩ
+CVREFIO
+Reference input capacitance 
+(VREFIO)
+5
+pF
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+6
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.5 Electrical Characteristics (continued)
+all minimum and maximum values at TA = –40°C to +125°C; all typical values at TA = 25°C, 2.7 V ≤ VDD ≤ 5.5 V, external 
+or internal VREFIO = 1.25 V to 5.5 V, RLOAD = 2 kΩ to AGND, CLOAD = 200 pF to AGND, and digital inputs at VDD or AGND 
+(unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+VOLTAGE REFERENCE OUTPUT
+Output (initial accuracy)(3)
+TA = 25°C
+2.4975
+2.5025
+V
+Output drift(3)
+DAC80501
+5
+ppm/℃
+DAC70501, DAC60501
+10
+Output impedance(3)
+0.1
+Ω
+Output noise(3)
+0.1 Hz to 10 Hz
+14
+µVPP
+Output noise density(3)
+Measured at 10 kHz, reference load = 10 nF
+140
+nV/√ Hz
+Load current(3)
+–0.5 mV < ΔVref < 0.5 mV
+±5
+mA
+Load regulation(3)
+Sourcing and sinking
+90
+µV/mA
+Line regulation(3)
+20
+µV/V
+Output voltage drift vs time(3)
+TA = 25°C, 1600 hr
+50
+ppm of 
+FSR
+Thermal hysteresis(3)
+1st cycle
+500
+µV
+Additional cycle
+25
+µV
+DYNAMIC PERFORMANCE
+ts
+Output voltage settling time(4)
+¼ to ¾ scale and ¾ to ¼ scale settling to ±2 
+LSB, VDD = 5.5 V, VREFIO = 2.5 V
+5
+µs
+10-mV settling to ±2 LSB, VDD = 5.5 V, 
+VREFIO = 2.5 V
+3
+Slew rate(4)
+VDD = 5.5 V, VREFIO = 2.5 V
+2
+V/µs
+Power on glitch magnitude
+CLOAD = 50 pF
+200
+mV
+Vn
+Output noise(4)
+0.1 Hz to 10 Hz, DAC at midscale,
+VDD = 5.5 V, external VREFIO = 2.5 V
+14
+µVPP
+100-kHz Bandwidth, DAC at midscale,
+VDD = 5.5 V, external VREFIO = 2.5 V
+23
+µVrms
+Vn
+Output noise density
+Measured at 1 kHz, DAC at midscale,
+VDD = 5.5 V, external VREFIO = 2.5 V,
+gain = 2 × (BUFF-GAIN bit = 1)
+78
+nV/√ Hz
+Measured at 10 kHz, DAC at midscale,
+VDD = 5.5 V, external VREFIO = 2.5 V,
+gain = 2 × (BUFF-GAIN bit = 1)
+74
+Measured at 1 kHz, DAC at full scale,
+VDD = 2.7 V, external VREFIO = 2.5 V,
+gain = 1 × (BUFF-GAIN bit = 0)
+55
+Measured at 10 kHz, DAC at full scale,
+VDD = 2.7 V, external VREFIO = 2.5 V,
+gain = 1 × (BUFF-GAIN bit = 0)
+50
+SFDR
+Spurious free dynamic range
+1-kHz sinusoid at DAC output, DAC updated 
+at 500 kHz, include up to 7th harmonics, no 
+filter on DAC output
+70
+dB
+THD
+Total harmonic distortion
+1-kHz sinusoid at DAC output, DAC updated 
+at 500 kHz, include up to 7th harmonics, no 
+filter on DAC output
+70
+dB
+Power supply rejection ratio (ac)
+200-mV 50-Hz to 60-Hz sine wave 
+superimposed on power supply voltage, DAC 
+at midscale. (ac analysis)
+85
+dB
+Code change glitch impulse
+Midcode ±1 LSB (including feedthrough)
+4
+nV-s
+Code change glitch magnitude
+Midcode ±1 LSB (including feedthrough)
+gain = 1 × (BUFF-GAIN bit = 0)
+7.5
+mV
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+7
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.5 Electrical Characteristics (continued)
+all minimum and maximum values at TA = –40°C to +125°C; all typical values at TA = 25°C, 2.7 V ≤ VDD ≤ 5.5 V, external 
+or internal VREFIO = 1.25 V to 5.5 V, RLOAD = 2 kΩ to AGND, CLOAD = 200 pF to AGND, and digital inputs at VDD or AGND 
+(unless otherwise noted)
+PARAMETER
+TEST CONDITIONS
+MIN
+TYP
+MAX
+UNIT
+Digital feedthrough
+At SCLK = 1 MHz, DAC output at midscale
+4
+nV-s
+DIGITAL INPUTS
+Hysteresis voltage
+0.4
+V
+Input current
+–5
+5
+µA
+Pin capacitance
+Per pin
+10
+pF
+POWER REQUIREMENTS
+IVDD
+Current flowing into VDD
+Normal mode, internal reference enabled, 
+DAC at full scale, SPI static
+1.5
+2.0
+mA
+Normal mode, external reference = 2.5 V, 
+DAC at full scale, SPI static
+1
+1.4
+DAC and Internal reference power-down
+15
+µA
+IVREFIO
+Current flowing into VREFIO
+0-V to 5-V range, midscale code
+25
+µA
+(1)
+End point fit between code 256 to code 64,511 for 16-bit, code 64 to code 16,127 for 14-bit, code 16 to code 4031 for 12 bit, DAC 
+output unloaded, performance under resistive and capacitance load conditions are specified by design and characterization, DAC 
+output range ≥ 2.5 V.
+(2)
+Not production tested.
+(3)
+Characterized on 8-pin DQF package.
+(4)
+Output buffer in gain = 2 × setting (BUFF-GAIN bit = 1).
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+8
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.6 Timing Requirements: SPI Mode
+all input signals are specified with tR = tF = 1 ns/V and timed from a voltage level of (VIL + VIH) / 2. 2.7 V ≤ VDD ≤ 5.5 V,
+VIH = 1.62 V, VIL = 0.15 V, VREFIO = 1.25 V to 5.5 V, and TA = –40°C to +125°C (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+fSCLK
+SCLK frequency
+50
+MHz
+tSCLKHIGH
+SCLK high time
+9
+ns
+tSCLKLOW
+SCLK low time
+9
+ns
+tSDIS
+SDIN setup
+5
+ns
+tSDIH
+SDIN hold
+10
+ns
+tSYNCS
+SYNC falling edge to SCLK falling edge setup
+13
+ns
+tSYNCH
+SCLK falling edge to SYNC rising  edge
+10
+ns
+tSYNCHIGH
+SYNC high time
+160
+ns
+tSYNCIGNORE
+SCLK falling edge to SYNC ignore
+15
+ns
+tDACWAIT
+Sequential DAC update wait time
+1
+µs
+7.7 Timing Requirements: I2C Standard Mode
+all input signals are specified with tR = tF = 1 ns/V and timed from a voltage level of (VIL + VIH) / 2. 2.7 V ≤ VDD ≤ 5.5 V,
+VIH = 1.62 V, VIL = 0.45 V, VREFIO = 1.25 V to 5.5 V, and TA = – 40°C to +125°C (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+fSCLK
+SCL frequency
+0.1
+MHz
+tBUF
+Bus free time between stop and start conditions
+4.7
+µs
+tHDSTA
+Hold time after repeated start
+4
+µs
+tSUSTA
+Repeated start setup time
+4.7
+µs
+tSUSTO
+Stop condition setup time
+4
+µs
+tHDDAT
+Data hold time
+0
+ns
+tSUDAT
+Data setup time
+250
+ns
+tLOW
+SCL clock low period
+4700
+ns
+tHIGH
+SCL clock high period
+4000
+ns
+tR
+Clock and data fall time
+300
+ns
+tF
+Clock and data rise time
+1000
+ns
+tUPDATE
+Sequential DAC update wait time
+1
+µs
+7.8 Timing Requirements: I2C Fast Mode
+all input signals are specified with tR = tF = 1 ns/V and timed from a voltage level of (VIL + VIH) / 2. 2.7 V ≤ VDD ≤ 5.5 V,
+VIH = 1.62 V, VIL = 0.45 V, VREFIO = 1.25 V to 5.5 V, and TA = – 40°C to +125°C (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+fSCLK
+SCL frequency
+0.4
+MHz
+tBUF
+Bus free time between stop and start conditions
+1.3
+µs
+tHDSTA
+Hold time after repeated start
+0.6
+µs
+tSUSTA
+Repeated start setup time
+0.6
+µs
+tSUSTO
+Stop condition setup time
+0.6
+µs
+tHDDAT
+Data hold time
+0
+ns
+tSUDAT
+Data setup time
+100
+ns
+tLOW
+SCL clock low period
+1300
+ns
+tHIGH
+SCL clock high period
+600
+ns
+tR
+Clock and data fall time
+300
+ns
+tF
+Clock and data rise time
+300
+ns
+tUPDATE
+Sequential DAC update wait time
+1
+µs
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+9
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.9 Timing Requirements: I2C Fast-Mode Plus
+all input signals are specified with tR = tF = 1 ns/V and timed from a voltage level of (VIL + VIH) / 2. 2.7 V ≤ VDD ≤ 5.5 V,
+VIH = 1.62 V, VIL = 0.45 V, VREFIO = 1.25 V to 5.5 V, and TA = – 40°C to +125°C (unless otherwise noted)
+MIN
+NOM
+MAX
+UNIT
+fSCLK
+SCL frequency
+1
+MHz
+tBUF
+Bus free time between stop and start conditions
+0.5
+µs
+tHDSTA
+Hold time after repeated start
+0.26
+µs
+tSUSTA
+Repeated start setup time
+0.26
+µs
+tSUSTO
+Stop condition setup time
+0.26
+µs
+tHDDAT
+Data hold time
+0
+ns
+tSUDAT
+Data setup time
+50
+ns
+tLOW
+SCL clock low period
+500
+ns
+tHIGH
+SCL clock high period
+260
+ns
+tR
+Clock and data fall time
+120
+ns
+tF
+Clock and data rise time
+120
+ns
+tUPDATE
+Sequential DAC update wait time
+1
+µs
+7.10 Timing Diagrams
+tSYNCS
+tSDIS
+tSDIH
+SYNC
+SDIN
+tSYNCHIGH
+Bit 23
+tSCLKLOW
+Bit 1
+Bit 0
+tSYNCH
+SCLK
+tSCLKHIGH
+tSYNCIGNORE
+Figure 7-1. SPI Mode Timing
+SCL
+SDA
+P
+S
+tBUF
+tHDSTA
+tLOW
+tR
+tHDDAT
+tHIGH
+tF
+tSUDAT
+tSUSTA
+tHDSTA
+S
+tSUSTO
+P
+Low byte ACK cycle
+Figure 7-2. I2C Mode Timing
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+10
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Code
+INL (LSB)
+0
+8192
+16384 24576 32768 40960 49152 57344 65536
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+D001
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-3. Integral Linearity Error vs Digital Input Code
+Code
+DNL (LSB)
+0
+8192
+16384 24576 32768 40960 49152 57344 65536
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+D002
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-4. Differential Linearity Error vs Digital Input Code
+Code
+Total Unadjusted Error (%FSR)
+0
+8192
+16384 24576 32768 40960 49152 57344 65536
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D003
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-5. Total Unadjusted Error vs Digital Input Code
+Temperature (oC)
+INL (LSB)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D004
+INL Max, Unloaded
+INL Min, Unloaded
+INL Max, 5 k: || 200 pF
+INL Min, 5 k: || 200 pF
+ 
+Figure 7-6. Integral Linearity Error vs Temperature
+Temperature (oC)
+DNL (LSB)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D005
+DNL Max, Unloaded
+DNL Min, Unloaded
+DNL Max, 5 k: || 200 pF
+DNL Min, 5 k: || 200 pF
+ 
+Figure 7-7. Differential Linearity Error vs Temperature
+Temperature (oC)
+Total Unadjusted Error (%FSR)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D006
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-8. Total Unadjusted Error vs Temperature
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+11
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Temperature (oC)
+Zero Code Error (mV)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+0
+0.25
+0.5
+0.75
+1
+1.25
+1.5
+D007
+ 
+Figure 7-9. Zero Code Error vs Temperature
+Temperature (oC)
+Offset Error (mV)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+D008
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-10. Offset Error vs Temperature
+Temperature (oC)
+Full Scale Error (%FSR)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+Data
+D009
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-11. Full Scale Error vs Temperature
+Temperature (oC)
+Gain Error (%FSR)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D010
+Unloaded
+5 k: || 200 pF
+ 
+Figure 7-12. Gain Error vs Temperature
+VDD (V)
+INL (LSB)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D011
+Max INL
+Min INL
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-13. Integral Linearity Error vs Supply Voltage
+VDD (V)
+DNL (LSB)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D012
+Max DNL
+Min DNL
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-14. Differential Linearity Error vs Supply Voltage
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+12
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+VDD (V)
+Total Unadjusted Error (%FSR)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D013
+REF-DIV = 1, BUFF-GAIN = 1
+REF-DIV = 0, BUFF-GAIN = 0
+ 
+Figure 7-15. Total Unadjusted Error vs Supply Voltage
+VDD (V)
+Zero Code Error (mV)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+D014
+REF-DIV = 1, BUFF-GAIN = 1
+REF-DIV = 0, BUFF-GAIN = 0
+ 
+Figure 7-16. Zero Code Error vs Supply Voltage
+VDD (V)
+Offset Error (mV)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+D015
+REF-DIV = 1, BUFF-GAIN = 1
+REF-DIV = 0, BUFF-GAIN = 0
+ 
+Figure 7-17. Offset Error vs Supply Voltage
+VDD (V)
+Gain Error (%FSR)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D016
+REF-DIV = 1, BUFF-GAIN = 1
+REF-DIV = 0, BUFF-GAIN = 0
+ 
+Figure 7-18. Gain Error vs Supply Voltage
+VDD (V)
+Full Scale Error (%FSR)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D017
+REF-DIV = 1, BUFF-GAIN = 1
+REF-DIV = 0, BUFF-GAIN = 0
+ 
+Figure 7-19. Full Scale Error vs Supply Voltage
+VREFIN (V)
+INL (LSB)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D018
+Max, REFDIV = 0
+Max, REFDIV = 1
+Min, REFDIV = 0
+Min, REFDIV = 1
+ 
+Figure 7-20. Integral Linearity Error vs Reference Voltage
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+13
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+VREFIN (V)
+DNL (LSB)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-1
+-0.75
+-0.5
+-0.25
+0
+0.25
+0.5
+0.75
+1
+D019
+Max, REFDIV = 0
+Max, REFDIV = 1
+Min, REFDIV = 0
+Min, REFDIV = 1
+ 
+Figure 7-21. Differential Linearity Error vs Reference Voltage
+VREFIN (V)
+Total Unadjusted Error (%FSR)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D020
+REFDIV = 0
+REFDIV = 1
+ 
+Figure 7-22. Total Unadjusted Error vs Reference Voltage
+VREFIN (V)
+Zero Code Error (mV)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+D021
+REF-DIV = 0, BUFF-GAIN = 0
+REF-DIV = 1, BUFF-GAIN = 1
+ 
+Figure 7-23. Zero Code Error vs Reference Voltage
+VREFIN (V)
+Offset Error (mV)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+D022
+REF-DIV = 0, BUFF-GAIN = 0
+REF-DIV = 1, BUFF-GAIN = 1
+ 
+Figure 7-24. Offset Error vs Reference Voltage
+VREFIN (V)
+Zero Code Error (mV)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D023
+REF-DIV = 0, BUFF-GAIN = 0
+REF-DIV = 1, BUFF-GAIN = 1
+ 
+Figure 7-25. Gain Error vs Reference Voltage
+VREFIN (V)
+Zero Code Error (mV)
+1.25
+2
+2.75
+3.5
+4.25
+5
+5.5
+-0.08
+-0.06
+-0.04
+-0.02
+0
+0.02
+0.04
+0.06
+0.08
+D024
+REF-DIV = 0, BUFF-GAIN = 0
+REF-DIV = 1, BUFF-GAIN = 1
+ 
+Figure 7-26. Full Scale Error vs Reference Voltage
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+14
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Code
+IDD (mA)
+0
+8192
+16384 24576 32768 40960 49152 57344 65536
+0
+0.25
+0.5
+0.75
+1
+1.25
+1.5
+1.75
+2
+D025
+Internal Reference, BUFF-GAIN = 0
+Internal Reference, BUFF-GAIN = 1
+External Reference, BUFF-GAIN = 0
+External Reference, BUFF-GAIN = 1
+ 
+Figure 7-27. Supply Current vs Digital Input Code
+Temperature (qC)
+IDD (mA)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+0
+0.25
+0.5
+0.75
+1
+1.25
+1.5
+1.75
+2
+D026
+Internal Reference, BUFF-GAIN = 0
+Internal Reference, BUFF-GAIN = 1
+External Reference, BUFF-GAIN = 0
+External Reference, BUFF-GAIN = 1
+DAC code at midscale
+Figure 7-28. Supply Current vs Temperature
+VDD (V)
+IDD (mA)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+0
+0.25
+0.5
+0.75
+1
+1.25
+1.5
+1.75
+2
+D027
+Internal Reference, BUFF-GAIN = 0
+Internal Reference, BUFF-GAIN = 1
+External Reference, BUFF-GAIN = 0
+External Reference, BUFF-GAIN = 1
+DAC code at midscale
+Figure 7-29. Supply Current vs Supply Voltage
+Temperature (qC)
+IDD (P$)
+-40
+-25
+-10
+5
+20
+35
+50
+65
+80
+95
+110
+125
+0
+2
+4
+6
+8
+10
+12
+D028
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-30. Power Down Current vs Temperature
+VDD (V)
+IDD (PA)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+0
+3
+6
+9
+12
+15
+D029
+External reference = 2.5 V, REF-DIV = 1 and BUFF-GAIN = 0
+Figure 7-31. Power Down Current vs Supply Voltage
+Load Current (mA)
+'VOUT (V)
+0
+5
+10
+15
+20
+25
+30
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+D033
+Sourcing 5.5V
+Sourcing 2.7V
+Sinking 5.5V
+Sinking 2.7V
+External reference = 2.5 V
+Figure 7-32. Headroom and Footroom vs Load Current
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+15
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Loading Current (mA)
+DAC Output (V)
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+50
+-1
+0
+1
+2
+3
+4
+5
+6
+7
+D031
+0xFFFF
+0xC000
+0x8000
+0x4000
+0x0
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-33. Source and Sink Capability
+Loading Current (mA)
+DAC Output (V)
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+50
+-1
+0
+1
+2
+3
+4
+5
+6
+7
+8
+D032
+0xFFFF
+0xC000
+0x8000
+0x4000
+0x0
+REF-DIV = 0 and BUFF-GAIN = 1
+Figure 7-34. Source and Sink Capability
+Loading Current (mA)
+DAC Output (V)
+-50
+-40
+-30
+-20
+-10
+0
+10
+20
+30
+40
+50
+-1
+0
+1
+2
+3
+4
+5
+6
+7
+D033
+0xFFFF
+0xC000
+0x8000
+0x4000
+0x0
+REF-DIV = 1 and BUFF-GAIN = 0
+ 
+Figure 7-35. Source and Sink Capability
+Time (0.5 Ps/div)
+3 nV-sec
+D034
+VOUT (2.5 mV/div)
+CS (5 V/div)
+DAC code transition from midscale – 1 to midscale LSB,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-36. Glitch Impulse, Rising Edge, 1‑LSB Step
+Time (0.5 Ps/div)
+2 nV-sec
+D035
+VOUT (2.5mV/div)
+CS (5 V/div)
+DAC code transition from midscale to midscale – 1 LSB,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-37. Glitch Impulse, Falling Edge, 1‑LSB Step
+Time (2 Psec/div)
+D036
+Small Singal VOUT (3 LSB/div)
+Large Singal VOUT (2 V/div)
+CS (5 V/div)
+REF-DIV = 0 and BUFF-GAIN = 0
+ 
+Figure 7-38. Full-Scale Settling Time, Rising Edge
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+16
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Time (2 Psec/div)
+D037
+Small Singal VOUT (3 LSB/div)
+Large Singal VOUT (2 V/div)
+CS (5 V/div)
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-39. Full-Scale Settling Time, Falling Edge
+Time (1 ms/div)
+D038
+VDD (2 V/div)
+DAC Output (40 mV/div)
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-40. Power-on Glitch
+Time (1 ms/div)
+D039
+VDD (2 V/div)
+DAC Output (40 mV/div)
+REF-DIV = 0 and BUFF-GAIN = 0
+ 
+Figure 7-41. Power-off Glitch
+Frequency (Hz)
+AC PSRR (dB)
+1
+10
+100
+1000
+10000
+100000
+-120
+-110
+-100
+-90
+-80
+-70
+-60
+-50
+-40
+-30
+-20
+-10
+0
+D040
+DAC code at midscale, VDD = 5.0 V + 0.2 VPP,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-42. DAC Output AC PSRR vs Frequency
+Frequency (Hz)
+Noise (dB)
+0
+4000
+8000
+12000
+16000
+20000
+-140
+-120
+-100
+-80
+-60
+-40
+-20
+0
+20
+D041
+fo = 1 kHz, fs = 400 kHz, includes 7 harmonics,
+measurement bandwidth = 20 kHz, external reference = 2.5 V,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-43. DAC Output THD+N vs Frequency
+Frequency (Hz)
+Noise (nV/—Hz)
+10
+2030 50 100 200
+5001000
+10000
+100000
+0
+50
+100
+150
+200
+250
+300
+D042
+DAC Code = 0x0
+DAC Code = 0x8000
+DAC Code = 0xFFFF
+Gain = 1X (REF-DIV = 1 and BUFF-GAIN = 1),
+external reference = 2.5 V,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-44. DAC Output Noise Spectral Density
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+17
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+VNOISE (2 PV/div)
+D043
+DAC code at midscale, external reference = 2.5 V,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-45. DAC Output Noise 0.1 Hz to 10 Hz
+VNOISE (2 PV/div)
+D044
+DAC code at midscale, internal reference = 2.5 V,
+REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-46. DAC Output Noise 0.1 Hz to 10 Hz
+Time (5 Psec/div)
+VOUT (1 mV/div)
+SCLK (5 V/div)
+D045
+DAC code at midscale, external reference = 2.5 V,
+SCLK = 1 MHz, REF-DIV = 0 and BUFF-GAIN = 0
+Figure 7-47. Clock Feedthrough
+Temperature (oC)
+Internal Reference Drift (ppm)
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+-400
+-350
+-300
+-250
+-200
+-150
+-100
+-50
+0
+50
+100
+150
+200
+250
+300
+30 units
+ 
+Figure 7-48. Internal Reference Voltage vs Temperature
+VDD (V)
+Internal Refeence (V)
+2.7
+3.1
+3.5
+3.9
+4.3
+4.7
+5.1
+5.5
+2.49925
+2.4993
+2.49935
+2.4994
+2.49945
+2.4995
+ 
+Figure 7-49. Internal Reference Voltage vs Supply Voltage
+Time (Hours)
+Reference Drift (ppm)
+0
+200
+400
+600
+800
+1000
+1200
+-100
+-75
+-50
+-25
+0
+25
+50
+75
+100
+ 
+Figure 7-50. Internal Reference Voltage vs Time
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+18
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+7.11 Typical Characteristics (continued)
+at TA = 25°C, VDD = 5.5 V, Internal reference = 2.5 V, REF-DIV = 0 and BUFF-GAIN = 1, and DAC outputs unloaded (unless 
+otherwise noted)
+Frequency (Hz)
+Noise (nV/—Hz)
+10
+2030 50 100 200
+5001000
+10000
+100000
+0
+100
+200
+300
+400
+500
+600
+700
+800
+D049
+ 
+Figure 7-51. Internal Reference Noise Density vs Frequency
+VNOISE (2 PV/div)
+D050
+ 
+Figure 7-52. Internal Reference Noise, 0.1 Hz to 10 Hz
+Temperature Drift (ppm/qC)
+Number of Units
+0
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+0
+1
+2
+3
+4
+5
+D051
+ 
+Figure 7-53. Internal Reference Temperature Drift Histogram
+VREFOUT (V)
+Percentage of Units
+0
+10%
+20%
+30%
+40%
+50%
+60%
+70%
+80%
+90%
+100%
+2.4975 2.4980 2.4985 2.4990 2.4995 2.5000 2.5005 2.5010
+D053
+Presolder Heat Reflow
+Postsolder Heat Reflow
+ 
+Figure 7-54. Internal Reference Initial Accuracy (Pre- and Post-
+Solder) Histogram
+VREFOUT Drift Delta (ppm/qC)
+Percentage of Units
+0
+2%
+4%
+6%
+8%
+10%
+12%
+14%
+16%
+18%
+20%
+22%
+24%
+26%
+28%
+-3 -2.5 -2 -1.5 -1 -0.5
+0
+0.5
+1
+1.5
+2
+2.5
+3
+D054
+ 
+Figure 7-55. Internal Reference Temperature Drift (Pre- and Post-Solder) Histogram
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+19
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8 Detailed Description
+8.1 Overview
+The DAC80501, DAC70501, DAC60501 (DACx0501) family of devices are buffered voltage output, 16-bit, 14-bit, 
+or 12-bit digital-to-analog converters (DACs), respectively. These devices include a 2.5-V, 5-ppm/°C internal 
+reference, giving full-scale output voltage ranges of 1.25 V, 2.5 V, or 5 V. The DACx0501 devices incorporate a 
+power-on-reset circuit that makes sure that the DAC output powers up at zero scale or midscale, and remains at 
+that scale until a valid code is written to the device.
+The digital interface of the DACx0501 can be configured to SPI or I2C mode using the SPI2C pin. In SPI mode, 
+the DACx0501 family uses a 3-wire serial interface that operates at clock rates up to 50 MHz. In I2C mode, the 
+DACx0501 devices operate in standard mode (100Kbps), fast mode (400Kbps), and fast mode plus (1.0Mbps).
+8.2 Functional Block Diagram
+VOUT
+DAC 
+Register
+DAC 
+Buffer
+BUF
+Power Down Logic
+Resistive Network
+Interface Logic
+Power On Reset
+VREFIO
+SCLK or SCL
+SDIN or SDA
+SYNC
+AGND
+VDD
+DAC
+Internal 
+Reference
+SPI2C
+ or A0
+8.3 Feature Description
+8.3.1 DAC Architecture
+The output channel in the DACx0501 family of devices consists of a rail-to-rail ladder architecture with an output 
+buffer amplifier. The devices include an internal 2.5-V reference. Figure 8-1 shows a block diagram of the DAC 
+architecture.
+R-2R
+DAC 
+Output
+DAC 
+Buffer 
+Register 
+DAC
+Active 
+Register 
+Serial Interface
+DAC Data Register 
+BUF
+Gain
+(x1 or x2)
+AGND
+2.5-V
+Reference
+VREFIO
+REF Divider
+(x1 or x0.5)
+REF-DIV Bit
+BUFF-GAIN Bit
+VOUT
+Figure 8-1. DACx0501 DAC Block Diagram
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+20
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.3.1.1 DAC Transfer Function
+The input data writes to the individual DAC data registers in straight binary format. After a power-on or a reset 
+event, all DAC registers are set to zero code (DACx0501Z devices) or midscale code (DACx0501M devices). 
+The DAC transfer function is shown by Equation 1.
+ 
+u
+u
+OUT
+N
+DAC_DATA
+VREFIO
+V
+GAIN
+DIV
+2
+(1)
+where:
+•
+N = resolution in bits = either 12 (DAC60501), 14 (DAC70501) or 16 (DAC80501).
+•
+DAC_DATA = decimal equivalent of the binary code that is loaded to the DAC register (address 8h). 
+DAC_DATA ranges from 0 to 2N – 1.
+•
+VREFIO = DAC reference voltage at the VREFIO pin. Either VREFIO from the internal 2.5-V reference or 
+VREFIO from an external reference.
+•
+DIV = 1 (default) or 2, as set by the REF-DIV bit in the GAIN register (address 4h).
+•
+GAIN = 1 or 2 (default), as set by the BUFF-GAIN bit in the GAIN register (address 4h).
+8.3.1.2 DAC Register Structure
+Data written to the DAC data registers are initially stored in the DAC buffer registers. The update mode of the 
+DAC output is determined by the status of the DAC_SYNC_EN bit (address 2h).
+In asynchronous mode (default, DAC_SYNC_EN = 0), a write to the DAC buffer register results in an immediate 
+update of the DAC active register. In SPI mode, the DAC output (VOUT pin) updates on the rising edge of 
+SYNC. In I2C mode, the DAC output (VOUT pin) updates on the falling edge of SCL on the last acknowledge bit.
+In synchronous mode (DAC_SYNC_EN = 1), writing to the DAC buffer register does not automatically update 
+the DAC active register. Instead, the update occurs only after a software LDAC trigger event. A software LDAC 
+trigger generates through the LDAC bit in the TRIGGER register (address 5h). When the host reads from a 
+DAC buffer register, the value held in the DAC buffer register is returned (not the value held in the DAC active 
+register).
+8.3.1.3 Output Amplifier
+The output buffer amplifier generates rail-to-rail voltages on the output, giving a maximum output range of 0 V 
+to VDD. Equation 1 shows that the full-scale output range of the DAC output is determined by the voltage 
+on the VREFIO pin, the reference divider setting (DIV) as set by the REF-DIV bit (address 4h), and the gain 
+configuration for that channel set by the corresponding BUFF-GAIN bit (address 4h). The buffer amplifier is 
+designed to have a 79º phase margin (nominal) at 380 kHz at room temperature.
+8.3.2 Internal Reference
+The DAx0501 family of devices includes a 2.5-V precision band-gap reference that is enabled by default. 
+Operation from an external reference is supported by disabling the internal reference in the REF_PWDWN bit 
+(address 3h). The internal reference is externally available at the VREFIO pin, and can be used to drive external 
+circuitry. At power-on reset, the internal reference is enabled. This enabled reference can result in current being 
+sunk or sourced from the device to an external reference source. When using an external reference, use a series 
+resistance that is larger than 1 kΩ to reduce the current at start-up to be less than 5 mA. After the internal 
+reference is disabled, the input becomes high impedance. For noise filtering, use a minimum 150-nF capacitor 
+between the reference output and AGND.
+The reference voltage to the device, either from the internal reference or an external one, can be divided by 
+a factor of two by setting the REF-DIV bit (address 4h) to 1. The REF-DIV bit provides additional flexibility in 
+setting the full-scale output range of the DAC output. Make sure to configure REF-DIV so that there is sufficient 
+headroom from VDD to the DAC operating reference voltage, VREFIO (see Equation 1). See Section 7.3 for 
+more information. The short-circuit current of the internal reference is limited by design to approximately 100 mA.
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+21
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+Improper configuration of the reference divider triggers a reference alarm condition. In this case, the reference 
+buffer is shut down, and all the DAC outputs go to 0 V. The DAC data registers are unaffected by the alarm 
+condition, thus enabling the DAC output to return to normal operation after the reference divider is configured 
+correctly.
+8.3.2.1 Solder Heat Reflow
+A known behavior of IC reference voltage circuits is the shift induced by the soldering process. Figure 7-54 and 
+Figure 7-55 show the effect of solder heat reflow for the DACx0501 internal reference.
+8.3.3 Power-On-Reset (POR)
+The DACx0501 family of devices includes a power-on reset (POR) function that controls the output voltage at 
+power up. After the VDD supply has been established, a POR event is issued. The POR causes all registers 
+to initialize to default values, and communication with the device is valid only after a 250-µs POR delay. The 
+default value for the DAC data registers is zero-code for the DACx0501Z devices and midscale code for the 
+DACx0501M devices. The DAC output remains at the power-up voltage until a valid command is written to a 
+channel.
+When the device powers up, a POR circuit sets the device to the default mode. The POR circuit requires specific 
+VDD levels, as indicated in Figure 8-2, to make sure that the internal capacitors discharge and reset the device 
+at power up. To make sure that a POR occurs, VDD must be less than 0.7 V for at least 1 ms. When VDD 
+drops to less than 2.2 V but remains greater than 0.7 V (shown as the undefined region), the device may or may 
+not reset under all specified temperature and power-supply conditions. In this case, initiate a POR. When VDD 
+remains greater than 2.2 V, a POR does not occur.
+No power-on reset
+Power-on reset
+0.70
+Undefined
+0.00
+2.20
+2.70
+5.50
+VDD (V)
+Specified supply
+voltage range
+Figure 8-2. Threshold Levels for VDD POR Circuit
+8.3.4 Software Reset
+A device software reset event is initiated by writing the reserved code 0x1010 to the SOFT-RESET bit in the 
+TRIGGER register (address 5h). A software reset initiates a POR event.
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+22
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.4 Device Functional Modes
+The DACx0501 has two modes of operation: normal and power-down.
+8.4.1 Power-Down Mode
+The DACx0501 output amplifiers and internal reference can be independently powered down through the 
+CONFIG register (3h). At power up, the DAC output and the internal reference are active by default. In power-
+down mode, the DAC output (VOUT pin) is internally connected to AGND through a 1-kΩ resistor.
+8.5 Programming
+8.5.1 Serial Interface
+The DACx0501 family of devices is controlled through either a 3-wire SPI or a 2-wire I2C interface. The type of 
+interface is determined at device power up based on the logic level of the SPI2C pin. A logic 0 on the SPI2C pin 
+puts the DACx0501 in SPI mode; whereas, logic 1 on SPI2C puts the DACx0501 in I2C mode. The SPI2C pin 
+must be kept static after the device powers up.
+8.5.1.1 SPI Mode
+The DACx0501 digital interface is programmed to work in SPI mode when the logic level of the SPI2C pin is 0 
+at power up. In SPI mode, the DACx0501 have a 3-wire serial interface: SYNC, SCLK, and SDIN, as shown in 
+Section 6. The serial interface is compatible with SPI, QSPI, and Microwire interface standards, and most digital 
+signal processors (DSPs). The serial interface operates at up to 50 MHz. The input shift register is 24 bits wide.
+The serial clock SCLK is a continuous or a gated clock. The first falling edge of SYNC starts the operation cycle. 
+When SYNC is high, the SCLK and SDIN signals are blocked. The device internal registers are updated from the 
+shift register on the rising edge of SYNC.
+8.5.1.1.1 SYNC Interrupt
+For SPI-mode operation, the SYNC line stays low for at least 24 falling edges of SCLK and the addressed 
+DAC register updates on the SYNC rising edge. However, if the SYNC line is brought high before the 24th 
+SCLK falling edge, this event acts as an interrupt to the write sequence. The shift register resets and the write 
+sequence is discarded. Neither an update of the data buffer or DAC register contents, nor a change in the 
+operating mode occurs, as shown in Figure 8-3.
+1
+2
+24
+SCLK
+SYNC
+SDIN
+DB23
+DB0
+Invalid/Interrupted write sequence
+1
+2
+24
+SCLK
+SYNC
+SDIN
+DB23
+DB0
+Valid write sequence
+Figure 8-3. SYNC Interrupt
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+23
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.5.1.2 I2C Mode
+The DACx0501 digital interface is programmed to work in I2C mode when the logic level of the SPI2C pin is 1 
+at power up. In I2C mode, the DACx0501 have a 2-wire serial interface: SCL, SDA, and one address pin, A0, 
+as shown in Section 6. The I2C bus consists of a data line (SDA) and a clock line (SCL) with pull-up structures. 
+When the bus is idle, both the SDA and SCL lines are pulled high. All the I2C-compatible devices connect to the 
+I2C bus through the open-drain I/O pins, SDA and SCL.
+The I2C specification states that the device that controls communication is called a controller, and the devices 
+that are controlled by the controller are called targets. The controller device generates the SCL signal. The 
+controller device also generates special timing conditions (start condition, repeated start condition, and stop 
+condition) on the bus to indicate the start or stop of a data transfer. Device addressing is completed by the 
+controller. The controller device on an I2C bus is typically a microcontroller or DSP. The DACx0501 operate as 
+a target device on the I2C bus. A target device acknowledges controller commands, and upon controller control, 
+receives or transmits data.
+Typically, the DACx0501 operate as a target receiver. A controller device writes to the DACx0501, a target 
+receiver. However, if a controller device requires the DACx0501 internal register data, the DACx0501 operate as 
+a target transmitter. In this case, the controller device reads from the DACx0501 According to I2C terminology, 
+read and write refer to the controller device.
+The DACx0501 are target devices that support the following data transfer modes:
+1.
+Standard mode (100Kbps)
+2.
+Fast mode (400Kbps)
+3.
+Fast mode plus (1.0Mbps)
+The data transfer protocol for standard and fast modes is exactly the same; therefore, these modes are referred 
+to as F/S-mode in this document. The fast-mode plus (FM+) protocol is supported in terms of data transfer 
+speed, but not output current. The low-level output current is 3 mA, similar to the case of standard and fast 
+modes. The DACx0501 support 7-bit addressing. The 10-bit addressing mode is not supported. These devices 
+support the general call reset function. Send the following sequence to initiate a software reset within the device: 
+Start/Repeated Start, 0x00, 0x06, Stop. The reset is asserted within the device on the falling edge of the ACK 
+bit, following the second byte.
+Other than specific timing signals, the I2C interface works with serial bytes. At the end of each byte, a ninth clock 
+cycle generates and detects an acknowledge signal. Acknowledge is when the SDA line is pulled low during the 
+high period of the ninth clock cycle. A not-acknowledge is when the SDA line is left high during the high period of 
+the ninth clock cycle as shown in Figure 8-4.
+Data output
+by Transmitter
+Data output
+by Receiver
+SCL from
+Controller
+1
+2
+S
+Start
+condition
+8
+9
+Not acknowledge
+Acknowledge
+Clock pulse for
+acknowledgement
+Figure 8-4. Acknowledge and Not Acknowledge on the I2C Bus
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+24
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.5.1.2.1 F/S Mode Protocol
+1.
+The controller initiates data transfer by generating a start condition. The start condition is when a high to-low 
+transition occurs on the SDA line while SCL is high, as shown in Figure 8-5. All I2C-compatible devices 
+recognize a start condition.
+SCL
+Stop
+condition
+SDA
+Start
+condition
+S
+P
+Figure 8-5. Start and Stop Conditions
+SCL
+Data line stable
+Data valid
+SDA
+Change of data 
+allowed
+Figure 8-6. Bit Transfer on the I2C Bus
+2.
+The controller then generates the SCL pulses, and transmits the 7-bit address and the read/write direction 
+bit (R/W) on the SDA line. During all transmissions, the controller makes sure that data are valid. Figure 8-6 
+shows that a valid data condition requires the SDA line to be stable during the entire high period of the clock 
+pulse. All devices recognize the address sent by the controller and compare the address to the internal fixed 
+addresses. Only the target device with a matching address generates an acknowledge by pulling the SDA 
+line low during the entire high period of the ninth SCL cycle; see also Figure 8-4 by pulling the SDA line low 
+during the entire high period of the ninth SCL cycle. Upon detecting this acknowledge, the controller knows 
+the communication link with a target has been established.
+3.
+The controller generates further SCL cycles to transmit (R/W bit 0) or receive (R/W bit 1) data to the target. 
+In either case, the receiver must acknowledge the data sent by the transmitter. Therefore, the acknowledge 
+signal can be generated by the controller or by the target, depending on which one is the receiver. The 9-bit 
+valid data sequences consists of 8-data bits and 1 acknowledge-bit, and can continue as long as necessary.
+4.
+To signal the end of the data transfer, the controller generates a stop condition by pulling the SDA line 
+from low to high while the SCL line is high (see Figure 8-5). This action releases the bus and stops the 
+communication link with the addressed target. All I2C-compatible devices recognize the stop condition. Upon 
+receipt of a stop condition, the bus is released, and all target devices then wait for a start condition followed 
+by a matching address.
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+25
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.5.1.2.2 I2C Update Sequence
+For a single update, the DACx0501 requires a start condition, a valid I2C address byte, a command byte, and 
+two data bytes: the most significant data byte (MSDB), and least significant data byte (LSDB), as listed in Table 
+8-1.
+Table 8-1. Update Sequence
+MSB
+....
+LSB
+ACK
+MSB
+...
+LSB
+ACK
+MSB
+...
+LSB
+ACK
+MSB
+...
+LSB
+ACK
+Address (A) byte
+Command byte
+MSDB
+LSDB
+DB [32:24]
+DB [23:16]
+DB [15:8]
+DB [7:0]
+After each byte is received, the DACx0501 acknowledge the byte by pulling the SDA line low during the high 
+period of a single clock pulse, as shown in Figure 8-7. These four bytes and acknowledge cycles make up the 36 
+clock cycles required for a single update to occur. A valid I2C address byte selects the DACx0501 devices.
+1
+7
+8
+9
+1
+2 - 8
+9
+S
+or
+Sr
+SDA
+SCL
+MSB
+Address
+START or
+REPEATED 
+START
+condition
+Recognize 
+START or
+REPEATED 
+START
+condition
+R/W
+ACK
+Acknowledgement
+signal from Target
+Generate ACKNOWLEDGE
+signal
+Clock line held low while
+interrupts are serviced
+Sr
+or
+P
+P
+Sr
+REPEATED 
+START or
+STOP
+condition
+Recognize 
+STOP or
+REPEATED 
+START
+condition
+ACK
+Figure 8-7. I2C Bus Protocol
+The command byte sets the operational mode of the selected DACx0501 device. When the operational mode is 
+selected by this byte, the DACx0501 must receive two data bytes, the most significant data byte (MSDB) and 
+least significant data byte (LSDB), for a data update to occur. The DACx0501 devices perform an update on the 
+falling edge of the acknowledge signal that follows the LSDB.
+When using fast mode (clock = 400 kHz), the maximum DAC update rate is limited to 11.11 kSPS. Using the 
+fast-mode plus (clock = 1 MHz), the maximum DAC update rate is limited to 27.77 kSPS. When a stop condition 
+is received, the DACx0501 release the I2C bus and await a new start condition.
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+26
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.5.1.2.2.1 Address Byte
+Table 8-2 shows that the address byte is the first byte received following the START condition from the controller 
+device. The first four bits (MSBs) of the address are factory preset to 1001. The next three bits of the address 
+are controlled by the A0 pin. The A0 pin input can be connected to VDD, AGND, SCL, or SDA. The A0 pin is 
+sampled during the first byte of each data frame to determine the address. The device latches the value of the 
+address pin, and consequently, responds to that particular address according to Table 8-3.
+Table 8-2. DACx0501 Address Byte
+ADDRESS TYPE
+MSB
+LSB
+AD6
+AD5
+AD4
+AD3
+AD2
+AD1
+AD0
+R/ W
+General address
+1
+0
+0
+1
+See Table 8-3 (target address column)
+0 or 1
+Table 8-3. Address Format
+TARGET ADDRESS
+A0 PIN
+1001 000
+AGND
+1001 001
+VDD
+1001 010
+SDA
+1001 011
+SCL
+8.5.1.2.2.2 Command Byte
+The DACx0501 command byte (shown in Table 8-4) controls which command is executed and which register is 
+being accessed when writing to or reading from the DACx0501 series.
+Table 8-4. DACx0501 Command Byte
+B23
+B22
+B21
+B20
+B19
+B18
+B17
+B16
+REGISTER
+0
+0
+0
+0
+0
+0
+0
+0
+NOOP
+0
+0
+0
+0
+0
+0
+0
+1
+DEVID
+0
+0
+0
+0
+0
+0
+1
+0
+SYNC
+0
+0
+0
+0
+0
+0
+1
+1
+CONFIG
+0
+0
+0
+0
+0
+1
+0
+0
+GAIN
+0
+0
+0
+0
+0
+1
+0
+1
+TRIGGER
+0
+0
+0
+0
+0
+1
+1
+1
+STATUS
+0
+0
+0
+0
+1
+0
+0
+0
+DAC DATA
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+27
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.5.1.2.2.3 Data Byte (MSDB and LSDB)
+The MSDB and LSDB contain the data that are passed to the register or registers specified by the command byte, as shown in Table 8-5. The DACx0501 
+update at the falling edge of the acknowledge signal that follows the LSDB[0] bit.
+Table 8-5. DACx0501 Data Byte
+REGISTER
+COMMAND BITS
+DATA BITS
+NOOP
+LSDB
+B19
+B18
+B17
+B16
+B15
+B14
+B13
+B12
+B11
+B10
+B9
+B8
+B7
+B6
+B5
+B4
+B3
+B2
+B1
+B0
+NOOP
+0
+0
+0
+0
+NOOP
+DEVID
+0
+0
+0
+1
+0
+RESOLUTION
+0
+0
+1
+0
+RSTSEL
+0
+0
+1
+0
+1
+0
+1
+SYNC
+0
+0
+1
+0
+RESERVED
+DAC_SYNC_EN
+CONFIG
+0
+0
+1
+1
+RESERVED
+REF-PWDWN
+RESERVED
+DAC_PWDWN
+GAIN
+0
+1
+0
+0
+RESERVED
+REF-DIV
+RESERVED
+BUF-GAIN
+TRIGGER
+0
+1
+0
+1
+LDAC
+SOFT-RESET [3:0]
+STATUS
+0
+1
+1
+1
+RESERVED
+REF-ALARM
+DAC DATA
+1
+0
+0
+0
+DAC-DATA [15:0] for 16-bit, DAC-DATA [13:0] for 14-bit, DAC-DATA [11:0] for 12-bit, left aligned
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+28
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+8.6 Register Map
+Table 8-7. Register Map
+OFFSET
+REGISTER NAME
+REGISTER DESCRIPTION
+SECTION
+0h
+NOOP
+No operation
+NOOP Register
+1h
+DEVID
+Device identification
+DEVID Register
+2h
+SYNC
+Synchronization
+SYNC Register
+3h
+CONFIG
+Configuration
+CONFIG Register
+4h
+GAIN
+Gain
+GAIN Register
+5h
+TRIGGER
+Trigger
+TRIGGER Register
+7h
+STATUS
+Status
+STATUS Register
+8h
+DAC
+Digital-to-analog converter
+DAC Register
+NOOP Register (offset = 0h) [reset = 0000h]
+Figure 8-8. NOOP Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+NOOP
+W-0h
+Table 8-8. NOOP Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-0
+No operation
+W
+0h
+No Operation command
+DEVID Register (offset = 1h) [reset = 0115h for DAC80501Z, reset = 1115h for DAC70501Z, reset = 2115h 
+for DAC60501Z, reset = 0195h for DAC80501M, reset = 1195h for DAC70501M, or reset = 2195h for 
+DAC60501M]
+Figure 8-9. DEVID Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0
+RESOLUTION
+0
+0
+0
+1
+RSTSEL
+0
+0
+1
+0
+1
+0
+1
+R-0h
+R-000b (DAC80501) or 
+001b (DAC70501) or 
+010b (DAC60501)
+R-0h
+R-0h
+R-0h
+R-1h
+R-0h 
+(DACx0501Z) 
+or 1h 
+(DACx0501M)
+R-0h
+R-0h
+R-1h
+R-0h
+R-1h
+R-0h
+R-1h
+Table 8-9. DEVID Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15
+RESERVED
+R
+0h
+RESERVED
+14-12
+RESOLUTION
+R
+000b for 
+DAC80501
+DAC Resolution:
+000b (DAC80501 16-bit)
+001b (DAC70501 14-bit)
+010b (DAC60501 12-bit)
+001b for 
+DAC70501
+010b for 
+DAC60501
+11-8
+RESERVED
+R
+1h
+RESERVED
+7
+RSTSEL
+R
+0h for 
+DACx0501Z
+DAC Power on Reset:
+0h (DACx0501Z reset to zero scale)
+1h (DACx0501M reset to midscale)
+1h for 
+DACx0501M
+6-0
+RESERVED
+R
+15h
+RESERVED
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+29
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+SYNC Register (offset = 2h) [reset = 0000h]
+Figure 8-10. SYNC Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+RESERVED
+DAC_SYNC_EN
+R/W-0h
+R/W-0h
+Table 8-10. SYNC Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-1
+RESERVED
+RW
+0h
+RESERVED
+0
+DAC_SYNC_EN
+RW
+0h
+When set to 1, the DAC output is set to update in response to an 
+LDAC trigger (synchronous mode).
+When cleared to 0 ,the DAC output is set to update immediately 
+(asynchronous mode), default.
+CONFIG Register (offset = 3h) [reset = 0000h]
+Figure 8-11. CONFIG Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+RESERVED
+REF_PWDWN
+RESERVED
+DAC_PWDWN
+R/W-0h
+R/W-0h
+R/W-0h
+R/W-0h
+Table 8-11. CONFIG Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-9
+RESERVED
+RW
+0h
+RESERVED
+8
+REF_PWDWN
+RW
+0h
+When set to 1, this bit disables the device internal reference.
+7-1
+RESERVED
+RW
+0h
+RESERVED
+0
+DAC_PWDWN
+RW
+0h
+When set to 1, the DAC in power-down mode and the DAC 
+output is connected to GND through a 1-kΩ internal resistor.
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+30
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+GAIN Register (offset = 4h) [reset = 0001h]
+Figure 8-12. GAIN Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+RESERVED
+REF-DIV
+RESERVED
+BUFF-GAIN
+R/W-0h
+R/W-0h
+R/W-0h
+R/W-1h
+Table 8-12. GAIN Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-9
+RESERVED
+RW
+0h
+RESERVED
+8
+REF-DIV
+RW
+0h
+The reference voltage to the device (either from the internal 
+or external reference) can be divided by a factor of two by 
+setting the REF-DIV bit to 1. Make sure to configure REF-
+DIV so that there is sufficient headroom from VDD to the 
+DAC operating reference voltage. Improper configuration of the 
+reference divider triggers a reference alarm condition. In the 
+case of an alarm condition, the reference buffer is shut down, 
+and all the DAC outputs go to 0 V. The DAC data registers are 
+unaffected by the alarm condition, and thus enable the DAC 
+output to return to normal operation after the reference divider is 
+configured correctly.
+When REF-DIV set to 1, the reference voltage is internally 
+divided by a factor of 2.
+When REF-DIV is cleared to 0, the reference voltage is 
+unaffected.
+7-1
+RESERVED
+RW
+0h
+RESERVED
+0
+BUFF-GAIN
+RW
+1h
+When set to 1, the buffer amplifier for corresponding DAC has a 
+gain of 2.
+When cleared to 0, the buffer amplifier for corresponding DAC 
+has a gain of 1.
+TRIGGER Register (offset = 5h) [reset = 0000h]
+Figure 8-13. TRIGGER Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+RESERVED
+LDAC
+SOFT-RESET [3:0]
+R/W-0h
+W-0h
+W-0h
+Table 8-13. TRIGGER Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-5
+RESERVED
+RW
+0h
+RESERVED
+4
+LDAC
+W
+0h
+Set this bit to 1 to synchronously load the DAC in synchronous 
+mode, This bit is self resetting.
+3-0
+SOFT-RESET [3:0]
+W
+0h
+When set to the reserved code of 1010, this bit resets the device 
+to the default state. These bits are self resetting.
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+31
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+STATUS Register (offset = 7h) [reset = 0000h]
+Figure 8-14. STATUS Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+RESERVED
+REF-ALARM
+R/W-0h
+R-0h
+Table 8-14. STATUS Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-1
+RESERVED
+RW
+0h
+RESERVED
+0
+REF-ALARM
+R
+0
+REF-ALARM bit. Reads 1 when the difference between the 
+reference and supply pins is below a minimum analog threshold. 
+Reads 0 otherwise. When 1, the reference buffer is shut down, 
+and the DAC outputs are all zero volts. The DAC codes are 
+unaffected, and the DAC output returns to normal when the 
+difference is above the analog threshold.
+DAC Register (offset = 8h) [reset = 0000h for DACx0501Z or reset = 8000h for DACx0501M]
+Figure 8-15. DAC Register
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+DAC-DATA [15:0]
+R/W-0000h (DACx0501Z) or 8000h (DACx0501M)
+Table 8-15. DAC Register Field Descriptions
+Bit
+Field
+Type
+Reset
+Description
+15-0
+DAC-DATA [15:0]
+RW
+0000h for 
+DACx0501Z
+DAC data register.
+Data are MSB aligned in straight binary format, and 
+use the following format:
+DAC80501: DATA[15:0]
+DAC70501: DATA[13:0], 0, 0
+DAC60501: DATA[11:0], 0, 0, 0, 0
+8000h for 
+DACx0501M
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+32
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+9 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, 
+and TI does not warrant its accuracy or completeness. TI’s customers are responsible for 
+determining suitability of components for their purposes, as well as validating and testing their design 
+implementation to confirm system functionality.
+9.1 Application Information
+Applications that incorporate analog circuits often require trimming, control, biasing, or a combination of all 
+three. These functions require high-accuracy, simple-to-implement compact solutions. The DACx0501 family of 
+precision DACs are an excellent choice for such applications. The DACx0501 tiny package, high resolution, 
+and simple interface make these devices an excellent choice for applications such as offset and gain control, 
+VCO tuning, programmable reference, and more. With the aforementioned features, this family of DACs caters 
+to a wide range of end equipment, such as battery testers, communications equipment, factory automation and 
+control, test and measurement, and more.
+9.2 Typical Application
+End equipment, such as oscilloscopes, battery test equipment, and other lab instruments require precision 
+calibration and control signals to tune the system accuracy. Precision DACs are typically used to generate these 
+signals. The complexity and accuracy of these systems are driving the need for multiple precision signals to be 
+generated in the system. The common approach for generating these signal is by using a multichannel DAC. 
+An alternative way to generate these signal is to use a single-channel DAC with a sample-and-hold circuit to 
+produce multichannel output. Using this approach, users can generate a customized number of channels instead 
+of using a fixed number of channels available in multichannel DACs.
+   DAC80501
++
+±
+SW
+CH
+RS
+CL
+RL
++
+±
+SW
+CH
+RS
+CL
+RL
++
+±
+SW
+CH
+RS
+CL
+RL
+SEQUENCER
+N
+2-N
+DEMUX
+VOUT0
+VOUT1
+VOUTN
+MCU
+SPI
+SYNC
+Figure 9-1. Multichannel Sample-and-Hold Circuit
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+33
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+9.2.1 Design Requirements
+The design requirements for this circuit are as follows:
+•
+Output range: 0-V to 5-V
+•
+Channels: 10
+•
+Output offset error: ±3-mV
+9.2.2 Detailed Design Procedure
+A basic sample-and-hold circuit consists of a voltage source (DAC in this case), a switch, a capacitor, and 
+a buffer. As the name implies, this circuit has two modes of operation: sample and hold. In sample mode, 
+the switch is closed connecting the DAC output to the hold capacitor, CH. In hold mode, the switch opens, 
+disconnecting the DAC output from CH. Thus, the final output is held to the sampled value because of the charge 
+stored on hold capacitor CH. The output buffer is needed for delivering the required current. In a practical circuit, 
+the switch leakage and the amplifier bias current make the capacitor drift from the stored value. Therefore, the 
+sample-and-hold circuit must be refreshed, even if the DAC value does not change. The key design parameters 
+of a sample-and-hold circuit are charge injection and voltage droop.
+9.2.2.1 Charge Injection
+During the sample-to-hold transition, a small amount of charge is injected onto the hold capacitor, mostly 
+because of the stray capacitance of the switch that creates small level changes when transitioning between 
+states. The resulting dc offset is typically referred to as pedestal error. This error contributes to the offset error of 
+the system. The pedestal error, ΔVOUT, is the measured offset voltage resulting from charge injection when the 
+switch transitions to hold state. ΔVOUT is related to charge injection through Equation 2.
+OUT
+Q
+V
+C
+'
+ 
+(2)
+where
+•
+Q is the injected charge coulombs.
+•
+C is the value of the hold capacitor in farads.
+In most solid-state switch data sheets, charge injection is graphed with respect to supply voltage, analog input, 
+or temperature. A charge injection value of 3 pC is typical in many solid-state switches under the conditions: 
+25°C, 5-V supply, and 0-V analog input.
+9.2.2.2 Voltage Droop
+In hold mode, the voltage across CH that usually remains constant suffers a droop because of the leakage 
+resistance of the switch and the amplifier bias current. A simplified equation for calculating the voltage droop is 
+given by Equation 3
+
+
+LEAK
+BIAS
+I
+I
+V
+t
+C
+
+'
+ 
+'
+(3)
+where
+•
+ILEAK is the leakage current through the switch in amperes.
+•
+IBIAS is the bias current of the amplifier in amperes.
+•
+C is the value of the hold capacitance in farads.
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+34
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+9.2.2.3 Output Offset Error
+The output offset error of a sample-and-hold channel is the cumulative error contributed by the DAC offset error, 
+amplifier offset error, and sample-and-hold pedestal error due to charge injection. The amplifier offset error can 
+be made negligible by choosing a low-offset amplifier, such as the OPA4317. The OPA4317 has a maximum 
+offset error of 0.1 mV. The DAC80501 has a maximum offset error of ±1.5 mV. Thus, to achieve a total offset 
+error less than ±3 mV, limit the offset error contributed by the sample-and-hold circuit to ±1.5 mV.
+Considering the bias current of 300 pA in the OPA4317, and a typical switch leakage current of 1 nA, a 2‑nF 
+hold capacitor results in a droop rate of 0.65 V/s. When the sample-and-hold circuit refreshes at a rate of more 
+than 100 µs, the voltage droop is 65 µV. This small offset error can be ignored for the simplicity of calculation. 
+Thus, the only contributor to the sample-and-hold offset error is the pedestal error. For a charge injection of 3 pC 
+and a pedestal error of 1.5 mV, the value of the hold capacitor is calculated as 2 nF, according to Equation 
+2. A capacitive load of 2 nF can be handled by the DAC80501. The switch-on resistance and optional series 
+resistance RS further helps in the stability of the DAC output amplifier. RS can be omitted for better settling time.
+9.2.2.4 Switch Selection
+The switch in the design must feature low on-state resistance and low off leakage, and must conduct rail-to-rail 
+analog signals. Very low charge injection is also a primary factor for selecting the switch. The TS12A4515 
+are single pole and single throw (SPST), low-voltage, single-supply CMOS analog switches with 20-Ω on-state 
+resistance, 3 pC of charge-injection (5-V supply), and an off-Leakage current value of 1 nA.
+9.2.2.5 Amplifier Selection
+The key parameters for the amplifier in this system are low offset voltage and low input bias current. The 
+OPA4317 is a quad amplifier that has a max offset voltage of 100 µV and a max bias current of 300 pA. As a 
+result of the quad package, less board area is used.
+9.2.2.6 Hold Capacitor Selection
+Use a hold capacitor that has high insulation resistance, low temperature coefficient, and low dielectric 
+absorption. Low temperature coefficient NP0/C0G ceramic capacitors are a great choice for this purpose. As 
+calculated in Equation 2, a 2-nF capacitor provides a total offset error of ±3 mV per channel.
+9.2.3 Application Curves
+Figure 9-2. Sample-and-Hold Pedestal Error With 3-pC Charge Injection
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+35
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+9.3 Power Supply Recommendations
+The DACx0501 operate within the specified VDD supply range of 2.7 V to 5.5 V. The DACx0501 do not require 
+specific supply sequencing.
+The VDD supply must be well regulated and low noise. Switching power supplies and DC/DC converters often 
+have high-frequency glitches or spikes riding on the output voltage. In addition, digital components create similar 
+high-frequency spikes. This noise can easily couple into the DAC output voltage through various paths between 
+the power connections and analog output. To further minimize noise from the power supply, include a 1-μF to 
+10-μF capacitor and 0.1-μF bypass capacitor. The current consumption on the VDD pin, the short-circuit current 
+limit, and the load current for the device is listed in Section 7.5. The power supply must meet the aforementioned 
+current requirements.
+9.4 Layout
+9.4.1 Layout Guidelines
+A precision analog component requires careful layout. The following list provides some insight into good layout 
+practices.
+•
+Bypass the VDD to ground with a low ESR ceramic bypass capacitor. The typical recommended bypass 
+capacitance is 0.1-µF to 0.22-µF ceramic capacitor, with a X7R or NP0 dielectric.
+•
+Place power supplies and REF bypass capacitors close to the pins to minimize inductance and optimize 
+performance.
+•
+Use a high-quality, ceramic-type NP0 or X7R for optimal performance across temperature, and a very low 
+dissipation factor.
+•
+The digital and analog sections must have proper placement with respect to the digital pins and analog pins 
+of the DACx0501 devices. The separation of analog and digital blocks minimizes coupling into neighboring 
+blocks, as well as interaction between analog and digital return currents.
+9.4.2 Layout Example
+1
+2
+3
+4
+8
+7
+6
+5
+VDD
+GND
+Decoupling 
+Capacitor
+GND
+GND
+VOUT
+Reference 
+Bypass 
+Capacitor
+Optional 
+REFIN or 
+REFOUT
+SDIN/SDA
+SYNC/A0
+SCLK/SCL
+Pull-down for 
+SPI Mode
+(Note: Ground and Power planes omitted for clarity)
+Pull-up
+VDD
+DACx0501
+Figure 9-3. Layout Example
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+www.ti.com
+36
+Submit Document Feedback
+Copyright © 2023 Texas Instruments Incorporated
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+10 Device and Documentation Support
+10.1 Documentation Support
+10.1.1 Related Documentation
+For related documentation see the following: Texas Instruments, DAC80501EVM user's guide
+10.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on 
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For 
+change details, review the revision history included in any revised document.
+10.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+10.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+10.5 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+10.6 Glossary
+TI Glossary 
+This glossary lists and explains terms, acronyms, and definitions.
+11 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+www.ti.com
+DAC80501, DAC70501, DAC60501
+SBAS794E – NOVEMBER 2018 – REVISED AUGUST 2023
+Copyright © 2023 Texas Instruments Incorporated
+Submit Document Feedback
+37
+Product Folder Links: DAC80501 DAC70501 DAC60501
+
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+PACKAGING INFORMATION
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+DAC60501MDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDGSR.A
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDGST.A
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFR.A
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFT.A
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501MDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651M
+DAC60501ZDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDGSR.A
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDGST.A
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFR.A
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFT.A
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC60501ZDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+651Z
+DAC70501MDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDGSR.A
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDGST.A
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+Addendum-Page 1
+
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+DAC70501MDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFR.A
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFT.A
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501MDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751M
+DAC70501ZDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDGSR.A
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDGST.A
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFR.A
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFT.A
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC70501ZDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+751Z
+DAC80501MDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFRG4
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFRG4.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501MDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851M
+DAC80501ZDGSR
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDGSR.B
+Active
+Production
+VSSOP (DGS) | 10
+2500 | LARGE T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+Addendum-Page 2
+
+PACKAGE OPTION ADDENDUM
+www.ti.com
+9-Nov-2025
+Orderable part number
+Status
+(1)
+Material type
+(2)
+Package | Pins
+Package qty | Carrier
+RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C)
+Part marking
+(6)
+DAC80501ZDGST
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+NIPDAUAG | SN
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDGST.B
+Active
+Production
+VSSOP (DGS) | 10
+250 | SMALL T&R
+Yes
+SN
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDQFR
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDQFR.B
+Active
+Production
+WSON (DQF) | 8
+3000 | LARGE T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDQFT
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+DAC80501ZDQFT.B
+Active
+Production
+WSON (DQF) | 8
+250 | SMALL T&R
+Yes
+NIPDAU
+Level-2-260C-1 YEAR
+-40 to 125
+851Z
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 3
+
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+18-Jun-2025
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0
+B0
+K0
+W
+Dimension designed to accommodate the component length
+Dimension designed to accommodate the component thickness
+Overall width of the carrier tape
+Pitch between successive cavity centers
+Dimension designed to accommodate the component width
+TAPE DIMENSIONS
+K0
+ P1
+B0 W
+A0
+Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket Quadrants
+Sprocket Holes
+Q1
+Q1
+Q2
+Q2
+Q3
+Q3
+Q4
+Q4
+User Direction of Feed
+P1
+Reel
+Diameter
+ 
+*All dimensions are nominal
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+DAC60501MDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC60501MDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC60501MDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC60501MDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC60501ZDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC60501ZDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC60501ZDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC60501ZDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC70501MDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC70501MDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC70501MDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC70501MDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC70501ZDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC70501ZDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC70501ZDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC70501ZDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+Pack Materials-Page 1
+
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+18-Jun-2025
+Device
+Package
+Type
+Package
+Drawing
+Pins
+SPQ
+Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+DAC80501MDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC80501MDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC80501MDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC80501MDQFRG4
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC80501MDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC80501ZDGSR
+VSSOP
+DGS
+10
+2500
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC80501ZDGST
+VSSOP
+DGS
+10
+250
+330.0
+12.4
+5.25
+3.35
+1.25
+8.0
+12.0
+Q1
+DAC80501ZDQFR
+WSON
+DQF
+8
+3000
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+DAC80501ZDQFT
+WSON
+DQF
+8
+250
+180.0
+8.4
+2.2
+2.2
+1.2
+4.0
+8.0
+Q2
+Pack Materials-Page 2
+
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+18-Jun-2025
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W
+L
+H
+ 
+*All dimensions are nominal
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+DAC60501MDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC60501MDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+DAC60501MDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC60501MDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+DAC60501ZDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC60501ZDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+DAC60501ZDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC60501ZDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+DAC70501MDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC70501MDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+DAC70501MDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC70501MDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+DAC70501ZDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC70501ZDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+DAC70501ZDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC70501ZDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+DAC80501MDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC80501MDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+Pack Materials-Page 3
+
+PACKAGE MATERIALS INFORMATION
+ 
+ 
+www.ti.com
+18-Jun-2025
+Device
+Package Type
+Package Drawing
+Pins
+SPQ
+Length (mm)
+Width (mm)
+Height (mm)
+DAC80501MDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC80501MDQFRG4
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC80501MDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+DAC80501ZDGSR
+VSSOP
+DGS
+10
+2500
+366.0
+364.0
+50.0
+DAC80501ZDGST
+VSSOP
+DGS
+10
+250
+366.0
+364.0
+50.0
+DAC80501ZDQFR
+WSON
+DQF
+8
+3000
+213.0
+191.0
+35.0
+DAC80501ZDQFT
+WSON
+DQF
+8
+250
+213.0
+191.0
+35.0
+Pack Materials-Page 4
+
+www.ti.com
+PACKAGE OUTLINE
+C
+ TYP
+5.05
+4.75
+1.1 MAX
+8X 0.5
+10X 0.27
+0.17
+2X
+2
+0.15
+0.05
+ TYP
+0.23
+0.13
+0 - 8
+0.25
+GAGE PLANE
+0.7
+0.4
+A
+NOTE 3
+3.1
+2.9
+B
+NOTE 4
+3.1
+2.9
+4221984/A   05/2015
+VSSOP - 1.1 mm max height
+DGS0010A
+SMALL OUTLINE PACKAGE
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-187, variation BA.
+ 
+1
+10
+0.1
+C A
+B
+6
+5
+PIN 1 ID
+AREA
+SEATING PLANE
+0.1 C
+ SEE DETAIL A
+DETAIL A
+TYPICAL
+SCALE  3.200
+
+www.ti.com
+EXAMPLE BOARD LAYOUT
+(4.4)
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+10X (1.45)
+10X (0.3)
+8X (0.5)
+(R
+)
+TYP
+0.05
+4221984/A   05/2015
+VSSOP - 1.1 mm max height
+DGS0010A
+SMALL OUTLINE PACKAGE
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+SCALE:10X
+1
+5
+6
+10
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+METAL
+SOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+SOLDER MASK DETAILS
+NOT TO SCALE
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(4.4)
+8X (0.5)
+10X (0.3)
+10X (1.45)
+(R
+) TYP
+0.05
+4221984/A   05/2015
+VSSOP - 1.1 mm max height
+DGS0010A
+SMALL OUTLINE PACKAGE
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SYMM
+SYMM
+1
+5
+6
+10
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE:10X
+
+www.ti.com
+GENERIC PACKAGE VIEW
+This image is a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+WSON - 0.8 mm max height
+DQF 8
+PLASTIC SMALL OUTLINE - NO LEAD
+2 x 2, 0.5 mm pitch
+4232898/A
+
+www.ti.com
+PACKAGE OUTLINE
+C
+2.1
+1.9
+2.1
+1.9
+0.8
+0.7
+0.05
+0.00
+2X 1.5
+6X 0.5
+7X 0.6
+0.4
+8X 0.3
+0.2
+0.7
+0.5
+(0.2) TYP
+WSON - 0.8 mm max height
+DQF0008A
+PLASTIC SMALL OUTLINE - NO LEAD
+4220563/A   03/2021
+0.05 C
+0.1
+C A B
+0.05
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice.
+PIN 1 INDEX AREA
+SEATING PLANE
+PIN 1 ID
+SYMM
+SYMM
+1
+4
+5
+8
+SCALE  6.000
+A
+B
+
+www.ti.com
+EXAMPLE BOARD LAYOUT
+6X (0.5)
+(R0.05) TYP
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+7X (0.7)
+8X (0.25)
+(1.7)
+(0.8)
+WSON - 0.8 mm max height
+DQF0008A
+PLASTIC SMALL OUTLINE - NO LEAD
+4220563/A   03/2021
+NOTES: (continued)
+ 
+3. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+    number SLUA271 (www.ti.com/lit/slua271).
+SYMM
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 30X
+SEE SOLDER MASK
+DETAIL
+1
+4
+5
+8
+METAL EDGE
+SOLDER MASK
+OPENING
+EXPOSED METAL
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED
+METAL
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DEFINED
+SOLDER MASK DETAILS
+
+www.ti.com
+EXAMPLE STENCIL DESIGN
+7X (0.7)
+8X (0.25)
+6X (0.5)
+(1.7)
+(R0.05) TYP
+(0.8)
+WSON - 0.8 mm max height
+DQF0008A
+PLASTIC SMALL OUTLINE - NO LEAD
+4220563/A   03/2021
+NOTES: (continued)
+ 
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 MM THICK STENCIL
+SCALE: 30X
+SYMM
+SYMM
+1
+4
+5
+8
+
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

@@ -1,0 +1,11 @@
+from pathlib import Path
+p=Path('reports/motherboard-return-zoning-20261001/health_U25_actual_native_cut_case_r02.py')
+q=p.with_name('health_U25_actual_native_cut_case_r03.py')
+s=p.read_text().replace('VCC_branch','VCC_transfer').replace('physical-cut-','physical-cut-r03-')
+s=s.replace("uid='f05f32fd-1116-432e-afbe-c48a00ed63c0'","uid='0901cf4a-0f1c-4f5a-8c92-68ccf5d1bfe3'")
+s=s.replace("hole=circle((pcbnew.FromMM(333.4375),pcbnew.FromMM(190.5)),pcbnew.FromMM(.08));before=after=0;changed=[]", """row=dict(return_net=field,reference_layers={'F.Cu':'In1.Cu','B.Cu':'In4.Cu'},allow_vias=True,via_diameter_mm=.5,via_drill_mm=.2,return_stitch_distance_mm=1.,reference_corridor_margin_mm=.10)
+  actual=NativeCollectedAnnulusCheck(b,{cp.GetNetname():row}).via(pv,row)
+  radius=actual['bounded_antipad_radius_mm']['In1.Cu'];hole_point=(pv.GetPosition().x,pv.GetPosition().y+pcbnew.FromMM(radius+.10))
+  hole=circle(hole_point,pcbnew.FromMM(.06));before=after=0;changed=[]""")
+s=s.replace("exact_hole_xy_mm=[333.4375,190.5],hole_radius_mm=.08","exact_hole_xy_mm=[pcbnew.ToMM(v)for v in hole_point],hole_radius_mm=.06,actual_original_antipad_radius_mm=radius")
+assert not q.exists();q.write_text(s)

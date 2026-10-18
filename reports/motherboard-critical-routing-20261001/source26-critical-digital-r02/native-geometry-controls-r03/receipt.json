@@ -1,0 +1,268 @@
+{
+  "passed": true,
+  "native_cases": [
+    {
+      "case": "healthy",
+      "passed": true,
+      "regular_native_drc": {
+        "exit_code": 0,
+        "regular_violations": 0,
+        "ignored_checks": [],
+        "reported_unconnected_items": 0
+      },
+      "return_corridor": {
+        "passed": true,
+        "new_copper_items_checked": 3,
+        "items": [
+          {
+            "signal_via_uuid": "3b01079a-eef1-4bbe-b3a8-a6240b9e126e",
+            "return_net": "/LOGIC_GND",
+            "return_stitches": [
+              {
+                "uuid": "2a7b340e-977b-45b6-9419-458ca90391d6",
+                "distance_mm": 0.85,
+                "source_pad_anchors": [
+                  {
+                    "reference": "G1",
+                    "pin": "1",
+                    "pad_uuid": "ef906df0-bf20-409f-b660-662140cce218"
+                  }
+                ],
+                "actual_flashed_and_native_connected_reference_layers": [
+                  "In1.Cu",
+                  "In4.Cu"
+                ]
+              }
+            ],
+            "intended_reference_layers": [
+              "In1.Cu",
+              "In4.Cu"
+            ],
+            "bounded_antipad_radius_mm": {
+              "In4.Cu": 0.57,
+              "In1.Cu": 0.57
+            },
+            "continuous_reference_annulus_width_mm": 0.2,
+            "polygon_discretization_allowance_mm": 0.02,
+            "physical_reference_annuli_required": true
+          },
+          {
+            "uuid": "bc8c1d98-d811-41b9-b4b6-f7675e500dc6",
+            "reference_net": "/LOGIC_GND",
+            "reference_layer": "In1.Cu",
+            "full_geometric_projected_corridor_covered": true,
+            "explicit_endpoint_antipad_vias": [
+              "3b01079a-eef1-4bbe-b3a8-a6240b9e126e"
+            ]
+          },
+          {
+            "uuid": "c4d94aeb-a340-45f3-93b9-ad459ea27591",
+            "reference_net": "/LOGIC_GND",
+            "reference_layer": "In4.Cu",
+            "full_geometric_projected_corridor_covered": true,
+            "explicit_endpoint_antipad_vias": [
+              "3b01079a-eef1-4bbe-b3a8-a6240b9e126e"
+            ]
+          }
+        ],
+        "actual_signal_via_reference_audits": [
+          {
+            "signal_via_uuid": "3b01079a-eef1-4bbe-b3a8-a6240b9e126e",
+            "return_net": "/LOGIC_GND",
+            "return_stitches": [
+              {
+                "uuid": "2a7b340e-977b-45b6-9419-458ca90391d6",
+                "distance_mm": 0.85,
+                "source_pad_anchors": [
+                  {
+                    "reference": "G1",
+                    "pin": "1",
+                    "pad_uuid": "ef906df0-bf20-409f-b660-662140cce218"
+                  }
+                ],
+                "actual_flashed_and_native_connected_reference_layers": [
+                  "In1.Cu",
+                  "In4.Cu"
+                ]
+              }
+            ],
+            "intended_reference_layers": [
+              "In1.Cu",
+              "In4.Cu"
+            ],
+            "bounded_antipad_radius_mm": {
+              "In4.Cu": 0.57,
+              "In1.Cu": 0.57
+            },
+            "continuous_reference_annulus_width_mm": 0.2,
+            "polygon_discretization_allowance_mm": 0.02,
+            "physical_reference_annuli_required": true
+          }
+        ],
+        "exact_same_net_antipad_exceptions_only": true,
+        "real_numbered_source_pad_anchor_required": true,
+        "actual_flashed_and_native_connected_reference_annuli_required": true,
+        "exact_sequential_native_nonempty_BooleanAdd_and_final_Simplify": true,
+        "physical_signal_integrity_qualified": false,
+        "measured_return_impedance": false,
+        "no_source_or_PCB_mutation": true
+      },
+      "union_equivalence": [
+        {
+          "layer": "In1.Cu",
+          "native_area": 80014362165392.0,
+          "all_native_outline_vertices_identical": true
+        },
+        {
+          "layer": "In4.Cu",
+          "native_area": 80014362165392.0,
+          "all_native_outline_vertices_identical": true
+        }
+      ],
+      "board_sha256": "aa53feec04d95a578d5cfaa2720d5068ef18d60ae51cb284c31daf6e56bba4aa",
+      "actual_signal_width_mm": 0.35,
+      "reference_corridor_margin_mm": 0.4,
+      "production_motherboard": false,
+      "source_pad_inventory": [
+        {
+          "reference": "J2",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "J1",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "G1",
+          "pin": "1",
+          "net": "/LOGIC_GND"
+        }
+      ]
+    },
+    {
+      "case": "wrong_domain",
+      "rejected": true,
+      "reason": "Signal-via antipad lacks a continuous own-return annulus",
+      "regular_native_drc_before_resource_removal": {
+        "rejected": true,
+        "actual_native_violations": [
+          {
+            "description": "Via is not connected or connected on only one layer",
+            "items": [
+              {
+                "description": "Via [/FIELD_B_0V] on F.Cu - B.Cu",
+                "pos": {
+                  "x": 5.0,
+                  "y": 5.85
+                },
+                "uuid": "e1697dd7-25c8-403b-b99b-b793743d68f1"
+              }
+            ],
+            "severity": "warning",
+            "type": "via_dangling"
+          },
+          {
+            "description": "Isolated copper fill",
+            "items": [
+              {
+                "description": "Zone [/LOGIC_GND] on In1.Cu, priority 0",
+                "pos": {
+                  "x": 0.3,
+                  "y": 0.3
+                },
+                "uuid": "7313b0bb-f274-492a-b591-0de80a634ab2"
+              }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+          },
+          {
+            "description": "Isolated copper fill",
+            "items": [
+              {
+                "description": "Zone [/LOGIC_GND] on In4.Cu, priority 0",
+                "pos": {
+                  "x": 0.3,
+                  "y": 0.3
+                },
+                "uuid": "75cd0423-c44c-4b58-8e83-55d995ae9a58"
+              }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+          }
+        ],
+        "ignored_checks": []
+      },
+      "board_sha256": "1bd0a02864df6d500161a33e345351a430ead832e2681150aa7d0a4f379f0360",
+      "actual_signal_width_mm": 0.35,
+      "reference_corridor_margin_mm": 0.4,
+      "production_motherboard": false,
+      "source_pad_inventory": [
+        {
+          "reference": "J1",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "J2",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "G1",
+          "pin": "1",
+          "net": "/FIELD_B_0V"
+        }
+      ]
+    },
+    {
+      "case": "missing_reference_annulus",
+      "rejected": true,
+      "reason": "Actual filled own-reference plane is absent:/LOGIC_GND In4.Cu",
+      "regular_native_drc_before_resource_removal": {
+        "exit_code": 0,
+        "regular_violations": 0,
+        "ignored_checks": [],
+        "reported_unconnected_items": 0
+      },
+      "board_sha256": "58b5482dc948dc0b3810a49690748b2d9fb5b62d095af3c44b1814557ad98a05",
+      "actual_signal_width_mm": 0.35,
+      "reference_corridor_margin_mm": 0.4,
+      "production_motherboard": false,
+      "source_pad_inventory": [
+        {
+          "reference": "J1",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "J2",
+          "pin": "1",
+          "net": "/DATA"
+        },
+        {
+          "reference": "G1",
+          "pin": "1",
+          "net": "/LOGIC_GND"
+        }
+      ]
+    }
+  ],
+  "all_cases": 3,
+  "production_motherboard": false,
+  "frozen_dependency_checks": {
+    "strict_actual_annulus_checker_sha256": "3496b5598390833c3cf71fd8dade26817a28ca1a7b208bba6af80fd1a0e00682",
+    "native_nonempty_fill_collector_sha256": "4cf2044f88d0d0f443260fcbcb87fc1184fe0f73d89adc581c34c2413ed112bd"
+  },
+  "manufacturing_ready": false,
+  "input_sha256": {
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\motherboard-critical-routing-20261001\\source26-critical-digital-r02\\native_geometry_fixture.py": "c04bfa92ff1b17476d9cd33667db429e7482b01069169149a9686f16a5b0bcd1",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_check_return_corridors_r03.py": "ce2cadab5d5ce10e7d61bd62cbf42053ed9c7330f3136ea2cc3d48fef15abee0",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_collect_native_reference_fills.py": "4cf2044f88d0d0f443260fcbcb87fc1184fe0f73d89adc581c34c2413ed112bd",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tools\\hardware_check_return_corridors_r02.py": "3496b5598390833c3cf71fd8dade26817a28ca1a7b208bba6af80fd1a0e00682",
+    "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\tests\\test_motherboard_return_corridors.py": "8db0cf47e73d9c96a315cd1d7d315a005d436660c753ff3f1b708df5a04937ba"
+  }
+}

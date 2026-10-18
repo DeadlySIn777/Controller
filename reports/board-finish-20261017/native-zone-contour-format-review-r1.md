@@ -1,0 +1,7 @@
+# Native zone contour serialization guard
+
+The running KiCad version is 10.0.4. Its tagged [zone formatter](https://gitlab.com/kicad/code/kicad/-/raw/10.0.4/pcbnew/pcb_io/kicad_sexpr/pcb_io_kicad_sexpr.cpp), lines 2804–2816, serializes the first outline and that outline's holes. The [matching parser](https://gitlab.com/kicad/code/kicad/-/raw/10.0.4/pcbnew/pcb_io/kicad_sexpr/pcb_io_kicad_sexpr_parser.cpp), lines 7659–7680, interprets the first polygon expression as an outer boundary and later expressions as its holes. Multiple disconnected outer regions therefore require separate native zone objects.
+
+This source inspection explains two independently observed failures: the power-corridor save omitted all but the first outer region, and the CORE60 board containing two outer polygon expressions failed its native outline-count assertion. Both failed constructions and raw checks remain preserved. Host polygon unions or a count of text expressions cannot prove that native copper intent survives.
+
+Every changed or added zone in the successor packet must consequently have one outer boundary, explicit associated holes, an individually guarded UUID/net/layer/profile, and exact native integer-ring equivalence after load/save/reload. A split region preserves every real fragment as a separately identified zone. This does not authorize discarding fragments, changing layer/rule profiles, or interpreting stale filled-polygon caches as new copper. Full native refill, source/contact/reference retention, DRC and electrical qualification remain separate checks.

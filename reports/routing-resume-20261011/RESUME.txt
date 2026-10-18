@@ -1,0 +1,47 @@
+Routing continuation, 11 October 2026
+
+Resumed work: missing native DRC and uncapped, refilled connectivity proof for
+the completed In3 bridge candidate. The candidate and baseline are copied/read
+without modification. One test-only KiCad slot; no new GPU routing job.
+The running integration queue and its working board remain under their existing
+owner. The signal rip-up round-2 entry remains held. The distinct r08 power-low
+step is active; it is not the held signal rip-up step.
+
+Saved results, not new physical measurements:
+r06 repaired: 4 completed, 0 lost, API 1380 -> 1376, joins 1371 -> 1367,
+0 DRC errors, 169 warnings. Four vias and their four stubs removed; 368 kept.
+r07: 29 completed, 17 lost, API 1376 -> 1364. The existing gate accepted this
+because it did not reject partition losses. The new isolated strict guard
+rejects it. All 17 lost nets appear as refused restorations because new copper
+conflicts with their former routes. The live r07 board is not repaired here.
+
+In3 candidate c28f6c9410cbf0b9bee8f7f1931ad78cffe30a03b401aeb102dc91c35650724e
+against r05 594a1091d3a0eade7bff5d4fb83418f10640004afd36119faab92a3886f9e6c2:
+31 jobs, 4 routed, 27 no-path; 28 segments and four vias. Two AO0_COM routes
+have one dive-and-return through In3, two vias each. These are router/source
+observations until native proof finishes, not electrical/current qualification.
+
+Live proof status: bridge-status.json.
+Independent final result: bridge-final-status.json and bridge-native/final-proof.json.
+Native raw receipts: bridge-native/. Completion watcher is bounded to two hours,
+supports watcher.stop, and evaluates receipts only; it never adopts copper.
+The runner's provisional proof.json must be assessed by the independent checker,
+which also checks project/rule identity, schematic parity and raw DRC evidence.
+
+Partition guard: partition_guard.py, ten host controls plus independent exhaustive
+partition checking; actual r06 PASS and r07 FAIL receipts are saved here.
+Restore correction: restore-fix/ripup_restore.py is an isolated candidate; it
+rejects the entire restore step before saving when any removed net cannot be
+restored. It is not installed in the live tools and is not a native PCB repair.
+Native after-cleanup lost=0 and all retained electrical/DRC gates are still needed.
+
+Resource observations: both existing CPU (>70%) and GPU (>80 C or >350 W)
+alarms are active. Two shared, one main and one test KiCad slots are configured.
+Native heavy processes use the 12-CPU affinity mask 0x0FFF0000. WSL affinity
+enforcement fails, so this is not a global 12-thread guarantee. Separate GPU
+namespaces can also admit concurrent jobs; no additional GPU work was launched.
+
+No published CAD baseline, source circuit, machine configuration, external IS-1
+archive or live working board is changed by this continuation. Native DRC/API,
+host controls and source inspection are separate evidence. Manufacturing
+readiness and physical qualification remain open.

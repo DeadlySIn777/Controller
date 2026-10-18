@@ -1,0 +1,12 @@
+# Power sequence sources
+
+Read28September2026. Engineering candidates, no procurement.
+
+- Efinix T20 data sheet v6.0: https://www.efinixinc.com/docs/trion20-ds-v6.0.pdf — p52 startup order, p53 unused resources, p58 ramps and reset pullup, p74 minimum reset pulse. Local exactcopy from priorresearch. No rail shutdown order found; DDR power-down and flash commands are different subjects.
+- ADI LTC2962/2963/2964 Rev0: https://www.analog.com/media/en/technical-documentation/data-sheets/LTC2962-2963-2964.pdf — read full first-party PDF through web tool; direct HTTPS transfer timed out, so no local PDF hash is claimed. p2 pin/package/order table, p3–4 threshold/current/IO bounds, p8–9 pin behavior, p12–16 powerup/configuration/window/filter/powerdown. https://www.analog.com/en/products/ltc2962.html links this PDF and https://mds.analog.com/api/public/content/ltc2962-2963-2964-pc.png.
+- TI TPS386000 RevF: https://www.ti.com/lit/ds/symlink/tps386000.pdf — rejected for narrow corewindow due guaranteed±1% threshold and up to10mV hysteresis. Headline typical accuracy is not the corner.
+- TI SN74LVC1G17 RevY October2025: https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf — Schmitt input, separate destinationrail supply, Ioff±10µA. DBV5 exactpinmap.
+- TI SN74LVC1G126 RevS August2026: https://www.ti.com/lit/ds/symlink/sn74lvc1g126.pdf — studied then rejected here because slow supervisor edges do not establish its input slew requirement. Not fitted.
+- Vishay PLT document60030 Rev11May2026: https://www.vishay.com/docs/60030/plt.pdf — 0.01%/5ppm option, L only above250ohm, partnumber encoding, aging/stress limits. Exact generated catalog-format MPNs need pricing/availability qualification.
+- TI TPS62901 RevA: https://www.ti.com/lit/ds/symlink/tps62901.pdf — existingregulator EN high0.97–1.03V/falling0.87–0.93V, internalUVLO rising2.85–3.0V/falling2.7–2.85V. Existing source and rawPG not altered.
+- Espressif ESP32-S3-WROOM-1/-1U v1.8: https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf — local PDF, pp16/27–28: EN50us minimum reset and stable-rail interval, reset VIH0.75*VDD and VIL0.25*VDD. DC input current50nA is specified at3.3V/25C, not a full-temperature leakage guarantee. ESP reset pulldown47k keeps buffer load below100uA with a20uA external-load allowance so VOH >= VCC-0.1V applies. FPGA reset retains4.7k because its internal pullup/VIH differ.

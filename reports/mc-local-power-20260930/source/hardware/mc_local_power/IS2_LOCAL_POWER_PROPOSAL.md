@@ -1,0 +1,16 @@
+# IS-2 hardware proposal MC-P1 — local power
+
+Revision `MC-P1`, 30 September 2026. **Proposed, not an agreed replacement of IS-1.** Frozen `controller-interface-spec` sources are unchanged. This circuit implements the replaceable MC's card-local core/I/O supplies and declares necessary component and allocation deviations for owner reconciliation.
+
+| Item | Frozen IS-1 | Proposed MC-P1 | Reason and consequence |
+|---|---|---|---|
+| Window supervisor | TPS386000 resets as RAILS_OK | Three LTC2962HUD#TRPBF independent adjustable window stages | Preserve narrow actual rail windows; existing full-corner review rejected TPS386000 for them. Preserve active-high rails-good interface through a destination-rail buffer. Component substitution needs logic-owner agreement and physical review. |
+| Core threshold allocation | Historical ledger tightened 1.17–1.23 V; actual T20 source specifies 1.15–1.25 V | UV top 1.331k/1k bottom; OV top 1.47002k/1k bottom | Use the actual manufacturer operating window, with thresholds inset enough to preserve regulation acceptance and detect out-of-range rails at initial/TCR plus 400 ppm drift. Old tight-window and failed aging results remain distinct history; no component rating is raised. |
+| MC switched CORE_5V steady reservation | 0.45 A | 0.50 A | Full conservative arithmetic is 0.46735 A, including both converter allowances and supervision. Do not hide the 17.35 mA frozen-budget excess. Reclose total PSM budget and slot feed. |
+| MC startup load | Not closed as an actual local regulator circuit | At least 0.80 A downstream-startup allowance proposed | Concurrent ramp model is 0.69205 A. Input-cap charging is separate. Exact slot limiter and connector timing/current coordination remain unselected. |
+| Local I/O regulator configuration | No frozen exact population | TPS62901 at 2.5 MHz, forced PWM, VSET, discharge; 32.4k mode resistor and XGL4020-102MEC | The existing FPGA's I/O bulk capacitance plus converter capacitance exceeds the 1 MHz effective ceiling. Count full source capacitance instead of reducing required decoupling silently. |
+| Normal reset release | RAILS_OK → reset/permission logic | 5 V window → core enable → core window → I/O enable → I/O window → destination-rail buffered FPGA_CRESET_N | Retain core-before-I/O order. Each stage adds 160–240 ms release; driver self-test begins only after configuration and actual readiness. No machine permission follows from reset release alone. |
+
+Signal conventions, eight standard motors/four-channel expansion, fixed wiring base, individual enable/alarm, full 24 DI/16 DO, watchdog limits, offline replacement and command/recovery policies do not change through this proposal. The old central power circuits remain baseline evidence. Local circuitry is a review candidate; static arithmetic and zero circuit ERC cannot substitute for board routing, FPGA fit or physical fault timing.
+
+The parent integration must combine programming/reset authority upstream, avoid using the raw 5 V qualifier as a 3.3 V gate signal, and keep the local support-capacitance budgets current as watchdog/buffer/identity circuits are added. Acceptance requires deliberate owner reconciliation into one revisioned complete interface, a closed PSM feed model and physical startup/brownout/partial-power measurements.

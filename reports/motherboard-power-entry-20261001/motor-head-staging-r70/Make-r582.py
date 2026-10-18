@@ -1,0 +1,4 @@
+from pathlib import Path
+p=Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/Source27-four-bypass-correct-orientation-r580.py');t=p.read_text().replace('r580','r582')
+t=t.replace("p=ps[key];n=p.GetNetname();a=mm(p.GetPosition());assert n=='/LOGIC_GND';choices=[]", "p=ps[key];n=p.GetNetname();a=mm(p.GetPosition());assert n=='/LOGIC_GND';choices=[]\n source_ref='C11086'if key[0]in['C11091','C11092','U11037','U11038','R11083']else'C11083';actual_source=next(v for v in b0.GetPads()if v.GetParentFootprint().GetReference()==source_ref and v.GetNumber()=='2');actual_ids={v.m_Uuid.AsString()for v in b0.GetConnectivity().GetConnectedItems(actual_source)};ground_original=[v for v in b.GetTracks()if isinstance(v,pcbnew.PCB_VIA)and v.m_Uuid.AsString()in actual_ids and v.m_Uuid.AsString()not in added27]")
+Path('reports/motherboard-power-entry-20261001/motor-head-staging-r70/Source27-four-bypass-correct-orientation-r582.py').write_text(t)

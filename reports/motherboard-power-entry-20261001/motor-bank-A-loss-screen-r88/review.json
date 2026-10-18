@@ -1,0 +1,102 @@
+{
+  "source_hashes": {
+    "reports\\motherboard-power-entry-20261001\\motor-bank-A-r83\\receipt.json": "11e642f8155d6413bfbd862b0081d1643ef5327c828b7b31d78b43c895249fce",
+    "reports\\motherboard-power-entry-20260930\\sources\\tps22990.pdf": "ea198776524544eb3e4a130f1f6a6e5c8e80ca8164eebf387a8fd6b4b7dde2a3",
+    "research\\expanded-power\\am26c31.pdf": "e22c6acb6fe06b844b4e203a781fb1b9d6c62320e4b0f6e82ac55b7483812964"
+  },
+  "donor_sha256": "71c74a58b21ee51df5004e5e43c389b18995f6eac05aff9c61a73c6ded181b48",
+  "strict_worst_case_arming_min_v": 4.9296376113,
+  "converter_min_v": 4.95,
+  "available_total_budget_v": 0.020362388699999734,
+  "conditional_screen": {
+    "copper_temperature_c": 85,
+    "finished_outer_copper_um": 63,
+    "resistivity_20C_ohm_m": 1.724e-08,
+    "copper_temperature_coefficient_per_C": 0.00393,
+    "board_total_thickness_max_screen_mm": 1.76,
+    "finished_hole_diameter_min_assumption_mm": 0.2,
+    "barrel_plating_min_assumption_um": 20,
+    "plating_hole_width_manufacturer_DFM_confirmed": false,
+    "bankA_transmitter_feeder_reservation_a": 0.8976,
+    "bankA_output_bleed_corner_a": 0.01600621600621599,
+    "bankA_head_through_current_allocation_a": 0.9136062160062159,
+    "shared_RAW_A_B_head_plus_receiver_control_reservation_a": 1.386412432012432,
+    "control_RAW_8mA_reservation_guaranteed": false,
+    "three_power_trace_sections": [
+      {
+        "role": "RAW_converter_source_neck",
+        "length_mm": 6.003332407921453,
+        "width_mm": 4,
+        "current_allocation_a": 1.386412432012432,
+        "resistance_ohm": 0.0005156185495916303,
+        "drop_v": 0.0007148599673300549,
+        "native_uuids": [
+          "2ab6aefe-e0b4-4f58-b6b9-c8ce4e6078ff"
+        ]
+      },
+      {
+        "role": "RAW_A_receiving_head",
+        "length_mm": 6.324555320336759,
+        "width_mm": 2.0,
+        "current_allocation_a": 0.9136062160062159,
+        "resistance_ohm": 0.0010864159501749633,
+        "drop_v": 0.0009925563652481459,
+        "native_uuids": [
+          "031c81e8-4726-437b-92ae-eb1edeffff58"
+        ]
+      },
+      {
+        "role": "A_VOUT_manufacturer_short_neck",
+        "length_mm": 0.8249999999999886,
+        "width_mm": 0.25,
+        "current_allocation_a": 0.9136062160062159,
+        "resistance_ohm": 0.001133731133333318,
+        "drop_v": 0.0010357838106930912,
+        "native_uuids": [
+          "97203ca8-bf95-4009-a365-da05ca47ee1c"
+        ]
+      }
+    ],
+    "three_power_barrel_arrays": [
+      {
+        "stage": "RAW_source",
+        "parallel_barrels": 3,
+        "current_allocation_a": 1.386412432012432,
+        "resistance_screen_ohm": 0.0010104579184401893,
+        "drop_v": 0.0014009114201508825
+      },
+      {
+        "stage": "head_input",
+        "parallel_barrels": 3,
+        "current_allocation_a": 0.9136062160062159,
+        "resistance_screen_ohm": 0.0010104579184401893,
+        "drop_v": 0.000923160635299659
+      },
+      {
+        "stage": "head_output",
+        "parallel_barrels": 3,
+        "current_allocation_a": 0.9136062160062159,
+        "resistance_screen_ohm": 0.0010104579184401893,
+        "drop_v": 0.000923160635299659
+      }
+    ],
+    "TPS22990_max_on_resistance_conditional_ohm": 0.006,
+    "TPS22990_exact_test_conditions": "VBIAS=5V, VIN=5V, VON=5V, IOUT=-200mA, -40..105C",
+    "test_conditions_cover_all_actual_4p95V_0p914A_corners": false,
+    "conditional_switch_drop_v": 0.0054816372960372955,
+    "positive_head_path_drop_screen_v": 0.011472070130058788,
+    "remaining_for_remote_positive_plus_full_own_return_monitor_noise_v": 0.008890318569940946,
+    "existing_parallel_RAW_F_zone_credit_taken": false,
+    "dynamic_transient_inductance_included": false
+  },
+  "remaining_engineering_gates": [
+    "Actual bank A driver feed, return conductors and monitor-sense endpoint must fit remaining voltage/noise budget; local supply label and return-plane coverage do not prove this.",
+    "Actual other bank sharing/current, every transistor/control load and connector transition remain separately bounded.",
+    "TPS22990 maximum RON at actual 4.95 V and actual load/temperature needs guaranteed evidence or physical qualification.",
+    "2MHz driver/cable/receiver current/loading is unqualified. .2244A per-package feeder reservation is not an AM26C31 operating allowance.",
+    "Factory copper/plating/hole/thickness and final mutual heating/thermal qualification."
+  ],
+  "strict_requirement_changed": false,
+  "delivery_qualified": false,
+  "manufacturing_ready": false
+}

@@ -1,0 +1,14 @@
+from pathlib import Path
+import json,hashlib
+H=Path(__file__).resolve().parent;ROOT=H.parent
+OUT=H/'FPGA-CDONE-R44-two-original-CORE-5V-duplicate-source-wall-supplement-r45'
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def main():
+ assert not OUT.exists();OUT.mkdir()
+ prior=H/'FPGA-CDONE-source-bound-current-native-ordinary-and-process-gated-handoff-r44/bounded-CDONE-and-frozen-AO1-continuation-handoff.json';assert sha(prior)=='7f399276b4167edd1d0c2aff7060dbe7090dfcef8c99c29ab5076cf0bf296fd4'
+ rp=ROOT/'sbc-power/CM-alternate-pose-only-new-ground-blocker-and-original-CORE233-binding-r447/receipt.json';assert sha(rp)=='28fb0fe021370798fbf39bb895d149085975ee1e87493aac130a2417b52a56c4'
+ sp=rp.parent/'original-CORE233-actual-BEFORE-SOURCE-direct-native-contact-scope.json';s=json.loads(sp.read_bytes());assert s['segment_is_actual_BEFORE_SOURCE']and s['SOURCE_before_layer_keys']==8306 and len(s['direct_same_net_native_F_contacts'])==17
+ a=s['original_segment'];dup=next(r for r in s['direct_same_net_native_F_contacts']if r['uuid']=='b1e1f4cd-cfe9-421c-8c66-6662888515d5')['exact_current_native_original_geometry'];assert a['a']==dup['a']and a['b']==dup['b']and a['w']==dup['w']==1.25
+ result={'verdict':'R44_BOUND_SHARPENED_BY_EXACT_ORIGINAL_DUPLICATE_CORE_SOURCE_WALL','prior_handoff':{'file':str(prior.resolve()),'SHA256':sha(prior)},'fresh_actual_BEFORE_SOURCE_contact_scope':{'file':str(sp.resolve()),'SHA256':sha(sp),'receipt_file':str(rp.resolve()),'receipt_SHA256':sha(rp)},'physical_overlapping_original_wall_UUIDs':[a['uuid'],dup['uuid']],'raw_net':a['net'],'layer':a['layer'],'literal_existing_endpoints_mm':[a['a'],a['b']],'each_native_width_mm':1.25,'source_root_selector':s['actual_BEFORE_source_root_selector'],'SOURCE_before_layer_keys':8306,'all_retained_original_direct_contacts':17,'source_copper_treatment':'Both original definitions overlap the same physical conductor; moving one leaves the entire original wall. Never treat the overlap as doubled copper thickness or width.','next_constructive_scope':'A separate explicitly authorized reroute must account for BOTH exact original duplicate chunks, their original endpoints/widths/locks, and every retained old direct source contact. No CORE chunk is softened, retired or changed by this handoff.','other_hard_wall':'Retained MISO In3 segment83569fc6-4fed-4142-8160-6dc984f1b06d remains literal; no coupled MISO replay.','new_process_registry_locations':0,'native_source_copper_or_profile_writes':0,'native_jobs':0,'adopted':False,'manufacturing_current_native_AFTER_current_IR_thermal_PDN_SI':'OPEN'}
+ p=OUT/'two-original-CORE-source-wall-supplement.json';p.write_text(json.dumps(result,indent=1)+'\n');r={'verdict':result['verdict'],'supplement_file':str(p.resolve()),'supplement_SHA256':sha(p),'adopted':False,'native_jobs':0};(OUT/'receipt.json').write_text(json.dumps(r,indent=1)+'\n');print(json.dumps(r),flush=True)
+if __name__=='__main__':main()

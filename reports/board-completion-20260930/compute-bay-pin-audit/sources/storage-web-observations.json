@@ -1,0 +1,52 @@
+{
+  "observed_date": "2026-09-30",
+  "scope": "Facts inspected through web tool; not complete downloaded web pages or target tests",
+  "sources": [
+    {
+      "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#BOOT_ORDER",
+      "facts": {
+        "nvme_boot_order_code": "0x6",
+        "explicit_compute_modules": ["CM4", "CM5"],
+        "rpiboot_used_for_compute_provisioning": true
+      }
+    },
+    {
+      "url": "https://www.raspberrypi.com/documentation/computers/compute-module.html",
+      "facts": {
+        "mass_storage_gadget_provisions": ["eMMC", "NVMe", "USB block devices"],
+        "route_requires_compatible_module_bootloader_and_carrier": true
+      }
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/products/sku/97544/intel-optane-memory-series-16gb-m-2-80mm-pcie-3-0-20nm-3d-xpoint/specifications.html",
+      "facts": {
+        "capacity_gb": 16,
+        "interface": "PCIe 3.0 x2 NVMe",
+        "form_factor_mm": [22, 80],
+        "marketing_status": "Discontinued",
+        "listed_active_power_w": 3.5,
+        "listed_idle_power_w": 1,
+        "enhanced_power_loss_data_protection": false
+      }
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/products/sku/99742/intel-optane-memory-series-32gb-m-2-80mm-pcie-3-0-20nm-3d-xpoint/specifications.html",
+      "facts": {
+        "capacity_gb": 32,
+        "interface": "PCIe 3.0 x2 NVMe",
+        "form_factor_mm": [22, 80],
+        "marketing_status": "Discontinued",
+        "listed_active_power_w": 3.5,
+        "listed_idle_power_w": 1,
+        "enhanced_power_loss_data_protection": false
+      }
+    }
+  ],
+  "limitations": [
+    "Shell downloads of the Raspberry Pi HTML pages returned HTTP 403; web tool inspection succeeded",
+    "Shell Intel downloads failed local certificate validation; certificate validation was not bypassed; web tool inspection succeeded",
+    "Exact user seller listing and MPN have not been provided to this subagent",
+    "Optane standalone ARM enumeration, x1 negotiation and boot have not been measured",
+    "Current retail/used pricing and commercial supply were not audited"
+  ]
+}

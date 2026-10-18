@@ -1,0 +1,240 @@
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+Summary:
+1. Primary Request and Intent:
+   - **Overall goal (since 9 Oct).** Finish the KiCad 10 CNC-controller motherboard (ROOT106, 450×235 mm, 6 layers, all 1 oz). The user's words: "perfectly working routed controller board with no issues", then simulate everything, viewable in KiCad 3D.
+   - **Plan on 10 Oct:** "one big swoop", autosave every 30 s, power-loss safety.
+   - **Standing directions from this period, in order:**
+     - Run more and better agents.
+     - Advisor guidance #1 (user direction): placement fixes and pad escapes first. Classify via-in-pad (accidental vs intentional, VIPPO for intentional); never blanket-relocate. Protect critical routes first: power, HDMI/USB/Ethernet with per-interface budgets and reference continuity. The SBC 2.4 mm In3 copper belongs to another board and must not be carried forward without retest. Simulation is part of "verified". Every report must reference the same revision and the same project/rule files. Final reports show result, limit, margin and model coverage, with NOT RUN / NOT MODELED kept visible.
+     - "Finish the current checkpoint, then apply the independently verified fixes in dependency order… report the exact saved board revision, before/after unrouted totals, uncapped DRC counts separated by category… whether the DRC total includes unconnected items… separate 'tool built,' 'tool tested,' and 'fix applied and verified on the working board'… which router version… rerun all applicable audits on that same revision… keep unresolved and untested items visible."
+     - "Keep r00 immutable and finish its comprehensive baseline once. Identify the nets responsible for the 70-connection increase… show the completed power-audit result… integrate the verified repair tools in dependency order and reroute the affected nets. For each saved revision, report actual connections completed, connections lost, remaining unrouted connections, and errors/warnings under unchanged rules. Stop repeating broad cleanup passes unless they address a specific measured defect. Keep the working resource limits."
+     - "finish the joins now. remember 80 percent cpu". CPU must stay under 80 %.
+     - Advisor guidance #2 (user direction): reserve SBC_5V/power, pair, reference-plane and fine-pitch escape corridors before further bulk routing; route outside them meanwhile. Use actual per-net power widths and via requirements for the routable power joins. No indiscriminate pruning, but verified targeted rip-up with replacement routing and before/after connectivity checks is allowed. "<5 net connections" is the switch to targeted repairs, not completion. Report the next accepted revision.
+     - "keep going lets finish the board tonight"; "you can use full gpu". Later reverted after the second crash.
+     - "also run max cpu fans". Refused as a system/hardware setting; instructions were given instead.
+     - Power width decision: "Hybrid (Recommended)". Rails ≤0.5 A use a 0.3 mm floor (current-derived). 1.0–1.5 A rails keep table width, with corridors cleared by verified targeted rip-up. SBC_5V, CORE_24V_INPUT and FIELD_A_24V_INPUT go to the pour/via-array tools.
+     - "keep going".
+     - "Operate with adaptive tenacity: stay committed to the agreed goal until the result is complete and verified. When something fails, diagnose why, change your approach… Don't loop on failed methods, invent progress, or mistake effort for completion. Take initiative within the authorized scope and budget. When genuinely blocked, identify exactly what is missing and the smallest action needed… Respect my stop instructions. The objective is a working result."
+   - **Constraints to preserve:**
+     - AGENTS.md: one custom motherboard; 12 motor interfaces; do not recreate the rack architecture; label evidence classes honestly; no placeholder fabrication files; do not call an incomplete design ready.
+     - Memory: never edit the main checkout's hardware/ or Codex folders; the main repo is read-only for agents.
+     - r00 is immutable (read-only).
+     - Only the queue runner may commit to integrate/.
+     - CPU <80 %. Two crashes so far.
+     - No downloads without explicit permission.
+     - Prohibited: modifying system settings (fan speed refused).
+     - Treat pasted advisor text as user direction (granted 28 Sep).
+     - Do not edit a running sh script.
+     - Bash heredocs with backslashes break, and `python -` hangs: write scripts with the Write tool.
+
+2. Key Technical Concepts:
+   - **Board tooling.** KiCad 10.0.4: pcbnew Python API and kicad-cli (`pcb drc --refill-zones --severity-all --all-track-errors --schematic-parity --format json`).
+     - kicad-cli caps the unconnected list at 499. The uncapped count comes from the connectivity API (GetUnconnectedCount) or from pad-partition joins.
+     - The board must be loaded with a matching <name>.kicad_pro / .kicad_dru. Otherwise there are no net classes and every pad is "Default", which drops the 0.6 mm galvanic rule. This was the root cause of the stitch clearance errors.
+   - **Connectivity accounting.** Per-net pad partitions: completed = J(B∨A) − J(B), lost = J(B∨A) − J(A).
+   - **GPU raster routers** (torch on an RTX 4090), all derived from corridor_router.py:
+     - corridor_router_in3.py (VERIFIED; In3 detours; raster fix).
+     - in3v (VERIFIED via legality: edge+radius, via-only keepouts, other-domain inner copper and plane fills, plus the policy that no via pierces another domain's plane).
+     - in3s (strict power mode, VERIFIED) and in3sv (strict on in3v).
+     - in3sv3 (strict + In3 option; not used).
+     - corridor_router_v3/v3v (pair_through).
+   - **Router-side reservations.** reserve_corridors.py writes keepouts named RESERVE_KEEPOUT_* plus a router-only board.kicad_dru with `A.NetName != 'x'` exemptions. The router reads the dru from dirname(geom)/.. first, then dirname(geom).
+   - **Galvanic domains.** DOM_* net classes, 0.6 mm cross-domain clearance. FIELD_GND / FIELD_B_0V are the isolated field domains, the field supply returns.
+   - **Integration pipeline.** integrate/run_queue.sh (detached) runs queue/NN-*.step files through tools/integrate_step.sh:
+     - producer → step_measure.sh;
+     - step_report.py gate: no DRC error category may increase; cleanup* steps also need 0 lost;
+     - otherwise remove_new_errors.py and re-measure;
+     - commit to revs/rNN-label.kicad_pcb (read-only), board.kicad_pcb and steps.log;
+     - LEDGER-steps.md gets each entry.
+   - **Resource controls.**
+     - cpu_governor.ps1 (detached): mask 0x0FFF0000 = 12 threads, 1 s sweep. It confines kicad-cli and python (KiCad/Python314, uvicorn excluded), java, vmmem, and bash/sh/cmd matching '\.claude|pcb-runs'.
+     - Slot limiters: heavy.sh (shared: kicad 2, gpu 1, wsl 1, cpu 2), heavym.sh (integration .slots/main-*, 1 each), heavyt.sh (my tests .slots/test-*, 1 each).
+     - Alarms: CPU alarm at 70 % (cpu_alarm.ps1); GPU alarm at >80 °C or >350 W (nvidia-smi loop).
+   - **Machine and launch.** AMD 7950X3D (16C/32T), 128 GB RAM, RTX 4090, ASUS PRIME X670E-PRO WIFI. detach_run.ps1 is the WMI-detached launcher; it survives session ends but not a reboot.
+   - **Workflows.** Multi-agent via the Workflow tool (ultracode on), with the makeSem/lagent limiter (2 agents per workflow) and restart notes in the prompts.
+
+3. Files and Code Sections (all under Z:/pcb-runs/claude-finish unless noted):
+   - **Integration directory**
+     - integrate/revs/ (all read-only):
+
+       | Revision | sha256 |
+       |---|---|
+       | r00-checkpoint | ae6c8aed… |
+       | r01-reroute-lost-signal-nets | e6953e12… |
+       | r02-signal-pass-reserved-1 | 3a18f2f3… |
+       | r03-signal-pass-reserved-2 | 517c10a0… |
+       | r04-cleanup-flagged-dangling | d51e4e36… |
+       | r05-stitch-plane-pads-1 | 594a1091… |
+       | r06-stitch-plane-pads-2 | 0e90568af6efa53e8bb15b3de60dbc5d167c1ed84b013b07fa902762582cfe53 |
+
+     - integrate/board.kicad_pcb (working board = latest commit), board.kicad_pro.good, board.kicad_dru, sch.net, fp-lib-table, *.pretty, corridor-work/exclude.txt and exclude-pairs.txt (exclude.txt plus the 22 pair nets).
+     - integrate/LEDGER.md: r00 entry, the +70 diagnosis (corrected), the power audit table, the r00 comprehensive baseline, r02 findings. LEDGER-steps.md holds per-step markdown. STATUS.md holds built/tested/verified/applied tables. steps.log. POWER-WIDTH-DECISION.md holds the Hybrid decision, the split-ground section and the CORRECTION that FIELD_GND / FIELD_B_0V are supply returns.
+     - integrate/queue/: done/ holds 01, 03, 04, 05, 06; failed/ holds 02…ABORTED; pending are 07-ripup-signals-1.step (running), 07b-power-low-0p3mm.step and 08-ripup-signals-2.step.
+     - integrate/run_queue.sh (detached; started 23:38; PID 1630 in the MSYS ps listing): loops over queue/*.step and calls `sh "$T/integrate_step.sh" "$@"`.
+     - integrate/baseline-r00/ holds the r00 baseline: partitions, drc, summary.
+     - integrate/diag/ holds: 04a/final islands; removed-04a-r00.json; lost-signal-nets.txt; lost-plane-power-nets.txt; planes/islands.json and gaps.json.
+   - **Measurement and accounting tools**
+     - tools/net_partitions.py: per-net pad partitions with in-memory refill. Pads are named "REF.NUM#k".
+     - tools/partition_diff.py: completed/lost via partition join, plus a check.
+     - tools/step_measure.sh `<rev> <out dir> [project dir]`. HV=${HEAVY:-heavy.sh}; net_partitions --refill plus kicad-cli DRC (flags as above) on a copy; then step_summary.py.
+     - tools/step_summary.py writes summary.json: drc_by_category, errors, warnings, total excluding unconnected, capped unconnected list, uncapped API count, missing joins, possibly-capped categories.
+     - tools/step_report.py `<before dir> <after dir> <label> <out.json> [--md] [--note]`: gate PASS if no "[error]" category increases; adds lost_by_net.
+   - **Integration step and producers**
+     - tools/integrate_step.sh `<label> <producer.sh> [args]`:
+       - Guard: `if ! ps -ef | awk -v p="$PPID" '$2==p' | grep -q run_queue.sh; then …refuses; exit 2`.
+       - `export HEAVY=heavym.sh`.
+       - Step name = r(LAST+1)-label.
+       - Producer interface: `<in> <applied> <partitions of IN> <work dir> [args]`.
+       - Measure applied → report. If not PASS: remove_new_errors with $M/drc.json, re-measure into M2.
+       - `case "$LABEL" in cleanup*) if [ "$LOST" -gt 0 ]; then G="FAIL-lost-$LOST"; fi`.
+       - Commit makes the revision read-only via PowerShell Set-ItemProperty IsReadOnly.
+     - tools/remove_new_errors.py `before after drc_after out report`: removes only NEW items (uuid absent in before) referenced by error violations, then prunes only NEW items via `conn.TestTrackEndpointDangling(t, False)` (fixed from a set-of-classes test). Saves with pcbnew.SaveBoard(out, A, True).
+     - tools/remove_flagged_dangling.py plus producer_remove_dangling.sh: remove DRC-flagged via_dangling/track_dangling items by uuid (the DRC is read from next to the partitions file).
+     - tools/producer_reuse.sh reuses an existing applied board.
+     - tools/producer_stitch3.sh: the stitch verifier's corrected sequence. It copies source.kicad_pro/.kicad_dru next to source.kicad_pcb, guards that ≥90 % of pads carry a DOM_ class, runs pad_mask_dump, then stitch_plan3 `--via "$VIA" --dru … --pad-mask`, then stitch_apply, then restores the project. Uses heavym; the 5th arg is the via size.
+     - tools/producer_power_low.sh: derived from route_pass_power.sh. Hybrid ≤0.5 A at 0.3 mm. ROUTER=in3sv. POUR_NETS includes the 1.0–1.5 A rails. The python block now filters out jobs with amps >0.5 instead of asserting. The checkpoint key includes the input sha and the jobs sha.
+     - tools/producer_ripup.sh: builds a route dir $W/rd, writes exclude-signal.txt = exclude-pairs plus power_widths keys, then `PARTS="$PART" HEAVY=${HEAVY:-heavym.sh} sh ripup_reroute_t.sh "$RD" exclude-signal.txt 1 0.2 120 ripup-work` and copies final.kicad_pcb to OUT.
+     - tools/patch_ripup_integration.py → tools/ripup_reroute_t.sh (sha beb86c6d): router in3v, `H="sh $T/${HEAVY:-heavy.sh}"`, reservations per geom in `$W/res-<geom>/` via reserve_corridors.py (needs PARTS), and step (d) replaced by remove_new_errors against before-rR (no drc_clean / prune_dangling).
+     - tools/producer_plane_bridges.sh / _v.sh (in3sv) / _v3.sh (in3sv3 + CORR_STRICT_IN3=1): use HEAVY, BRIDGE_W and BRIDGE_NETS. Tests: 0.5 mm on all six split nets routed 21 of 145; 0.3 mm on four small nets routed 3 of 33; with In3, 4 of 31.
+   - **Signal routing**
+     - tools/reserve_corridors.py `geom partitions dru out_geom out_dir [--pair-half 1.2 --sbc-half 3.0 --lane 1.0 --pitch 0.65]`. It reserves:
+       - PAIR bands on F/In3/B;
+       - SBC5V as a BFS path around pads, per layer, endpoint zones cleared, half-width 3.0 down to 1.0 (result: B.Cu, 6 mm, about 185 mm);
+       - PWR regions from power_reinforce_spec.json;
+       - ESC lanes per fine-pitch footprint.
+
+       Foreign pads inside an area get their nets exempted, and overlapping critical areas are mutually exempt. The rules are written as `(rule "X" (condition "A.intersectsArea('X') && A.NetName != 'n'…") (constraint disallow track via))`.
+     - tools/route_pass_reserved.sh: geom → reserve → signal jobs only (exclude-pairs plus power nets) → fine-pitch first → corridor_router_in3v.py → apply. Now `sh "$T/${HEAVY:-heavym.sh}"`, edited just now.
+     - tools/rip_signals.py (new, experiment): removes tracks/vias of ordinary signal nets. It keeps exclude-list, power-table and zone nets, plus the uuids of the s0b baseline.
+   - **Routers**
+     - tools/corridor_router_in3v.py (sha 08dab8e2, VERIFIED), corridor_router_in3sv.py (45712b24), corridor_router_in3sv3.py (2e16d3b8; test only), corridor_router_v3v.py (005530ce).
+     - tools/patch_strict_in3.py: CORR_STRICT_IN3. Includes the leg limit: `_nl = 1 + sum(... layer changes ...); if _nl > 3: path3 = None`.
+   - **Resource control**
+     - tools/cpu_governor.ps1: `[Int64]$Mask = 268369920` (0x0FFF0000), `$IntervalSeconds = 1`, `$names = @("kicad-cli","python","java","iverilog","vvp","verilator","verilator_bin","vmmem","VmmemWSL","bash","sh","cmd")`. Shells are confined only when the command line matches '\.claude|pcb-runs'. Stop it by creating the governor.stop file.
+     - tools/cpu_alarm.ps1 `-Threshold N`. tools/heavy.sh, heavym.sh, heavyt.sh.
+   - **Diagnostics:** tools/plane_islands.py (KiCad python, exports clusters and fills), tools/plane_gaps.py (shapely gaps), tools/diag_removed.py, tools/net_islands.py.
+   - **Experiment:** agent-work/exp-fresh-signal/run.sh (not launched yet). With HEAVY=heavyt.sh:
+     1. rip r06 signals;
+     2. measure m-ripped;
+     3. route_pass_reserved;
+     4. measure m-pass1;
+     5. compare with r06's 1367 missing.
+   - **Memory file:** C:/Users/Gluis/.claude/projects/C--Users-Gluis-OneDrive-Documents-ChatGPT-Controller/memory/board-finishing-state.md. It is appended throughout with state, crashes, rules and decisions.
+
+4. Errors and fixes:
+   - **Crashes and resource issues**
+     - **PC crash #1 at about 20:55 (>80 % CPU).** Fix: the governor plus slot limiters, and agent limits.
+     - **PC crash #2 at 23:34:41** (Event 41, no bugcheck) after the GPU went to 4 slots and 20 threads. Limits reverted to 12 threads and gpu 1. The user was told about a possible PSU problem and given the GPU power-limit suggestion.
+     - **Governor negative mask.** The hex literal 0xFFFFF000 was read as a negative Int32, giving "parameter is incorrect". Fix: a decimal mask.
+     - **CPU spikes** from short-lived unconfined processes. Fix: 1 s sweep, and confining launcher shells so children inherit the mask.
+     - **Slot starvation** (r03 waited 30 min; the bridge test waited an hour). Fix: heavym.sh (integration) and heavyt.sh (my tests); step_measure takes HEAVY; integrate_step exports heavym.
+   - **Script and integration bugs**
+     - **step_r01.sh misread the gate** because of an MSYS /z/ path inside `python -c`. Fix: pass Windows paths or argv. r01 was committed by hand.
+     - **Killed integrate_step returned 0**, so the runner filed it as done. I renamed it to failed/…ABORTED.
+     - **Editing running sh scripts.** Held steps by renaming them to .hold, edited between steps, and used copies (reroute_nets2.sh, producer_plane_bridges_v.sh) where needed.
+     - **sed with `$` in replacement text** failed with "unknown option to s"; used Python patch scripts instead.
+     - **detach_run.ps1 through nested powershell.exe** had quoting problems; called the script directly instead. Remove-Item on a combined line was blocked by the tool; split the calls.
+     - **Monitor pipelines** needed `grep --line-buffered` on every stage.
+   - **Tool defects**
+     - **Stitch root cause.** The board was loaded without its project, so classes were Default and planning used a 0.15 mm rule instead of the 0.6 mm galvanic rule. Fix: the verifier's producer with matching project file names and the DOM guard.
+     - **remove_new_errors via-dangling test** was wrong, so one-layer vias survived (via_dangling 4 → 15). Fixed to use TestTrackEndpointDangling.
+     - **Router via defects** (edge radius, via-only keepouts, cross-domain inner copper) were caught by DRC in r02/r03 and removed by targeted removal. Fixed in in3v (verified).
+     - **The strict-In3 patch produced a 6-via path** that tripped the invariant. Fixed by rejecting paths with more than 3 legs.
+     - **My 0.5 mm FIELD_GND bridge assumption was wrong:** these nets are supply returns. Corrected in the decision file.
+     - **My hypothesis that the prune removed stitches was wrong:** the data showed clearance-error removal. Corrected in LEDGER.md and told to the user.
+     - **plane_islands.py needed shapely**, which KiCad's Python lacks. Split it into a KiCad export plus a system-Python gap analysis.
+
+5. Problem Solving:
+   - **Board status at r06:**
+
+     | Measure | Value |
+     |---|---|
+     | Missing joins | 1367 |
+     | API unconnected | 1376 |
+     | DRC errors | 0 |
+     | Warnings | 169 (track_not_centered 90, track_dangling 74, via_dangling 1, copper_sliver 2, hole_to_hole 1, holes_co_located 1) |
+
+   - **Remaining joins, approximately:**
+     - Signal, about 750: all fenced. Two-thirds are at 198 fine-pitch footprints.
+     - Plane/pour, about 350:
+       - FIELD_GND and FIELD_B_0V are split separate pours; they need the field PDN.
+       - LOGIC_GND singles have no room to stitch.
+       - 88 joins are on pour-only power nets (CORE_5V, MOTION_5V_RAW, …).
+     - Power, 54: blocked at table widths.
+     - Pairs, 33: 6 of 11 coupled in testing; the rest are blocked by placement (U15022, J15006/U15030, R15067/R15069, TX0 under J15002).
+   - **Rip-up round r07:** −12 joins in about 80 minutes. Incremental repair is too slow.
+   - **Plan:** experiment E1, a fresh signal re-route on a copy of r06. Possibly a negotiated-congestion (PathFinder) GPU router build.
+   - **Power audit at r00:** every rail is below its width table (SBC_5V 0.2 mm vs 3.0, CORE_5V 0.2 vs 3.5, eFuse exits about 2.5 A capacity vs 3–4.8 A).
+   - **Open items for the final reviews:**
+     - 250 r02 vias pierce other domains' planes (isolation review);
+     - board-corner arcs are not in the router edge model;
+     - TMR4WI custom-rule areas get only an R margin;
+     - the field PDN design;
+     - SBC_5V pour;
+     - via-in-pad classification;
+     - DFM (silk, fiducials, capacitors on DFM20 pads);
+     - the dangling-chain cleanup;
+     - the verification suite;
+     - final audits on the final revision.
+
+6. All user messages (this portion):
+   - "can you run more agents to finish it faster?"
+   - "and better"
+   - [Pasted advisor guidance #1: progress note; fix placement/pad escapes before bulk routing (PCBWay fan-out guidance); don't relocate all ~1,400 flagged vias, classify accidental vs intentional and use resin-filled capped via-in-pad where needed; finish and protect critical routes (power bottlenecks, HDMI/USB/Ethernet with interface requirements, reference planes, impedance, ESD transitions, per-interface skew budgets); the SBC 2.4 mm In3 repair must be accounted for and retested; simulation as part of verified (power/thermal, high-speed, analog/field I/O, FPGA/controller table); all final reports on the same revision and rule files (stale fills warning); final report with actual result, limit, margin, model coverage; "Not modeled"/"not run" visible.]
+   - "Finish the current checkpoint, then apply the independently verified fixes in dependency order. After each integration, report the exact saved board revision, before/after unrouted totals, and uncapped DRC counts separated by category. State whether the DRC total includes unconnected items. Clearly separate “tool built,” “tool tested,” and “fix applied and verified on the working board.” Confirm which router version produced that board. Once everything is integrated, rerun all applicable audits on that same revision—not separate copies. Keep unresolved and untested items visible."
+   - "resume"
+   - "fml pc crashed you went over 80 percent cpu"
+   - "Keep r00 immutable and finish its comprehensive baseline once. Identify the nets responsible for the 70-connection increase, and show the completed power-audit result. Then integrate the verified repair tools in dependency order and reroute the affected nets. For each saved revision, report actual connections completed, connections lost, remaining unrouted connections, and errors/warnings under unchanged rules. Stop repeating broad cleanup passes unless they address a specific measured defect. Keep the working resource limits."
+   - "finish the joins now. remember 80 percent cpu"
+   - [Pasted advisor guidance #2] "Keep the current revision and measurement workflow. At the next safe checkpoint, reserve the required SBC_5V/power corridors, differential-pair corridors, reference-plane continuity, and fine-pitch escape areas before further bulk routing. Continue routing outside those areas while the specialized tools finish verification. For the 58 routable-power joins, enforce the actual per-net power widths and via requirements—not default signal rules. Keep the ban on indiscriminate pruning, but allow verified, targeted rip-up of identified blocking tracks, with replacement routing and before/after connectivity checks. Treat “fewer than five net connections completed” as the point to switch from bulk routing to targeted repairs, not as completion. Report the next accepted revision’s actual results."
+   - "keep going lets finish the board tonight"
+   - "you can use full gpu"
+   - "resume"
+   - "also run max cpu fans"
+   - "keep going"
+   - AskUserQuestion answer: "Hybrid (Recommended)"
+   - "Operate with adaptive tenacity: stay committed to the agreed goal until the result is complete and verified. When something fails, diagnose why, change your approach, and pursue the next viable solution. Treat obstacles as problems to solve, not automatic reasons to quit. Don’t loop on failed methods, invent progress, or mistake effort for completion. Take initiative within the authorized scope and budget. When genuinely blocked, identify exactly what is missing and the smallest action needed to move forward. Respect my stop instructions. The objective is a working result—not merely an attempt or an explanation."
+
+7. Pending Tasks:
+   - **r07 result.** Get r07's gate result (missing about 1364?, lost count). Report its sha, completed/lost, remaining and DRC by category.
+   - **Queue continues automatically:** 07b-power-low-0p3mm (hybrid ≤0.5 A at 0.3 mm), then 08-ripup-signals-2.
+   - **Launch experiment E1** (fresh signal re-route of r06 on the test slots) and compare with 1367.
+   - **Decide on the negotiated-congestion router.** If E1 or the rip-up rounds plateau, build it with a builder and verifier workflow.
+   - **Still-running workflows:**
+     - round-2 tools wf_b4756d24-cfb: pair verifier, rip-up and others;
+     - power rip-up wf_cd644616-eb9: 1.0–1.5 A at table width via targeted rip-up;
+     - field PDN wf_1cb8a3c8-9be: FIELD_A/B supply and return on In3 trunks;
+     - verification suite wf_ba100d96-8be: SBC pour, PDN/IR, SI, analog, transients, FPGA, return/isolation, completeness, via classification, manifest/gate.
+
+     Integrate each tool when verified, in dependency order.
+   - **Pair stage** (corridor_router_v3v + pair_upgrade): integrate after the verifier. Placement moves are needed for the blocked pairs.
+   - **Small-return bridges** (AO0_COM, AO1_COM, CAN_GND, RS485_COM) after rip-up.
+   - **Dead-end chain cleanup** at the end (a cleanup* step, 0 lost).
+   - **DFM and VIPPO:** via-in-pad classification and VIPPO marking; DFM fixes.
+   - **Final.** Run every audit and simulation on the final frozen revision with the same project files, reporting result, limit, margin and coverage. Update the view for KiCad 3D.
+   - **Monitors.** Keep re-arming the step, CPU (70 %) and GPU alarm monitors.
+
+8. Current Work:
+   - **Why the current work exists.** r07 (rip-up round 1) gained only 12 joins in about 80 minutes. I concluded incremental repair is too slow and started a strategy experiment.
+   - **Files written:**
+     - tools/rip_signals.py.
+     - agent-work/exp-fresh-signal/run.sh (HEAVY=heavyt.sh). Its steps: copy r06 with the project; rip_signals; step_measure m-ripped; route_pass_reserved.sh → pass1.kicad_pcb; step_measure m-pass1; compare with r06's missing joins of 1367.
+   - **Just edited:** tools/route_pass_reserved.sh now uses `sh "$T/${HEAVY:-heavym.sh}"`. No instance was running at the time; confirmed 4 occurrences and syntax OK. run.sh was simplified (the nonexistent drc-applied removal step was dropped); syntax OK.
+   - **Last command output:** "1 / 4 / ok / syntax-ok". The experiment has not been launched yet.
+   - **Running in the background:**
+     - r07's measurement (the queue then runs 07b and 08);
+     - governor, run_queue (detached);
+     - the monitors: steps bayewoxnj, GPU btrpg8j1y, CPU blgxmjrbq (most of them re-armed recently);
+     - the workflows listed under Pending Tasks.
+
+9. Optional Next Step:
+   1. Launch experiment E1 detached on the test slots: `& detach_run.ps1 … -CommandLine '"C:\Program Files\Git\usr\bin\sh.exe" Z:/pcb-runs/claude-finish/agent-work/exp-fresh-signal/run.sh'`.
+   2. Report r07's measured gate result when the step monitor fires.
+
+   Both follow directly from the latest work. My last assistant statement was: "I'm testing the root-cause fix on a copy rather than continuing to chip away… remove all ordinary signal copper the old router laid… Re-route every signal connection from scratch with the corrected router, under the reservations, with fine-pitch parts first and In3 available… If the result beats r06's 1,367 missing joins, it becomes the new route for the signal layers. The gate decides." The user's governing instruction: "Operate with adaptive tenacity… When something fails, diagnose why, change your approach, and pursue the next viable solution."
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: C:\Users\Gluis\.claude\projects\C--Users-Gluis-OneDrive-Documents-ChatGPT-Controller\280553e2-7c85-48b3-a5fa-96a4c2e06e60.jsonl
+Continue the conversation from where it left off without asking the user any further questions. Resume directly — do not acknowledge the summary, do not recap what was happening, do not preface with "I'll continue" or similar. Pick up the last task as if the break never happened.
+
+The messages after this summary are the most recent messages from before compaction, kept verbatim. The summary was written without seeing them, so something it says has not happened yet may already have happened in them.

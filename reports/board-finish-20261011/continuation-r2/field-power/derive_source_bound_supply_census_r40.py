@@ -1,0 +1,6 @@
+from pathlib import Path
+P=Path(__file__).resolve().parent;s=(P/'field_supply_census_r38.py').read_text().replace('field-supply-census-r38','field-supply-census-r40').replace("('B_DO_PG','U11038','6')", "('B_DO_PG','U11038','3')").replace("('FIELD5','U11017','5')", "('FIELD5','U11017','8')")
+s=s.replace('import json,pickle','import json,pickle,re')
+s=s.replace("assert not OUT.exists();OUT.mkdir();bp=", "assert not OUT.exists();OUT.mkdir();source=P/'combined-power-source-r3-hierarchy/source-export/fresh.net';assert sha(source)=='070444b08e9225319d80e54a7e23a841218d5bb32e38a10c3739052e3197e7b2';roles=dict(re.findall(r'\\(ref \"U11038\"\\)\\s+\\(pin \"([^\"]+)\"\\)\\s+\\(pinfunction \"([^\"]+)\"\\)',source.read_text(encoding='utf-8')));assert roles['3']=='PG_3' and roles['8']=='IN_8' and roles['5']=='EN_5' and roles['1']=='OUT_1';bp=")
+s=s.replace("'r32_rejected_and_r36_pending_excluded':True", "'r32_rejected_and_r36_pending_excluded':True,'R38_R39_PG_pad6_NC_pad7_DELAY_diagnostics_superseded':True,'fresh_native_source_SHA256':sha(source),'U11038_exact_native_pin_roles':roles")
+(P/'field_supply_census_r40.py').write_text(s,encoding='utf-8');compile(s,'field_supply_census_r40.py','exec')

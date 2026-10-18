@@ -1,0 +1,21 @@
+"""Reuse finite paired constructor on changed, genuinely rooted SOURCE geometry."""
+from pathlib import Path
+import hashlib,json
+H=Path(__file__).resolve().parent;p=H/'construct_AO1_DAC_CS_current_ordinary_F_In3_B_pairs_r624.py';s=p.read_text();start=s.index(" mp=pin(H/'DI6-");end=s.index('\n sourcepad=',start)
+init="""
+ mp=pin(H/'DI6-twelve-NEW-exact-current-normal-antipads-r578/model.pkl','cfe6fcbc3e13360edb56916f18a9a88038e84a8841e2e0f8e5faf93ea3399793');g,legacy_h,b,q,legacy_c=pickle.loads(mp.read_bytes());MS.restore_bound_field_current_precision_states(b,q)
+ rp=pin(H/'AO1-R656-seven-GROUND-additions-joint-R20-independent-source-geometry-r658/receipt.json','faa3a4649c2bf82849f135af651653eee9ccc27dc6ce9c35c48584371f10cc12');r=json.loads(rp.read_bytes());cp=pin(r['after_context_file'],'94ea2f68b967fac5c78a8085291b1f46de54b2f5b29a33de12253fe8119f7c23');h=pickle.loads(cp.read_bytes());c=h;gp=pin(cp.parent/'actual-before-R20-and-prospective-ground-added-COM-groups.pkl','d26f50bfa4047a6e29e572eb3daf3a7fdf72c323ee3adeabeb9567198c53c3f9');groups=pickle.loads(gp.read_bytes());root=K.root(groups['after'],'U14619','7');refs=K.source_refs(root);reference=refs['In1.Cu'];reference4=refs['In4.Cu'];before_root=K.root(groups['before'],'U14619','7');native=K.source_refs(before_root)['In1.Cu']
+ sourcefile=pin(P/'field-power/FIELD-ROOT-Q0-DIC-DI6-exact-R157-native-diagnostic-stage-r753/FIELD-ROOT-Q0-DIC-DI6-known-failure-diagnostic.kicad_pcb','7bddce003de3ac2324be5a6ac442e6b662b92915908d4b79e6209d40a098b8a2');identity=K.A.N.SourceNets(sourcefile.read_bytes());original=K.C.inventory(sourcefile.read_bytes())[3]
+ peerp=pin(H/'AO1-MON3-VREF-and-only-b177-5V-native-width-endpoint-source-detour-r19/MON3-VREF-plus-exact-b177-5V-controlled-detour-NOMINEE.pkl','d35097754a50017d6d4b17d4388dbced44c63547b39fbddbcda31b8a78cf4181');retired=pickle.loads(peerp.read_bytes())['deleted_original_chunks'];existing={t['uuid']for t in h['tracks']+h['vias']};peertracks=[];peervias=[]
+ for uid,ch in original.items():
+  if uid in retired:assert ch==retired[uid];continue
+  if uid in existing or not ch.lstrip().startswith((b'(segment',b'(via')):continue
+  z=K.A.G.parse(uid,ch,{})
+  if z['kind']=='segment':peertracks.append({'uuid':uid,'net':z['net'],'layer':z['layer'],'a':z['a'],'b':z['b'],'w':z['w']})
+  else:peervias.append({'uuid':uid,'net':z['net'],'x':z['at'][0],'y':z['at'][1],'d':z['d'],'drill':z['drill'],'flashed':list(K.LAYERS)})"""
+s=s[:start]+init+s[end:];start=s.index(";peertracks=[];peervias=[]",s.index('\n sourcepad='));end=s.index('\n planner_h=',start);s=s[:start]+s[end:]
+for a,b in [('AO1-DAC-CS-current-ordinary-F-In3-B-two-pair-constructor-r624','AO1-DAC-CS-real-rooted-ground-bridges-exact-b177-detour-paired-constructor-r674'),('R624_','R674_'),("'actual_R622_native_and_current_AO1_COM_refs_SHA256':sha(cp)","'prospective_R658_SOURCE_refs_after_literal_actual_before_ground_bridges_SHA256':sha(cp)"),("'VREF_four_prospective_items_HARD_only_not_reference_credit':True","'all_exact_AO1_R20_R656_and_additional_R753_items_HARD':True"),("'all_original_current_power_fault_and_peer_Cu_fixed':True","'all_R753_retained_and_exact_AO1_R20_R656_peer_Cu_fixed':True"),("'real_source_connected_both_In1_In4_returns_no_generic_plane_waiver':True","'genuine_prospective_SOURCE_connected_both_In1_In4_no_native_AFTER_claim':True")]:
+ assert a in s,a;s=s.replace(a,b)
+s=s.replace('Native\nand current HOST J1/In1 support are both required for this nomination;','The pinned prospective ground additions genuinely root both reference planes;').replace('Both actual native pads are bare.','Use exact actual pad poses and retained native target graph.')
+out=H/'construct_AO1_CS_real_ground_bridges_exact_b177_detour_r674.generated.py';assert not out.exists();out.write_text(s)
+(H/'derive-AO1-CS-constructive-ground-source-r674.json').write_text(json.dumps({'source':str(p.resolve()),'source_SHA256':hashlib.sha256(p.read_bytes()).hexdigest(),'generated':str(out.resolve()),'generated_SHA256':hashlib.sha256(out.read_bytes()).hexdigest(),'changed_problem':'R20 b177 native-width detour frees F cage; R656 seven ground bodies genuinely join two old COM islands; exact current R753 additions held; SOURCE reference prospective only'},indent=1)+'\n')

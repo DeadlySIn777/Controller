@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "manufacturing_ready": false,
+  "status": "candidate_circuit_bounded_assumptions",
+  "switch_mpn": "TPS22990DMLR",
+  "supervisor_mpn": "TPS389001DSET",
+  "switch_pin_map": {
+    "1": "CT",
+    "2": "NC",
+    "3": "VIN",
+    "4": "VBIAS",
+    "5": "ON",
+    "6": "GND",
+    "7": "PG",
+    "8": "VOUT",
+    "9": "VOUT",
+    "10": "VOUT",
+    "11": "VIN_THERMAL_PAD"
+  },
+  "supervisor_pin_map": {
+    "1": "SENSE",
+    "2": "GND",
+    "3": "MR_N",
+    "4": "VDD",
+    "5": "CT",
+    "6": "RESET_N"
+  },
+  "bounds": {
+    "input_v": [
+      4.85,
+      5.15
+    ],
+    "sbc_running_current_a": 3.0,
+    "sbc_charge_cap_max_f": 0.001,
+    "switch_resistance_screening_ohm": 0.008,
+    "trace_contact_resistance_max_ohm": 0.015,
+    "switch_ct_effective_f": [
+      4.7e-07,
+      1.32e-06
+    ],
+    "switch_rise_time_typical_equation_screening_fast_factor": 0.5,
+    "supervisor_delay_cap_effective_f": [
+      1.2e-06,
+      3.2e-06
+    ],
+    "sense_top_ohm": 31600,
+    "sense_bottom_ohm": 10000,
+    "sense_resistor_total_fraction": 0.002,
+    "sense_threshold_negative_v": 1.15,
+    "sense_threshold_positive_v": 1.157,
+    "sense_threshold_fraction": 0.01,
+    "sense_leakage_a": 1e-07,
+    "supervisor_delay_current_a": [
+      9e-07,
+      1.35e-06
+    ],
+    "supervisor_delay_threshold_v": [
+      1.17,
+      1.29
+    ],
+    "supervisor_delay_cap_initial_v_assumed": [0, 0],
+    "power_aux_reservation_a": 0.003,
+    "qod_resistance_max_ohm": 253,
+    "fully_discharged_target_v": 0.3
+  },
+  "boundary": {
+    "JIN1": [
+      "CORE_5V",
+      "LOGIC_GND"
+    ],
+    "JOUT1": [
+      "SBC_5V",
+      "LOGIC_GND"
+    ],
+    "JSTATUS1": [
+      "SBC_ENABLE",
+      "SBC_SWITCH_PG",
+      "LOGIC_GND"
+    ],
+    "JMR1": [
+      "SBC_RESET_N",
+      "LOGIC_GND"
+    ]
+  },
+  "parts": {
+    "RHI1": {
+      "value": "31.6k0.1%10ppm",
+      "nets": [
+        "CORE_5V",
+        "SBC_SENSE"
+      ]
+    },
+    "RLO1": {
+      "value": "10k0.1%10ppm",
+      "nets": [
+        "SBC_SENSE",
+        "LOGIC_GND"
+      ]
+    },
+    "REN1": {
+      "value": "330k1%",
+      "nets": [
+        "CORE_5V",
+        "SBC_ENABLE"
+      ]
+    },
+    "RPD1": {
+      "value": "330k1%",
+      "nets": [
+        "SBC_ENABLE",
+        "LOGIC_GND"
+      ]
+    },
+    "RMR1": {
+      "value": "100k1%",
+      "nets": [
+        "CORE_5V",
+        "SBC_RESET_N"
+      ]
+    },
+    "RPG1": {
+      "value": "100k1%",
+      "nets": [
+        "SBC_5V",
+        "SBC_SWITCH_PG"
+      ]
+    },
+    "CIN1": {
+      "value": "2.2uF16V X7R",
+      "nets": [
+        "CORE_5V",
+        "LOGIC_GND"
+      ]
+    },
+    "CBIAS1": {
+      "value": "100nF16V X7R",
+      "nets": [
+        "CORE_5V",
+        "LOGIC_GND"
+      ]
+    },
+    "CSUP1": {
+      "value": "100nF16V X7R",
+      "nets": [
+        "CORE_5V",
+        "LOGIC_GND"
+      ]
+    },
+    "COUT1": {
+      "value": "1uF16V X7R",
+      "nets": [
+        "SBC_5V",
+        "LOGIC_GND"
+      ]
+    },
+    "CTSW1": {
+      "value": "1uF50V X7R",
+      "nets": [
+        "SBC_SLEW_CT",
+        "LOGIC_GND"
+      ]
+    },
+    "CTSUP1": {
+      "value": "2.2uF16V X7R",
+      "nets": [
+        "SBC_DELAY_CT",
+        "LOGIC_GND"
+      ]
+    }
+  },
+  "critical_limits": [
+    "No current limiting, short-circuit isolation, reverse-current blocking or overvoltage cutoff is implemented by this switch.",
+    "TPS22990 PG indicates gate enhancement, not precision output voltage; VBIAS must be valid.",
+    "TPS3890 RESET auto-releases after good voltage and delay; no machine restart permission or latch.",
+    "TPS22990 slew equation is typical at5Vbias and must be qualified atactualCT/load/temperature; factor0.5 is engineering screening, not a guarantee.",
+    "Input and output capacitor bias/temperature/aging and actualSBCboot profiles remain unqualified.",
+    "SBC externalUSB/other supply backfeed can bypass sequencing; normal operation requires no independentSBCpower source until reverse isolation is designed.",
+    "TPS3890 normal specs start1.5V; power-up reset at0.8V requires specified15uA sink condition.330k/330kONnetwork bounds pullup current during that transition; switching belowvalidBIAS remains unqualified.",
+    "RESET propagation and switch turnoff cannot guarantee SBC stays above4.75V during arbitrarybrownout.",
+    "SBCstartup supply only; host reset/boot compatibility and machine output ownership remain separate.",
+    "Full CT delay and QODdischarge calculation require initiallydischargedCT and poweredQOD. TPS3890 internalRCT is200ohmtypical withno guaranteedmax; shortMR/brownout pulse mayretainCTcharge. No fullminimumdelay orfullydischargedSBC claim for arbitrarywarmreset."
+  ]
+}

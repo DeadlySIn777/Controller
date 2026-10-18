@@ -1,0 +1,24 @@
+"""Permit native measurement of a geometry-checked failed host clone only."""
+import hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):return json.loads(Path(p).read_bytes())
+mp=H/'sbc-power/SAFE-repaired-owned-zone-normalization-r160/model.pkl';assert sha(mp)=='d7e0fe77a8ee25fef4e45538da29aa72809c102192879330c7a5b32a200e711b'
+strict=H/'sbc-power/SAFE-repaired-independent-true-geometry-r161/receipt.json';assert sha(strict)=='c69486b72b0391cfd4064368febec14b12e81c47ce4fd2b1484bddcf06f47991';sr=read(strict);assert sr['model_sha256']==sha(mp)and sr['verdict']=='PASS_STRICT_TRUE_GEOMETRY_SCOPE'and not sr['errors']
+root=H/'SAFE-full-root42-retention-r50/receipt.json';assert sha(root)=='6ee956571dc162306ed1d5bcced1cf8cb05f3c8af1fabd7c672e773a5acbd68c';rr=read(root);assert rr['model_sha256']==sha(mp)and rr['verdict']=='FAIL_SAFE_FULL76_ROOT42_RETENTION'
+power=H/'sbc-power/SAFE-original198b-DC936-power-contact-audit-r150/receipt.json';pr=read(power);assert pr['model_sha256']==sha(mp)
+refs=H/'sbc-power/SAFE-strict-source-reference-audit-r151/receipt.json';fr=read(refs);assert fr['model_sha256']==sha(mp)and fr['verdict']=='FAIL_STRICT_POSITIVE_OLD_REFERENCE_SCOPE'
+out=H/'SAFE-exploratory-native-measurement-gate-r9.json';assert not out.exists()
+gate={'verdict':'ALLOW_EXPLORATORY_NATIVE_MEASUREMENT_ONLY_HOST_RETENTION_FAILURES_UNCHANGED','model_file':str(mp.resolve()),'model_sha256':sha(mp),'strict_geometry_pass':True,'known_host_retention_pass':False,'known_failed_ground_root42':{'old_named_logic_pads':1354,'current_named_logic_pads':1350,'lost_actual_logic_source_keys':26,'old_logic_group_splits':1,'strict_reference_loss_counts':{'LOGIC':276,'FAG':56,'FBG':13}},'old198b_IO3_contact_split_remains':True,'purpose':'Actual full native fill, uncapped connectivity, original-source/no-loss comparison and every-severity DRC on exploratory clone while concrete repairs continue. No adoption, source change, manufacturing release or failure waiver.','frozen_read_set':[{'file':str(p.resolve()),'sha256':sha(p)}for p in(mp,strict,root,power,refs,Path(__file__))],'native_rule_scope':'exactoriginal159c prefix plus separately boundedPG neck rule/area. The217 Claude router reservations and3 source-synchronized suffix tokens remain planning-only, no implicit native installation.','parent_native_board_sha256':'eedf63f2c24346a885cebcabbd7546576663d5cbb29bc8dbd48401921201240a','live_CLAUDE_board_changed':False,'adopted':False,'manufacturing_ready':False}
+out.write_text(json.dumps(gate,indent=1)+'\n');print('R9_DIAGNOSTIC_GATE',sha(out))
+src=H/'stage_joint_power_native_r7.py';dst=H/'stage_joint_power_native_diagnostic_r9.py';assert not dst.exists();t=src.read_text()
+t=t.replace("assert len(sys.argv) == 3, 'recipe/receipt.json fresh_output_directory'","assert len(sys.argv) == 4, 'recipe/receipt.json fresh_output_directory explicit_diagnostic_gate.json'")
+t=t.replace("recipe = Path(sys.argv[1]).resolve(); out = Path(sys.argv[2]).resolve()","recipe = Path(sys.argv[1]).resolve(); out = Path(sys.argv[2]).resolve(); gatepath=Path(sys.argv[3]).resolve(); gate=read(gatepath); assert sha(gatepath)=='"+sha(out)+"'")
+old="assert r['host_retained_relationships_pass'], 'Retained host contact gate must pass before native staging'";assert old in t
+t=t.replace(old,"assert gate['verdict']=='ALLOW_EXPLORATORY_NATIVE_MEASUREMENT_ONLY_HOST_RETENTION_FAILURES_UNCHANGED' and gate['strict_geometry_pass'] and not gate['known_host_retention_pass'] and not gate['adopted'] and not gate['manufacturing_ready']; assert r['frozen_host_model_sha256']==gate['model_sha256']\n    for evidence in gate['frozen_read_set']:assert sha(evidence['file'])==evidence['sha256']")
+old='pins.update(fp_pins);';assert old in t;t=t.replace(old,"pins[str(gatepath.resolve())]=sha(gatepath);pins.update({e['file']:e['sha256']for e in gate['frozen_read_set']});pins.update(fp_pins);")
+old="'parent_sha256':sha(parent),'candidate_sha256':sha(board),";assert old in t;t=t.replace(old,"'parent_sha256':sha(parent),'candidate_sha256':sha(board),'explicit_diagnostic_measurement_gate_file':str(gatepath),'explicit_diagnostic_gate_sha256':sha(gatepath),'host_retention_failures_preserved':True,'adoption_gate':'REJECTED_HOST_RETENTION_FAIL_NATIVE_MEASUREMENT_ONLY','manufacturing_ready':False,")
+compile(t,str(dst),'exec');dst.write_text(t)
+(H/'exploratory-native-r9-derivation.json').write_text(json.dumps({'original_production_stage_sha256':sha(src),'diagnostic_stage_sha256':sha(dst),'diagnostic_gate_sha256':sha(out),'original_inventory_Cu_pose_hole_zone_flash_source_sidecar_guards_unchanged':True,'only_host_failures_permit_exploratory_measurement_with_fixed_pass_literal_geometry':'No failed contact/reference field is set true or waived. Adoption prohibited.','adopted':False,'board_written':False},indent=1)+'\n')
+print(dst)

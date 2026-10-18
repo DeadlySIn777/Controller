@@ -1,0 +1,6 @@
+read_verilog rtl/cnc_iol1_readonly_target_master.v rtl/cnc_motherboard_iol1_target_bringup.v rtl/cnc_motherboard_motion_bringup.v rtl/cnc_spi_frame.v rtl/cnc_stepgen.v rtl/cnc_encoder.v
+hierarchy -check -top cnc_motherboard_iol1_target_bringup
+synth_efinix -top cnc_motherboard_iol1_target_bringup
+check -assert
+stat
+write_json synthesized.json

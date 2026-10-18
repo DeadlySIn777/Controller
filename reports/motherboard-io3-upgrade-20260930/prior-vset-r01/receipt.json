@@ -1,0 +1,100 @@
+{
+  "id": "MB-IO3-001",
+  "old_mpn": "TPS62901RPJR",
+  "new_mpn": "TPS62902RPJR",
+  "same_footprint": "CNC_MC_Power:TPS62901_RPJ9",
+  "pin_function_map": {
+    "1": "PG",
+    "2": "SW",
+    "3": "VOS",
+    "4": "GND",
+    "5": "EN",
+    "6": "VIN",
+    "7": "MODE/S-CONF",
+    "8": "SS/TR",
+    "9": "FB/VSET"
+  },
+  "exact_pin_net_ledger": [
+    {
+      "ref": "U2002",
+      "pin": "3",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "L2002",
+      "pin": "2",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "C2005",
+      "pin": "1",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    },
+    {
+      "ref": "C2010",
+      "pin": "1",
+      "old_model_net": "IO_3V3",
+      "new_model_net": "IO_3V3_REG_LOCAL",
+      "old_native_net": "/IO_3V3",
+      "new_native_parent_net": "/mc_local_power/IO_3V3_REG_LOCAL"
+    }
+  ],
+  "added_ref": "R17001",
+  "new_component": {
+    "kind": "R",
+    "value": "15mohm 1% 50ppm 1W",
+    "mpn": "KRL2012E-C-R015-F-T5",
+    "footprint": "CNC_MB_IO3:KRL2012_Susumu",
+    "physical": true,
+    "pins": {
+      "1": "IO_3V3_REG_LOCAL",
+      "2": "IO_3V3"
+    },
+    "no_connect": [],
+    "resistance_ohm": 0.015,
+    "tolerance": 0.01,
+    "temperature_coefficient_ppm_k": 50,
+    "power_rating_w": 1,
+    "source_block": "motherboard_io3_upgrade",
+    "source_reference": "R17001",
+    "role": "controlled distributed-cap damping; local VOS remains upstream",
+    "status": "source_candidate_not_layout_or_physical_qualified"
+  },
+  "all_other_retained_endpoints_unchanged": true,
+  "library_id": "CNC_MB_IO3:TPS62902RPJR",
+  "library_file": "hardware/motherboard_io3_upgrade/CNC_MB_IO3.kicad_sym",
+  "footprint_file": "hardware/motherboard_io3_upgrade/CNC_MB_IO3.pretty/KRL2012_Susumu.kicad_mod",
+  "manufacturing_ready": false,
+  "original_mc_changed": false,
+  "source_bounds": {
+    "rmin_at_max_junction_175c_ohm": 0.014738625,
+    "rmax_at_max_junction_175c_ohm": 0.015263625000000001,
+    "normal_design_current_a": 0.9087077446234255,
+    "regulator_rating_a": 2,
+    "local_nominal_cout_f": 2.21e-05,
+    "distributed_nominal_cout_f": 6.611e-05
+  },
+  "open_engineering_gates": [
+    "Actual effective local Cout>=10uF and distributed damping stability/ESR.",
+    "PCB must not bypass R17001 by planes/traces; VOS Kelvin local node.",
+    "Regulator input/inductor thermal/actual startup and target FPGA power.",
+    "Overall allocation uses explicit reservations rather than complete guaranteed dynamic maxima."
+  ],
+  "source_sha256": {
+    "hardware/motion_card/mc_local_power.kicad_sch": "7575e229660d33291680d121f59c29df2e2b88cc3ddde21e865427d3ee122841",
+    "hardware/motion_card/design.json": "8cad1942b123437927e2fd24fea36d6c17865da3c3cac796aa9b5328d4757f6a",
+    "hardware/motherboard_io3_upgrade/motherboard_io3_upgrade.kicad_sch": "b29c008b2f74d9727daf917720392e48da23cd09a0023d7c2b61e4059f8b2283",
+    "hardware/motherboard_io3_upgrade/design.json": "ba0d67d35137b374afd2890222b40cb780695f194a37bcb0e8462eb7662e1503",
+    "hardware/motherboard_io3_upgrade/CNC_MB_IO3.kicad_sym": "92cd7ea6d5e5bebc3909d7195188eca02800c24c992045480f77aeee89ccbb63",
+    "hardware/motherboard_io3_upgrade/CNC_MB_IO3.pretty/KRL2012_Susumu.kicad_mod": "2c5d37df4215c5d53d198986b0c6ab11342dfc4fbde39afb08eb2cf7353991d8"
+  }
+}

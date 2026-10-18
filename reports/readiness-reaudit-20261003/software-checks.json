@@ -1,0 +1,162 @@
+{
+  "started_utc": "2026-10-04T04:00:40.965008+00:00",
+  "finished_utc": "2026-10-04T04:00:48.865360+00:00",
+  "scope": "source inspection, host source-negative tests, retained manifest/hash verification only",
+  "physical_interfaces_opened": false,
+  "new_target_build_or_HDL_simulation_or_synthesis": false,
+  "new_vendor_fit_or_physical_measurement": false,
+  "source_snapshot_count": 619,
+  "source_hashes_unchanged": true,
+  "source_changes": {},
+  "runs": [
+    {
+      "name": "cnc1-manifest",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "cnc1/tools/record_evidence.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "software-cnc1-manifest.log",
+      "log_sha256": "d36b9f7ff73d4cdadbcde900e7ece767c8f7e463c382f610c4b016c5c6e8e2f3"
+    },
+    {
+      "name": "cnc1-spidev-manifest",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "cnc1/tools/record_spidev_evidence.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "software-cnc1-spidev-manifest.log",
+      "log_sha256": "9bc627f4383243e2931c97d9465697517524c496420a1b6de6d07531f5ae9a29"
+    },
+    {
+      "name": "baseline-rtl-manifest",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "gateware/tools/record_evidence.py",
+        "--check"
+      ],
+      "exit_code": 1,
+      "log": "software-baseline-rtl-manifest.log",
+      "log_sha256": "1584c9bfe02411e44fad984385f4f284f6d0aa5359e40b95b4b2e1411336b384"
+    },
+    {
+      "name": "baseline-synthesis-manifest",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "gateware/synthesis/record_results.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "software-baseline-synthesis-manifest.log",
+      "log_sha256": "8cdaf25e33223a5205db07a76058046b1c70c837792821e3d64e50883b140458"
+    },
+    {
+      "name": "baseline-postmap-manifest",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "gateware/synthesis/postmap/record_results.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "software-baseline-postmap-manifest.log",
+      "log_sha256": "8e8c648c41e55891d8cbf96f42a3f3f4989c9e6656f4acfe1800be8b3e2f0a1d"
+    },
+    {
+      "name": "cnc3-readonly-source-tests",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_cnc3_rtl.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "software-cnc3-readonly-source-tests.log",
+      "log_sha256": "fa7a2a7ab9966c24e72082532d34173492a1f6de78686c873b392eef555bb616"
+    },
+    {
+      "name": "iol1-readonly-source-tests",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_motherboard_iol1_readonly.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "software-iol1-readonly-source-tests.log",
+      "log_sha256": "fa3c708f8360c8e65e4eead39bc1227ee051fd1949ee681e153a198cb098cd89"
+    }
+  ],
+  "bundle_integrity": [
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-is2-profile-20261002\\profile-candidate-r02\\bundle-manifest.json",
+      "manifest_sha256": "6b379afee372b2024c4f2a52f2a3a57fd9614b5672738d0c0db9669702958c3c",
+      "count": 44,
+      "all_match": true,
+      "differences": []
+    },
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-motion-candidate-r01\\bundle-manifest.json",
+      "manifest_sha256": "d17e30860af91907edbf56e9a3172af669cda94cc341dda0377fad8a17b10e78",
+      "count": 45,
+      "all_match": true,
+      "differences": []
+    },
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\prefix-record-candidate-r01\\bundle-manifest.json",
+      "manifest_sha256": "40d985aa68b61d8c4994cc9631a21a09657be834bddd4c50b5d53daf032485e7",
+      "count": 101,
+      "all_match": true,
+      "differences": []
+    }
+  ],
+  "referenced_evidence_integrity": [
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\arithmetic-sharing-handoff-r01\\receipt.json",
+      "manifest_sha256": "65f1786d3fd45a4d3c91141b1e98222cdba187a9fbc11f83870704e5f149d2dd",
+      "count": 18,
+      "all_match": true,
+      "differences": []
+    },
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-iol1-integrated-records-20261002\\arithmetic-sharing-peer-addendum-r01\\receipt.json",
+      "manifest_sha256": "5d205caf364de2215c77f1c937861339aa723a23ee2cde5bbdb89c0279217f6c",
+      "count": 3,
+      "all_match": true,
+      "differences": []
+    },
+    {
+      "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\reports\\cnc3-is2-profile-20261002\\profile-handoff-r02\\receipt.json",
+      "manifest_sha256": "3d4facf474f5455b284dd675f3718710616591fcb7e206a24fb7fb3a4cd9e745",
+      "count": 5,
+      "all_match": true,
+      "differences": []
+    }
+  ],
+  "esp_source_integrity": {
+    "manifest": "C:\\Users\\Gluis\\OneDrive\\Documents\\ChatGPT\\Controller\\firmware\\esp32_service\\evidence\\manifest.json",
+    "manifest_sha256": "42f4f779d3c2fbfe3e29a15ac2835db13013425faaa5c3c7666725a36a1209a6",
+    "count": 14,
+    "all_match": true,
+    "differences": []
+  }
+}

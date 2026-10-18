@@ -1,0 +1,20 @@
+"""Real CM SMD land-edge joins; shared source Cu before new ordinary barrels."""
+from pathlib import Path
+P=Path(__file__).resolve().parent
+s=(P/'nominate_CM51_polygon_routed_ordinary_ground_fanouts_r276.py').read_text()
+s=s.replace('CM51-exact-polygon-routed-ordinary-ground-fanout-nominations-r276','CM51-real-land-edge-shared-source-ordinary-ground-nominations-r278')
+s=s.replace('CM51-ordinary-inward-first-ground-fanout-nominations-r275/partial-only-nominated-discrete.pkl','CM51-physical-routed-ordinary-ground-fullbody-reference-FAIL-retained-r277/only-nominated-discrete.pkl')
+s=s.replace('.intersection(sourcecentre).difference(unary_union(tc))','.difference(unary_union(tc))')
+s=s.replace("start=[p['x'],p['y']];sp=Point(start);attempts=[];winner=None", "attempts=[];winner=None\n  sharedgoal=unary_union([r['shape']for r in root if r['layer']=='F.Cu']+[buf(LineString([t['a'],t['b']]),t['w']/2)for t in tracks]+[Point(v['x'],v['y']).buffer(v['d']/2,quad_segs=128)for v in vias])")
+s=s.replace("for radius in(2.,4.,8.):", "for radius,dy in [(r,y)for r in(2.,4.,8.)for y in(-.3,.3)]:\n   start=[p['x'],round(p['y']+dy,6)];sp=Point(start)")
+s=s.replace("'radius_mm':radius,'foreign_hard_count'", "'radius_mm':radius,'real_own_land_start_offset_y_mm':dy,'foreign_hard_count'")
+s=s.replace("target=f.buffer(-.000005).intersection(vf);attempt=", "shared=f.buffer(-.000005).intersection(sharedgoal.buffer(-.00001));shared_join=not shared.is_empty;target=shared if shared_join else f.buffer(-.000005).intersection(vf);attempt=")
+s=s.replace("ann=pt.buffer(.25,quad_segs=128).difference(drill);areas=", "ann=pt.buffer(.25,quad_segs=128).difference(drill);areas=")
+s=s.replace("drill=buf(pt,.10000002);ann=", "drill=Point().buffer(.1)if shared_join else buf(pt,.10000002);ann=")
+s=s.replace("if not any(x>0 for x in areas.values()):errors.append", "if not shared_join and not any(x>0 for x in areas.values()):errors.append")
+s=s.replace("if errors:continue\n    v=", "if any(e['kind']!='actual_drilled_fullbody_reference'for e in errors):continue\n    v=")
+s=s.replace("accepted.append(winner);tracks+=newtracks;vias.append(v);done.add(p['uuid']);break", "winner['shared_actual_or_sparse_source_F_Cu_join']=shared_join;winner['new_fullbody_reference_FAIL_retained']=any(e['kind']=='actual_drilled_fullbody_reference'for e in errors);winner['actual_start_cap_own_land_contact_mm2']=buf(Point(start),.1).intersection(unary_union(L.poly(p['layers']['F.Cu']))).area;assert winner['actual_start_cap_own_land_contact_mm2']>0;accepted.append(winner);tracks+=newtracks\n    if shared_join:winner['via']=None\n    else:vias.append(v)\n    done.add(p['uuid']);break")
+s=s.replace("'CM_signed_return_A':3.5593046439628484", "'land_edge_starts_have_actual_positive_SMD_Cu_overlap':True,'every_new_nonempty_fullbody_reference_gap_is_unclosed_FAIL_no_waiver':True,'CM_signed_return_A':3.5593046439628484")
+s=s.replace('CM51_ALL_ORDINARY_POLYGON_ROUTE_NOMINEES_CURRENT_HEAD_CONSTRUCTION_AND_SOURCE_PROOF_OPEN','CM51_ALL_REAL_LAND_EDGE_PHYSICAL_SOURCE_ROUTE_NOMINEES_REFERENCE_FAILS_RETAINED_FULL_PROOF_OPEN')
+s=s.replace('R276','R278')
+exec(compile(s,str(__file__),'exec'))
