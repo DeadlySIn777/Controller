@@ -1,6 +1,10 @@
-# Controller motherboard — public routing review
+# Controller motherboard â€” public routing review
 
 Actual editable KiCad 10 motherboard source and Specctra routing interchange, published 18 October 2026. **The board is unfinished and not ready for fabrication or assembly.**
+
+## Router interchange update
+
+[New measured failures and setup corrections](review/router-interchange-findings.md): the corrected native reference is **1,193 joins / 1,210 API items**. The early R6 cached round trip loses five connections and is rejected. The R8 partial-retrace correction passes exact segment preservation and router load/export; native round-trip verification remains pending. Historical blanket locks and lossy coordinate/via-mask import are also being corrected. Treat the earlier R6 DSN as a preserved diagnostic input.
 
 ## Open the actual files
 
@@ -17,7 +21,7 @@ The loose `.kicad_pcb` files omit only derived `(filled_polygon ...)` cache node
 
 The corrected baseline has **1,172 required pad-island joins**, **1,183 API unconnected items**, and **499 CLI unconnected diagnostic rows**. These are different counters for the same incomplete board. Cached native DRC reports zero other errors, 332 warnings and zero schematic parity issues. This is not a zero-error completed board. Latest staged changes have no new measured full native AFTER count.
 
-The board is 450 × 235 mm, six copper layers, 2,723 footprints and 9,971 pads. Current staged source contains 86,456 track segments and 8,014 vias. Signal routing occupies mainly F.Cu, In3.Cu and B.Cu; the remaining inner layers largely carry split power/reference zones. Raw export census reports 82,946 locked copper objects out of 94,470 tracks/vias. Historical locks must be reviewed for coordinated global routing rather than assumed electrical requirements.
+The board is 450 Ã— 235 mm, six copper layers, 2,723 footprints and 9,971 pads. Current staged source contains 86,456 track segments and 8,014 vias. Signal routing occupies mainly F.Cu, In3.Cu and B.Cu; the remaining inner layers largely carry split power/reference zones. Raw export census reports 82,946 locked copper objects out of 94,470 tracks/vias. Historical locks must be reviewed for coordinated global routing rather than assumed electrical requirements.
 
 One active motherboard retains the soldered FPGA, all twelve fitted motor interfaces with individual enable/alarm, four ABZ encoders, 24 DI and 16 smart DO plus the other required interfaces. Existing machine settings, electrical limits, galvanic domains and fault/recovery behavior remain requirements. No channel removal, domain merge or blanket clearance reduction is authorized by this snapshot.
 
